@@ -6,7 +6,7 @@ import {
   Workflow, Eye, Layers as LayersIcon, BookOpen,
   Bot, Sparkles, Search, FileCheck2, Plus, Cpu, ArrowLeftRight,
   Boxes, RefreshCw, Compass, Radar, Target, LineChart, ArrowDown, ArrowUp,
-  ChevronRight, ChevronDown, ArrowRight, ArrowLeft, TrendingUp, X, Monitor,
+  ChevronRight, ChevronDown, ArrowRight, ArrowLeft, TrendingUp, X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INDUSTRIES, INDUSTRY_BY_KEY, type IndustryKey, type IndustryLexicon, type Kpi } from "./industryLexicon";
@@ -1108,6 +1108,8 @@ export function LizaOSStack() {
         <div className="md:hidden">
           <MobileStack
             industry={industry}
+            industryKey={industryKey}
+            onIndustryChange={setIndustryKey}
             sourceLayer={sourceLayer}
             toolsLayer={toolsLayer}
             nativeLayer={nativeLayer}
@@ -1190,9 +1192,11 @@ export function LizaOSStack() {
 
 /* ---------- Mobile-only: vertical loop SVG + three expandable sections ---------- */
 function MobileStack({
-  industry, sourceLayer, toolsLayer, nativeLayer, isGeneric,
+  industry, industryKey, onIndustryChange, sourceLayer, toolsLayer, nativeLayer, isGeneric,
 }: {
   industry: IndustryLexicon;
+  industryKey: IndustryKey;
+  onIndustryChange: (k: IndustryKey) => void;
   sourceLayer: Layer;
   toolsLayer: Layer;
   nativeLayer: Layer;
@@ -1254,30 +1258,11 @@ function MobileStack({
 
   return (
     <div className="space-y-4">
-      {/* Honest hint banner */}
-      <div
-        className="rounded-xl border px-3.5 py-2.5 flex items-start gap-2.5"
-        style={{
-          background: "hsl(var(--primary) / 0.06)",
-          borderColor: "hsl(var(--primary) / 0.25)",
-        }}
-      >
-        <Monitor className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--primary))" }} />
-        <div className="min-w-0">
-          <p className="text-[12px] font-bold text-foreground leading-tight">
-            Open this on desktop for the full architecture diagram.
-          </p>
-          <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">
-            On mobile we only show the loop and the layers. The interactive system map needs a larger screen.
-          </p>
-        </div>
-      </div>
+      {/* Mobile industry selector */}
+      <MobileIndustrySelector active={industryKey} onChange={onIndustryChange} />
 
-      {/* Hero loop diagram */}
-      <MobileLoopDiagram />
-
-      {/* Guided tour CTA */}
-      <MobileGuidedTour sections={sections} />
+      {/* Click-driven guided tour + section list */}
+      <MobileGuidedTour sections={sections} industry={industry} isGeneric={isGeneric} />
 
       {!isGeneric && (
         <div className="pt-2 text-center">
@@ -1294,8 +1279,51 @@ function MobileStack({
   );
 }
 
-/* Vertical loop SVG: Leadership -> Decision Standard -> Workspace -> Records / AI tools, with feedback arrow */
-function MobileLoopDiagram() {
+/* Mobile industry selector — compact pill rolodex */
+function MobileIndustrySelector({
+  active, onChange,
+}: { active: IndustryKey; onChange: (k: IndustryKey) => void }) {
+  return (
+    <div
+      className="rounded-2xl border-2 p-3"
+      style={{
+        background: "hsl(var(--card))",
+        borderColor: active === "generic" ? "hsl(var(--primary) / 0.55)" : "hsl(var(--primary) / 0.25)",
+        boxShadow: "0 12px 30px -18px hsl(var(--primary) / 0.4)",
+      }}
+    >
+      <p className="text-[10px] font-black tracking-[0.22em] uppercase text-primary mb-1">
+        Step 1 of 2
+      </p>
+      <p className="text-[14px] font-black text-foreground leading-tight mb-2.5">
+        Pick your industry, then play the tour.
+      </p>
+      <div className="flex flex-wrap gap-1.5">
+        {INDUSTRIES.map((ind) => {
+          const isActive = ind.key === active;
+          return (
+            <button
+              key={ind.key}
+              type="button"
+              onClick={() => onChange(ind.key)}
+              className="text-[12px] font-bold px-3 py-2 rounded-lg transition-all"
+              style={{
+                background: isActive ? "hsl(var(--primary))" : "hsl(var(--background))",
+                color: isActive ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground) / 0.85)",
+                border: isActive ? "1px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
+              }}
+            >
+              {ind.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* (Old MobileLoopDiagram removed — replaced by industry-aware guided tour.) */
+function _MobileLoopDiagramUnused() {
   const PRIMARY = "hsl(var(--primary))";
   const GREEN = "hsl(var(--brand-green))";
   const AMBER = "hsl(var(--brand-amber, var(--primary)))";
@@ -1715,46 +1743,79 @@ function ScenarioFlipCard({ industry }: { industry: IndustryLexicon }) {
    bubble. Tap right/left to skip, tap card to pause. */
 type MobileTourSection = { id: string; tone: Tone; kicker: string; title: string; sub: string; icon: React.ReactNode; items: { label: string; detail: string }[] };
 
-const TOUR_NARRATION: Record<string, { headline: string; body: string }> = {
-  leadership: {
-    headline: "Start with leadership.",
-    body: "Owners write the playbooks, mandates and policies. These become the rules every AI request runs against.",
-  },
-  core: {
-    headline: "Liza enforces those rules.",
-    body: "Every AI request — from any tool — gets checked against the standard before it answers. Off-policy outputs are blocked or rewritten.",
-  },
-  native: {
-    headline: "Work happens inside Liza.",
-    body: "Workbooks for memos, RFIs, deviations, complaints. Every artifact is versioned, attributable and audit-ready.",
-  },
-  systems: {
-    headline: "It reads from your stack.",
-    body: "Vault, Procore, ERP, Drive, SharePoint. Liza pulls context in and pushes approved outputs back as truth.",
-  },
-  tools: {
-    headline: "Your AI tools stay on policy.",
-    body: "Copilot, Claude, vendor agents — they all call Liza so every team gets the same governed answer.",
-  },
-};
+/* Industry-aware narration. Falls back to generic for any missing section. */
+function buildMobileNarration(
+  industry: IndustryLexicon,
+  isGeneric: boolean,
+): Record<string, { headline: string; body: string }> {
+  const label = industry.label;
+  const generic: Record<string, { headline: string; body: string }> = {
+    leadership: {
+      headline: "Start with leadership.",
+      body: "Owners write the playbooks, mandates and policies. These become the rules every AI request runs against.",
+    },
+    core: {
+      headline: "Liza enforces those rules.",
+      body: "Every AI request, from any tool, gets checked against the standard before it answers. Off-policy outputs are blocked or rewritten.",
+    },
+    native: {
+      headline: "Work happens inside Liza.",
+      body: "Workbooks for memos, RFIs, deviations, complaints. Every artifact is versioned, attributable and audit-ready.",
+    },
+    systems: {
+      headline: "It reads from your stack.",
+      body: "Vault, Procore, ERP, Drive, SharePoint. Liza pulls context in and pushes approved outputs back as truth.",
+    },
+    tools: {
+      headline: "Your AI tools stay on policy.",
+      body: "Copilot, Claude, vendor agents. They all call Liza so every team gets the same governed answer.",
+    },
+  };
+  if (isGeneric) return generic;
+  // Industry-specific overrides driven by the industry lexicon.
+  return {
+    leadership: {
+      headline: `${label}: leadership sets the standard.`,
+      body: industry.leadership.pushItems[0]?.detail ?? generic.leadership.body,
+    },
+    core: {
+      headline: `${label}: governed core checks every request.`,
+      body: industry.judgmentCore.systemic ?? generic.core.body,
+    },
+    native: {
+      headline: `${label}: this is where work happens.`,
+      body: industry.nativeSurfaces.sub ?? generic.native.body,
+    },
+    systems: {
+      headline: `${label} systems of record.`,
+      body: industry.sourceSystems.sub ?? generic.systems.body,
+    },
+    tools: {
+      headline: `${label} AI tools, kept on policy.`,
+      body: industry.connectedTools.sub ?? generic.tools.body,
+    },
+  };
+}
 
-function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
+function MobileGuidedTour({
+  sections, industry, isGeneric,
+}: { sections: MobileTourSection[]; industry: IndustryLexicon; isGeneric: boolean }) {
   const [open, setOpen] = useState<Record<string, boolean>>({});
   const [tourActive, setTourActive] = useState(false);
   const [step, setStep] = useState(0);
-  const [paused, setPaused] = useState(false);
   const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  const STEP_MS = 6500;
+  const narrationMap = useMemo(
+    () => buildMobileNarration(industry, isGeneric),
+    [industry, isGeneric],
+  );
 
-  // Drive the tour
+  // When step changes (or tour starts), open the current section + scroll to it.
   useEffect(() => {
-    if (!tourActive || paused) return;
+    if (!tourActive) return;
     const current = sections[step];
     if (!current) return;
-    // open this section, close others
     setOpen(() => ({ [current.id]: true }));
-    // scroll into view (with offset for sticky header)
     requestAnimationFrame(() => {
       const el = refs.current[current.id];
       if (el) {
@@ -1763,26 +1824,25 @@ function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
         window.scrollTo({ top, behavior: "smooth" });
       }
     });
-    const t = window.setTimeout(() => {
-      if (step < sections.length - 1) setStep((s) => s + 1);
-      else setTourActive(false);
-    }, STEP_MS);
-    return () => window.clearTimeout(t);
-  }, [tourActive, step, paused, sections]);
+  }, [tourActive, step, sections]);
+
+  // Reset step to 0 if industry changes mid-tour so narration matches.
+  useEffect(() => {
+    if (tourActive) setStep(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [industry.label]);
 
   const startTour = () => {
     setStep(0);
-    setPaused(false);
     setTourActive(true);
   };
 
   const stopTour = () => {
     setTourActive(false);
-    setPaused(false);
   };
 
   const current = tourActive ? sections[step] : null;
-  const narration = current ? TOUR_NARRATION[current.id] : null;
+  const narration = current ? narrationMap[current.id] : null;
   const tone = current ? TONE[current.tone] : null;
 
   return (
@@ -1803,10 +1863,10 @@ function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-[12.5px] font-black text-foreground leading-tight">
-            Take the 5-step guided tour
+            {isGeneric ? "Step 2: Take the 5-step guided tour" : `Step 2: 5-step ${industry.label} tour`}
           </p>
           <p className="text-[11px] text-muted-foreground leading-snug mt-0.5">
-            We'll walk you through every layer of the platform with narration.
+            Tap through each layer at your own pace. Back, Next, or close anytime.
           </p>
         </div>
         <button
@@ -1900,13 +1960,9 @@ function MobileGuidedTour({ sections }: { sections: MobileTourSection[] }) {
                   <ArrowLeft className="w-3.5 h-3.5" />
                   Back
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setPaused((p) => !p)}
-                  className="text-[11px] font-bold text-foreground/80"
-                >
-                  {paused ? "Resume" : "Pause"}
-                </button>
+                <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                  Tap next when ready
+                </span>
                 {step < sections.length - 1 ? (
                   <button
                     type="button"
