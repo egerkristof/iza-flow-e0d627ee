@@ -79,9 +79,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          No AI tool was built to
+          The system of intelligence
           <br />
-          <span className="text-primary">define your knowledge.</span>
+          <span className="text-primary">for how your company decides.</span>
         </motion.h1>
 
         <motion.p
@@ -90,11 +90,8 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA OS turns what your best people know into{" "}
-          <span className="font-black text-foreground">executable standards</span>,{" "}
-          <span className="font-black text-foreground">governed in every AI workflow</span>,{" "}
-          shared across teams, and{" "}
-          <span className="brand-gradient-text font-black">always yours to take with you</span>.
+          One governed standard your leadership owns. Every AI tool, every team, every
+          decision executes to it.
         </motion.p>
 
         {/* CTAs */}
@@ -116,14 +113,12 @@ export function HeroSection() {
             Score your AI execution
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <a
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/os"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
           >
-            Book a Discovery Call <ArrowRight className="w-4 h-4" />
-          </a>
+            See the architecture <ArrowRight className="w-4 h-4" />
+          </Link>
         </motion.div>
 
       </div>
