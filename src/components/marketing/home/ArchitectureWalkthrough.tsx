@@ -712,20 +712,24 @@ const SCENES: Scene[] = [
     caption: "Discounts drift. Audit flags real risk. Nobody made a bad call. Nobody made the rules either.",
   },
   {
-    kicker: "05 · Meet Liza", headline: "One standard your company decides by.", duration: 7500, render: SceneStandard,
+    kicker: "05 · The bill", headline: "And the bill is about to be itemised.", duration: 7500, render: SceneMeter,
+    caption: "AI is shifting from flat seats to metered tokens. Every call becomes a P&L line. Without a standard, every token is unanchored consumption.",
+  },
+  {
+    kicker: "06 · Meet Liza", headline: "One standard your company decides by.", duration: 7500, render: SceneStandard,
     caption: "A living document. Versioned. Owned by leaders. Read by every AI tool.",
   },
   {
-    kicker: "06 · The loop", headline: "Leaders write. Teams cite. Signal flows back.", duration: 8000, render: SceneLoop,
+    kicker: "07 · The loop", headline: "Leaders write. Teams cite. Signal flows back.", duration: 8000, render: SceneLoop,
     caption: "Sarah edits a rule. Maya cites it on a deal. Liza flags the next edge case for Sarah.",
   },
   {
-    kicker: "07 · The plan", headline: "Liza learns, then governs.", duration: 8500, render: ScenePlan,
+    kicker: "08 · The plan", headline: "Liza learns, then governs.", duration: 8500, render: ScenePlan,
     caption: "Connect, co-author, wire to every AI tool. Two weeks to one source of truth.",
   },
   {
-    kicker: "08 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
-    caption: "Same answer in every tool. Regulation rolls out in a day. The standard sharpens itself every week.",
+    kicker: "09 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
+    caption: "Same answer in every tool. Regulation rolls out in a day. Every token tied to a standard you can defend.",
   },
 ];
 
