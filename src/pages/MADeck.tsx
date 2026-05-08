@@ -51,15 +51,15 @@ const CHROME_BG = "hsl(220 15% 97%)";
 const CHROME_BORDER = "hsl(220 12% 90%)";
 
 // Satcom-operator palette: cyan/teal axis distinct from /space (builder green-teal)
-const TEAL = "200 95% 38%";
-const MINT = "180 90% 42%";
+const TEAL = "220 65% 32%";
+const MINT = "38 92% 50%";
 const WARM = "15 85% 55%";
 const RED = "0 72% 50%";
 const GREEN = "155 72% 38%";
 const BLUE = "220 80% 50%";
-const SEAFOAM = "170 100% 33%";
+const SEAFOAM = "200 70% 38%";
 const GOLD = "45 95% 42%";
-const ACCENT = "200 90% 42%";
+const ACCENT = "220 60% 38%";
 
 function SlideGrid() {
   return (
@@ -94,24 +94,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Satcom Operators · Strategic Conversation
+            LIZA OS · M&As · Strategic Conversation
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Operator Memory Layer<br />
+          The Deal Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Satcom.
+            for AI-Native M&A.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns anomaly playbooks, vendor SOWs, and senior fleet judgment into the governed operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Customer Pilot · Open-Canvas Partnership · Sovereign-Satcom Layer</span>
+          LIZA OS turns prior diligences, integration playbooks, and senior dealmaker judgment into the governed operating layer between AI inputs and AI outputs.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Diligence Pilot · Post-Merger Integration · Market Intelligence Layer</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Prepared for satellite operators (Hispasat · SES · Eutelsat · Inmarsat-class) &nbsp;·&nbsp; Pilot + Open-Canvas Partnership Conversation
+          Confidential &nbsp;·&nbsp; Prepared for corporate development & M&A teams (Hispasat · OTP · KKR-class acquirers) &nbsp;·&nbsp; Pilot + Open-Canvas Partnership Conversation
         </p>
       </div>
       <SlideBar />
@@ -125,8 +125,8 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "Satcom Operators", sub: "Fleet ops · Procurement · ITU & SLAs", active: true, color: TEAL },
-    { label: "Space (Builders)", sub: "ECSS · MAIT · Mission Memory", active: false, color: MUTED },
+    { label: "M&A Teams", sub: "Diligence · PMI · Market Intelligence", active: true, color: TEAL },
+    { label: "Satcom Operators", sub: "Fleet ops · Procurement · ITU & SLAs", active: false, color: MUTED },
     { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: MUTED },
     { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
   ];
@@ -140,10 +140,10 @@ function SlideShape() {
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>Satcom operators are the next spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>M&A teams are the next spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about satellite operators — fleets, procurement organizations, and regulatory teams that fly the bird for 15 years — and you benefit from platform leverage already proven inside AEC and adjacent regulated work.
+          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about M&A teams: corporate development, post-merger integration, and continuous market scanning. You benefit from platform leverage already proven inside AEC, satcom, and other regulated work.
         </p>
 
         {/* Diagram */}
@@ -200,19 +200,19 @@ function SlideShape() {
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${TEAL})` }}>WHAT YOU OWN</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              An operator-native memory layer for fleet ops, procurement governance, and ITU/SLA continuity — codifying expertise faster than retirements drain it.
+              A dealmaker-native memory layer for diligence, post-merger integration, and continuous market scanning. Codifies sector know-how and prior-deal lessons faster than your bench can rotate.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${BLUE})` }}>WHAT COMPOUNDS</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Investment from adjacent verticals (AEC, Pharma, Space builders) accelerates the platform; you inherit a hardened core, not a v1.
+              Investment from adjacent verticals (AEC, Pharma, Satcom) accelerates the platform; your M&A team inherits a hardened core, not a v1.
             </div>
           </div>
           <div className="rounded-lg p-5 border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <div className="text-xs font-bold tracking-[0.2em] mb-1.5" style={{ color: `hsl(${GOLD})` }}>HOW WE STRUCTURE IT</div>
             <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Phase 1: 30-day operator-memory pilot. Phase 2: open-canvas partnership and optional sovereign-satcom stake.
+              Phase 1: 30-day pilot on a live PMI workstream or sector scan. Phase 2: extend across the deal lifecycle. Phase 3: optional strategic stake.
             </div>
           </div>
         </div>
@@ -227,41 +227,41 @@ function SlideShape() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function Slide02() {
-  const above: { x: number; label: string }[] = ["Anomaly playbooks","Station-keeping SOPs","ITU filings","SLA frameworks"].map((label: string, i: number) => ({
+  const above: { x: number; label: string }[] = ["Diligence checklists","SPA templates","Synergy models","Integration playbooks"].map((label: string, i: number) => ({
     x: 720 + i * 165,
     label,
   }));
   const buckets: { title: string; items: string[] }[] = [
     {
-      "title": "Fleet Engineering Judgment",
+      "title": "Senior Dealmaker Judgment",
       "items": [
-        "Per-satellite quirks not in the playbook",
-        "Anomaly precedent the senior controller remembers",
-        "Station-keeping rule-of-thumb for this orbital regime"
+        "Per-target quirks not in the playbook",
+        "Deal precedent the senior partner remembers",
+        "Valuation rule-of-thumb for this sector and cycle"
       ]
     },
     {
-      "title": "Regulator & Coordination Memory",
+      "title": "Regulator & Antitrust Memory",
       "items": [
-        "ITU coordination history on this slot",
-        "National regulator precedent and conditions",
-        "Prior filing rejections and rationale"
+        "Antitrust history with this competition authority",
+        "National regulator precedent and remedies",
+        "Prior clearance conditions and the rationale"
       ]
     },
     {
-      "title": "Vendor & Procurement Practice",
+      "title": "Target Operator & Integration Practice",
       "items": [
-        "Acceptance-criteria patterns by prime",
-        "Contract trade-offs settled in the last RFP",
-        "Past vendor-performance signals not in the SOW"
+        "Reps & warranties patterns by sector",
+        "SPA trade-offs settled in the last deal",
+        "Past target-management signals not in the data room"
       ]
     },
     {
-      "title": "Cross-Function Decisions",
+      "title": "Cross-Function Deal Decisions",
       "items": [
-        "Live SLA escalations and customer posture",
-        "Spectrum-strategy moves not yet logged",
-        "Sign-off thresholds across ops and commercial"
+        "Live integration escalations and seller posture",
+        "Sector-strategy moves not yet logged",
+        "Sign-off thresholds across IC, legal, and ops"
       ]
     }
   ];
@@ -273,13 +273,13 @@ function Slide02() {
       {/* Header */}
       <div className="relative z-20 px-28 pt-12">
         <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          The Context Gap in Satcom Operations
+          The Context Gap in M&A
         </p>
         <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
           The Context Gap.
         </h2>
         <p className="font-medium" style={{ fontSize: 24, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
-          AI doesn&apos;t miss because the model is weak. It misses because <span style={{ color: TEXT, fontWeight: 700 }}>most of how a satcom operations organization actually decides was never formally defined.</span>
+          AI doesn&apos;t miss because the model is weak. It misses because <span style={{ color: TEXT, fontWeight: 700 }}>most of how an M&A organization actually decides was never formally defined.</span>
         </p>
       </div>
 
@@ -355,7 +355,7 @@ function Slide02() {
           })}
 
           <text x="960" y="725" textAnchor="middle"
-            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO RUN A FLEET TO SLA</text>
+            style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>WHAT AI NEEDS TO RUN A DEAL TO CLOSE</text>
         </svg>
       </div>
 
@@ -380,108 +380,108 @@ function Slide02() {
 
 const SATCOM_GAP_CASES = [
   {
-    name: "Fleet Operations Engineering",
+    name: "Diligence & Investment Committee",
     icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
     accent: RED,
-    records: ["Anomaly playbooks", "Station-keeping SOPs", "Per-satellite quirks"],
-    output: "Anomaly response drafts · Maneuver plans",
-    gap: "AI drafts from visible procedures, but misses the per-bird quirk, the workaround the senior ops engineer found three years ago, and the precedent from the last similar event on this fleet.",
-    cost: "Slow recovery. SLA penalty. Ground-segment overtime.",
+    records: ["Prior IC memos", "Sector models", "Diligence checklists"],
+    output: "Diligence summaries · IC memos",
+    gap: "AI drafts from the data room, but misses the precedent your senior partner remembers, the red flag that killed a lookalike deal three years ago, and the sector heuristics that never made the checklist.",
+    cost: "IC re-litigates. Decisions slip. Bench burns out on rework.",
   },
   {
-    name: "Procurement & Vendor Governance",
+    name: "Post-Merger Integration",
     icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
     accent: WARM,
-    records: ["RFP / SOW history", "Acceptance criteria", "Prior prime trade-offs"],
-    output: "Spec reviews · Vendor scorecards",
-    gap: "AI summarises the SOW, but misses what your last prime over-promised, which clauses your lawyers always insist on, and which acceptance tests caught real problems on the previous bus.",
-    cost: "Weak contract. Late acceptance finding. Cycle repeated.",
+    records: ["SPA templates", "100-day plans", "Prior integration playbooks"],
+    output: "Integration plans · PMI dashboards",
+    gap: "AI summarises the SPA, but misses what your last seller over-promised, which clauses your GC always insists on, and which Day-100 milestones actually caught problems in the last integration.",
+    cost: "Weak protection. Synergy slip. Integration cycle repeated.",
   },
   {
-    name: "Regulatory · Spectrum · ITU",
+    name: "Market Intelligence & Sourcing",
     icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
     accent: GOLD,
-    records: ["ITU filings", "Coordination history", "National regulator precedent"],
-    output: "Filing drafts · Coordination responses",
-    gap: "AI generates a plausible filing, but misses the slot-coordination nuance, the bilateral precedent with a neighbouring administration, and the carve-outs your spectrum specialist negotiated last cycle.",
-    cost: "Filing rejected. Slot delay. Service launch slip.",
+    records: ["Market maps", "Competitor news", "Banker pitch decks"],
+    output: "Market briefings · Sector landscapes",
+    gap: "AI generates a plausible market brief, but misses the conversation your head of M&A had with that founder last year, the deals your fund passed on, and the soft signals from the sector your team has been tracking.",
+    cost: "Deals missed. Sourcing reactive. Strategy lags the market.",
   },
 ];
 
 const SATCOM_COST_BENCHMARKS = [
   {
     value: "15–20 yrs",
-    label: "of fleet memory locked in the senior ops engineers who know each satellite's drift, anomalies, and workarounds — and retire with the bird",
-    source: "Satcom operator field engagements; ITU/SES/Eutelsat industry context, 2022-2024",
+    label: "of deal memory locked in the senior partners and heads of M&A who remember why every prior deal was won, lost, or passed on. It walks out the door when they move firm.",
+    source: "Corporate development and PE field engagements, 2022-2024",
   },
   {
     value: "6–18 mo",
-    label: "to ramp a new ops engineer, contract manager, or spectrum specialist to fluency on an operating fleet — because the playbooks live in heads, not in queryable systems",
-    source: "Satcom operator onboarding benchmarks; industry HR studies",
+    label: "to ramp a new associate, integration lead, or sector analyst to fluency on a live portfolio. The playbooks live in heads, not in queryable systems.",
+    source: "Corp dev / PE onboarding benchmarks; industry HR studies",
   },
   {
     value: "$M / hr",
-    label: "of SLA exposure on broadcast, government, and IFC contracts — anomaly response time converts directly into revenue, penalties, and contract risk",
-    source: "Industry SLA frameworks; satcom commercial benchmarks",
+    label: "of expected synergies that miss in the average post-merger integration, often because integration teams cannot access prior PMI lessons across the portfolio.",
+    source: "KPMG / Bain post-merger integration benchmarks",
   },
 ];
 
 const __VERTICAL_PERSONAS = [
   {
     "id": "ops",
-    "name": "Fleet Operations Engineering",
+    "name": "Diligence & Investment Committee",
     "color": "RED",
     "iconName": "Briefcase",
     "above": [
-      "Anomaly playbooks",
-      "Station-keeping SOPs",
-      "Per-satellite quirks"
+      "Diligence checklists",
+      "IC memos",
+      "Sector models"
     ],
     "below": [
-      "Per-bird quirks the senior controller remembers",
-      "Anomaly precedent across the fleet",
-      "Workaround patterns that never made it to the SOP"
+      "Why the senior partner killed the last lookalike deal",
+      "Valuation precedent across the sector",
+      "Red-flag patterns that never made it to the checklist"
     ],
-    "breaks": "Slow recovery. SLA penalty. Ground-segment overtime."
+    "breaks": "IC re-litigates. Diligence re-done. Deal slips or dies."
   },
   {
     "id": "proc",
-    "name": "Procurement & Vendor Governance",
+    "name": "Post-Merger Integration",
     "color": "WARM",
     "iconName": "Shield",
     "above": [
-      "RFP / SOW history",
-      "Acceptance criteria",
-      "Prior trade-offs"
+      "SPA templates",
+      "Synergy models",
+      "Day-1 plans"
     ],
     "below": [
-      "Acceptance patterns specific to this prime",
-      "Contract trade-offs settled with legal",
-      "Past performance signals not in the SOW"
+      "What broke in the last integration of a similar target",
+      "Carve-outs settled with legal last cycle",
+      "Cultural signals never written into the IM"
     ],
-    "breaks": "Weak contract. Late acceptance finding. Cycle repeated."
+    "breaks": "Synergies miss. Day-100 plan stalls. Value leaks."
   },
   {
     "id": "reg",
-    "name": "Regulatory · Spectrum · ITU",
+    "name": "Market Intelligence & Sourcing",
     "color": "GOLD",
     "iconName": "Database",
     "above": [
-      "ITU filings",
-      "Coordination history",
-      "Regulator precedent"
+      "Market maps",
+      "Competitor moves",
+      "Banker pitch decks"
     ],
     "below": [
-      "National regulator precedent on this slot",
-      "Coordination outcomes from the last cycle",
-      "Why a prior filing was rejected"
+      "Why we passed on this target last cycle",
+      "Conversations with the founder six months ago",
+      "Soft signals from the sector that never made the report"
     ],
-    "breaks": "Filing rejected. Slot delay. Service launch slip."
+    "breaks": "Sourcing thin. Deals come from inbound, not strategy."
   }
 ] as const;
 
 function Slide03() {
-  const alsoApplies = ["Mission planning","Ground segment","Customer onboarding","Capacity planning","Cyber & resilience","Insurance & claims"];
+  const alsoApplies = ["Sector mapping","Carve-outs","Founder outreach","Synergy tracking","Cyber diligence","JV & partnerships"];
   const renderIcon = (name: string, color: string) => {
     const props = { size: 20, style: { color: `hsl(${color})` } };
     if (name === "Briefcase") return <Briefcase {...props} />;
@@ -496,13 +496,13 @@ function Slide03() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-20 pt-10 pb-8">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>
-          Where Missing Context Shows Up in Satcom
+          Where Missing Context Shows Up in M&A
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 48, color: TEXT, lineHeight: 1.05 }}>
           The same iceberg, in every persona. <span style={{ color: `hsl(${TEAL})` }}>What is captured is dwarfed by what runs the work.</span>
         </h2>
         <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          The artifacts above the waterline are what AI sees. The Organizational Intelligence below the waterline is the fleet-grade operations judgment that determines whether the output is usable.
+          The artifacts above the waterline are what AI sees. The Organizational Intelligence below the waterline is the dealmaker judgment that determines whether the output is usable.
         </p>
 
         <div className="grid grid-cols-3 gap-6 flex-1 min-h-0 mb-4">
@@ -604,23 +604,23 @@ function Slide04Cost() {
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-2" style={{ fontSize: 22, color: `hsl(${WARM})` }}>
-          What Missing Context Costs a Satcom Operator
+          What Missing Context Costs an M&A Team
         </p>
         <h2 className="font-black mb-4" style={{ fontSize: 48, color: TEXT, lineHeight: 1.08, maxWidth: 1640 }}>
-          Missing context becomes expensive because it slows anomaly response, weakens procurement, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable SLA, regulatory, and continuity risk.</span>
+          Missing context becomes expensive because it slows diligence, weakens integration, and triggers <span style={{ color: `hsl(${WARM})` }}>avoidable IC rework, missed synergies, and value leakage.</span>
         </h2>
 
         <div className="grid grid-cols-[360px_1fr] gap-5 mb-4">
           <div className="rounded-[28px] border px-7 py-7" style={{ borderColor: `hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.05)` }}>
             <p className="font-black" style={{ fontSize: 64, color: `hsl(${WARM})`, lineHeight: 0.95 }}>hours</p>
             <p className="font-bold mt-2" style={{ fontSize: 23, color: TEXT, lineHeight: 1.18 }}>
-              of SLA exposure per anomaly that loses its precedent on a flagship satellite
+              of senior-partner time burned re-litigating questions that have been answered on prior deals
             </p>
             <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>
-              This is what AI amplifies if it runs without the latest fleet anomaly history, per-bird quirks, vendor SOW context, or senior ops judgment.
+              This is what AI amplifies if it runs without prior IC memos, integration lessons, sector heuristics, or senior-partner judgment.
             </p>
             <p className="mt-4" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.45 }}>
-              Qualitative pattern from satcom SLA frameworks &amp; operator field engagements; industry-level, not customer data
+              Qualitative pattern from corp dev and PE field engagements; industry-level, not customer data
             </p>
           </div>
 
@@ -640,10 +640,10 @@ function Slide04Cost() {
                 Why this matters for AI
               </p>
               <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-                If AI produces a plausible answer inside an anomaly response, vendor review, ITU filing, or SLA report <span className="font-bold">without the full operator and fleet context</span>, the senior ops engineer or contract lead still has to catch it, correct it, and re-route it through approval.
+                If AI produces a plausible answer inside a diligence summary, IC memo, integration plan, or market brief <span className="font-bold">without the full deal and portfolio context</span>, the senior partner or head of integration still has to catch it, correct it, and re-route it through review.
               </p>
               <p className="mt-3" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                On a flagship operating fleet, an anomaly handled slowly or a vendor clause missed translates into <span className="font-bold" style={{ color: TEXT }}>direct SLA penalties, lost broadcast/IFC revenue</span>, and knock-on effects on customer renewals and replacement procurement.
+                On a live deal or post-merger integration, a missed precedent or weak clause translates into <span className="font-bold" style={{ color: TEXT }}>missed synergies, value leakage</span>, and knock-on effects on the next deal in the pipeline.
               </p>
             </div>
           </div>
@@ -651,9 +651,9 @@ function Slide04Cost() {
 
         <div className="grid grid-cols-3 gap-5 flex-1 min-h-0">
           {[
-            { label: "Service continuity", value: "exposed", desc: "Senior ops engineers and contract leads spend cycles fixing AI-assisted work instead of resolving anomalies, closing tickets, and protecting SLAs.", color: RED },
-            { label: "Procurement & regulatory", value: "exposed", desc: "Wrong outputs in vendor reviews, ITU filings, or SLA reports create rework loops, audit risk, and weakened position with primes and regulators.", color: WARM },
-            { label: "AI usage", value: "cannot scale safely", desc: "Without operator-grade governance, the CTO and General Counsel limit adoption because every output creates SLA, regulatory, and customer exposure.", color: GOLD },
+            { label: "Deal velocity", value: "exposed", desc: "Senior partners and integration leads burn cycles fixing AI-assisted work instead of running the next deal or closing the integration.", color: RED },
+            { label: "PMI & antitrust", value: "exposed", desc: "Wrong outputs in integration plans, antitrust filings, or synergy reports create rework loops, audit risk, and weakened position with regulators and the seller.", color: WARM },
+            { label: "AI usage", value: "cannot scale safely", desc: "Without dealmaker-grade governance, the Head of M&A and General Counsel limit adoption because every output creates IC, regulatory, and reputational exposure.", color: GOLD },
           ].map((item) => (
             <div key={item.label} className="rounded-2xl px-7 py-7 h-full flex flex-col justify-center" style={{ background: `hsl(${item.color} / 0.06)`, border: `2px solid hsl(${item.color} / 0.18)` }}>
               <p className="font-black" style={{ fontSize: 15, color: `hsl(${item.color})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>{item.label}</p>
@@ -690,17 +690,17 @@ function SlideWhyNow() {
     },
     {
       metric: "Now",
-      label: "Sovereign-satcom push + GEO replacement cycle accelerating",
-      insight: "Operators are renewing fleets, signing multi-orbit deals, and expected by regulators and customers to govern AI-assisted ops, filings, and SLA reports.",
+      label: "Acquisition pace accelerating + AI inside diligence is now baseline",
+      insight: "Acquirers are running more parallel processes than ever, and bankers, regulators, and ICs expect traceability for AI-assisted memos, models, and integration plans.",
       color: TEAL,
-      source: "ITU/EU sovereign-satcom policy context; operator replacement-cycle benchmarks, 2024",
+      source: "Mergermarket; PitchBook activity benchmarks, 2024",
     },
   ];
 
   const shifts = [
-    { shift: "GenAI moved into satcom operations workflows", result: "Operators piloted LLMs inside anomaly response, vendor reviews, and ITU filings. The audit trail did not follow." },
-    { shift: "Customers and regulators ask 'how was this output governed?'", result: "Broadcast, IFC, government, and defense customers — plus ITU and national regulators — expect traceability for AI-assisted operator outputs." },
-    { shift: "Senior fleet engineers are retiring faster than they are replaced", result: "Fleet handovers and procurement cycles are senior-talent-bound. Every hour a senior ops engineer spends correcting AI is an hour not spent protecting the SLA." },
+    { shift: "GenAI moved into M&A workflows", result: "Corp dev and PE teams piloted LLMs inside diligence, IC memos, and integration plans. The audit trail did not follow." },
+    { shift: "ICs and regulators ask 'how was this output governed?'", result: "Investment committees, sellers, and antitrust regulators expect traceability for AI-assisted deal and integration outputs." },
+    { shift: "Senior dealmakers and PMI leads rotate faster than knowledge transfers", result: "Diligence and integration cycles are senior-talent-bound. Every hour a senior partner spends correcting AI is an hour not spent on the next deal." },
   ];
 
   return (
@@ -757,9 +757,9 @@ function SlideWhyNow() {
 
 function Slide05() {
   const verticalSurfaces = [
-    { title: "Operator roles", items: "Fleet ops engineer, satellite controller, procurement lead, ITU/spectrum officer", color: TEAL },
-    { title: "Operator workflows", items: "Anomaly response, station-keeping handover, vendor acceptance, ITU filing, SLA report", color: GOLD },
-    { title: "Operator language", items: "ITU-R, ETSI EN 301 / 302, SLA frameworks, transponder plans, EOL & relocation playbooks", color: GREEN },
+    { title: "Dealmaker roles", items: "Head of M&A, corp dev associate, integration lead, sector analyst, GC", color: TEAL },
+    { title: "M&A workflows", items: "Diligence, IC memo, antitrust filing, integration plan, market brief", color: GOLD },
+    { title: "M&A language", items: "SPA / APA, EBITDA bridges, antitrust thresholds, synergy models, Day-1 / Day-100 playbooks", color: GREEN },
   ];
 
   return (
@@ -770,12 +770,12 @@ function Slide05() {
           Horizontal Core · Vertical Surface
         </p>
         <h2 className="font-black mb-2" style={{ fontSize: 50, color: TEXT, lineHeight: 1.08 }}>
-          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through an operator-native experience.</span>
+          The platform is horizontal. <span style={{ color: `hsl(${TEAL})` }}>Adoption happens through a dealmaker-native experience.</span>
         </h2>
         <div className="grid grid-cols-[1fr_60px_1.1fr_60px_1fr] gap-3 items-stretch mb-1">
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${BLUE} / 0.16)`, background: `hsl(${BLUE} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${BLUE})` }}>Input</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Anomaly playbooks, station-keeping SOPs, vendor SOWs, ITU filings, SLA frameworks, fleet ops logs, procurement precedent</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Prior IC memos, SPA templates, synergy models, antitrust filings, integration playbooks, sector research, deal-room exhausts</p>
           </div>
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border-2 px-6 py-4 text-center" style={{ borderColor: `hsl(${TEAL} / 0.32)`, background: `hsl(${TEAL} / 0.07)` }}>
@@ -785,7 +785,7 @@ function Slide05() {
           <div className="flex items-center justify-center"><ArrowRight size={26} style={{ color: `hsl(${TEAL} / 0.4)` }} /></div>
           <div className="rounded-2xl border px-5 py-4" style={{ borderColor: `hsl(${GREEN} / 0.16)`, background: `hsl(${GREEN} / 0.04)` }}>
             <p className="font-black tracking-[0.16em] uppercase mb-1" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows fleet memory, validated SOPs, vendor contract precedent, and senior-controller judgment</p>
+            <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>AI work that follows deal memory, validated playbooks, prior-cycle precedent, and senior-partner judgment</p>
           </div>
         </div>
 
@@ -1505,10 +1505,10 @@ function Slide08() {
         <div className="mb-8">
           <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>Horizontal Proof · Vertical Gap</p>
           <h2 className="font-black max-w-[1480px]" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
-            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into satcom — with a lighthouse satellite operator.</span>
+            The infrastructure is proven horizontally. <span style={{ color: `hsl(${GREEN})` }}>Now we want to vertically integrate into M&A. With a lighthouse acquirer.</span>
           </h2>
           <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1320, lineHeight: 1.45 }}>
-            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for satcom is one operator-grade lighthouse partner — a satellite operator like Hispasat, SES, Eutelsat, or Inmarsat-class — to make this experience native under ITU, SLA, and gov/defense audit conditions.
+            Across AEC departments and adjacent regulated work, the same loop holds: expert judgment must be captured, enforced, and updated. The next milestone for satcom is one operator-grade lighthouse partner — an acquirer like Hispasat, OTP, or a mid-market PE platform — to make this experience native under IC, antitrust, and PMI audit conditions.
           </p>
         </div>
 
@@ -1575,47 +1575,47 @@ function Slide08() {
 function Slide09() {
   const beachheads = [
     {
-      vertical: "Procurement & Vendor Governance", status: "Expansion", color: GREEN,
+      vertical: "Post-Merger Integration", status: "Expansion", color: GREEN,
       icon: <FileText size={24} style={{ color: `hsl(${GREEN})` }} />,
-      problem: "Replacement satellites are bought every 7-10 years and the people who managed the last contract are rarely the ones running the next. Vendor SOWs, acceptance reviews, and prime-management lessons live in a few senior heads.",
-      result: "Procurement memory across cycles. Faster, sharper vendor reviews. Acceptance criteria that compound contract-by-contract.",
-      proof: "Adjacent to ERP, contract-management, and prime-vendor governance workflows",
+      problem: "The market moves every week, but sector know-how, prior conversations with founders and bankers, and reasons for past passes live in senior heads. Junior analysts inherit fragments.",
+      result: "Continuous market memory. Sharper sector briefs. A pipeline that compounds across cycles instead of restarting every quarter.",
+      proof: "Adjacent to CRM, deal-tracking, and sourcing workflows",
     },
     {
-      vertical: "Fleet Operations & Anomaly Response", status: "Wedge", color: TEAL,
+      vertical: "Post-Merger Integration", status: "Wedge", color: TEAL,
       icon: <Workflow size={24} style={{ color: `hsl(${TEAL})` }} />,
-      problem: "Anomaly playbooks, station-keeping handovers, and EOL plans live in disconnected SOCC tools and senior-controller heads. AI can't reason across them. Operational knowledge dies when a satellite is retired or an engineer leaves.",
-      result: "Unified anomaly & station-keeping lifecycle. Every AI response grounded in this satellite's quirks, your SOPs, and prior anomaly precedent.",
-      proof: "Target embedding path across Kratos, SES Adaptive, and SOCC / ground-segment workflows",
+      problem: "Day-1 / Day-100 playbooks, integration trackers, and synergy models live in disconnected PM tools and senior heads. AI cannot reason across them. PMI knowledge dies when the integration team rotates or the deal closes.",
+      result: "Unified integration lifecycle. Every AI response grounded in this target's specifics, your PMI standards, and prior integration precedent.",
+      proof: "Target embedding path across Smartsheet, ServiceNow, and PMI tooling",
     },
     {
-      vertical: "Regulatory, ITU & SLA Continuity", status: "Expansion", color: GOLD,
+      vertical: "Diligence & Investment Committee", status: "Expansion", color: GOLD,
       icon: <Shield size={24} style={{ color: `hsl(${GOLD})` }} />,
-      problem: "ITU filings, coordination history, and SLA frameworks diverge from operator standards. Spectrum precedent evaporates between filings. New regulatory and service-ops staff inherit fragmented data.",
-      result: "ITU-aware filings. Living regulatory and SLA memory. Audit-grade artifacts for regulators, broadcasters, and gov / defense customers, every cycle.",
-      proof: "Regulatory & service-ops extension path once fleet ops and procurement integrations are in place",
+      problem: "Diligence checklists and IC memos drift between deals. Prior-deal precedent evaporates between cycles. New associates inherit fragmented templates and re-discover red flags from scratch.",
+      result: "Standard-aware diligence. Living IC memory. Audit-grade artifacts for the IC, the seller, and antitrust regulators, every cycle.",
+      proof: "Diligence & IC extension path once PMI and sourcing integrations are in place",
     },
   ];
 
   const expandInto = [
-    { name: "ITU filings & spectrum coordination", col: TEAL },
-    { name: "Anomaly review boards & RCA prep", col: "215 25% 50%" },
-    { name: "Replacement-satellite procurement", col: GOLD },
-    { name: "Launch & LEOP coordination", col: GREEN },
-    { name: "SLA reporting & service-ops handover", col: ACCENT },
-    { name: "Gov / defense & sovereignty workflows", col: "330 70% 55%" },
+    { name: "Antitrust & regulatory filings", col: TEAL },
+    { name: "IC memos & deal reviews", col: "215 25% 50%" },
+    { name: "Carve-outs & divestitures", col: GOLD },
+    { name: "Day-1 readiness & cutover", col: GREEN },
+    { name: "Synergy tracking & PMO reporting", col: ACCENT },
+    { name: "JV, partnerships & strategic stakes", col: "330 70% 55%" },
   ];
 
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 flex flex-col h-full px-24 pt-14 pb-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Operator Lifecycle Expansion Path</p>
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>Deal Lifecycle Expansion Path</p>
 
         <div className="mb-6 flex items-start justify-between gap-8">
           <h2 className="font-black max-w-[1180px]" style={{ fontSize: 56, color: TEXT, lineHeight: 1.02 }}>
-            One operator memory layer.{" "}
-            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the fleet lifecycle.</span>
+            One deal memory layer.{" "}
+            <span style={{ color: `hsl(${GREEN})` }}>Every phase of the deal lifecycle.</span>
           </h2>
           <div className="w-[280px] rounded-2xl px-5 py-4 shrink-0"
             style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -1623,10 +1623,10 @@ function Slide09() {
               The thesis
             </p>
             <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})`, lineHeight: 1.2 }}>
-              The missing connective tissue underneath the satcom-operator AI stack.
+              The missing connective tissue underneath the M&A AI stack.
             </p>
             <p className="mt-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Current signal: AEC vertical proven across 3 departments; pharma and space-builder verticals in conversation. Satcom-operator lighthouse partner being recruited — this conversation is one of the active threads.
+              Current signal: AEC vertical proven across 3 departments; pharma, satcom, and banking verticals in conversation. M&A lighthouse partner being recruited. This conversation is one of the active threads.
             </p>
           </div>
         </div>
@@ -1697,7 +1697,7 @@ function Slide09() {
                 Strategic path
               </p>
               <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-                Expansion across the fleet & contract lifecycle. Partnership path on the next slide.
+                Expansion across the deal & integration lifecycle. Partnership path on the next slide.
               </p>
             </div>
             <div className="rounded-xl px-5 py-4 shrink-0"
@@ -1725,21 +1725,21 @@ function Slide09Partnership() {
   const ladder = [
     {
       phase: "Month 1",
-      title: "30-Day Operator Pilot",
+      title: "30-Day M&A Pilot",
       color: GREEN,
-      desc: "Co-design pilot with one of your fleet-ops, procurement, or regulatory teams. We codify one workflow (anomaly response, station-keeping handover, or vendor-acceptance review) and ship a measurable delta. Low commitment, fast signal.",
+      desc: "Co-design pilot with your corp dev, PMI, or sector-research team. We codify one workflow (live PMI workstream, sector scan, or IC memo template) and ship a measurable delta. Low commitment, fast signal.",
     },
     {
       phase: "Months 2-6",
-      title: "Operator Memory Layer",
+      title: "Deal Memory Layer",
       color: TEAL,
-      desc: "Expand to a second satellite or contract cycle: encode senior-controller and procurement judgment, codify recurring anomaly and ITU patterns, and build the operator memory layer that survives senior-staff turnover.",
+      desc: "Expand to a second deal or sector: encode senior-partner and PMI-lead judgment, codify recurring red flags and integration patterns, and build the deal memory layer that survives senior turnover.",
     },
     {
       phase: "Months 6-18",
-      title: "Operator Standard · Open Canvas",
+      title: "M&A Standard · Open Canvas",
       color: GOLD,
-      desc: "LIZA OS + a lighthouse operator jointly define the operator-knowledge standard for the category. Optional strategic stake. Pathway to a sovereign-satcom reference architecture adopted by other operators and gov / defense customers.",
+      desc: "LIZA OS + a lighthouse acquirer jointly define the M&A knowledge standard for the category. Optional strategic stake. Pathway to a reference architecture adopted by other acquirers and PE platforms.",
     },
   ];
 
@@ -1749,10 +1749,10 @@ function Slide09Partnership() {
       <div className="relative z-10 flex flex-col h-full px-24 pt-12 pb-12">
         <div className="mb-10 text-center">
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>
-            Operator Partnership Mechanic
+            M&A Partnership Mechanic
           </p>
           <h2 className="font-black max-w-[1440px] mx-auto" style={{ fontSize: 62, color: TEXT, lineHeight: 1.02 }}>
-            An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>operator standard</span>.
+            An 18-month path from <span style={{ color: `hsl(${TEAL})` }}>30-day pilot</span> to <span style={{ color: `hsl(${GOLD})` }}>M&A standard</span>.
           </h2>
         </div>
 
@@ -1980,11 +1980,11 @@ function SlideExecutionChallenge() {
       icon: <BookOpen size={24} />,
       color: TEAL,
       actions: [
-        "Your team selects one high-value workflow (e.g. anomaly response, station-keeping handover, vendor acceptance, ITU filing prep)",
-        "Platform guides structured capture from 2-3 senior fleet-ops controllers, procurement leads, or ITU/spectrum specialists",
-        "LIZA auto-generates SLA- and ITU-aware playbooks grounded in your SOPs, prior anomalies, and regulatory precedent",
+        "Your team selects one high-value workflow (e.g. live PMI workstream, sector scan, IC memo template, antitrust prep)",
+        "Platform guides structured capture from 2-3 senior partners, integration leads, or sector specialists",
+        "LIZA auto-generates IC- and antitrust-aware playbooks grounded in your standards, prior deals, and integration precedent",
       ],
-      output: "3-5 operator-grade playbooks ready",
+      output: "3-5 dealmaker-grade playbooks ready",
     },
     {
       week: "Week 2-3",
@@ -1992,11 +1992,11 @@ function SlideExecutionChallenge() {
       icon: <Zap size={24} />,
       color: SEAFOAM,
       actions: [
-        "Fleet-ops / procurement team self-serves: run playbooks against live anomalies, handovers, and vendor reviews",
-        "Real satellites, real contracts, real audit-grade deliverables",
+        "Corp dev / PMI team self-serves: run playbooks against live deals, integrations, and sector scans",
+        "Real deals, real integrations, real audit-grade deliverables",
         "Platform tracks drift and captures feedback automatically",
       ],
-      output: "Measurable quality delta: senior controller vs. AI-with-LIZA vs. AI-alone",
+      output: "Measurable quality delta: senior partner vs. AI-with-LIZA vs. AI-alone",
     },
     {
       week: "Week 4",
@@ -2004,9 +2004,9 @@ function SlideExecutionChallenge() {
       icon: <TrendingUp size={24} />,
       color: GREEN,
       actions: [
-        "Automated review: hours saved per anomaly, SLA risk reduced, regulatory exposure cut",
-        "Operator memory self-improves from every execution; full traceability preserved",
-        "Business case for fleet-wide and contract-cycle rollout with real numbers",
+        "Automated review: hours saved per memo, IC rework reduced, integration risk cut",
+        "Deal memory self-improves from every execution; full traceability preserved",
+        "Business case for portfolio-wide rollout across deals and integrations with real numbers",
       ],
       output: "ROI proven. Expansion decision with audit-grade data.",
     },
@@ -2020,7 +2020,7 @@ function SlideExecutionChallenge() {
 
           <h2 className="font-black mb-6" style={{ fontSize: 52, color: TEXT, lineHeight: 1.05 }}>
           The wedge is one workflow. The product is the operator-native knowledge loop.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>Co-built with a lighthouse satellite operator.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>Co-built with a lighthouse acquirer.</span>
         </h2>
 
         <div className="flex gap-6 flex-1 min-h-0">
@@ -2066,7 +2066,7 @@ function SlideExecutionChallenge() {
             { metric: "€5-15K", label: "Sprint cost", sub: "Low-friction entry" },
             { metric: "1 workflow", label: "Starting scope", sub: "Narrow and measurable" },
             { metric: "30 days", label: "Time to proof", sub: "Not a six-month rollout" },
-            { metric: "Operator-native", label: "Product direction", sub: "Role, workflow, and ITU / SLA / gov-defense audit fit" },
+            { metric: "Operator-native", label: "Product direction", sub: "Role, workflow, and IC / antitrust audit fit" },
           ].map(m => (
             <div key={m.label} className="rounded-xl px-5 py-5 text-center" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.12)` }}>
               <p className="font-black" style={{ fontSize: 34, color: TEXT }}>{m.metric}</p>
@@ -2150,17 +2150,17 @@ function Slide13() {
           <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Two-Door Conversation</p>
           <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.05 }}>Pilot first.<br/><span style={{ color: `hsl(${TEAL})` }}>Strategic stake optional.</span></h2>
           <p style={{ fontSize: 24, color: MUTED }}>
-            Door 1: 30-day operator pilot &nbsp;·&nbsp; Door 2: co-define the operator standard (open canvas) &nbsp;·&nbsp; Sequence: customer first, strategic stake later if it fits
+            Door 1: 30-day M&A pilot &nbsp;·&nbsp; Door 2: co-define the M&A standard (open canvas) &nbsp;·&nbsp; Sequence: customer first, strategic stake later if it fits
           </p>
         </div>
 
         {/* Use of funds */}
         <div className="grid grid-cols-4 gap-4 mb-6">
           {[
-            { label: "30-Day Operator Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one operator-critical workflow end-to-end (anomaly, handover, vendor acceptance, or ITU filing). Measurable delta in 30 days. No long commitment.", color: ACCENT },
-            { label: "Operator Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across the fleet and contract cycle. Platform base anchors operator memory; credits scale with execution.", color: GREEN },
-            { label: "Operator Standard · Open Canvas", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: a lighthouse operator co-defines the operator-knowledge standard and takes a strategic position in the satcom vertical of LIZA OS.", color: GOLD },
-            { label: "European Sovereign Satcom", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across regional operators, gov / defense customers, and national programs.", color: MUTED },
+            { label: "30-Day M&A Pilot", pct: "Phase 1", amt: "€25-50K", desc: "Codify one operator-critical workflow end-to-end (anomaly, handover, vendor acceptance, or ITU filing). Measurable delta in 30 days. No long commitment.", color: ACCENT },
+            { label: "Deal Memory Rollout", pct: "Phase 2", amt: "Annual base + credits", desc: "Expand across the deal and integration cycle. Platform base anchors deal memory; credits scale with execution.", color: GREEN },
+            { label: "M&A Standard · Open Canvas", pct: "Phase 3", amt: "Strategic stake", desc: "Optional: a lighthouse operator co-defines the operator-knowledge standard and takes a strategic position in the satcom vertical of LIZA OS.", color: GOLD },
+            { label: "European M&A Standard", pct: "Roadmap", amt: "Joint GTM", desc: "Use the joint case study to open doors across regional acquirers, PE platforms, and corporate dev teams.", color: MUTED },
           ].map(({ label, pct, amt, desc, color }) => (
             <div key={label} className="rounded-xl border px-5 py-4 text-center"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.06)` }}>
@@ -2174,9 +2174,9 @@ function Slide13() {
         {/* Milestones */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { month: "Month 1", target: "30-day pilot live", milestone: "One workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a senior fleet-ops or procurement lead.", color: TEAL },
-            { month: "Months 2-6", target: "Operator memory layer", milestone: "Expansion to a second satellite or contract cycle. Operator memory captured. Onboarding time for new controllers and procurement staff measurably down.", color: SEAFOAM },
-            { month: "Months 6-18", target: "Operator standard live", milestone: "Joint case study with the lighthouse operator. Open-canvas / strategic-stake conversation opens (optional). Doors open to other operators and gov / defense customers.", color: MINT },
+            { month: "Month 1", target: "30-day pilot live", milestone: "One workflow codified end-to-end. Measurable hours-saved and quality delta delivered to a senior partner or head of integration.", color: TEAL },
+            { month: "Months 2-6", target: "Deal memory layer", milestone: "Expansion to a second deal or integration. Deal memory captured. Onboarding time for new associates and PMI leads measurably down.", color: SEAFOAM },
+            { month: "Months 6-18", target: "M&A standard live", milestone: "Joint case study with the lighthouse acquirer. Open-canvas / strategic-stake conversation opens (optional). Doors open to other acquirers, PE, and corp dev teams.", color: MINT },
           ].map(({ month, target, milestone, color }) => (
             <div key={month} className="rounded-xl border px-5 py-4"
               style={{ borderColor: `hsl(${color} / 0.2)`, background: `hsl(${color} / 0.04)` }}>
@@ -2191,7 +2191,7 @@ function Slide13() {
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.5 }}>
             LIZA has built the horizontal knowledge loop.{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>A lighthouse satellite operator can turn it into the operator-grade control layer for European satcom.</strong>
+            <strong style={{ color: `hsl(${TEAL})` }}>A lighthouse acquirer can turn it into the dealmaker-grade control layer for European M&A.</strong>
           </p>
         </div>
 
@@ -2364,7 +2364,7 @@ function SlideContextGapExemplified() {
                 What AI couldn&apos;t see
               </p>
               <p className="font-semibold" style={{ fontSize: 13, color: MUTED }}>
-                Lives in NOC logs, ITU threads, ops directors' heads.
+                Lives in deal-room threads, prior-IC memos, and senior partners' heads.
               </p>
             </div>
 
@@ -2410,10 +2410,10 @@ function SlideContextGapExemplified() {
                   </p>
                 </div>
                 <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
-                  Mission plan. Link budgets. SLA library. ITU filings. NOC logs.
+                  CIM. Data room. SPA template. Comp tables. Prior memos.
                 </p>
                 <p className="mt-1 font-semibold" style={{ fontSize: 12, color: MUTED }}>
-                  Indexable. RAG-friendly. Insufficient for an anchor customer or regulator.
+                  Indexable. RAG-friendly. Insufficient for an IC or an antitrust regulator.
                 </p>
               </div>
               <div className="rounded-lg px-4 py-3"
@@ -2424,7 +2424,7 @@ function SlideContextGapExemplified() {
                     What closes the gap
                   </p>
                 </div>
-                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live constellation state, open ITU queries, and ops-leadership conventions and resolves them at brief-write time." }} />
+                <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "An <strong>Organizational Intelligence</strong> layer that captures live deal state, open antitrust queries, and head-of-M&A conventions and resolves them at memo-write time." }} />
               </div>
             </div>
           </div>
@@ -2441,11 +2441,11 @@ function SlideContextGapExemplified() {
 
 function SlidePeopleAsNodes() {
   const team = [
-    { name: "Eva", role: "NOC Lead" },
-    { name: "Raj", role: "RF / Link" },
-    { name: "Maria", role: "Mission Ops" },
-    { name: "Anna", role: "Regulatory" },
-    { name: "Tom", role: "Customer Ops" },
+    { name: "Eva", role: "Head of M&A" },
+    { name: "Raj", role: "Diligence" },
+    { name: "Maria", role: "PMI Lead" },
+    { name: "Anna", role: "GC / Antitrust" },
+    { name: "Tom", role: "Sector Analyst" },
   ];
   const cx = 200, cy = 200, r = 130;
   const positions = team.map((p, i) => {
@@ -2465,12 +2465,12 @@ function SlidePeopleAsNodes() {
   ];
 
   const artifacts = [
-    { label: "Mission plan", x: 60, y: 60 },
-    { label: "Link budget", x: 240, y: 50 },
-    { label: "SLA library", x: 80, y: 170 },
-    { label: "ITU filings", x: 240, y: 180 },
-    { label: "NOC logs", x: 50, y: 280 },
-    { label: "Anomalies", x: 240, y: 300 },
+    { label: "IC memos", x: 60, y: 60 },
+    { label: "SPA template", x: 240, y: 50 },
+    { label: "Synergy model", x: 80, y: 170 },
+    { label: "Antitrust", x: 240, y: 180 },
+    { label: "Data room", x: 50, y: 280 },
+    { label: "PMI tracker", x: 240, y: 300 },
   ];
 
   return (
@@ -2496,7 +2496,7 @@ function SlidePeopleAsNodes() {
             </div>
             <div className="px-5 pt-5">
               <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>
-                Mission plans and SLAs define what. NOC, RF and ops leads define how.
+                IC memos and SPAs define what. Heads of M&A, GCs, and PMI leads define how.
               </p>
               <p className="font-semibold mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
                 Documents are versioned. Judgment is not. Nothing scales and AI inherits none of it.
@@ -2621,7 +2621,7 @@ function SlidePeopleAsNodes() {
                 <circle cx="200" cy="200" r="180" fill="url(#sat-contextField)" />
 
                 {(() => {
-                  const edgeLabels: Record<string, string> = {"0-1":"link integrity","0-2":"service continuity","2-3":"regulatory posture","2-4":"incident memory"};
+                  const edgeLabels: Record<string, string> = {"0-1":"deal posture","0-2":"integration plan","2-3":"antitrust strategy","2-4":"sector memory"};
                   return edges.map((e, i) => {
                     const key = `${e.a}-${e.b}`;
                     const label = edgeLabels[key];
@@ -2703,33 +2703,33 @@ function SlideOrgIntelligence() {
   const facets = [
     {
       icon: <Brain size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Senior Ops Judgment",
-      body: "How experienced NOC leads, RF engineers and ops directors actually decide: which anomaly matters, when to invoke contingency, when 'within SLA' is acceptable. Today: trapped in heads.",
+      title: "Senior Partner Judgment",
+      body: "How experienced heads of M&A, GCs, and PMI directors actually decide: which red flag matters, when to walk, when to pay up, when a synergy is real. Today: trapped in heads.",
     },
     {
       icon: <Users size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Customer & Partner Memory",
-      body: "How this constellation is run: prior anchor commitments, partner ground-station agreements, what was promised in the last service review, who owns each open incident.",
+      title: "Seller & Founder Memory",
+      body: "How this target was approached: prior conversations with the founder, banker history, what was hinted in the last meeting, who owns each open thread.",
     },
     {
       icon: <RefreshCw size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Changing Constellations & Standards",
-      body: "Sat health changes, ITU updates, frequency coordination revisions, software loads. Context that drifted last orbit and rewrote the right answer for today's brief.",
+      title: "Moving Markets & Standards",
+      body: "Sector dynamics shift weekly, comp tables move, antitrust thresholds change, accounting standards update. Context that drifted last quarter and rewrote the right answer for today's memo.",
     },
     {
       icon: <Target size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Service & Mission Strategy",
-      body: "What leadership locked this cycle, which markets are priority, which customers get first restoration, which capacity is reserved. Most AI never gets told.",
+      title: "Investment Strategy",
+      body: "What the IC locked this cycle, which sectors are priority, which targets get first look, which capital is reserved. Most AI never gets told.",
     },
     {
       icon: <Globe size={26} style={{ color: `hsl(${TEAL})` }} />,
-      title: "Regulator & External Signals",
-      body: "ITU coordination, FCC / Ofcom / BNetzA letters, partner operator notices, anomaly reports. Facts from outside the company the team must react to.",
+      title: "Regulator & Market Signals",
+      body: "Antitrust authorities, BaFin / FCA / SEC actions, competitor M&A moves, sector news. Facts from outside the firm the team must react to.",
     },
     {
       icon: <GitBranch size={26} style={{ color: `hsl(${TEAL})` }} />,
       title: "Decisions & Exceptions",
-      body: "Restoration thresholds, open coordination items, customer-specific waivers, the rules that override the rules. The connective tissue between policy and orbit.",
+      body: "Sign-off thresholds, open antitrust queries, deal-specific carve-outs, the rules that override the rules. The connective tissue between policy and the live deal.",
     },
   ];
 
@@ -2748,7 +2748,7 @@ function SlideOrgIntelligence() {
           <span style={{ color: `hsl(${GREEN})` }}>the substrate.</span>
         </h2>
         <p className="font-medium mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          The 90% the iceberg points at. Up close, it is six interacting layers. A satcom knowledge graph is what holds them together.
+          The 90% the iceberg points at. Up close, it is six interacting layers. An M&A knowledge graph is what holds them together.
         </p>
 
         <div className="flex-1 min-h-0 grid gap-8 items-center" style={{ gridTemplateColumns: "5fr 7fr" }}>
@@ -2820,7 +2820,7 @@ function SlideOrgIntelligence() {
         <div className="mt-6 rounded-xl border px-8 py-4 flex items-center gap-4"
           style={{ borderColor: `hsl(${GREEN} / 0.30)`, background: `hsl(${GREEN} / 0.06)` }}>
           <Sparkles size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "This substrate looks different in LEO broadband than in GEO video than in government. <strong>Which is why execution has to be sub-vertical.</strong>" }} />
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: "This substrate looks different in PE diligence than in corporate PMI than in sector scanning. <strong>Which is why execution has to be sub-vertical.</strong>" }} />
         </div>
       </div>
       <SlideBar from={TEAL} to={GREEN} />
@@ -2834,8 +2834,8 @@ const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
   { id: 3, title: "The Context Gap, Exemplified", component: <SlideContextGapExemplified /> },
-  { id: 4, title: "Where Missing Context Shows Up in Space", component: <Slide03 /> },
-  { id: 5, title: "What Missing Context Costs in Space", component: <Slide04Cost /> },
+  { id: 4, title: "Where Missing Context Shows Up in M&A", component: <Slide03 /> },
+  { id: 5, title: "What Missing Context Costs in M&A", component: <Slide04Cost /> },
   { id: 6, title: "Early Validation", component: <Slide08 /> },
   { id: 7, title: "Why Now", component: <SlideWhyNow /> },
   { id: 8, title: "The Context Layer", component: <Slide05 /> },
@@ -2857,7 +2857,7 @@ const SLIDES = [
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function SpaceDeck() {
+export default function MADeck() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -2972,7 +2972,7 @@ export default function SpaceDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Satcom-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-MA-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -3019,9 +3019,9 @@ export default function SpaceDeck() {
     return (
       <div className="fixed inset-0 z-[9999] overflow-auto" style={{ background: CHROME_BG }}>
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Satcom Operator Strategic Deck</h2>
+          <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · M&A Strategic Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Satcom-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-MA-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -3057,13 +3057,13 @@ export default function SpaceDeck() {
     <div className="fixed inset-0 z-[9999] flex flex-col" style={{ background: CHROME_BG }}>
       <div className="flex items-center justify-between px-5 py-3 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
         <div className="flex items-center gap-4">
-          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · Satcom Operator Strategic Deck</span>
+          <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA OS · M&A Strategic Deck</span>
           <span className="font-mono text-xs px-2 py-1 rounded" style={{ background: CARD_ALT, color: MUTED }}>
             {current + 1} / {SLIDES.length}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Satcom-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-MA-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>
