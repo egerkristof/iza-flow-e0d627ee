@@ -2233,26 +2233,26 @@ function SlideContextGapExemplified() {
     {
       n: 1,
       nature: "JUST CHANGED",
-      title: "Two satellites in safe-mode since last orbit",
-      body: "Two birds in plane 4 went safe-mode overnight. The brief still assumes nominal availability. The customer call is in three hours.",
+      title: "Target lost a top-3 customer last week",
+      body: "The target's largest German customer issued a non-renewal notice on Friday. The IC memo still cites the trailing-twelve-month revenue as committed. The IC sits in three hours.",
     },
     {
       n: 2,
       nature: "OPEN ISSUE",
-      title: "Open ITU coordination query",
-      body: "An adjacent operator filed a coordination query last week. Not yet answered. The brief cannot claim 'standard interference mitigation' until that closes.",
+      title: "Open antitrust query from BNetzA",
+      body: "The German competition authority filed a follow-up question two weeks ago. Not yet answered. The memo cannot claim 'standard clearance pathway' until that closes.",
     },
     {
       n: 3,
       nature: "CONTRADICTION",
-      title: "Two link-budget templates disagree",
-      body: "The mission-ops link budget assumes one rain model. The customer SLA template references another. Both retrievable. Only one matches what was contractually committed.",
+      title: "Two synergy models disagree",
+      body: "The deal team's synergy model assumes one cost base. The integration team's Day-100 plan references another. Both retrievable. Only one matches what was committed in the LOI.",
     },
     {
       n: 4,
       nature: "UNWRITTEN RULE",
-      title: "Director of Ops blocks blanket SLA claims",
-      body: "When availability is degraded mid-orbit, the director always requires a per-region SLA breakdown. Briefs without it have been pulled. Nobody wrote the rule down.",
+      title: "Head of M&A blocks blanket synergy claims",
+      body: "When the target carries customer concentration risk, the head of M&A always requires a per-customer revenue breakdown. Memos without it have been pulled at IC. Nobody wrote the rule down.",
     },
   ];
 
@@ -2313,7 +2313,7 @@ function SlideContextGapExemplified() {
               style={{ borderColor: `hsl(${TEAL} / 0.12)`, background: `hsl(${TEAL} / 0.03)` }}>
               <FileText size={14} style={{ color: `hsl(${TEAL})` }} />
               <span className="font-bold tracking-[0.14em] uppercase" style={{ fontSize: 10.5, color: `hsl(${TEAL})` }}>
-                Mission ops · Constellation Δ · Service brief
+                Corporate Development · Project Atlas · IC memo
               </span>
               <div className="flex items-center gap-2 ml-3 pl-3 border-l" style={{ borderColor: `hsl(${TEAL} / 0.18)` }}>
                 <Sparkles size={14} style={{ color: `hsl(${ACCENT})` }} />
@@ -2322,38 +2322,38 @@ function SlideContextGapExemplified() {
                 </span>
               </div>
               <span className="ml-auto font-mono" style={{ fontSize: 10.5, color: MUTED }}>
-                Mission Ops Brief · cycle current
+                IC Memo · current cycle
               </span>
             </div>
 
             <div className="px-9 pt-6 pb-3" style={{ borderBottom: `1px dashed hsl(${TEAL} / 0.18)` }}>
               <div style={{ fontSize: 13.5, lineHeight: 1.7 }}>
-                <div className="mt-1"><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Constellation</span>
-                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Atlas-LEO · Ku-band</span>
-                  <span style={{ color: MUTED }}> · operational · 84 sats</span>
+                <div className="mt-1"><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Target</span>
+                  <span style={{ color: TEXT, fontWeight: 800, fontSize: 16 }}>Project Atlas · DACH SaaS</span>
+                  <span style={{ color: MUTED }}> · €120M ARR · founder-led</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Sponsor</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Internal · NOC review</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Head of M&amp;A · IC review</span>
                 </div>
                 <div><span style={{ color: MUTED, width: 90, display: "inline-block" }}>Audience</span>
-                  <span style={{ color: TEXT, fontWeight: 600 }}>Anchor customer · regulator · partner ground stations</span>
+                  <span style={{ color: TEXT, fontWeight: 600 }}>Investment committee · GC · integration lead</span>
                 </div>
               </div>
             </div>
 
             <div className="flex-1 px-9 py-7"
               style={{ fontSize: 20, color: TEXT, lineHeight: 1.7, fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              <p className="mb-5">The link budget was recomputed against <Mark n={1}>our standard rain-fade model</Mark> as required by the service-level agreement.</p>
-              <p className="mb-5">Beam steering follows <Mark n={2}>the constellation's standard handover policy.</Mark>.</p>
-              <p className="mb-5">Coordination with adjacent operators uses <Mark n={3}>the standard interference-mitigation rules</Mark> per ITU filings.</p>
-              <p style={{ color: MUTED }}><Mark n={4}>Service quality is expected to remain within SLA.</Mark></p>
+              <p className="mb-5">Revenue projections are anchored on <Mark n={1}>the target&apos;s committed customer base</Mark> as captured in the data room.</p>
+              <p className="mb-5">Antitrust clearance follows <Mark n={2}>the standard pathway for transactions of this size</Mark>.</p>
+              <p className="mb-5">Cost synergies were modelled using <Mark n={3}>our standard SaaS integration playbook</Mark>.</p>
+              <p style={{ color: MUTED }}><Mark n={4}>Deal economics are expected to remain within IC thresholds.</Mark></p>
             </div>
 
             <div className="px-9 py-3.5 flex items-center gap-3"
               style={{ borderTop: `1px solid hsl(${WARM} / 0.22)`, background: `hsl(${WARM} / 0.06)` }}>
               <AlertTriangle size={18} style={{ color: `hsl(${WARM})` }} />
               <p className="font-black" style={{ fontSize: 15, color: TEXT }}>
-                Customer-ready? No. SLA-credit-trigger. Regulator-reportable.
+                IC-ready? No. Re-work loop. Reputation risk with the seller.
               </p>
             </div>
           </div>
