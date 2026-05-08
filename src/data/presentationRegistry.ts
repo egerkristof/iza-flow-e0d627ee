@@ -15,6 +15,7 @@ import SpaceBrief from "@/pages/SpaceBrief";
 import SatcomDeck from "@/pages/SatcomDeck";
 import SatcomBrief from "@/pages/SatcomBrief";
 import MADeck from "@/pages/MADeck";
+import StrategyOfficeDeck from "@/pages/StrategyOfficeDeck";
 import PharmaBrief from "@/pages/PharmaBrief";
 import BankingInvestorDeck from "@/pages/BankingInvestorDeck";
 import AutomotiveInvestorDeck from "@/pages/AutomotiveInvestorDeck";
@@ -167,6 +168,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/MADeck.tsx",
     description: "Corporate development / M&A variant. Reframed around the actual corp dev workflow (per Fernando, Hispasat): generalist 360° company view, expert routing to internal mission/regulatory/finance teams, and partnership/market memory. Three pillars: 360° Company View, Expert Routing, Market & Partnership Memory. Two-door CTA: 30-day pilot on a live target or sector scan, or strategic stake in the deal-memory layer.",
     component: MADeck,
+    showInAdmin: true,
+  },
+  {
+    id: "strategy-office",
+    title: "Strategy Office Sales Deck",
+    path: "/strategy-office",
+    sourcePath: "src/pages/StrategyOfficeDeck.tsx",
+    description: "Sales deck (NOT investor) for Strategy / Corp Dev / Business Development cells. Built from Fernando's Hispasat reality: small team, no fixed workflows, no budget, must form 360° views fast and route deep questions to busy expert teams (fleet, finance, regulatory). Category: Strategy Office OS — the bridge between leadership intent and execution expertise. Lifecycle: Scan → Synthesise → Route → Decide → Remember. Investor slides removed; ends on 30-day pilot CTA. Function page lives at /industries/strategy-office.",
+    component: StrategyOfficeDeck,
     showInAdmin: true,
   },
   {
