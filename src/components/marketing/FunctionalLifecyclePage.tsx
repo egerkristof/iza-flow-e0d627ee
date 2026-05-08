@@ -48,6 +48,7 @@ export interface FunctionalLifecycleConfig {
   showCalculator?: boolean;
   deckHref?: string;
   deckLabel?: string;
+  hideDiagnostic?: boolean;
 }
 
 const DEFAULT_HOW = [
@@ -108,12 +109,22 @@ export default function FunctionalLifecyclePage({ config }: { config: Functional
             >
               Book a Discovery Call <ArrowRight className="w-4 h-4" />
             </a>
-            <Link
-              to="/diagnostic"
-              className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Take the Diagnostic
-            </Link>
+            {!config.hideDiagnostic && (
+              <Link
+                to="/diagnostic"
+                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Take the Diagnostic
+              </Link>
+            )}
+            {config.hideDiagnostic && config.deckHref && (
+              <Link
+                to={config.deckHref}
+                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {config.deckLabel ?? "View the Deck"} <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -267,12 +278,14 @@ export default function FunctionalLifecyclePage({ config }: { config: Functional
             >
               Book a Discovery Call <ArrowRight className="w-4 h-4" />
             </a>
-            <Link
-              to="/diagnostic"
-              className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Take the Diagnostic <ArrowRight className="w-4 h-4" />
-            </Link>
+            {!config.hideDiagnostic && (
+              <Link
+                to="/diagnostic"
+                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Take the Diagnostic <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
             {config.deckHref && (
               <Link
                 to={config.deckHref}

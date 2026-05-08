@@ -73,6 +73,8 @@ const config = {
   ctaNote: "Start with one live workstream. End the month with a standing 360 view and an expert routing rail your colleagues actually want to use.",
   deckHref: "/strategy-office",
   deckLabel: "View the Sales Deck",
+  showCalculator: false,
+  hideDiagnostic: true,
 };
 
 export default function IndustryStrategyOfficePage() {
