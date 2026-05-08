@@ -65,16 +65,16 @@ export function WhoItsForStrip() {
 
         <div className="flex items-center justify-center gap-4">
           <Link
-            to="/use-cases"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            to="/by-function"
+            className="text-sm font-medium text-primary hover:underline transition-colors"
           >
-            See all use cases →
+            Explore all functions →
           </Link>
           <Link
             to="/industries"
-            className="text-sm font-medium text-primary hover:underline transition-colors"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
-            Explore industries →
+            Browse industries →
           </Link>
         </div>
       </div>
