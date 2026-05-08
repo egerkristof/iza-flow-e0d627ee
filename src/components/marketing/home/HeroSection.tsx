@@ -14,21 +14,20 @@ const NODES = [
   { x: "8%",  y: "50%", size: 4, delay: 0.6 },
 ];
 
-const TRUST_STATS = [
-  { value: "85%", label: "of enterprises adopted AI. Almost none govern what it produces." },
-  { value: "40%", label: "of AI productivity gains lost to rework." },
-  { value: "90%", label: "of operating knowledge stays tacit, in people and threads." },
-  { value: "$280B", label: "lost yearly to rework in US construction alone." },
+/* ── Fast-moving / transactional teams ── */
+const FAST_MOVING = [
+  { icon: Briefcase, label: "Consulting & Professional Services", sub: "Delivery lifecycle" },
+  { icon: Zap, label: "SaaS & Digital Business", sub: "Product lifecycle" },
+  { icon: TrendingUp, label: "Sales & GTM", sub: "Revenue lifecycle" },
+  { icon: Cpu, label: "Enterprise IT & AI", sub: "Delivery lifecycle" },
 ];
 
-/* ── Industry lifecycles already covered ── */
-const INDUSTRY_LIFECYCLES = [
+/* ── Regulated / high-stakes lifecycles ── */
+const REGULATED = [
   { icon: FlaskConical, label: "Pharma & Life Sciences", sub: "GxP lifecycle" },
-  { icon: Rocket,       label: "Space Engineering & Operations", sub: "Mission lifecycle" },
-  { icon: Building2,    label: "AEC",                    sub: "Project lifecycle" },
-  { icon: ShieldCheck,  label: "Regulated Manufacturing",sub: "Quality lifecycle" },
-  { icon: Banknote,     label: "Financial Services",     sub: "Risk & compliance" },
-  { icon: Cpu,          label: "Enterprise IT & AI",     sub: "Delivery lifecycle" },
+  { icon: Building2, label: "AEC", sub: "Project lifecycle" },
+  { icon: Banknote, label: "Financial Services", sub: "Risk & compliance" },
+  { icon: ShieldCheck, label: "Regulated Manufacturing", sub: "Quality lifecycle" },
 ];
 
 export function HeroSection() {
