@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 export function ExecutableKnowledgeVideo() {
   return (
     <section className="py-20 px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
           <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground mb-3">
             What executable knowledge looks like in practice
@@ -31,11 +31,15 @@ export function ExecutableKnowledgeVideo() {
             muted
             loop
             playsInline
+            controls
             preload="metadata"
             className="w-full h-auto block"
             aria-label="Three business moments showing how a published policy becomes an executable standard across every AI tool"
           />
         </motion.div>
+        <p className="text-center text-xs text-muted-foreground mt-4">
+          Tip: hover the video for player controls — pause, scrub, or expand to fullscreen.
+        </p>
       </div>
     </section>
   );
