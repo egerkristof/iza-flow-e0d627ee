@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Rocket, Cpu } from "lucide-react";
+import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Rocket, Cpu, Zap, Briefcase, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
-import { CAL_URL } from "./shared";
 
 /* ── Floating ambient nodes ── */
 const NODES = [
@@ -15,21 +14,20 @@ const NODES = [
   { x: "8%",  y: "50%", size: 4, delay: 0.6 },
 ];
 
-const TRUST_STATS = [
-  { value: "85%", label: "of enterprises adopted AI. Almost none govern what it produces." },
-  { value: "40%", label: "of AI productivity gains lost to rework." },
-  { value: "90%", label: "of operating knowledge stays tacit, in people and threads." },
-  { value: "$280B", label: "lost yearly to rework in US construction alone." },
+/* ── Fast-moving / transactional teams ── */
+const FAST_MOVING = [
+  { icon: Briefcase, label: "Consulting & Professional Services", sub: "Delivery lifecycle" },
+  { icon: Zap, label: "SaaS & Digital Business", sub: "Product lifecycle" },
+  { icon: TrendingUp, label: "Sales & GTM", sub: "Revenue lifecycle" },
+  { icon: Cpu, label: "Enterprise IT & AI", sub: "Delivery lifecycle" },
 ];
 
-/* ── Industry lifecycles already covered ── */
-const INDUSTRY_LIFECYCLES = [
+/* ── Regulated / high-stakes lifecycles ── */
+const REGULATED = [
   { icon: FlaskConical, label: "Pharma & Life Sciences", sub: "GxP lifecycle" },
-  { icon: Rocket,       label: "Space Engineering & Operations", sub: "Mission lifecycle" },
-  { icon: Building2,    label: "AEC",                    sub: "Project lifecycle" },
-  { icon: ShieldCheck,  label: "Regulated Manufacturing",sub: "Quality lifecycle" },
-  { icon: Banknote,     label: "Financial Services",     sub: "Risk & compliance" },
-  { icon: Cpu,          label: "Enterprise IT & AI",     sub: "Delivery lifecycle" },
+  { icon: Building2, label: "AEC", sub: "Project lifecycle" },
+  { icon: Banknote, label: "Financial Services", sub: "Risk & compliance" },
+  { icon: ShieldCheck, label: "Regulated Manufacturing", sub: "Quality lifecycle" },
 ];
 
 export function HeroSection() {
@@ -84,14 +82,14 @@ export function HeroSection() {
       {/* ── Content ── */}
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         <motion.h1
-          className="text-3xl md:text-5xl lg:text-[3.75rem] font-black mb-5 leading-[1.08] tracking-tight"
+          className="text-3xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.08] tracking-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Your team already uses AI.
+          Accelerate your team's work
           <br />
-          <span className="text-primary">Your playbook lives in a PDF nobody reads.</span>
+          <span className="text-primary">with AI that learns how you actually operate.</span>
         </motion.h1>
 
         <motion.p
@@ -100,9 +98,8 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          Build your team playbook in three steps. LIZA turns how your function
-          actually works into executable knowledge, so every person and every AI
-          tool runs to the same standard from day one.
+          LIZA captures how your function works, then makes sure every person
+          and every AI tool executes to the same standard.
         </motion.p>
 
         {/* CTAs */}
@@ -134,22 +131,27 @@ export function HeroSection() {
 
       </div>
 
-      {/* ── Industry lifecycles we already cover ── */}
+      {/* ── Industry coverage ── */}
       <motion.div
         className="relative z-10 mt-2 w-full max-w-4xl mx-auto"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.45 }}
       >
-        <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="flex items-center justify-center gap-3 mb-6">
           <div className="h-px w-10 bg-border" />
           <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground font-semibold">
-            Built for the most demanding industry lifecycles
+            Built for teams across every industry
           </p>
           <div className="h-px w-10 bg-border" />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
-          {INDUSTRY_LIFECYCLES.map((ind, i) => {
+
+        {/* Fast-moving */}
+        <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3 text-center">
+          Fast-moving & transactional
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mb-6">
+          {FAST_MOVING.map((ind, i) => {
             const Icon = ind.icon;
             return (
               <motion.div
@@ -174,6 +176,38 @@ export function HeroSection() {
             );
           })}
         </div>
+
+        {/* Regulated */}
+        <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3 text-center">
+          Regulated & high-stakes
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
+          {REGULATED.map((ind, i) => {
+            const Icon = ind.icon;
+            return (
+              <motion.div
+                key={ind.label}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + i * 0.05 }}
+                className="group flex items-center gap-3 px-3.5 py-3 md:px-4 md:py-3.5 rounded-xl border border-border bg-background/40 backdrop-blur-sm hover:border-primary/40 hover:bg-background/70 transition-all"
+              >
+                <div className="shrink-0 w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center bg-primary/8 text-primary">
+                  <Icon className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+                </div>
+                <div className="min-w-0 text-left">
+                  <div className="text-[12px] md:text-[13px] font-semibold text-foreground leading-tight truncate">
+                    {ind.label}
+                  </div>
+                  <div className="text-[10px] md:text-[11px] text-muted-foreground leading-tight truncate">
+                    {ind.sub}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
         <p className="mt-5 text-center text-[12px] md:text-[13px] text-muted-foreground">
           Trusted by <span className="font-semibold text-foreground">Heads of AI</span>,{" "}
           <span className="font-semibold text-foreground">CFOs</span>,{" "}
