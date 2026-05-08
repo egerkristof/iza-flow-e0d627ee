@@ -1,23 +1,25 @@
 import React from "react";
 import { Sequence, AbsoluteFill } from "remotion";
-import { Scene1Standard } from "./scenes/Scene1Standard";
-import { Scene2Execution } from "./scenes/Scene2Execution";
-import { Scene3CrossTeam } from "./scenes/Scene3CrossTeam";
-import { Scene4Signal } from "./scenes/Scene4Signal";
-import { Scene5Update } from "./scenes/Scene5Update";
-import { Scene6Audit } from "./scenes/Scene6Audit";
-import { Scene7Playbook } from "./scenes/Scene7Playbook";
+import { S1_MeetSarah }    from "./scenes/S1_MeetSarah";
+import { S2_MondayMorning }from "./scenes/S2_MondayMorning";
+import { S3_PressureAbove }from "./scenes/S3_PressureAbove";
+import { S4_SilosAround }  from "./scenes/S4_SilosAround";
+import { S5_TheBreak }     from "./scenes/S5_TheBreak";
+import { S6_TheGuide }     from "./scenes/S6_TheGuide";
+import { S7_ThePlan }      from "./scenes/S7_ThePlan";
+import { S8_NewMonday }    from "./scenes/S8_NewMonday";
 import { C } from "./theme";
 
-// Per-scene durations in frames (30fps). Slower pacing, more screens.
+// Hero's story (StoryBrand). Slow pacing — 30fps. ~88s total.
 const SCENES: { dur: number; render: (d: number) => React.ReactNode }[] = [
-  { dur: 270, render: (d) => <Scene1Standard durationInFrames={d} /> },   // 9s — publish + standard
-  { dur: 270, render: (d) => <Scene2Execution durationInFrames={d} /> },  // 9s — three tools, one answer
-  { dur: 240, render: (d) => <Scene3CrossTeam durationInFrames={d} /> },  // 8s — workbooks inherit
-  { dur: 180, render: (d) => <Scene4Signal durationInFrames={d} /> },     // 6s — field signal alone
-  { dur: 240, render: (d) => <Scene5Update durationInFrames={d} /> },     // 8s — Sarah reviews, ships v2.5
-  { dur: 210, render: (d) => <Scene6Audit durationInFrames={d} /> },      // 7s — audit log
-  { dur: 210, render: (d) => <Scene7Playbook durationInFrames={d} /> },   // 7s — AACE playbook reveal
+  { dur: 300, render: (d) => <S1_MeetSarah    durationInFrames={d} /> }, // 10s · CHARACTER
+  { dur: 330, render: (d) => <S2_MondayMorning durationInFrames={d} /> }, // 11s · WORLD
+  { dur: 330, render: (d) => <S3_PressureAbove durationInFrames={d} /> }, // 11s · PRESSURE FROM ABOVE
+  { dur: 360, render: (d) => <S4_SilosAround  durationInFrames={d} /> }, // 12s · SILOS
+  { dur: 330, render: (d) => <S5_TheBreak     durationInFrames={d} /> }, // 11s · THE BREAK (villain)
+  { dur: 270, render: (d) => <S6_TheGuide     durationInFrames={d} /> }, // 9s  · THE GUIDE (LIZA)
+  { dur: 360, render: (d) => <S7_ThePlan      durationInFrames={d} /> }, // 12s · THE PLAN
+  { dur: 360, render: (d) => <S8_NewMonday    durationInFrames={d} /> }, // 12s · RESOLUTION
 ];
 
 export const MainVideo: React.FC = () => {
