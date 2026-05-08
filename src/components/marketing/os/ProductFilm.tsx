@@ -488,17 +488,20 @@ function ForgeKnowledgeGraph({ tone, green, amber }: { tone: string; green: stri
   const red = "hsl(var(--destructive))";
 
   // Coordinates in % of a 100x60 viewBox (matches container aspect-[5/3])
+  // Coordinates in % of a 100x60 viewBox (matches container aspect-[5/3]).
+  // Keep nodes inside y:10..50 and x:14..86 so labels never collide with the
+  // caption track or the graph's outer edges at narrow widths.
   const CORE = { x: 50, y: 30 };
   type Node = { id: string; label: string; sub?: string; x: number; y: number; color: string; appear: number };
   const nodes: Node[] = [
-    { id: "policy",   label: "Policy",        sub: "v3.2",   x: 50, y: 6,  color: amber, appear: 400  },
-    { id: "pricing",  label: "Pricing rule",  sub: "PR-014", x: 88, y: 18, color: tone,  appear: 700  },
-    { id: "playbook", label: "Playbook",      sub: "PB-027", x: 90, y: 44, color: green, appear: 1000 },
-    { id: "tier",     label: "Customer tier", sub: "Strat.", x: 70, y: 56, color: tone,  appear: 1300 },
-    { id: "audit",    label: "Audit log",     sub: "live",   x: 30, y: 56, color: green, appear: 1600 },
-    { id: "risk",     label: "Risk",          sub: "guarded",x: 10, y: 44, color: red,   appear: 1900 },
-    { id: "approval", label: "Approval",      sub: "thresh.",x: 12, y: 18, color: amber, appear: 2200 },
-    { id: "signal",   label: "Field signal",  sub: "Maya, AE", x: 30, y: 6, color: tone, appear: 2500 },
+    { id: "policy",   label: "Policy",        sub: "v3.2",     x: 50, y: 10, color: amber, appear: 400  },
+    { id: "pricing",  label: "Pricing rule",  sub: "PR-014",   x: 84, y: 20, color: tone,  appear: 700  },
+    { id: "playbook", label: "Playbook",      sub: "PB-027",   x: 84, y: 40, color: green, appear: 1000 },
+    { id: "tier",     label: "Customer tier", sub: "Strat.",   x: 66, y: 50, color: tone,  appear: 1300 },
+    { id: "audit",    label: "Audit log",     sub: "live",     x: 34, y: 50, color: green, appear: 1600 },
+    { id: "risk",     label: "Risk",          sub: "guarded",  x: 16, y: 40, color: red,   appear: 1900 },
+    { id: "approval", label: "Approval",      sub: "thresh.",  x: 16, y: 20, color: amber, appear: 2200 },
+    { id: "signal",   label: "Field signal",  sub: "Maya, AE", x: 34, y: 10, color: tone,  appear: 2500 },
   ];
 
   type Edge = { from: string; to: string; label: string; appear: number; color: string; pulse?: boolean };
@@ -520,7 +523,7 @@ function ForgeKnowledgeGraph({ tone, green, amber }: { tone: string; green: stri
   const pos = (id: string) => (id === "core" ? CORE : nodes.find((n) => n.id === id)!);
 
   return (
-    <div className="relative w-full max-w-3xl aspect-[5/3] mx-auto">
+    <div className="relative w-full max-w-2xl aspect-[5/3] mx-auto">
       <svg viewBox="0 0 100 60" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
         <defs>
           <radialGradient id="coreGlow3">
