@@ -4,30 +4,36 @@ import { C } from "../theme";
 import { Window } from "../components/Window";
 import { SceneFrame } from "../components/SceneFrame";
 
+// The real AACE (Adaptive Agentic Context Engine) ontology — the five
+// Context Categories that compile into the runtime system prompt.
 const AACE = [
   {
-    tag: "A",
-    label: "Assumption",
-    text: "Buyer is mid-market, < EUR 200k ARR, renewal motion.",
-    color: C.primary,
+    tag: "DIR",
+    label: "Directive",
+    text: "Never quote a discount above the cap without CFO + Legal sign-off.",
+    color: C.red,
+    hint: "Non-negotiable rule",
   },
   {
-    tag: "A",
-    label: "Action",
-    text: "Apply discount cap from Q4 Discount Policy v2.5.",
+    tag: "KNW",
+    label: "Knowledge",
+    text: "Q4 Discount Policy v2.5  ·  Owner: Sarah K.  ·  Updated Thu 16:47.",
     color: C.primary,
+    hint: "Authoritative reference",
   },
   {
-    tag: "C",
-    label: "Constraint",
-    text: "Above 22% on a 2-year deal requires CFO + Legal sign-off.",
+    tag: "PRC",
+    label: "Procedure",
+    text: "Compute cap from term length and ARR tier, then check approval threshold.",
+    color: C.primary,
+    hint: "Logic patch",
+  },
+  {
+    tag: "PRF",
+    label: "Preference",
+    text: "Quote tone: confident, no hedging, EUR with thousands separator.",
     color: C.amber,
-  },
-  {
-    tag: "E",
-    label: "Evidence",
-    text: "Bound to Q4 Discount Policy v2.5  ·  Owner: Sarah K.  ·  Updated Thu 16:47.",
-    color: C.green,
+    hint: "Voice & format",
   },
 ];
 
@@ -42,12 +48,12 @@ export const Scene7Playbook: React.FC<{ durationInFrames: number }> = ({ duratio
 
   return (
     <SceneFrame
-      kicker="The grammar underneath"
+      kicker="Inside a Playbook  ·  AACE"
       headline={
         <>
-          Every playbook is written in{" "}
-          <span style={{ color: C.primary }}>AACE</span>.
-          {" "}The structure your AI executes.
+          A Playbook bundles{" "}
+          <span style={{ color: C.primary }}>Directives, Knowledge, Procedures, Preferences</span>.
+          {" "}Then your AI executes it.
         </>
       }
       durationInFrames={durationInFrames}
@@ -60,6 +66,18 @@ export const Scene7Playbook: React.FC<{ durationInFrames: number }> = ({ duratio
           }}
         >
           <Window label="Playbook  ·  Renewal Discount" accent={C.primary} glow>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 800,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                color: C.textSubtle,
+                marginBottom: 14,
+              }}
+            >
+              Trigger: "discount on renewal"  ·  Locked context
+            </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {AACE.map((b, i) => (
                 <div
@@ -79,7 +97,7 @@ export const Scene7Playbook: React.FC<{ durationInFrames: number }> = ({ duratio
                 >
                   <div
                     style={{
-                      width: 44,
+                      width: 56,
                       height: 44,
                       borderRadius: 10,
                       background: `${b.color}1A`,
@@ -88,7 +106,8 @@ export const Scene7Playbook: React.FC<{ durationInFrames: number }> = ({ duratio
                       alignItems: "center",
                       justifyContent: "center",
                       fontWeight: 900,
-                      fontSize: 22,
+                      fontSize: 14,
+                      letterSpacing: "0.08em",
                       flexShrink: 0,
                     }}
                   >
@@ -97,15 +116,26 @@ export const Scene7Playbook: React.FC<{ durationInFrames: number }> = ({ duratio
                   <div style={{ minWidth: 0, flex: 1 }}>
                     <div
                       style={{
-                        fontSize: 13,
-                        fontWeight: 900,
-                        letterSpacing: "0.14em",
-                        textTransform: "uppercase",
-                        color: b.color,
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: 10,
                         marginBottom: 4,
                       }}
                     >
-                      {b.label}
+                      <span
+                        style={{
+                          fontSize: 13,
+                          fontWeight: 900,
+                          letterSpacing: "0.14em",
+                          textTransform: "uppercase",
+                          color: b.color,
+                        }}
+                      >
+                        {b.label}
+                      </span>
+                      <span style={{ fontSize: 12, color: C.textSubtle, fontWeight: 600 }}>
+                        {b.hint}
+                      </span>
                     </div>
                     <div style={{ fontSize: 18, color: C.text, fontWeight: 600, lineHeight: 1.45 }}>
                       {b.text}
