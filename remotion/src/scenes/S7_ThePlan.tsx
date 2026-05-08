@@ -4,88 +4,72 @@ import { SceneFrame } from "../components/SceneFrame";
 import { Window } from "../components/Window";
 import { C } from "../theme";
 
-/* Beat 7 — THE PLAN. Three concrete steps. Same Sarah, same teams. */
+/* Beat 7 · STAKES (StoryBrand 6 · "what's at stake if you don't act").
+   Without LIZA — silos compound, AI does the wrong thing faster, drift wins. */
 export const S7_ThePlan: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const steps = [
+  const cols = [
     {
-      n: "01",
-      title: "Codify",
-      desc: "Sarah writes one Playbook for the Acme-class deal: thresholds, exceptions, who can override.",
-      sample: "Discount > 12% → Finance review · MSA non-standard → Legal sign-off",
-      color: C.primary,
+      tag: "Without LIZA",
+      tone: C.red,
+      bullets: [
+        "Standards stay in your seniors' heads",
+        "AI accelerates the wrong answer",
+        "Silos harden · cross-team context never arrives",
+        "Every quarter the gap between juniors and seniors widens",
+      ],
+      kicker: "You go faster · in the wrong direction",
     },
     {
-      n: "02",
-      title: "Publish",
-      desc: "LIZA pushes that Playbook into every surface her team and adjacent teams already use.",
-      sample: "Copilot · Glean · Harvey · Salesforce · the team workspace",
-      color: C.amber,
-    },
-    {
-      n: "03",
-      title: "Inherit",
-      desc: "Legal, Finance and CS see the same rule, in their tool, in their language. Same Monday.",
-      sample: "Three teams. One source. Zero re-typing.",
-      color: C.green,
+      tag: "With LIZA",
+      tone: C.green,
+      bullets: [
+        "Your highest standard is captured · once",
+        "Every person and every agent inherits it",
+        "Context flows across teams in real time",
+        "Your team becomes the benchmark, not the bottleneck",
+      ],
+      kicker: "Same speed · in the right direction",
     },
   ];
 
   return (
     <SceneFrame
-      kicker="The plan · three moves"
-      headline="Sarah's policy becomes the rule every tool runs."
+      kicker="What's at stake"
+      headline="The choice isn't whether AI joins your team. It's which version of your team it amplifies."
       durationInFrames={durationInFrames}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 22, padding: "0 120px", alignItems: "stretch" }}>
-        {steps.map((s, i) => {
-          const ap = spring({ frame: frame - 25 - i * 50, fps, config: { damping: 18, stiffness: 110 } });
+      <div style={{ display: "flex", gap: 28, padding: "0 100px", justifyContent: "center" }}>
+        {cols.map((c, i) => {
+          const ap = spring({ frame: frame - 24 - i * 36, fps, config: { damping: 18, stiffness: 110 } });
           return (
-            <div
-              key={s.n}
-              style={{
-                opacity: ap,
-                transform: `translateX(${(1 - ap) * -24}px)`,
-              }}
-            >
-              <Window label={`Step ${s.n} · ${s.title}`} accent={s.color}>
-                <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
-                  <div
-                    style={{
-                      width: 90,
-                      height: 90,
-                      borderRadius: 18,
-                      background: s.color + "18",
-                      color: s.color,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 38,
-                      fontWeight: 900,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {s.n}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 22, fontWeight: 800, color: C.text, marginBottom: 6 }}>{s.desc}</div>
-                    <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 700,
-                        color: s.color,
-                        background: s.color + "14",
-                        padding: "8px 14px",
-                        borderRadius: 8,
-                        display: "inline-block",
-                      }}
-                    >
-                      {s.sample}
-                    </div>
-                  </div>
+            <div key={c.tag} style={{ width: 540, opacity: ap, transform: `translateY(${(1 - ap) * 16}px)` }}>
+              <Window label={c.tag} accent={c.tone} glow={i === 1}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  {c.bullets.map((b, j) => {
+                    const bp = spring({ frame: frame - 60 - i * 36 - j * 14, fps, config: { damping: 18, stiffness: 130 } });
+                    return (
+                      <div key={b} style={{
+                        opacity: bp, transform: `translateX(${(1 - bp) * -10}px)`,
+                        display: "flex", gap: 12, alignItems: "flex-start",
+                      }}>
+                        <div style={{
+                          marginTop: 8, width: 8, height: 8, borderRadius: "50%",
+                          background: c.tone, flexShrink: 0,
+                        }} />
+                        <div style={{ fontSize: 17, fontWeight: 700, color: C.text, lineHeight: 1.4 }}>{b}</div>
+                      </div>
+                    );
+                  })}
                 </div>
+                <div style={{
+                  marginTop: 18, padding: "10px 14px", borderRadius: 10,
+                  background: c.tone + "14", color: c.tone,
+                  fontSize: 14, fontWeight: 900, letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                }}>{c.kicker}</div>
               </Window>
             </div>
           );

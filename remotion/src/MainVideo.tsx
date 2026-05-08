@@ -10,16 +10,16 @@ import { S7_ThePlan }      from "./scenes/S7_ThePlan";
 import { S8_NewMonday }    from "./scenes/S8_NewMonday";
 import { C } from "./theme";
 
-// Hero's story (StoryBrand). Slow pacing — 30fps. ~88s total.
+// Hero's story · StoryBrand 7. Slow pacing · 30fps · ~88s total.
 const SCENES: { dur: number; render: (d: number) => React.ReactNode }[] = [
-  { dur: 300, render: (d) => <S1_MeetSarah    durationInFrames={d} /> }, // 10s · CHARACTER
-  { dur: 330, render: (d) => <S2_MondayMorning durationInFrames={d} /> }, // 11s · WORLD
-  { dur: 330, render: (d) => <S3_PressureAbove durationInFrames={d} /> }, // 11s · PRESSURE FROM ABOVE
-  { dur: 360, render: (d) => <S4_SilosAround  durationInFrames={d} /> }, // 12s · SILOS
-  { dur: 330, render: (d) => <S5_TheBreak     durationInFrames={d} /> }, // 11s · THE BREAK (villain)
-  { dur: 270, render: (d) => <S6_TheGuide     durationInFrames={d} /> }, // 9s  · THE GUIDE (LIZA)
-  { dur: 360, render: (d) => <S7_ThePlan      durationInFrames={d} /> }, // 12s · THE PLAN
-  { dur: 360, render: (d) => <S8_NewMonday    durationInFrames={d} /> }, // 12s · RESOLUTION
+  { dur: 300, render: (d) => <S1_MeetSarah    durationInFrames={d} /> }, // 10s · CHARACTER (you, the manager)
+  { dur: 330, render: (d) => <S2_MondayMorning durationInFrames={d} /> }, // 11s · PROBLEM external · standards in heads
+  { dur: 330, render: (d) => <S3_PressureAbove durationInFrames={d} /> }, // 11s · PROBLEM internal · AI complication
+  { dur: 360, render: (d) => <S4_SilosAround  durationInFrames={d} /> }, // 12s · PROBLEM philosophical · silos + drift
+  { dur: 330, render: (d) => <S5_TheBreak     durationInFrames={d} /> }, // 11s · GUIDE · LIZA appears
+  { dur: 270, render: (d) => <S6_TheGuide     durationInFrames={d} /> }, // 9s  · PLAN · 3 moves
+  { dur: 360, render: (d) => <S7_ThePlan      durationInFrames={d} /> }, // 12s · STAKES · with vs without
+  { dur: 360, render: (d) => <S8_NewMonday    durationInFrames={d} /> }, // 12s · SUCCESS + CTA
 ];
 
 export const MainVideo: React.FC = () => {
