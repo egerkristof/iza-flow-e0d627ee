@@ -101,13 +101,13 @@ function Slide01() {
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
           The Deal Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native M&A.
+            for corporate development teams.
           </span>
         </h1>
 
-        <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns prior diligences, integration playbooks, and senior dealmaker judgment into the governed operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Diligence Pilot · Post-Merger Integration · Market Intelligence Layer</span>
+        <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1180, lineHeight: 1.5 }}>
+          M&A teams need a bit of everything: fleet, regulatory, financials, market. Not engineer-deep on any one of them. LIZA OS gives corp dev a single 360° company view, and routes the deep questions to the right internal expert team.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>360° Company View · Expert Routing · Deal & Partnership Memory</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
@@ -125,7 +125,7 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "M&A Teams", sub: "Diligence · PMI · Market Intelligence", active: true, color: TEAL },
+    { label: "Corp Dev / M&A", sub: "360° view · Expert routing · Deal memory", active: true, color: TEAL },
     { label: "Satcom Operators", sub: "Fleet ops · Procurement · ITU & SLAs", active: false, color: MUTED },
     { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: MUTED },
     { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
@@ -140,10 +140,10 @@ function SlideShape() {
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>M&A teams are the next spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Corp dev is the next spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about M&A teams: corporate development, post-merger integration, and continuous market scanning. You benefit from platform leverage already proven inside AEC, satcom, and other regulated work.
+          Corp dev teams sit on top of fleet, regulatory, and finance experts. They need a bit of everything to form a view on a target or a partnership, and the routing rails to ask the deep questions of the right internal team. LIZA OS gives them both, on top of platform leverage already proven inside satcom, pharma, and AEC.
         </p>
 
         {/* Diagram */}
