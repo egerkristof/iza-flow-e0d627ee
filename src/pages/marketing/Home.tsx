@@ -6,6 +6,8 @@ import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
 import { SectionDivider } from "@/components/marketing/home/SectionDivider";
 import { ArchitectureTeaser } from "@/components/marketing/home/ArchitectureTeaser";
 import { TrustStrip } from "@/components/marketing/home/TrustStrip";
+import { ThreeBruisesStrip } from "@/components/marketing/home/ThreeBruisesStrip";
+import { PersonaLensExpander } from "@/components/marketing/home/PersonaLensExpander";
 
 /* Homepage = 4 acts. Hook → Story → Proof → Ask. Anatomy lives on /os. */
 export default function HomePage() {
@@ -17,9 +19,11 @@ export default function HomePage() {
       <SectionDivider />
       {/* 2. Story (the Stories player, now responsive) */}
       <ArchitectureTeaser />
+      <ThreeBruisesStrip />
       <SectionDivider />
       {/* 3. Proof */}
       <ThreeReasonsSection />
+      <PersonaLensExpander />
       {/* 4. Ask */}
       <BuyerRouterFAQ />
       <BetaCTASection />
