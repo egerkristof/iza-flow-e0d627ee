@@ -4,131 +4,96 @@ import { SceneFrame } from "../components/SceneFrame";
 import { Window } from "../components/Window";
 import { C } from "../theme";
 
-/* Beat 8 — RESOLUTION. New Monday. Same teams. Same answer.
-   Sarah ships v2 from one signal. The loop closes. */
+/* Beat 8 · SUCCESS + CALL TO ACTION (StoryBrand 5 + 7).
+   The new reality. AI-native team. Connect existing tools via APIs and MCPs. */
 export const S8_NewMonday: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const teams = [
-    { name: "Legal",   color: C.amber },
-    { name: "Finance", color: C.primary },
-    { name: "CS",      color: C.green },
+  const stack = [
+    "Google Drive", "SharePoint", "Notion", "Slack",
+    "Salesforce", "HubSpot", "Jira", "Linear",
+    "GitHub", "Copilot", "Glean", "MCPs",
   ];
 
-  const stats = [
-    { k: "Decisions stuck",      before: "11", after: "1" },
-    { k: "Days lost to drift",   before: "3",  after: "0" },
-    { k: "Standards refreshed",  before: "—",  after: "v2.5 · live" },
+  const outcomes = [
+    "Every person executes at the senior standard",
+    "Every agent runs the same playbook · cited and current",
+    "Cross-team context flows in real time",
+    "Your team becomes the benchmark for the rest of the org",
   ];
 
   return (
     <SceneFrame
-      kicker="Next Monday"
-      headline="Same Sarah. Same teams. Same standard, in every tool. The loop closes."
+      kicker="The new reality"
+      headline="Run your team on AI-native infrastructure. Same SaaS feel. Your existing stack, connected in."
       durationInFrames={durationInFrames}
     >
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 30, padding: "0 100px" }}>
-        {/* Three teams, all green check */}
-        <div style={{ display: "flex", gap: 24 }}>
-          {teams.map((t, i) => {
-            const ap = spring({ frame: frame - 20 - i * 18, fps, config: { damping: 18, stiffness: 130 } });
-            return (
-              <div
-                key={t.name}
-                style={{
-                  opacity: ap,
-                  transform: `translateY(${(1 - ap) * 14}px)`,
-                  width: 320,
-                  background: C.card,
-                  border: `1.5px solid ${t.color}55`,
-                  borderRadius: 14,
-                  padding: "18px 22px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 14,
-                  boxShadow: `0 14px 40px -20px ${t.color}77`,
-                }}
-              >
-                <div
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 12,
-                    background: C.greenSoft,
-                    color: C.green,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 26,
-                    fontWeight: 900,
-                  }}
-                >
-                  ✓
-                </div>
-                <div>
-                  <div style={{ fontSize: 12, fontWeight: 900, letterSpacing: "0.16em", color: t.color, textTransform: "uppercase" }}>
-                    {t.name}
-                  </div>
-                  <div style={{ fontSize: 17, fontWeight: 800, color: C.text, marginTop: 2 }}>
-                    Same answer. Cited Playbook PB-014 v2.5.
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22, padding: "0 100px" }}>
+        <div style={{ width: 1080 }}>
+          <Window label="Connect what you already use" accent={C.primary}>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+              {stack.map((s, i) => {
+                const ap = spring({ frame: frame - 18 - i * 6, fps, config: { damping: 18, stiffness: 140 } });
+                return (
+                  <div key={s} style={{
+                    opacity: ap, transform: `translateY(${(1 - ap) * 6}px)`,
+                    padding: "10px 16px", borderRadius: 10,
+                    border: `1.5px solid ${C.border}`, background: C.card,
+                    fontSize: 15, fontWeight: 800, color: C.text,
+                  }}>{s}</div>
+                );
+              })}
+            </div>
+            <div style={{ textAlign: "center", marginTop: 14, fontSize: 13, fontWeight: 700, color: C.textMuted, letterSpacing: "0.04em" }}>
+              APIs · MCPs · native integrations · zero rip-and-replace
+            </div>
+          </Window>
         </div>
 
-        {/* Stats panel */}
-        <div
-          style={{
-            opacity: interpolate(frame, [110, 160], [0, 1], { extrapolateRight: "clamp" }),
-            transform: `translateY(${interpolate(frame, [110, 160], [16, 0], { extrapolateRight: "clamp" })}px)`,
-            width: 1080,
-          }}
-        >
-          <Window label="Sarah's week, before vs after" accent={C.green} glow>
-            <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr", gap: 20, alignItems: "center" }}>
-              <div style={{ fontSize: 12, fontWeight: 900, letterSpacing: "0.16em", color: C.textMuted, textTransform: "uppercase" }}>
-                Metric
-              </div>
-              <div style={{ fontSize: 12, fontWeight: 900, letterSpacing: "0.16em", color: C.red, textTransform: "uppercase", textAlign: "center" }}>
-                Before
-              </div>
-              <div style={{ fontSize: 12, fontWeight: 900, letterSpacing: "0.16em", color: C.green, textTransform: "uppercase", textAlign: "center" }}>
-                After
-              </div>
-              {stats.map((s, i) => {
-                const ap = spring({ frame: frame - 150 - i * 18, fps, config: { damping: 18, stiffness: 130 } });
+        <div style={{ width: 1080 }}>
+          <Window label="What you get on Monday" accent={C.green} glow>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+              {outcomes.map((o, i) => {
+                const ap = spring({ frame: frame - 80 - i * 18, fps, config: { damping: 18, stiffness: 130 } });
                 return (
-                  <React.Fragment key={s.k}>
-                    <div style={{ fontSize: 18, fontWeight: 700, color: C.text, opacity: ap, paddingTop: 14, borderTop: `1px solid ${C.border}` }}>
-                      {s.k}
-                    </div>
-                    <div style={{ fontSize: 28, fontWeight: 900, color: C.red, textAlign: "center", opacity: ap, paddingTop: 14, borderTop: `1px solid ${C.border}` }}>
-                      {s.before}
-                    </div>
-                    <div style={{ fontSize: 28, fontWeight: 900, color: C.green, textAlign: "center", opacity: ap, paddingTop: 14, borderTop: `1px solid ${C.border}` }}>
-                      {s.after}
-                    </div>
-                  </React.Fragment>
+                  <div key={o} style={{
+                    opacity: ap, transform: `translateX(${(1 - ap) * -10}px)`,
+                    display: "flex", gap: 12, alignItems: "center",
+                    padding: "12px 14px", borderRadius: 10,
+                    background: C.greenSoft, border: `1px solid ${C.green}33`,
+                  }}>
+                    <div style={{
+                      width: 28, height: 28, borderRadius: 8,
+                      background: C.green, color: "#fff",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontWeight: 900, fontSize: 16, flexShrink: 0,
+                    }}>✓</div>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: C.text }}>{o}</div>
+                  </div>
                 );
               })}
             </div>
           </Window>
         </div>
 
-        <div
-          style={{
-            opacity: interpolate(frame, [220, 270], [0, 1], { extrapolateRight: "clamp" }),
-            fontSize: 24,
-            fontWeight: 900,
-            color: C.text,
-            textAlign: "center",
-            letterSpacing: "-0.01em",
-          }}
-        >
-          LIZA. Your standards. Executable. Once.
+        <div style={{
+          opacity: interpolate(frame, [220, 270], [0, 1], { extrapolateRight: "clamp" }),
+          textAlign: "center", marginTop: 6,
+        }}>
+          <div style={{ fontSize: 30, fontWeight: 900, color: C.text, letterSpacing: "-0.01em" }}>
+            Your standards · executable · once.
+          </div>
+          <div style={{
+            marginTop: 14, display: "inline-block",
+            background: `linear-gradient(135deg, ${C.primary}, #0E6FA3)`,
+            color: "#fff", fontWeight: 900, fontSize: 18,
+            padding: "14px 28px", borderRadius: 12,
+            letterSpacing: "0.04em",
+            boxShadow: `0 20px 50px -20px ${C.primary}aa`,
+          }}>
+            Talk to us · start with LIZA
+          </div>
         </div>
       </div>
     </SceneFrame>
