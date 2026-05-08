@@ -39,6 +39,7 @@ import IndustryBizDevPage from "./pages/marketing/IndustryBizDev";
 import IndustryAccountMgmtPage from "./pages/marketing/IndustryAccountMgmt";
 import IndustryOnboardingPage from "./pages/marketing/IndustryOnboarding";
 import IndustryMeetingsPage from "./pages/marketing/IndustryMeetings";
+import IndustryStrategyOfficePage from "./pages/marketing/IndustryStrategyOffice";
 import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
@@ -109,6 +110,7 @@ const App = () => (
             <Route path="/industries/account-management" element={<IndustryAccountMgmtPage />} />
             <Route path="/industries/onboarding" element={<IndustryOnboardingPage />} />
             <Route path="/industries/meetings" element={<IndustryMeetingsPage />} />
+            <Route path="/industries/strategy-office" element={<IndustryStrategyOfficePage />} />
             <Route path="/manifesto" element={<ManifestoPage />} />
             <Route path="/beta" element={<BetaPage />} />
             <Route path="/platform-signup" element={<PlatformSignupPage />} />

@@ -2,11 +2,21 @@ import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { Link } from "react-router-dom";
 import {
   ArrowRight, Briefcase, Megaphone, TrendingUp, Users, Target,
-  Handshake, GraduationCap, Radio,
+  Handshake, GraduationCap, Radio, Compass,
 } from "lucide-react";
 import { SectionTag } from "@/components/marketing/home/shared";
 
 const FUNCTIONS = [
+  {
+    slug: "strategy-office",
+    icon: <Compass className="w-6 h-6" />,
+    title: "Strategy Office",
+    lifecycle: "Scan, Synthesise, Route, Decide, Remember",
+    description:
+      "For corp dev, business development, and strategic planning cells. The bridge between the boardroom and the operating floor. A standing 360 view, an expert routing rail, and a memory that compounds.",
+    tags: ["360 View", "Expert Routing", "Strategic Memory"],
+    col: "220 65% 32%",
+  },
   {
     slug: "sales",
     icon: <TrendingUp className="w-6 h-6" />,
