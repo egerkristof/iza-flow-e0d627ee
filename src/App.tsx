@@ -51,6 +51,7 @@ import CalculatorPage from "./pages/marketing/Calculator";
 import AuditLandingPage from "./pages/marketing/AuditLanding";
 import OSPage from "./pages/marketing/OS";
 import ByFunctionPage from "./pages/marketing/ByFunction";
+import ForPersonaPage from "./pages/marketing/ForPersona";
 
 const queryClient = new QueryClient();
 
@@ -91,6 +92,7 @@ const App = () => (
             <Route path="/use-cases" element={<UseCasesPage />} />
             <Route path="/industries" element={<IndustriesPage />} />
             <Route path="/by-function" element={<ByFunctionPage />} />
+            <Route path="/for/:slug" element={<ForPersonaPage />} />
             <Route path="/industries/regulated" element={<IndustryPharmaPage />} />
             <Route path="/industries/pharma" element={<Navigate to="/industries/regulated" replace />} />
             <Route path="/industries/space" element={<IndustrySpacePage />} />

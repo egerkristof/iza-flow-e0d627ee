@@ -89,9 +89,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          The system of intelligence
+          Your standards live in docs.
           <br />
-          <span className="text-primary">for how your company decides and delivers work.</span>
+          <span className="text-primary">Your AI ignores them.</span>
         </motion.h1>
 
         <motion.p
@@ -100,9 +100,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          One governed standard your leadership owns, applied across the full
-          lifecycle of how work gets done. Every AI tool, every team, every
-          decision executes to it.
+          Every team gets a different answer. Every tool drifts from your policy.
+          And you pay for every one of those tokens. LIZA is the executable
+          standard your leadership owns, enforced across every AI tool and team.
         </motion.p>
 
         {/* CTAs */}
