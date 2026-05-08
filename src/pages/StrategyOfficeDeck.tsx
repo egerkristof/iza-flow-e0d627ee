@@ -2830,29 +2830,25 @@ function SlideOrgIntelligence() {
 
 // ─── Slide registry ──────────────────────────────────────────────────────────
 
+// Sales arc for Strategy Office buyers. Investor-only slides (Team, Business Model,
+// Two-Door, Strategic Pivot, Strategic Partnership Path, Expansion Path, Shape of
+// the Company) are intentionally dropped. The deck ends on the 30-day pilot.
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
   { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "The Context Gap, Exemplified", component: <SlideContextGapExemplified /> },
-  { id: 4, title: "Where Missing Context Shows Up in M&A", component: <Slide03 /> },
-  { id: 5, title: "What Missing Context Costs in M&A", component: <Slide04Cost /> },
+  { id: 3, title: "Where the Strategy Office Breaks", component: <SlideContextGapExemplified /> },
+  { id: 4, title: "Three Failure Modes", component: <Slide03 /> },
+  { id: 5, title: "What It Costs the Team", component: <Slide04Cost /> },
   { id: 6, title: "Early Validation", component: <Slide08 /> },
   { id: 7, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 8, title: "The Context Layer", component: <Slide05 /> },
+  { id: 8, title: "The Strategy Office OS", component: <Slide05 /> },
   { id: 9, title: "People as Nodes", component: <SlidePeopleAsNodes /> },
   { id: 10, title: "Organizational Intelligence", component: <SlideOrgIntelligence /> },
-  { id: 11, title: "Strategic Pivot", component: <SlideVerticalization /> },
-  { id: 12, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 13, title: "Expansion Path", component: <Slide09 /> },
-  { id: 14, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
-  { id: 15, title: "Shape of the Company", component: <SlideShape /> },
-  { id: 16, title: "What's Built", component: <Slide10 /> },
-  { id: 17, title: "Business Model", component: <Slide11 /> },
-  { id: 18, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 19, title: "Team", component: <Slide12 /> },
-  { id: 20, title: "Two-Door Partnership Path", component: <Slide13 /> },
-  { id: 21, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 22, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 11, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 12, title: "What's Built", component: <Slide10 /> },
+  { id: 13, title: "30-Day Pilot", component: <SlideExecutionChallenge /> },
+  { id: 14, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 15, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
