@@ -101,13 +101,13 @@ function Slide01() {
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
           The Deal Memory Layer<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native M&A.
+            for corporate development teams.
           </span>
         </h1>
 
-        <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns prior diligences, integration playbooks, and senior dealmaker judgment into the governed operating layer between AI inputs and AI outputs.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Diligence Pilot · Post-Merger Integration · Market Intelligence Layer</span>
+        <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1180, lineHeight: 1.5 }}>
+          M&A teams need a bit of everything: fleet, regulatory, financials, market. Not engineer-deep on any one of them. LIZA OS gives corp dev a single 360° company view, and routes the deep questions to the right internal expert team.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>360° Company View · Expert Routing · Deal & Partnership Memory</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
@@ -125,7 +125,7 @@ function Slide01() {
 
 function SlideShape() {
   const verticals = [
-    { label: "M&A Teams", sub: "Diligence · PMI · Market Intelligence", active: true, color: TEAL },
+    { label: "Corp Dev / M&A", sub: "360° view · Expert routing · Deal memory", active: true, color: TEAL },
     { label: "Satcom Operators", sub: "Fleet ops · Procurement · ITU & SLAs", active: false, color: MUTED },
     { label: "Pharma", sub: "GxP · Deviations · CSRs", active: false, color: MUTED },
     { label: "AEC", sub: "RFI · Submittals · Handover", active: false, color: MUTED },
@@ -140,10 +140,10 @@ function SlideShape() {
           </div>
         </div>
         <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          One OS. <span style={{ color: `hsl(${TEAL})` }}>M&A teams are the next spear.</span>
+          One OS. <span style={{ color: `hsl(${TEAL})` }}>Corp dev is the next spear.</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1500, lineHeight: 1.45 }}>
-          We build a single context layer and deploy it vertical-by-vertical. The conversation today is about M&A teams: corporate development, post-merger integration, and continuous market scanning. You benefit from platform leverage already proven inside AEC, satcom, and other regulated work.
+          Corp dev teams sit on top of fleet, regulatory, and finance experts. They need a bit of everything to form a view on a target or a partnership, and the routing rails to ask the deep questions of the right internal team. LIZA OS gives them both, on top of platform leverage already proven inside satcom, pharma, and AEC.
         </p>
 
         {/* Diagram */}
@@ -380,31 +380,31 @@ function Slide02() {
 
 const SATCOM_GAP_CASES = [
   {
-    name: "Diligence & Investment Committee",
+    name: "360° Company View",
     icon: <Shield size={22} style={{ color: `hsl(${RED})` }} />,
     accent: RED,
-    records: ["Prior IC memos", "Sector models", "Diligence checklists"],
-    output: "Diligence summaries · IC memos",
-    gap: "AI drafts from the data room, but misses the precedent your senior partner remembers, the red flag that killed a lookalike deal three years ago, and the sector heuristics that never made the checklist.",
-    cost: "IC re-litigates. Decisions slip. Bench burns out on rework.",
+    records: ["Fleet & assets", "Regulatory filings", "Financials & ownership"],
+    output: "One overview per target · IC-ready brief",
+    gap: "Corp dev needs a bit of everything — fleet, regulatory, financials — but is not engineer-deep on any of it. Today that overview is hand-stitched from PDFs, web search, and emails to the mission and regulatory teams.",
+    cost: "Days lost per target. Half the questions never reach the expert team in time.",
   },
   {
-    name: "Post-Merger Integration",
+    name: "Expert Routing",
     icon: <Briefcase size={22} style={{ color: `hsl(${WARM})` }} />,
     accent: WARM,
-    records: ["SPA templates", "100-day plans", "Prior integration playbooks"],
-    output: "Integration plans · PMI dashboards",
-    gap: "AI summarises the SPA, but misses what your last seller over-promised, which clauses your GC always insists on, and which Day-100 milestones actually caught problems in the last integration.",
-    cost: "Weak protection. Synergy slip. Integration cycle repeated.",
+    records: ["Mission ops know-how", "Regulatory specialists", "Finance & legal desks"],
+    output: "Routed questions · Expert answers attached to the deal",
+    gap: "Corp dev's job is to ask the right deep question of the right internal team — can this satellite move to that orbit, does it have fuel, will the regulator allow it. Today those answers live in Slack threads and inboxes, not on the deal.",
+    cost: "Expert answers re-asked every cycle. Senior bandwidth burned on the same questions.",
   },
   {
-    name: "Market Intelligence & Sourcing",
+    name: "Market & Partnership Memory",
     icon: <DollarSign size={22} style={{ color: `hsl(${GOLD})` }} />,
     accent: GOLD,
-    records: ["Market maps", "Competitor news", "Banker pitch decks"],
-    output: "Market briefings · Sector landscapes",
-    gap: "AI generates a plausible market brief, but misses the conversation your head of M&A had with that founder last year, the deals your fund passed on, and the soft signals from the sector your team has been tracking.",
-    cost: "Deals missed. Sourcing reactive. Strategy lags the market.",
+    records: ["Sector maps", "Prior conversations", "Passed-on targets & partnerships"],
+    output: "Live market view · Partnership candidates surfaced",
+    gap: "Corp dev is also scanning for collaboration, not just acquisition. The conversation a colleague had with that operator last year, the partnership that almost happened, the targets the team passed on — none of it is queryable.",
+    cost: "Partnerships missed. Strategy lags the market. Same scan repeated next quarter.",
   },
 ];
 
@@ -429,54 +429,54 @@ const SATCOM_COST_BENCHMARKS = [
 const __VERTICAL_PERSONAS = [
   {
     "id": "ops",
-    "name": "Diligence & Investment Committee",
+    "name": "360° Company View",
     "color": "RED",
     "iconName": "Briefcase",
     "above": [
-      "Diligence checklists",
-      "IC memos",
-      "Sector models"
+      "Fleet & asset summary",
+      "Regulatory & licence overview",
+      "Financials & ownership"
     ],
     "below": [
-      "Why the senior partner killed the last lookalike deal",
-      "Valuation precedent across the sector",
-      "Red-flag patterns that never made it to the checklist"
+      "Which experts already covered this sector internally",
+      "What we learned about this target the last time we looked",
+      "Soft signals the analyst hasn't surfaced yet"
     ],
-    "breaks": "IC re-litigates. Diligence re-done. Deal slips or dies."
+    "breaks": "Overview hand-stitched per target. Half the picture is missing on day one."
   },
   {
     "id": "proc",
-    "name": "Post-Merger Integration",
+    "name": "Expert Routing",
     "color": "WARM",
     "iconName": "Shield",
     "above": [
-      "SPA templates",
-      "Synergy models",
-      "Day-1 plans"
+      "Mission ops team",
+      "Regulatory specialists",
+      "Finance & legal desks"
     ],
     "below": [
-      "What broke in the last integration of a similar target",
-      "Carve-outs settled with legal last cycle",
-      "Cultural signals never written into the IM"
+      "Can this satellite move to that orbit, does it have fuel",
+      "Will the regulator allow this transfer",
+      "Did we already answer this on a prior deal"
     ],
-    "breaks": "Synergies miss. Day-100 plan stalls. Value leaks."
+    "breaks": "Expert answers re-asked every cycle. Senior bandwidth burned twice."
   },
   {
     "id": "reg",
-    "name": "Market Intelligence & Sourcing",
+    "name": "Market & Partnership Memory",
     "color": "GOLD",
     "iconName": "Database",
     "above": [
-      "Market maps",
-      "Competitor moves",
-      "Banker pitch decks"
+      "Sector maps",
+      "Competitor & partner moves",
+      "Banker and broker pitches"
     ],
     "below": [
-      "Why we passed on this target last cycle",
-      "Conversations with the founder six months ago",
-      "Soft signals from the sector that never made the report"
+      "The partnership that almost happened last year",
+      "Conversations a colleague had with this operator",
+      "Targets the team passed on and why"
     ],
-    "breaks": "Sourcing thin. Deals come from inbound, not strategy."
+    "breaks": "Partnerships missed. Strategy lags the market."
   }
 ] as const;
 
