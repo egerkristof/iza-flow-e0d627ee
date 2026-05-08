@@ -485,85 +485,181 @@ function ForgeKnowledgeGraph({ tone, green, amber }: { tone: string; green: stri
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  // 4 satellites around 1 core. Positions in % of a 320x220 box.
-  const cx = 50;
-  const cy = 50;
-  const satellites = [
-    { id: "policy", label: "Policy", angle: -90, appear: 600, color: amber, edge: "enforces" },
-    { id: "pricing", label: "Pricing", angle: 0, appear: 1100, color: tone, edge: "uses" },
-    { id: "playbook", label: "Playbook", angle: 90, appear: 1600, color: green, edge: "executes" },
-    { id: "risk", label: "Risk", angle: 180, appear: 2100, color: "hsl(var(--destructive))", edge: "guards" },
+  const red = "hsl(var(--destructive))";
+
+  // Coordinates in % of a 100x60 viewBox (matches container aspect-[5/3])
+  const CORE = { x: 50, y: 30 };
+  type Node = { id: string; label: string; sub?: string; x: number; y: number; color: string; appear: number };
+  const nodes: Node[] = [
+    { id: "policy",   label: "Policy",        sub: "v3.2",   x: 50, y: 6,  color: amber, appear: 400  },
+    { id: "pricing",  label: "Pricing rule",  sub: "PR-014", x: 88, y: 18, color: tone,  appear: 700  },
+    { id: "playbook", label: "Playbook",      sub: "PB-027", x: 90, y: 44, color: green, appear: 1000 },
+    { id: "tier",     label: "Customer tier", sub: "Strat.", x: 70, y: 56, color: tone,  appear: 1300 },
+    { id: "audit",    label: "Audit log",     sub: "live",   x: 30, y: 56, color: green, appear: 1600 },
+    { id: "risk",     label: "Risk",          sub: "guarded",x: 10, y: 44, color: red,   appear: 1900 },
+    { id: "approval", label: "Approval",      sub: "thresh.",x: 12, y: 18, color: amber, appear: 2200 },
+    { id: "signal",   label: "Field signal",  sub: "Maya, AE", x: 30, y: 6, color: tone, appear: 2500 },
   ];
-  const r = 32; // radius in viewBox %
+
+  type Edge = { from: string; to: string; label: string; appear: number; color: string; pulse?: boolean };
+  const edges: Edge[] = [
+    // Core hub edges
+    { from: "core", to: "policy",   label: "enforces",    appear: 600,  color: amber, pulse: true },
+    { from: "core", to: "pricing",  label: "uses",        appear: 900,  color: tone,  pulse: true },
+    { from: "core", to: "playbook", label: "executes",    appear: 1200, color: green, pulse: true },
+    { from: "core", to: "tier",     label: "applies to",  appear: 1500, color: tone },
+    { from: "core", to: "risk",     label: "guards",      appear: 1800, color: red },
+    // Lateral relationships
+    { from: "policy",   to: "approval", label: "requires",     appear: 2400, color: amber },
+    { from: "pricing",  to: "audit",    label: "logs to",      appear: 2600, color: tone },
+    { from: "playbook", to: "tier",     label: "tailored by",  appear: 2800, color: green },
+    { from: "risk",     to: "audit",    label: "feeds",        appear: 3000, color: red, pulse: true },
+    { from: "signal",   to: "policy",   label: "updates",      appear: 3200, color: tone, pulse: true },
+  ];
+
+  const pos = (id: string) => (id === "core" ? CORE : nodes.find((n) => n.id === id)!);
 
   return (
-    <div className="relative w-full max-w-md aspect-[4/3] mx-auto">
-      <svg viewBox="0 0 100 75" className="absolute inset-0 w-full h-full">
+    <div className="relative w-full max-w-3xl aspect-[5/3] mx-auto">
+      <svg viewBox="0 0 100 60" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
         <defs>
-          <radialGradient id="coreGlow2">
-            <stop offset="0%" stopColor={`hsl(${tone} / 0.35)`} />
-            <stop offset="100%" stopColor={`hsl(${tone} / 0)`} />
+          <radialGradient id="coreGlow3">
+            <stop offset="0%" stopColor={tone} stopOpacity="0.30" />
+            <stop offset="100%" stopColor={tone} stopOpacity="0" />
           </radialGradient>
         </defs>
-        {/* glow */}
-        <ellipse cx={cx} cy={cy * 0.75} rx={18} ry={14} fill="url(#coreGlow2)">
-          <animate attributeName="rx" values="16;20;16" dur="3s" repeatCount="indefinite" />
+        {/* core glow */}
+        <ellipse cx={CORE.x} cy={CORE.y} rx={18} ry={12} fill="url(#coreGlow3)">
+          <animate attributeName="rx" values="16;22;16" dur="3.5s" repeatCount="indefinite" />
         </ellipse>
 
-        {/* edges */}
-        {satellites.map((s, i) => {
-          const rad = (s.angle * Math.PI) / 180;
-          const sx = cx + Math.cos(rad) * r;
-          const sy = cy * 0.75 + Math.sin(rad) * r * 0.7;
-          const visible = t > s.appear;
-          const progress = Math.min(1, Math.max(0, (t - s.appear) / 500));
-          const x2 = cx + (sx - cx) * progress;
-          const y2 = cy * 0.75 + (sy - cy * 0.75) * progress;
+        {/* Edges */}
+        {edges.map((e, i) => {
+          const a = pos(e.from);
+          const b = pos(e.to);
+          const visible = t > e.appear;
+          const progress = Math.min(1, Math.max(0, (t - e.appear) / 450));
+          const x2 = a.x + (b.x - a.x) * progress;
+          const y2 = a.y + (b.y - a.y) * progress;
+          // Slight curvature: control point perpendicular to line midpoint
+          const mx = (a.x + b.x) / 2;
+          const my = (a.y + b.y) / 2;
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const len = Math.hypot(dx, dy) || 1;
+          const nx = -dy / len;
+          const ny = dx / len;
+          const curve = e.from === "core" ? 0 : 4; // hub edges straight, lateral curved
+          const cx = mx + nx * curve;
+          const cy = my + ny * curve;
           return (
-            <g key={"e" + i} opacity={visible ? 1 : 0}>
-              <line
-                x1={cx}
-                y1={cy * 0.75}
-                x2={x2}
-                y2={y2}
-                stroke={s.color}
-                strokeOpacity={0.55}
-                strokeWidth={0.5}
-                strokeLinecap="round"
-              />
-              {progress >= 1 && (
-                <circle r={0.7} fill={s.color}>
-                  <animateMotion
-                    dur="2.5s"
-                    repeatCount="indefinite"
-                    path={`M ${cx} ${cy * 0.75} L ${sx} ${sy}`}
+            <g key={`e${i}`} opacity={visible ? 1 : 0}>
+              {progress < 1 ? (
+                <line
+                  x1={a.x}
+                  y1={a.y}
+                  x2={x2}
+                  y2={y2}
+                  stroke={e.color}
+                  strokeOpacity={0.55}
+                  strokeWidth={0.45}
+                  strokeLinecap="round"
+                  strokeDasharray={curve > 0 ? "1.4 0.8" : undefined}
+                />
+              ) : (
+                <>
+                  <path
+                    id={`p${i}`}
+                    d={`M ${a.x} ${a.y} Q ${cx} ${cy} ${b.x} ${b.y}`}
+                    fill="none"
+                    stroke={e.color}
+                    strokeOpacity={0.55}
+                    strokeWidth={0.45}
+                    strokeLinecap="round"
+                    strokeDasharray={curve > 0 ? "1.4 0.8" : undefined}
                   />
-                </circle>
+                  {/* arrowhead */}
+                  <circle cx={b.x} cy={b.y} r={0.6} fill={e.color} />
+                  {e.pulse && (
+                    <circle r={0.7} fill={e.color}>
+                      <animateMotion dur="2.6s" repeatCount="indefinite">
+                        <mpath xlinkHref={`#p${i}`} />
+                      </animateMotion>
+                    </circle>
+                  )}
+                </>
               )}
+            </g>
+          );
+        })}
+
+        {/* Edge labels (rendered over lines, white pill background) */}
+        {edges.map((e, i) => {
+          const a = pos(e.from);
+          const b = pos(e.to);
+          if (t < e.appear + 400) return null;
+          const mx = (a.x + b.x) / 2;
+          const my = (a.y + b.y) / 2;
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const len = Math.hypot(dx, dy) || 1;
+          const nx = -dy / len;
+          const ny = dx / len;
+          const offset = e.from === "core" ? 0 : 2;
+          const lx = mx + nx * offset;
+          const ly = my + ny * offset;
+          const labelW = e.label.length * 1.1 + 2.4;
+          return (
+            <g key={`l${i}`}>
+              <rect
+                x={lx - labelW / 2}
+                y={ly - 1.4}
+                width={labelW}
+                height={2.8}
+                rx={1.2}
+                fill="hsl(var(--background))"
+                stroke={e.color}
+                strokeOpacity={0.4}
+                strokeWidth={0.18}
+              />
+              <text
+                x={lx}
+                y={ly + 0.55}
+                textAnchor="middle"
+                style={{
+                  fontSize: 1.55,
+                  fontWeight: 800,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  fill: e.color,
+                }}
+              >
+                {e.label}
+              </text>
             </g>
           );
         })}
       </svg>
 
-      {/* Core node */}
+      {/* Core node (HTML) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.6 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, type: "spring", damping: 12 }}
-        className="absolute -translate-x-1/2 -translate-y-1/2"
-        style={{ left: "50%", top: "50%" }}
+        className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
+        style={{ left: `${CORE.x}%`, top: `${(CORE.y / 60) * 100}%` }}
       >
         <div
-          className="rounded-xl border-2 px-3.5 py-2 bg-card text-center whitespace-nowrap"
+          className="rounded-xl border-2 px-3 sm:px-4 py-2 bg-card text-center whitespace-nowrap"
           style={{
             borderColor: tone,
-            background: `hsl(${tone} / 0.08)`,
-            boxShadow: `0 16px 36px -12px ${tone}`,
+            background: `${tone}14`,
+            boxShadow: `0 18px 38px -12px ${tone}`,
           }}
         >
           <div className="flex items-center gap-1.5 justify-center">
             <Network className="w-3.5 h-3.5" style={{ color: tone }} />
-            <span className="text-[10px] sm:text-[11px] font-black tracking-[0.18em] uppercase" style={{ color: tone }}>
+            <span className="text-[10px] sm:text-[12px] font-black tracking-[0.2em] uppercase" style={{ color: tone }}>
               Decision Standard
             </span>
           </div>
@@ -571,40 +667,39 @@ function ForgeKnowledgeGraph({ tone, green, amber }: { tone: string; green: stri
         </div>
       </motion.div>
 
-      {/* Satellite nodes */}
-      {satellites.map((s) => {
-        const rad = (s.angle * Math.PI) / 180;
-        const sx = 50 + Math.cos(rad) * 32;
-        const sy = 50 + Math.sin(rad) * 32;
-        const visible = t > s.appear + 200;
+      {/* Satellite nodes (HTML) */}
+      {nodes.map((n) => {
+        const visible = t > n.appear + 150;
         return (
           <motion.div
-            key={s.id}
+            key={n.id}
             initial={false}
             animate={visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.4, type: "spring", damping: 14 }}
-            className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${sx}%`, top: `${sy}%` }}
+            className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
+            style={{ left: `${n.x}%`, top: `${(n.y / 60) * 100}%` }}
           >
             <div
-              className="rounded-lg border px-2.5 py-1 bg-card whitespace-nowrap"
+              className="rounded-lg border px-2 sm:px-2.5 py-1 sm:py-1.5 bg-card whitespace-nowrap"
               style={{
-                borderColor: s.color,
-                boxShadow: `0 6px 16px -6px ${s.color}`,
+                borderColor: n.color,
+                boxShadow: `0 6px 16px -6px ${n.color}`,
               }}
             >
               <div className="flex items-center gap-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: n.color }} />
                 <span
-                  className="inline-block w-1.5 h-1.5 rounded-full"
-                  style={{ background: s.color }}
-                />
-                <span
-                  className="text-[9px] sm:text-[10px] font-black tracking-[0.16em] uppercase"
-                  style={{ color: s.color }}
+                  className="text-[9px] sm:text-[10px] font-black tracking-[0.14em] uppercase"
+                  style={{ color: n.color }}
                 >
-                  {s.label}
+                  {n.label}
                 </span>
               </div>
+              {n.sub && (
+                <div className="text-[8px] sm:text-[9px] font-bold text-muted-foreground tracking-wider mt-0.5">
+                  {n.sub}
+                </div>
+              )}
             </div>
           </motion.div>
         );
