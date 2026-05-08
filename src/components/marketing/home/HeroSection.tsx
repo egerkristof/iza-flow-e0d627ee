@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Rocket, Cpu } from "lucide-react";
+import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Rocket, Cpu, Zap, Briefcase, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
-import { CAL_URL } from "./shared";
 
 /* ── Floating ambient nodes ── */
 const NODES = [
