@@ -39,6 +39,7 @@ import IndustryBizDevPage from "./pages/marketing/IndustryBizDev";
 import IndustryAccountMgmtPage from "./pages/marketing/IndustryAccountMgmt";
 import IndustryOnboardingPage from "./pages/marketing/IndustryOnboarding";
 import IndustryMeetingsPage from "./pages/marketing/IndustryMeetings";
+import IndustryStrategyOfficePage from "./pages/marketing/IndustryStrategyOffice";
 import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
