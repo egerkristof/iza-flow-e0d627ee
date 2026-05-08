@@ -94,24 +94,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · M&As · Strategic Conversation
+            LIZA OS · Strategy Office · Sales Conversation
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Deal Memory Layer<br />
+          The Bridge Between<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for corporate development teams.
+            Boardroom and Operating Floor.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1180, lineHeight: 1.5 }}>
-          M&A teams need a bit of everything: fleet, regulatory, financials, market. Not engineer-deep on any one of them. LIZA OS gives corp dev a single 360° company view, and routes the deep questions to the right internal expert team.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>360° Company View · Expert Routing · Deal & Partnership Memory</span>
+          For the Strategy Office: corp dev, business development, and strategic planning teams that must know everything, fast, without being the expert on anything. LIZA gives them a standing 360° view, a routing rail into busy expert teams, and a memory that compounds across every brief.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>Scan · Synthesise · Route · Decide · Remember</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Prepared for corporate development & M&A teams (Hispasat · OTP · KKR-class acquirers) &nbsp;·&nbsp; Pilot + Open-Canvas Partnership Conversation
+          Confidential &nbsp;·&nbsp; Prepared for Strategy, Corp Dev, and Business Development leaders &nbsp;·&nbsp; 30-Day Pilot Conversation
         </p>
       </div>
       <SlideBar />
