@@ -87,9 +87,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Accelerate your team's work
+          AI that learns
           <br />
-          <span className="text-primary">with AI that learns how you actually operate.</span>
+          <span className="text-primary">how your team actually works.</span>
         </motion.h1>
 
         <motion.p
@@ -98,8 +98,8 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA captures how your function works, then makes sure every person
-          and every AI tool executes to the same standard.
+          LIZA captures your function's real playbook, so every person and
+          every AI tool executes to the same standard.
         </motion.p>
 
         {/* CTAs */}
