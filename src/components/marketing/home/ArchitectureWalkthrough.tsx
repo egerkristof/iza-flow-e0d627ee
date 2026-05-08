@@ -6,6 +6,7 @@ import {
   ArrowRight, ArrowLeft, Play, Pause, Bot, Search,
   CheckCircle2, TrendingDown, Users, FileText, Activity,
   Briefcase, Scale, Headphones, Cog, UserCheck, Wallet, Globe, Newspaper, AlertCircle, Link2, Plug,
+  Gauge,
 } from "lucide-react";
 
 /* Mobile-only auto-playing "Stories" video of the Liza architecture.
