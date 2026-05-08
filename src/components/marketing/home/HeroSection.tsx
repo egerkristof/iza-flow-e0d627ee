@@ -174,6 +174,12 @@ export function HeroSection() {
             );
           })}
         </div>
+        <p className="mt-5 text-center text-[12px] md:text-[13px] text-muted-foreground">
+          Trusted by <span className="font-semibold text-foreground">Heads of AI</span>,{" "}
+          <span className="font-semibold text-foreground">CFOs</span>,{" "}
+          <span className="font-semibold text-foreground">Function Owners</span>, and{" "}
+          <span className="font-semibold text-foreground">Platform Leads</span>.
+        </p>
       </motion.div>
 
       {/* ── Scroll hint ── */}
