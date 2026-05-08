@@ -1,26 +1,21 @@
 import React from "react";
 import { Sequence, AbsoluteFill } from "remotion";
-import { S1_MeetSarah }    from "./scenes/S1_MeetSarah";
-import { S2_MondayMorning }from "./scenes/S2_MondayMorning";
-import { S3_PressureAbove }from "./scenes/S3_PressureAbove";
-import { S4_SilosAround }  from "./scenes/S4_SilosAround";
-import { S5_TheBreak }     from "./scenes/S5_TheBreak";
-import { S6_TheGuide }     from "./scenes/S6_TheGuide";
-import { S7_ThePlan }      from "./scenes/S7_ThePlan";
-import { S8_NewMonday }    from "./scenes/S8_NewMonday";
+import { Scene1_Character } from "./scenes/Scene1_Character";
+import { Scene2_Problem }   from "./scenes/Scene2_Problem";
+import { Scene3_Guide }     from "./scenes/Scene3_Guide";
+import { Scene4_Plan }      from "./scenes/Scene4_Plan";
+import { Scene5_Success }   from "./scenes/Scene5_Success";
 import { C } from "./theme";
 
-// Hero's story · StoryBrand 7. Slow pacing · 30fps · ~88s total.
+/* 5-scene hero's journey · persistent left-rail · 30fps · ~90s total. */
 const SCENES: { dur: number; render: (d: number) => React.ReactNode }[] = [
-  { dur: 300, render: (d) => <S1_MeetSarah    durationInFrames={d} /> }, // 10s · CHARACTER (you, the manager)
-  { dur: 330, render: (d) => <S2_MondayMorning durationInFrames={d} /> }, // 11s · PROBLEM external · standards in heads
-  { dur: 330, render: (d) => <S3_PressureAbove durationInFrames={d} /> }, // 11s · PROBLEM internal · AI complication
-  { dur: 360, render: (d) => <S4_SilosAround  durationInFrames={d} /> }, // 12s · PROBLEM philosophical · silos + drift
-  { dur: 330, render: (d) => <S5_TheBreak     durationInFrames={d} /> }, // 11s · GUIDE · LIZA appears
-  { dur: 270, render: (d) => <S6_TheGuide     durationInFrames={d} /> }, // 9s  · PLAN · 3 moves
-  { dur: 360, render: (d) => <S7_ThePlan      durationInFrames={d} /> }, // 12s · STAKES · with vs without
-  { dur: 360, render: (d) => <S8_NewMonday    durationInFrames={d} /> }, // 12s · SUCCESS + CTA
+  { dur: 660, render: (d) => <Scene1_Character durationInFrames={d} /> }, // 22s · CHARACTER
+  { dur: 540, render: (d) => <Scene2_Problem   durationInFrames={d} /> }, // 18s · PROBLEM
+  { dur: 540, render: (d) => <Scene3_Guide     durationInFrames={d} /> }, // 18s · GUIDE
+  { dur: 540, render: (d) => <Scene4_Plan      durationInFrames={d} /> }, // 18s · PLAN
+  { dur: 420, render: (d) => <Scene5_Success   durationInFrames={d} /> }, // 14s · SUCCESS
 ];
+// total: 2700 frames @ 30fps = 90s
 
 export const MainVideo: React.FC = () => {
   let cursor = 0;
