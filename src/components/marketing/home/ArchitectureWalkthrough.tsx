@@ -337,6 +337,105 @@ function SceneStandard(p: number) {
   );
 }
 
+/* 4c. METER — AI is moving from flat seats to metered consumption */
+function SceneMeter(p: number) {
+  // Two side-by-side meters: "Today" (flat seats) → "By 2027" (metered tokens)
+  const todayIn = between(p, 0.05, 0.3);
+  const arrowIn = between(p, 0.3, 0.45);
+  const meterIn = between(p, 0.4, 0.7);
+  const fill = between(p, 0.45, 0.85); // animate the meter filling
+  const callouts = [
+    { k: "Sales draft",  v: "12,400 tok"  },
+    { k: "Legal review", v: "38,900 tok"  },
+    { k: "Support reply", v: "4,100 tok"  },
+    { k: "Agent loop",   v: "210,500 tok" },
+  ];
+  return (
+    <div className="w-full max-w-[320px] mx-auto">
+      <div className="text-center mb-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: RED }}>
+          The pricing model is changing
+        </span>
+      </div>
+
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+        {/* TODAY — flat seats */}
+        <div
+          className="rounded-lg border p-2"
+          style={{
+            opacity: todayIn,
+            transform: `translateY(${(1 - todayIn) * 8}px)`,
+            borderColor: MUTED + "44",
+            background: "hsl(var(--background))",
+          }}
+        >
+          <p className="text-[8.5px] font-black uppercase tracking-[0.14em] text-muted-foreground">Today</p>
+          <p className="text-[14px] font-black text-foreground leading-tight mt-1">$30 / seat</p>
+          <p className="text-[8.5px] text-muted-foreground leading-snug mt-1">
+            Flat. Predictable. Disconnected from value.
+          </p>
+        </div>
+
+        <div style={{ opacity: arrowIn }}>
+          <ArrowRight className="w-4 h-4" style={{ color: RED }} />
+        </div>
+
+        {/* 2027 — metered tokens */}
+        <div
+          className="rounded-lg border p-2"
+          style={{
+            opacity: meterIn,
+            transform: `translateY(${(1 - meterIn) * 8}px)`,
+            borderColor: RED + "55",
+            background: RED + "08",
+          }}
+        >
+          <p className="text-[8.5px] font-black uppercase tracking-[0.14em]" style={{ color: RED }}>By 2027</p>
+          <p className="text-[14px] font-black text-foreground leading-tight mt-1">$ / million tokens</p>
+          <div className="mt-1.5 h-1.5 rounded-full overflow-hidden" style={{ background: RED + "1a" }}>
+            <div className="h-full" style={{ width: `${fill * 100}%`, background: RED, transition: "width 80ms linear" }} />
+          </div>
+          <p className="text-[8.5px] text-muted-foreground leading-snug mt-1">
+            Every call is a line item.
+          </p>
+        </div>
+      </div>
+
+      {/* Itemised consumption callouts */}
+      <div
+        className="mt-3 rounded-lg border p-2"
+        style={{
+          opacity: between(p, 0.55, 0.8),
+          borderColor: RED + "33",
+          background: "hsl(var(--background))",
+        }}
+      >
+        <div className="flex items-center gap-1.5 mb-1.5">
+          <Gauge className="w-3 h-3" style={{ color: RED }} />
+          <span className="text-[8.5px] font-black uppercase tracking-[0.14em]" style={{ color: RED }}>
+            Yesterday's bill · sample
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-1">
+          {callouts.map((c) => (
+            <div key={c.k} className="flex items-center justify-between gap-2">
+              <span className="text-[9px] text-foreground/85 truncate">{c.k}</span>
+              <span className="text-[9px] font-mono font-black" style={{ color: RED }}>{c.v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="mt-3 text-center text-[10px] font-bold text-foreground/85 leading-snug"
+        style={{ opacity: between(p, 0.75, 0.95) }}
+      >
+        If you can't tie every token to a standard, you can't defend the bill.
+      </div>
+    </div>
+  );
+}
+
 /* 4b. THE LOOP — leaders edit, teams cite, signal flows back */
 function SceneLoop(p: number) {
   const editIn = between(p, 0.0, 0.25);
