@@ -89,9 +89,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Your standards live in docs.
+          Your team already uses AI.
           <br />
-          <span className="text-primary">Your AI ignores them.</span>
+          <span className="text-primary">Your playbook lives in a PDF nobody reads.</span>
         </motion.h1>
 
         <motion.p
@@ -100,9 +100,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          Every team gets a different answer. Every tool drifts from your policy.
-          And you pay for every one of those tokens. LIZA is the executable
-          standard your leadership owns, enforced across every AI tool and team.
+          Build your team playbook in three steps. LIZA turns how your function
+          actually works into executable knowledge, so every person and every AI
+          tool runs to the same standard from day one.
         </motion.p>
 
         {/* CTAs */}
@@ -113,7 +113,7 @@ export function HeroSection() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Link
-            to="/diagnostic"
+            to="/by-function"
             className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold transition-all"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -121,14 +121,14 @@ export function HeroSection() {
               boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
             }}
           >
-            Score your AI execution
+            See it for your function
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link
-            to="/os"
+            to="/diagnostic"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
           >
-            See the architecture <ArrowRight className="w-3.5 h-3.5" />
+            Score your AI execution <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </motion.div>
 

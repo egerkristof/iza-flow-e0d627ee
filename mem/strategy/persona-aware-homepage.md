@@ -1,15 +1,23 @@
 ---
 name: Persona-Aware Homepage Pattern
-description: Homepage uses one narrative with persona-aware proof inside, not a front-door persona selector. Persona-routed pages exist at /for/:slug for paid/outbound traffic only.
+description: Three-layer ICP. Operator (business/function lead) is primary on homepage. Champion (Head of AI) leads /os. Gatekeepers (CFO, Compliance, Infra) live on dedicated proof pages.
 type: strategy
 ---
-**Decision:** Council-validated. No front-door persona selector on homepage. Single narrative with three structural elements:
+**ICP layering (council-validated, supersedes prior Head-of-AI-primary stance):**
 
-1. **Hero subline** — names the bruise ("Your standards live in docs. Your AI ignores them.") not the architecture.
-2. **ThreeBruisesStrip** — after ArchitectureTeaser. One enemy, three persona-language cards (Head of AI, CFO, Business Lead).
-3. **PersonaLensExpander** — after ThreeReasonsSection. Inline tabs (Head of AI / CFO / Business Lead / Infra) → 3 lines + 1 metric + 1 quote. No funnel split.
-4. **Persona-routed campaign pages** — `/for/head-of-ai`, `/for/cfo`, `/for/business-lead`, `/for/infra`. For paid/outbound traffic only, NOT linked from homepage nav.
+1. **Primary - Operator:** Business / function team lead (Sales lead, Consulting partner, Lab director, Strategy office head). Lands on **homepage** and **`/by-function`**. Speaks operator language: "build your playbook in 3 steps", "your team uses AI inconsistently", "PDF nobody reads".
+2. **Secondary - Champion:** Head of AI / CAIO / VP AI. Lands on **`/os`** and **`/for/head-of-ai`**. Speaks program language: "one standard across every AI surface", "executable governance", "model-agnostic".
+3. **Tertiary - Gatekeepers:** CFO, Compliance, Infra/Platform. Live on dedicated pages (**`/for/cfo`**, **`/security-audit`**, **`/for/infra`**), linked from champion pages, NOT homepage hero.
 
-**Why no selector:** Costs conversion, signals weak positioning, shifts work to visitor. April Dunford / Andy Raskin / Peep Laja / Elena Verna / Bob Moesta consensus.
+**Homepage structure (operator-first):**
+- **Hero subline:** operator bruise ("Your team already uses AI. Your playbook lives in a PDF nobody reads.")
+- **Primary CTA:** "See it for your function" -> `/by-function`. Secondary: "Score your AI execution" -> `/diagnostic`.
+- **ProductMomentStrip** right after hero: the "3 steps to your playbook" emotional hook.
+- **ThreeBruisesStrip** is function-keyed (Sales Lead / Consulting Partner / Function Owner), not persona-keyed.
+- **PersonaLensExpander** demoted to "Who else cares once you bring this in", Business Lead tab first, then Head of AI, CFO, Infra. Bridge to champion + gatekeeper stories.
 
-**Personas:** Head of AI (primary), CFO (CapEx/OpEx framing), Business Lead (function owner), Infra (platform/lock-in).
+**Why operator-first, not champion-first:** Homepage traffic is organic/social/word-of-mouth. The operator is who lands. The champion is reached via operator forwarding the page or via `/os` directly. Don't optimize the homepage for the person who isn't visiting it (Dunford, Verna, council consensus).
+
+**No front-door persona selector.** Single narrative, persona-aware proof inside.
+
+**Persona-routed pages** (`/for/head-of-ai`, `/for/cfo`, `/for/business-lead`, `/for/infra`) exist for paid/outbound traffic only, NOT linked from homepage nav.

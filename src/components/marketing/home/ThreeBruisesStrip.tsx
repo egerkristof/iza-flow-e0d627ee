@@ -1,20 +1,20 @@
 import { motion } from "framer-motion";
-import { Cpu, Banknote, Building2 } from "lucide-react";
+import { Briefcase, Headphones, FlaskConical } from "lucide-react";
 
 const BRUISES = [
   {
-    icon: Cpu,
-    persona: "Head of AI",
-    line: "Three tools. Three answers. Zero ownership of which one is right.",
+    icon: Briefcase,
+    persona: "Sales Lead",
+    line: "Every rep writes their own pitch with AI. Half of them off-message by Wednesday.",
   },
   {
-    icon: Banknote,
-    persona: "CFO",
-    line: "AI spend climbs every quarter. ROI per token is undefined.",
+    icon: Headphones,
+    persona: "Consulting Partner",
+    line: "Your senior playbook lives in five people's heads. New hires take six months to ramp.",
   },
   {
-    icon: Building2,
-    persona: "Business Lead",
+    icon: FlaskConical,
+    persona: "Function Owner",
     line: "Your team uses AI like a Ouija board. Output looks confident, drifts from policy.",
   },
 ];
@@ -27,7 +27,7 @@ export function ThreeBruisesStrip() {
           className="text-[11px] font-black tracking-[0.25em] uppercase mb-8 text-center"
           style={{ color: "hsl(var(--primary))" }}
         >
-          One enemy. Three bruises.
+          One enemy. Different bruise depending on the function you run.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {BRUISES.map((b, i) => {
