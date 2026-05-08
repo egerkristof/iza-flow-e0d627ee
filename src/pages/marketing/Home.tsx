@@ -9,6 +9,7 @@ import { ThreeBruisesStrip } from "@/components/marketing/home/ThreeBruisesStrip
 import { PersonaLensExpander } from "@/components/marketing/home/PersonaLensExpander";
 import { ProductMomentStrip } from "@/components/marketing/home/ProductMomentStrip";
 import { WhoItsForStrip } from "@/components/marketing/home/WhoItsForStrip";
+import { ExecutableKnowledgeVideo } from "@/components/marketing/home/ExecutableKnowledgeVideo";
 
 /* Homepage = 4 acts. Hook -> Story -> Proof -> Ask. Anatomy lives on /os. */
 export default function HomePage() {
@@ -17,6 +18,8 @@ export default function HomePage() {
       {/* 1. Hook */}
       <HeroSection />
       <TrustStrip />
+      {/* What executable knowledge looks like, in 18s */}
+      <ExecutableKnowledgeVideo />
       {/* Operator hook: 3 steps to your playbook */}
       <ProductMomentStrip />
       <SectionDivider />
