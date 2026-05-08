@@ -44,10 +44,13 @@ export default function OSPage() {
         <div className="relative z-10 max-w-3xl mx-auto text-center">
           <SectionTag label="The Liza framework" />
           <h1 className="text-4xl md:text-6xl font-black leading-[1.05] tracking-tight mb-5">
-            Here is the architecture that makes that work.
+            The knowledge layer that governs every AI execution.
             <br />
             <GradientText>One standard. Every AI surface inherits it.</GradientText>
           </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Liza is the operating system that turns your policies, procedures, and standards into executable context. Publish it once and every model, agent, and copilot in your stack runs on the same source of truth.
+          </p>
           <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               to="/diagnostic"

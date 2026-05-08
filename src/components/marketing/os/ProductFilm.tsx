@@ -150,7 +150,7 @@ export function ProductFilm() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.04 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 pb-24 sm:pb-20"
+            className="absolute inset-0 flex items-center justify-center px-4 sm:px-8 pt-12 sm:pt-14 pb-24 sm:pb-20"
           >
             <BeatVisual visual={beat.visual} />
           </motion.div>
@@ -630,7 +630,7 @@ function TrappedIceberg({ tone, amber }: { tone: string; amber: string }) {
     "Decision rationale lost in Slack threads",
   ];
   return (
-    <div className="relative w-full max-w-2xl mx-auto aspect-[4/3]">
+    <div className="relative w-full max-w-2xl mx-auto h-full max-h-[460px]">
       {/* Waterline */}
       <div className="absolute left-0 right-0 top-[34%] h-px" style={{ background: "hsl(var(--border))" }} />
       <div className="absolute left-2 top-[34%] -translate-y-1/2 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-widest rounded" style={{ background: "hsl(var(--background))", color: "hsl(var(--muted-foreground))" }}>
