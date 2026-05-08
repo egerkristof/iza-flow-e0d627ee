@@ -2,6 +2,7 @@ import FunctionalLifecyclePage from "@/components/marketing/FunctionalLifecycleP
 import {
   Compass, FileText, Layers, MessageSquare, ScrollText, BookMarked,
   AlertTriangle, Clock, Brain, Building2, Handshake, Target, Globe,
+  Eye, Route, Database, RefreshCw,
 } from "lucide-react";
 
 const config = {
@@ -41,6 +42,33 @@ const config = {
   ],
   howItWorksNote:
     "A working strategy office runs on captured context, not heroics. The pattern is the same whether you sit in satcom, banking, pharma, or a federated holding.",
+  howItWorksHeadline: "What changes when the strategy office stops starting at zero",
+  howItWorks: [
+    {
+      icon: <Eye className="w-5 h-5" />,
+      step: "01",
+      title: "Standing 360 view",
+      desc: "The brief on every relevant target, partner, competitor, and sector is already half-built before it is requested. The team starts at 60 percent, not zero.",
+    },
+    {
+      icon: <Route className="w-5 h-5" />,
+      step: "02",
+      title: "Routed expert questions",
+      desc: "The four sharp questions only fleet, finance, legal, or regulatory can answer get routed in their format, on their schedule. No more chasing, no more two-week silences.",
+    },
+    {
+      icon: <Database className="w-5 h-5" />,
+      step: "03",
+      title: "Captured once, reusable forever",
+      desc: "Every answer, every memo, every senior take is filed against the entity it belongs to. The next analyst asking the same question gets the answer in seconds, not days.",
+    },
+    {
+      icon: <RefreshCw className="w-5 h-5" />,
+      step: "04",
+      title: "Compounding briefs",
+      desc: "Each brief makes the next one faster. The strategy office becomes the team that walks in with answers, and the team experts actually want to help.",
+    },
+  ],
   useCaseHeadline: "Three motions every strategy team already runs",
   useCaseNote: "Same workflow in different jackets. Each one compounds the next when the answers are captured once and reused.",
   useCases: [

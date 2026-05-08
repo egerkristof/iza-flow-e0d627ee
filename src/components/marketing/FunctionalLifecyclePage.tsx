@@ -49,6 +49,7 @@ export interface FunctionalLifecycleConfig {
   deckHref?: string;
   deckLabel?: string;
   hideDiagnostic?: boolean;
+  howItWorksHeadline?: string;
 }
 
 const DEFAULT_HOW = [
@@ -185,7 +186,7 @@ export default function FunctionalLifecyclePage({ config }: { config: Functional
       <section className="pb-16 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 text-foreground">
-            How LIZA governs AI across your {config.tag.toLowerCase()}
+            {config.howItWorksHeadline ?? `How LIZA governs AI across your ${config.tag.toLowerCase()}`}
           </h2>
           <p className="text-sm text-muted-foreground text-center mb-10 max-w-lg mx-auto">
             {config.howItWorksNote}
