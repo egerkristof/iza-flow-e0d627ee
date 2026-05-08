@@ -131,22 +131,27 @@ export function HeroSection() {
 
       </div>
 
-      {/* ── Industry lifecycles we already cover ── */}
+      {/* ── Industry coverage ── */}
       <motion.div
         className="relative z-10 mt-2 w-full max-w-4xl mx-auto"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.45 }}
       >
-        <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="flex items-center justify-center gap-3 mb-6">
           <div className="h-px w-10 bg-border" />
           <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground font-semibold">
-            Built for the most demanding industry lifecycles
+            Built for teams across every industry
           </p>
           <div className="h-px w-10 bg-border" />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
-          {INDUSTRY_LIFECYCLES.map((ind, i) => {
+
+        {/* Fast-moving */}
+        <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3 text-center">
+          Fast-moving & transactional
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mb-6">
+          {FAST_MOVING.map((ind, i) => {
             const Icon = ind.icon;
             return (
               <motion.div
@@ -171,6 +176,38 @@ export function HeroSection() {
             );
           })}
         </div>
+
+        {/* Regulated */}
+        <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3 text-center">
+          Regulated & high-stakes
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
+          {REGULATED.map((ind, i) => {
+            const Icon = ind.icon;
+            return (
+              <motion.div
+                key={ind.label}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.7 + i * 0.05 }}
+                className="group flex items-center gap-3 px-3.5 py-3 md:px-4 md:py-3.5 rounded-xl border border-border bg-background/40 backdrop-blur-sm hover:border-primary/40 hover:bg-background/70 transition-all"
+              >
+                <div className="shrink-0 w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center bg-primary/8 text-primary">
+                  <Icon className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+                </div>
+                <div className="min-w-0 text-left">
+                  <div className="text-[12px] md:text-[13px] font-semibold text-foreground leading-tight truncate">
+                    {ind.label}
+                  </div>
+                  <div className="text-[10px] md:text-[11px] text-muted-foreground leading-tight truncate">
+                    {ind.sub}
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
         <p className="mt-5 text-center text-[12px] md:text-[13px] text-muted-foreground">
           Trusted by <span className="font-semibold text-foreground">Heads of AI</span>,{" "}
           <span className="font-semibold text-foreground">CFOs</span>,{" "}
