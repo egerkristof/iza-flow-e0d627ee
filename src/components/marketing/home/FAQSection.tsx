@@ -25,6 +25,10 @@ const FAQS = [
     a: "No. LIZA OS is the governance layer above your tools. It ensures your standards and compliance requirements are enforced regardless of which AI model someone uses.",
   },
   {
+    q: "AI pricing is shifting from seats to metered tokens. How does LIZA help?",
+    a: "Today most AI is billed flat per seat. By 2027, every call is a metered line item on your P&L. Without a governance layer, every token is unanchored consumption and impossible to defend at budget time. LIZA ties every AI call to a standard, a workflow and an outcome — so each token maps to a business decision you can audit, justify and optimise. You stop buying AI tooling and start owning AI unit economics.",
+  },
+  {
     q: "How do departments adopt this without creating a central bottleneck?",
     a: "Capabilities are modular. Each department composes the ones they need. Same governance standards, independent execution.",
   },

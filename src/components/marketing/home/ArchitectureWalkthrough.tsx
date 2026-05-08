@@ -6,6 +6,7 @@ import {
   ArrowRight, ArrowLeft, Play, Pause, Bot, Search,
   CheckCircle2, TrendingDown, Users, FileText, Activity,
   Briefcase, Scale, Headphones, Cog, UserCheck, Wallet, Globe, Newspaper, AlertCircle, Link2, Plug,
+  Gauge,
 } from "lucide-react";
 
 /* Mobile-only auto-playing "Stories" video of the Liza architecture.
@@ -336,6 +337,105 @@ function SceneStandard(p: number) {
   );
 }
 
+/* 4c. METER — AI is moving from flat seats to metered consumption */
+function SceneMeter(p: number) {
+  // Two side-by-side meters: "Today" (flat seats) → "By 2027" (metered tokens)
+  const todayIn = between(p, 0.05, 0.3);
+  const arrowIn = between(p, 0.3, 0.45);
+  const meterIn = between(p, 0.4, 0.7);
+  const fill = between(p, 0.45, 0.85); // animate the meter filling
+  const callouts = [
+    { k: "Sales draft",  v: "12,400 tok"  },
+    { k: "Legal review", v: "38,900 tok"  },
+    { k: "Support reply", v: "4,100 tok"  },
+    { k: "Agent loop",   v: "210,500 tok" },
+  ];
+  return (
+    <div className="w-full max-w-[320px] mx-auto">
+      <div className="text-center mb-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: RED }}>
+          The pricing model is changing
+        </span>
+      </div>
+
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+        {/* TODAY — flat seats */}
+        <div
+          className="rounded-lg border p-2"
+          style={{
+            opacity: todayIn,
+            transform: `translateY(${(1 - todayIn) * 8}px)`,
+            borderColor: MUTED + "44",
+            background: "hsl(var(--background))",
+          }}
+        >
+          <p className="text-[8.5px] font-black uppercase tracking-[0.14em] text-muted-foreground">Today</p>
+          <p className="text-[14px] font-black text-foreground leading-tight mt-1">$30 / seat</p>
+          <p className="text-[8.5px] text-muted-foreground leading-snug mt-1">
+            Flat. Predictable. Disconnected from value.
+          </p>
+        </div>
+
+        <div style={{ opacity: arrowIn }}>
+          <ArrowRight className="w-4 h-4" style={{ color: RED }} />
+        </div>
+
+        {/* 2027 — metered tokens */}
+        <div
+          className="rounded-lg border p-2"
+          style={{
+            opacity: meterIn,
+            transform: `translateY(${(1 - meterIn) * 8}px)`,
+            borderColor: RED + "55",
+            background: RED + "08",
+          }}
+        >
+          <p className="text-[8.5px] font-black uppercase tracking-[0.14em]" style={{ color: RED }}>By 2027</p>
+          <p className="text-[14px] font-black text-foreground leading-tight mt-1">$ / million tokens</p>
+          <div className="mt-1.5 h-1.5 rounded-full overflow-hidden" style={{ background: RED + "1a" }}>
+            <div className="h-full" style={{ width: `${fill * 100}%`, background: RED, transition: "width 80ms linear" }} />
+          </div>
+          <p className="text-[8.5px] text-muted-foreground leading-snug mt-1">
+            Every call is a line item.
+          </p>
+        </div>
+      </div>
+
+      {/* Itemised consumption callouts */}
+      <div
+        className="mt-3 rounded-lg border p-2"
+        style={{
+          opacity: between(p, 0.55, 0.8),
+          borderColor: RED + "33",
+          background: "hsl(var(--background))",
+        }}
+      >
+        <div className="flex items-center gap-1.5 mb-1.5">
+          <Gauge className="w-3 h-3" style={{ color: RED }} />
+          <span className="text-[8.5px] font-black uppercase tracking-[0.14em]" style={{ color: RED }}>
+            Yesterday's bill · sample
+          </span>
+        </div>
+        <div className="grid grid-cols-2 gap-1">
+          {callouts.map((c) => (
+            <div key={c.k} className="flex items-center justify-between gap-2">
+              <span className="text-[9px] text-foreground/85 truncate">{c.k}</span>
+              <span className="text-[9px] font-mono font-black" style={{ color: RED }}>{c.v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="mt-3 text-center text-[10px] font-bold text-foreground/85 leading-snug"
+        style={{ opacity: between(p, 0.75, 0.95) }}
+      >
+        If you can't tie every token to a standard, you can't defend the bill.
+      </div>
+    </div>
+  );
+}
+
 /* 4b. THE LOOP — leaders edit, teams cite, signal flows back */
 function SceneLoop(p: number) {
   const editIn = between(p, 0.0, 0.25);
@@ -612,20 +712,24 @@ const SCENES: Scene[] = [
     caption: "Discounts drift. Audit flags real risk. Nobody made a bad call. Nobody made the rules either.",
   },
   {
-    kicker: "05 · Meet Liza", headline: "One standard your company decides by.", duration: 7500, render: SceneStandard,
+    kicker: "05 · The bill", headline: "And the bill is about to be itemised.", duration: 7500, render: SceneMeter,
+    caption: "AI is shifting from flat seats to metered tokens. Every call becomes a P&L line. Without a standard, every token is unanchored consumption.",
+  },
+  {
+    kicker: "06 · Meet Liza", headline: "One standard your company decides by.", duration: 7500, render: SceneStandard,
     caption: "A living document. Versioned. Owned by leaders. Read by every AI tool.",
   },
   {
-    kicker: "06 · The loop", headline: "Leaders write. Teams cite. Signal flows back.", duration: 8000, render: SceneLoop,
+    kicker: "07 · The loop", headline: "Leaders write. Teams cite. Signal flows back.", duration: 8000, render: SceneLoop,
     caption: "Sarah edits a rule. Maya cites it on a deal. Liza flags the next edge case for Sarah.",
   },
   {
-    kicker: "07 · The plan", headline: "Liza learns, then governs.", duration: 8500, render: ScenePlan,
+    kicker: "08 · The plan", headline: "Liza learns, then governs.", duration: 8500, render: ScenePlan,
     caption: "Connect, co-author, wire to every AI tool. Two weeks to one source of truth.",
   },
   {
-    kicker: "08 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
-    caption: "Same answer in every tool. Regulation rolls out in a day. The standard sharpens itself every week.",
+    kicker: "09 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
+    caption: "Same answer in every tool. Regulation rolls out in a day. Every token tied to a standard you can defend.",
   },
 ];
 

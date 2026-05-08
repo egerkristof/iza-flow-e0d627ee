@@ -4,7 +4,7 @@ const STATS = [
   { value: "85%", label: "of enterprises adopted AI. Almost none govern what it produces.", source: "McKinsey State of AI, 2025" },
   { value: "40%", label: "of AI productivity gains lost to rework and review.", source: "Workday, 2026" },
   { value: "90%", label: "of operating knowledge stays tacit, in people and threads.", source: "Observed across regulated deployments" },
-  { value: "$280B", label: "lost yearly to rework in US construction alone.", source: "FMI / industry analyses" },
+  { value: "2027", label: "AI shifts from flat seats to metered consumption. Every token becomes a P&L line.", source: "Industry pricing trajectory" },
 ];
 
 export function TrustStrip() {
