@@ -175,7 +175,7 @@ export const presentationRoutes: PresentationRoute[] = [
     title: "Strategy Office Sales Deck",
     path: "/strategy-office",
     sourcePath: "src/pages/StrategyOfficeDeck.tsx",
-    description: "Sales deck (NOT investor) for Strategy / Corp Dev / Business Development cells. Built from Fernando's Hispasat reality: small team, no fixed workflows, no budget, must form 360° views fast and route deep questions to busy expert teams (fleet, finance, regulatory). Category: Strategy Office OS — the bridge between leadership intent and execution expertise. Lifecycle: Scan → Synthesise → Route → Decide → Remember. Investor slides removed; ends on 30-day pilot CTA. Function page lives at /industries/strategy-office.",
+    description: "Sales deck for Strategy / Corp Dev / Business Development teams. Problem-led 12-slide arc (rewritten from scratch, not redressed from M&A): leads with the human reality of the strategy team (every brief from zero, busy experts, lost prior work, senior memory walks out, Friday board demand), names structural reasons it stays broken, then introduces LIZA as the memory + routing layer (secondary, not the headline). Ends on a 30-day pilot with measured deltas (time-to-brief, expert response, reuse rate). Function page lives at /industries/strategy-office.",
     component: StrategyOfficeDeck,
     showInAdmin: true,
   },
