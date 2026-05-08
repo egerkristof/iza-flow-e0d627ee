@@ -1025,7 +1025,7 @@ export default function StrategyOfficeDeck() {
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
 
-  useSwipe({ onSwipeLeft: next, onSwipeRight: prev });
+  useSwipe(next, prev);
 
   const enterFullscreen = useCallback(() => {
     document.documentElement.requestFullscreen?.();
