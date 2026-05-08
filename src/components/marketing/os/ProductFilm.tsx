@@ -622,61 +622,23 @@ function TrappedIceberg({ tone, amber }: { tone: string; amber: string }) {
   const below = [
     "Pricing exceptions never written down",
     "How deals actually get approved",
-    "Risk thresholds carried in senior heads",
+    "Risk thresholds in senior heads",
     "Why last quarter's playbook changed",
-    "Customer-specific tone and red lines",
-    "Trade-offs behind every \"it depends\"",
-    "Edge cases solved once, then forgotten",
-    "Decision rationale lost in Slack threads",
+    "Customer red lines and tone",
+    "Trade-offs behind every it depends",
   ];
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-full max-h-[460px]">
-      {/* Waterline */}
-      <div className="absolute left-0 right-0 top-[34%] h-px" style={{ background: "hsl(var(--border))" }} />
-      <div className="absolute left-2 top-[34%] -translate-y-1/2 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-widest rounded" style={{ background: "hsl(var(--background))", color: "hsl(var(--muted-foreground))" }}>
-        Waterline
-      </div>
-
-      {/* Iceberg shape */}
-      <svg viewBox="0 0 100 75" className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="ice-above" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="hsl(var(--card))" stopOpacity="0.95" />
-            <stop offset="100%" stopColor="hsl(var(--card))" stopOpacity="0.6" />
-          </linearGradient>
-          <linearGradient id="ice-below" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={tone} stopOpacity="0.10" />
-            <stop offset="100%" stopColor={tone} stopOpacity="0.02" />
-          </linearGradient>
-        </defs>
-        {/* tip */}
-        <motion.polygon
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          points="42,4 58,4 64,25.5 36,25.5"
-          fill="url(#ice-above)"
-          stroke="hsl(var(--border))"
-          strokeWidth="0.4"
-        />
-        {/* mass below */}
-        <motion.polygon
-          initial={{ opacity: 0, y: 10 }}
+    <div className="relative w-full h-full max-w-3xl mx-auto flex flex-col">
+      {/* ABOVE WATER — 35% */}
+      <div className="relative flex-[35] min-h-0 flex flex-col items-center justify-end pb-2">
+        <motion.span
+          initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          points="36,25.5 64,25.5 86,46 78,66 50,72 22,66 14,46"
-          fill="url(#ice-below)"
-          stroke={tone}
-          strokeOpacity="0.35"
-          strokeWidth="0.4"
-          strokeDasharray="1.2 0.8"
-        />
-      </svg>
-
-      {/* Above water labels */}
-      <div className="absolute top-[2%] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-10">
-        <span className="text-[8px] sm:text-[9px] font-black tracking-[0.22em] uppercase text-muted-foreground">What AI sees</span>
-        <div className="flex gap-1.5 sm:gap-2">
+          className="text-[9px] sm:text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground mb-2"
+        >
+          What AI sees
+        </motion.span>
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 justify-center mb-2">
           {above.map((it, i) => {
             const Icon = it.icon;
             return (
@@ -684,43 +646,103 @@ function TrappedIceberg({ tone, amber }: { tone: string; amber: string }) {
                 key={it.t}
                 initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + i * 0.1 }}
-                className="px-1.5 py-1 rounded border bg-card flex items-center gap-1"
+                transition={{ delay: 0.1 + i * 0.08 }}
+                className="px-2 py-1 rounded-md border bg-card flex items-center gap-1.5"
                 style={{ borderColor: "hsl(var(--border))" }}
               >
-                <Icon className="w-2.5 h-2.5 text-muted-foreground" />
-                <span className="text-[8px] sm:text-[9px] font-bold">{it.t}</span>
-                <Lock className="w-2 h-2" style={{ color: amber }} />
+                <Icon className="w-3 h-3 text-muted-foreground" />
+                <span className="text-[9px] sm:text-[11px] font-bold">{it.t}</span>
+                <Lock className="w-2.5 h-2.5" style={{ color: amber }} />
               </motion.div>
             );
           })}
         </div>
+
+        {/* Iceberg tip — anchored to waterline */}
+        <motion.svg
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewBox="0 0 100 40"
+          preserveAspectRatio="xMidYMax meet"
+          className="w-[160px] sm:w-[200px] h-auto"
+        >
+          <defs>
+            <linearGradient id="ice-above" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="hsl(var(--card))" stopOpacity="1" />
+              <stop offset="100%" stopColor="hsl(var(--card))" stopOpacity="0.7" />
+            </linearGradient>
+          </defs>
+          <polygon
+            points="42,4 58,4 72,40 28,40"
+            fill="url(#ice-above)"
+            stroke="hsl(var(--border))"
+            strokeWidth="0.6"
+          />
+        </motion.svg>
       </div>
 
-      {/* Below water labels */}
-      <div className="absolute inset-x-0 top-[40%] bottom-[2%] flex flex-col items-center gap-1 sm:gap-1.5 z-10 px-4">
-        <motion.span
+      {/* WATERLINE */}
+      <div className="relative h-px w-full" style={{ background: "hsl(var(--border))" }}>
+        <span
+          className="absolute right-0 -top-2 px-1.5 py-0.5 text-[8px] sm:text-[9px] font-black uppercase tracking-widest rounded"
+          style={{ background: "hsl(var(--background))", color: "hsl(var(--muted-foreground))" }}
+        >
+          Waterline
+        </span>
+      </div>
+
+      {/* BELOW WATER — 65% */}
+      <div className="relative flex-[65] min-h-0 flex">
+        {/* Iceberg mass background */}
+        <motion.svg
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="text-[8px] sm:text-[9px] font-black tracking-[0.22em] uppercase"
-          style={{ color: tone }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          viewBox="0 0 100 60"
+          preserveAspectRatio="none"
+          className="absolute inset-0 w-full h-full"
         >
-          What runs your business
-        </motion.span>
-        <div className="grid grid-cols-2 gap-x-2 sm:gap-x-3 gap-y-0.5 sm:gap-y-1 w-full max-w-md">
-          {below.map((line, i) => (
-            <motion.div
-              key={line}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -8 : 8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.8 + i * 0.12 }}
-              className="flex items-start gap-1 text-[8.5px] sm:text-[10px] leading-tight"
-            >
-              <span className="mt-0.5" style={{ color: tone }}>•</span>
-              <span className="font-semibold text-muted-foreground">{line}</span>
-            </motion.div>
-          ))}
+          <defs>
+            <linearGradient id="ice-below" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={tone} stopOpacity="0.14" />
+              <stop offset="100%" stopColor={tone} stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
+          <polygon
+            points="22,0 78,0 96,30 86,52 50,60 14,52 4,30"
+            fill="url(#ice-below)"
+            stroke={tone}
+            strokeOpacity="0.35"
+            strokeWidth="0.4"
+            strokeDasharray="1.2 0.8"
+          />
+        </motion.svg>
+
+        <div className="relative z-10 w-full flex flex-col items-center justify-center px-4 sm:px-6 py-3 gap-2 sm:gap-3">
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="text-[9px] sm:text-[10px] font-black tracking-[0.22em] uppercase"
+            style={{ color: tone }}
+          >
+            What actually runs your business
+          </motion.span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2 w-full max-w-lg">
+            {below.map((line, i) => (
+              <motion.div
+                key={line}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -8 : 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 + i * 0.1 }}
+                className="flex items-start gap-1.5 text-[10px] sm:text-[12px] leading-snug"
+              >
+                <span className="mt-0.5 font-black" style={{ color: tone }}>•</span>
+                <span className="font-semibold text-foreground/80">{line}</span>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
