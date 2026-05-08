@@ -13,6 +13,21 @@ type Persona = {
 
 const PERSONAS: Persona[] = [
   {
+    id: "business-lead",
+    label: "Business Lead",
+    icon: Building2,
+    lines: [
+      "Your team uses AI like a Ouija board. Confident output, drifts from policy.",
+      "New hires take months to ramp because the standard lives in people's heads.",
+      "LIZA encodes how your function actually decides, so AI executes to it on day one.",
+    ],
+    metric: { value: "Days, not months", label: "to ramp on your standard" },
+    quote: {
+      text: "Our playbook stopped being a PDF nobody reads. It's now what AI runs on.",
+      attribution: "Head of Operations, regulated manufacturer",
+    },
+  },
+  {
     id: "head-of-ai",
     label: "Head of AI",
     icon: Cpu,
@@ -40,21 +55,6 @@ const PERSONAS: Persona[] = [
     quote: {
       text: "We stopped buying AI tools and started owning AI unit economics.",
       attribution: "CFO, mid-market enterprise",
-    },
-  },
-  {
-    id: "business-lead",
-    label: "Business Lead",
-    icon: Building2,
-    lines: [
-      "Your team uses AI like a Ouija board. Confident output, drifts from policy.",
-      "New hires take months to ramp because the standard lives in people's heads.",
-      "LIZA encodes how your function actually decides, so AI executes to it on day one.",
-    ],
-    metric: { value: "Days, not months", label: "to ramp on your standard" },
-    quote: {
-      text: "Our playbook stopped being a PDF nobody reads. It's now what AI runs on.",
-      attribution: "Head of Operations, regulated manufacturer",
     },
   },
   {
@@ -90,7 +90,7 @@ export function PersonaLensExpander() {
             See it through your lens
           </p>
           <h2 className="text-2xl md:text-4xl font-black tracking-tight text-foreground">
-            One enemy. Different bruise depending on the chair you sit in.
+            Who else cares once you bring this in.
           </h2>
         </div>
 

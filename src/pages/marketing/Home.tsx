@@ -8,6 +8,8 @@ import { ArchitectureTeaser } from "@/components/marketing/home/ArchitectureTeas
 import { TrustStrip } from "@/components/marketing/home/TrustStrip";
 import { ThreeBruisesStrip } from "@/components/marketing/home/ThreeBruisesStrip";
 import { PersonaLensExpander } from "@/components/marketing/home/PersonaLensExpander";
+import { ProductMomentStrip } from "@/components/marketing/home/ProductMomentStrip";
+import { WhoItsForStrip } from "@/components/marketing/home/WhoItsForStrip";
 
 /* Homepage = 4 acts. Hook → Story → Proof → Ask. Anatomy lives on /os. */
 export default function HomePage() {
@@ -16,10 +18,13 @@ export default function HomePage() {
       {/* 1. Hook */}
       <HeroSection />
       <TrustStrip />
+      {/* Operator hook: 3 steps to your playbook */}
+      <ProductMomentStrip />
       <SectionDivider />
       {/* 2. Story (the Stories player, now responsive) */}
       <ArchitectureTeaser />
       <ThreeBruisesStrip />
+      <WhoItsForStrip />
       <SectionDivider />
       {/* 3. Proof */}
       <ThreeReasonsSection />
