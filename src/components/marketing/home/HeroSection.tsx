@@ -82,14 +82,14 @@ export function HeroSection() {
       {/* ── Content ── */}
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         <motion.h1
-          className="text-3xl md:text-5xl lg:text-[3.75rem] font-black mb-5 leading-[1.08] tracking-tight"
+          className="text-3xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.08] tracking-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Your team already uses AI.
+          Accelerate your team's work
           <br />
-          <span className="text-primary">Your playbook lives in a PDF nobody reads.</span>
+          <span className="text-primary">with AI that learns how you actually operate.</span>
         </motion.h1>
 
         <motion.p
@@ -98,9 +98,8 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          Build your team playbook in three steps. LIZA turns how your function
-          actually works into executable knowledge, so every person and every AI
-          tool runs to the same standard from day one.
+          LIZA captures how your function works, then makes sure every person
+          and every AI tool executes to the same standard.
         </motion.p>
 
         {/* CTAs */}
