@@ -4,92 +4,59 @@ import { SceneFrame } from "../components/SceneFrame";
 import { Window } from "../components/Window";
 import { C } from "../theme";
 
-/* Beat 5 — THE VILLAIN. Drift. Sarah firefights. Days lost. Trust erodes. */
+/* Beat 5 · GUIDE (StoryBrand 3) — LIZA appears.
+   Starts where any real automation should: from your people.
+   Ingests your docs (in or out of date), the AACE framework codifies what
+   was never written down. */
 export const S5_TheBreak: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const thread = [
-    { who: "Legal",   t: "Cannot approve. SLA language is non-standard.",         tone: C.amber },
-    { who: "Finance", t: "Discount above 12% needs CFO sign-off.",                tone: C.primary },
-    { who: "CS",      t: "We already promised the customer 18%.",                  tone: C.green },
-    { who: "Sarah",   t: "Calling a 30-min sync. Again. Third time this week.",   tone: C.red },
+  const badge = spring({ frame: frame - 14, fps, config: { damping: 14, stiffness: 110 } });
+  const ringPulse = (Math.sin(frame / 14) + 1) / 2;
+
+  const moves = [
+    { tag: "Ingests",  text: "Your Drive, SharePoint, wikis, SOPs · in date or out of date" },
+    { tag: "Codifies", text: "AACE framework captures the expert reasoning your seniors never wrote down" },
+    { tag: "Updates",  text: "A copilot helps you fix the stale stuff and fill the missing pieces" },
   ];
 
   return (
     <SceneFrame
-      kicker="What actually happens"
-      headline="Three days of email. One escalation. The customer notices the silence. Sarah is the bottleneck, not by choice."
+      kicker="The guide · LIZA"
+      headline="Real automation has to start where the work actually starts. With your people. Not your wiki."
       durationInFrames={durationInFrames}
     >
-      <div style={{ display: "flex", gap: 40, padding: "0 100px", alignItems: "stretch", justifyContent: "center" }}>
-        <div style={{ width: 760 }}>
-          <Window label="Re: Acme renewal · email thread" accent={C.red}>
-            {thread.map((m, i) => {
-              const ap = spring({ frame: frame - 30 - i * 28, fps, config: { damping: 18, stiffness: 130 } });
-              return (
-                <div
-                  key={m.who}
-                  style={{
-                    opacity: ap,
-                    transform: `translateX(${(1 - ap) * -16}px)`,
-                    padding: "14px 0",
-                    borderBottom: i < thread.length - 1 ? `1px solid ${C.border}` : "none",
-                    display: "flex",
-                    gap: 16,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <div
-                    style={{
-                      minWidth: 96,
-                      fontSize: 12,
-                      fontWeight: 900,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: m.tone,
-                      paddingTop: 4,
-                    }}
-                  >
-                    {m.who}
-                  </div>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: C.text, lineHeight: 1.4 }}>{m.t}</div>
-                </div>
-              );
-            })}
-          </Window>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 36, marginTop: 20 }}>
+        <div style={{ position: "relative", width: 220, height: 220 }}>
+          <div style={{ position: "absolute", inset: 0, borderRadius: "50%",
+            background: `radial-gradient(circle, ${C.primary}22, transparent 70%)`,
+            transform: `scale(${1 + ringPulse * 0.25})` }} />
+          <div style={{ position: "absolute", inset: 30, borderRadius: "50%",
+            border: `2px dashed ${C.primary}66`, transform: `rotate(${frame * 0.6}deg)` }} />
+          <div style={{ position: "absolute", inset: 60, borderRadius: "50%",
+            background: `linear-gradient(135deg, ${C.primary}, #0E6FA3)`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "#fff", fontWeight: 900, fontSize: 36, letterSpacing: "0.04em",
+            transform: `scale(${badge})`, boxShadow: `0 30px 80px -20px ${C.primary}aa` }}>LIZA</div>
         </div>
 
-        {/* Cost panel */}
-        <div
-          style={{
-            width: 380,
-            opacity: interpolate(frame, [140, 200], [0, 1], { extrapolateRight: "clamp" }),
-            transform: `translateY(${interpolate(frame, [140, 200], [16, 0], { extrapolateRight: "clamp" })}px)`,
-          }}
-        >
-          <Window label="What this week costs" accent={C.red} glow>
-            {[
-              { k: "Decisions stuck", v: "11" },
-              { k: "Slack DMs to Sarah", v: "84" },
-              { k: "Ad-hoc syncs", v: "5" },
-              { k: "Customer days lost", v: "3" },
-            ].map((row, i) => {
-              const ap = spring({ frame: frame - 170 - i * 14, fps, config: { damping: 18, stiffness: 130 } });
+        <div style={{ width: 1080 }}>
+          <Window label="LIZA · how she starts" accent={C.primary} glow>
+            {moves.map((m, i) => {
+              const ap = spring({ frame: frame - 80 - i * 30, fps, config: { damping: 18, stiffness: 130 } });
               return (
-                <div
-                  key={row.k}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: "14px 0",
-                    borderBottom: i < 3 ? `1px solid ${C.border}` : "none",
-                    opacity: ap,
-                  }}
-                >
-                  <div style={{ fontSize: 14, fontWeight: 700, color: C.textMuted }}>{row.k}</div>
-                  <div style={{ fontSize: 32, fontWeight: 900, color: C.red }}>{row.v}</div>
+                <div key={m.tag} style={{
+                  opacity: ap, transform: `translateX(${(1 - ap) * -16}px)`,
+                  display: "flex", gap: 18, alignItems: "center",
+                  padding: "16px 0",
+                  borderBottom: i < moves.length - 1 ? `1px solid ${C.border}` : "none",
+                }}>
+                  <div style={{
+                    minWidth: 130, fontSize: 12, fontWeight: 900, letterSpacing: "0.18em",
+                    color: C.primary, textTransform: "uppercase",
+                  }}>{m.tag}</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: C.text, lineHeight: 1.4 }}>{m.text}</div>
                 </div>
               );
             })}
