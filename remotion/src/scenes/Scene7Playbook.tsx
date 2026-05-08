@@ -46,8 +46,8 @@ export const Scene7Playbook: React.FC<{ durationInFrames: number }> = ({ duratio
       headline={
         <>
           Every playbook is written in{" "}
-          <span style={{ color: C.primary }}>AACE</span>
-          {" "}— the structure your AI executes.
+          <span style={{ color: C.primary }}>AACE</span>.
+          {" "}The structure your AI executes.
         </>
       }
       durationInFrames={durationInFrames}
