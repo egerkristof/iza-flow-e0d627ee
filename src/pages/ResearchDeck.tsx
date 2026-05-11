@@ -285,31 +285,31 @@ function S03Iceberg() {
           Obsidian is the benchmark. <span style={{ color: `hsl(${TEAL})` }}>Three structural things it does not do.</span>
         </h2>
         <div className="grid grid-cols-12 gap-6 flex-1">
-          <div className="col-span-4 rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${AMBER} / 0.45)`, background: `hsl(${AMBER} / 0.04)` }}>
-            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${AMBER})` }}>BENCHMARK</p>
-            <p className="font-black mt-3 mb-2" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>Obsidian + plugins</p>
-            <ul className="space-y-3 mb-5 mt-4">
+          <div className="col-span-4 rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${AMBER} / 0.45)`, background: `hsl(${AMBER} / 0.04)` }}>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${AMBER})` }}>BENCHMARK</p>
+            <p className="font-black mt-3 mb-2" style={{ fontSize: 34, color: TEXT, lineHeight: 1.1 }}>Obsidian + plugins</p>
+            <ul className="space-y-4 mb-5 mt-5">
               {obsidian.map(o => (
-                <li key={o} className="flex gap-3 items-start" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-                  <Check size={16} color={`hsl(${AMBER})`} strokeWidth={3} className="mt-1 flex-shrink-0" />
+                <li key={o} className="flex gap-3 items-start" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                  <Check size={20} color={`hsl(${AMBER})`} strokeWidth={3} className="mt-1 flex-shrink-0" />
                   <span>{o}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-auto rounded-lg p-3" style={{ background: `hsl(${AMBER} / 0.1)` }}>
-              <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.4 }}>
+            <div className="mt-auto rounded-lg p-4" style={{ background: `hsl(${AMBER} / 0.1)` }}>
+              <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>
                 <span style={{ fontWeight: 800, color: `hsl(${AMBER})` }}>Honest gets-you-to: </span>~70% of the individual experience, after the work.
               </p>
             </div>
           </div>
           <div className="col-span-8 flex flex-col gap-4">
-            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>THE THREE STRUCTURAL DELTAS · LIZA OS</p>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>THE THREE STRUCTURAL DELTAS · LIZA OS</p>
             {liza.map((l, i) => (
-              <div key={l.title} className="rounded-xl border-2 p-5 flex gap-5 items-start flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.06)` }}>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-black flex-shrink-0" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 20 }}>{i + 1}</div>
+              <div key={l.title} className="rounded-xl border-2 p-6 flex gap-5 items-start flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.06)` }}>
+                <div className="w-14 h-14 rounded-full flex items-center justify-center font-black flex-shrink-0" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 24 }}>{i + 1}</div>
                 <div>
-                  <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>{l.title}</p>
-                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.5 }}>{l.body}</p>
+                  <p className="font-black mb-2" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{l.title}</p>
+                  <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>{l.body}</p>
                 </div>
               </div>
             ))}
@@ -1076,7 +1076,7 @@ function S14TwoDoor() {
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="12" text="HOW TO START" />
         <h2 className="font-black mt-5 mb-8" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          Be the first researcher <span style={{ color: `hsl(${TEAL})` }}>to co-build it.</span>
+          Run a 16-week pilot <span style={{ color: `hsl(${TEAL})` }}>on your field.</span>
         </h2>
         <div className="flex-1 flex flex-col gap-7">
           {/* Pitch banner */}
@@ -1224,9 +1224,7 @@ function SCoreMapping() {
           Augmented research mapping.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>The structure of a field, before you write in it.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
-          One idea. Not a vault and not a chatbot. An Obsidian-grade graph turbo-charged by AI that maps how schools, lineages, and authors fit together so you can see how your stance lands inside the field.
-        </p>
+        <div className="mb-6" />
         <div className="grid grid-cols-12 gap-8 flex-1">
           {/* LEFT: Big structured-field diagram */}
           <div className="col-span-7 rounded-2xl border-2 relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
@@ -1478,11 +1476,10 @@ function SFrontier() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="05" text="WHERE THIS GOES" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
-          The same map, at field scale.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>Replaces the systematic review.</span>
+        <h2 className="font-black mt-5 mb-6" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+          You stop reading 15-month-old reviews.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>You read your field, today.</span>
         </h2>
-        <div className="mb-7" />
 
         {/* Hero visual: papers/year bar chart + SLR snapshots vs continuous map ribbon */}
         <div className="rounded-2xl border-2 p-6 mb-7" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
@@ -1541,22 +1538,43 @@ SNAPSHOTS</text>
           </svg>
         </div>
 
-        <div className="grid grid-cols-3 gap-5 flex-1">
-          <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY · THE SYSTEMATIC REVIEW</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>A 15-month human meta-read of a field</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>Teams hand-screen thousands of papers, extract claims, and synthesise the state of a discipline into one review. It is the artefact most researchers actually read instead of the papers, and it is frozen the day it ships.</p>
-            <p className="mt-auto pt-3" style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>Borah et al., BMJ Open 2017. Mean 67.3 weeks across 195 PROSPERO reviews.</p>
+        <div className="grid grid-cols-3 gap-6 flex-1">
+          <div className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY · WHAT YOU DO</p>
+            <p className="font-black mt-3 mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>You read a 15-month-old review</p>
+            <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+              The corpus has outgrown the human. So you read systematic reviews instead of the papers. By the time one ships, the field has moved on for over a year.
+            </p>
+            <p className="mt-auto pt-4" style={{ fontSize: 13, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>
+              Mean 67.3 weeks per review across 195 PROSPERO studies. Borah et al., BMJ Open 2017.
+            </p>
           </div>
-          <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE }}>NEXT · THE LIVE FIELD MAP</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>The same review, computed continuously</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>The structured map of schools, lineages, and disagreements rebuilds every time a new paper lands. Synthesis becomes a live artefact, not a 15-month snapshot.</p>
+          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WITH LIZA · WHAT YOU GET</p>
+            <p className="font-black mt-3 mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>A live review of your field</p>
+            <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+              The same structured map of schools, lineages, and disagreements, rebuilt every time a new paper lands. Open the field on Monday and see what changed since Friday.
+            </p>
+            <p className="mt-auto pt-4" style={{ fontSize: 13, color: `hsl(${TEAL})`, fontWeight: 800, letterSpacing: "0.18em" }}>
+              ALWAYS ON · ALWAYS CURRENT
+            </p>
           </div>
-          <div className="rounded-xl border-2 p-5 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Systematic review and meta-analysis as a service</p>
-            <p className="mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.5, fontWeight: 600 }}>An always-on, citable map of a discipline. Researchers cite the live map, journals commission updates, labs anchor their stance against it. The 15-month lag disappears.</p>
+          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${MINT} / 0.55)`, background: `hsl(${MINT} / 0.06)` }}>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${MINT})` }}>WHAT IT MEANS FOR YOU</p>
+            <ul className="mt-4 space-y-4">
+              <li className="flex gap-3 items-start" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                <Check size={22} style={{ color: `hsl(${MINT})`, marginTop: 3, flexShrink: 0 }} />
+                <span><b>Skip the wait.</b> Start work on day one against the current state of the field, not last year's.</span>
+              </li>
+              <li className="flex gap-3 items-start" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                <Check size={22} style={{ color: `hsl(${MINT})`, marginTop: 3, flexShrink: 0 }} />
+                <span><b>Anchor your stance live.</b> See in real time who agrees, who rebuts, what just superseded what.</span>
+              </li>
+              <li className="flex gap-3 items-start" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                <Check size={22} style={{ color: `hsl(${MINT})`, marginTop: 3, flexShrink: 0 }} />
+                <span><b>Cite the map.</b> Reference a versioned snapshot of your field instead of a frozen 2023 review.</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
