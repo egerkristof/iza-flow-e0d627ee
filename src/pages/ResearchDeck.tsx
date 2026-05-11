@@ -1129,52 +1129,120 @@ function S15Close() {
 
 // ─── Slide list ──────────────────────────────────────────────────────────────
 function SCoreMapping() {
-  const moves = [
-    {
-      tag: "STRUCTURE THE FIELD",
-      title: "Schools, lineages, and authors typed up front",
-      body: "Drop your corpus in. The system resolves it into a structured map of schools of thought, lineages, and the authors that anchor them. You walk into a field, not a folder.",
-      Icon: Network,
-    },
-    {
-      tag: "SEE THE DISAGREEMENTS",
-      title: "Who argues against whom, and on what",
-      body: "Disagreement, rebuttal, and supersession become first-class objects. You can see, before you write, where the debate actually sits and which positions you are choosing between.",
-      Icon: GitBranch,
-    },
-    {
-      tag: "POSITION YOUR STANCE",
-      title: "Place yourself against the map, not against the noise",
-      body: "Anchor your hypothesis inside the map. The system shows where it sits relative to the schools, what it inherits, and what it refuses. You stop guessing where you stand.",
-      Icon: Target,
-    },
+function SCoreMapping() {
+  const callouts = [
+    { n: "1", tag: "STRUCTURE", title: "Schools, lineages, authors typed up front",
+      body: "Your corpus is resolved into a structured field. You walk into a map, not a folder." },
+    { n: "2", tag: "DISAGREEMENT", title: "Who argues against whom, and on what",
+      body: "Rebuttal and supersession become first-class objects. The debate is visible." },
+    { n: "3", tag: "STANCE", title: "Position yourself against the map",
+      body: "Anchor your hypothesis inside the field. See what it inherits, what it refuses." },
   ];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="02" text="THE CORE" />
-        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Augmented research mapping.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>The structure of a field, before you write in it.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 20, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
-          One idea. Not a vault and not a chatbot. An Obsidian-grade graph turbo-charged by AI that maps how schools, lineages, and authors fit together so you can see, before you commit, how your stance lands inside the field.
+        <p className="mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
+          One idea. Not a vault and not a chatbot. An Obsidian-grade graph turbo-charged by AI that maps how schools, lineages, and authors fit together so you can see how your stance lands inside the field.
         </p>
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          {moves.map(m => {
-            const Icon = m.Icon;
-            return (
-              <div key={m.tag} className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.05)` }}>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5" style={{ background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>
-                  <Icon size={28} />
+        <div className="grid grid-cols-12 gap-8 flex-1">
+          {/* LEFT: Big structured-field diagram */}
+          <div className="col-span-7 rounded-2xl border-2 relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <p className="absolute top-4 left-5 z-10" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>YOUR FIELD · STRUCTURED VIEW</p>
+            <p className="absolute bottom-4 right-5 z-10" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>SCHOOLS · LINEAGES · AUTHORS · STANCE</p>
+            <svg viewBox="0 0 800 540" className="w-full h-full">
+              <defs>
+                <radialGradient id="cm-halo" cx="50%" cy="50%" r="55%">
+                  <stop offset="0%" stopColor={`hsl(${TEAL} / 0.15)`} />
+                  <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+                </radialGradient>
+                <marker id="cm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${TEAL})`} />
+                </marker>
+              </defs>
+              <ellipse cx="400" cy="270" rx="340" ry="200" fill="url(#cm-halo)" />
+
+              {/* Three schools (clusters) */}
+              {/* SCHOOL A — top-left */}
+              <g>
+                <ellipse cx="200" cy="170" rx="120" ry="78" fill={`hsl(${TEAL} / 0.06)`} stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 5" />
+                <text x="200" y="80" textAnchor="middle" fontSize="13" fontWeight="800" fill={TEXT} letterSpacing="2">SCHOOL A</text>
+                {[[160,150,9,"Polanyi"],[230,135,7,""],[180,200,7,""],[245,190,7,""],[130,180,6,""]].map(([x,y,r,label],i)=>(
+                  <g key={`A${i}`}>
+                    <circle cx={x as number} cy={y as number} r={r as number} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                    {label && <text x={x as number} y={(y as number)+22} textAnchor="middle" fontSize="10" fontWeight="700" fill={MUTED}>{label as string}</text>}
+                  </g>
+                ))}
+                {/* lineage edges (within school) */}
+                <line x1="160" y1="150" x2="230" y2="135" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+                <line x1="160" y1="150" x2="180" y2="200" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+                <line x1="230" y1="135" x2="245" y2="190" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+              </g>
+
+              {/* SCHOOL B — top-right */}
+              <g>
+                <ellipse cx="600" cy="170" rx="120" ry="78" fill={`hsl(${TEAL} / 0.06)`} stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 5" />
+                <text x="600" y="80" textAnchor="middle" fontSize="13" fontWeight="800" fill={TEXT} letterSpacing="2">SCHOOL B</text>
+                {[[560,150,9,"Nonaka"],[640,140,7,""],[620,200,7,""],[560,200,6,""]].map(([x,y,r,label],i)=>(
+                  <g key={`B${i}`}>
+                    <circle cx={x as number} cy={y as number} r={r as number} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                    {label && <text x={x as number} y={(y as number)+22} textAnchor="middle" fontSize="10" fontWeight="700" fill={MUTED}>{label as string}</text>}
+                  </g>
+                ))}
+                <line x1="560" y1="150" x2="640" y2="140" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+                <line x1="640" y1="140" x2="620" y2="200" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+              </g>
+
+              {/* SCHOOL C — bottom */}
+              <g>
+                <ellipse cx="400" cy="430" rx="150" ry="68" fill={`hsl(${TEAL} / 0.06)`} stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 5" />
+                <text x="400" y="510" textAnchor="middle" fontSize="13" fontWeight="800" fill={TEXT} letterSpacing="2">SCHOOL C</text>
+                {[[330,425,8,"Csíkszentmihályi"],[420,410,7,""],[470,440,7,""],[380,455,6,""]].map(([x,y,r,label],i)=>(
+                  <g key={`C${i}`}>
+                    <circle cx={x as number} cy={y as number} r={r as number} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                    {label && <text x={x as number} y={(y as number)-12} textAnchor="middle" fontSize="10" fontWeight="700" fill={MUTED}>{label as string}</text>}
+                  </g>
+                ))}
+                <line x1="330" y1="425" x2="420" y2="410" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+              </g>
+
+              {/* Cross-school disagreements (red dashed) */}
+              <line x1="245" y1="190" x2="560" y2="200" stroke={`hsl(${RED} / 0.55)`} strokeWidth="1.6" strokeDasharray="6 5" />
+              <text x="400" y="212" textAnchor="middle" fontSize="10" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.5">DISAGREES</text>
+              <line x1="620" y1="200" x2="470" y2="440" stroke={`hsl(${RED} / 0.55)`} strokeWidth="1.6" strokeDasharray="6 5" />
+              <text x="570" y="328" fontSize="10" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.5">REBUTS</text>
+
+              {/* YOUR STANCE anchor */}
+              <g>
+                <line x1="400" y1="270" x2="200" y2="170" stroke={`hsl(${MINT})`} strokeWidth="1.4" strokeDasharray="2 4" />
+                <line x1="400" y1="270" x2="600" y2="170" stroke={`hsl(${MINT})`} strokeWidth="1.4" strokeDasharray="2 4" />
+                <line x1="400" y1="270" x2="400" y2="430" stroke={`hsl(${MINT})`} strokeWidth="1.4" strokeDasharray="2 4" />
+                <circle cx="400" cy="270" r="22" fill={BG} stroke={`hsl(${MINT})`} strokeWidth="3" />
+                <circle cx="400" cy="270" r="10" fill={`hsl(${MINT})`} />
+                <rect x="338" y="297" width="124" height="22" rx="4" fill={`hsl(${MINT})`} />
+                <text x="400" y="313" textAnchor="middle" fontSize="11" fontWeight="800" fill={BG} letterSpacing="1.5">YOUR STANCE</text>
+              </g>
+            </svg>
+          </div>
+
+          {/* RIGHT: 3 numbered callouts */}
+          <div className="col-span-5 flex flex-col gap-4">
+            {callouts.map(c => (
+              <div key={c.n} className="rounded-xl border-2 p-5 flex gap-4 items-start flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.05)` }}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center font-black flex-shrink-0" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 22 }}>{c.n}</div>
+                <div>
+                  <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.28em", color: `hsl(${TEAL})` }}>{c.tag}</p>
+                  <p className="font-black mt-1.5 mb-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>{c.title}</p>
+                  <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{c.body}</p>
                 </div>
-                <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{m.tag}</p>
-                <p className="font-black mt-3 mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{m.title}</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{m.body}</p>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar />
