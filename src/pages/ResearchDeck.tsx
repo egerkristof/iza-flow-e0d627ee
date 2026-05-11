@@ -148,6 +148,32 @@ function S01Cover() {
       <SlideGrid />
       <div className="absolute top-1/4 left-1/3 w-[700px] h-[700px] rounded-full opacity-[0.08]"
         style={{ background: `radial-gradient(circle, hsl(${TEAL}), transparent 70%)` }} />
+      {/* Background field-map motif */}
+      <svg viewBox="0 0 1920 1080" className="absolute inset-0 w-full h-full" style={{ opacity: 0.18 }}>
+        {/* school A */}
+        {[[640,360,8],[700,330,6],[600,400,6],[680,410,6]].map(([x,y,r],i)=>(
+          <circle key={`ca${i}`} cx={x} cy={y} r={r} fill="none" stroke={`hsl(${TEAL})`} strokeWidth="1.4" />
+        ))}
+        {/* school B */}
+        {[[1280,360,8],[1340,340,6],[1230,410,6],[1300,420,6]].map(([x,y,r],i)=>(
+          <circle key={`cb${i}`} cx={x} cy={y} r={r} fill="none" stroke={`hsl(${TEAL})`} strokeWidth="1.4" />
+        ))}
+        {/* school C */}
+        {[[960,820,8],[900,790,6],[1020,790,6],[960,860,6]].map(([x,y,r],i)=>(
+          <circle key={`cc${i}`} cx={x} cy={y} r={r} fill="none" stroke={`hsl(${TEAL})`} strokeWidth="1.4" />
+        ))}
+        {/* anchor center */}
+        <circle cx="960" cy="540" r="14" fill={`hsl(${TEAL})`} />
+        <circle cx="960" cy="540" r="22" fill="none" stroke={`hsl(${TEAL})`} strokeDasharray="3 5" />
+        {/* spokes anchor → schools */}
+        {[[640,360],[1280,360],[960,820]].map(([x,y],i)=>(
+          <line key={`sp${i}`} x1="960" y1="540" x2={x} y2={y} stroke={`hsl(${TEAL})`} strokeWidth="1.2" strokeDasharray="2 6" />
+        ))}
+        {/* cross-school disagreements */}
+        <line x1="700" y1="330" x2="1230" y2="410" stroke={`hsl(${TEAL})`} strokeWidth="1" strokeDasharray="2 6" />
+        <line x1="680" y1="410" x2="900" y2="790" stroke={`hsl(${TEAL})`} strokeWidth="1" strokeDasharray="2 6" />
+        <line x1="1300" y1="420" x2="1020" y2="790" stroke={`hsl(${TEAL})`} strokeWidth="1" strokeDasharray="2 6" />
+      </svg>
       <div className="relative z-10 flex flex-col items-center text-center px-28">
         <div className="flex items-center gap-3 mb-14 px-7 py-3 rounded-full border"
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
@@ -1052,18 +1078,99 @@ function S14TwoDoor() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="12" text="HOW TO START" />
-        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Be the first researcher <span style={{ color: `hsl(${TEAL})` }}>to co-build it.</span>
         </h2>
-        <div className="flex-1 flex">
-          <div className="rounded-2xl p-14 flex flex-col w-full" style={{ background: TEXT, color: BG }}>
-            <p style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${MINT})` }}>DESIGN PARTNER · ONE RESEARCHER</p>
-            <p className="font-black mt-5 mb-7" style={{ fontSize: 56, lineHeight: 1.05 }}>Run the semester pilot</p>
-            <p style={{ fontSize: 26, color: "hsl(0 0% 100% / 0.85)", lineHeight: 1.5, maxWidth: 1300 }}>
-              One researcher. One field. Sixteen weeks. We co-build the Research Memory Layer alongside you and leave you with a usable field map, a judgment log, and a portable structured graph that is yours after the pilot ends.
-            </p>
-            <div className="mt-auto pt-10 flex items-center gap-3">
-              <p style={{ fontSize: 16, color: "hsl(0 0% 100% / 0.6)", letterSpacing: "0.18em" }}>NO INSTITUTIONAL COMMITMENT REQUIRED</p>
+        <div className="flex-1 flex flex-col gap-7">
+          {/* Pitch banner */}
+          <div className="rounded-2xl p-8 flex items-start justify-between gap-10" style={{ background: TEXT, color: BG }}>
+            <div>
+              <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.28em", color: `hsl(${MINT})` }}>DESIGN PARTNER · ONE RESEARCHER · 16 WEEKS</p>
+              <p className="font-black mt-3 mb-3" style={{ fontSize: 42, lineHeight: 1.05 }}>Run the semester pilot</p>
+              <p style={{ fontSize: 19, color: "hsl(0 0% 100% / 0.82)", lineHeight: 1.5, maxWidth: 1100 }}>
+                One researcher. One field. We co-build alongside you and leave you with a usable field map, a judgment log, and a portable structured graph that is yours after the pilot ends.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 items-end flex-shrink-0">
+              <div className="rounded-lg px-4 py-2" style={{ background: `hsl(${MINT} / 0.18)`, border: `1px solid hsl(${MINT} / 0.5)` }}>
+                <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", color: `hsl(${MINT})` }}>NO INSTITUTIONAL COMMITMENT</p>
+              </div>
+              <div className="rounded-lg px-4 py-2" style={{ background: `hsl(${MINT} / 0.18)`, border: `1px solid hsl(${MINT} / 0.5)` }}>
+                <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", color: `hsl(${MINT})` }}>ARTEFACTS YOURS TO KEEP</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 16-week timeline visual */}
+          <div className="rounded-2xl border-2 p-7 flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <p className="mb-5" style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>16-WEEK PILOT · 4 PHASES</p>
+            <svg viewBox="0 0 1500 280" className="w-full" style={{ height: 260 }}>
+              <defs>
+                <linearGradient id="tl-spine" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor={`hsl(${TEAL} / 0.2)`} />
+                  <stop offset="50%" stopColor={`hsl(${TEAL})`} />
+                  <stop offset="100%" stopColor={`hsl(${MINT})`} />
+                </linearGradient>
+              </defs>
+              {/* week ticks 1..16 */}
+              {Array.from({ length: 17 }).map((_, i) => {
+                const x = 60 + (i * (1380 / 16));
+                return (
+                  <g key={`tk${i}`}>
+                    <line x1={x} y1="120" x2={x} y2="132" stroke={SUBTLE} strokeWidth="1" />
+                    {(i === 0 || (i + 1) % 4 === 0) && (
+                      <text x={x} y="152" textAnchor="middle" fontSize="11" fontWeight="700" fill={SUBTLE}>W{i === 0 ? 1 : i}</text>
+                    )}
+                  </g>
+                );
+              })}
+              {/* spine */}
+              <rect x="60" y="115" width="1380" height="6" rx="3" fill="url(#tl-spine)" />
+
+              {/* Phase milestones */}
+              {[
+                { wk: 1,  label: "Onboard",  detail: "Pick the field. Drop the corpus.",   x: 60 + 0  * (1380/16) },
+                { wk: 4,  label: "Map",      detail: "Schools, lineages, and authors typed.", x: 60 + 4  * (1380/16) },
+                { wk: 8,  label: "Anchor",   detail: "Hypothesis placed inside the map.", x: 60 + 8  * (1380/16) },
+                { wk: 12, label: "Augment",  detail: "Counter-arguments, gaps, and judgment log.", x: 60 + 12 * (1380/16) },
+                { wk: 16, label: "Compound", detail: "Portable graph. Yours to keep.",    x: 60 + 16 * (1380/16) },
+              ].map((m, i) => (
+                <g key={`ms${i}`}>
+                  <circle cx={m.x} cy="118" r="13" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="3" />
+                  <circle cx={m.x} cy="118" r="6"  fill={`hsl(${TEAL})`} />
+                  {/* alternating top/bottom labels */}
+                  {i % 2 === 0 ? (
+                    <g>
+                      <line x1={m.x} y1="105" x2={m.x} y2="60" stroke={`hsl(${TEAL} / 0.5)`} />
+                      <rect x={m.x - 90} y="20" width="180" height="40" rx="6" fill={BG} stroke={`hsl(${TEAL} / 0.5)`} />
+                      <text x={m.x} y="38" textAnchor="middle" fontSize="13" fontWeight="900" fill={TEXT}>{`W${m.wk} · ${m.label}`}</text>
+                      <text x={m.x} y="54" textAnchor="middle" fontSize="11" fontWeight="600" fill={MUTED}>{m.detail}</text>
+                    </g>
+                  ) : (
+                    <g>
+                      <line x1={m.x} y1="131" x2={m.x} y2="180" stroke={`hsl(${TEAL} / 0.5)`} />
+                      <rect x={m.x - 90} y="180" width="180" height="40" rx="6" fill={BG} stroke={`hsl(${TEAL} / 0.5)`} />
+                      <text x={m.x} y="198" textAnchor="middle" fontSize="13" fontWeight="900" fill={TEXT}>{`W${m.wk} · ${m.label}`}</text>
+                      <text x={m.x} y="214" textAnchor="middle" fontSize="11" fontWeight="600" fill={MUTED}>{m.detail}</text>
+                    </g>
+                  )}
+                </g>
+              ))}
+            </svg>
+
+            <div className="grid grid-cols-3 gap-5 mt-2">
+              <div className="rounded-lg border p-4" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>YOU GET</p>
+                <p className="font-bold mt-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>A working field map of your discipline</p>
+              </div>
+              <div className="rounded-lg border p-4" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>YOU KEEP</p>
+                <p className="font-bold mt-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>The judgment log and portable graph</p>
+              </div>
+              <div className="rounded-lg border p-4" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WE ASK</p>
+                <p className="font-bold mt-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>Weekly working sessions and honest feedback</p>
+              </div>
             </div>
           </div>
         </div>
@@ -1103,52 +1210,119 @@ function S15Close() {
 
 // ─── Slide list ──────────────────────────────────────────────────────────────
 function SCoreMapping() {
-  const moves = [
-    {
-      tag: "STRUCTURE THE FIELD",
-      title: "Schools, lineages, and authors typed up front",
-      body: "Drop your corpus in. The system resolves it into a structured map of schools of thought, lineages, and the authors that anchor them. You walk into a field, not a folder.",
-      Icon: Network,
-    },
-    {
-      tag: "SEE THE DISAGREEMENTS",
-      title: "Who argues against whom, and on what",
-      body: "Disagreement, rebuttal, and supersession become first-class objects. You can see, before you write, where the debate actually sits and which positions you are choosing between.",
-      Icon: GitBranch,
-    },
-    {
-      tag: "POSITION YOUR STANCE",
-      title: "Place yourself against the map, not against the noise",
-      body: "Anchor your hypothesis inside the map. The system shows where it sits relative to the schools, what it inherits, and what it refuses. You stop guessing where you stand.",
-      Icon: Target,
-    },
+  const callouts = [
+    { n: "1", tag: "STRUCTURE", title: "Schools, lineages, authors typed up front",
+      body: "Your corpus is resolved into a structured field. You walk into a map, not a folder." },
+    { n: "2", tag: "DISAGREEMENT", title: "Who argues against whom, and on what",
+      body: "Rebuttal and supersession become first-class objects. The debate is visible." },
+    { n: "3", tag: "STANCE", title: "Position yourself against the map",
+      body: "Anchor your hypothesis inside the field. See what it inherits, what it refuses." },
   ];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="02" text="THE CORE" />
-        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           Augmented research mapping.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>The structure of a field, before you write in it.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 20, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
-          One idea. Not a vault and not a chatbot. An Obsidian-grade graph turbo-charged by AI that maps how schools, lineages, and authors fit together so you can see, before you commit, how your stance lands inside the field.
+        <p className="mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
+          One idea. Not a vault and not a chatbot. An Obsidian-grade graph turbo-charged by AI that maps how schools, lineages, and authors fit together so you can see how your stance lands inside the field.
         </p>
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          {moves.map(m => {
-            const Icon = m.Icon;
-            return (
-              <div key={m.tag} className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.05)` }}>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5" style={{ background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>
-                  <Icon size={28} />
+        <div className="grid grid-cols-12 gap-8 flex-1">
+          {/* LEFT: Big structured-field diagram */}
+          <div className="col-span-7 rounded-2xl border-2 relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <p className="absolute top-4 left-5 z-10" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>YOUR FIELD · STRUCTURED VIEW</p>
+            <p className="absolute bottom-4 right-5 z-10" style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>SCHOOLS · LINEAGES · AUTHORS · STANCE</p>
+            <svg viewBox="0 0 800 540" className="w-full h-full">
+              <defs>
+                <radialGradient id="cm-halo" cx="50%" cy="50%" r="55%">
+                  <stop offset="0%" stopColor={`hsl(${TEAL} / 0.15)`} />
+                  <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+                </radialGradient>
+                <marker id="cm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${TEAL})`} />
+                </marker>
+              </defs>
+              <ellipse cx="400" cy="270" rx="340" ry="200" fill="url(#cm-halo)" />
+
+              {/* Three schools (clusters) */}
+              {/* SCHOOL A — top-left */}
+              <g>
+                <ellipse cx="200" cy="170" rx="120" ry="78" fill={`hsl(${TEAL} / 0.06)`} stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 5" />
+                <text x="200" y="80" textAnchor="middle" fontSize="13" fontWeight="800" fill={TEXT} letterSpacing="2">SCHOOL A</text>
+                {[[160,150,9,"Polanyi"],[230,135,7,""],[180,200,7,""],[245,190,7,""],[130,180,6,""]].map(([x,y,r,label],i)=>(
+                  <g key={`A${i}`}>
+                    <circle cx={x as number} cy={y as number} r={r as number} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                    {label && <text x={x as number} y={(y as number)+22} textAnchor="middle" fontSize="10" fontWeight="700" fill={MUTED}>{label as string}</text>}
+                  </g>
+                ))}
+                {/* lineage edges (within school) */}
+                <line x1="160" y1="150" x2="230" y2="135" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+                <line x1="160" y1="150" x2="180" y2="200" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+                <line x1="230" y1="135" x2="245" y2="190" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+              </g>
+
+              {/* SCHOOL B — top-right */}
+              <g>
+                <ellipse cx="600" cy="170" rx="120" ry="78" fill={`hsl(${TEAL} / 0.06)`} stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 5" />
+                <text x="600" y="80" textAnchor="middle" fontSize="13" fontWeight="800" fill={TEXT} letterSpacing="2">SCHOOL B</text>
+                {[[560,150,9,"Nonaka"],[640,140,7,""],[620,200,7,""],[560,200,6,""]].map(([x,y,r,label],i)=>(
+                  <g key={`B${i}`}>
+                    <circle cx={x as number} cy={y as number} r={r as number} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                    {label && <text x={x as number} y={(y as number)+22} textAnchor="middle" fontSize="10" fontWeight="700" fill={MUTED}>{label as string}</text>}
+                  </g>
+                ))}
+                <line x1="560" y1="150" x2="640" y2="140" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+                <line x1="640" y1="140" x2="620" y2="200" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+              </g>
+
+              {/* SCHOOL C — bottom */}
+              <g>
+                <ellipse cx="400" cy="430" rx="150" ry="68" fill={`hsl(${TEAL} / 0.06)`} stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 5" />
+                <text x="400" y="510" textAnchor="middle" fontSize="13" fontWeight="800" fill={TEXT} letterSpacing="2">SCHOOL C</text>
+                {[[330,425,8,"Csíkszentmihályi"],[420,410,7,""],[470,440,7,""],[380,455,6,""]].map(([x,y,r,label],i)=>(
+                  <g key={`C${i}`}>
+                    <circle cx={x as number} cy={y as number} r={r as number} fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                    {label && <text x={x as number} y={(y as number)-12} textAnchor="middle" fontSize="10" fontWeight="700" fill={MUTED}>{label as string}</text>}
+                  </g>
+                ))}
+                <line x1="330" y1="425" x2="420" y2="410" stroke={`hsl(${TEAL} / 0.7)`} strokeWidth="1.4" markerEnd="url(#cm-arrow)" />
+              </g>
+
+              {/* Cross-school disagreements (red dashed) */}
+              <line x1="245" y1="190" x2="560" y2="200" stroke={`hsl(${RED} / 0.55)`} strokeWidth="1.6" strokeDasharray="6 5" />
+              <text x="400" y="212" textAnchor="middle" fontSize="10" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.5">DISAGREES</text>
+              <line x1="620" y1="200" x2="470" y2="440" stroke={`hsl(${RED} / 0.55)`} strokeWidth="1.6" strokeDasharray="6 5" />
+              <text x="570" y="328" fontSize="10" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.5">REBUTS</text>
+
+              {/* YOUR STANCE anchor */}
+              <g>
+                <line x1="400" y1="270" x2="200" y2="170" stroke={`hsl(${MINT})`} strokeWidth="1.4" strokeDasharray="2 4" />
+                <line x1="400" y1="270" x2="600" y2="170" stroke={`hsl(${MINT})`} strokeWidth="1.4" strokeDasharray="2 4" />
+                <line x1="400" y1="270" x2="400" y2="430" stroke={`hsl(${MINT})`} strokeWidth="1.4" strokeDasharray="2 4" />
+                <circle cx="400" cy="270" r="22" fill={BG} stroke={`hsl(${MINT})`} strokeWidth="3" />
+                <circle cx="400" cy="270" r="10" fill={`hsl(${MINT})`} />
+                <rect x="338" y="297" width="124" height="22" rx="4" fill={`hsl(${MINT})`} />
+                <text x="400" y="313" textAnchor="middle" fontSize="11" fontWeight="800" fill={BG} letterSpacing="1.5">YOUR STANCE</text>
+              </g>
+            </svg>
+          </div>
+
+          {/* RIGHT: 3 numbered callouts */}
+          <div className="col-span-5 flex flex-col gap-4">
+            {callouts.map(c => (
+              <div key={c.n} className="rounded-xl border-2 p-5 flex gap-4 items-start flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.05)` }}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center font-black flex-shrink-0" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 22 }}>{c.n}</div>
+                <div>
+                  <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.28em", color: `hsl(${TEAL})` }}>{c.tag}</p>
+                  <p className="font-black mt-1.5 mb-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>{c.title}</p>
+                  <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{c.body}</p>
                 </div>
-                <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{m.tag}</p>
-                <p className="font-black mt-3 mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{m.title}</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{m.body}</p>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </div>
       <SlideBar />
@@ -1166,50 +1340,114 @@ function SAuthor() {
   const youOnly = [
     "Form the hypothesis",
     "Read the foundational texts",
-    "Decide which counter-argument changes your mind",
-    "Write the claim, the voice, the argument",
+    "Decide what changes your mind",
+    "Write the claim, voice, and argument",
   ];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="04" text="ACADEMIC INTEGRITY" />
-        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           You remain the author.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>We refuse to outsource your thinking.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
-          We are not the school that hands the thesis to the model. The system maps the field, surfaces the disagreements, and preserves your judgment. The claim, the voice, and the argument stay yours, and stay attributable.
+        <p className="mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
+          We are not the school that hands the thesis to the model. The system maps the field and preserves your judgment. The claim, the voice, and the argument stay yours, and stay attributable.
         </p>
+
+        {/* Hero divider visual: SYSTEM map → handoff → AUTHOR signature */}
+        <div className="rounded-2xl border-2 mb-7 relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)`, height: 220 }}>
+          <svg viewBox="0 0 1600 220" className="w-full h-full">
+            <defs>
+              <marker id="au-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${TEAL})`} />
+              </marker>
+            </defs>
+
+            {/* LEFT: structured field tile */}
+            <g>
+              <rect x="40" y="30" width="430" height="160" rx="10" fill={BG} stroke={`hsl(${TEAL} / 0.55)`} />
+              <text x="60" y="55" fontSize="11" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="2">THE SYSTEM · STRUCTURED FIELD</text>
+              {/* mini schools */}
+              {[[120,110,18],[230,95,16],[340,120,16]].map(([cx,cy,r],i)=>(
+                <g key={`s${i}`}>
+                  <ellipse cx={cx as number} cy={cy as number} rx={(r as number)+22} ry={(r as number)+10} fill={`hsl(${TEAL} / 0.07)`} stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 4" />
+                  <circle cx={cx as number} cy={cy as number} r="5" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                  <circle cx={(cx as number)-12} cy={(cy as number)+8} r="4" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                  <circle cx={(cx as number)+12} cy={(cy as number)+8} r="4" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                </g>
+              ))}
+              {/* anchor */}
+              <circle cx="230" cy="155" r="10" fill={`hsl(${MINT})`} />
+              <text x="230" y="180" textAnchor="middle" fontSize="10" fontWeight="800" fill={MUTED} letterSpacing="1.2">YOUR ANCHOR</text>
+            </g>
+
+            {/* MIDDLE: handoff arrow */}
+            <g>
+              <line x1="490" y1="110" x2="650" y2="110" stroke={`hsl(${TEAL})`} strokeWidth="2.2" markerEnd="url(#au-arrow)" />
+              <rect x="510" y="86" width="120" height="22" rx="11" fill={BG} stroke={`hsl(${TEAL} / 0.6)`} />
+              <text x="570" y="102" textAnchor="middle" fontSize="11" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.6">HANDS YOU</text>
+              <text x="570" y="135" textAnchor="middle" fontSize="11" fontWeight="700" fill={MUTED} letterSpacing="1.2">map · disagreements · log</text>
+            </g>
+
+            {/* RIGHT: manuscript with signature */}
+            <g>
+              <rect x="680" y="30" width="430" height="160" rx="10" fill={BG} stroke={`hsl(${TEAL} / 0.55)`} />
+              <text x="700" y="55" fontSize="11" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="2">YOU · THE MANUSCRIPT</text>
+              {/* paper lines */}
+              {[80,98,116,134].map((y,i)=>(
+                <line key={`ln${i}`} x1="700" y1={y} x2={i===3?960:1080} y2={y} stroke={`hsl(${TEAL} / 0.35)`} strokeWidth="2" />
+              ))}
+              {/* signature swoosh */}
+              <path d="M720 168 C 740 150, 770 188, 800 160 S 870 145, 900 165 S 960 178, 980 158" fill="none" stroke={`hsl(${MINT})`} strokeWidth="2.4" />
+              <text x="700" y="182" fontSize="9" fontWeight="700" fill={SUBTLE} letterSpacing="1.2">CLAIM · VOICE · ARGUMENT</text>
+            </g>
+
+            {/* RIGHT END: stamp */}
+            <g transform="translate(1190, 110) rotate(-8)">
+              <rect x="-95" y="-42" width="190" height="84" rx="6" fill="none" stroke={`hsl(${MINT})`} strokeWidth="3" />
+              <text x="0" y="-12" textAnchor="middle" fontSize="14" fontWeight="900" fill={`hsl(${MINT})`} letterSpacing="2">AUTHORED</text>
+              <text x="0" y="10" textAnchor="middle" fontSize="14" fontWeight="900" fill={`hsl(${MINT})`} letterSpacing="2">BY YOU</text>
+              <text x="0" y="30" textAnchor="middle" fontSize="9" fontWeight="700" fill={`hsl(${MINT} / 0.85)`} letterSpacing="2">ATTRIBUTABLE</text>
+            </g>
+
+            {/* outer red boundary line */}
+            <line x1="1320" y1="20" x2="1320" y2="200" stroke={`hsl(${RED} / 0.4)`} strokeWidth="2" strokeDasharray="6 5" />
+            <text x="1340" y="50" fontSize="11" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.6">WHAT WE</text>
+            <text x="1340" y="68" fontSize="11" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.6">REFUSE TO</text>
+            <text x="1340" y="86" fontSize="11" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.6">DO FOR YOU</text>
+            <g transform="translate(1340, 110)">
+              <text x="0" y="14" fontSize="10" fontWeight="700" fill={MUTED}>· write the thesis</text>
+              <text x="0" y="32" fontSize="10" fontWeight="700" fill={MUTED}>· pick your stance</text>
+              <text x="0" y="50" fontSize="10" fontWeight="700" fill={MUTED}>· generate your argument</text>
+              <text x="0" y="68" fontSize="10" fontWeight="700" fill={MUTED}>· speak in your voice</text>
+            </g>
+          </svg>
+        </div>
+
         <div className="grid grid-cols-2 gap-7 flex-1">
-          <div className="rounded-2xl border p-8 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>WHAT THE SYSTEM DOES</p>
-            <p className="font-black mt-3 mb-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>The mapping and the memory</p>
-            <ul className="space-y-4 mt-2">
+          <div className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>WHAT THE SYSTEM DOES</p>
+            <ul className="space-y-2.5 mt-3">
               {we.map(p => (
                 <li key={p} className="flex gap-3 items-start">
-                  <Check size={18} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
-                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>{p}</span>
+                  <Check size={17} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{p}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>WHAT ONLY YOU DO</p>
-            <p className="font-black mt-3 mb-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>The scholar's act</p>
-            <ul className="space-y-4 mt-2">
+          <div className="rounded-2xl border-2 p-6 flex flex-col" style={{ borderColor: `hsl(${MINT} / 0.6)`, background: `hsl(${MINT} / 0.05)` }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${MINT})` }}>WHAT ONLY YOU DO</p>
+            <ul className="space-y-2.5 mt-3">
               {youOnly.map(p => (
                 <li key={p} className="flex gap-3 items-start">
-                  <Brain size={18} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
-                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>{p}</span>
+                  <Brain size={17} style={{ color: `hsl(${MINT})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 17, color: TEXT, lineHeight: 1.4, fontWeight: 600 }}>{p}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-auto pt-6">
-              <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
-                Augmentation, never outsourcing.
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -1219,42 +1457,96 @@ function SAuthor() {
 }
 
 function SFrontier() {
+  // Stylised "papers / year" growth bars (10 years)
+  const bars = [12, 18, 26, 35, 48, 65, 88, 118, 160, 215];
+  const maxBar = Math.max(...bars);
+  const yrs = ["'15","'16","'17","'18","'19","'20","'21","'22","'23","'24"];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="05" text="WHERE THIS GOES" />
-        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           The same map, at field scale.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>Replaces the systematic review.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
-          A systematic literature review is already a partly automated act: most researchers now read reviews, not papers, because the corpus has outgrown the human. The structured field map is the next step. Run at field scale, it does what an SLR or meta-analysis tries to do, continuously and on living data.
+        <p className="mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
+          A systematic literature review is already a partly automated act. Most researchers now read reviews, not papers, because the corpus has outgrown the human. The structured field map is the next step, computed continuously on living data.
         </p>
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          <div className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>TODAY</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>67-week systematic reviews</p>
-            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              A reader-of-readers. Frozen the day it ships. The frontier has already moved.
-            </p>
-            <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>
-              Source: Borah et al., BMJ Open 2017 — mean 67.3 weeks across 195 PROSPERO reviews.
-            </p>
+
+        {/* Hero visual: papers/year bar chart + SLR snapshots vs continuous map ribbon */}
+        <div className="rounded-2xl border-2 p-6 mb-7" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
+          <div className="flex items-center justify-between mb-3">
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>PAPERS PUBLISHED PER YEAR · ILLUSTRATIVE</p>
+            <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", color: SUBTLE }}>SLR SNAPSHOTS vs CONTINUOUS MAP</p>
           </div>
-          <div className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>NEXT</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>The map at field scale</p>
-            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              The same structured map, computed continuously across the field. Schools, disagreements, and supersessions stay live as papers ship.
-            </p>
+          <svg viewBox="0 0 1600 320" className="w-full" style={{ height: 280 }}>
+            <defs>
+              <linearGradient id="fr-bar" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={`hsl(${TEAL} / 0.7)`} />
+                <stop offset="100%" stopColor={`hsl(${TEAL} / 0.25)`} />
+              </linearGradient>
+              <linearGradient id="fr-ribbon" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor={`hsl(${MINT})`} />
+                <stop offset="100%" stopColor={`hsl(${TEAL})`} />
+              </linearGradient>
+            </defs>
+            {/* baseline */}
+            <line x1="60" y1="220" x2="1540" y2="220" stroke={GRID_LINE} strokeWidth="1" />
+
+            {/* bars */}
+            {bars.map((v, i) => {
+              const w = 90;
+              const gap = 58;
+              const x = 80 + i * (w + gap);
+              const h = (v / maxBar) * 170;
+              return (
+                <g key={i}>
+                  <rect x={x} y={220 - h} width={w} height={h} rx="3" fill="url(#fr-bar)" />
+                  <text x={x + w / 2} y={245} textAnchor="middle" fontSize="13" fontWeight="700" fill={SUBTLE}>{yrs[i]}</text>
+                </g>
+              );
+            })}
+
+            {/* SLR snapshot diamonds — every ~67 weeks */}
+            {[1, 3.3, 5.6, 7.9].map((p, i) => {
+              const x = 80 + p * (90 + 58) + 45;
+              return (
+                <g key={`d${i}`}>
+                  <polygon points={`${x},20 ${x + 12},35 ${x},50 ${x - 12},35`} fill={BG} stroke={`hsl(${AMBER})`} strokeWidth="2" />
+                  <text x={x} y={70} textAnchor="middle" fontSize="11" fontWeight="800" fill={`hsl(${AMBER})`} letterSpacing="1">SLR</text>
+                </g>
+              );
+            })}
+            {/* SLR label spine */}
+            <line x1="80" y1="35" x2="1500" y2="35" stroke={`hsl(${AMBER} / 0.4)`} strokeDasharray="4 6" />
+            <text x="60" y="40" fontSize="11" fontWeight="800" fill={`hsl(${AMBER})`} letterSpacing="1.5" textAnchor="end">67-WK
+SNAPSHOTS</text>
+
+            {/* Continuous map ribbon */}
+            <rect x="60" y="270" width="1480" height="14" rx="7" fill="url(#fr-ribbon)" />
+            <circle cx="60" cy="277" r="9" fill={`hsl(${MINT})`} />
+            <circle cx="1540" cy="277" r="9" fill={`hsl(${TEAL})`} />
+            <text x="60" y="306" fontSize="12" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.5">LIZA · LIVE FIELD MAP · UPDATES AS PAPERS SHIP</text>
+          </svg>
+        </div>
+
+        <div className="grid grid-cols-3 gap-5 flex-1">
+          <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>67-week systematic reviews</p>
+            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>A reader-of-readers. Frozen the day it ships.</p>
+            <p className="mt-auto pt-3" style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>Borah et al., BMJ Open 2017. Mean 67.3 weeks across 195 PROSPERO reviews.</p>
           </div>
-          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>SLR and meta-analysis as a service</p>
-            <p className="mt-3" style={{ fontSize: 16, color: TEXT, lineHeight: 1.5, fontWeight: 600 }}>
-              An always-on, citable structured map of a discipline. The artefact most researchers actually consume — without the 15-month lag.
-            </p>
+          <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE }}>NEXT</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>The map at field scale</p>
+            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>The same structured map, computed continuously. Schools and disagreements stay live as papers ship.</p>
+          </div>
+          <div className="rounded-xl border-2 p-5 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>SLR and meta-analysis as a service</p>
+            <p className="mt-2" style={{ fontSize: 14, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>An always-on, citable structured map of a discipline. The artefact researchers actually consume, without the 15-month lag.</p>
           </div>
         </div>
       </div>
