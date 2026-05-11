@@ -188,9 +188,6 @@ function S01Cover() {
             Augmented research mapping. You remain the author.
           </span>
         </h1>
-        <p style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.18em" }}>
-          FOR THE INDIVIDUAL RESEARCHER · PHD · ECR · FACULTY
-        </p>
       </div>
       <SlideBar />
     </div>
