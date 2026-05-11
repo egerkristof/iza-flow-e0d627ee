@@ -1476,11 +1476,10 @@ function SFrontier() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="05" text="WHERE THIS GOES" />
-        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
-          The same map, at field scale.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>Replaces the systematic review.</span>
+        <h2 className="font-black mt-5 mb-6" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+          You stop reading 15-month-old reviews.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>You read your field, today.</span>
         </h2>
-        <div className="mb-7" />
 
         {/* Hero visual: papers/year bar chart + SLR snapshots vs continuous map ribbon */}
         <div className="rounded-2xl border-2 p-6 mb-7" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
@@ -1539,22 +1538,43 @@ SNAPSHOTS</text>
           </svg>
         </div>
 
-        <div className="grid grid-cols-3 gap-5 flex-1">
-          <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY · THE SYSTEMATIC REVIEW</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>A 15-month human meta-read of a field</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>Teams hand-screen thousands of papers, extract claims, and synthesise the state of a discipline into one review. It is the artefact most researchers actually read instead of the papers, and it is frozen the day it ships.</p>
-            <p className="mt-auto pt-3" style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>Borah et al., BMJ Open 2017. Mean 67.3 weeks across 195 PROSPERO reviews.</p>
+        <div className="grid grid-cols-3 gap-6 flex-1">
+          <div className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY · WHAT YOU DO</p>
+            <p className="font-black mt-3 mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>You read a 15-month-old review</p>
+            <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+              The corpus has outgrown the human. So you read systematic reviews instead of the papers. By the time one ships, the field has moved on for over a year.
+            </p>
+            <p className="mt-auto pt-4" style={{ fontSize: 13, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>
+              Mean 67.3 weeks per review across 195 PROSPERO studies. Borah et al., BMJ Open 2017.
+            </p>
           </div>
-          <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE }}>NEXT · THE LIVE FIELD MAP</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>The same review, computed continuously</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>The structured map of schools, lineages, and disagreements rebuilds every time a new paper lands. Synthesis becomes a live artefact, not a 15-month snapshot.</p>
+          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WITH LIZA · WHAT YOU GET</p>
+            <p className="font-black mt-3 mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>A live review of your field</p>
+            <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+              The same structured map of schools, lineages, and disagreements, rebuilt every time a new paper lands. Open the field on Monday and see what changed since Friday.
+            </p>
+            <p className="mt-auto pt-4" style={{ fontSize: 13, color: `hsl(${TEAL})`, fontWeight: 800, letterSpacing: "0.18em" }}>
+              ALWAYS ON · ALWAYS CURRENT
+            </p>
           </div>
-          <div className="rounded-xl border-2 p-5 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Systematic review and meta-analysis as a service</p>
-            <p className="mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.5, fontWeight: 600 }}>An always-on, citable map of a discipline. Researchers cite the live map, journals commission updates, labs anchor their stance against it. The 15-month lag disappears.</p>
+          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${MINT} / 0.55)`, background: `hsl(${MINT} / 0.06)` }}>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${MINT})` }}>WHAT IT MEANS FOR YOU</p>
+            <ul className="mt-4 space-y-4">
+              <li className="flex gap-3 items-start" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                <Check size={22} style={{ color: `hsl(${MINT})`, marginTop: 3, flexShrink: 0 }} />
+                <span><b>Skip the wait.</b> Start work on day one against the current state of the field, not last year's.</span>
+              </li>
+              <li className="flex gap-3 items-start" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                <Check size={22} style={{ color: `hsl(${MINT})`, marginTop: 3, flexShrink: 0 }} />
+                <span><b>Anchor your stance live.</b> See in real time who agrees, who rebuts, what just superseded what.</span>
+              </li>
+              <li className="flex gap-3 items-start" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                <Check size={22} style={{ color: `hsl(${MINT})`, marginTop: 3, flexShrink: 0 }} />
+                <span><b>Cite the map.</b> Reference a versioned snapshot of your field instead of a frozen 2023 review.</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
