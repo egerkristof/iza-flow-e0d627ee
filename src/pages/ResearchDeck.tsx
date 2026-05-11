@@ -1310,12 +1310,12 @@ function SCoreMapping() {
           {/* RIGHT: 3 numbered callouts */}
           <div className="col-span-5 flex flex-col gap-4">
             {callouts.map(c => (
-              <div key={c.n} className="rounded-xl border-2 p-5 flex gap-4 items-start flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.05)` }}>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-black flex-shrink-0" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 22 }}>{c.n}</div>
+              <div key={c.n} className="rounded-xl border-2 p-7 flex gap-5 items-start flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.05)` }}>
+                <div className="w-14 h-14 rounded-full flex items-center justify-center font-black flex-shrink-0" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 26 }}>{c.n}</div>
                 <div>
-                  <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.28em", color: `hsl(${TEAL})` }}>{c.tag}</p>
-                  <p className="font-black mt-1.5 mb-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>{c.title}</p>
-                  <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{c.body}</p>
+                  <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.28em", color: `hsl(${TEAL})` }}>{c.tag}</p>
+                  <p className="font-black mt-2 mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>{c.title}</p>
+                  <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{c.body}</p>
                 </div>
               </div>
             ))}
