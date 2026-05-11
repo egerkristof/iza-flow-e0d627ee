@@ -296,11 +296,6 @@ function S03Iceberg() {
                 </li>
               ))}
             </ul>
-            <div className="mt-auto rounded-lg p-4" style={{ background: `hsl(${AMBER} / 0.1)` }}>
-              <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>
-                <span style={{ fontWeight: 800, color: `hsl(${AMBER})` }}>Honest gets-you-to: </span>~70% of the individual experience, after the work.
-              </p>
-            </div>
           </div>
           <div className="col-span-8 flex flex-col gap-4">
             <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>THE THREE STRUCTURAL DELTAS · LIZA OS</p>
