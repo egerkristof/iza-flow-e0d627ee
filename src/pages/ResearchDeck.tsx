@@ -153,17 +153,17 @@ function S01Cover() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>
-            LIZA OS · Research Memory Layer · Concept Deck
+            LIZA OS · Augmented Research Mapping · Concept Deck
           </span>
         </div>
         <h1 className="font-black mb-10" style={{ fontSize: 96, lineHeight: 1.04, color: TEXT }}>
-          The research memory layer.<br />
+          See the field before you write in it.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Structured field. Your judgment. AI inside the map.
+            Augmented research mapping. You remain the author.
           </span>
         </h1>
         <p style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.18em" }}>
-          FOR THE INDIVIDUAL RESEARCHER
+          FOR THE INDIVIDUAL RESEARCHER · PHD · ECR · FACULTY
         </p>
       </div>
       <SlideBar />
