@@ -285,31 +285,31 @@ function S03Iceberg() {
           Obsidian is the benchmark. <span style={{ color: `hsl(${TEAL})` }}>Three structural things it does not do.</span>
         </h2>
         <div className="grid grid-cols-12 gap-6 flex-1">
-          <div className="col-span-4 rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${AMBER} / 0.45)`, background: `hsl(${AMBER} / 0.04)` }}>
-            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${AMBER})` }}>BENCHMARK</p>
-            <p className="font-black mt-3 mb-2" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>Obsidian + plugins</p>
-            <ul className="space-y-3 mb-5 mt-4">
+          <div className="col-span-4 rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${AMBER} / 0.45)`, background: `hsl(${AMBER} / 0.04)` }}>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${AMBER})` }}>BENCHMARK</p>
+            <p className="font-black mt-3 mb-2" style={{ fontSize: 34, color: TEXT, lineHeight: 1.1 }}>Obsidian + plugins</p>
+            <ul className="space-y-4 mb-5 mt-5">
               {obsidian.map(o => (
-                <li key={o} className="flex gap-3 items-start" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-                  <Check size={16} color={`hsl(${AMBER})`} strokeWidth={3} className="mt-1 flex-shrink-0" />
+                <li key={o} className="flex gap-3 items-start" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                  <Check size={20} color={`hsl(${AMBER})`} strokeWidth={3} className="mt-1 flex-shrink-0" />
                   <span>{o}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-auto rounded-lg p-3" style={{ background: `hsl(${AMBER} / 0.1)` }}>
-              <p style={{ fontSize: 13, color: TEXT, lineHeight: 1.4 }}>
+            <div className="mt-auto rounded-lg p-4" style={{ background: `hsl(${AMBER} / 0.1)` }}>
+              <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.45 }}>
                 <span style={{ fontWeight: 800, color: `hsl(${AMBER})` }}>Honest gets-you-to: </span>~70% of the individual experience, after the work.
               </p>
             </div>
           </div>
           <div className="col-span-8 flex flex-col gap-4">
-            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>THE THREE STRUCTURAL DELTAS · LIZA OS</p>
+            <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>THE THREE STRUCTURAL DELTAS · LIZA OS</p>
             {liza.map((l, i) => (
-              <div key={l.title} className="rounded-xl border-2 p-5 flex gap-5 items-start flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.06)` }}>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center font-black flex-shrink-0" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 20 }}>{i + 1}</div>
+              <div key={l.title} className="rounded-xl border-2 p-6 flex gap-5 items-start flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.06)` }}>
+                <div className="w-14 h-14 rounded-full flex items-center justify-center font-black flex-shrink-0" style={{ background: `hsl(${TEAL})`, color: BG, fontSize: 24 }}>{i + 1}</div>
                 <div>
-                  <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>{l.title}</p>
-                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.5 }}>{l.body}</p>
+                  <p className="font-black mb-2" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{l.title}</p>
+                  <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>{l.body}</p>
                 </div>
               </div>
             ))}
