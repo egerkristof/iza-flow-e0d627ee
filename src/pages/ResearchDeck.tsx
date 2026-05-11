@@ -1545,7 +1545,7 @@ SNAPSHOTS</text>
           <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY · THE SYSTEMATIC REVIEW</p>
             <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>A 15-month human meta-read of a field</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>Teams hand-screen thousands of papers, extract claims, and synthesise the state of a discipline into one review. It is the artefact most researchers actually read instead of the papers — and it is frozen the day it ships.</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>Teams hand-screen thousands of papers, extract claims, and synthesise the state of a discipline into one review. It is the artefact most researchers actually read instead of the papers, and it is frozen the day it ships.</p>
             <p className="mt-auto pt-3" style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>Borah et al., BMJ Open 2017. Mean 67.3 weeks across 195 PROSPERO reviews.</p>
           </div>
           <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
