@@ -148,6 +148,32 @@ function S01Cover() {
       <SlideGrid />
       <div className="absolute top-1/4 left-1/3 w-[700px] h-[700px] rounded-full opacity-[0.08]"
         style={{ background: `radial-gradient(circle, hsl(${TEAL}), transparent 70%)` }} />
+      {/* Background field-map motif */}
+      <svg viewBox="0 0 1920 1080" className="absolute inset-0 w-full h-full" style={{ opacity: 0.18 }}>
+        {/* school A */}
+        {[[640,360,8],[700,330,6],[600,400,6],[680,410,6]].map(([x,y,r],i)=>(
+          <circle key={`ca${i}`} cx={x} cy={y} r={r} fill="none" stroke={`hsl(${TEAL})`} strokeWidth="1.4" />
+        ))}
+        {/* school B */}
+        {[[1280,360,8],[1340,340,6],[1230,410,6],[1300,420,6]].map(([x,y,r],i)=>(
+          <circle key={`cb${i}`} cx={x} cy={y} r={r} fill="none" stroke={`hsl(${TEAL})`} strokeWidth="1.4" />
+        ))}
+        {/* school C */}
+        {[[960,820,8],[900,790,6],[1020,790,6],[960,860,6]].map(([x,y,r],i)=>(
+          <circle key={`cc${i}`} cx={x} cy={y} r={r} fill="none" stroke={`hsl(${TEAL})`} strokeWidth="1.4" />
+        ))}
+        {/* anchor center */}
+        <circle cx="960" cy="540" r="14" fill={`hsl(${TEAL})`} />
+        <circle cx="960" cy="540" r="22" fill="none" stroke={`hsl(${TEAL})`} strokeDasharray="3 5" />
+        {/* spokes anchor → schools */}
+        {[[640,360],[1280,360],[960,820]].map(([x,y],i)=>(
+          <line key={`sp${i}`} x1="960" y1="540" x2={x} y2={y} stroke={`hsl(${TEAL})`} strokeWidth="1.2" strokeDasharray="2 6" />
+        ))}
+        {/* cross-school disagreements */}
+        <line x1="700" y1="330" x2="1230" y2="410" stroke={`hsl(${TEAL})`} strokeWidth="1" strokeDasharray="2 6" />
+        <line x1="680" y1="410" x2="900" y2="790" stroke={`hsl(${TEAL})`} strokeWidth="1" strokeDasharray="2 6" />
+        <line x1="1300" y1="420" x2="1020" y2="790" stroke={`hsl(${TEAL})`} strokeWidth="1" strokeDasharray="2 6" />
+      </svg>
       <div className="relative z-10 flex flex-col items-center text-center px-28">
         <div className="flex items-center gap-3 mb-14 px-7 py-3 rounded-full border"
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
