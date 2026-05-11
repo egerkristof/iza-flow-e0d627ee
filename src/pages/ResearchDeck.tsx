@@ -1376,42 +1376,96 @@ function SAuthor() {
 }
 
 function SFrontier() {
+  // Stylised "papers / year" growth bars (10 years)
+  const bars = [12, 18, 26, 35, 48, 65, 88, 118, 160, 215];
+  const maxBar = Math.max(...bars);
+  const yrs = ["'15","'16","'17","'18","'19","'20","'21","'22","'23","'24"];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="05" text="WHERE THIS GOES" />
-        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           The same map, at field scale.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>Replaces the systematic review.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
-          A systematic literature review is already a partly automated act: most researchers now read reviews, not papers, because the corpus has outgrown the human. The structured field map is the next step. Run at field scale, it does what an SLR or meta-analysis tries to do, continuously and on living data.
+        <p className="mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
+          A systematic literature review is already a partly automated act. Most researchers now read reviews, not papers, because the corpus has outgrown the human. The structured field map is the next step, computed continuously on living data.
         </p>
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          <div className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>TODAY</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>67-week systematic reviews</p>
-            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              A reader-of-readers. Frozen the day it ships. The frontier has already moved.
-            </p>
-            <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>
-              Source: Borah et al., BMJ Open 2017 — mean 67.3 weeks across 195 PROSPERO reviews.
-            </p>
+
+        {/* Hero visual: papers/year bar chart + SLR snapshots vs continuous map ribbon */}
+        <div className="rounded-2xl border-2 p-6 mb-7" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
+          <div className="flex items-center justify-between mb-3">
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>PAPERS PUBLISHED PER YEAR · ILLUSTRATIVE</p>
+            <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", color: SUBTLE }}>SLR SNAPSHOTS vs CONTINUOUS MAP</p>
           </div>
-          <div className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>NEXT</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>The map at field scale</p>
-            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
-              The same structured map, computed continuously across the field. Schools, disagreements, and supersessions stay live as papers ship.
-            </p>
+          <svg viewBox="0 0 1600 320" className="w-full" style={{ height: 280 }}>
+            <defs>
+              <linearGradient id="fr-bar" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={`hsl(${TEAL} / 0.7)`} />
+                <stop offset="100%" stopColor={`hsl(${TEAL} / 0.25)`} />
+              </linearGradient>
+              <linearGradient id="fr-ribbon" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor={`hsl(${MINT})`} />
+                <stop offset="100%" stopColor={`hsl(${TEAL})`} />
+              </linearGradient>
+            </defs>
+            {/* baseline */}
+            <line x1="60" y1="220" x2="1540" y2="220" stroke={GRID_LINE} strokeWidth="1" />
+
+            {/* bars */}
+            {bars.map((v, i) => {
+              const w = 90;
+              const gap = 58;
+              const x = 80 + i * (w + gap);
+              const h = (v / maxBar) * 170;
+              return (
+                <g key={i}>
+                  <rect x={x} y={220 - h} width={w} height={h} rx="3" fill="url(#fr-bar)" />
+                  <text x={x + w / 2} y={245} textAnchor="middle" fontSize="13" fontWeight="700" fill={SUBTLE}>{yrs[i]}</text>
+                </g>
+              );
+            })}
+
+            {/* SLR snapshot diamonds — every ~67 weeks */}
+            {[1, 3.3, 5.6, 7.9].map((p, i) => {
+              const x = 80 + p * (90 + 58) + 45;
+              return (
+                <g key={`d${i}`}>
+                  <polygon points={`${x},20 ${x + 12},35 ${x},50 ${x - 12},35`} fill={BG} stroke={`hsl(${AMBER})`} strokeWidth="2" />
+                  <text x={x} y={70} textAnchor="middle" fontSize="11" fontWeight="800" fill={`hsl(${AMBER})`} letterSpacing="1">SLR</text>
+                </g>
+              );
+            })}
+            {/* SLR label spine */}
+            <line x1="80" y1="35" x2="1500" y2="35" stroke={`hsl(${AMBER} / 0.4)`} strokeDasharray="4 6" />
+            <text x="60" y="40" fontSize="11" fontWeight="800" fill={`hsl(${AMBER})`} letterSpacing="1.5" textAnchor="end">67-WK
+SNAPSHOTS</text>
+
+            {/* Continuous map ribbon */}
+            <rect x="60" y="270" width="1480" height="14" rx="7" fill="url(#fr-ribbon)" />
+            <circle cx="60" cy="277" r="9" fill={`hsl(${MINT})`} />
+            <circle cx="1540" cy="277" r="9" fill={`hsl(${TEAL})`} />
+            <text x="60" y="306" fontSize="12" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.5">LIZA · LIVE FIELD MAP · UPDATES AS PAPERS SHIP</text>
+          </svg>
+        </div>
+
+        <div className="grid grid-cols-3 gap-5 flex-1">
+          <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>67-week systematic reviews</p>
+            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>A reader-of-readers. Frozen the day it ships.</p>
+            <p className="mt-auto pt-3" style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>Borah et al., BMJ Open 2017. Mean 67.3 weeks across 195 PROSPERO reviews.</p>
           </div>
-          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
-            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>SLR and meta-analysis as a service</p>
-            <p className="mt-3" style={{ fontSize: 16, color: TEXT, lineHeight: 1.5, fontWeight: 600 }}>
-              An always-on, citable structured map of a discipline. The artefact most researchers actually consume — without the 15-month lag.
-            </p>
+          <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE }}>NEXT</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>The map at field scale</p>
+            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>The same structured map, computed continuously. Schools and disagreements stay live as papers ship.</p>
+          </div>
+          <div className="rounded-xl border-2 p-5 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.06)` }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>SLR and meta-analysis as a service</p>
+            <p className="mt-2" style={{ fontSize: 14, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>An always-on, citable structured map of a discipline. The artefact researchers actually consume, without the 15-month lag.</p>
           </div>
         </div>
       </div>
