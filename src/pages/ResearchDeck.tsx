@@ -1129,7 +1129,6 @@ function S15Close() {
 
 // ─── Slide list ──────────────────────────────────────────────────────────────
 function SCoreMapping() {
-function SCoreMapping() {
   const callouts = [
     { n: "1", tag: "STRUCTURE", title: "Schools, lineages, authors typed up front",
       body: "Your corpus is resolved into a structured field. You walk into a map, not a folder." },
