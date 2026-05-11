@@ -1076,7 +1076,7 @@ function S14TwoDoor() {
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="12" text="HOW TO START" />
         <h2 className="font-black mt-5 mb-8" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
-          Be the first researcher <span style={{ color: `hsl(${TEAL})` }}>to co-build it.</span>
+          Run a 16-week pilot <span style={{ color: `hsl(${TEAL})` }}>on your field.</span>
         </h2>
         <div className="flex-1 flex flex-col gap-7">
           {/* Pitch banner */}
