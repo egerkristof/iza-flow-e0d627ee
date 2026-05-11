@@ -1078,18 +1078,99 @@ function S14TwoDoor() {
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="12" text="HOW TO START" />
-        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
           Be the first researcher <span style={{ color: `hsl(${TEAL})` }}>to co-build it.</span>
         </h2>
-        <div className="flex-1 flex">
-          <div className="rounded-2xl p-14 flex flex-col w-full" style={{ background: TEXT, color: BG }}>
-            <p style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${MINT})` }}>DESIGN PARTNER · ONE RESEARCHER</p>
-            <p className="font-black mt-5 mb-7" style={{ fontSize: 56, lineHeight: 1.05 }}>Run the semester pilot</p>
-            <p style={{ fontSize: 26, color: "hsl(0 0% 100% / 0.85)", lineHeight: 1.5, maxWidth: 1300 }}>
-              One researcher. One field. Sixteen weeks. We co-build the Research Memory Layer alongside you and leave you with a usable field map, a judgment log, and a portable structured graph that is yours after the pilot ends.
-            </p>
-            <div className="mt-auto pt-10 flex items-center gap-3">
-              <p style={{ fontSize: 16, color: "hsl(0 0% 100% / 0.6)", letterSpacing: "0.18em" }}>NO INSTITUTIONAL COMMITMENT REQUIRED</p>
+        <div className="flex-1 flex flex-col gap-7">
+          {/* Pitch banner */}
+          <div className="rounded-2xl p-8 flex items-start justify-between gap-10" style={{ background: TEXT, color: BG }}>
+            <div>
+              <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.28em", color: `hsl(${MINT})` }}>DESIGN PARTNER · ONE RESEARCHER · 16 WEEKS</p>
+              <p className="font-black mt-3 mb-3" style={{ fontSize: 42, lineHeight: 1.05 }}>Run the semester pilot</p>
+              <p style={{ fontSize: 19, color: "hsl(0 0% 100% / 0.82)", lineHeight: 1.5, maxWidth: 1100 }}>
+                One researcher. One field. We co-build alongside you and leave you with a usable field map, a judgment log, and a portable structured graph that is yours after the pilot ends.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 items-end flex-shrink-0">
+              <div className="rounded-lg px-4 py-2" style={{ background: `hsl(${MINT} / 0.18)`, border: `1px solid hsl(${MINT} / 0.5)` }}>
+                <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", color: `hsl(${MINT})` }}>NO INSTITUTIONAL COMMITMENT</p>
+              </div>
+              <div className="rounded-lg px-4 py-2" style={{ background: `hsl(${MINT} / 0.18)`, border: `1px solid hsl(${MINT} / 0.5)` }}>
+                <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.2em", color: `hsl(${MINT})` }}>ARTEFACTS YOURS TO KEEP</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 16-week timeline visual */}
+          <div className="rounded-2xl border-2 p-7 flex-1" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
+            <p className="mb-5" style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>16-WEEK PILOT · 4 PHASES</p>
+            <svg viewBox="0 0 1500 280" className="w-full" style={{ height: 260 }}>
+              <defs>
+                <linearGradient id="tl-spine" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor={`hsl(${TEAL} / 0.2)`} />
+                  <stop offset="50%" stopColor={`hsl(${TEAL})`} />
+                  <stop offset="100%" stopColor={`hsl(${MINT})`} />
+                </linearGradient>
+              </defs>
+              {/* week ticks 1..16 */}
+              {Array.from({ length: 17 }).map((_, i) => {
+                const x = 60 + (i * (1380 / 16));
+                return (
+                  <g key={`tk${i}`}>
+                    <line x1={x} y1="120" x2={x} y2="132" stroke={SUBTLE} strokeWidth="1" />
+                    {(i === 0 || (i + 1) % 4 === 0) && (
+                      <text x={x} y="152" textAnchor="middle" fontSize="11" fontWeight="700" fill={SUBTLE}>W{i === 0 ? 1 : i}</text>
+                    )}
+                  </g>
+                );
+              })}
+              {/* spine */}
+              <rect x="60" y="115" width="1380" height="6" rx="3" fill="url(#tl-spine)" />
+
+              {/* Phase milestones */}
+              {[
+                { wk: 1,  label: "Onboard",  detail: "Pick the field. Drop the corpus.",   x: 60 + 0  * (1380/16) },
+                { wk: 4,  label: "Map",      detail: "Schools, lineages, and authors typed.", x: 60 + 4  * (1380/16) },
+                { wk: 8,  label: "Anchor",   detail: "Hypothesis placed inside the map.", x: 60 + 8  * (1380/16) },
+                { wk: 12, label: "Augment",  detail: "Counter-arguments, gaps, and judgment log.", x: 60 + 12 * (1380/16) },
+                { wk: 16, label: "Compound", detail: "Portable graph. Yours to keep.",    x: 60 + 16 * (1380/16) },
+              ].map((m, i) => (
+                <g key={`ms${i}`}>
+                  <circle cx={m.x} cy="118" r="13" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="3" />
+                  <circle cx={m.x} cy="118" r="6"  fill={`hsl(${TEAL})`} />
+                  {/* alternating top/bottom labels */}
+                  {i % 2 === 0 ? (
+                    <g>
+                      <line x1={m.x} y1="105" x2={m.x} y2="60" stroke={`hsl(${TEAL} / 0.5)`} />
+                      <rect x={m.x - 90} y="20" width="180" height="40" rx="6" fill={BG} stroke={`hsl(${TEAL} / 0.5)`} />
+                      <text x={m.x} y="38" textAnchor="middle" fontSize="13" fontWeight="900" fill={TEXT}>{`W${m.wk} · ${m.label}`}</text>
+                      <text x={m.x} y="54" textAnchor="middle" fontSize="11" fontWeight="600" fill={MUTED}>{m.detail}</text>
+                    </g>
+                  ) : (
+                    <g>
+                      <line x1={m.x} y1="131" x2={m.x} y2="180" stroke={`hsl(${TEAL} / 0.5)`} />
+                      <rect x={m.x - 90} y="180" width="180" height="40" rx="6" fill={BG} stroke={`hsl(${TEAL} / 0.5)`} />
+                      <text x={m.x} y="198" textAnchor="middle" fontSize="13" fontWeight="900" fill={TEXT}>{`W${m.wk} · ${m.label}`}</text>
+                      <text x={m.x} y="214" textAnchor="middle" fontSize="11" fontWeight="600" fill={MUTED}>{m.detail}</text>
+                    </g>
+                  )}
+                </g>
+              ))}
+            </svg>
+
+            <div className="grid grid-cols-3 gap-5 mt-2">
+              <div className="rounded-lg border p-4" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>YOU GET</p>
+                <p className="font-bold mt-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>A working field map of your discipline</p>
+              </div>
+              <div className="rounded-lg border p-4" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>YOU KEEP</p>
+                <p className="font-bold mt-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>The judgment log and portable graph</p>
+              </div>
+              <div className="rounded-lg border p-4" style={{ borderColor: CHROME_BORDER, background: BG }}>
+                <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WE ASK</p>
+                <p className="font-bold mt-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>Weekly working sessions and honest feedback</p>
+              </div>
             </div>
           </div>
         </div>
