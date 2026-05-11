@@ -1259,50 +1259,114 @@ function SAuthor() {
   const youOnly = [
     "Form the hypothesis",
     "Read the foundational texts",
-    "Decide which counter-argument changes your mind",
-    "Write the claim, the voice, the argument",
+    "Decide what changes your mind",
+    "Write the claim, voice, and argument",
   ];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10 h-full flex flex-col">
         <Eyebrow n="04" text="ACADEMIC INTEGRITY" />
-        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+        <h2 className="font-black mt-5 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
           You remain the author.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>We refuse to outsource your thinking.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
-          We are not the school that hands the thesis to the model. The system maps the field, surfaces the disagreements, and preserves your judgment. The claim, the voice, and the argument stay yours, and stay attributable.
+        <p className="mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
+          We are not the school that hands the thesis to the model. The system maps the field and preserves your judgment. The claim, the voice, and the argument stay yours, and stay attributable.
         </p>
+
+        {/* Hero divider visual: SYSTEM map → handoff → AUTHOR signature */}
+        <div className="rounded-2xl border-2 mb-7 relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)`, height: 220 }}>
+          <svg viewBox="0 0 1600 220" className="w-full h-full">
+            <defs>
+              <marker id="au-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${TEAL})`} />
+              </marker>
+            </defs>
+
+            {/* LEFT: structured field tile */}
+            <g>
+              <rect x="40" y="30" width="430" height="160" rx="10" fill={BG} stroke={`hsl(${TEAL} / 0.55)`} />
+              <text x="60" y="55" fontSize="11" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="2">THE SYSTEM · STRUCTURED FIELD</text>
+              {/* mini schools */}
+              {[[120,110,18],[230,95,16],[340,120,16]].map(([cx,cy,r],i)=>(
+                <g key={`s${i}`}>
+                  <ellipse cx={cx as number} cy={cy as number} rx={(r as number)+22} ry={(r as number)+10} fill={`hsl(${TEAL} / 0.07)`} stroke={`hsl(${TEAL} / 0.4)`} strokeDasharray="3 4" />
+                  <circle cx={cx as number} cy={cy as number} r="5" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                  <circle cx={(cx as number)-12} cy={(cy as number)+8} r="4" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                  <circle cx={(cx as number)+12} cy={(cy as number)+8} r="4" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="1.6" />
+                </g>
+              ))}
+              {/* anchor */}
+              <circle cx="230" cy="155" r="10" fill={`hsl(${MINT})`} />
+              <text x="230" y="180" textAnchor="middle" fontSize="10" fontWeight="800" fill={MUTED} letterSpacing="1.2">YOUR ANCHOR</text>
+            </g>
+
+            {/* MIDDLE: handoff arrow */}
+            <g>
+              <line x1="490" y1="110" x2="650" y2="110" stroke={`hsl(${TEAL})`} strokeWidth="2.2" markerEnd="url(#au-arrow)" />
+              <rect x="510" y="86" width="120" height="22" rx="11" fill={BG} stroke={`hsl(${TEAL} / 0.6)`} />
+              <text x="570" y="102" textAnchor="middle" fontSize="11" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="1.6">HANDS YOU</text>
+              <text x="570" y="135" textAnchor="middle" fontSize="11" fontWeight="700" fill={MUTED} letterSpacing="1.2">map · disagreements · log</text>
+            </g>
+
+            {/* RIGHT: manuscript with signature */}
+            <g>
+              <rect x="680" y="30" width="430" height="160" rx="10" fill={BG} stroke={`hsl(${TEAL} / 0.55)`} />
+              <text x="700" y="55" fontSize="11" fontWeight="800" fill={`hsl(${TEAL})`} letterSpacing="2">YOU · THE MANUSCRIPT</text>
+              {/* paper lines */}
+              {[80,98,116,134].map((y,i)=>(
+                <line key={`ln${i}`} x1="700" y1={y} x2={i===3?960:1080} y2={y} stroke={`hsl(${TEAL} / 0.35)`} strokeWidth="2" />
+              ))}
+              {/* signature swoosh */}
+              <path d="M720 168 C 740 150, 770 188, 800 160 S 870 145, 900 165 S 960 178, 980 158" fill="none" stroke={`hsl(${MINT})`} strokeWidth="2.4" />
+              <text x="700" y="182" fontSize="9" fontWeight="700" fill={SUBTLE} letterSpacing="1.2">CLAIM · VOICE · ARGUMENT</text>
+            </g>
+
+            {/* RIGHT END: stamp */}
+            <g transform="translate(1190, 110) rotate(-8)">
+              <rect x="-95" y="-42" width="190" height="84" rx="6" fill="none" stroke={`hsl(${MINT})`} strokeWidth="3" />
+              <text x="0" y="-12" textAnchor="middle" fontSize="14" fontWeight="900" fill={`hsl(${MINT})`} letterSpacing="2">AUTHORED</text>
+              <text x="0" y="10" textAnchor="middle" fontSize="14" fontWeight="900" fill={`hsl(${MINT})`} letterSpacing="2">BY YOU</text>
+              <text x="0" y="30" textAnchor="middle" fontSize="9" fontWeight="700" fill={`hsl(${MINT} / 0.85)`} letterSpacing="2">ATTRIBUTABLE</text>
+            </g>
+
+            {/* outer red boundary line */}
+            <line x1="1320" y1="20" x2="1320" y2="200" stroke={`hsl(${RED} / 0.4)`} strokeWidth="2" strokeDasharray="6 5" />
+            <text x="1340" y="50" fontSize="11" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.6">WHAT WE</text>
+            <text x="1340" y="68" fontSize="11" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.6">REFUSE TO</text>
+            <text x="1340" y="86" fontSize="11" fontWeight="800" fill={`hsl(${RED})`} letterSpacing="1.6">DO FOR YOU</text>
+            <g transform="translate(1340, 110)">
+              <text x="0" y="14" fontSize="10" fontWeight="700" fill={MUTED}>· write the thesis</text>
+              <text x="0" y="32" fontSize="10" fontWeight="700" fill={MUTED}>· pick your stance</text>
+              <text x="0" y="50" fontSize="10" fontWeight="700" fill={MUTED}>· generate your argument</text>
+              <text x="0" y="68" fontSize="10" fontWeight="700" fill={MUTED}>· speak in your voice</text>
+            </g>
+          </svg>
+        </div>
+
         <div className="grid grid-cols-2 gap-7 flex-1">
-          <div className="rounded-2xl border p-8 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>WHAT THE SYSTEM DOES</p>
-            <p className="font-black mt-3 mb-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>The mapping and the memory</p>
-            <ul className="space-y-4 mt-2">
+          <div className="rounded-2xl border p-6 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>WHAT THE SYSTEM DOES</p>
+            <ul className="space-y-2.5 mt-3">
               {we.map(p => (
                 <li key={p} className="flex gap-3 items-start">
-                  <Check size={18} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
-                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>{p}</span>
+                  <Check size={17} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{p}</span>
                 </li>
               ))}
             </ul>
           </div>
-          <div className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
-            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>WHAT ONLY YOU DO</p>
-            <p className="font-black mt-3 mb-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>The scholar's act</p>
-            <ul className="space-y-4 mt-2">
+          <div className="rounded-2xl border-2 p-6 flex flex-col" style={{ borderColor: `hsl(${MINT} / 0.6)`, background: `hsl(${MINT} / 0.05)` }}>
+            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${MINT})` }}>WHAT ONLY YOU DO</p>
+            <ul className="space-y-2.5 mt-3">
               {youOnly.map(p => (
                 <li key={p} className="flex gap-3 items-start">
-                  <Brain size={18} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
-                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>{p}</span>
+                  <Brain size={17} style={{ color: `hsl(${MINT})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 17, color: TEXT, lineHeight: 1.4, fontWeight: 600 }}>{p}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-auto pt-6">
-              <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
-                Augmentation, never outsourcing.
-              </p>
-            </div>
           </div>
         </div>
       </div>
