@@ -153,17 +153,17 @@ function S01Cover() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 26, color: `hsl(${TEAL})` }}>
-            LIZA OS · Research Memory Layer · Concept Deck
+            LIZA OS · Augmented Research Mapping · Concept Deck
           </span>
         </div>
         <h1 className="font-black mb-10" style={{ fontSize: 96, lineHeight: 1.04, color: TEXT }}>
-          The research memory layer.<br />
+          See the field before you write in it.<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Structured field. Your judgment. AI inside the map.
+            Augmented research mapping. You remain the author.
           </span>
         </h1>
         <p style={{ fontSize: 18, color: SUBTLE, letterSpacing: "0.18em" }}>
-          FOR THE INDIVIDUAL RESEARCHER
+          FOR THE INDIVIDUAL RESEARCHER · PHD · ECR · FACULTY
         </p>
       </div>
       <SlideBar />
@@ -1102,21 +1102,174 @@ function S15Close() {
 }
 
 // ─── Slide list ──────────────────────────────────────────────────────────────
+function SCoreMapping() {
+  const moves = [
+    {
+      tag: "STRUCTURE THE FIELD",
+      title: "Schools, lineages, and authors typed up front",
+      body: "Drop your corpus in. The system resolves it into a structured map of schools of thought, lineages, and the authors that anchor them. You walk into a field, not a folder.",
+      Icon: Network,
+    },
+    {
+      tag: "SEE THE DISAGREEMENTS",
+      title: "Who argues against whom, and on what",
+      body: "Disagreement, rebuttal, and supersession become first-class objects. You can see, before you write, where the debate actually sits and which positions you are choosing between.",
+      Icon: GitBranch,
+    },
+    {
+      tag: "POSITION YOUR STANCE",
+      title: "Place yourself against the map, not against the noise",
+      body: "Anchor your hypothesis inside the map. The system shows where it sits relative to the schools, what it inherits, and what it refuses. You stop guessing where you stand.",
+      Icon: Target,
+    },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <Eyebrow n="02" text="THE CORE" />
+        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT }}>
+          Augmented research mapping.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>The structure of a field, before you write in it.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 20, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
+          One idea. Not a vault and not a chatbot. An Obsidian-grade graph turbo-charged by AI that maps how schools, lineages, and authors fit together so you can see, before you commit, how your stance lands inside the field.
+        </p>
+        <div className="grid grid-cols-3 gap-6 flex-1">
+          {moves.map(m => {
+            const Icon = m.Icon;
+            return (
+              <div key={m.tag} className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.05)` }}>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5" style={{ background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>
+                  <Icon size={28} />
+                </div>
+                <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>{m.tag}</p>
+                <p className="font-black mt-3 mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{m.title}</p>
+                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>{m.body}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+function SAuthor() {
+  const we = [
+    "Map the field for you to read against",
+    "Surface counter-arguments inside your map",
+    "Capture every why-not-this you make",
+    "Preserve a versioned record of your judgment",
+  ];
+  const youOnly = [
+    "Form the hypothesis",
+    "Read the foundational texts",
+    "Decide which counter-argument changes your mind",
+    "Write the claim, the voice, the argument",
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <Eyebrow n="04" text="ACADEMIC INTEGRITY" />
+        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+          You remain the author.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>We refuse to outsource your thinking.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
+          We are not the school that hands the thesis to the model. The system maps the field, surfaces the disagreements, and preserves your judgment. The claim, the voice, and the argument stay yours, and stay attributable.
+        </p>
+        <div className="grid grid-cols-2 gap-7 flex-1">
+          <div className="rounded-2xl border p-8 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>WHAT THE SYSTEM DOES</p>
+            <p className="font-black mt-3 mb-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>The mapping and the memory</p>
+            <ul className="space-y-4 mt-2">
+              {we.map(p => (
+                <li key={p} className="flex gap-3 items-start">
+                  <Check size={18} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl border-2 p-8 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>WHAT ONLY YOU DO</p>
+            <p className="font-black mt-3 mb-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>The scholar's act</p>
+            <ul className="space-y-4 mt-2">
+              {youOnly.map(p => (
+                <li key={p} className="flex gap-3 items-start">
+                  <Brain size={18} style={{ color: `hsl(${TEAL})`, marginTop: 3, flexShrink: 0 }} />
+                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto pt-6">
+              <p style={{ fontSize: 14, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})`, textTransform: "uppercase" }}>
+                Augmentation, never outsourcing.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
+function SFrontier() {
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 h-full flex flex-col">
+        <Eyebrow n="05" text="WHERE THIS GOES" />
+        <h2 className="font-black mt-5 mb-4" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT }}>
+          The same map, at field scale.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>Replaces the systematic review.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1500 }}>
+          A systematic literature review is already a partly automated act: most researchers now read reviews, not papers, because the corpus has outgrown the human. The structured field map is the next step. Run at field scale, it does what an SLR or meta-analysis tries to do, continuously and on living data.
+        </p>
+        <div className="grid grid-cols-3 gap-6 flex-1">
+          <div className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>TODAY</p>
+            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>67-week systematic reviews</p>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
+              A reader-of-readers. Frozen the day it ships. The frontier has already moved.
+            </p>
+            <p className="mt-auto pt-4" style={{ fontSize: 12, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>
+              Source: Borah et al., BMJ Open 2017 — mean 67.3 weeks across 195 PROSPERO reviews.
+            </p>
+          </div>
+          <div className="rounded-2xl border p-7 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: SUBTLE }}>NEXT</p>
+            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>The map at field scale</p>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.5 }}>
+              The same structured map, computed continuously across the field. Schools, disagreements, and supersessions stay live as papers ship.
+            </p>
+          </div>
+          <div className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.25em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
+            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>SLR and meta-analysis as a service</p>
+            <p className="mt-3" style={{ fontSize: 16, color: TEXT, lineHeight: 1.5, fontWeight: 600 }}>
+              An always-on, citable structured map of a discipline. The artefact most researchers actually consume — without the 15-month lag.
+            </p>
+          </div>
+        </div>
+      </div>
+      <SlideBar />
+    </div>
+  );
+}
+
 const SLIDES = [
-  { id: 1, title: "Cover", component: <S01Cover /> },
-  { id: 2, title: "Personas", component: <S02WhoBreaks /> },
-  { id: 3, title: "The Iceberg", component: <S03Iceberg /> },
-  { id: 4, title: "The Third Path", component: <S04ThirdPath /> },
-  { id: 5, title: "The Thesis", component: <S05Thesis /> },
-  { id: 6, title: "Why Now", component: <S06WhyNow /> },
-  { id: 7, title: "The Shift", component: <S07Shift /> },
-  { id: 8, title: "Line of Work", component: <S08LineOfWork /> },
-  { id: 9, title: "Reading Is the Work", component: <S08bReading /> },
-  { id: 10, title: "How It Works", component: <S08Loop /> },
-  { id: 11, title: "Architecture", component: <S09Architecture /> },
-  { id: 12, title: "Outcomes", component: <S13Outcomes /> },
-  { id: 13, title: "How to Start", component: <S14TwoDoor /> },
-  { id: 14, title: "Close", component: <S15Close /> },
+  { id: 1, title: "Cover",                       component: <S01Cover />     },
+  { id: 2, title: "The Core: Mapping",           component: <SCoreMapping /> },
+  { id: 3, title: "What Obsidian Does Not Do",   component: <S03Iceberg />   },
+  { id: 4, title: "You Remain the Author",       component: <SAuthor />      },
+  { id: 5, title: "Field Scale",                 component: <SFrontier />    },
+  { id: 6, title: "How to Start",                component: <S14TwoDoor />   },
 ];
 
 // ─── Main page (mirrors SpaceDefenseHoldingsDeck shell) ──────────────────────
