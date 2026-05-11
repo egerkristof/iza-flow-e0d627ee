@@ -1482,9 +1482,7 @@ function SFrontier() {
           The same map, at field scale.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>Replaces the systematic review.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
-          A systematic literature review is already a partly automated act. Most researchers now read reviews, not papers, because the corpus has outgrown the human. The structured field map is the next step, computed continuously on living data.
-        </p>
+        <div className="mb-7" />
 
         {/* Hero visual: papers/year bar chart + SLR snapshots vs continuous map ribbon */}
         <div className="rounded-2xl border-2 p-6 mb-7" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
@@ -1545,20 +1543,20 @@ SNAPSHOTS</text>
 
         <div className="grid grid-cols-3 gap-5 flex-1">
           <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY</p>
-            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>67-week systematic reviews</p>
-            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>A reader-of-readers. Frozen the day it ships.</p>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${AMBER})` }}>TODAY · THE SYSTEMATIC REVIEW</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>A 15-month human meta-read of a field</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>Teams hand-screen thousands of papers, extract claims, and synthesise the state of a discipline into one review. It is the artefact most researchers actually read instead of the papers — and it is frozen the day it ships.</p>
             <p className="mt-auto pt-3" style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic", lineHeight: 1.4 }}>Borah et al., BMJ Open 2017. Mean 67.3 weeks across 195 PROSPERO reviews.</p>
           </div>
           <div className="rounded-xl border p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE }}>NEXT</p>
-            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>The map at field scale</p>
-            <p className="mt-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>The same structured map, computed continuously. Schools and disagreements stay live as papers ship.</p>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: SUBTLE }}>NEXT · THE LIVE FIELD MAP</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>The same review, computed continuously</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.5 }}>The structured map of schools, lineages, and disagreements rebuilds every time a new paper lands. Synthesis becomes a live artefact, not a 15-month snapshot.</p>
           </div>
           <div className="rounded-xl border-2 p-5 flex flex-col" style={{ borderColor: `hsl(${TEAL} / 0.55)`, background: `hsl(${TEAL} / 0.06)` }}>
-            <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
-            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>SLR and meta-analysis as a service</p>
-            <p className="mt-2" style={{ fontSize: 14, color: TEXT, lineHeight: 1.45, fontWeight: 600 }}>An always-on, citable structured map of a discipline. The artefact researchers actually consume, without the 15-month lag.</p>
+            <p style={{ fontSize: 13, fontWeight: 800, letterSpacing: "0.22em", color: `hsl(${TEAL})` }}>WHY IT IS BIG</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Systematic review and meta-analysis as a service</p>
+            <p className="mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.5, fontWeight: 600 }}>An always-on, citable map of a discipline. Researchers cite the live map, journals commission updates, labs anchor their stance against it. The 15-month lag disappears.</p>
           </div>
         </div>
       </div>
