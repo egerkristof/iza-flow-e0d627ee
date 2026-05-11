@@ -1224,9 +1224,7 @@ function SCoreMapping() {
           Augmented research mapping.{" "}
           <span style={{ color: `hsl(${TEAL})` }}>The structure of a field, before you write in it.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, maxWidth: 1600 }}>
-          One idea. Not a vault and not a chatbot. An Obsidian-grade graph turbo-charged by AI that maps how schools, lineages, and authors fit together so you can see how your stance lands inside the field.
-        </p>
+        <div className="mb-6" />
         <div className="grid grid-cols-12 gap-8 flex-1">
           {/* LEFT: Big structured-field diagram */}
           <div className="col-span-7 rounded-2xl border-2 relative overflow-hidden" style={{ borderColor: `hsl(${TEAL} / 0.4)`, background: `hsl(${TEAL} / 0.04)` }}>
