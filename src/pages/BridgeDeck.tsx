@@ -121,21 +121,21 @@ function S01Cover() {
 // ─── Slide 02 — Traction ─────────────────────────────────────────────────────
 function S02Traction() {
   const clients = [
-    { icon: Building2, label: "AEC", desc: "Engineering & design firm", color: ACCENT },
+    { icon: Briefcase, label: "Consulting", desc: "Engagement delivery & methodology", color: "280 60% 50%" },
+    { icon: Building2, label: "AEC", desc: "Engineering & design lifecycle", color: ACCENT },
     { icon: FlaskConical, label: "Pharma", desc: "Regulated lifecycle ops", color: GREEN },
     { icon: Shield, label: "Cybersecurity", desc: "Audit & compliance", color: GOLD },
-    { icon: Briefcase, label: "Consulting", desc: "Professional services", color: "280 60% 50%" },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Traction · The Core Is Built & Validated" color={GREEN} />
+        <Tag label="Traction · The Knowledge Cycle Is Proven" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          AACE v3.1 is live. <span style={{ color: `hsl(${GREEN})` }}>Clients are paying.</span>
+          One pattern. <span style={{ color: `hsl(${GREEN})` }}>Four paid design partnerships.</span>
         </h2>
         <p style={{ fontSize: 28, color: MUTED, maxWidth: 1400 }} className="mb-14">
-          Four paid enterprise clients across four industries. The Context Gap thesis is proven, and rework reductions are measurable in days, not percentages.
+          The same Knowledge Cycle — capture expertise, govern it, execute it through AI — validated across four knowledge industries with paid design partnerships and early revenue.
         </p>
 
         <div className="grid grid-cols-4 gap-6 mb-14">
@@ -150,7 +150,7 @@ function S02Traction() {
               <p style={{ fontSize: 19, color: MUTED, marginTop: 6 }}>{c.desc}</p>
               <div className="mt-5 flex items-center gap-2">
                 <CheckCircle2 size={18} style={{ color: `hsl(${GREEN})` }} />
-                <span style={{ fontSize: 16, color: `hsl(${GREEN})`, fontWeight: 600 }}>Paid · In production</span>
+                <span style={{ fontSize: 16, color: `hsl(${GREEN})`, fontWeight: 600 }}>Paid design partnership</span>
               </div>
             </div>
           ))}
@@ -160,17 +160,17 @@ function S02Traction() {
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
             <p style={{ fontSize: 17, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Audit workflow</p>
             <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>18 days <span style={{ color: MUTED, fontSize: 32 }}>→</span> 1 day</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Cycle-time collapse on a live cybersecurity engagement.</p>
+            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Cycle-time collapse on a live cybersecurity partnership.</p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
             <p style={{ fontSize: 17, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Product-market fit</p>
-            <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 verticals</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Same Context Layer thesis validated across every paid pilot.</p>
+            <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 industries</p>
+            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Same core infrastructure, different industries — pattern is repeatable.</p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.25)` }}>
             <p style={{ fontSize: 17, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Revenue</p>
             <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>Early ARR</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Generating revenue from enterprise pilots — not a research project.</p>
+            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Paid design partnerships with enterprises, not a research project.</p>
           </div>
         </div>
       </div>
