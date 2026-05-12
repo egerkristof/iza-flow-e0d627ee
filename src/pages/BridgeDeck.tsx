@@ -731,11 +731,11 @@ function S11Team() {
       <DarkGrid />
       <div className="relative z-10">
         <DarkTag label="Team" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
+        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
           Same team that built the proof <span style={{ color: `hsl(${GOLD})` }}>will ship the self-serve.</span>
         </h2>
-        <p style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1600 }} className="mb-12">
-          No new hires required to deliver this bridge. The people who designed and shipped the engine are the people activating self-serve.
+        <p style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1600 }} className="mb-10">
+          No new hires required. The people who designed and shipped the engine are the people activating self-serve.
         </p>
 
         <div className="grid grid-cols-3 gap-6">
@@ -758,17 +758,18 @@ function S11Team() {
 
         <div className="mt-10 grid grid-cols-3 gap-6">
           {[
-            { i: Hammer, t: "15 months", d: "Self-funded build to four paid partnerships" },
-            { i: Coins, t: "Capital efficient", d: "Shipped a working engine on a fraction of the typical seed" },
-            { i: Brain, t: "Practitioners", d: "Built AI inside enterprise. Lived this exact gap." },
+            { i: Hammer, t: "15 months self-funded", d: "Built to four paid partnerships without external capital" },
+            { i: Coins, t: "Capital efficient", d: "Shipped a working engine on a fraction of the typical seed spend" },
+            { i: Brain, t: "Practitioners", d: "Built AI inside enterprise. Lived this exact gap for 15 years." },
           ].map(b => (
-            <div key={b.t} className="rounded-xl p-5 flex items-center gap-4"
-              style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.08)` }}>
-              <b.i size={24} style={{ color: `hsl(${GOLD})` }} />
-              <div>
-                <p style={{ fontSize: 18, color: DARK_TEXT, fontWeight: 700 }}>{b.t}</p>
-                <p style={{ fontSize: 16, color: DARK_MUTED }}>{b.d}</p>
+            <div key={b.t} className="rounded-2xl p-7 flex flex-col"
+              style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${GOLD} / 0.3)` }}>
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${GOLD} / 0.12)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>
+                <b.i size={28} style={{ color: `hsl(${GOLD})` }} />
               </div>
+              <p style={{ fontSize: 28, color: DARK_TEXT, fontWeight: 700 }}>{b.t}</p>
+              <p style={{ fontSize: 20, color: DARK_MUTED, marginTop: 6, lineHeight: 1.4 }}>{b.d}</p>
             </div>
           ))}
         </div>
