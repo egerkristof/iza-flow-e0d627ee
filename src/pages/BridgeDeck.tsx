@@ -518,7 +518,7 @@ function S07Product() {
 function S08UseOfFunds() {
   const lines = [
     { c: ACCENT, pct: 55, label: "Engineering · Self-Serve Wizard + AACE hardening", amt: "€110K" },
-    { c: GREEN, pct: 25, label: "Vertical packaging · Professional Services bundles", amt: "€50K" },
+    { c: GREEN, pct: 25, label: "Vertical packaging · AEC, Pharma, Cyber, Consulting bundles", amt: "€50K" },
     { c: GOLD, pct: 12, label: "Activation telemetry & growth instrumentation", amt: "€24K" },
     { c: "280 60% 50%", pct: 8, label: "Legal, infra, and round-close costs", amt: "€16K" },
   ];
