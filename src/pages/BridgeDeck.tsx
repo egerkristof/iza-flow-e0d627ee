@@ -4,7 +4,8 @@ import {
   CheckCircle2, AlertTriangle, Zap, Target, TrendingUp,
   Building2, FlaskConical, Shield, Briefcase, ArrowRight,
   Users, Wand2, Rocket, Crosshair,
-  ChevronLeft, ChevronRight, Maximize2, X, Grid3x3
+  ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
+  Layers, Cpu, GitBranch, Calendar, Coins, FileSignature, Clock, BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
