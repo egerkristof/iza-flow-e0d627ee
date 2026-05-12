@@ -99,16 +99,16 @@ function S01Cover() {
       <DarkGrid />
       <div className="relative z-10 text-center px-32">
         <p className="font-semibold tracking-[0.3em] uppercase mb-10" style={{ fontSize: 24, color: `hsl(${GOLD})` }}>
-          €200K Bridge Round · Confidential
+          LIZA OS · Bridge Round · Confidential
         </p>
-        <h1 className="font-bold leading-[1.02] mb-10" style={{ fontSize: 132, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
-          €200K. 6 weeks.
+        <h1 className="font-bold leading-[1.02] mb-10" style={{ fontSize: 120, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
+          From paid pilots to self-serve.
         </h1>
-        <p className="leading-[1.2] mb-14" style={{ fontSize: 56, color: `hsl(${ACCENT} / 0.95)`, fontWeight: 500 }}>
-          The bridge to self-serve.
+        <p className="leading-[1.2] mb-14" style={{ fontSize: 52, color: `hsl(${ACCENT} / 0.95)`, fontWeight: 500 }}>
+          A €200K bridge to a financeable Seed.
         </p>
         <p className="mx-auto mb-14" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.4 }}>
-          Funding the engineering runway that turns four paid design partnerships into a self-serve SaaS engine.
+          We have shipped a working product and four paid design partnerships. This round funds the last engineering sprint that turns custom delivery into a product-led SaaS engine.
         </p>
         <div className="inline-flex items-center gap-8 px-10 py-5 rounded-2xl"
           style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(0 0% 100% / 0.12)` }}>
