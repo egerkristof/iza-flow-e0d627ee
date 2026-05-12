@@ -546,7 +546,7 @@ function S07Funds() {
           Every euro buys <span style={{ color: `hsl(${GOLD})` }}>self-serve velocity.</span>
         </h2>
         <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-10">
-          No vanity hires. Two engineers keep shipping the self-serve wizard, an early go-to-market motion fills the funnel, and every line is tied to a measurable activation milestone.
+          No vanity hires. Four engineers keep shipping the self-serve wizard, an early go-to-market motion fills the funnel, and every line is tied to a measurable activation milestone.
         </p>
 
         {/* Stacked bar */}
@@ -575,7 +575,7 @@ function S07Funds() {
           {[
             { i: Clock, t: "6 months runway", d: "From close to Seed-ready metrics. No salary cliff in the middle." },
             { i: Users, t: "Early go-to-market", d: "Sales motion and design partner outreach funded for the bridge window." },
-            { i: Hammer, t: "Two engineers shipping", d: "Salaried, not contracted. Self-serve wizard from day one of close." },
+            { i: Hammer, t: "Four engineers shipping", d: "Salaried, not contracted. Self-serve wizard from day one of close." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
               <b.i size={26} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" />
