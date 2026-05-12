@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import SeedInvestorDeck from "@/pages/SeedInvestorDeck";
+import BridgeDeck from "@/pages/BridgeDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
