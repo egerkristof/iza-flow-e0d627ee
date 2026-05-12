@@ -144,17 +144,17 @@ function S02Moment() {
     {
       icon: Globe, c: ACCENT, label: "Market moment",
       head: "AI inherits no standards.",
-      body: "Drop AI into a company and it has no expertise, no memory of how work is actually done, no link to the artifacts and decisions that move with the org. Generic models guess. Nobody owns the layer that defines the standards. That layer is the next platform shift.",
+      body: "Drop AI into a company and it inherits no expertise, no memory of how work is done, no link to artifacts and decisions. Generic models guess. Nobody owns the layer that defines the standards. That layer is the next platform shift.",
     },
     {
       icon: Sparkles, c: GREEN, label: "Company moment",
       head: "Core works. Self-serve is next.",
-      body: "Four paid design partnerships across four knowledge industries. Engine shipped. The only thing missing is the self-serve flow that lets the next 100 customers start without us.",
+      body: "Four paid partnerships across four knowledge industries. Engine shipped. Missing: the self-serve flow that lets the next 100 customers start without us in the room.",
     },
     {
       icon: Coins, c: GOLD, label: "Capital moment",
       head: "Cheapest entry we will offer.",
-      body: "€200K bridges from paid pilots to a financeable Seed on proven self-serve metrics. First-mover SAFE terms. Not raised again at this price.",
+      body: "€200K bridges paid pilots to a financeable Seed. First-mover SAFE terms. Not raised again at this price.",
     },
   ];
   return (
@@ -165,11 +165,7 @@ function S02Moment() {
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Three windows are <span style={{ color: `hsl(${GOLD})` }}>open at the same time.</span>
         </h2>
-        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1500 }} className="mb-14">
-          A market shift, a company inflection, and a financing window. They overlap right now. €200K is what closes the loop.
-        </p>
-
-        <div className="grid grid-cols-3 gap-7">
+        <div className="grid grid-cols-3 gap-7 mt-12">
           {cols.map(c => (
             <div key={c.label} className="rounded-2xl p-8 flex flex-col"
               style={{ background: CARD_ALT, border: `1px solid hsl(${c.c} / 0.25)` }}>
@@ -179,7 +175,7 @@ function S02Moment() {
               </div>
               <p style={{ fontSize: 16, color: `hsl(${c.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-3">{c.label}</p>
               <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 14 }}>{c.head}</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{c.body}</p>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{c.body}</p>
             </div>
           ))}
         </div>
