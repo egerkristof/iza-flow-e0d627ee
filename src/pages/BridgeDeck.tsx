@@ -634,10 +634,6 @@ function S07Funds() {
 // SLIDE 08 — ROADMAP TO MARKUP (Bridge → Seed → A)
 // ═════════════════════════════════════════════════════════════════════════════
 function S10Roadmap() {
-// ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 09 — ROADMAP TO MARKUP (Bridge → Seed → A)
-// ═════════════════════════════════════════════════════════════════════════════
-function S10Roadmap() {
   const stages = [
     { tag: "Now · €200K Bridge", c: GOLD, t: "Ship self-serve", val: "Today's price",
       bullets: ["Wizard, telemetry, hardening", "Founders + 4 engineers", "Bridge to Seed metrics"] },
