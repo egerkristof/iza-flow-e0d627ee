@@ -347,48 +347,58 @@ function S04Unlock() {
 
 // ─── Slide 05 — Wedge & Milestone ────────────────────────────────────────────
 function S05Wedge() {
+  const targets = [
+    { i: Building2, c: ACCENT, t: "AEC", d: "Engineering & design" },
+    { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
+    { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
+    { i: Briefcase, c: "280 60% 50%", t: "Consulting", d: "Professional services" },
+  ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 26, color: `hsl(${GOLD} / 0.9)` }}>
-          The Vertical Wedge · The Goal
+          The Wedge · Knowledge Industries
         </p>
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
-          One arrow. <span style={{ color: `hsl(${GOLD})` }}>One bullseye.</span>
+          One platform. <span style={{ color: `hsl(${GOLD})` }}>Every knowledge industry.</span>
         </h2>
         <p style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1500 }} className="mb-12">
-          The self-serve capability is pointed at one proven, repeatable industry: <span style={{ color: DARK_TEXT, fontWeight: 700 }}>Professional Services / Consulting.</span>
+          Self-serve unlocks adoption across the industries where expertise is the product: <span style={{ color: DARK_TEXT, fontWeight: 700 }}>AEC, Pharma, Cybersecurity, Consulting</span> — and we are already in conversation with each.
         </p>
 
-        {/* Arrow → Bullseye */}
-        <div className="rounded-2xl p-10 mb-10 flex items-center gap-10"
+        {/* Self-serve hub → 4 industry targets */}
+        <div className="rounded-2xl p-10 mb-10"
           style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
-          <div className="flex-1 flex items-center gap-6">
-            <div className="w-20 h-20 rounded-2xl flex items-center justify-center"
-              style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.4)` }}>
-              <Rocket size={42} style={{ color: `hsl(${ACCENT})` }} />
+          <div className="grid grid-cols-[260px_1fr] gap-10 items-center">
+            <div className="flex flex-col items-center text-center">
+              <div className="relative w-32 h-32 rounded-full flex items-center justify-center mb-4"
+                style={{ background: `radial-gradient(circle, hsl(${GOLD} / 0.5) 0%, hsl(${GOLD} / 0.15) 50%, transparent 75%)` }}>
+                <div className="absolute inset-3 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.5)` }} />
+                <div className="absolute inset-7 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.7)` }} />
+                <Rocket size={40} style={{ color: `hsl(${GOLD})` }} />
+              </div>
+              <p style={{ fontSize: 16, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Self-Serve Capability</p>
+              <p style={{ fontSize: 26, color: DARK_TEXT, fontWeight: 700 }}>The €200K build</p>
             </div>
             <div>
-              <p style={{ fontSize: 17, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Self-Serve Capability</p>
-              <p style={{ fontSize: 32, color: DARK_TEXT, fontWeight: 700 }}>The €200K build</p>
-            </div>
-          </div>
-
-          <div className="flex-1 flex items-center justify-center">
-            <ArrowRight size={64} style={{ color: `hsl(${GOLD})` }} />
-          </div>
-
-          <div className="flex-1 flex items-center gap-6 justify-end">
-            <div>
-              <p style={{ fontSize: 17, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold text-right">Target Vertical</p>
-              <p style={{ fontSize: 32, color: DARK_TEXT, fontWeight: 700 }} className="text-right">Professional Services</p>
-            </div>
-            <div className="relative w-28 h-28 rounded-full flex items-center justify-center"
-              style={{ background: `radial-gradient(circle, hsl(${GOLD} / 0.5) 0%, hsl(${GOLD} / 0.15) 50%, transparent 75%)` }}>
-              <div className="absolute inset-3 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.5)` }} />
-              <div className="absolute inset-7 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.7)` }} />
-              <Crosshair size={36} style={{ color: `hsl(${GOLD})` }} />
+              <div className="flex items-center gap-3 mb-5">
+                <ArrowRight size={28} style={{ color: `hsl(${GOLD})` }} />
+                <p style={{ fontSize: 18, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Knowledge industries · in conversation</p>
+              </div>
+              <div className="grid grid-cols-4 gap-4">
+                {targets.map(t => (
+                  <div key={t.t} className="rounded-xl p-5"
+                    style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${t.c} / 0.35)` }}>
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+                      style={{ background: `hsl(${t.c} / 0.18)`, border: `1px solid hsl(${t.c} / 0.35)` }}>
+                      <t.i size={24} style={{ color: `hsl(${t.c})` }} />
+                    </div>
+                    <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 700 }}>{t.t}</p>
+                    <p style={{ fontSize: 16, color: DARK_MUTED, marginTop: 4 }}>{t.d}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -398,7 +408,7 @@ function S05Wedge() {
           <div className="rounded-2xl p-7" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${GREEN} / 0.35)` }}>
             <Target size={28} style={{ color: `hsl(${GREEN})` }} className="mb-4" />
             <p style={{ fontSize: 17, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-2">Q4 Milestone</p>
-            <p style={{ fontSize: 30, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.15 }}>100% self-serve ARR growth in Professional Services</p>
+            <p style={{ fontSize: 30, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.15 }}>Self-serve ARR growth across knowledge industries</p>
           </div>
           <div className="rounded-2xl p-7" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${ACCENT} / 0.35)` }}>
             <TrendingUp size={28} style={{ color: `hsl(${ACCENT})` }} className="mb-4" />
