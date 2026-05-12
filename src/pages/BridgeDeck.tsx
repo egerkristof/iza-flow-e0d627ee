@@ -254,10 +254,10 @@ function S04Unlock() {
       <div className="relative z-10">
         <Tag label="The €200K Unlock · The Bridge Solution" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          From Consulting Kickstart to <span style={{ color: `hsl(${ACCENT})` }}>Self-Serve Wizard.</span>
+          Core infrastructure works. <span style={{ color: `hsl(${ACCENT})` }}>Now ship self-serve.</span>
         </h2>
         <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          €200K funds the engineering runway to remove the human bottleneck from our own deployment — a frictionless, AI-native SaaS onboarding flow.
+          We have the core infrastructure plus basic native UIs on top, proven in four paid partnerships. €200K funds the self-serve layer that lets knowledge industries adopt the platform without us in the room.
         </p>
 
         {/* Before / After */}
@@ -329,9 +329,9 @@ function S04Unlock() {
 
         <div className="grid grid-cols-3 gap-6">
           {[
-            { t: "Platform stabilisation", d: "Harden the AACE core for unattended deployment." },
-            { t: "Onboarding wizard", d: "AI-native flow that proposes the customer's first Context Layer." },
-            { t: "Activation telemetry", d: "Instrument every step to remove friction continuously." },
+            { t: "Harden the core", d: "AACE infrastructure ready for unattended, multi-tenant deployment." },
+            { t: "Self-serve native UIs", d: "Onboarding wizard plus the workbench surfaces a customer needs on day one." },
+            { t: "Activation telemetry", d: "Instrument every step so the funnel improves itself, no humans needed." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
               <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
