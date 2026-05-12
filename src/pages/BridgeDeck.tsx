@@ -219,16 +219,16 @@ function S03Proof() {
     { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
   ];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
         <Tag label="Proof" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+        <h2 className="font-bold leading-[1.05] mb-7" style={{ fontSize: 72, color: TEXT, letterSpacing: "-0.02em" }}>
           Here's how this all works. <span style={{ color: `hsl(${GREEN})` }}>One loop, four paid partnerships.</span>
         </h2>
 
         {/* The cycle diagram */}
-        <div className="rounded-2xl p-8 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="rounded-2xl p-7 mb-6" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <div className="flex items-center justify-between gap-2">
             {stages.map((s, idx) => (
               <div key={s.t} className="flex items-center gap-3 flex-1">
@@ -268,21 +268,21 @@ function S03Proof() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-4">
-            <div className="rounded-xl p-5" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <p style={{ fontSize: 14, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Cycle-time win</p>
-              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>18 days <span style={{ color: MUTED, fontSize: 24 }}>→</span> 1 day</p>
-              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Live cybersecurity partnership.</p>
+          <div className="flex flex-col gap-3">
+            <div className="rounded-xl p-4" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <p style={{ fontSize: 13, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-1">Cycle-time win</p>
+              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1 }}>18 days <span style={{ color: MUTED, fontSize: 22 }}>→</span> 1 day</p>
+              <p style={{ fontSize: 15, color: MUTED, marginTop: 3 }}>Live cybersecurity partnership.</p>
             </div>
-            <div className="rounded-xl p-5" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
-              <p style={{ fontSize: 14, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Pattern fit</p>
-              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 industries</p>
-              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Same loop, repeatable.</p>
+            <div className="rounded-xl p-4" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+              <p style={{ fontSize: 13, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-1">Pattern fit</p>
+              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 industries</p>
+              <p style={{ fontSize: 15, color: MUTED, marginTop: 3 }}>Same loop, repeatable.</p>
             </div>
-            <div className="rounded-xl p-5" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.25)` }}>
-              <p style={{ fontSize: 14, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Revenue</p>
-              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>Early ARR</p>
-              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Paid, not pilot-ware.</p>
+            <div className="rounded-xl p-4" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.25)` }}>
+              <p style={{ fontSize: 13, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-1">Revenue</p>
+              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1 }}>Early ARR</p>
+              <p style={{ fontSize: 15, color: MUTED, marginTop: 3 }}>Paid, not pilot-ware.</p>
             </div>
           </div>
         </div>
