@@ -144,17 +144,17 @@ function S02Moment() {
     {
       icon: Globe, c: ACCENT, label: "Market moment",
       head: "AI inherits no standards.",
-      body: "Drop AI into a company and it has no expertise, no memory of how work is actually done, no link to the artifacts and decisions that move with the org. Generic models guess. Nobody owns the layer that defines the standards. That layer is the next platform shift.",
+      body: "Drop AI into a company and it inherits no expertise, no memory of how work is done, no link to artifacts and decisions. Generic models guess. Nobody owns the layer that defines the standards. That layer is the next platform shift.",
     },
     {
       icon: Sparkles, c: GREEN, label: "Company moment",
       head: "Core works. Self-serve is next.",
-      body: "Four paid design partnerships across four knowledge industries. Engine shipped. The only thing missing is the self-serve flow that lets the next 100 customers start without us.",
+      body: "Four paid partnerships across four knowledge industries. Engine shipped. Missing: the self-serve flow that lets the next 100 customers start without us in the room.",
     },
     {
       icon: Coins, c: GOLD, label: "Capital moment",
       head: "Cheapest entry we will offer.",
-      body: "€200K bridges from paid pilots to a financeable Seed on proven self-serve metrics. First-mover SAFE terms. Not raised again at this price.",
+      body: "€200K bridges paid pilots to a financeable Seed. First-mover SAFE terms. Not raised again at this price.",
     },
   ];
   return (
@@ -165,11 +165,7 @@ function S02Moment() {
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Three windows are <span style={{ color: `hsl(${GOLD})` }}>open at the same time.</span>
         </h2>
-        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1500 }} className="mb-14">
-          A market shift, a company inflection, and a financing window. They overlap right now. €200K is what closes the loop.
-        </p>
-
-        <div className="grid grid-cols-3 gap-7">
+        <div className="grid grid-cols-3 gap-7 mt-12">
           {cols.map(c => (
             <div key={c.label} className="rounded-2xl p-8 flex flex-col"
               style={{ background: CARD_ALT, border: `1px solid hsl(${c.c} / 0.25)` }}>
@@ -179,7 +175,7 @@ function S02Moment() {
               </div>
               <p style={{ fontSize: 16, color: `hsl(${c.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-3">{c.label}</p>
               <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 14 }}>{c.head}</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{c.body}</p>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{c.body}</p>
             </div>
           ))}
         </div>
@@ -204,10 +200,10 @@ function S02Moment() {
 // ═════════════════════════════════════════════════════════════════════════════
 function S03Proof() {
   const stages = [
-    { i: BookOpen, c: ACCENT, t: "Capture" },
-    { i: Shield, c: GREEN, t: "Govern" },
-    { i: Zap, c: GOLD, t: "Execute" },
-    { i: TrendingUp, c: PURPLE, t: "Evolve" },
+    { i: BookOpen, c: ACCENT, t: "Capture", d: "Pull expert know-how out of docs, calls, and people's heads." },
+    { i: Shield, c: GREEN, t: "Govern", d: "Turn it into versioned, owned standards the org can trust." },
+    { i: Zap, c: GOLD, t: "Execute", d: "Run AI work through those standards, with sources cited." },
+    { i: TrendingUp, c: PURPLE, t: "Evolve", d: "Feedback from real use updates the standards. Loop closes." },
   ];
   const industries = [
     { i: Briefcase, c: PURPLE, t: "Consulting", d: "Engagement methodology" },
@@ -220,12 +216,9 @@ function S03Proof() {
       <SlideGrid />
       <div className="relative z-10">
         <Tag label="Proof · The Knowledge Cycle, validated 4 / 4" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
-          One loop. <span style={{ color: `hsl(${GREEN})` }}>Four paid design partnerships.</span>
+        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+          Here's how this all works. <span style={{ color: `hsl(${GREEN})` }}>One loop, four paid partnerships.</span>
         </h2>
-        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          The same Knowledge Cycle ran end-to-end across four knowledge industries. Capture expertise, govern it, execute it through AI, evolve from feedback. Every loop produced measurable cycle-time and quality wins.
-        </p>
 
         {/* The cycle diagram */}
         <div className="rounded-2xl p-8 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
@@ -239,6 +232,7 @@ function S03Proof() {
                   </div>
                   <p style={{ fontSize: 14, color: SUBTLE, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase">Step {idx + 1}</p>
                   <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>{s.t}</p>
+                  <p style={{ fontSize: 15, color: MUTED, marginTop: 6, lineHeight: 1.35, maxWidth: 220 }}>{s.d}</p>
                 </div>
                 {idx < stages.length - 1 && <ArrowRight size={28} style={{ color: SUBTLE }} className="shrink-0" />}
               </div>
@@ -378,12 +372,9 @@ function S05Gap() {
       <SlideGrid />
       <div className="relative z-10">
         <Tag label="The gap to scale · Why it is not yet self-serve" color={RED} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Onboarding still <span style={{ color: `hsl(${RED})` }}>needs us in the room.</span>
         </h2>
-        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-12">
-          We are laying AI-native infrastructure inside real organizations. That is genuinely complex work, and the engine handles it. What is missing is the path that lets a single person, in a single team, launch their first playbook on day one and let the workspace, people, and standards grow from there. Until that exists, every new customer pulls a founder into the room.
-        </p>
 
         <div className="rounded-2xl p-10 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <div className="flex items-center justify-between gap-4">
@@ -393,7 +384,7 @@ function S05Gap() {
                 <Layers size={42} style={{ color: `hsl(${ACCENT})` }} />
               </div>
               <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Complex deployment</p>
-              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>AI-native foundation, real org change</p>
+              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>Standing up AI-native infrastructure inside a real org. Genuinely hard. The engine handles it.</p>
             </div>
             <ArrowRight size={36} style={{ color: SUBTLE }} />
             <div className="flex-1 text-center">
@@ -402,7 +393,7 @@ function S05Gap() {
                 <AlertTriangle size={42} style={{ color: `hsl(${RED})` }} />
               </div>
               <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Guided Kickstart</p>
-              <p style={{ fontSize: 17, color: `hsl(${RED})`, marginTop: 4, fontWeight: 600 }}>The bottleneck · founders in every room</p>
+              <p style={{ fontSize: 17, color: `hsl(${RED})`, marginTop: 4, fontWeight: 600 }}>A founder still has to walk every customer in. The only step that does not scale.</p>
             </div>
             <ArrowRight size={36} style={{ color: SUBTLE }} />
             <div className="flex-1 text-center">
@@ -411,16 +402,16 @@ function S05Gap() {
                 <CheckCircle2 size={42} style={{ color: `hsl(${GREEN})` }} />
               </div>
               <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Live customers</p>
-              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>Activated one at a time</p>
+              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>Paying, using, expanding. But activated one at a time, not as a funnel.</p>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-6">
           {[
-            { t: "Manual deployment", d: "Every client needs hands-on configuration of bundles, standards, and workspaces." },
-            { t: "Founder-time gated", d: "Kickstarts pull senior team off product and platform work." },
-            { t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point to grow from." },
+            { t: "Manual deployment", d: "Every customer is configured by hand. Bundles, standards, workspaces, all set up in the room with the team. Repeatable, not yet packaged." },
+            { t: "Founder-time gated", d: "Each kickstart pulls a founder out of building. The number of customers we add per month is capped by our calendar, not by demand." },
+            { t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point that one team can self-serve and grow from." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
               <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
@@ -541,7 +532,7 @@ function S06Unlock() {
 function S07Funds() {
   const lines = [
     { c: ACCENT, pct: 40, label: "Engineering salary · ship self-serve wizard", amt: "€80K" },
-    { c: GREEN, pct: 25, label: "Founder runway · keep founders full-time", amt: "€50K" },
+    { c: GREEN, pct: 25, label: "Go-to-market · early sales, design partner outreach, demand gen", amt: "€50K" },
     { c: GOLD, pct: 18, label: "Vertical packaging · AEC, Pharma, Cyber, Consulting", amt: "€36K" },
     { c: PURPLE, pct: 10, label: "Activation telemetry · funnel instrumentation", amt: "€20K" },
     { c: RED, pct: 7, label: "Legal, infra, round-close costs", amt: "€14K" },
@@ -555,7 +546,7 @@ function S07Funds() {
           Every euro buys <span style={{ color: `hsl(${GOLD})` }}>self-serve velocity.</span>
         </h2>
         <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-10">
-          No vanity hires, no marketing burn. Founders stay full-time, two engineers keep shipping, and every line is tied to a measurable activation milestone.
+          No vanity hires. Two engineers keep shipping the self-serve wizard, an early go-to-market motion fills the funnel, and every line is tied to a measurable activation milestone.
         </p>
 
         {/* Stacked bar */}
@@ -583,7 +574,7 @@ function S07Funds() {
         <div className="grid grid-cols-3 gap-6">
           {[
             { i: Clock, t: "6 months runway", d: "From close to Seed-ready metrics. No salary cliff in the middle." },
-            { i: Users, t: "Founders full-time", d: "István, Kristóf, Zoltán stay on the build. No moonlighting." },
+            { i: Users, t: "Early go-to-market", d: "Sales motion and design partner outreach funded for the bridge window." },
             { i: Hammer, t: "Two engineers shipping", d: "Salaried, not contracted. Self-serve wizard from day one of close." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
@@ -748,7 +739,7 @@ function S10Roadmap() {
     { tag: "Q4 2026 · Self-Serve ARR", c: GREEN, t: "Paid self-serve cohort", val: "Implied step-up",
       bullets: ["Paid teams via wizard", "Activation metrics live", "Reference logos at scale"] },
     { tag: "2027 · Seed / Series A", c: ACCENT, t: "Premium markup", val: "Seed-priced",
-      bullets: ["€2M+ on proven SaaS metrics", "Expand the OS across verticals", "Horizontal Context Layer thesis funded"] },
+      bullets: ["Priced on real self-serve traction", "Expand the OS across verticals", "Horizontal Context Layer thesis funded"] },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
