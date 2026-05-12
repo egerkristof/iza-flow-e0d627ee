@@ -114,7 +114,7 @@ function S01Cover() {
           style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(0 0% 100% / 0.12)` }}>
           {[
             { k: "Round size", v: "€200,000" },
-            { k: "Check size", v: "€10K – €30K" },
+            { k: "Check size", v: "€10K to €30K" },
             { k: "Close window", v: "6 weeks, rolling" },
             { k: "For", v: "Operators · Angels · Micro-funds" },
           ].map((x, i, arr) => (
@@ -129,7 +129,7 @@ function S01Cover() {
         </div>
       </div>
       <div className="absolute bottom-12 left-0 right-0 text-center" style={{ fontSize: 18, color: DARK_MUTED }}>
-        LIZA OS — The Context Layer for AI-Native Organizations
+        LIZA OS · The Context Layer for AI-Native Organizations
       </div>
       <SlideBar from={GOLD} to={ACCENT} />
     </div>
@@ -310,7 +310,7 @@ function S04Built() {
     {
       i: GitBranch, c: GOLD, t: "Governance & Audit",
       d: "Versioned standards, change history, full reasoning trail per output.",
-      mock: ["Standard v3 · pricing-rules", "Diff: +2 lines, –1 line · approved", "32 outputs re-run on new version"],
+      mock: ["Standard v3 · pricing-rules", "Diff: +2 lines, minus 1 line · approved", "32 outputs re-run on new version"],
     },
     {
       i: Layers, c: PURPLE, t: "Workbooks & Mandates",
@@ -470,7 +470,7 @@ function S06Unlock() {
                 </div>
               ))}
               <div className="mt-3 pt-3 border-t" style={{ borderColor: CHROME_BORDER }}>
-                <span style={{ fontSize: 15, color: `hsl(${RED})`, fontWeight: 700 }}>4–6 weeks · founder time</span>
+                <span style={{ fontSize: 15, color: `hsl(${RED})`, fontWeight: 700 }}>4 to 6 weeks · founder time</span>
               </div>
             </div>
           </div>
@@ -607,7 +607,7 @@ function S07Funds() {
 // ═════════════════════════════════════════════════════════════════════════════
 function S08Plan() {
   const months = [
-    { m: "Month 1–2", c: GOLD, t: "Harden core + wizard MVP", k: "Wizard alpha live · 2 internal pilots", icon: Hammer },
+    { m: "Month 1 & 2", c: GOLD, t: "Harden core + wizard MVP", k: "Wizard alpha live · 2 internal pilots", icon: Hammer },
     { m: "Month 3", c: ACCENT, t: "First self-serve activation", k: "First customer onboarded with no founder in the room", icon: Rocket },
     { m: "Month 4", c: GREEN, t: "Paid self-serve cohort", k: "5+ paid teams via wizard · time-to-first-playbook < 1 day", icon: Coins },
     { m: "Month 5", c: PURPLE, t: "Activation funnel optimised", k: "Activation rate doubled · expansion inside accounts measured", icon: LineChart },
@@ -920,7 +920,7 @@ function S12Ask() {
             <div className="space-y-2.5">
               {[
                 { k: "Instrument", v: "SAFE, post-money" },
-                { k: "Check size", v: "€10K – €30K" },
+                { k: "Check size", v: "€10K to €30K" },
                 { k: "For", v: "Operators, angels, micro-funds" },
                 { k: "Close window", v: "6 weeks, rolling" },
                 { k: "Markup trigger", v: "Repriced on the Seed round" },
