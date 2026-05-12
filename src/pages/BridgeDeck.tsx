@@ -135,7 +135,7 @@ function S02Traction() {
           One pattern. <span style={{ color: `hsl(${GREEN})` }}>Four paid design partnerships.</span>
         </h2>
         <p style={{ fontSize: 28, color: MUTED, maxWidth: 1400 }} className="mb-14">
-          The same Knowledge Cycle — capture expertise, govern it, execute it through AI — validated across four knowledge industries with paid design partnerships and early revenue.
+          The same Knowledge Cycle, capture expertise, govern it, execute it through AI, validated across four knowledge industries with paid design partnerships and early revenue.
         </p>
 
         <div className="grid grid-cols-4 gap-6 mb-14">
