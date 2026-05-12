@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import SeedInvestorDeck from "@/pages/SeedInvestorDeck";
+import BridgeDeck from "@/pages/BridgeDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
@@ -189,12 +189,12 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
-    id: "investor-seed",
-    title: "Seed Investor Deck",
-    path: "/investor-seed",
-    sourcePath: "src/pages/SeedInvestorDeck.tsx",
-    description: "Pre-seed and seed stage deck",
-    component: SeedInvestorDeck,
+    id: "investor-bridge",
+    title: "€200K Bridge Deck (Traction to Scale)",
+    path: "/investor-bridge",
+    sourcePath: "src/pages/BridgeDeck.tsx",
+    description: "5-slide €200K bridge round deck for $10K–$30K check writers (micro-funds, operator syndicates, angels). Narrative: AACE v3.1 is live with 4 paid enterprise clients (AEC, Pharma, Cyber, Consulting); growth gated by high-touch Guided Kickstart; €200K funds the Self-Serve Wizard to remove the human bottleneck; vertical wedge on Professional Services with a Q4 milestone of 100% self-serve ARR growth — teeing up a premium Seed/Series A markup.",
+    component: BridgeDeck,
     showInAdmin: true,
   },
   {
