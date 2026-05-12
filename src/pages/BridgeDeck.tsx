@@ -3,9 +3,9 @@ import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentat
 import {
   CheckCircle2, AlertTriangle, Zap, Target, TrendingUp,
   Building2, FlaskConical, Shield, Briefcase, ArrowRight,
-  Users, Wand2, Rocket, Crosshair,
-  ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
-  Layers, Cpu, GitBranch, Calendar, Coins, FileSignature, Clock, BookOpen, Brain
+  Users, Wand2, Rocket, Crosshair, ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
+  Layers, Cpu, GitBranch, Calendar, Coins, FileSignature, Clock, BookOpen, Brain,
+  Globe, Sparkles, Hammer, LineChart, User, UsersRound, Network,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -50,6 +50,7 @@ const ACCENT = "200 90% 42%";
 const GREEN = "155 72% 38%";
 const GOLD = "45 95% 42%";
 const RED = "0 72% 50%";
+const PURPLE = "280 60% 50%";
 const DARK_BG = "hsl(222 25% 8%)";
 const DARK_TEXT = "hsl(0 0% 95%)";
 const DARK_MUTED = "hsl(215 15% 60%)";
@@ -76,8 +77,22 @@ function SlideBar({ from = ACCENT, to = GREEN }: { from?: string; to?: string })
 function Tag({ label, color = ACCENT }: { label: string; color?: string }) {
   return <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 26, color: `hsl(${color})` }}>{label}</p>;
 }
+function DarkTag({ label, color = GOLD }: { label: string; color?: string }) {
+  return <p className="font-semibold tracking-[0.3em] uppercase mb-6" style={{ fontSize: 24, color: `hsl(${color} / 0.95)` }}>{label}</p>;
+}
+function FooterBridge({ text, dark = false }: { text: string; dark?: boolean }) {
+  return (
+    <div className="absolute left-28 right-28 bottom-7 flex items-center gap-3"
+      style={{ color: dark ? DARK_MUTED : SUBTLE, fontSize: 16, letterSpacing: "0.02em" }}>
+      <span style={{ width: 32, height: 1, background: dark ? "hsl(0 0% 100% / 0.2)" : CHROME_BORDER }} />
+      <span>{text}</span>
+    </div>
+  );
+}
 
-// ─── Slide 01 — Cover ────────────────────────────────────────────────────────
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 01 — COVER
+// ═════════════════════════════════════════════════════════════════════════════
 function S01Cover() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center relative" style={{ background: DARK_BG }}>
@@ -87,27 +102,30 @@ function S01Cover() {
           €200K Bridge Round · Confidential
         </p>
         <h1 className="font-bold leading-[1.02] mb-10" style={{ fontSize: 132, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
-          Traction to Scale
+          €200K. 6 weeks.
         </h1>
-        <p className="leading-[1.2] mb-12" style={{ fontSize: 56, color: `hsl(${ACCENT} / 0.95)`, fontWeight: 500 }}>
-          Unlocking Zero-Touch Onboarding
+        <p className="leading-[1.2] mb-14" style={{ fontSize: 56, color: `hsl(${ACCENT} / 0.95)`, fontWeight: 500 }}>
+          The bridge to self-serve.
+        </p>
+        <p className="mx-auto mb-14" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.4 }}>
+          Funding the engineering runway that turns four paid design partnerships into a self-serve SaaS engine.
         </p>
         <div className="inline-flex items-center gap-8 px-10 py-5 rounded-2xl"
           style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(0 0% 100% / 0.12)` }}>
-          <div className="text-left">
-            <p style={{ fontSize: 18, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Round Size</p>
-            <p style={{ fontSize: 32, color: DARK_TEXT, fontWeight: 700 }}>€200,000</p>
-          </div>
-          <div className="w-px h-12" style={{ background: "hsl(0 0% 100% / 0.15)" }} />
-          <div className="text-left">
-            <p style={{ fontSize: 18, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Check Size</p>
-            <p style={{ fontSize: 32, color: DARK_TEXT, fontWeight: 700 }}>€10K – €30K</p>
-          </div>
-          <div className="w-px h-12" style={{ background: "hsl(0 0% 100% / 0.15)" }} />
-          <div className="text-left">
-            <p style={{ fontSize: 18, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">For</p>
-            <p style={{ fontSize: 32, color: DARK_TEXT, fontWeight: 700 }}>Operators · Angels · Micro-Funds</p>
-          </div>
+          {[
+            { k: "Round size", v: "€200,000" },
+            { k: "Check size", v: "€10K – €30K" },
+            { k: "Close window", v: "6 weeks, rolling" },
+            { k: "For", v: "Operators · Angels · Micro-funds" },
+          ].map((x, i, arr) => (
+            <div key={x.k} className="flex items-center gap-8">
+              <div className="text-left">
+                <p style={{ fontSize: 16, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">{x.k}</p>
+                <p style={{ fontSize: 28, color: DARK_TEXT, fontWeight: 700 }}>{x.v}</p>
+              </div>
+              {i < arr.length - 1 && <div className="w-px h-12" style={{ background: "hsl(0 0% 100% / 0.15)" }} />}
+            </div>
+          ))}
         </div>
       </div>
       <div className="absolute bottom-12 left-0 right-0 text-center" style={{ fontSize: 18, color: DARK_MUTED }}>
@@ -118,121 +136,291 @@ function S01Cover() {
   );
 }
 
-// ─── Slide 02 — Traction ─────────────────────────────────────────────────────
-function S02Traction() {
-  const clients = [
-    { icon: Briefcase, label: "Consulting", desc: "Engagement delivery & methodology", color: "280 60% 50%" },
-    { icon: Building2, label: "AEC", desc: "Engineering & design lifecycle", color: ACCENT },
-    { icon: FlaskConical, label: "Pharma", desc: "Regulated lifecycle ops", color: GREEN },
-    { icon: Shield, label: "Cybersecurity", desc: "Audit & compliance", color: GOLD },
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 02 — THE MOMENT (market · company · capital)
+// ═════════════════════════════════════════════════════════════════════════════
+function S02Moment() {
+  const cols = [
+    {
+      icon: Globe, c: ACCENT, label: "Market moment",
+      head: "Every enterprise is wiring AI.",
+      body: "Generic models guess your standards. Nobody owns the layer that defines them. The Context Layer is the next platform shift.",
+    },
+    {
+      icon: Sparkles, c: GREEN, label: "Company moment",
+      head: "Core works. Self-serve is next.",
+      body: "Four paid design partnerships across four knowledge industries. Engine shipped. The only thing missing is the self-serve flow that lets the next 100 customers start without us.",
+    },
+    {
+      icon: Coins, c: GOLD, label: "Capital moment",
+      head: "Cheapest entry we will offer.",
+      body: "€200K bridges from paid pilots to a financeable Seed on proven self-serve metrics. First-mover SAFE terms. Not raised again at this price.",
+    },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Traction · The Knowledge Cycle Is Proven" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          One pattern. <span style={{ color: `hsl(${GREEN})` }}>Four paid design partnerships.</span>
+        <Tag label="The Moment · Why now, why us, why this round" color={ACCENT} />
+        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+          Three windows are <span style={{ color: `hsl(${GOLD})` }}>open at the same time.</span>
         </h2>
-        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1400 }} className="mb-14">
-          The same Knowledge Cycle, capture expertise, govern it, execute it through AI, validated across four knowledge industries with paid design partnerships and early revenue.
+        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1500 }} className="mb-14">
+          A market shift, a company inflection, and a financing window. They overlap right now. €200K is what closes the loop.
         </p>
 
-        <div className="grid grid-cols-4 gap-6 mb-14">
-          {clients.map((c) => (
-            <div key={c.label} className="rounded-2xl p-7"
-              style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="grid grid-cols-3 gap-7">
+          {cols.map(c => (
+            <div key={c.label} className="rounded-2xl p-8 flex flex-col"
+              style={{ background: CARD_ALT, border: `1px solid hsl(${c.c} / 0.25)` }}>
               <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                style={{ background: `hsl(${c.color} / 0.12)`, border: `1px solid hsl(${c.color} / 0.3)` }}>
-                <c.icon size={28} style={{ color: `hsl(${c.color})` }} />
+                style={{ background: `hsl(${c.c} / 0.12)`, border: `1px solid hsl(${c.c} / 0.3)` }}>
+                <c.icon size={28} style={{ color: `hsl(${c.c})` }} />
               </div>
-              <p style={{ fontSize: 30, color: TEXT, fontWeight: 700 }}>{c.label}</p>
-              <p style={{ fontSize: 19, color: MUTED, marginTop: 6 }}>{c.desc}</p>
-              <div className="mt-5 flex items-center gap-2">
-                <CheckCircle2 size={18} style={{ color: `hsl(${GREEN})` }} />
-                <span style={{ fontSize: 16, color: `hsl(${GREEN})`, fontWeight: 600 }}>Paid design partnership</span>
-              </div>
+              <p style={{ fontSize: 16, color: `hsl(${c.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-3">{c.label}</p>
+              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 14 }}>{c.head}</p>
+              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5 }}>{c.body}</p>
             </div>
           ))}
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
-          <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
-            <p style={{ fontSize: 17, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Audit workflow</p>
-            <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>18 days <span style={{ color: MUTED, fontSize: 32 }}>→</span> 1 day</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Cycle-time collapse on a live cybersecurity partnership.</p>
+        <div className="mt-10 rounded-2xl p-7 flex items-center gap-6"
+          style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+          <Sparkles size={32} style={{ color: `hsl(${GOLD})` }} />
+          <p style={{ fontSize: 24, color: TEXT, fontWeight: 600, lineHeight: 1.3 }}>
+            <span style={{ fontWeight: 800 }}>This is the cheapest entry point we will ever offer.</span>
+            <span style={{ color: MUTED, fontWeight: 500 }}> The next round is priced on self-serve traction the bridge produces.</span>
+          </p>
+        </div>
+      </div>
+      <FooterBridge text="Next: the proof. Same loop, four industries, paying." />
+      <SlideBar from={ACCENT} to={GOLD} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 03 — PROOF (Knowledge Cycle, 4/4)
+// ═════════════════════════════════════════════════════════════════════════════
+function S03Proof() {
+  const stages = [
+    { i: BookOpen, c: ACCENT, t: "Capture" },
+    { i: Shield, c: GREEN, t: "Govern" },
+    { i: Zap, c: GOLD, t: "Execute" },
+    { i: TrendingUp, c: PURPLE, t: "Evolve" },
+  ];
+  const industries = [
+    { i: Briefcase, c: PURPLE, t: "Consulting", d: "Engagement methodology" },
+    { i: Building2, c: ACCENT, t: "AEC", d: "Engineering & design" },
+    { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
+    { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10">
+        <Tag label="Proof · The Knowledge Cycle, validated 4 / 4" color={GREEN} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+          One loop. <span style={{ color: `hsl(${GREEN})` }}>Four paid design partnerships.</span>
+        </h2>
+        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1500 }} className="mb-12">
+          The same Knowledge Cycle ran end-to-end across four knowledge industries. Capture expertise, govern it, execute it through AI, evolve from feedback. Every loop produced measurable cycle-time and quality wins.
+        </p>
+
+        {/* The cycle diagram */}
+        <div className="rounded-2xl p-8 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <div className="flex items-center justify-between gap-2">
+            {stages.map((s, idx) => (
+              <div key={s.t} className="flex items-center gap-3 flex-1">
+                <div className="flex flex-col items-center text-center flex-1">
+                  <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-3"
+                    style={{ background: `hsl(${s.c} / 0.12)`, border: `2px solid hsl(${s.c} / 0.4)` }}>
+                    <s.i size={36} style={{ color: `hsl(${s.c})` }} />
+                  </div>
+                  <p style={{ fontSize: 14, color: SUBTLE, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase">Step {idx + 1}</p>
+                  <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>{s.t}</p>
+                </div>
+                {idx < stages.length - 1 && <ArrowRight size={28} style={{ color: SUBTLE }} className="shrink-0" />}
+              </div>
+            ))}
           </div>
-          <div className="rounded-2xl p-8" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
-            <p style={{ fontSize: 17, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Product-market fit</p>
-            <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 industries</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Same core infrastructure, different industries — pattern is repeatable.</p>
+        </div>
+
+        {/* Industries + metrics */}
+        <div className="grid grid-cols-[1.4fr_1fr] gap-6">
+          <div>
+            <p style={{ fontSize: 16, color: SUBTLE, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-4">Loop ran end-to-end in</p>
+            <div className="grid grid-cols-2 gap-4">
+              {industries.map(ind => (
+                <div key={ind.t} className="rounded-xl p-5 flex items-center gap-4"
+                  style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ background: `hsl(${ind.c} / 0.12)`, border: `1px solid hsl(${ind.c} / 0.3)` }}>
+                    <ind.i size={22} style={{ color: `hsl(${ind.c})` }} />
+                  </div>
+                  <div className="flex-1">
+                    <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{ind.t}</p>
+                    <p style={{ fontSize: 16, color: MUTED }}>{ind.d}</p>
+                  </div>
+                  <CheckCircle2 size={22} style={{ color: `hsl(${GREEN})` }} />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="rounded-2xl p-8" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.25)` }}>
-            <p style={{ fontSize: 17, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Revenue</p>
-            <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>Early ARR</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Paid design partnerships with enterprises, not a research project.</p>
+          <div className="flex flex-col gap-4">
+            <div className="rounded-xl p-5" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <p style={{ fontSize: 14, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Cycle-time win</p>
+              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>18 days <span style={{ color: MUTED, fontSize: 24 }}>→</span> 1 day</p>
+              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Live cybersecurity partnership.</p>
+            </div>
+            <div className="rounded-xl p-5" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+              <p style={{ fontSize: 14, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Pattern fit</p>
+              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 industries</p>
+              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Same loop, repeatable.</p>
+            </div>
+            <div className="rounded-xl p-5" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.25)` }}>
+              <p style={{ fontSize: 14, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Revenue</p>
+              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>Early ARR</p>
+              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Paid, not pilot-ware.</p>
+            </div>
           </div>
         </div>
       </div>
+      <FooterBridge text="Next: what we already shipped to make this loop run." />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
 }
 
-// ─── Slide 03 — Bottleneck ───────────────────────────────────────────────────
-function S03Bottleneck() {
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 04 — WHAT WE BUILT (core infra + native UIs, plain English)
+// ═════════════════════════════════════════════════════════════════════════════
+function S04Built() {
+  const layers = [
+    {
+      i: BookOpen, c: ACCENT, t: "Knowledge Capture",
+      d: "Bundles, playbooks, and standards extracted from documents and experts.",
+      mock: ["📥  Source: process-handbook.pdf", "Detected: 12 playbooks · 38 standards", "Reviewed by Zoltán · Approved"],
+    },
+    {
+      i: Cpu, c: GREEN, t: "Reasoning Engine",
+      d: "Every AI action runs through your codified context and rules.",
+      mock: ["AI request · audit-prep.workbook", "Context loaded: 4 bundles · 12 standards", "Output cited 7 standards · 0 drift"],
+    },
+    {
+      i: GitBranch, c: GOLD, t: "Governance & Audit",
+      d: "Versioned standards, change history, full reasoning trail per output.",
+      mock: ["Standard v3 · pricing-rules", "Diff: +2 lines, –1 line · approved", "32 outputs re-run on new version"],
+    },
+    {
+      i: Layers, c: PURPLE, t: "Workbooks & Mandates",
+      d: "Where teams actually run AI work, with context attached by default.",
+      mock: ["Workbook: Q4-audit-engagement", "Mandate: 'follow ISO 20700'", "3 teammates · context auto-loaded"],
+    },
+  ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The Bottleneck · The Problem" color={RED} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          Demand outruns our <span style={{ color: `hsl(${RED})` }}>manual onboarding.</span>
+        <Tag label="What we built · Core infra plus native UIs" color={GREEN} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+          The engine works. <span style={{ color: `hsl(${GREEN})` }}>You can use it today.</span>
         </h2>
-        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          Today every new client requires a high-touch Guided Kickstart. The platform works — the adoption motion does not yet scale.
+        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1500 }} className="mb-12">
+          Four core layers, each with a native UI on top. Live with paying partners. The engine is not the bottleneck.
         </p>
 
-        {/* Funnel diagram */}
-        <div className="rounded-2xl p-10 mb-10" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="grid grid-cols-2 gap-6">
+          {layers.map(l => (
+            <div key={l.t} className="rounded-2xl p-7 flex gap-5"
+              style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: `hsl(${l.c} / 0.12)`, border: `1px solid hsl(${l.c} / 0.3)` }}>
+                <l.i size={28} style={{ color: `hsl(${l.c})` }} />
+              </div>
+              <div className="flex-1">
+                <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>{l.t}</p>
+                <p style={{ fontSize: 17, color: MUTED, marginTop: 4, lineHeight: 1.4 }}>{l.d}</p>
+                {/* mini mock UI */}
+                <div className="rounded-lg p-3 mt-4" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${RED})` }} />
+                    <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GOLD})` }} />
+                    <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GREEN})` }} />
+                  </div>
+                  {l.mock.map((m, i) => (
+                    <p key={i} style={{ fontSize: 14, color: i === l.mock.length - 1 ? `hsl(${l.c})` : TEXT, fontFamily: "ui-monospace, monospace", lineHeight: 1.6 }}>
+                      {m}
+                    </p>
+                  ))}
+                </div>
+                <div className="mt-3 inline-flex items-center gap-2">
+                  <CheckCircle2 size={14} style={{ color: `hsl(${GREEN})` }} />
+                  <span style={{ fontSize: 13, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase">Live with paid partners</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <FooterBridge text="Next: why the engine alone is not yet a SaaS." />
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 05 — THE GAP (bottleneck funnel)
+// ═════════════════════════════════════════════════════════════════════════════
+function S05Gap() {
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10">
+        <Tag label="The gap to scale · The Problem" color={RED} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+          Onboarding is <span style={{ color: `hsl(${RED})` }}>too heavy to scale.</span>
+        </h2>
+        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-12">
+          We are laying AI-native infrastructure inside complex organizations. That work is real, but every customer today still needs us in the room. That is the only thing standing between us and self-serve growth.
+        </p>
+
+        <div className="rounded-2xl p-10 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <div className="flex items-center justify-between gap-4">
-            {/* Wide top */}
             <div className="flex-1 text-center">
               <div className="mx-auto mb-4 rounded-xl flex items-center justify-center"
                 style={{ width: "100%", height: 110, background: `hsl(${ACCENT} / 0.1)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
-                <Users size={42} style={{ color: `hsl(${ACCENT})` }} />
+                <Layers size={42} style={{ color: `hsl(${ACCENT})` }} />
               </div>
-              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>Inbound demand</p>
-              <p style={{ fontSize: 18, color: MUTED, marginTop: 4 }}>Pipeline well above capacity</p>
+              <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Complex deployment</p>
+              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>AI-native foundation, real org change</p>
             </div>
             <ArrowRight size={36} style={{ color: SUBTLE }} />
-            {/* Choke */}
             <div className="flex-1 text-center">
               <div className="mx-auto mb-4 rounded-xl flex items-center justify-center"
                 style={{ width: "55%", height: 110, background: `hsl(${RED} / 0.08)`, border: `2px solid hsl(${RED} / 0.5)` }}>
                 <AlertTriangle size={42} style={{ color: `hsl(${RED})` }} />
               </div>
-              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>Guided Kickstart</p>
-              <p style={{ fontSize: 18, color: `hsl(${RED})`, marginTop: 4, fontWeight: 600 }}>The bottleneck — high-touch advisory</p>
+              <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Guided Kickstart</p>
+              <p style={{ fontSize: 17, color: `hsl(${RED})`, marginTop: 4, fontWeight: 600 }}>The bottleneck · founders in every room</p>
             </div>
             <ArrowRight size={36} style={{ color: SUBTLE }} />
-            {/* Trickle */}
             <div className="flex-1 text-center">
               <div className="mx-auto mb-4 rounded-xl flex items-center justify-center"
                 style={{ width: "32%", height: 110, background: `hsl(${GREEN} / 0.1)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
                 <CheckCircle2 size={42} style={{ color: `hsl(${GREEN})` }} />
               </div>
-              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>Live customers</p>
-              <p style={{ fontSize: 18, color: MUTED, marginTop: 4 }}>Activated one at a time</p>
+              <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Live customers</p>
+              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>Activated one at a time</p>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-6">
           {[
-            { t: "Manual deployment", d: "Each client needs hands-on configuration of bundles and standards." },
+            { t: "Manual deployment", d: "Every client needs hands-on configuration of bundles, standards, and workspaces." },
             { t: "Founder-time gated", d: "Kickstarts pull senior team off product and platform work." },
-            { t: "Linear, not SaaS", d: "Revenue scales with people, not with software — a classic services trap." },
+            { t: "Linear, not SaaS", d: "Revenue scales with people, not software. A classic services trap." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
               <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
@@ -241,134 +429,260 @@ function S03Bottleneck() {
           ))}
         </div>
       </div>
+      <FooterBridge text="Next: exactly what €200K removes from this picture." />
       <SlideBar from={RED} to={GOLD} />
     </div>
   );
 }
 
-// ─── Slide 04 — €200k Unlock ─────────────────────────────────────────────────
-function S04Unlock() {
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 06 — THE €200K UNLOCK
+// ═════════════════════════════════════════════════════════════════════════════
+function S06Unlock() {
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The €200K Unlock · The Bridge Solution" color={ACCENT} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
+        <Tag label="The €200K Unlock · From 'us in the room' to 'anyone can start'" color={ACCENT} />
+        <h2 className="font-bold leading-[1.05] mb-5" style={{ fontSize: 76, color: TEXT, letterSpacing: "-0.02em" }}>
           Core infrastructure works. <span style={{ color: `hsl(${ACCENT})` }}>Now ship self-serve.</span>
         </h2>
-        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          We have the core infrastructure plus basic native UIs on top, proven in four paid partnerships. €200K funds the self-serve layer that lets knowledge industries adopt the platform without us in the room.
+        <p style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }} className="mb-9">
+          €200K buys the wizard, the workspace flow, and the activation telemetry that lets a single team launch a playbook on day one and grow from there.
         </p>
 
-        {/* Before / After */}
-        <div className="grid grid-cols-[1fr_auto_1fr] gap-8 items-stretch mb-10">
-          <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p style={{ fontSize: 17, color: MUTED, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-4">Today</p>
-            <p style={{ fontSize: 34, color: TEXT, fontWeight: 700, marginBottom: 18 }}>Guided Kickstart</p>
-            {/* Mock UI */}
-            <div className="rounded-xl p-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-2.5 h-2.5 rounded-full" style={{ background: `hsl(${RED})` }} />
-                <div className="w-2.5 h-2.5 rounded-full" style={{ background: `hsl(${GOLD})` }} />
-                <div className="w-2.5 h-2.5 rounded-full" style={{ background: `hsl(${GREEN})` }} />
-                <span className="ml-2" style={{ fontSize: 14, color: SUBTLE }}>liza · advisory session</span>
+        {/* Before / After + smallest unit ladder */}
+        <div className="grid grid-cols-[1fr_auto_1fr] gap-6 items-stretch mb-7">
+          <div className="rounded-2xl p-6" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p style={{ fontSize: 15, color: MUTED, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-3">Today</p>
+            <p style={{ fontSize: 28, color: TEXT, fontWeight: 700, marginBottom: 14 }}>Guided Kickstart</p>
+            <div className="rounded-xl p-4" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${RED})` }} />
+                <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GOLD})` }} />
+                <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GREEN})` }} />
+                <span className="ml-2" style={{ fontSize: 13, color: SUBTLE }}>liza · advisory session</span>
               </div>
-              {[
-                "Workshop: map your context",
-                "Manual bundle configuration",
-                "Founder review of standards",
-                "Hand-off to delivery team",
-              ].map((l, i) => (
-                <div key={i} className="flex items-center gap-3 py-2.5">
-                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ background: `hsl(${RED} / 0.1)`, color: `hsl(${RED})`, fontSize: 14, fontWeight: 700 }}>{i + 1}</div>
-                  <span style={{ fontSize: 19, color: TEXT }}>{l}</span>
+              {["Workshop: map the context", "Manual bundle configuration", "Founder review of standards", "Hand-off to delivery team"].map((l, i) => (
+                <div key={i} className="flex items-center gap-3 py-2">
+                  <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: `hsl(${RED} / 0.1)`, color: `hsl(${RED})`, fontSize: 13, fontWeight: 700 }}>{i + 1}</div>
+                  <span style={{ fontSize: 17, color: TEXT }}>{l}</span>
                 </div>
               ))}
-              <div className="mt-4 pt-4 border-t" style={{ borderColor: CHROME_BORDER }}>
-                <span style={{ fontSize: 16, color: `hsl(${RED})`, fontWeight: 700 }}>~4–6 weeks · founder time</span>
+              <div className="mt-3 pt-3 border-t" style={{ borderColor: CHROME_BORDER }}>
+                <span style={{ fontSize: 15, color: `hsl(${RED})`, fontWeight: 700 }}>4–6 weeks · founder time</span>
               </div>
             </div>
           </div>
 
           <div className="flex items-center justify-center">
-            <div className="flex flex-col items-center gap-3 px-6 py-8 rounded-2xl"
+            <div className="flex flex-col items-center gap-2 px-5 py-7 rounded-2xl"
               style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px dashed hsl(${ACCENT} / 0.4)` }}>
-              <Wand2 size={40} style={{ color: `hsl(${ACCENT})` }} />
-              <p style={{ fontSize: 22, color: `hsl(${ACCENT})`, fontWeight: 700 }}>€200K</p>
-              <p style={{ fontSize: 16, color: MUTED, textAlign: "center", maxWidth: 160 }}>Engineering runway to ship the self-serve flow</p>
+              <Wand2 size={36} style={{ color: `hsl(${ACCENT})` }} />
+              <p style={{ fontSize: 20, color: `hsl(${ACCENT})`, fontWeight: 700 }}>€200K</p>
+              <p style={{ fontSize: 14, color: MUTED, textAlign: "center", maxWidth: 140 }}>Engineering runway to ship the self-serve flow</p>
             </div>
           </div>
 
-          <div className="rounded-2xl p-8" style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
-            <p style={{ fontSize: 17, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-4">After bridge</p>
-            <p style={{ fontSize: 34, color: TEXT, fontWeight: 700, marginBottom: 18 }}>Self-Serve Wizard</p>
-            <div className="rounded-xl p-5" style={{ background: BG, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
-              <div className="flex items-center gap-2 mb-4">
-                <Zap size={16} style={{ color: `hsl(${ACCENT})` }} />
-                <span style={{ fontSize: 14, color: `hsl(${ACCENT})`, fontWeight: 700 }}>liza · self-serve onboarding</span>
+          <div className="rounded-2xl p-6" style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+            <p style={{ fontSize: 15, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-3">After bridge</p>
+            <p style={{ fontSize: 28, color: TEXT, fontWeight: 700, marginBottom: 14 }}>Self-Serve Wizard</p>
+            <div className="rounded-xl p-4" style={{ background: BG, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+              <div className="flex items-center gap-2 mb-3">
+                <Zap size={14} style={{ color: `hsl(${ACCENT})` }} />
+                <span style={{ fontSize: 13, color: `hsl(${ACCENT})`, fontWeight: 700 }}>liza · self-serve onboarding</span>
               </div>
-              {[
-                "Connect your sources",
-                "AI proposes your context map",
-                "Approve standards in-app",
-                "Go live — no humans required",
-              ].map((l, i) => (
-                <div key={i} className="flex items-center gap-3 py-2.5">
-                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ background: `hsl(${GREEN} / 0.12)`, color: `hsl(${GREEN})`, fontSize: 14, fontWeight: 700 }}>
-                    <CheckCircle2 size={16} />
+              {["Connect your sources", "AI proposes your context map", "Approve standards in-app", "Launch your first playbook"].map((l, i) => (
+                <div key={i} className="flex items-center gap-3 py-2">
+                  <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ background: `hsl(${GREEN} / 0.12)`, color: `hsl(${GREEN})` }}>
+                    <CheckCircle2 size={14} />
                   </div>
-                  <span style={{ fontSize: 19, color: TEXT }}>{l}</span>
+                  <span style={{ fontSize: 17, color: TEXT }}>{l}</span>
                 </div>
               ))}
-              <div className="mt-4 pt-4 border-t" style={{ borderColor: CHROME_BORDER }}>
-                <span style={{ fontSize: 16, color: `hsl(${GREEN})`, fontWeight: 700 }}>Minutes · zero founder time</span>
+              <div className="mt-3 pt-3 border-t" style={{ borderColor: CHROME_BORDER }}>
+                <span style={{ fontSize: 15, color: `hsl(${GREEN})`, fontWeight: 700 }}>Minutes · zero founder time</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
-          {[
-            { t: "Harden the core", d: "AACE infrastructure ready for unattended, multi-tenant deployment." },
-            { t: "Self-serve native UIs", d: "Onboarding wizard plus the workbench surfaces a customer needs on day one." },
-            { t: "Activation telemetry", d: "Instrument every step so the funnel improves itself, no humans needed." },
-          ].map(b => (
-            <div key={b.t} className="rounded-xl p-6" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
-              <p style={{ fontSize: 18, color: MUTED, marginTop: 6 }}>{b.d}</p>
-            </div>
-          ))}
+        {/* Smallest unit ladder */}
+        <div className="rounded-2xl p-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p style={{ fontSize: 14, color: SUBTLE, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-3">Land small, grow naturally</p>
+          <div className="flex items-center gap-3">
+            {[
+              { i: User, t: "1 person" },
+              { i: BookOpen, t: "1 playbook" },
+              { i: UsersRound, t: "1 team" },
+              { i: Network, t: "1 org" },
+            ].map((s, idx, arr) => (
+              <div key={s.t} className="flex items-center gap-3 flex-1">
+                <div className="flex-1 flex items-center gap-3 rounded-xl px-4 py-3"
+                  style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+                  <s.i size={22} style={{ color: `hsl(${ACCENT})` }} />
+                  <span style={{ fontSize: 18, color: TEXT, fontWeight: 600 }}>{s.t}</span>
+                </div>
+                {idx < arr.length - 1 && <ArrowRight size={20} style={{ color: SUBTLE }} className="shrink-0" />}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+      <FooterBridge text="Next: where every euro actually goes." />
       <SlideBar from={ACCENT} to={GREEN} />
     </div>
   );
 }
 
-// ─── Slide 05 — Wedge & Milestone ────────────────────────────────────────────
-function S05Wedge() {
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 07 — USE OF FUNDS (with people on it)
+// ═════════════════════════════════════════════════════════════════════════════
+function S07Funds() {
+  const lines = [
+    { c: ACCENT, pct: 40, label: "Engineering salary · ship self-serve wizard", amt: "€80K" },
+    { c: GREEN, pct: 25, label: "Founder runway · keep founders full-time", amt: "€50K" },
+    { c: GOLD, pct: 18, label: "Vertical packaging · AEC, Pharma, Cyber, Consulting", amt: "€36K" },
+    { c: PURPLE, pct: 10, label: "Activation telemetry · funnel instrumentation", amt: "€20K" },
+    { c: RED, pct: 7, label: "Legal, infra, round-close costs", amt: "€14K" },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10">
+        <Tag label="Use of Funds · €200,000" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+          Every euro buys <span style={{ color: `hsl(${GOLD})` }}>self-serve velocity.</span>
+        </h2>
+        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-10">
+          No vanity hires, no marketing burn. Founders stay full-time, two engineers keep shipping, and every line is tied to a measurable activation milestone.
+        </p>
+
+        {/* Stacked bar */}
+        <div className="rounded-2xl p-7 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <div className="flex w-full h-14 rounded-xl overflow-hidden mb-7" style={{ border: `1px solid ${CHROME_BORDER}` }}>
+            {lines.map(l => (
+              <div key={l.label} style={{ width: `${l.pct}%`, background: `hsl(${l.c})` }} className="flex items-center justify-center">
+                <span style={{ fontSize: 20, fontWeight: 700, color: "white" }}>{l.pct}%</span>
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-x-10 gap-y-4">
+            {lines.map(l => (
+              <div key={l.label} className="flex items-start gap-4">
+                <div className="w-4 h-4 rounded-sm mt-1.5 shrink-0" style={{ background: `hsl(${l.c})` }} />
+                <div className="flex-1">
+                  <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{l.amt} <span style={{ color: MUTED, fontWeight: 500, fontSize: 18 }}>· {l.pct}%</span></p>
+                  <p style={{ fontSize: 18, color: MUTED, marginTop: 2 }}>{l.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-6">
+          {[
+            { i: Clock, t: "6 months runway", d: "From close to Seed-ready metrics. No salary cliff in the middle." },
+            { i: Users, t: "Founders full-time", d: "István, Kristóf, Zoltán stay on the build. No moonlighting." },
+            { i: Hammer, t: "Two engineers shipping", d: "Salaried, not contracted. Self-serve wizard from day one of close." },
+          ].map(b => (
+            <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <b.i size={26} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" />
+              <div>
+                <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
+                <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>{b.d}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <FooterBridge text="Next: the 6-month plan that turns this spend into Seed metrics." />
+      <SlideBar from={GOLD} to={ACCENT} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 08 — 6-MONTH PLAN (timeline)
+// ═════════════════════════════════════════════════════════════════════════════
+function S08Plan() {
+  const months = [
+    { m: "Month 1–2", c: GOLD, t: "Harden core + wizard MVP", k: "Wizard alpha live · 2 internal pilots", icon: Hammer },
+    { m: "Month 3", c: ACCENT, t: "First self-serve activation", k: "First customer onboarded with no founder in the room", icon: Rocket },
+    { m: "Month 4", c: GREEN, t: "Paid self-serve cohort", k: "5+ paid teams via wizard · time-to-first-playbook < 1 day", icon: Coins },
+    { m: "Month 5", c: PURPLE, t: "Activation funnel optimised", k: "Activation rate doubled · expansion inside accounts measured", icon: LineChart },
+    { m: "Month 6", c: GREEN, t: "Seed-ready metrics", k: "Cohort retention, ARR mix, CAC payback · Seed deck open", icon: CheckCircle2 },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10">
+        <Tag label="The 6-month plan · Bridge to Seed metrics" color={ACCENT} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+          Five milestones. <span style={{ color: `hsl(${ACCENT})` }}>One every month.</span>
+        </h2>
+        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-12">
+          The bridge converts cleanly into Seed metrics. Every month carries one shipped artifact and one measurable signal.
+        </p>
+
+        <div className="relative">
+          <div className="absolute top-8 left-[6%] right-[6%] h-0.5"
+            style={{ background: `linear-gradient(90deg, hsl(${GOLD}), hsl(${ACCENT}), hsl(${GREEN}), hsl(${PURPLE}), hsl(${GREEN}))` }} />
+          <div className="grid grid-cols-5 gap-4 relative">
+            {months.map(s => (
+              <div key={s.m} className="flex flex-col items-center">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 z-10"
+                  style={{ background: BG, border: `3px solid hsl(${s.c})` }}>
+                  <s.icon size={26} style={{ color: `hsl(${s.c})` }} />
+                </div>
+                <div className="rounded-2xl p-5 w-full" style={{ background: CARD_ALT, border: `1px solid hsl(${s.c} / 0.3)` }}>
+                  <p style={{ fontSize: 14, color: `hsl(${s.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-2">{s.m}</p>
+                  <p style={{ fontSize: 22, color: TEXT, fontWeight: 700, lineHeight: 1.2, marginBottom: 10 }}>{s.t}</p>
+                  <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>{s.k}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-12 rounded-2xl p-6 flex items-center gap-5"
+          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <Target size={28} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 22, color: TEXT, fontWeight: 600, lineHeight: 1.35 }}>
+            <span style={{ fontWeight: 800 }}>End-of-bridge state:</span>
+            <span style={{ color: MUTED, fontWeight: 500 }}> a working self-serve funnel with paid cohorts, activation metrics, and the Seed deck open.</span>
+          </p>
+        </div>
+      </div>
+      <FooterBridge text="Next: where the self-serve flow lands first." />
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 09 — WEDGE (knowledge industries)
+// ═════════════════════════════════════════════════════════════════════════════
+function S09Wedge() {
   const targets = [
     { i: Building2, c: ACCENT, t: "AEC", d: "Engineering & design" },
     { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
     { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
-    { i: Briefcase, c: "280 60% 50%", t: "Consulting", d: "Professional services" },
+    { i: Briefcase, c: PURPLE, t: "Consulting", d: "Professional services" },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 26, color: `hsl(${GOLD} / 0.9)` }}>
-          The Wedge · Knowledge Industries
-        </p>
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
+        <DarkTag label="The Wedge · Where self-serve lands first" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
           One platform. <span style={{ color: `hsl(${GOLD})` }}>Every knowledge industry.</span>
         </h2>
-        <p style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1500 }} className="mb-12">
-          Self-serve unlocks adoption across the industries where expertise is the product: <span style={{ color: DARK_TEXT, fontWeight: 700 }}>AEC, Pharma, Cybersecurity, Consulting</span> — and we are already in conversation with each.
+        <p style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1600 }} className="mb-12">
+          Self-serve unlocks adoption across the industries where expertise is the product: AEC, Pharma, Cybersecurity, Consulting. We are already in conversation with each.
         </p>
 
-        {/* Self-serve hub → 4 industry targets */}
-        <div className="rounded-2xl p-10 mb-10"
+        <div className="rounded-2xl p-9 mb-9"
           style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
           <div className="grid grid-cols-[260px_1fr] gap-10 items-center">
             <div className="flex flex-col items-center text-center">
@@ -384,7 +698,7 @@ function S05Wedge() {
             <div>
               <div className="flex items-center gap-3 mb-5">
                 <ArrowRight size={28} style={{ color: `hsl(${GOLD})` }} />
-                <p style={{ fontSize: 18, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Knowledge industries · in conversation</p>
+                <p style={{ fontSize: 16, color: DARK_MUTED, letterSpacing: "0.18em" }} className="uppercase font-semibold">Knowledge industries · in conversation</p>
               </div>
               <div className="grid grid-cols-4 gap-4">
                 {targets.map(t => (
@@ -403,314 +717,213 @@ function S05Wedge() {
           </div>
         </div>
 
-        {/* Milestone */}
-        <div className="grid grid-cols-3 gap-6">
-          <div className="rounded-2xl p-7" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${GREEN} / 0.35)` }}>
-            <Target size={28} style={{ color: `hsl(${GREEN})` }} className="mb-4" />
-            <p style={{ fontSize: 17, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-2">Q4 Milestone</p>
-            <p style={{ fontSize: 30, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.15 }}>Self-serve ARR growth across knowledge industries</p>
-          </div>
-          <div className="rounded-2xl p-7" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${ACCENT} / 0.35)` }}>
-            <TrendingUp size={28} style={{ color: `hsl(${ACCENT})` }} className="mb-4" />
-            <p style={{ fontSize: 17, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-2">Engine</p>
-            <p style={{ fontSize: 30, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.15 }}>Repeatable, hyper-scalable SaaS revenue motion</p>
-          </div>
-          <div className="rounded-2xl p-7" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${GOLD} / 0.4)` }}>
-            <Rocket size={28} style={{ color: `hsl(${GOLD})` }} className="mb-4" />
-            <p style={{ fontSize: 17, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-2">Tee-Up</p>
-            <p style={{ fontSize: 30, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.15 }}>Premium Seed / Series A markup on proven self-serve metrics</p>
-          </div>
-        </div>
-      </div>
-      <SlideBar from={GOLD} to={ACCENT} />
-    </div>
-  );
-}
-
-// ─── Slide 06 — Thesis (Context Gap) ─────────────────────────────────────────
-function S06Thesis() {
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10">
-        <Tag label="The Thesis · Why This Wins" color={ACCENT} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          Whatever you don't define, <span style={{ color: `hsl(${RED})` }}>AI invents.</span>
-        </h2>
-        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          Every enterprise is paying a Context Gap Tax. Expertise lives in people's heads, the way work gets done is undocumented, and AI has no idea what good looks like. So it guesses. Every output becomes rework, drift, and silent risk.
-        </p>
-
-        {/* Three causes of the Context Gap */}
-        <div className="mb-8">
-          <p style={{ fontSize: 18, color: SUBTLE, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-5">The cause · three structural gaps</p>
-          <div className="grid grid-cols-3 gap-6">
-            {[
-              {
-                i: Brain, c: GOLD,
-                t: "No expertise inside the AI",
-                d: "Generic models have no idea how your senior people actually decide. They default to average, public-internet judgment.",
-              },
-              {
-                i: GitBranch, c: ACCENT,
-                t: "No follow-through on change",
-                d: "When standards, prices, regulations, or methods evolve, AI keeps using the old version. Nothing propagates.",
-              },
-              {
-                i: FileSignature, c: "280 60% 50%",
-                t: "No grip on how work is produced",
-                d: "Outputs and artifacts come out inconsistent across people and teams. No shared template, no audit trail, no governance.",
-              },
-            ].map(b => (
-              <div key={b.t} className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: `hsl(${b.c} / 0.12)`, border: `1px solid hsl(${b.c} / 0.3)` }}>
-                  <b.i size={28} style={{ color: `hsl(${b.c})` }} />
-                </div>
-                <p style={{ fontSize: 26, color: TEXT, fontWeight: 700, lineHeight: 1.15 }}>{b.t}</p>
-                <p style={{ fontSize: 19, color: MUTED, marginTop: 10, lineHeight: 1.4 }}>{b.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* The fix */}
-        <div className="rounded-2xl p-8 flex items-center gap-8"
-          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-          <div className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: `hsl(${GREEN} / 0.15)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-            <Layers size={30} style={{ color: `hsl(${GREEN})` }} />
-          </div>
-          <div>
-            <p style={{ fontSize: 17, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">The fix · the Context Layer</p>
-            <p style={{ fontSize: 24, color: TEXT, lineHeight: 1.35, fontWeight: 500 }}>
-              LIZA OS turns expertise, change, and work standards into executable, governed context that every AI action runs through. Validated in 4 of 4 paid design partnerships.
-            </p>
-          </div>
-        </div>
-      </div>
-      <SlideBar from={ACCENT} to={GREEN} />
-    </div>
-  );
-}
-
-// ─── Slide 07 — What's Built (Product) ───────────────────────────────────────
-function S07Product() {
-  const layers = [
-    { i: BookOpen, c: ACCENT, t: "Knowledge Capture", d: "Core infra: bundles, playbooks, standards extracted from documents and experts. Basic native UI shipped." },
-    { i: Cpu, c: GREEN, t: "AACE Reasoning Engine", d: "Core infra: v3.1 routes every AI action through codified context and rules. Powers all four partnerships." },
-    { i: GitBranch, c: GOLD, t: "Governance & Audit", d: "Core infra: versioned standards, change history, full reasoning trail. Basic native UI shipped." },
-    { i: Layers, c: "280 60% 50%", t: "Workbooks & Mandates", d: "Basic native UI on top of the engine: where teams run AI work with context attached by default." },
-  ];
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10">
-        <Tag label="What's Built · Core Infra + Native UIs" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          The engine works. <span style={{ color: `hsl(${GREEN})` }}>Self-serve is what's missing.</span>
-        </h2>
-        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          Four layers of core infrastructure with basic native UIs on top, validated across four paid design partnerships. The bridge funds the self-serve layer that turns this into a product anyone can adopt.
-        </p>
-
-        <div className="grid grid-cols-2 gap-6">
-          {layers.map(l => (
-            <div key={l.t} className="rounded-2xl p-8 flex items-start gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <div className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: `hsl(${l.c} / 0.12)`, border: `1px solid hsl(${l.c} / 0.3)` }}>
-                <l.i size={32} style={{ color: `hsl(${l.c})` }} />
-              </div>
-              <div>
-                <p style={{ fontSize: 28, color: TEXT, fontWeight: 700 }}>{l.t}</p>
-                <p style={{ fontSize: 20, color: MUTED, marginTop: 6 }}>{l.d}</p>
-                <div className="mt-4 inline-flex items-center gap-2">
-                  <CheckCircle2 size={16} style={{ color: `hsl(${GREEN})` }} />
-                  <span style={{ fontSize: 15, color: `hsl(${GREEN})`, fontWeight: 600, letterSpacing: "0.1em" }} className="uppercase">Live with paid partners</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <SlideBar from={GREEN} to={ACCENT} />
-    </div>
-  );
-}
-
-// ─── Slide 08 — Use of Funds ─────────────────────────────────────────────────
-function S08UseOfFunds() {
-  const lines = [
-    { c: ACCENT, pct: 55, label: "Engineering · Self-Serve Wizard + AACE hardening", amt: "€110K" },
-    { c: GREEN, pct: 25, label: "Vertical packaging · AEC, Pharma, Cyber, Consulting bundles", amt: "€50K" },
-    { c: GOLD, pct: 12, label: "Activation telemetry & growth instrumentation", amt: "€24K" },
-    { c: "280 60% 50%", pct: 8, label: "Legal, infra, and round-close costs", amt: "€16K" },
-  ];
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10">
-        <Tag label="Use of Funds · €200,000" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          Every euro buys <span style={{ color: `hsl(${GOLD})` }}>self-serve velocity.</span>
-        </h2>
-        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          No vanity hires, no marketing burn. Pure engineering and packaging runway to remove the human bottleneck.
-        </p>
-
-        {/* Stacked bar */}
-        <div className="rounded-2xl p-8 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <div className="flex w-full h-16 rounded-xl overflow-hidden mb-8" style={{ border: `1px solid ${CHROME_BORDER}` }}>
-            {lines.map(l => (
-              <div key={l.label} style={{ width: `${l.pct}%`, background: `hsl(${l.c})` }} className="flex items-center justify-center">
-                <span style={{ fontSize: 22, fontWeight: 700, color: "white" }}>{l.pct}%</span>
-              </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-2 gap-x-10 gap-y-5">
-            {lines.map(l => (
-              <div key={l.label} className="flex items-start gap-4">
-                <div className="w-4 h-4 rounded-sm mt-1.5 shrink-0" style={{ background: `hsl(${l.c})` }} />
-                <div className="flex-1">
-                  <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{l.amt} <span style={{ color: MUTED, fontWeight: 500, fontSize: 18 }}>· {l.pct}%</span></p>
-                  <p style={{ fontSize: 19, color: MUTED, marginTop: 2 }}>{l.label}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-5">
           {[
-            { i: Clock, t: "6 months", d: "Runway to ship and activate the self-serve flow." },
-            { i: Coins, t: "Capital efficient", d: "Bridge spend tied directly to a measurable ARR motion." },
-          { i: Target, t: "Knowledge industries", d: "Funds focused on AEC, Pharma, Cyber, Consulting — no scope sprawl." },
+            { i: Target, c: GREEN, t: "Q4 milestone", d: "Self-serve ARR growth across knowledge industries" },
+            { i: TrendingUp, c: ACCENT, t: "Engine", d: "Repeatable, hyper-scalable SaaS revenue motion" },
+            { i: Rocket, c: GOLD, t: "Tee-up", d: "Premium Seed / Series A markup on proven self-serve metrics" },
           ].map(b => (
-            <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-              <b.i size={26} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" />
-              <div>
-                <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
-                <p style={{ fontSize: 18, color: MUTED, marginTop: 4 }}>{b.d}</p>
-              </div>
+            <div key={b.t} className="rounded-2xl p-6"
+              style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${b.c} / 0.35)` }}>
+              <b.i size={26} style={{ color: `hsl(${b.c})` }} className="mb-3" />
+              <p style={{ fontSize: 14, color: `hsl(${b.c})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">{b.t}</p>
+              <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.2 }}>{b.d}</p>
             </div>
           ))}
         </div>
       </div>
+      <FooterBridge text="Next: the path to your markup." dark />
       <SlideBar from={GOLD} to={ACCENT} />
     </div>
   );
 }
 
-// ─── Slide 09 — Roadmap to Series A ──────────────────────────────────────────
-function S09Roadmap() {
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 10 — ROADMAP TO MARKUP (Bridge → Seed → A)
+// ═════════════════════════════════════════════════════════════════════════════
+function S10Roadmap() {
   const stages = [
-    {
-      tag: "Now", c: GOLD, t: "€200K Bridge",
-      bullets: ["Ship Self-Serve Wizard", "Harden AACE for unattended deploy", "Instrument activation funnel"],
-    },
-    {
-      tag: "Q4 2026", c: GREEN, t: "Self-Serve ARR",
-      bullets: ["Self-serve growth across knowledge industries", "Repeatable activation metrics", "Reference logos at scale"],
-    },
-    {
-      tag: "2027", c: ACCENT, t: "Premium Seed / Series A",
-      bullets: ["€2M+ round on proven SaaS metrics", "Expand the OS across verticals", "Horizontal OS thesis funded"],
-    },
+    { tag: "Now · €200K Bridge", c: GOLD, t: "Ship self-serve", val: "Today's price",
+      bullets: ["Wizard, telemetry, hardening", "Founders + 2 engineers", "Bridge to Seed metrics"] },
+    { tag: "Q4 2026 · Self-Serve ARR", c: GREEN, t: "Paid self-serve cohort", val: "Implied step-up",
+      bullets: ["Paid teams via wizard", "Activation metrics live", "Reference logos at scale"] },
+    { tag: "2027 · Seed / Series A", c: ACCENT, t: "Premium markup", val: "Seed-priced",
+      bullets: ["€2M+ on proven SaaS metrics", "Expand the OS across verticals", "Horizontal Context Layer thesis funded"] },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Roadmap · Bridge → Markup" color={ACCENT} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
+        <Tag label="Path to markup · Bridge to Seed to A" color={ACCENT} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           A clear path to a <span style={{ color: `hsl(${ACCENT})` }}>premium markup.</span>
         </h2>
-        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          The bridge isn't survival capital. It's the precise spend that converts paid pilots into a financeable SaaS engine.
+        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-12">
+          The bridge is not survival capital. It is the precise spend that converts paid pilots into a financeable SaaS engine, on a clear price step-up.
         </p>
 
         <div className="relative">
-          {/* Connecting line */}
-          <div className="absolute top-8 left-[8%] right-[8%] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${GOLD}), hsl(${GREEN}), hsl(${ACCENT}))` }} />
+          <div className="absolute top-8 left-[8%] right-[8%] h-0.5"
+            style={{ background: `linear-gradient(90deg, hsl(${GOLD}), hsl(${GREEN}), hsl(${ACCENT}))` }} />
           <div className="grid grid-cols-3 gap-8 relative">
-            {stages.map(s => (
+            {stages.map((s, idx) => (
               <div key={s.tag} className="flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full flex items-center justify-center mb-5 z-10"
                   style={{ background: BG, border: `3px solid hsl(${s.c})` }}>
                   <Calendar size={26} style={{ color: `hsl(${s.c})` }} />
                 </div>
                 <div className="rounded-2xl p-7 w-full" style={{ background: CARD_ALT, border: `1px solid hsl(${s.c} / 0.3)` }}>
-                  <p style={{ fontSize: 16, color: `hsl(${s.c})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">{s.tag}</p>
-                  <p style={{ fontSize: 30, color: TEXT, fontWeight: 700, marginBottom: 16 }}>{s.t}</p>
+                  <p style={{ fontSize: 14, color: `hsl(${s.c})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">{s.tag}</p>
+                  <p style={{ fontSize: 28, color: TEXT, fontWeight: 700, marginBottom: 6 }}>{s.t}</p>
+                  <p style={{ fontSize: 16, color: `hsl(${s.c})`, fontWeight: 700, marginBottom: 14 }}>{s.val}</p>
                   <ul className="space-y-3">
                     {s.bullets.map(b => (
                       <li key={b} className="flex items-start gap-3">
                         <CheckCircle2 size={18} style={{ color: `hsl(${s.c})` }} className="mt-1 shrink-0" />
-                        <span style={{ fontSize: 19, color: TEXT }}>{b}</span>
+                        <span style={{ fontSize: 18, color: TEXT }}>{b}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
+                {idx < stages.length - 1 && (
+                  <div className="absolute" style={{
+                    top: 24, left: `${(idx + 1) * 33.33 - 4}%`,
+                    transform: "translateX(-50%)",
+                  }}>
+                    <ArrowRight size={28} style={{ color: SUBTLE }} />
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
+
+        <div className="mt-10 rounded-2xl p-6 flex items-center gap-5"
+          style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+          <TrendingUp size={28} style={{ color: `hsl(${GOLD})` }} />
+          <p style={{ fontSize: 22, color: TEXT, fontWeight: 600, lineHeight: 1.35 }}>
+            <span style={{ fontWeight: 800 }}>Bridge investors are first in line</span>
+            <span style={{ color: MUTED, fontWeight: 500 }}> at SAFE terms that reprice on the next round. The markup math works on a single Seed step-up.</span>
+          </p>
+        </div>
       </div>
+      <FooterBridge text="Next: the team shipping it." />
       <SlideBar from={GOLD} to={ACCENT} />
     </div>
   );
 }
 
-// ─── Slide 10 — Team & The Ask ───────────────────────────────────────────────
-function S10Ask() {
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 11 — TEAM
+// ═════════════════════════════════════════════════════════════════════════════
+function S11Team() {
+  const team = [
+    {
+      n: "István Boscha", r: "Founder & CEO",
+      role: "Closes paid partnerships",
+      d: "15+ years building data and AI systems for enterprise. Sold and scaled prior ventures. Owns the partner conversations and the round.",
+    },
+    {
+      n: "Kristóf Éger", r: "Engineering",
+      role: "Ships the engine",
+      d: "Architect of the platform. Shipped the four core layers to four paid partnerships across regulated verticals.",
+    },
+    {
+      n: "Zoltán Kauker", r: "Delivery & Standards",
+      role: "Codifies what customers pay for",
+      d: "Turns expert judgment into governed bundles. Runs every paid pilot end-to-end. Same hands will package the wizard.",
+    },
+  ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 26, color: `hsl(${GOLD} / 0.9)` }}>
-          The Team · The Ask
+        <DarkTag label="Team · Built by operators · 15 months self-funded" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
+          Same team that built the proof <span style={{ color: `hsl(${GOLD})` }}>will ship the self-serve.</span>
+        </h2>
+        <p style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1600 }} className="mb-12">
+          No new hires required to deliver this bridge. The people who designed and shipped the engine are the people activating self-serve.
         </p>
-        <h2 className="font-bold leading-[1.05] mb-12" style={{ fontSize: 84, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
-          €200K. <span style={{ color: `hsl(${GOLD})` }}>SAFE. Closing now.</span>
+
+        <div className="grid grid-cols-3 gap-6">
+          {team.map(p => (
+            <div key={p.n} className="rounded-2xl p-7 flex flex-col"
+              style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mb-5"
+                style={{ background: `hsl(${ACCENT} / 0.18)`, border: `1px solid hsl(${ACCENT} / 0.35)` }}>
+                <Users size={28} style={{ color: `hsl(${ACCENT})` }} />
+              </div>
+              <p style={{ fontSize: 26, color: DARK_TEXT, fontWeight: 700 }}>{p.n}</p>
+              <p style={{ fontSize: 17, color: `hsl(${GOLD})`, fontWeight: 600, marginTop: 2 }}>{p.r}</p>
+              <p style={{ fontSize: 18, color: DARK_TEXT, fontWeight: 600, marginTop: 14, lineHeight: 1.3 }}>
+                <span style={{ color: `hsl(${ACCENT})` }}>{p.role}</span>
+              </p>
+              <p style={{ fontSize: 17, color: DARK_MUTED, marginTop: 8, lineHeight: 1.5 }}>{p.d}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 grid grid-cols-3 gap-6">
+          {[
+            { i: Hammer, t: "15 months", d: "Self-funded build to four paid partnerships" },
+            { i: Coins, t: "Capital efficient", d: "Shipped a working engine on a fraction of the typical seed" },
+            { i: Brain, t: "Practitioners", d: "Built AI inside enterprise. Lived this exact gap." },
+          ].map(b => (
+            <div key={b.t} className="rounded-xl p-5 flex items-center gap-4"
+              style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.08)` }}>
+              <b.i size={24} style={{ color: `hsl(${GOLD})` }} />
+              <div>
+                <p style={{ fontSize: 18, color: DARK_TEXT, fontWeight: 700 }}>{b.t}</p>
+                <p style={{ fontSize: 16, color: DARK_MUTED }}>{b.d}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <FooterBridge text="Next: the ask, and how to wire." dark />
+      <SlideBar from={GOLD} to={ACCENT} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 12 — THE ASK
+// ═════════════════════════════════════════════════════════════════════════════
+function S12Ask() {
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
+      <DarkGrid />
+      <div className="relative z-10">
+        <DarkTag label="The Ask · €200K · SAFE · Closing in 6 weeks" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
+          €200K. SAFE. <span style={{ color: `hsl(${GOLD})` }}>Closing now.</span>
         </h2>
 
-        <div className="grid grid-cols-[1.1fr_1fr] gap-10">
-          {/* Team */}
-          <div className="rounded-2xl p-8" style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
-            <p style={{ fontSize: 17, color: DARK_MUTED, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-5">Built by operators</p>
-            <div className="space-y-5">
-              {[
-                { n: "István Boscha", r: "Founder & CEO", d: "15+ years building data and AI systems for enterprise. Sold and scaled prior ventures." },
-                { n: "Kristóf Éger", r: "Engineering", d: "AACE architect. Shipped v3.1 to four paid enterprise clients across regulated verticals." },
-                { n: "Zoltán Kauker", r: "Delivery & Standards", d: "Codifies expert judgment into governed bundles. Runs every paid pilot end-to-end." },
-              ].map(p => (
-                <div key={p.n} className="flex items-start gap-4 pb-5 last:pb-0 last:border-0 border-b" style={{ borderColor: "hsl(0 0% 100% / 0.06)" }}>
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
-                    style={{ background: `hsl(${ACCENT} / 0.18)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
-                    <Users size={22} style={{ color: `hsl(${ACCENT})` }} />
-                  </div>
-                  <div>
-                    <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 700 }}>{p.n} <span style={{ color: `hsl(${GOLD})`, fontSize: 17, fontWeight: 600, marginLeft: 8 }}>{p.r}</span></p>
-                    <p style={{ fontSize: 18, color: DARK_MUTED, marginTop: 4 }}>{p.d}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="rounded-2xl p-7 mb-8 flex items-center gap-6"
+          style={{ background: `hsl(${ACCENT} / 0.08)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+          <Sparkles size={32} style={{ color: `hsl(${ACCENT})` }} />
+          <p style={{ fontSize: 24, color: DARK_TEXT, fontWeight: 600, lineHeight: 1.35 }}>
+            <span style={{ fontWeight: 800 }}>You are not betting on a thesis.</span>
+            <span style={{ color: DARK_MUTED, fontWeight: 500 }}> You are funding the last engineering sprint between a working product and a self-serve SaaS.</span>
+          </p>
+        </div>
 
-          {/* The Ask */}
-          <div className="rounded-2xl p-8 flex flex-col" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.4)` }}>
+        <div className="grid grid-cols-[1.1fr_1fr] gap-8">
+          {/* Terms */}
+          <div className="rounded-2xl p-8" style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.4)` }}>
             <FileSignature size={32} style={{ color: `hsl(${GOLD})` }} className="mb-4" />
-            <p style={{ fontSize: 17, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-3">The Ask</p>
+            <p style={{ fontSize: 16, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-3">The terms</p>
             <p style={{ fontSize: 64, color: DARK_TEXT, fontWeight: 700, lineHeight: 1 }}>€200,000</p>
-            <p style={{ fontSize: 22, color: DARK_MUTED, marginTop: 8, marginBottom: 24 }}>Bridge round · Self-Serve Capability</p>
+            <p style={{ fontSize: 20, color: DARK_MUTED, marginTop: 6, marginBottom: 22 }}>Bridge round · Self-serve capability</p>
 
-            <div className="space-y-3 mb-auto">
+            <div className="space-y-2.5">
               {[
                 { k: "Instrument", v: "SAFE, post-money" },
                 { k: "Check size", v: "€10K – €30K" },
                 { k: "For", v: "Operators, angels, micro-funds" },
-                { k: "Close", v: "Rolling, target 6 weeks" },
+                { k: "Close window", v: "6 weeks, rolling" },
+                { k: "Markup trigger", v: "Repriced on the Seed round" },
               ].map(r => (
                 <div key={r.k} className="flex items-center justify-between py-2.5 border-b" style={{ borderColor: "hsl(0 0% 100% / 0.08)" }}>
                   <span style={{ fontSize: 18, color: DARK_MUTED }}>{r.k}</span>
@@ -718,11 +931,35 @@ function S10Ask() {
                 </div>
               ))}
             </div>
+          </div>
 
-            <div className="mt-8 rounded-xl p-5" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
-              <p style={{ fontSize: 18, color: DARK_TEXT, fontWeight: 600 }}>What you back</p>
-              <p style={{ fontSize: 17, color: DARK_MUTED, marginTop: 4, lineHeight: 1.4 }}>
-                A shipped product, four paid clients, and the precise spend that converts manual onboarding into a financeable SaaS engine.
+          {/* What you back + close */}
+          <div className="flex flex-col gap-5">
+            <div className="rounded-2xl p-7"
+              style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
+              <p style={{ fontSize: 16, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-3">What you back</p>
+              {[
+                "A shipped product running paid workloads",
+                "Four paid design partnerships across knowledge industries",
+                "A 6-month plan with monthly milestones",
+                "The team that built the proof, full-time",
+                "First-mover SAFE terms, repriced on the Seed",
+              ].map(b => (
+                <div key={b} className="flex items-start gap-3 py-2">
+                  <CheckCircle2 size={20} style={{ color: `hsl(${GREEN})` }} className="mt-0.5 shrink-0" />
+                  <span style={{ fontSize: 19, color: DARK_TEXT }}>{b}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="rounded-2xl p-6"
+              style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>
+              <p style={{ fontSize: 16, color: `hsl(${RED})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Close mechanics</p>
+              <p style={{ fontSize: 24, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.3 }}>
+                Reply with check size. SAFE in your inbox within 48 hours.
+              </p>
+              <p style={{ fontSize: 18, color: DARK_MUTED, marginTop: 8, lineHeight: 1.4 }}>
+                Two slots remaining at first-mover terms. After they close, the round caps and the next entry is the priced Seed.
               </p>
             </div>
           </div>
@@ -736,15 +973,17 @@ function S10Ask() {
 // ─── Slide registry ──────────────────────────────────────────────────────────
 const SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
-  { id: "thesis", title: "Thesis", component: <S06Thesis /> },
-  { id: "traction", title: "Traction", component: <S02Traction /> },
-  { id: "product", title: "What's Built", component: <S07Product /> },
-  { id: "bottleneck", title: "Bottleneck", component: <S03Bottleneck /> },
-  { id: "unlock", title: "€200K Unlock", component: <S04Unlock /> },
-  { id: "wedge", title: "Wedge & Milestone", component: <S05Wedge /> },
-  { id: "funds", title: "Use of Funds", component: <S08UseOfFunds /> },
-  { id: "roadmap", title: "Roadmap", component: <S09Roadmap /> },
-  { id: "ask", title: "Team & The Ask", component: <S10Ask /> },
+  { id: "moment", title: "The Moment", component: <S02Moment /> },
+  { id: "proof", title: "Proof", component: <S03Proof /> },
+  { id: "built", title: "What we built", component: <S04Built /> },
+  { id: "gap", title: "The Gap", component: <S05Gap /> },
+  { id: "unlock", title: "€200K Unlock", component: <S06Unlock /> },
+  { id: "funds", title: "Use of Funds", component: <S07Funds /> },
+  { id: "plan", title: "6-Month Plan", component: <S08Plan /> },
+  { id: "wedge", title: "Wedge", component: <S09Wedge /> },
+  { id: "roadmap", title: "Path to Markup", component: <S10Roadmap /> },
+  { id: "team", title: "Team", component: <S11Team /> },
+  { id: "ask", title: "The Ask", component: <S12Ask /> },
 ];
 
 // ─── Deck shell ──────────────────────────────────────────────────────────────
@@ -762,6 +1001,10 @@ export default function BridgeDeck() {
   const prev = useCallback(() => setCurrent(c => Math.max(c - 1, 0)), []);
   const goTo = useCallback((i: number) => { setCurrent(i); setShowGrid(false); }, []);
 
+  const enterFullscreen = useCallback(() => {
+    document.documentElement.requestFullscreen?.().then(() => setIsFullscreen(true)).catch(() => {});
+  }, []);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight" || e.key === "ArrowDown" || e.key === " ") { e.preventDefault(); next(); }
@@ -772,11 +1015,7 @@ export default function BridgeDeck() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev]);
-
-  const enterFullscreen = () => {
-    document.documentElement.requestFullscreen?.().then(() => setIsFullscreen(true)).catch(() => {});
-  };
+  }, [next, prev, enterFullscreen]);
 
   useEffect(() => {
     const onFsc = () => { if (!document.fullscreenElement) setIsFullscreen(false); };
@@ -887,7 +1126,7 @@ export default function BridgeDeck() {
         style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GOLD})` }} />
-          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS — €200K Bridge Deck</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS · €200K Bridge Deck</span>
           <span className="text-xs px-2 py-0.5 rounded"
             style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
             Bridge · {SLIDES.length} slides
@@ -939,7 +1178,7 @@ export default function BridgeDeck() {
                       <ScaledSlide>{s.component}</ScaledSlide>
                     </div>
                     <p className="text-xs px-2 pb-2" style={{ color: MUTED }}>
-                      <span className="font-mono">{String(i + 1).padStart(2, "0")}</span> — {s.title}
+                      <span className="font-mono">{String(i + 1).padStart(2, "0")}</span> · {s.title}
                     </p>
                   </button>
                 ))}
