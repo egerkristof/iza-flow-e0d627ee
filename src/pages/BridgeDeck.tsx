@@ -5,7 +5,7 @@ import {
   Building2, FlaskConical, Shield, Briefcase, ArrowRight,
   Users, Wand2, Rocket, Crosshair,
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
-  Layers, Cpu, GitBranch, Calendar, Coins, FileSignature, Clock, BookOpen
+  Layers, Cpu, GitBranch, Calendar, Coins, FileSignature, Clock, BookOpen, Brain
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
