@@ -143,8 +143,8 @@ function S02Moment() {
   const cols = [
     {
       icon: Globe, c: ACCENT, label: "Market moment",
-      head: "Every enterprise is wiring AI.",
-      body: "Generic models guess your standards. Nobody owns the layer that defines them. The Context Layer is the next platform shift.",
+      head: "AI inherits no standards.",
+      body: "Drop AI into a company and it has no expertise, no memory of how work is actually done, no link to the artifacts and decisions that move with the org. Generic models guess. Nobody owns the layer that defines the standards. That layer is the next platform shift.",
     },
     {
       icon: Sparkles, c: GREEN, label: "Company moment",
@@ -211,7 +211,7 @@ function S03Proof() {
   ];
   const industries = [
     { i: Briefcase, c: PURPLE, t: "Consulting", d: "Engagement methodology" },
-    { i: Building2, c: ACCENT, t: "AEC", d: "Engineering & design" },
+    { i: Building2, c: ACCENT, t: "AEC", d: "Architecture, Engineering & Construction" },
     { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
     { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
   ];
@@ -665,7 +665,7 @@ function S08Plan() {
 // ═════════════════════════════════════════════════════════════════════════════
 function S09Wedge() {
   const targets = [
-    { i: Building2, c: ACCENT, t: "AEC", d: "Engineering & design" },
+    { i: Building2, c: ACCENT, t: "AEC", d: "Architecture, Engineering & Construction" },
     { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
     { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
     { i: Briefcase, c: PURPLE, t: "Consulting", d: "Professional services" },
