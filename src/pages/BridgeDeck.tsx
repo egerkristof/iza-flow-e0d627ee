@@ -121,21 +121,21 @@ function S01Cover() {
 // ─── Slide 02 — Traction ─────────────────────────────────────────────────────
 function S02Traction() {
   const clients = [
-    { icon: Building2, label: "AEC", desc: "Engineering & design firm", color: ACCENT },
+    { icon: Briefcase, label: "Consulting", desc: "Engagement delivery & methodology", color: "280 60% 50%" },
+    { icon: Building2, label: "AEC", desc: "Engineering & design lifecycle", color: ACCENT },
     { icon: FlaskConical, label: "Pharma", desc: "Regulated lifecycle ops", color: GREEN },
     { icon: Shield, label: "Cybersecurity", desc: "Audit & compliance", color: GOLD },
-    { icon: Briefcase, label: "Consulting", desc: "Professional services", color: "280 60% 50%" },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Traction · The Core Is Built & Validated" color={GREEN} />
+        <Tag label="Traction · The Knowledge Cycle Is Proven" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          AACE v3.1 is live. <span style={{ color: `hsl(${GREEN})` }}>Clients are paying.</span>
+          One pattern. <span style={{ color: `hsl(${GREEN})` }}>Four paid design partnerships.</span>
         </h2>
         <p style={{ fontSize: 28, color: MUTED, maxWidth: 1400 }} className="mb-14">
-          Four paid enterprise clients across four industries. The Context Gap thesis is proven, and rework reductions are measurable in days, not percentages.
+          The same Knowledge Cycle — capture expertise, govern it, execute it through AI — validated across four knowledge industries with paid design partnerships and early revenue.
         </p>
 
         <div className="grid grid-cols-4 gap-6 mb-14">
@@ -150,7 +150,7 @@ function S02Traction() {
               <p style={{ fontSize: 19, color: MUTED, marginTop: 6 }}>{c.desc}</p>
               <div className="mt-5 flex items-center gap-2">
                 <CheckCircle2 size={18} style={{ color: `hsl(${GREEN})` }} />
-                <span style={{ fontSize: 16, color: `hsl(${GREEN})`, fontWeight: 600 }}>Paid · In production</span>
+                <span style={{ fontSize: 16, color: `hsl(${GREEN})`, fontWeight: 600 }}>Paid design partnership</span>
               </div>
             </div>
           ))}
@@ -160,17 +160,17 @@ function S02Traction() {
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
             <p style={{ fontSize: 17, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Audit workflow</p>
             <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>18 days <span style={{ color: MUTED, fontSize: 32 }}>→</span> 1 day</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Cycle-time collapse on a live cybersecurity engagement.</p>
+            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Cycle-time collapse on a live cybersecurity partnership.</p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
             <p style={{ fontSize: 17, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Product-market fit</p>
-            <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 verticals</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Same Context Layer thesis validated across every paid pilot.</p>
+            <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 industries</p>
+            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Same core infrastructure, different industries — pattern is repeatable.</p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.25)` }}>
             <p style={{ fontSize: 17, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-3">Revenue</p>
             <p style={{ fontSize: 56, color: TEXT, fontWeight: 700, lineHeight: 1 }}>Early ARR</p>
-            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Generating revenue from enterprise pilots — not a research project.</p>
+            <p style={{ fontSize: 19, color: MUTED, marginTop: 10 }}>Paid design partnerships with enterprises, not a research project.</p>
           </div>
         </div>
       </div>
@@ -254,10 +254,10 @@ function S04Unlock() {
       <div className="relative z-10">
         <Tag label="The €200K Unlock · The Bridge Solution" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          From Consulting Kickstart to <span style={{ color: `hsl(${ACCENT})` }}>Self-Serve Wizard.</span>
+          Core infrastructure works. <span style={{ color: `hsl(${ACCENT})` }}>Now ship self-serve.</span>
         </h2>
         <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          €200K funds the engineering runway to remove the human bottleneck from our own deployment — a frictionless, AI-native SaaS onboarding flow.
+          We have the core infrastructure plus basic native UIs on top, proven in four paid partnerships. €200K funds the self-serve layer that lets knowledge industries adopt the platform without us in the room.
         </p>
 
         {/* Before / After */}
@@ -329,9 +329,9 @@ function S04Unlock() {
 
         <div className="grid grid-cols-3 gap-6">
           {[
-            { t: "Platform stabilisation", d: "Harden the AACE core for unattended deployment." },
-            { t: "Onboarding wizard", d: "AI-native flow that proposes the customer's first Context Layer." },
-            { t: "Activation telemetry", d: "Instrument every step to remove friction continuously." },
+            { t: "Harden the core", d: "AACE infrastructure ready for unattended, multi-tenant deployment." },
+            { t: "Self-serve native UIs", d: "Onboarding wizard plus the workbench surfaces a customer needs on day one." },
+            { t: "Activation telemetry", d: "Instrument every step so the funnel improves itself, no humans needed." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
               <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
@@ -347,48 +347,58 @@ function S04Unlock() {
 
 // ─── Slide 05 — Wedge & Milestone ────────────────────────────────────────────
 function S05Wedge() {
+  const targets = [
+    { i: Building2, c: ACCENT, t: "AEC", d: "Engineering & design" },
+    { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
+    { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
+    { i: Briefcase, c: "280 60% 50%", t: "Consulting", d: "Professional services" },
+  ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
         <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 26, color: `hsl(${GOLD} / 0.9)` }}>
-          The Vertical Wedge · The Goal
+          The Wedge · Knowledge Industries
         </p>
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
-          One arrow. <span style={{ color: `hsl(${GOLD})` }}>One bullseye.</span>
+          One platform. <span style={{ color: `hsl(${GOLD})` }}>Every knowledge industry.</span>
         </h2>
         <p style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1500 }} className="mb-12">
-          The self-serve capability is pointed at one proven, repeatable industry: <span style={{ color: DARK_TEXT, fontWeight: 700 }}>Professional Services / Consulting.</span>
+          Self-serve unlocks adoption across the industries where expertise is the product: <span style={{ color: DARK_TEXT, fontWeight: 700 }}>AEC, Pharma, Cybersecurity, Consulting</span> — and we are already in conversation with each.
         </p>
 
-        {/* Arrow → Bullseye */}
-        <div className="rounded-2xl p-10 mb-10 flex items-center gap-10"
+        {/* Self-serve hub → 4 industry targets */}
+        <div className="rounded-2xl p-10 mb-10"
           style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
-          <div className="flex-1 flex items-center gap-6">
-            <div className="w-20 h-20 rounded-2xl flex items-center justify-center"
-              style={{ background: `hsl(${ACCENT} / 0.15)`, border: `1px solid hsl(${ACCENT} / 0.4)` }}>
-              <Rocket size={42} style={{ color: `hsl(${ACCENT})` }} />
+          <div className="grid grid-cols-[260px_1fr] gap-10 items-center">
+            <div className="flex flex-col items-center text-center">
+              <div className="relative w-32 h-32 rounded-full flex items-center justify-center mb-4"
+                style={{ background: `radial-gradient(circle, hsl(${GOLD} / 0.5) 0%, hsl(${GOLD} / 0.15) 50%, transparent 75%)` }}>
+                <div className="absolute inset-3 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.5)` }} />
+                <div className="absolute inset-7 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.7)` }} />
+                <Rocket size={40} style={{ color: `hsl(${GOLD})` }} />
+              </div>
+              <p style={{ fontSize: 16, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Self-Serve Capability</p>
+              <p style={{ fontSize: 26, color: DARK_TEXT, fontWeight: 700 }}>The €200K build</p>
             </div>
             <div>
-              <p style={{ fontSize: 17, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Self-Serve Capability</p>
-              <p style={{ fontSize: 32, color: DARK_TEXT, fontWeight: 700 }}>The €200K build</p>
-            </div>
-          </div>
-
-          <div className="flex-1 flex items-center justify-center">
-            <ArrowRight size={64} style={{ color: `hsl(${GOLD})` }} />
-          </div>
-
-          <div className="flex-1 flex items-center gap-6 justify-end">
-            <div>
-              <p style={{ fontSize: 17, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold text-right">Target Vertical</p>
-              <p style={{ fontSize: 32, color: DARK_TEXT, fontWeight: 700 }} className="text-right">Professional Services</p>
-            </div>
-            <div className="relative w-28 h-28 rounded-full flex items-center justify-center"
-              style={{ background: `radial-gradient(circle, hsl(${GOLD} / 0.5) 0%, hsl(${GOLD} / 0.15) 50%, transparent 75%)` }}>
-              <div className="absolute inset-3 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.5)` }} />
-              <div className="absolute inset-7 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.7)` }} />
-              <Crosshair size={36} style={{ color: `hsl(${GOLD})` }} />
+              <div className="flex items-center gap-3 mb-5">
+                <ArrowRight size={28} style={{ color: `hsl(${GOLD})` }} />
+                <p style={{ fontSize: 18, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Knowledge industries · in conversation</p>
+              </div>
+              <div className="grid grid-cols-4 gap-4">
+                {targets.map(t => (
+                  <div key={t.t} className="rounded-xl p-5"
+                    style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${t.c} / 0.35)` }}>
+                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
+                      style={{ background: `hsl(${t.c} / 0.18)`, border: `1px solid hsl(${t.c} / 0.35)` }}>
+                      <t.i size={24} style={{ color: `hsl(${t.c})` }} />
+                    </div>
+                    <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 700 }}>{t.t}</p>
+                    <p style={{ fontSize: 16, color: DARK_MUTED, marginTop: 4 }}>{t.d}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -398,7 +408,7 @@ function S05Wedge() {
           <div className="rounded-2xl p-7" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${GREEN} / 0.35)` }}>
             <Target size={28} style={{ color: `hsl(${GREEN})` }} className="mb-4" />
             <p style={{ fontSize: 17, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.15em" }} className="uppercase mb-2">Q4 Milestone</p>
-            <p style={{ fontSize: 30, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.15 }}>100% self-serve ARR growth in Professional Services</p>
+            <p style={{ fontSize: 30, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.15 }}>Self-serve ARR growth across knowledge industries</p>
           </div>
           <div className="rounded-2xl p-7" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${ACCENT} / 0.35)` }}>
             <TrendingUp size={28} style={{ color: `hsl(${ACCENT})` }} className="mb-4" />
@@ -463,21 +473,21 @@ function S06Thesis() {
 // ─── Slide 07 — What's Built (Product) ───────────────────────────────────────
 function S07Product() {
   const layers = [
-    { i: BookOpen, c: ACCENT, t: "Knowledge Capture", d: "Bundles, playbooks, and standards extracted from documents and experts." },
-    { i: Cpu, c: GREEN, t: "AACE Reasoning Engine", d: "v3.1 live. Routes every AI action through your codified context and rules." },
-    { i: GitBranch, c: GOLD, t: "Governance & Audit", d: "Versioned standards, change history, and full reasoning trail per output." },
-    { i: Layers, c: "280 60% 50%", t: "Workbooks & Mandates", d: "Where teams actually run AI work, with context attached by default." },
+    { i: BookOpen, c: ACCENT, t: "Knowledge Capture", d: "Core infra: bundles, playbooks, standards extracted from documents and experts. Basic native UI shipped." },
+    { i: Cpu, c: GREEN, t: "AACE Reasoning Engine", d: "Core infra: v3.1 routes every AI action through codified context and rules. Powers all four partnerships." },
+    { i: GitBranch, c: GOLD, t: "Governance & Audit", d: "Core infra: versioned standards, change history, full reasoning trail. Basic native UI shipped." },
+    { i: Layers, c: "280 60% 50%", t: "Workbooks & Mandates", d: "Basic native UI on top of the engine: where teams run AI work with context attached by default." },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="What's Built · AACE v3.1" color={GREEN} />
+        <Tag label="What's Built · Core Infra + Native UIs" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          The platform is <span style={{ color: `hsl(${GREEN})` }}>shipped, not slideware.</span>
+          The engine works. <span style={{ color: `hsl(${GREEN})` }}>Self-serve is what's missing.</span>
         </h2>
         <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          Four layers, in production today, running paid enterprise workloads.
+          Four layers of core infrastructure with basic native UIs on top, validated across four paid design partnerships. The bridge funds the self-serve layer that turns this into a product anyone can adopt.
         </p>
 
         <div className="grid grid-cols-2 gap-6">
@@ -492,7 +502,7 @@ function S07Product() {
                 <p style={{ fontSize: 20, color: MUTED, marginTop: 6 }}>{l.d}</p>
                 <div className="mt-4 inline-flex items-center gap-2">
                   <CheckCircle2 size={16} style={{ color: `hsl(${GREEN})` }} />
-                  <span style={{ fontSize: 15, color: `hsl(${GREEN})`, fontWeight: 600, letterSpacing: "0.1em" }} className="uppercase">Live in production</span>
+                  <span style={{ fontSize: 15, color: `hsl(${GREEN})`, fontWeight: 600, letterSpacing: "0.1em" }} className="uppercase">Live with paid partners</span>
                 </div>
               </div>
             </div>
@@ -508,7 +518,7 @@ function S07Product() {
 function S08UseOfFunds() {
   const lines = [
     { c: ACCENT, pct: 55, label: "Engineering · Self-Serve Wizard + AACE hardening", amt: "€110K" },
-    { c: GREEN, pct: 25, label: "Vertical packaging · Professional Services bundles", amt: "€50K" },
+    { c: GREEN, pct: 25, label: "Vertical packaging · AEC, Pharma, Cyber, Consulting bundles", amt: "€50K" },
     { c: GOLD, pct: 12, label: "Activation telemetry & growth instrumentation", amt: "€24K" },
     { c: "280 60% 50%", pct: 8, label: "Legal, infra, and round-close costs", amt: "€16K" },
   ];
@@ -550,7 +560,7 @@ function S08UseOfFunds() {
           {[
             { i: Clock, t: "6 months", d: "Runway to ship and activate the self-serve flow." },
             { i: Coins, t: "Capital efficient", d: "Bridge spend tied directly to a measurable ARR motion." },
-            { i: Target, t: "One vertical", d: "Funds focused on Professional Services, no scope sprawl." },
+          { i: Target, t: "Knowledge industries", d: "Funds focused on AEC, Pharma, Cyber, Consulting — no scope sprawl." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
               <b.i size={26} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" />
@@ -576,11 +586,11 @@ function S09Roadmap() {
     },
     {
       tag: "Q4 2026", c: GREEN, t: "Self-Serve ARR",
-      bullets: ["100% self-serve growth in Pro Services", "Repeatable activation metrics", "Reference logos at scale"],
+      bullets: ["Self-serve growth across knowledge industries", "Repeatable activation metrics", "Reference logos at scale"],
     },
     {
       tag: "2027", c: ACCENT, t: "Premium Seed / Series A",
-      bullets: ["€2M+ round on proven SaaS metrics", "Expand to second vertical", "Horizontal OS thesis funded"],
+      bullets: ["€2M+ round on proven SaaS metrics", "Expand the OS across verticals", "Horizontal OS thesis funded"],
     },
   ];
   return (
