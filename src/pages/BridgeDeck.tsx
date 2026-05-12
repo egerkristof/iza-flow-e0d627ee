@@ -859,16 +859,8 @@ function S12Ask() {
           </div>
         </div>
 
-        <div className="mt-6 rounded-2xl p-6 flex items-center gap-6"
-          style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-          <Coins size={32} style={{ color: `hsl(${GREEN})` }} className="shrink-0" />
-          <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 600, lineHeight: 1.4 }}>
-            <span style={{ fontWeight: 800, color: `hsl(${GOLD})` }}>How it works:</span> you wire €200K today at a €10M valuation.
-            When the Seed prices, your shares convert at <span style={{ fontWeight: 800 }}>20% below that price</span>, with the €10M as a ceiling. Whichever gives you more shares wins.
-          </p>
-        </div>
+        <SlideBar from={GOLD} to={ACCENT} />
       </div>
-      <SlideBar from={GOLD} to={ACCENT} />
     </div>
   );
 }
