@@ -438,31 +438,55 @@ function S06Thesis() {
           Whatever you don't define, <span style={{ color: `hsl(${RED})` }}>AI invents.</span>
         </h2>
         <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          Every enterprise is paying a Context Gap Tax: rework, drift, and silent risk because expertise lives in heads, not in the system. LIZA OS is the Context Layer that closes it.
+          Every enterprise is paying a Context Gap Tax. Expertise lives in people's heads, the way work gets done is undocumented, and AI has no idea what good looks like. So it guesses. Every output becomes rework, drift, and silent risk.
         </p>
 
-        <div className="grid grid-cols-3 gap-6 mb-10">
-          {[
-            { i: AlertTriangle, c: RED, t: "The Tax", d: "€550K+/year per org in hidden rework, retraining, and bad AI output." },
-            { i: BookOpen, c: GOLD, t: "The Cause", d: "AI inherits no standards. Generic models guess your judgment, badly." },
-            { i: Layers, c: GREEN, t: "The Fix", d: "A Context Layer that turns expertise into executable, governed standards." },
-          ].map(b => (
-            <div key={b.t} className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                style={{ background: `hsl(${b.c} / 0.12)`, border: `1px solid hsl(${b.c} / 0.3)` }}>
-                <b.i size={28} style={{ color: `hsl(${b.c})` }} />
+        {/* Three causes of the Context Gap */}
+        <div className="mb-8">
+          <p style={{ fontSize: 18, color: SUBTLE, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-5">The cause · three structural gaps</p>
+          <div className="grid grid-cols-3 gap-6">
+            {[
+              {
+                i: Brain, c: GOLD,
+                t: "No expertise inside the AI",
+                d: "Generic models have no idea how your senior people actually decide. They default to average, public-internet judgment.",
+              },
+              {
+                i: GitBranch, c: ACCENT,
+                t: "No follow-through on change",
+                d: "When standards, prices, regulations, or methods evolve, AI keeps using the old version. Nothing propagates.",
+              },
+              {
+                i: FileSignature, c: "280 60% 50%",
+                t: "No grip on how work is produced",
+                d: "Outputs and artifacts come out inconsistent across people and teams. No shared template, no audit trail, no governance.",
+              },
+            ].map(b => (
+              <div key={b.t} className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+                  style={{ background: `hsl(${b.c} / 0.12)`, border: `1px solid hsl(${b.c} / 0.3)` }}>
+                  <b.i size={28} style={{ color: `hsl(${b.c})` }} />
+                </div>
+                <p style={{ fontSize: 26, color: TEXT, fontWeight: 700, lineHeight: 1.15 }}>{b.t}</p>
+                <p style={{ fontSize: 19, color: MUTED, marginTop: 10, lineHeight: 1.4 }}>{b.d}</p>
               </div>
-              <p style={{ fontSize: 28, color: TEXT, fontWeight: 700 }}>{b.t}</p>
-              <p style={{ fontSize: 20, color: MUTED, marginTop: 8 }}>{b.d}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="rounded-2xl p-8 flex items-center gap-8" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
-          <div style={{ fontSize: 64, fontWeight: 700, color: `hsl(${ACCENT})`, lineHeight: 1 }}>4 / 4</div>
-          <p style={{ fontSize: 24, color: TEXT, lineHeight: 1.3, fontWeight: 500 }}>
-            Verticals where the same Context Layer pattern produced measurable cycle-time and quality wins. The thesis is no longer a hypothesis.
-          </p>
+        {/* The fix */}
+        <div className="rounded-2xl p-8 flex items-center gap-8"
+          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <div className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0"
+            style={{ background: `hsl(${GREEN} / 0.15)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <Layers size={30} style={{ color: `hsl(${GREEN})` }} />
+          </div>
+          <div>
+            <p style={{ fontSize: 17, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">The fix · the Context Layer</p>
+            <p style={{ fontSize: 24, color: TEXT, lineHeight: 1.35, fontWeight: 500 }}>
+              LIZA OS turns expertise, change, and work standards into executable, governed context that every AI action runs through. Validated in 4 of 4 paid design partnerships.
+            </p>
+          </div>
         </div>
       </div>
       <SlideBar from={ACCENT} to={GREEN} />
