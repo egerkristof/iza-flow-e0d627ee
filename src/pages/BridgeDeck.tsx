@@ -532,7 +532,7 @@ function S06Unlock() {
 function S07Funds() {
   const lines = [
     { c: ACCENT, pct: 40, label: "Engineering salary · ship self-serve wizard", amt: "€80K" },
-    { c: GREEN, pct: 25, label: "Founder runway · keep founders full-time", amt: "€50K" },
+    { c: GREEN, pct: 25, label: "Go-to-market · early sales, design partner outreach, demand gen", amt: "€50K" },
     { c: GOLD, pct: 18, label: "Vertical packaging · AEC, Pharma, Cyber, Consulting", amt: "€36K" },
     { c: PURPLE, pct: 10, label: "Activation telemetry · funnel instrumentation", amt: "€20K" },
     { c: RED, pct: 7, label: "Legal, infra, round-close costs", amt: "€14K" },
@@ -546,7 +546,7 @@ function S07Funds() {
           Every euro buys <span style={{ color: `hsl(${GOLD})` }}>self-serve velocity.</span>
         </h2>
         <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-10">
-          No vanity hires, no marketing burn. Founders stay full-time, two engineers keep shipping, and every line is tied to a measurable activation milestone.
+          No vanity hires. Two engineers keep shipping the self-serve wizard, an early go-to-market motion fills the funnel, and every line is tied to a measurable activation milestone.
         </p>
 
         {/* Stacked bar */}
@@ -574,7 +574,7 @@ function S07Funds() {
         <div className="grid grid-cols-3 gap-6">
           {[
             { i: Clock, t: "6 months runway", d: "From close to Seed-ready metrics. No salary cliff in the middle." },
-            { i: Users, t: "Founders full-time", d: "István, Kristóf, Zoltán stay on the build. No moonlighting." },
+            { i: Users, t: "Early go-to-market", d: "Sales motion and design partner outreach funded for the bridge window." },
             { i: Hammer, t: "Two engineers shipping", d: "Salaried, not contracted. Self-serve wizard from day one of close." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
