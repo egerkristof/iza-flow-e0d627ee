@@ -140,16 +140,11 @@ function S01Cover() {
 // SLIDE 02 — THE MOMENT (market · company · capital)
 // ═════════════════════════════════════════════════════════════════════════════
 function S02Moment() {
-  const cols = [
+  const sideCols = [
     {
       icon: Globe, c: ACCENT, label: "Market moment",
       head: "AI inherits no standards.",
-      body: "Drop AI into a company and it inherits no expertise, no memory of how work is done, no link to artifacts and decisions. Generic models guess. Nobody owns the layer that defines the standards. That layer is the next platform shift.",
-    },
-    {
-      icon: Sparkles, c: GREEN, label: "Company moment",
-      head: "Core works. Self-serve is next.",
-      body: "Four paid partnerships across four knowledge industries. Engine shipped. Missing: the self-serve flow that lets the next 100 customers start without us in the room.",
+      body: "Drop AI into a company and it inherits no expertise, no memory of how work is done, no link to decisions. Generic models guess. Nobody owns the layer that defines the standards. That is the next platform shift.",
     },
     {
       icon: Coins, c: GOLD, label: "Capital moment",
@@ -165,28 +160,40 @@ function S02Moment() {
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Three windows are <span style={{ color: `hsl(${GOLD})` }}>open at the same time.</span>
         </h2>
-        <div className="grid grid-cols-3 gap-7 mt-12">
-          {cols.map(c => (
-            <div key={c.label} className="rounded-2xl p-8 flex flex-col"
-              style={{ background: CARD_ALT, border: `1px solid hsl(${c.c} / 0.25)` }}>
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                style={{ background: `hsl(${c.c} / 0.12)`, border: `1px solid hsl(${c.c} / 0.3)` }}>
-                <c.icon size={28} style={{ color: `hsl(${c.c})` }} />
+        <div className="grid grid-cols-[1fr_1.5fr] gap-7 mt-10 items-stretch">
+          {/* Featured: Company moment = LIZA today */}
+          <div className="rounded-2xl p-9 flex flex-col col-start-2 row-span-2"
+            style={{ background: `hsl(${GREEN} / 0.06)`, border: `2px solid hsl(${GREEN} / 0.4)` }}>
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center"
+                style={{ background: `hsl(${GREEN} / 0.14)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                <Sparkles size={34} style={{ color: `hsl(${GREEN})` }} />
               </div>
-              <p style={{ fontSize: 16, color: `hsl(${c.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-3">{c.label}</p>
-              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 14 }}>{c.head}</p>
-              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{c.body}</p>
+              <p style={{ fontSize: 18, color: `hsl(${GREEN})`, fontWeight: 800, letterSpacing: "0.22em" }} className="uppercase">Company moment · LIZA today</p>
+            </div>
+            <p style={{ fontSize: 44, color: TEXT, fontWeight: 800, lineHeight: 1.1, marginBottom: 18 }}>
+              The engine works. Self-serve is the unlock.
+            </p>
+            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.5, marginBottom: 18 }}>
+              LIZA is the Context Layer for AI-native organizations. We capture expert know-how, govern it as versioned standards, and run every AI action through that context with full audit. The full loop is live in <span style={{ color: TEXT, fontWeight: 700 }}>four paid partnerships across four industries</span>: Consulting, AEC, Pharma, Cybersecurity.
+            </p>
+            <p style={{ fontSize: 22, color: TEXT, fontWeight: 600, lineHeight: 1.4 }}>
+              What's missing: the self-serve flow that lets the next 100 customers start without us in the room.
+            </p>
+          </div>
+
+          {sideCols.map(c => (
+            <div key={c.label} className="rounded-2xl p-7 flex flex-col col-start-1"
+              style={{ background: CARD_ALT, border: `1px solid hsl(${c.c} / 0.25)` }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${c.c} / 0.12)`, border: `1px solid hsl(${c.c} / 0.3)` }}>
+                <c.icon size={24} style={{ color: `hsl(${c.c})` }} />
+              </div>
+              <p style={{ fontSize: 14, color: `hsl(${c.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-2">{c.label}</p>
+              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 10 }}>{c.head}</p>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{c.body}</p>
             </div>
           ))}
-        </div>
-
-        <div className="mt-10 rounded-2xl p-7 flex items-center gap-6"
-          style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
-          <Sparkles size={32} style={{ color: `hsl(${GOLD})` }} />
-          <p style={{ fontSize: 24, color: TEXT, fontWeight: 600, lineHeight: 1.3 }}>
-            <span style={{ fontWeight: 800 }}>This is the cheapest entry point we will ever offer.</span>
-            <span style={{ color: MUTED, fontWeight: 500 }}> The next round is priced on self-serve traction the bridge produces.</span>
-          </p>
         </div>
       </div>
       <FooterBridge text="Next: the proof. Same loop, four industries, paying." />
