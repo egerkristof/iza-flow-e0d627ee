@@ -414,17 +414,47 @@ function S05Gap() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-6 mb-8">
           {[
-            { t: "Manual deployment", d: "Every customer is configured by hand. Bundles, standards, workspaces, all set up in the room with the team. Repeatable, not yet packaged." },
-            { t: "Founder-time gated", d: "Each kickstart pulls a founder out of building. The number of customers we add per month is capped by our calendar, not by demand." },
-            { t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point that one team can self-serve and grow from." },
+            { i: Hammer, t: "Manual deployment", d: "Every customer is configured by hand. Bundles, standards, workspaces, all set up in the room with the team. Repeatable, not yet packaged." },
+            { i: Calendar, t: "Founder-time gated", d: "Each kickstart pulls a founder out of building. The number of customers we add per month is capped by our calendar, not by demand." },
+            { i: User, t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point that one team can self-serve and grow from." },
           ].map(b => (
-            <div key={b.t} className="rounded-xl p-6" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-              <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
-              <p style={{ fontSize: 18, color: MUTED, marginTop: 6 }}>{b.d}</p>
+            <div key={b.t} className="rounded-2xl p-7" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>
+                <b.i size={26} style={{ color: `hsl(${RED})` }} />
+              </div>
+              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>{b.t}</p>
+              <p style={{ fontSize: 19, color: MUTED, marginTop: 8, lineHeight: 1.45 }}>{b.d}</p>
             </div>
           ))}
+        </div>
+
+        {/* Bottleneck visual: today vs after bridge */}
+        <div className="rounded-2xl p-7 flex items-center gap-8"
+          style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+          <div className="flex items-center gap-4">
+            <Calendar size={42} style={{ color: `hsl(${RED})` }} />
+            <div>
+              <p style={{ fontSize: 14, color: `hsl(${RED})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase">Today</p>
+              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>~2 customers / month</p>
+              <p style={{ fontSize: 16, color: MUTED }}>Capped by founder calendar.</p>
+            </div>
+          </div>
+          <ArrowRight size={36} style={{ color: SUBTLE }} className="shrink-0" />
+          <div className="flex items-center gap-4">
+            <Rocket size={42} style={{ color: `hsl(${GREEN})` }} />
+            <div>
+              <p style={{ fontSize: 14, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase">After the bridge</p>
+              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>n customers / month</p>
+              <p style={{ fontSize: 16, color: MUTED }}>Wizard, telemetry, no founder required.</p>
+            </div>
+          </div>
+          <div className="ml-auto text-right">
+            <p style={{ fontSize: 14, color: SUBTLE, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase">Bottleneck</p>
+            <p style={{ fontSize: 22, color: TEXT, fontWeight: 700, lineHeight: 1.2, maxWidth: 360 }}>One linear, founder-gated step between us and a real funnel.</p>
+          </div>
         </div>
       </div>
       <FooterBridge text="Next: exactly what €200K removes from this picture." />
