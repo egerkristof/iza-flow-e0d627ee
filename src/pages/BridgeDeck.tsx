@@ -704,92 +704,14 @@ function S08Plan() {
           </div>
         </div>
       </div>
-      <FooterBridge text="Next: where the self-serve flow lands first." />
+      <FooterBridge text="Next: the path to your markup." />
       <SlideBar from={ACCENT} to={GREEN} />
     </div>
   );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 09 — WEDGE (knowledge industries)
-// ═════════════════════════════════════════════════════════════════════════════
-function S09Wedge() {
-  const targets = [
-    { i: Building2, c: ACCENT, t: "AEC", d: "Architecture, Engineering & Construction" },
-    { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
-    { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
-    { i: Briefcase, c: PURPLE, t: "Consulting", d: "Professional services" },
-  ];
-  return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
-      <DarkGrid />
-      <div className="relative z-10">
-        <DarkTag label="The Wedge" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
-          One platform. <span style={{ color: `hsl(${GOLD})` }}>Every knowledge industry.</span>
-        </h2>
-        <p style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1600 }} className="mb-12">
-          Self-serve unlocks adoption across the industries where expertise is the product: AEC, Pharma, Cybersecurity, Consulting. We are already in conversation with each.
-        </p>
-
-        <div className="rounded-2xl p-9 mb-9"
-          style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
-          <div className="grid grid-cols-[260px_1fr] gap-10 items-center">
-            <div className="flex flex-col items-center text-center">
-              <div className="relative w-32 h-32 rounded-full flex items-center justify-center mb-4"
-                style={{ background: `radial-gradient(circle, hsl(${GOLD} / 0.5) 0%, hsl(${GOLD} / 0.15) 50%, transparent 75%)` }}>
-                <div className="absolute inset-3 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.5)` }} />
-                <div className="absolute inset-7 rounded-full" style={{ border: `2px solid hsl(${GOLD} / 0.7)` }} />
-                <Rocket size={40} style={{ color: `hsl(${GOLD})` }} />
-              </div>
-              <p style={{ fontSize: 16, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">Self-Serve Capability</p>
-              <p style={{ fontSize: 26, color: DARK_TEXT, fontWeight: 700 }}>The €200K build</p>
-            </div>
-            <div>
-              <div className="flex items-center gap-3 mb-5">
-                <ArrowRight size={28} style={{ color: `hsl(${GOLD})` }} />
-                <p style={{ fontSize: 16, color: DARK_MUTED, letterSpacing: "0.18em" }} className="uppercase font-semibold">Knowledge industries · in conversation</p>
-              </div>
-              <div className="grid grid-cols-4 gap-4">
-                {targets.map(t => (
-                  <div key={t.t} className="rounded-xl p-5"
-                    style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${t.c} / 0.35)` }}>
-                    <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-3"
-                      style={{ background: `hsl(${t.c} / 0.18)`, border: `1px solid hsl(${t.c} / 0.35)` }}>
-                      <t.i size={24} style={{ color: `hsl(${t.c})` }} />
-                    </div>
-                    <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 700 }}>{t.t}</p>
-                    <p style={{ fontSize: 16, color: DARK_MUTED, marginTop: 4 }}>{t.d}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-5">
-          {[
-            { i: Target, c: GREEN, t: "Q4 milestone", d: "Self-serve ARR growth across knowledge industries" },
-            { i: TrendingUp, c: ACCENT, t: "Engine", d: "Repeatable, hyper-scalable SaaS revenue motion" },
-            { i: Rocket, c: GOLD, t: "Tee-up", d: "Premium Seed / Series A markup on proven self-serve metrics" },
-          ].map(b => (
-            <div key={b.t} className="rounded-2xl p-6"
-              style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(${b.c} / 0.35)` }}>
-              <b.i size={26} style={{ color: `hsl(${b.c})` }} className="mb-3" />
-              <p style={{ fontSize: 14, color: `hsl(${b.c})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">{b.t}</p>
-              <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.2 }}>{b.d}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-      <FooterBridge text="Next: the path to your markup." dark />
-      <SlideBar from={GOLD} to={ACCENT} />
-    </div>
-  );
-}
-
-// ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 10 — ROADMAP TO MARKUP (Bridge → Seed → A)
+// SLIDE 09 — ROADMAP TO MARKUP (Bridge → Seed → A)
 // ═════════════════════════════════════════════════════════════════════════════
 function S10Roadmap() {
   const stages = [
