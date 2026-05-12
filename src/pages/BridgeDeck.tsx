@@ -953,7 +953,6 @@ const SLIDES = [
   { id: "unlock", title: "€200K Unlock", component: <S06Unlock /> },
   { id: "funds", title: "Use of Funds", component: <S07Funds /> },
   { id: "plan", title: "6-Month Plan", component: <S08Plan /> },
-  { id: "wedge", title: "Wedge", component: <S09Wedge /> },
   { id: "roadmap", title: "Path to Markup", component: <S10Roadmap /> },
   { id: "team", title: "Team", component: <S11Team /> },
   { id: "ask", title: "The Ask", component: <S12Ask /> },
