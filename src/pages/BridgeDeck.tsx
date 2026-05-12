@@ -161,7 +161,7 @@ function S02Moment() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The Moment · Why now, why us, why this round" color={ACCENT} />
+        <Tag label="The Moment" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Three windows are <span style={{ color: `hsl(${GOLD})` }}>open at the same time.</span>
         </h2>
@@ -215,7 +215,7 @@ function S03Proof() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Proof · The Knowledge Cycle, validated 4 / 4" color={GREEN} />
+        <Tag label="Proof" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Here's how this all works. <span style={{ color: `hsl(${GREEN})` }}>One loop, four paid partnerships.</span>
         </h2>
@@ -316,7 +316,7 @@ function S04Built() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="What we built · Core infra plus native UIs" color={GREEN} />
+        <Tag label="What we built" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           The engine works. <span style={{ color: `hsl(${GREEN})` }}>You can use it today.</span>
         </h2>
@@ -371,7 +371,7 @@ function S05Gap() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The gap to scale · Why it is not yet self-serve" color={RED} />
+        <Tag label="The gap to scale" color={RED} />
         <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Onboarding still <span style={{ color: `hsl(${RED})` }}>needs us in the room.</span>
         </h2>
@@ -434,7 +434,7 @@ function S06Unlock() {
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The €200K Unlock · From 'us in the room' to 'anyone can start'" color={ACCENT} />
+        <Tag label="The €200K Unlock" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-5" style={{ fontSize: 76, color: TEXT, letterSpacing: "-0.02em" }}>
           Core infrastructure works. <span style={{ color: `hsl(${ACCENT})` }}>Now ship self-serve.</span>
         </h2>
@@ -541,7 +541,7 @@ function S07Funds() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Use of Funds · €200,000" color={GOLD} />
+        <Tag label="Use of Funds" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Every euro buys <span style={{ color: `hsl(${GOLD})` }}>self-serve velocity.</span>
         </h2>
@@ -608,7 +608,7 @@ function S08Plan() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The 6-month plan · Bridge to Seed metrics" color={ACCENT} />
+        <Tag label="The 6-month plan" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Five milestones. <span style={{ color: `hsl(${ACCENT})` }}>One every month.</span>
         </h2>
@@ -665,7 +665,7 @@ function S09Wedge() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
-        <DarkTag label="The Wedge · Where self-serve lands first" color={GOLD} />
+        <DarkTag label="The Wedge" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
           One platform. <span style={{ color: `hsl(${GOLD})` }}>Every knowledge industry.</span>
         </h2>
@@ -735,7 +735,7 @@ function S09Wedge() {
 function S10Roadmap() {
   const stages = [
     { tag: "Now · €200K Bridge", c: GOLD, t: "Ship self-serve", val: "Today's price",
-      bullets: ["Wizard, telemetry, hardening", "Founders + 2 engineers", "Bridge to Seed metrics"] },
+      bullets: ["Wizard, telemetry, hardening", "Founders + 4 engineers", "Bridge to Seed metrics"] },
     { tag: "Q4 2026 · Self-Serve ARR", c: GREEN, t: "Paid self-serve cohort", val: "Implied step-up",
       bullets: ["Paid teams via wizard", "Activation metrics live", "Reference logos at scale"] },
     { tag: "2027 · Seed / Series A", c: ACCENT, t: "Premium markup", val: "Seed-priced",
@@ -745,7 +745,7 @@ function S10Roadmap() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Path to markup · Bridge to Seed to A" color={ACCENT} />
+        <Tag label="Path to markup" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           A clear path to a <span style={{ color: `hsl(${ACCENT})` }}>premium markup.</span>
         </h2>
@@ -829,7 +829,7 @@ function S11Team() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
-        <DarkTag label="Team · Built by operators · 15 months self-funded" color={GOLD} />
+        <DarkTag label="Team" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
           Same team that built the proof <span style={{ color: `hsl(${GOLD})` }}>will ship the self-serve.</span>
         </h2>
@@ -886,7 +886,7 @@ function S12Ask() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
-        <DarkTag label="The Ask · €200K · SAFE · Closing in 6 weeks" color={GOLD} />
+        <DarkTag label="The Ask" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
           €200K. SAFE. <span style={{ color: `hsl(${GOLD})` }}>Closing now.</span>
         </h2>
