@@ -911,10 +911,11 @@ function S12Ask() {
             <div className="space-y-2.5">
               {[
                 { k: "Instrument", v: "SAFE, post-money" },
+                { k: "Valuation cap", v: "€10M post-money" },
+                { k: "Discount", v: "20% (better-of vs cap)" },
                 { k: "Check size", v: "€10K to €30K" },
-                { k: "For", v: "Operators, angels, micro-funds" },
                 { k: "Close window", v: "6 weeks, rolling" },
-                { k: "Markup trigger", v: "Repriced on the Seed round" },
+                { k: "Markup trigger", v: "Repriced on the Seed" },
               ].map(r => (
                 <div key={r.k} className="flex items-center justify-between py-2.5 border-b" style={{ borderColor: "hsl(0 0% 100% / 0.08)" }}>
                   <span style={{ fontSize: 18, color: DARK_MUTED }}>{r.k}</span>
@@ -934,7 +935,7 @@ function S12Ask() {
                 "Four paid design partnerships across knowledge industries",
                 "A 6-month plan with monthly milestones",
                 "The team that built the proof, full-time",
-                "First-mover SAFE terms, repriced on the Seed",
+                "First-mover SAFE: €10M cap + 20% discount, better-of",
               ].map(b => (
                 <div key={b} className="flex items-start gap-3 py-2">
                   <CheckCircle2 size={20} style={{ color: `hsl(${GREEN})` }} className="mt-0.5 shrink-0" />
