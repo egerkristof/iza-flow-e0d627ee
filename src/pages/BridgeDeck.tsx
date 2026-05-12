@@ -739,7 +739,7 @@ function S10Roadmap() {
     { tag: "Q4 2026 · Self-Serve ARR", c: GREEN, t: "Paid self-serve cohort", val: "Implied step-up",
       bullets: ["Paid teams via wizard", "Activation metrics live", "Reference logos at scale"] },
     { tag: "2027 · Seed / Series A", c: ACCENT, t: "Premium markup", val: "Seed-priced",
-      bullets: ["€2M+ on proven SaaS metrics", "Expand the OS across verticals", "Horizontal Context Layer thesis funded"] },
+      bullets: ["Priced on real self-serve traction", "Expand the OS across verticals", "Horizontal Context Layer thesis funded"] },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
