@@ -417,13 +417,300 @@ function S05Wedge() {
   );
 }
 
+// ─── Slide 06 — Thesis (Context Gap) ─────────────────────────────────────────
+function S06Thesis() {
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10">
+        <Tag label="The Thesis · Why This Wins" color={ACCENT} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
+          Whatever you don't define, <span style={{ color: `hsl(${RED})` }}>AI invents.</span>
+        </h2>
+        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
+          Every enterprise is paying a Context Gap Tax: rework, drift, and silent risk because expertise lives in heads, not in the system. LIZA OS is the Context Layer that closes it.
+        </p>
+
+        <div className="grid grid-cols-3 gap-6 mb-10">
+          {[
+            { i: AlertTriangle, c: RED, t: "The Tax", d: "€550K+/year per org in hidden rework, retraining, and bad AI output." },
+            { i: BookOpen, c: GOLD, t: "The Cause", d: "AI inherits no standards. Generic models guess your judgment, badly." },
+            { i: Layers, c: GREEN, t: "The Fix", d: "A Context Layer that turns expertise into executable, governed standards." },
+          ].map(b => (
+            <div key={b.t} className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+                style={{ background: `hsl(${b.c} / 0.12)`, border: `1px solid hsl(${b.c} / 0.3)` }}>
+                <b.i size={28} style={{ color: `hsl(${b.c})` }} />
+              </div>
+              <p style={{ fontSize: 28, color: TEXT, fontWeight: 700 }}>{b.t}</p>
+              <p style={{ fontSize: 20, color: MUTED, marginTop: 8 }}>{b.d}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl p-8 flex items-center gap-8" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+          <div style={{ fontSize: 64, fontWeight: 700, color: `hsl(${ACCENT})`, lineHeight: 1 }}>4 / 4</div>
+          <p style={{ fontSize: 24, color: TEXT, lineHeight: 1.3, fontWeight: 500 }}>
+            Verticals where the same Context Layer pattern produced measurable cycle-time and quality wins. The thesis is no longer a hypothesis.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ─── Slide 07 — What's Built (Product) ───────────────────────────────────────
+function S07Product() {
+  const layers = [
+    { i: BookOpen, c: ACCENT, t: "Knowledge Capture", d: "Bundles, playbooks, and standards extracted from documents and experts." },
+    { i: Cpu, c: GREEN, t: "AACE Reasoning Engine", d: "v3.1 live. Routes every AI action through your codified context and rules." },
+    { i: GitBranch, c: GOLD, t: "Governance & Audit", d: "Versioned standards, change history, and full reasoning trail per output." },
+    { i: Layers, c: "280 60% 50%", t: "Workbooks & Mandates", d: "Where teams actually run AI work, with context attached by default." },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10">
+        <Tag label="What's Built · AACE v3.1" color={GREEN} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
+          The platform is <span style={{ color: `hsl(${GREEN})` }}>shipped, not slideware.</span>
+        </h2>
+        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
+          Four layers, in production today, running paid enterprise workloads.
+        </p>
+
+        <div className="grid grid-cols-2 gap-6">
+          {layers.map(l => (
+            <div key={l.t} className="rounded-2xl p-8 flex items-start gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: `hsl(${l.c} / 0.12)`, border: `1px solid hsl(${l.c} / 0.3)` }}>
+                <l.i size={32} style={{ color: `hsl(${l.c})` }} />
+              </div>
+              <div>
+                <p style={{ fontSize: 28, color: TEXT, fontWeight: 700 }}>{l.t}</p>
+                <p style={{ fontSize: 20, color: MUTED, marginTop: 6 }}>{l.d}</p>
+                <div className="mt-4 inline-flex items-center gap-2">
+                  <CheckCircle2 size={16} style={{ color: `hsl(${GREEN})` }} />
+                  <span style={{ fontSize: 15, color: `hsl(${GREEN})`, fontWeight: 600, letterSpacing: "0.1em" }} className="uppercase">Live in production</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── Slide 08 — Use of Funds ─────────────────────────────────────────────────
+function S08UseOfFunds() {
+  const lines = [
+    { c: ACCENT, pct: 55, label: "Engineering · Self-Serve Wizard + AACE hardening", amt: "€110K" },
+    { c: GREEN, pct: 25, label: "Vertical packaging · Professional Services bundles", amt: "€50K" },
+    { c: GOLD, pct: 12, label: "Activation telemetry & growth instrumentation", amt: "€24K" },
+    { c: "280 60% 50%", pct: 8, label: "Legal, infra, and round-close costs", amt: "€16K" },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10">
+        <Tag label="Use of Funds · €200,000" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
+          Every euro buys <span style={{ color: `hsl(${GOLD})` }}>self-serve velocity.</span>
+        </h2>
+        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
+          No vanity hires, no marketing burn. Pure engineering and packaging runway to remove the human bottleneck.
+        </p>
+
+        {/* Stacked bar */}
+        <div className="rounded-2xl p-8 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <div className="flex w-full h-16 rounded-xl overflow-hidden mb-8" style={{ border: `1px solid ${CHROME_BORDER}` }}>
+            {lines.map(l => (
+              <div key={l.label} style={{ width: `${l.pct}%`, background: `hsl(${l.c})` }} className="flex items-center justify-center">
+                <span style={{ fontSize: 22, fontWeight: 700, color: "white" }}>{l.pct}%</span>
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-x-10 gap-y-5">
+            {lines.map(l => (
+              <div key={l.label} className="flex items-start gap-4">
+                <div className="w-4 h-4 rounded-sm mt-1.5 shrink-0" style={{ background: `hsl(${l.c})` }} />
+                <div className="flex-1">
+                  <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{l.amt} <span style={{ color: MUTED, fontWeight: 500, fontSize: 18 }}>· {l.pct}%</span></p>
+                  <p style={{ fontSize: 19, color: MUTED, marginTop: 2 }}>{l.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-6">
+          {[
+            { i: Clock, t: "6 months", d: "Runway to ship and activate the self-serve flow." },
+            { i: Coins, t: "Capital efficient", d: "Bridge spend tied directly to a measurable ARR motion." },
+            { i: Target, t: "One vertical", d: "Funds focused on Professional Services, no scope sprawl." },
+          ].map(b => (
+            <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+              <b.i size={26} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" />
+              <div>
+                <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
+                <p style={{ fontSize: 18, color: MUTED, marginTop: 4 }}>{b.d}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── Slide 09 — Roadmap to Series A ──────────────────────────────────────────
+function S09Roadmap() {
+  const stages = [
+    {
+      tag: "Now", c: GOLD, t: "€200K Bridge",
+      bullets: ["Ship Self-Serve Wizard", "Harden AACE for unattended deploy", "Instrument activation funnel"],
+    },
+    {
+      tag: "Q4 2026", c: GREEN, t: "Self-Serve ARR",
+      bullets: ["100% self-serve growth in Pro Services", "Repeatable activation metrics", "Reference logos at scale"],
+    },
+    {
+      tag: "2027", c: ACCENT, t: "Premium Seed / Series A",
+      bullets: ["€2M+ round on proven SaaS metrics", "Expand to second vertical", "Horizontal OS thesis funded"],
+    },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10">
+        <Tag label="Roadmap · Bridge → Markup" color={ACCENT} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
+          A clear path to a <span style={{ color: `hsl(${ACCENT})` }}>premium markup.</span>
+        </h2>
+        <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
+          The bridge isn't survival capital. It's the precise spend that converts paid pilots into a financeable SaaS engine.
+        </p>
+
+        <div className="relative">
+          {/* Connecting line */}
+          <div className="absolute top-8 left-[8%] right-[8%] h-0.5" style={{ background: `linear-gradient(90deg, hsl(${GOLD}), hsl(${GREEN}), hsl(${ACCENT}))` }} />
+          <div className="grid grid-cols-3 gap-8 relative">
+            {stages.map(s => (
+              <div key={s.tag} className="flex flex-col items-center">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-5 z-10"
+                  style={{ background: BG, border: `3px solid hsl(${s.c})` }}>
+                  <Calendar size={26} style={{ color: `hsl(${s.c})` }} />
+                </div>
+                <div className="rounded-2xl p-7 w-full" style={{ background: CARD_ALT, border: `1px solid hsl(${s.c} / 0.3)` }}>
+                  <p style={{ fontSize: 16, color: `hsl(${s.c})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">{s.tag}</p>
+                  <p style={{ fontSize: 30, color: TEXT, fontWeight: 700, marginBottom: 16 }}>{s.t}</p>
+                  <ul className="space-y-3">
+                    {s.bullets.map(b => (
+                      <li key={b} className="flex items-start gap-3">
+                        <CheckCircle2 size={18} style={{ color: `hsl(${s.c})` }} className="mt-1 shrink-0" />
+                        <span style={{ fontSize: 19, color: TEXT }}>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── Slide 10 — Team & The Ask ───────────────────────────────────────────────
+function S10Ask() {
+  return (
+    <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
+      <DarkGrid />
+      <div className="relative z-10">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 26, color: `hsl(${GOLD} / 0.9)` }}>
+          The Team · The Ask
+        </p>
+        <h2 className="font-bold leading-[1.05] mb-12" style={{ fontSize: 84, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
+          €200K. <span style={{ color: `hsl(${GOLD})` }}>SAFE. Closing now.</span>
+        </h2>
+
+        <div className="grid grid-cols-[1.1fr_1fr] gap-10">
+          {/* Team */}
+          <div className="rounded-2xl p-8" style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
+            <p style={{ fontSize: 17, color: DARK_MUTED, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-5">Built by operators</p>
+            <div className="space-y-5">
+              {[
+                { n: "István Boscha", r: "Founder & CEO", d: "15+ years building data and AI systems for enterprise. Sold and scaled prior ventures." },
+                { n: "Kristóf Éger", r: "Engineering", d: "AACE architect. Shipped v3.1 to four paid enterprise clients across regulated verticals." },
+                { n: "Zoltán Kauker", r: "Delivery & Standards", d: "Codifies expert judgment into governed bundles. Runs every paid pilot end-to-end." },
+              ].map(p => (
+                <div key={p.n} className="flex items-start gap-4 pb-5 last:pb-0 last:border-0 border-b" style={{ borderColor: "hsl(0 0% 100% / 0.06)" }}>
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0"
+                    style={{ background: `hsl(${ACCENT} / 0.18)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+                    <Users size={22} style={{ color: `hsl(${ACCENT})` }} />
+                  </div>
+                  <div>
+                    <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 700 }}>{p.n} <span style={{ color: `hsl(${GOLD})`, fontSize: 17, fontWeight: 600, marginLeft: 8 }}>{p.r}</span></p>
+                    <p style={{ fontSize: 18, color: DARK_MUTED, marginTop: 4 }}>{p.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* The Ask */}
+          <div className="rounded-2xl p-8 flex flex-col" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.4)` }}>
+            <FileSignature size={32} style={{ color: `hsl(${GOLD})` }} className="mb-4" />
+            <p style={{ fontSize: 17, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-3">The Ask</p>
+            <p style={{ fontSize: 64, color: DARK_TEXT, fontWeight: 700, lineHeight: 1 }}>€200,000</p>
+            <p style={{ fontSize: 22, color: DARK_MUTED, marginTop: 8, marginBottom: 24 }}>Bridge round · Self-Serve Capability</p>
+
+            <div className="space-y-3 mb-auto">
+              {[
+                { k: "Instrument", v: "SAFE, post-money" },
+                { k: "Check size", v: "€10K – €30K" },
+                { k: "For", v: "Operators, angels, micro-funds" },
+                { k: "Close", v: "Rolling, target 6 weeks" },
+              ].map(r => (
+                <div key={r.k} className="flex items-center justify-between py-2.5 border-b" style={{ borderColor: "hsl(0 0% 100% / 0.08)" }}>
+                  <span style={{ fontSize: 18, color: DARK_MUTED }}>{r.k}</span>
+                  <span style={{ fontSize: 20, color: DARK_TEXT, fontWeight: 700 }}>{r.v}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-xl p-5" style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(0 0% 100% / 0.1)` }}>
+              <p style={{ fontSize: 18, color: DARK_TEXT, fontWeight: 600 }}>What you back</p>
+              <p style={{ fontSize: 17, color: DARK_MUTED, marginTop: 4, lineHeight: 1.4 }}>
+                A shipped product, four paid clients, and the precise spend that converts manual onboarding into a financeable SaaS engine.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={ACCENT} />
+    </div>
+  );
+}
+
 // ─── Slide registry ──────────────────────────────────────────────────────────
 const SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
+  { id: "thesis", title: "Thesis", component: <S06Thesis /> },
   { id: "traction", title: "Traction", component: <S02Traction /> },
+  { id: "product", title: "What's Built", component: <S07Product /> },
   { id: "bottleneck", title: "Bottleneck", component: <S03Bottleneck /> },
   { id: "unlock", title: "€200K Unlock", component: <S04Unlock /> },
   { id: "wedge", title: "Wedge & Milestone", component: <S05Wedge /> },
+  { id: "funds", title: "Use of Funds", component: <S08UseOfFunds /> },
+  { id: "roadmap", title: "Roadmap", component: <S09Roadmap /> },
+  { id: "ask", title: "Team & The Ask", component: <S10Ask /> },
 ];
 
 // ─── Deck shell ──────────────────────────────────────────────────────────────
