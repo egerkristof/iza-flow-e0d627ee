@@ -143,8 +143,8 @@ function S02Moment() {
   const cols = [
     {
       icon: Globe, c: ACCENT, label: "Market moment",
-      head: "Every enterprise is wiring AI.",
-      body: "Generic models guess your standards. Nobody owns the layer that defines them. The Context Layer is the next platform shift.",
+      head: "AI inherits no standards.",
+      body: "Drop AI into a company and it has no expertise, no memory of how work is actually done, no link to the artifacts and decisions that move with the org. Generic models guess. Nobody owns the layer that defines the standards. That layer is the next platform shift.",
     },
     {
       icon: Sparkles, c: GREEN, label: "Company moment",
@@ -211,7 +211,7 @@ function S03Proof() {
   ];
   const industries = [
     { i: Briefcase, c: PURPLE, t: "Consulting", d: "Engagement methodology" },
-    { i: Building2, c: ACCENT, t: "AEC", d: "Engineering & design" },
+    { i: Building2, c: ACCENT, t: "AEC", d: "Architecture, Engineering & Construction" },
     { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
     { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
   ];
@@ -377,12 +377,12 @@ function S05Gap() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The gap to scale · The Problem" color={RED} />
+        <Tag label="The gap to scale · Why it is not yet self-serve" color={RED} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
-          Onboarding is <span style={{ color: `hsl(${RED})` }}>too heavy to scale.</span>
+          Onboarding still <span style={{ color: `hsl(${RED})` }}>needs us in the room.</span>
         </h2>
         <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-12">
-          We are laying AI-native infrastructure inside complex organizations. That work is real, but every customer today still needs us in the room. That is the only thing standing between us and self-serve growth.
+          We are laying AI-native infrastructure inside real organizations. That is genuinely complex work, and the engine handles it. What is missing is the path that lets a single person, in a single team, launch their first playbook on day one and let the workspace, people, and standards grow from there. Until that exists, every new customer pulls a founder into the room.
         </p>
 
         <div className="rounded-2xl p-10 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
@@ -420,7 +420,7 @@ function S05Gap() {
           {[
             { t: "Manual deployment", d: "Every client needs hands-on configuration of bundles, standards, and workspaces." },
             { t: "Founder-time gated", d: "Kickstarts pull senior team off product and platform work." },
-            { t: "Linear, not SaaS", d: "Revenue scales with people, not software. A classic services trap." },
+            { t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point to grow from." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
               <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
@@ -665,7 +665,7 @@ function S08Plan() {
 // ═════════════════════════════════════════════════════════════════════════════
 function S09Wedge() {
   const targets = [
-    { i: Building2, c: ACCENT, t: "AEC", d: "Engineering & design" },
+    { i: Building2, c: ACCENT, t: "AEC", d: "Architecture, Engineering & Construction" },
     { i: FlaskConical, c: GREEN, t: "Pharma", d: "Regulated lifecycle" },
     { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
     { i: Briefcase, c: PURPLE, t: "Consulting", d: "Professional services" },
