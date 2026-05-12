@@ -473,21 +473,21 @@ function S06Thesis() {
 // ─── Slide 07 — What's Built (Product) ───────────────────────────────────────
 function S07Product() {
   const layers = [
-    { i: BookOpen, c: ACCENT, t: "Knowledge Capture", d: "Bundles, playbooks, and standards extracted from documents and experts." },
-    { i: Cpu, c: GREEN, t: "AACE Reasoning Engine", d: "v3.1 live. Routes every AI action through your codified context and rules." },
-    { i: GitBranch, c: GOLD, t: "Governance & Audit", d: "Versioned standards, change history, and full reasoning trail per output." },
-    { i: Layers, c: "280 60% 50%", t: "Workbooks & Mandates", d: "Where teams actually run AI work, with context attached by default." },
+    { i: BookOpen, c: ACCENT, t: "Knowledge Capture", d: "Core infra: bundles, playbooks, standards extracted from documents and experts. Basic native UI shipped." },
+    { i: Cpu, c: GREEN, t: "AACE Reasoning Engine", d: "Core infra: v3.1 routes every AI action through codified context and rules. Powers all four partnerships." },
+    { i: GitBranch, c: GOLD, t: "Governance & Audit", d: "Core infra: versioned standards, change history, full reasoning trail. Basic native UI shipped." },
+    { i: Layers, c: "280 60% 50%", t: "Workbooks & Mandates", d: "Basic native UI on top of the engine: where teams run AI work with context attached by default." },
   ];
   return (
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="What's Built · AACE v3.1" color={GREEN} />
+        <Tag label="What's Built · Core Infra + Native UIs" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 84, color: TEXT, letterSpacing: "-0.02em" }}>
-          The platform is <span style={{ color: `hsl(${GREEN})` }}>shipped, not slideware.</span>
+          The engine works. <span style={{ color: `hsl(${GREEN})` }}>Self-serve is what's missing.</span>
         </h2>
         <p style={{ fontSize: 28, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          Four layers, in production today, running paid enterprise workloads.
+          Four layers of core infrastructure with basic native UIs on top, validated across four paid design partnerships. The bridge funds the self-serve layer that turns this into a product anyone can adopt.
         </p>
 
         <div className="grid grid-cols-2 gap-6">
@@ -502,7 +502,7 @@ function S07Product() {
                 <p style={{ fontSize: 20, color: MUTED, marginTop: 6 }}>{l.d}</p>
                 <div className="mt-4 inline-flex items-center gap-2">
                   <CheckCircle2 size={16} style={{ color: `hsl(${GREEN})` }} />
-                  <span style={{ fontSize: 15, color: `hsl(${GREEN})`, fontWeight: 600, letterSpacing: "0.1em" }} className="uppercase">Live in production</span>
+                  <span style={{ fontSize: 15, color: `hsl(${GREEN})`, fontWeight: 600, letterSpacing: "0.1em" }} className="uppercase">Live with paid partners</span>
                 </div>
               </div>
             </div>
