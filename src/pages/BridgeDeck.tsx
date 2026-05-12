@@ -631,87 +631,7 @@ function S07Funds() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 08 — 6-MONTH PLAN (timeline)
-// ═════════════════════════════════════════════════════════════════════════════
-function S08Plan() {
-  const months = [
-    { m: "Month 1 & 2", c: GOLD, t: "Harden core + wizard MVP", k: "Wizard alpha live · 2 internal pilots", icon: Hammer },
-    { m: "Month 3", c: ACCENT, t: "First self-serve activation", k: "First customer onboarded with no founder in the room", icon: Rocket },
-    { m: "Month 4", c: GREEN, t: "Paid self-serve cohort", k: "5+ paid teams via wizard · time-to-first-playbook < 1 day", icon: Coins },
-    { m: "Month 5", c: PURPLE, t: "Activation funnel optimised", k: "Activation rate doubled · expansion inside accounts measured", icon: LineChart },
-    { m: "Month 6", c: GREEN, t: "Seed-ready metrics", k: "Cohort retention, ARR mix, CAC payback · Seed deck open", icon: CheckCircle2 },
-  ];
-  return (
-    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
-      <SlideGrid />
-      <div className="relative z-10">
-        <Tag label="The 6-month plan" color={ACCENT} />
-        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 72, color: TEXT, letterSpacing: "-0.02em" }}>
-          Five milestones. <span style={{ color: `hsl(${ACCENT})` }}>One every month.</span>
-        </h2>
-        <p style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }} className="mb-10">
-          The bridge converts cleanly into Seed metrics. Every month carries one shipped artifact and one measurable signal.
-        </p>
-
-        {/* Horizontal progress bar */}
-        <div className="rounded-2xl p-2 mb-8"
-          style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <div className="flex w-full h-10 rounded-xl overflow-hidden"
-            style={{ border: `1px solid ${CHROME_BORDER}` }}>
-            {[
-              { c: GOLD, l: "M1-2", w: "24%" },
-              { c: `200 85% 55%`, l: "M3", w: "19%" },
-              { c: GREEN, l: "M4", w: "19%" },
-              { c: PURPLE, l: "M5", w: "19%" },
-              { c: GREEN, l: "M6", w: "19%" },
-            ].map(s => (
-              <div key={s.l} className="flex items-center justify-center"
-                style={{ width: s.w, background: `hsl(${s.c} / 0.25)` }}>
-                <span style={{ fontSize: 16, fontWeight: 700, color: `hsl(${s.c})` }}>{s.l}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-5 gap-5 relative">
-          {months.map(s => (
-            <div key={s.m} className="flex flex-col">
-              <div className="rounded-2xl p-6 flex-1 flex flex-col"
-                style={{ background: CARD_ALT, border: `2px solid hsl(${s.c} / 0.3)` }}>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                  style={{ background: `hsl(${s.c} / 0.12)`, border: `1px solid hsl(${s.c} / 0.3)` }}>
-                  <s.icon size={28} style={{ color: `hsl(${s.c})` }} />
-                </div>
-                <p style={{ fontSize: 13, color: `hsl(${s.c})`, fontWeight: 700, letterSpacing: "0.22em" }} className="uppercase mb-2">{s.m}</p>
-                <p style={{ fontSize: 26, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 12 }}>{s.t}</p>
-                <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{s.k}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-8 rounded-2xl p-8 flex items-center gap-6"
-          style={{ background: `hsl(${GREEN} / 0.07)`, border: `2px solid hsl(${GREEN} / 0.35)` }}>
-          <div className="w-16 h-16 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: `hsl(${GREEN} / 0.12)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-            <Target size={32} style={{ color: `hsl(${GREEN})` }} />
-          </div>
-          <div>
-            <p style={{ fontSize: 14, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.22em" }} className="uppercase mb-1">End-of-bridge state</p>
-            <p style={{ fontSize: 30, color: TEXT, fontWeight: 700, lineHeight: 1.2 }}>
-              A working self-serve funnel with paid cohorts, activation metrics, and the Seed deck open.
-            </p>
-          </div>
-        </div>
-      </div>
-      <FooterBridge text="Next: the path to your markup." />
-      <SlideBar from={ACCENT} to={GREEN} />
-    </div>
-  );
-}
-
-// ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 09 — ROADMAP TO MARKUP (Bridge → Seed → A)
+// SLIDE 08 — ROADMAP TO MARKUP (Bridge → Seed → A)
 // ═════════════════════════════════════════════════════════════════════════════
 function S10Roadmap() {
   const stages = [
@@ -952,7 +872,7 @@ const SLIDES = [
   { id: "gap", title: "The Gap", component: <S05Gap /> },
   { id: "unlock", title: "€200K Unlock", component: <S06Unlock /> },
   { id: "funds", title: "Use of Funds", component: <S07Funds /> },
-  { id: "plan", title: "6-Month Plan", component: <S08Plan /> },
+  { id: "roadmap", title: "Path to Markup", component: <S10Roadmap /> },
   { id: "roadmap", title: "Path to Markup", component: <S10Roadmap /> },
   { id: "team", title: "Team", component: <S11Team /> },
   { id: "ask", title: "The Ask", component: <S12Ask /> },
