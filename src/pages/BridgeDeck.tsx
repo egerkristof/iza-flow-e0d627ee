@@ -140,61 +140,77 @@ function S01Cover() {
 // SLIDE 02 — THE MOMENT (market · company · capital)
 // ═════════════════════════════════════════════════════════════════════════════
 function S02Moment() {
-  const sideCols = [
+  const cols = [
     {
-      icon: Globe, c: ACCENT, label: "Market moment",
+      icon: Globe, c: ACCENT, label: "Market", sub: "Why now, in the world",
       head: "AI inherits no standards.",
-      body: "Drop AI into a company and it inherits no expertise, no memory of how work is done, no link to decisions. Generic models guess. Nobody owns the layer that defines the standards. That is the next platform shift.",
+      body: "Drop AI into a company and it inherits no expertise, no memory of how work is done, no link to decisions. Generic models guess. Nobody owns the layer that defines the standards.",
+      tag: "The next platform shift.",
     },
     {
-      icon: Coins, c: GOLD, label: "Capital moment",
+      icon: Sparkles, c: GREEN, label: "Company", sub: "Why now, for LIZA",
+      head: "The engine works.",
+      body: "LIZA is the Context Layer for AI-native organizations. The full loop is live across four paid partnerships in four industries: Consulting, AEC, Pharma, Cybersecurity.",
+      tag: "Self-serve is the unlock.",
+      featured: true,
+    },
+    {
+      icon: Coins, c: GOLD, label: "Capital", sub: "Why now, for you",
       head: "Cheapest entry we will offer.",
-      body: "€200K bridges paid pilots to a financeable Seed. First-mover SAFE terms. Not raised again at this price.",
+      body: "€200K bridges paid pilots to a financeable Seed. Enter at €10M today on a SAFE, convert 20% cheaper than the next investor at Seed.",
+      tag: "Not raised again at this price.",
     },
   ];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-20 flex flex-col" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col items-center text-center">
         <Tag label="The Moment" color={ACCENT} />
-        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+        <h2 className="font-bold leading-[1.05] mb-5" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Three windows are <span style={{ color: `hsl(${GOLD})` }}>open at the same time.</span>
         </h2>
-        <div className="grid grid-cols-[1fr_1.5fr] gap-7 mt-10 items-stretch">
-          {/* Featured: Company moment = LIZA today */}
-          <div className="rounded-2xl p-9 flex flex-col col-start-2 row-span-2"
-            style={{ background: `hsl(${GREEN} / 0.06)`, border: `2px solid hsl(${GREEN} / 0.4)` }}>
-            <div className="flex items-center gap-4 mb-5">
-              <div className="w-16 h-16 rounded-xl flex items-center justify-center"
-                style={{ background: `hsl(${GREEN} / 0.14)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-                <Sparkles size={34} style={{ color: `hsl(${GREEN})` }} />
-              </div>
-              <p style={{ fontSize: 18, color: `hsl(${GREEN})`, fontWeight: 800, letterSpacing: "0.22em" }} className="uppercase">Company moment · LIZA today</p>
-            </div>
-            <p style={{ fontSize: 44, color: TEXT, fontWeight: 800, lineHeight: 1.1, marginBottom: 18 }}>
-              The engine works. Self-serve is the unlock.
-            </p>
-            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.5, marginBottom: 18 }}>
-              LIZA is the Context Layer for AI-native organizations. We capture expert know-how, govern it as versioned standards, and run every AI action through that context with full audit. The full loop is live in <span style={{ color: TEXT, fontWeight: 700 }}>four paid partnerships across four industries</span>: Consulting, AEC, Pharma, Cybersecurity.
-            </p>
-            <p style={{ fontSize: 22, color: TEXT, fontWeight: 600, lineHeight: 1.4 }}>
-              What's missing: the self-serve flow that lets the next 100 customers start without us in the room.
-            </p>
-          </div>
+        <p style={{ fontSize: 24, color: MUTED, lineHeight: 1.4, maxWidth: 1280 }} className="mb-10">
+          The market is shifting, our product is ready, and the round is priced to reward whoever moves first.
+        </p>
+      </div>
 
-          {sideCols.map(c => (
-            <div key={c.label} className="rounded-2xl p-7 flex flex-col col-start-1"
-              style={{ background: CARD_ALT, border: `1px solid hsl(${c.c} / 0.25)` }}>
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: `hsl(${c.c} / 0.12)`, border: `1px solid hsl(${c.c} / 0.3)` }}>
-                <c.icon size={24} style={{ color: `hsl(${c.c})` }} />
+      <div className="relative z-10 grid grid-cols-3 gap-7 items-stretch">
+        {cols.map((c) => {
+          const featured = !!c.featured;
+          return (
+            <div key={c.label} className="rounded-2xl p-8 flex flex-col"
+              style={{
+                background: featured ? `hsl(${c.c} / 0.06)` : CARD_ALT,
+                border: featured ? `2px solid hsl(${c.c} / 0.5)` : `1px solid hsl(${c.c} / 0.25)`,
+                boxShadow: featured ? `0 18px 40px -24px hsl(${c.c} / 0.5)` : "none",
+              }}>
+              <div className="flex items-center gap-4 mb-5">
+                <div className="rounded-xl flex items-center justify-center"
+                  style={{
+                    width: featured ? 60 : 52, height: featured ? 60 : 52,
+                    background: `hsl(${c.c} / 0.12)`, border: `1px solid hsl(${c.c} / 0.35)`,
+                  }}>
+                  <c.icon size={featured ? 30 : 26} style={{ color: `hsl(${c.c})` }} />
+                </div>
+                <div>
+                  <p style={{ fontSize: 16, color: `hsl(${c.c})`, fontWeight: 800, letterSpacing: "0.22em" }} className="uppercase">{c.label}</p>
+                  <p style={{ fontSize: 15, color: SUBTLE, fontWeight: 600 }}>{c.sub}</p>
+                </div>
               </div>
-              <p style={{ fontSize: 14, color: `hsl(${c.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-2">{c.label}</p>
-              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 10 }}>{c.head}</p>
-              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{c.body}</p>
+              <p style={{ fontSize: featured ? 32 : 28, color: TEXT, fontWeight: 800, lineHeight: 1.15, marginBottom: 14 }}>
+                {c.head}
+              </p>
+              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.5, marginBottom: 18 }}>
+                {c.body}
+              </p>
+              <div className="mt-auto pt-4" style={{ borderTop: `1px dashed hsl(${c.c} / 0.4)` }}>
+                <p style={{ fontSize: 20, color: `hsl(${c.c})`, fontWeight: 800, lineHeight: 1.3 }}>
+                  {c.tag}
+                </p>
+              </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
       <FooterBridge text="Next: the proof. Same loop, four industries, paying." />
       <SlideBar from={ACCENT} to={GOLD} />
