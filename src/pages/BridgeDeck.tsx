@@ -872,7 +872,7 @@ const SLIDES = [
   { id: "gap", title: "The Gap", component: <S05Gap /> },
   { id: "unlock", title: "€200K Unlock", component: <S06Unlock /> },
   { id: "funds", title: "Use of Funds", component: <S07Funds /> },
-  { id: "plan", title: "6-Month Plan", component: <S08Plan /> },
+  { id: "roadmap", title: "Path to Markup", component: <S10Roadmap /> },
   { id: "roadmap", title: "Path to Markup", component: <S10Roadmap /> },
   { id: "team", title: "Team", component: <S11Team /> },
   { id: "ask", title: "The Ask", component: <S12Ask /> },
