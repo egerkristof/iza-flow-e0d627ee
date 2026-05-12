@@ -200,10 +200,10 @@ function S02Moment() {
 // ═════════════════════════════════════════════════════════════════════════════
 function S03Proof() {
   const stages = [
-    { i: BookOpen, c: ACCENT, t: "Capture" },
-    { i: Shield, c: GREEN, t: "Govern" },
-    { i: Zap, c: GOLD, t: "Execute" },
-    { i: TrendingUp, c: PURPLE, t: "Evolve" },
+    { i: BookOpen, c: ACCENT, t: "Capture", d: "Pull expert know-how out of docs, calls, and people's heads." },
+    { i: Shield, c: GREEN, t: "Govern", d: "Turn it into versioned, owned standards the org can trust." },
+    { i: Zap, c: GOLD, t: "Execute", d: "Run AI work through those standards, with sources cited." },
+    { i: TrendingUp, c: PURPLE, t: "Evolve", d: "Feedback from real use updates the standards. Loop closes." },
   ];
   const industries = [
     { i: Briefcase, c: PURPLE, t: "Consulting", d: "Engagement methodology" },
@@ -216,12 +216,9 @@ function S03Proof() {
       <SlideGrid />
       <div className="relative z-10">
         <Tag label="Proof · The Knowledge Cycle, validated 4 / 4" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
-          One loop. <span style={{ color: `hsl(${GREEN})` }}>Four paid design partnerships.</span>
+        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+          Here's how this all works. <span style={{ color: `hsl(${GREEN})` }}>One loop, four paid partnerships.</span>
         </h2>
-        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1500 }} className="mb-12">
-          The same Knowledge Cycle ran end-to-end across four knowledge industries. Capture expertise, govern it, execute it through AI, evolve from feedback. Every loop produced measurable cycle-time and quality wins.
-        </p>
 
         {/* The cycle diagram */}
         <div className="rounded-2xl p-8 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
@@ -235,6 +232,7 @@ function S03Proof() {
                   </div>
                   <p style={{ fontSize: 14, color: SUBTLE, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase">Step {idx + 1}</p>
                   <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>{s.t}</p>
+                  <p style={{ fontSize: 15, color: MUTED, marginTop: 6, lineHeight: 1.35, maxWidth: 220 }}>{s.d}</p>
                 </div>
                 {idx < stages.length - 1 && <ArrowRight size={28} style={{ color: SUBTLE }} className="shrink-0" />}
               </div>
