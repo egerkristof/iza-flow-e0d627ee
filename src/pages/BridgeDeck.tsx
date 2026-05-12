@@ -372,12 +372,9 @@ function S05Gap() {
       <SlideGrid />
       <div className="relative z-10">
         <Tag label="The gap to scale · Why it is not yet self-serve" color={RED} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Onboarding still <span style={{ color: `hsl(${RED})` }}>needs us in the room.</span>
         </h2>
-        <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-12">
-          We are laying AI-native infrastructure inside real organizations. That is genuinely complex work, and the engine handles it. What is missing is the path that lets a single person, in a single team, launch their first playbook on day one and let the workspace, people, and standards grow from there. Until that exists, every new customer pulls a founder into the room.
-        </p>
 
         <div className="rounded-2xl p-10 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <div className="flex items-center justify-between gap-4">
@@ -387,7 +384,7 @@ function S05Gap() {
                 <Layers size={42} style={{ color: `hsl(${ACCENT})` }} />
               </div>
               <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Complex deployment</p>
-              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>AI-native foundation, real org change</p>
+              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>Standing up AI-native infrastructure inside a real org. Genuinely hard. The engine handles it.</p>
             </div>
             <ArrowRight size={36} style={{ color: SUBTLE }} />
             <div className="flex-1 text-center">
@@ -396,7 +393,7 @@ function S05Gap() {
                 <AlertTriangle size={42} style={{ color: `hsl(${RED})` }} />
               </div>
               <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Guided Kickstart</p>
-              <p style={{ fontSize: 17, color: `hsl(${RED})`, marginTop: 4, fontWeight: 600 }}>The bottleneck · founders in every room</p>
+              <p style={{ fontSize: 17, color: `hsl(${RED})`, marginTop: 4, fontWeight: 600 }}>A founder still has to walk every customer in. The only step that does not scale.</p>
             </div>
             <ArrowRight size={36} style={{ color: SUBTLE }} />
             <div className="flex-1 text-center">
@@ -405,16 +402,16 @@ function S05Gap() {
                 <CheckCircle2 size={42} style={{ color: `hsl(${GREEN})` }} />
               </div>
               <p style={{ fontSize: 24, color: TEXT, fontWeight: 700 }}>Live customers</p>
-              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>Activated one at a time</p>
+              <p style={{ fontSize: 17, color: MUTED, marginTop: 4 }}>Paying, using, expanding. But activated one at a time, not as a funnel.</p>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-6">
           {[
-            { t: "Manual deployment", d: "Every client needs hands-on configuration of bundles, standards, and workspaces." },
-            { t: "Founder-time gated", d: "Kickstarts pull senior team off product and platform work." },
-            { t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point to grow from." },
+            { t: "Manual deployment", d: "Every customer is configured by hand. Bundles, standards, workspaces, all set up in the room with the team. Repeatable, not yet packaged." },
+            { t: "Founder-time gated", d: "Each kickstart pulls a founder out of building. The number of customers we add per month is capped by our calendar, not by demand." },
+            { t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point that one team can self-serve and grow from." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
               <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
