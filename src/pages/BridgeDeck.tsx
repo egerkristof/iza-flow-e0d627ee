@@ -793,15 +793,6 @@ function S12Ask() {
           €200K. SAFE. <span style={{ color: `hsl(${GOLD})` }}>Closing now.</span>
         </h2>
 
-        <div className="rounded-2xl p-7 mb-8 flex items-center gap-6"
-          style={{ background: `hsl(${ACCENT} / 0.08)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
-          <Sparkles size={32} style={{ color: `hsl(${ACCENT})` }} />
-          <p style={{ fontSize: 24, color: DARK_TEXT, fontWeight: 600, lineHeight: 1.35 }}>
-            <span style={{ fontWeight: 800 }}>You are not betting on a thesis.</span>
-            <span style={{ color: DARK_MUTED, fontWeight: 500 }}> You are funding the last engineering sprint between a working product and a self-serve SaaS.</span>
-          </p>
-        </div>
-
         <div className="grid grid-cols-[1.1fr_1fr] gap-8">
           {/* Terms */}
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.4)` }}>
@@ -859,16 +850,8 @@ function S12Ask() {
           </div>
         </div>
 
-        <div className="mt-6 rounded-2xl p-6 flex items-center gap-6"
-          style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-          <Coins size={32} style={{ color: `hsl(${GREEN})` }} className="shrink-0" />
-          <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 600, lineHeight: 1.4 }}>
-            <span style={{ fontWeight: 800, color: `hsl(${GOLD})` }}>How it works:</span> you wire €200K today at a €10M valuation.
-            When the Seed prices, your shares convert at <span style={{ fontWeight: 800 }}>20% below that price</span>, with the €10M as a ceiling. Whichever gives you more shares wins.
-          </p>
-        </div>
+        <SlideBar from={GOLD} to={ACCENT} />
       </div>
-      <SlideBar from={GOLD} to={ACCENT} />
     </div>
   );
 }
