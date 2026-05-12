@@ -140,16 +140,11 @@ function S01Cover() {
 // SLIDE 02 — THE MOMENT (market · company · capital)
 // ═════════════════════════════════════════════════════════════════════════════
 function S02Moment() {
-  const cols = [
+  const sideCols = [
     {
       icon: Globe, c: ACCENT, label: "Market moment",
       head: "AI inherits no standards.",
-      body: "Drop AI into a company and it inherits no expertise, no memory of how work is done, no link to artifacts and decisions. Generic models guess. Nobody owns the layer that defines the standards. That layer is the next platform shift.",
-    },
-    {
-      icon: Sparkles, c: GREEN, label: "Company moment",
-      head: "Core works. Self-serve is next.",
-      body: "Four paid partnerships across four knowledge industries. Engine shipped. Missing: the self-serve flow that lets the next 100 customers start without us in the room.",
+      body: "Drop AI into a company and it inherits no expertise, no memory of how work is done, no link to decisions. Generic models guess. Nobody owns the layer that defines the standards. That is the next platform shift.",
     },
     {
       icon: Coins, c: GOLD, label: "Capital moment",
@@ -161,32 +156,44 @@ function S02Moment() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The Moment · Why now, why us, why this round" color={ACCENT} />
+        <Tag label="The Moment" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Three windows are <span style={{ color: `hsl(${GOLD})` }}>open at the same time.</span>
         </h2>
-        <div className="grid grid-cols-3 gap-7 mt-12">
-          {cols.map(c => (
-            <div key={c.label} className="rounded-2xl p-8 flex flex-col"
-              style={{ background: CARD_ALT, border: `1px solid hsl(${c.c} / 0.25)` }}>
-              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                style={{ background: `hsl(${c.c} / 0.12)`, border: `1px solid hsl(${c.c} / 0.3)` }}>
-                <c.icon size={28} style={{ color: `hsl(${c.c})` }} />
+        <div className="grid grid-cols-[1fr_1.5fr] gap-7 mt-10 items-stretch">
+          {/* Featured: Company moment = LIZA today */}
+          <div className="rounded-2xl p-9 flex flex-col col-start-2 row-span-2"
+            style={{ background: `hsl(${GREEN} / 0.06)`, border: `2px solid hsl(${GREEN} / 0.4)` }}>
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center"
+                style={{ background: `hsl(${GREEN} / 0.14)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                <Sparkles size={34} style={{ color: `hsl(${GREEN})` }} />
               </div>
-              <p style={{ fontSize: 16, color: `hsl(${c.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-3">{c.label}</p>
-              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 14 }}>{c.head}</p>
-              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.5 }}>{c.body}</p>
+              <p style={{ fontSize: 18, color: `hsl(${GREEN})`, fontWeight: 800, letterSpacing: "0.22em" }} className="uppercase">Company moment · LIZA today</p>
+            </div>
+            <p style={{ fontSize: 44, color: TEXT, fontWeight: 800, lineHeight: 1.1, marginBottom: 18 }}>
+              The engine works. Self-serve is the unlock.
+            </p>
+            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.5, marginBottom: 18 }}>
+              LIZA is the Context Layer for AI-native organizations. We capture expert know-how, govern it as versioned standards, and run every AI action through that context with full audit. The full loop is live in <span style={{ color: TEXT, fontWeight: 700 }}>four paid partnerships across four industries</span>: Consulting, AEC, Pharma, Cybersecurity.
+            </p>
+            <p style={{ fontSize: 22, color: TEXT, fontWeight: 600, lineHeight: 1.4 }}>
+              What's missing: the self-serve flow that lets the next 100 customers start without us in the room.
+            </p>
+          </div>
+
+          {sideCols.map(c => (
+            <div key={c.label} className="rounded-2xl p-7 flex flex-col col-start-1"
+              style={{ background: CARD_ALT, border: `1px solid hsl(${c.c} / 0.25)` }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${c.c} / 0.12)`, border: `1px solid hsl(${c.c} / 0.3)` }}>
+                <c.icon size={24} style={{ color: `hsl(${c.c})` }} />
+              </div>
+              <p style={{ fontSize: 14, color: `hsl(${c.c})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase mb-2">{c.label}</p>
+              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700, lineHeight: 1.15, marginBottom: 10 }}>{c.head}</p>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{c.body}</p>
             </div>
           ))}
-        </div>
-
-        <div className="mt-10 rounded-2xl p-7 flex items-center gap-6"
-          style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
-          <Sparkles size={32} style={{ color: `hsl(${GOLD})` }} />
-          <p style={{ fontSize: 24, color: TEXT, fontWeight: 600, lineHeight: 1.3 }}>
-            <span style={{ fontWeight: 800 }}>This is the cheapest entry point we will ever offer.</span>
-            <span style={{ color: MUTED, fontWeight: 500 }}> The next round is priced on self-serve traction the bridge produces.</span>
-          </p>
         </div>
       </div>
       <FooterBridge text="Next: the proof. Same loop, four industries, paying." />
@@ -212,16 +219,16 @@ function S03Proof() {
     { i: Shield, c: GOLD, t: "Cybersecurity", d: "Audit & compliance" },
   ];
   return (
-    <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Proof · The Knowledge Cycle, validated 4 / 4" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
+        <Tag label="Proof" color={GREEN} />
+        <h2 className="font-bold leading-[1.05] mb-7" style={{ fontSize: 72, color: TEXT, letterSpacing: "-0.02em" }}>
           Here's how this all works. <span style={{ color: `hsl(${GREEN})` }}>One loop, four paid partnerships.</span>
         </h2>
 
         {/* The cycle diagram */}
-        <div className="rounded-2xl p-8 mb-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="rounded-2xl p-7 mb-6" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <div className="flex items-center justify-between gap-2">
             {stages.map((s, idx) => (
               <div key={s.t} className="flex items-center gap-3 flex-1">
@@ -261,21 +268,21 @@ function S03Proof() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-4">
-            <div className="rounded-xl p-5" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <p style={{ fontSize: 14, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Cycle-time win</p>
-              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>18 days <span style={{ color: MUTED, fontSize: 24 }}>→</span> 1 day</p>
-              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Live cybersecurity partnership.</p>
+          <div className="flex flex-col gap-3">
+            <div className="rounded-xl p-4" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <p style={{ fontSize: 13, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-1">Cycle-time win</p>
+              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1 }}>18 days <span style={{ color: MUTED, fontSize: 22 }}>→</span> 1 day</p>
+              <p style={{ fontSize: 15, color: MUTED, marginTop: 3 }}>Live cybersecurity partnership.</p>
             </div>
-            <div className="rounded-xl p-5" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
-              <p style={{ fontSize: 14, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Pattern fit</p>
-              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 industries</p>
-              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Same loop, repeatable.</p>
+            <div className="rounded-xl p-4" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+              <p style={{ fontSize: 13, color: `hsl(${ACCENT})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-1">Pattern fit</p>
+              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1 }}>4 / 4 industries</p>
+              <p style={{ fontSize: 15, color: MUTED, marginTop: 3 }}>Same loop, repeatable.</p>
             </div>
-            <div className="rounded-xl p-5" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.25)` }}>
-              <p style={{ fontSize: 14, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Revenue</p>
-              <p style={{ fontSize: 38, color: TEXT, fontWeight: 700, lineHeight: 1 }}>Early ARR</p>
-              <p style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>Paid, not pilot-ware.</p>
+            <div className="rounded-xl p-4" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.25)` }}>
+              <p style={{ fontSize: 13, color: `hsl(${GOLD})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-1">Revenue</p>
+              <p style={{ fontSize: 32, color: TEXT, fontWeight: 700, lineHeight: 1 }}>Early ARR</p>
+              <p style={{ fontSize: 15, color: MUTED, marginTop: 3 }}>Paid, not pilot-ware.</p>
             </div>
           </div>
         </div>
@@ -316,7 +323,7 @@ function S04Built() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="What we built · Core infra plus native UIs" color={GREEN} />
+        <Tag label="What we built" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           The engine works. <span style={{ color: `hsl(${GREEN})` }}>You can use it today.</span>
         </h2>
@@ -371,7 +378,7 @@ function S05Gap() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The gap to scale · Why it is not yet self-serve" color={RED} />
+        <Tag label="The gap to scale" color={RED} />
         <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Onboarding still <span style={{ color: `hsl(${RED})` }}>needs us in the room.</span>
         </h2>
@@ -407,17 +414,47 @@ function S05Gap() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-6 mb-8">
           {[
-            { t: "Manual deployment", d: "Every customer is configured by hand. Bundles, standards, workspaces, all set up in the room with the team. Repeatable, not yet packaged." },
-            { t: "Founder-time gated", d: "Each kickstart pulls a founder out of building. The number of customers we add per month is capped by our calendar, not by demand." },
-            { t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point that one team can self-serve and grow from." },
+            { i: Hammer, t: "Manual deployment", d: "Every customer is configured by hand. Bundles, standards, workspaces, all set up in the room with the team. Repeatable, not yet packaged." },
+            { i: Calendar, t: "Founder-time gated", d: "Each kickstart pulls a founder out of building. The number of customers we add per month is capped by our calendar, not by demand." },
+            { i: User, t: "No smallest unit", d: "Today's flow assumes a full org rollout. There is no one-person, one-playbook entry point that one team can self-serve and grow from." },
           ].map(b => (
-            <div key={b.t} className="rounded-xl p-6" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-              <p style={{ fontSize: 22, color: TEXT, fontWeight: 700 }}>{b.t}</p>
-              <p style={{ fontSize: 18, color: MUTED, marginTop: 6 }}>{b.d}</p>
+            <div key={b.t} className="rounded-2xl p-7" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>
+                <b.i size={26} style={{ color: `hsl(${RED})` }} />
+              </div>
+              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>{b.t}</p>
+              <p style={{ fontSize: 19, color: MUTED, marginTop: 8, lineHeight: 1.45 }}>{b.d}</p>
             </div>
           ))}
+        </div>
+
+        {/* Bottleneck visual: today vs after bridge */}
+        <div className="rounded-2xl p-7 flex items-center gap-8"
+          style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+          <div className="flex items-center gap-4">
+            <Calendar size={42} style={{ color: `hsl(${RED})` }} />
+            <div>
+              <p style={{ fontSize: 14, color: `hsl(${RED})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase">Today</p>
+              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>~2 customers / month</p>
+              <p style={{ fontSize: 16, color: MUTED }}>Capped by founder calendar.</p>
+            </div>
+          </div>
+          <ArrowRight size={36} style={{ color: SUBTLE }} className="shrink-0" />
+          <div className="flex items-center gap-4">
+            <Rocket size={42} style={{ color: `hsl(${GREEN})` }} />
+            <div>
+              <p style={{ fontSize: 14, color: `hsl(${GREEN})`, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase">After the bridge</p>
+              <p style={{ fontSize: 26, color: TEXT, fontWeight: 700 }}>n customers / month</p>
+              <p style={{ fontSize: 16, color: MUTED }}>Wizard, telemetry, no founder required.</p>
+            </div>
+          </div>
+          <div className="ml-auto text-right">
+            <p style={{ fontSize: 14, color: SUBTLE, fontWeight: 700, letterSpacing: "0.2em" }} className="uppercase">Bottleneck</p>
+            <p style={{ fontSize: 22, color: TEXT, fontWeight: 700, lineHeight: 1.2, maxWidth: 360 }}>One linear, founder-gated step between us and a real funnel.</p>
+          </div>
         </div>
       </div>
       <FooterBridge text="Next: exactly what €200K removes from this picture." />
@@ -434,7 +471,7 @@ function S06Unlock() {
     <div className="w-full h-full relative px-28 py-16" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The €200K Unlock · From 'us in the room' to 'anyone can start'" color={ACCENT} />
+        <Tag label="The €200K Unlock" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-5" style={{ fontSize: 76, color: TEXT, letterSpacing: "-0.02em" }}>
           Core infrastructure works. <span style={{ color: `hsl(${ACCENT})` }}>Now ship self-serve.</span>
         </h2>
@@ -541,12 +578,12 @@ function S07Funds() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Use of Funds · €200,000" color={GOLD} />
+        <Tag label="Use of Funds" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Every euro buys <span style={{ color: `hsl(${GOLD})` }}>self-serve velocity.</span>
         </h2>
         <p style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }} className="mb-10">
-          No vanity hires. Two engineers keep shipping the self-serve wizard, an early go-to-market motion fills the funnel, and every line is tied to a measurable activation milestone.
+          No vanity hires. Four engineers keep shipping the self-serve wizard, an early go-to-market motion fills the funnel, and every line is tied to a measurable activation milestone.
         </p>
 
         {/* Stacked bar */}
@@ -575,7 +612,7 @@ function S07Funds() {
           {[
             { i: Clock, t: "6 months runway", d: "From close to Seed-ready metrics. No salary cliff in the middle." },
             { i: Users, t: "Early go-to-market", d: "Sales motion and design partner outreach funded for the bridge window." },
-            { i: Hammer, t: "Two engineers shipping", d: "Salaried, not contracted. Self-serve wizard from day one of close." },
+            { i: Hammer, t: "Four engineers shipping", d: "Salaried, not contracted. Self-serve wizard from day one of close." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
               <b.i size={26} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" />
@@ -608,7 +645,7 @@ function S08Plan() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="The 6-month plan · Bridge to Seed metrics" color={ACCENT} />
+        <Tag label="The 6-month plan" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           Five milestones. <span style={{ color: `hsl(${ACCENT})` }}>One every month.</span>
         </h2>
@@ -665,7 +702,7 @@ function S09Wedge() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
-        <DarkTag label="The Wedge · Where self-serve lands first" color={GOLD} />
+        <DarkTag label="The Wedge" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
           One platform. <span style={{ color: `hsl(${GOLD})` }}>Every knowledge industry.</span>
         </h2>
@@ -735,7 +772,7 @@ function S09Wedge() {
 function S10Roadmap() {
   const stages = [
     { tag: "Now · €200K Bridge", c: GOLD, t: "Ship self-serve", val: "Today's price",
-      bullets: ["Wizard, telemetry, hardening", "Founders + 2 engineers", "Bridge to Seed metrics"] },
+      bullets: ["Wizard, telemetry, hardening", "Founders + 4 engineers", "Bridge to Seed metrics"] },
     { tag: "Q4 2026 · Self-Serve ARR", c: GREEN, t: "Paid self-serve cohort", val: "Implied step-up",
       bullets: ["Paid teams via wizard", "Activation metrics live", "Reference logos at scale"] },
     { tag: "2027 · Seed / Series A", c: ACCENT, t: "Premium markup", val: "Seed-priced",
@@ -745,7 +782,7 @@ function S10Roadmap() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: BG }}>
       <SlideGrid />
       <div className="relative z-10">
-        <Tag label="Path to markup · Bridge to Seed to A" color={ACCENT} />
+        <Tag label="Path to markup" color={ACCENT} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: TEXT, letterSpacing: "-0.02em" }}>
           A clear path to a <span style={{ color: `hsl(${ACCENT})` }}>premium markup.</span>
         </h2>
@@ -829,7 +866,7 @@ function S11Team() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
-        <DarkTag label="Team · Built by operators · 15 months self-funded" color={GOLD} />
+        <DarkTag label="Team" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
           Same team that built the proof <span style={{ color: `hsl(${GOLD})` }}>will ship the self-serve.</span>
         </h2>
@@ -886,7 +923,7 @@ function S12Ask() {
     <div className="w-full h-full relative px-28 py-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <div className="relative z-10">
-        <DarkTag label="The Ask · €200K · SAFE · Closing in 6 weeks" color={GOLD} />
+        <DarkTag label="The Ask" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 80, color: DARK_TEXT, letterSpacing: "-0.02em" }}>
           €200K. SAFE. <span style={{ color: `hsl(${GOLD})` }}>Closing now.</span>
         </h2>
