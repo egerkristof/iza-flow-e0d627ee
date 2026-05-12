@@ -560,7 +560,7 @@ function S08UseOfFunds() {
           {[
             { i: Clock, t: "6 months", d: "Runway to ship and activate the self-serve flow." },
             { i: Coins, t: "Capital efficient", d: "Bridge spend tied directly to a measurable ARR motion." },
-            { i: Target, t: "One vertical", d: "Funds focused on Professional Services, no scope sprawl." },
+          { i: Target, t: "Knowledge industries", d: "Funds focused on AEC, Pharma, Cyber, Consulting — no scope sprawl." },
           ].map(b => (
             <div key={b.t} className="rounded-xl p-6 flex items-start gap-4" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
               <b.i size={26} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" />
@@ -586,11 +586,11 @@ function S09Roadmap() {
     },
     {
       tag: "Q4 2026", c: GREEN, t: "Self-Serve ARR",
-      bullets: ["100% self-serve growth in Pro Services", "Repeatable activation metrics", "Reference logos at scale"],
+      bullets: ["Self-serve growth across knowledge industries", "Repeatable activation metrics", "Reference logos at scale"],
     },
     {
       tag: "2027", c: ACCENT, t: "Premium Seed / Series A",
-      bullets: ["€2M+ round on proven SaaS metrics", "Expand to second vertical", "Horizontal OS thesis funded"],
+      bullets: ["€2M+ round on proven SaaS metrics", "Expand the OS across verticals", "Horizontal OS thesis funded"],
     },
   ];
   return (
