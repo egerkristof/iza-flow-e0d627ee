@@ -1341,6 +1341,7 @@ const SLIDES = [
   { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
   { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
   { id: "augmentation-mechanics", title: "Augmentation Mechanics", component: <S09bAugmentationMechanics /> },
+  { id: "societal-impact", title: "2030 Skills · Societal Impact", component: <S12SocietalImpact /> },
 ];
 
 // ─── Deck shell ──────────────────────────────────────────────────────────────
