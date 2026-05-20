@@ -643,8 +643,9 @@ function S05Loop() {
                 )}
               </div>
               {i < steps.length - 1 && (
-                <div className="absolute top-1/2 -right-4 -translate-y-1/2 z-10">
-                  <ArrowRight size={28} style={{ color: SUBTLE }} />
+                <div className="absolute top-1/2 -translate-y-1/2 z-10 flex items-center justify-center"
+                  style={{ right: -20, width: 20, height: 20 }}>
+                  <ArrowRight size={20} style={{ color: SUBTLE }} />
                 </div>
               )}
             </div>
@@ -660,6 +661,87 @@ function S05Loop() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 06 — ARTIFACT PROPAGATION & OBSERVABILITY
 // ═════════════════════════════════════════════════════════════════════════════
+function PropagationTree() {
+  // All positions in % of container — SVG uses the same coordinate system so lines always line up.
+  const ROOT = { cx: 50, cy: 10 };
+  const REQS = [
+    { cx: 27, cy: 30, label: "Requirement A" },
+    { cx: 73, cy: 30, label: "Requirement B" },
+  ];
+  const SPECS = [
+    { cx: 13, cy: 54, label: "Spec A1", parent: 0 },
+    { cx: 38, cy: 54, label: "Spec A2", parent: 0 },
+    { cx: 62, cy: 54, label: "Spec B1", parent: 1 },
+    { cx: 87, cy: 54, label: "Spec B2", parent: 1 },
+  ];
+  const REPORTS = [
+    { cx: 11, cy: 86, label: "Report-1", parent: 0 },
+    { cx: 37, cy: 86, label: "Report-2", parent: 1 },
+    { cx: 63, cy: 86, label: "Report-3", parent: 2 },
+    { cx: 89, cy: 86, label: "Report-4", parent: 3 },
+  ];
+  // Vertical half-heights of each tier (in % of container) — lines start/end at node edges, not centres.
+  const H_ROOT = 7, H_REQ = 5, H_SPEC = 4;
+
+  return (
+    <div className="rounded-2xl border relative overflow-hidden" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 580 }}>
+      {/* Lines first, behind nodes */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <g stroke={`hsl(${RED} / 0.4)`} strokeWidth="0.2" fill="none">
+          {REQS.map((r, i) => (
+            <line key={`r-${i}`} x1={ROOT.cx} y1={ROOT.cy + H_ROOT} x2={r.cx} y2={r.cy - H_REQ} />
+          ))}
+          {SPECS.map((s, i) => {
+            const p = REQS[s.parent];
+            return <line key={`s-${i}`} x1={p.cx} y1={p.cy + H_REQ} x2={s.cx} y2={s.cy - H_SPEC} />;
+          })}
+          {REPORTS.map((rep, i) => {
+            const p = SPECS[rep.parent];
+            return <line key={`rep-${i}`} x1={p.cx} y1={p.cy + H_SPEC} x2={rep.cx} y2={rep.cy - H_SPEC} />;
+          })}
+        </g>
+      </svg>
+
+      {/* Root */}
+      <div className="absolute -translate-x-1/2 -translate-y-1/2 px-5 py-3 rounded-xl border-2 flex items-center gap-3 whitespace-nowrap"
+        style={{ left: `${ROOT.cx}%`, top: `${ROOT.cy}%`, borderColor: `hsl(${RED} / 0.5)`, background: `hsl(${RED} / 0.1)`, zIndex: 2 }}>
+        <ShieldCheck size={22} style={{ color: `hsl(${RED})` }} />
+        <div className="text-left">
+          <p className="font-bold leading-tight" style={{ fontSize: 17, color: TEXT }}>Standard · GxP Deviation</p>
+          <p style={{ fontSize: 12, color: `hsl(${RED})` }}>Rule v2.1 published</p>
+        </div>
+      </div>
+
+      {REQS.map(r => (
+        <div key={r.label}
+          className="absolute -translate-x-1/2 -translate-y-1/2 px-4 py-2 rounded-xl border-2 flex items-center gap-2 whitespace-nowrap"
+          style={{ left: `${r.cx}%`, top: `${r.cy}%`, borderColor: `hsl(${RED} / 0.45)`, background: `hsl(${RED} / 0.06)`, zIndex: 2 }}>
+          <AlertCircle size={16} style={{ color: `hsl(${RED})` }} />
+          <p className="font-semibold" style={{ fontSize: 15, color: TEXT }}>{r.label}</p>
+        </div>
+      ))}
+
+      {SPECS.map(s => (
+        <div key={s.label}
+          className="absolute -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg border flex items-center gap-1.5 whitespace-nowrap"
+          style={{ left: `${s.cx}%`, top: `${s.cy}%`, borderColor: `hsl(${RED} / 0.35)`, background: `hsl(${RED} / 0.05)`, zIndex: 2 }}>
+          <AlertCircle size={12} style={{ color: `hsl(${RED})` }} />
+          <p className="font-medium" style={{ fontSize: 13, color: TEXT }}>{s.label}</p>
+        </div>
+      ))}
+
+      {REPORTS.map(rep => (
+        <div key={rep.label}
+          className="absolute -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg border flex items-center gap-1.5 whitespace-nowrap"
+          style={{ left: `${rep.cx}%`, top: `${rep.cy}%`, borderColor: `hsl(${RED} / 0.3)`, background: "white", zIndex: 2 }}>
+          <FileText size={12} style={{ color: `hsl(${RED})` }} />
+          <p style={{ fontSize: 13, color: TEXT }}>{rep.label}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function S06Propagation() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
@@ -674,70 +756,7 @@ function S06Propagation() {
 
         <div className="grid grid-cols-[1.3fr_1fr] gap-12 items-start">
           {/* Tree */}
-          <div className="rounded-2xl border p-10 relative" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 580 }}>
-            {/* Root */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-6 px-6 py-4 rounded-xl border-2 flex items-center gap-3"
-              style={{ borderColor: `hsl(${RED} / 0.5)`, background: `hsl(${RED} / 0.1)` }}>
-              <ShieldCheck size={24} style={{ color: `hsl(${RED})` }} />
-              <div>
-                <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>Standard · GxP Deviation</p>
-                <p style={{ fontSize: 14, color: `hsl(${RED})` }}>Rule v2.1 published</p>
-              </div>
-            </div>
-
-            {/* Requirements row */}
-            <div className="absolute left-0 right-0 top-[180px] flex justify-around px-12">
-              {["Requirement A", "Requirement B"].map(r => (
-                <div key={r} className="px-5 py-3 rounded-xl border-2 flex items-center gap-2"
-                  style={{ borderColor: `hsl(${RED} / 0.4)`, background: `hsl(${RED} / 0.06)` }}>
-                  <AlertCircle size={18} style={{ color: `hsl(${RED})` }} />
-                  <p className="font-semibold" style={{ fontSize: 17, color: TEXT }}>{r}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Specs row */}
-            <div className="absolute left-0 right-0 top-[320px] flex justify-around px-6">
-              {["Spec A1", "Spec A2", "Spec B1", "Spec B2"].map(s => (
-                <div key={s} className="px-4 py-2 rounded-lg border flex items-center gap-2"
-                  style={{ borderColor: `hsl(${RED} / 0.35)`, background: `hsl(${RED} / 0.05)` }}>
-                  <AlertCircle size={14} style={{ color: `hsl(${RED})` }} />
-                  <p className="font-medium" style={{ fontSize: 15, color: TEXT }}>{s}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Reports row */}
-            <div className="absolute left-0 right-0 bottom-10 flex justify-around px-4">
-              {["Report-1", "Report-2", "Report-3", "Report-4"].map(s => (
-                <div key={s} className="px-3 py-2 rounded-lg border flex items-center gap-2"
-                  style={{ borderColor: `hsl(${RED} / 0.3)`, background: "white" }}>
-                  <FileText size={13} style={{ color: `hsl(${RED})` }} />
-                  <p style={{ fontSize: 14, color: TEXT }}>{s}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Connecting lines */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 100 100" preserveAspectRatio="none" style={{ zIndex: 0 }}>
-              <g stroke={`hsl(${RED} / 0.35)`} strokeWidth="0.25" fill="none">
-                {/* root → requirements */}
-                <path d="M 50 12 L 30 30" />
-                <path d="M 50 12 L 70 30" />
-                {/* requirements → specs */}
-                <path d="M 30 36 L 20 55" />
-                <path d="M 30 36 L 42 55" />
-                <path d="M 70 36 L 58 55" />
-                <path d="M 70 36 L 80 55" />
-                {/* specs → reports */}
-                <path d="M 20 60 L 14 86" />
-                <path d="M 42 60 L 38 86" />
-                <path d="M 58 60 L 62 86" />
-                <path d="M 80 60 L 86 86" />
-              </g>
-            </svg>
-          </div>
+          <PropagationTree />
 
           {/* Rationale Log */}
           <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.04)`, height: 580 }}>
