@@ -1866,19 +1866,28 @@ function S10bACVBridge() {
   const seatBuild = [
     {
       profile: "Light seat", color: SUBTLE,
-      who: "Occasional operator. ~1 Operational call/workday.",
+      who: "Occasional operator. About 1 Operational call per workday, a Design call every two weeks, a Strategic run once a quarter.",
+      opPerDay: "≈ 1 / workday",
+      designPerDay: "≈ 1 / 2 weeks",
+      stratPerDay: "≈ 1 / quarter",
       op: 220, design: 20, strat: 2,
       revenue: "~$165 / seat / year",
     },
     {
       profile: "Standard seat", color: ACCENT,
-      who: "Daily operator inside a Playbook. ~5 Operational calls/workday.",
+      who: "Daily operator inside a Playbook. About 5 Operational calls per workday, a Design call most workdays, a Strategic run every 6 weeks.",
+      opPerDay: "≈ 5 / workday",
+      designPerDay: "≈ 1 / 3 days",
+      stratPerDay: "≈ 1 / 6 weeks",
       op: 1_100, design: 80, strat: 8,
       revenue: "~$760 / seat / year",
     },
     {
       profile: "Heavy / Strategic seat", color: PURPLE,
-      who: "Power user or analyst pod. ~10 Operational, regular Strategic runs.",
+      who: "Power user or analyst pod. About 10 Operational calls per workday, a Design call every workday, a Strategic run every 2 weeks.",
+      opPerDay: "≈ 10 / workday",
+      designPerDay: "≈ 1 / workday",
+      stratPerDay: "≈ 1 / 2 weeks",
       op: 2_200, design: 200, strat: 20,
       revenue: "~$1,660 / seat / year",
     },
@@ -1891,12 +1900,13 @@ function S10bACVBridge() {
       color: GREEN,
       who: "20-50 person company, one department live on a few Playbooks.",
       platform: 15_000,
+      platformWhy: "fixed annual access fee (Layer 02 + 03): standards, governance, audit trail",
       seats: "20 standard seats × ~$760",
       seatsValue: 15_200,
-      strat: "Light Strategic use",
+      strat: "≈ 700 Strategic runs/yr × ~$11 (shared across the org)",
       stratValue: 8_000,
       total: "≈ $38-45K",
-      check: "≈ 25 partner-day-equivalents/yr displaced",
+      check: "≈ 25 partner-day-equivalents of senior work displaced per year (1 partner-day-equivalent ≈ €1,600 of fully loaded partner time).",
     },
     {
       seg: "Mid-market",
@@ -1904,12 +1914,13 @@ function S10bACVBridge() {
       color: ACCENT,
       who: "200-1,000 person company, 2-3 departments live, one Strategic pod.",
       platform: 40_000,
+      platformWhy: "fixed annual access fee (Layer 02 + 03), scaled to org size",
       seats: "60 standard seats × ~$760",
       seatsValue: 45_600,
-      strat: "5 Heavy/Strategic seats × ~$1,660 + Strategic runs",
+      strat: "5 Heavy seats × ~$1,660 + ≈ 2,400 shared Strategic runs × ~$11",
       stratValue: 35_000,
       total: "≈ $120-145K",
-      check: "≈ 95 partner-day-equivalents/yr displaced",
+      check: "≈ 95 partner-day-equivalents of senior work displaced per year.",
     },
     {
       seg: "Enterprise",
@@ -1917,13 +1928,24 @@ function S10bACVBridge() {
       color: GOLD,
       who: "1,000+ person company, 4+ departments, multiple Strategic pods.",
       platform: 80_000,
+      platformWhy: "fixed annual access fee (Layer 02 + 03), enterprise tier (SSO, regulatory packs, dedicated support)",
       seats: "100 active seats (standard + heavy mix)",
       seatsValue: 110_000,
-      strat: "10+ Strategic seats and recurring partner-grade runs",
+      strat: "10+ Heavy seats × ~$1,660 + ≈ 4,000 partner-grade Strategic runs × ~$11",
       stratValue: 60_000,
       total: "≈ $230-280K",
-      check: "≈ 155 partner-day-equivalents/yr displaced; < 1 partner-day/workday across the org",
+      check: "≈ 155 partner-day-equivalents/yr displaced; fewer than 1 partner-day per workday across the org.",
     },
+  ];
+  const legend = [
+    { k: "ACV", v: "Annual Contract Value. The total annual revenue from one customer, including platform fee + metered seats + Strategic pods." },
+    { k: "Seat", v: "One named user with active access. Charged via the metered Layer 01 (per call), not as a flat licence." },
+    { k: "Workday", v: "One productive day of work. We use 220 workdays per year per seat (52 weeks − holiday, sick, training, public)." },
+    { k: "Op / Design / Strat (1× / 5× / 25×)", v: "The three decision classes from Slide 11. Op = ~20 min of analyst work. Design = ~1-2 hr of senior work. Strat = ~half-day of partner-grade work." },
+    { k: "Platform fee", v: "Fixed annual fee for Layer 02 (Collaboration: shared Playbooks, governance, comparability) and Layer 03 (Infrastructure: standards-as-code, audit, portability). Independent of usage." },
+    { k: "Strategic pod", v: "An analyst team that runs Strategic-class artifacts (board memos, due-diligence files, regulatory submissions) on behalf of the org. Mostly Heavy seats + shared Strategic runs." },
+    { k: "Partner-day-equivalent", v: "One day of fully loaded partner time. We use €1,600/day (€400/hr × 4 productive hours), the same loaded cost used on Slide 11." },
+    { k: "Activation", v: "How many decision-class calls an active seat actually runs per workday. The only real commercial risk: pricing and margin hold, what varies is whether seats fire 1 or 5 calls/day." },
   ];
   const fmt = (n: number) => `$${(n / 1000).toFixed(0)}K`;
   return (
@@ -1933,15 +1955,23 @@ function S10bACVBridge() {
       <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
       <div className="relative z-10">
         <Tag label="ACV Bridge · Bottom-up meets Top-down" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 38, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1780 }}>
+        <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 36, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1780 }}>
           The per-call math (Slide 11) and the top-down ACV targets <span style={{ color: `hsl(${GOLD})` }}>meet in the middle. Here is the arithmetic that joins them.</span>
         </h2>
-        <p className="mb-4" style={{ fontSize: 13, color: MUTED, lineHeight: 1.45, maxWidth: 1780 }}>
-          <span className="font-semibold" style={{ color: TEXT }}>How to read this slide:</span> the left panel builds revenue <em>bottom-up</em> from one active seat (calls per workday × mid-band price). The right panel builds revenue <em>top-down</em> for each customer segment (platform fee + metered seats + Strategic pods). The reconciliation row shows the two sides land within ±10% of the published ACV targets.
-          <span className="block" style={{ marginTop: 4, fontSize: 11.5, color: SUBTLE }}>
-            Prices used (mid of Slide 11 bands): Operational $0.45/call · Design $2.25/call · Strategic $11/call. 220 productive workdays/year. Partner-day-equivalent = €1,600 of fully loaded partner time.
-          </span>
+        <p className="mb-2.5" style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.45, maxWidth: 1780 }}>
+          <span className="font-semibold" style={{ color: TEXT }}>How to read this slide:</span> the <span className="font-semibold" style={{ color: `hsl(${ACCENT})` }}>left panel</span> builds revenue <em>bottom-up</em> from one active seat (calls per workday × mid-band price from Slide 11). The <span className="font-semibold" style={{ color: `hsl(${GOLD})` }}>right panel</span> builds revenue <em>top-down</em> for each customer segment (platform fee + metered seats + Strategic pods). The <span className="font-semibold" style={{ color: `hsl(${GREEN})` }}>reconciliation row</span> shows both sides land within ±10% of the published ACV targets. Mid-band prices used: Operational $0.45/call · Design $2.25/call · Strategic $11/call. Workday = 220 productive days/year.
         </p>
+        {/* Legend strip: define every piece of jargon used on the slide */}
+        <div className="rounded-lg border bg-white px-4 py-2.5 mb-3" style={{ borderColor: CHROME_BORDER }}>
+          <div className="grid grid-cols-4 gap-x-4 gap-y-1.5">
+            {legend.map(l => (
+              <div key={l.k}>
+                <p className="font-mono uppercase tracking-[0.08em]" style={{ fontSize: 9, color: `hsl(${GOLD})` }}>{l.k}</p>
+                <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.3 }}>{l.v}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="grid grid-cols-[0.85fr_1.15fr] gap-5 items-start">
           {/* Bottom-up: one seat */}
@@ -1950,7 +1980,7 @@ function S10bACVBridge() {
             <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
               <div className="grid grid-cols-[1.1fr_0.55fr_0.55fr_0.55fr_0.85fr] gap-0 px-3 py-2 font-mono uppercase tracking-[0.08em]"
                 style={{ fontSize: 9.5, color: SUBTLE, background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
-                <span>Seat profile</span><span>Op / yr</span><span>Design / yr</span><span>Strat / yr</span><span>Revenue</span>
+                <span>Seat profile</span><span>Op calls / yr<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>(1× class)</span></span><span>Design calls / yr<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>(5× class)</span></span><span>Strat calls / yr<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>(25× class)</span></span><span>Revenue<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>(metered, $/yr)</span></span>
               </div>
               {seatBuild.map(s => (
                 <div key={s.profile} className="grid grid-cols-[1.1fr_0.55fr_0.55fr_0.55fr_0.85fr] gap-0 px-3 py-2.5 items-start"
@@ -1959,21 +1989,30 @@ function S10bACVBridge() {
                     <span className="font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{s.profile}</span>
                     <span style={{ fontSize: 9.5, color: SUBTLE, lineHeight: 1.25, marginTop: 2 }}>{s.who}</span>
                   </div>
-                  <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.op.toLocaleString()}</span>
-                  <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.design}</span>
-                  <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.strat}</span>
+                  <div className="flex flex-col">
+                    <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.op.toLocaleString()}</span>
+                    <span className="font-mono" style={{ fontSize: 9, color: SUBTLE, lineHeight: 1.2, marginTop: 1 }}>{s.opPerDay}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.design}</span>
+                    <span className="font-mono" style={{ fontSize: 9, color: SUBTLE, lineHeight: 1.2, marginTop: 1 }}>{s.designPerDay}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.strat}</span>
+                    <span className="font-mono" style={{ fontSize: 9, color: SUBTLE, lineHeight: 1.2, marginTop: 1 }}>{s.stratPerDay}</span>
+                  </div>
                   <span className="font-mono font-bold" style={{ fontSize: 12.5, color: `hsl(${s.color === SUBTLE ? ACCENT : s.color})` }}>{s.revenue}</span>
                 </div>
               ))}
             </div>
             <div className="mt-3 rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px dashed hsl(${GREEN} / 0.35)` }}>
-              <p className="font-mono uppercase tracking-[0.1em] mb-1" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Worked example · one Standard seat</p>
-              <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.45 }}>
-                <span className="font-mono">1,100 × $0.45</span> (Operational) <span className="font-mono">+ 80 × $2.25</span> (Design) <span className="font-mono">+ 8 × $11</span> (Strategic) = <span className="font-mono font-semibold" style={{ color: TEXT }}>$495 + $180 + $88 = $763 / seat / year</span> in metered revenue.
+              <p className="font-mono uppercase tracking-[0.1em] mb-1" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Worked example · one Standard seat over one year</p>
+              <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.5 }}>
+                A Standard seat fires 5 Operational calls/workday × 220 workdays = <span className="font-mono">1,100 Op calls/yr</span>, plus about <span className="font-mono">80 Design</span> and <span className="font-mono">8 Strategic</span>. At mid-band prices from Slide 11: <span className="font-mono">1,100 × $0.45 = $495</span> (Op) + <span className="font-mono">80 × $2.25 = $180</span> (Design) + <span className="font-mono">8 × $11 = $88</span> (Strategic) = <span className="font-mono font-semibold" style={{ color: TEXT }}>$763 / seat / year</span> in metered Layer 01 revenue. This is <em>only</em> the per-call meter — it excludes the fixed platform fee that funds Layers 02 and 03.
               </p>
             </div>
             <p className="mt-3" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.4 }}>
-              Pure metered alone is fragile at the small end (10 seats × light usage ≈ $1.6K). The platform fee (Layer 02 on Slide 11) is what makes the small tier viable.
+              <span className="font-semibold" style={{ color: TEXT }}>Why metered alone is not enough:</span> 10 light seats × ~$165 ≈ $1.6K/yr. Below the cost of selling and supporting an account. The fixed platform fee (Layer 02 + 03 from Slide 11) is what makes the small tier viable and what monetises the collaboration and infrastructure value that no per-call meter can capture.
             </p>
           </div>
 
@@ -1983,7 +2022,7 @@ function S10bACVBridge() {
             <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
               <div className="grid grid-cols-[0.9fr_0.55fr_0.95fr_1.05fr_1.05fr_0.65fr] gap-0 px-3 py-2 font-mono uppercase tracking-[0.08em]"
                 style={{ fontSize: 9.5, color: SUBTLE, background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
-                <span>Segment</span><span>Target ACV</span><span>Platform fee</span><span>Metered seats</span><span>Strategic pods</span><span>Total</span>
+                <span>Segment</span><span>Target ACV<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>($/yr)</span></span><span>Platform fee<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>(Layer 02+03, fixed)</span></span><span>Metered seats<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>(Layer 01, per call)</span></span><span>Strategic pods<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>(heavy seats + shared runs)</span></span><span>Total<br/><span style={{ textTransform: "none", letterSpacing: 0, color: SUBTLE }}>built</span></span>
               </div>
               {segments.map(s => (
                 <div key={s.seg} className="grid grid-cols-[0.9fr_0.55fr_0.95fr_1.05fr_1.05fr_0.65fr] gap-0 px-3 py-2.5 items-start"
@@ -1995,7 +2034,7 @@ function S10bACVBridge() {
                   <span className="font-mono font-bold" style={{ fontSize: 14, color: `hsl(${s.color})`, lineHeight: 1.1 }}>{s.acv}</span>
                   <div className="flex flex-col">
                     <span className="font-mono font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{fmt(s.platform)}</span>
-                    <span style={{ fontSize: 9.5, color: SUBTLE, lineHeight: 1.25, marginTop: 2 }}>fixed access + Layer 02-03 value</span>
+                    <span style={{ fontSize: 9.5, color: SUBTLE, lineHeight: 1.25, marginTop: 2 }}>{s.platformWhy}</span>
                   </div>
                   <div className="flex flex-col">
                     <span className="font-mono font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{fmt(s.seatsValue)}</span>
@@ -2012,7 +2051,7 @@ function S10bACVBridge() {
             <div className="grid grid-cols-3 gap-2 mt-3">
               {segments.map(s => (
                 <div key={s.seg + "-check"} className="rounded-lg px-3 py-2" style={{ background: `hsl(${s.color} / 0.08)`, border: `1px dashed hsl(${s.color} / 0.35)` }}>
-                  <p className="font-mono uppercase tracking-[0.1em] mb-1" style={{ fontSize: 9, color: `hsl(${s.color})` }}>Sanity check · {s.seg}</p>
+                  <p className="font-mono uppercase tracking-[0.1em] mb-1" style={{ fontSize: 9, color: `hsl(${s.color})` }}>Sanity check · what the customer gets back · {s.seg}</p>
                   <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.35 }}>{s.check}</p>
                 </div>
               ))}
@@ -2025,10 +2064,10 @@ function S10bACVBridge() {
           <div className="flex items-center gap-3">
             <ShieldCheck size={20} style={{ color: `hsl(${GREEN})` }} />
             <p className="font-bold" style={{ fontSize: 14, color: TEXT }}>Reconciliation</p>
-            <span className="font-mono" style={{ fontSize: 11, color: SUBTLE }}>both sides land within ±10% of the published ACVs</span>
+            <span className="font-mono" style={{ fontSize: 11, color: SUBTLE }}>bottom-up totals land within ±10% of the top-down ACV targets ($40K · $120-150K · $250K+)</span>
           </div>
           <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.45, marginTop: 4 }}>
-            ACVs are driven by <span className="font-semibold" style={{ color: TEXT }}>seats × activation × decision-class mix</span>, not by token volume. The unit economics on Slide 11 produce ≈90% gross margin across the band, so the commercial risk is activation (calls per active seat per workday), not unit economics. The platform fee is what de-risks the small tier and what makes Layers 02 (Collaboration) and 03 (Infrastructure) priceable. As inference prices fall, margin widens because price stays anchored to displaced human cost, not to COGS.
+            ACVs are driven by <span className="font-semibold" style={{ color: TEXT }}>seats × activation × decision-class mix</span>, not by token volume. Unit economics from Slide 11 produce roughly 90% gross margin across the band, so the commercial risk is <em>activation</em> (how many decision-class calls an active seat actually runs per workday), not unit economics. The fixed platform fee de-risks the small tier and monetises Layer 02 (Collaboration: shared Playbooks, comparability) and Layer 03 (Infrastructure: standards-as-code, audit, regulatory defensibility). As inference prices fall over time, margin widens because customer price stays anchored to displaced human cost, not to COGS (Cost Of Goods Sold = what we pay model vendors).
           </p>
         </div>
       </div>
