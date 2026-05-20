@@ -1332,7 +1332,7 @@ function S09bAugmentationMechanics() {
           style={{ borderColor: `hsl(${PURPLE} / 0.5)`, background: `hsl(${PURPLE} / 0.06)` }}>
           <Lock size={20} style={{ color: `hsl(${PURPLE})` }} />
           <p style={{ fontSize: 15.5, color: TEXT, lineHeight: 1.4 }}>
-            <span className="font-bold">The org chart becomes a permission graph.</span> Seniority is no longer a meeting calendar — it is a signature on a Playbook. Juniors ship from day one; the system makes sure they ship at senior quality.
+            <span className="font-bold">The org chart becomes a permission graph.</span> Seniority is no longer a meeting calendar. It is a signature on a Playbook. Juniors ship from day one; the system makes sure they ship at senior quality.
           </p>
         </div>
       </div>
