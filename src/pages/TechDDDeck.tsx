@@ -136,9 +136,88 @@ function S01Cover() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 02 — INFRASTRUCTURE SHIFT (Data → Cognitive)
+// SLIDE 02 — THE THREE HORIZONS COLLAPSE
 // ═════════════════════════════════════════════════════════════════════════════
-function S02Shift() {
+function S02Horizons() {
+  const past = [
+    { h: "H3 · Transform", sub: "5+ yr bets", w: "55%", color: PURPLE },
+    { h: "H2 · Improve", sub: "1-3 yr programmes", w: "75%", color: ACCENT },
+    { h: "H1 · Run", sub: "Quarter to quarter", w: "100%", color: GREEN },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={2} total={TOTAL} />
+      <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
+      <div className="relative z-10">
+        <Tag label="The Context We Operate In" />
+        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 64, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          The three horizons used to be sequential. <span style={{ color: `hsl(${ACCENT})` }}>They now run simultaneously, at the edge.</span>
+        </h2>
+
+        <div className="grid grid-cols-2 gap-10 mt-12">
+          {/* PAST */}
+          <div className="rounded-2xl border p-10" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 520 }}>
+            <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 14, color: SUBTLE }}>The past · sequential</p>
+            <p className="font-bold mb-8" style={{ fontSize: 32, color: TEXT }}>Staircase of horizons</p>
+            <div className="flex flex-col gap-4 items-start">
+              {past.map(p => (
+                <div key={p.h} className="rounded-xl border-2 px-6 py-4 flex items-center justify-between"
+                  style={{
+                    width: p.w, borderColor: `hsl(${p.color} / 0.4)`,
+                    background: `linear-gradient(90deg, hsl(${p.color} / 0.06), hsl(${p.color} / 0.14))`,
+                  }}>
+                  <span className="font-bold" style={{ fontSize: 22, color: TEXT }}>{p.h}</span>
+                  <span style={{ fontSize: 16, color: MUTED }}>{p.sub}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 italic" style={{ fontSize: 16, color: MUTED }}>
+              Run today. Improve next year. Transform on the five-year plan.
+            </p>
+          </div>
+
+          {/* TODAY */}
+          <div className="rounded-2xl border-2 p-10 relative overflow-hidden"
+            style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.04)`, height: 520 }}>
+            <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>Today · collapsed</p>
+            <p className="font-bold mb-8" style={{ fontSize: 32, color: TEXT }}>Permanent edge state</p>
+
+            <div className="relative mx-auto" style={{ width: 360, height: 280 }}>
+              {/* three overlapping rings */}
+              <div className="absolute rounded-full border-2"
+                style={{ width: 220, height: 220, left: 0, top: 30, borderColor: `hsl(${GREEN} / 0.55)`, background: `hsl(${GREEN} / 0.10)` }} />
+              <div className="absolute rounded-full border-2"
+                style={{ width: 220, height: 220, left: 140, top: 30, borderColor: `hsl(${ACCENT} / 0.55)`, background: `hsl(${ACCENT} / 0.10)` }} />
+              <div className="absolute rounded-full border-2"
+                style={{ width: 220, height: 220, left: 70, top: 0, borderColor: `hsl(${PURPLE} / 0.55)`, background: `hsl(${PURPLE} / 0.10)` }} />
+              {/* labels */}
+              <span className="absolute font-bold" style={{ left: 24, top: 232, fontSize: 16, color: `hsl(${GREEN})` }}>H1 Run</span>
+              <span className="absolute font-bold" style={{ left: 260, top: 232, fontSize: 16, color: `hsl(${ACCENT})` }}>H2 Improve</span>
+              <span className="absolute font-bold text-center" style={{ left: 130, top: -22, fontSize: 16, color: `hsl(${PURPLE})`, width: 120 }}>H3 Transform</span>
+              {/* center label */}
+              <div className="absolute flex items-center justify-center text-center font-bold"
+                style={{ left: 130, top: 110, width: 120, height: 60, fontSize: 14, color: TEXT }}>
+                same week<br />same team
+              </div>
+            </div>
+
+            <p className="mt-6 italic" style={{ fontSize: 16, color: MUTED }}>
+              Every business now runs, improves, and transforms on the same calendar week.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Footer text="Sequential planning cycles and static SOPs cannot hold this state. A runtime can. That is the cognitive infrastructure on the next slide." />
+      <SlideBar from={GREEN} to={PURPLE} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 03 — INFRASTRUCTURE SHIFT (Data → Cognitive)
+// ═════════════════════════════════════════════════════════════════════════════
+function S03Shift() {
   const past = [
     { icon: Database, label: "Database", sub: "Rows, tables, schema" },
     { icon: Layers, label: "ORM / Logic", sub: "Hibernate, services" },
