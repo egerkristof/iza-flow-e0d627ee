@@ -256,68 +256,104 @@ function S03Shift() {
           </div>
 
           {/* Present — topology, not a stack. LLM runs vertically through all layers. */}
-          <div className="rounded-2xl border-2 p-10 relative" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.04)` }}>
-            <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>The AI era</p>
-            <p className="font-bold mb-8" style={{ fontSize: 36, color: TEXT }}>Cognitive Infrastructure</p>
+          <div className="rounded-2xl border-2 p-8 relative" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.04)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] mb-1.5" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>The AI era</p>
+            <p className="font-bold mb-5" style={{ fontSize: 32, color: TEXT }}>Cognitive Infrastructure</p>
 
-            <div className="flex gap-5">
-              {/* Three layers (left side of right column) */}
-              <div className="flex-1 flex flex-col gap-4">
-                {/* Top — Knowledge Plane (fused) */}
-                <div className="p-5 rounded-xl bg-white border-2" style={{ borderColor: `hsl(${ACCENT} / 0.3)` }}>
-                  <div className="flex items-center gap-3 mb-3">
-                    <Compass size={26} style={{ color: `hsl(${ACCENT})` }} />
-                    <p className="font-semibold" style={{ fontSize: 22, color: TEXT }}>Knowledge Plane</p>
+            <div className="flex gap-4 items-stretch">
+              {/* Three layers */}
+              <div className="flex-1 flex flex-col gap-3">
+                {/* Top — Knowledge Plane */}
+                <div className="p-4 rounded-xl bg-white border-2" style={{ borderColor: `hsl(${ACCENT} / 0.3)` }}>
+                  <div className="flex items-center gap-2.5 mb-2.5">
+                    <Compass size={22} style={{ color: `hsl(${ACCENT})` }} />
+                    <p className="font-semibold" style={{ fontSize: 20, color: TEXT }}>Knowledge Plane</p>
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <div className="flex items-center gap-2"><Database size={14} style={{ color: SUBTLE }} /><p style={{ fontSize: 15, color: MUTED }}>Your governed data</p></div>
-                    <div className="flex items-center gap-2"><ShieldCheck size={14} style={{ color: SUBTLE }} /><p style={{ fontSize: 15, color: MUTED }}>Intent · policy · judgment</p></div>
-                    <div className="flex items-center gap-2"><Globe size={14} style={{ color: SUBTLE }} /><p style={{ fontSize: 15, color: MUTED }}>External knowledge & live research</p></div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { icon: Database, label: "Governed data" },
+                      { icon: ShieldCheck, label: "Intent · policy · judgment" },
+                      { icon: Globe, label: "External & live research" },
+                    ].map((c) => (
+                      <div key={c.label} className="rounded-lg border px-2.5 py-2 flex flex-col gap-1.5"
+                        style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+                        <c.icon size={14} style={{ color: `hsl(${ACCENT})` }} />
+                        <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{c.label}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div className="flex justify-center"><ArrowDown size={18} style={{ color: `hsl(${ACCENT})` }} /></div>
+                <div className="flex justify-center -my-1"><ArrowDown size={16} style={{ color: `hsl(${ACCENT})` }} /></div>
                 {/* Middle — Semantic Layer */}
-                <div className="p-5 rounded-xl bg-white border-2" style={{ borderColor: `hsl(${ACCENT} / 0.3)` }}>
-                  <div className="flex items-center gap-3 mb-1.5">
-                    <Network size={26} style={{ color: `hsl(${ACCENT})` }} />
-                    <p className="font-semibold" style={{ fontSize: 22, color: TEXT }}>Semantic Layer · LIZA OS</p>
+                <div className="p-4 rounded-xl bg-white border-2" style={{ borderColor: `hsl(${ACCENT} / 0.3)` }}>
+                  <div className="flex items-center gap-2.5 mb-2.5">
+                    <Network size={22} style={{ color: `hsl(${ACCENT})` }} />
+                    <p className="font-semibold" style={{ fontSize: 20, color: TEXT }}>Semantic Layer · LIZA OS</p>
                   </div>
-                  <p style={{ fontSize: 15, color: MUTED }}>Executable knowledge · state-locked Playbooks</p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { icon: Zap, label: "Executable knowledge" },
+                      { icon: Lock, label: "State-locked Playbooks" },
+                      { icon: FileText, label: "Artifact Store" },
+                    ].map((c) => (
+                      <div key={c.label} className="rounded-lg border px-2.5 py-2 flex flex-col gap-1.5"
+                        style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+                        <c.icon size={14} style={{ color: `hsl(${ACCENT})` }} />
+                        <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{c.label}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex justify-center"><ArrowDown size={18} style={{ color: `hsl(${ACCENT})` }} /></div>
-                {/* Bottom — Conversational Surface */}
-                <div className="p-5 rounded-xl bg-white border-2" style={{ borderColor: `hsl(${ACCENT} / 0.3)` }}>
-                  <div className="flex items-center gap-3 mb-1.5">
-                    <MessageSquare size={26} style={{ color: `hsl(${ACCENT})` }} />
-                    <p className="font-semibold" style={{ fontSize: 22, color: TEXT }}>Conversational Surface</p>
+                <div className="flex justify-center -my-1"><ArrowDown size={16} style={{ color: `hsl(${ACCENT})` }} /></div>
+                {/* Bottom — Conversational Surface (collaborative) */}
+                <div className="p-4 rounded-xl bg-white border-2" style={{ borderColor: `hsl(${ACCENT} / 0.3)` }}>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-2.5">
+                      <MessageSquare size={22} style={{ color: `hsl(${ACCENT})` }} />
+                      <p className="font-semibold" style={{ fontSize: 20, color: TEXT }}>Collaborative Surface</p>
+                    </div>
+                    {/* avatar dots — signals collaboration */}
+                    <div className="flex -space-x-1.5">
+                      {[0,1,2,3].map(i => (
+                        <div key={i} className="rounded-full border-2 border-white"
+                          style={{ width: 18, height: 18,
+                            background: i === 3 ? `hsl(${ACCENT})` : `hsl(${ACCENT} / ${0.25 + i*0.15})` }} />
+                      ))}
+                    </div>
                   </div>
-                  <p style={{ fontSize: 15, color: MUTED }}>Chat · copilots · agent UI · where humans meet the system</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}>
+                    Chat · copilots · agent UI. Humans and agents collaborate in the same thread.
+                  </p>
                 </div>
               </div>
 
-              {/* Vertical LLM spine — threads through every layer */}
-              <div className="relative flex flex-col items-center" style={{ width: 72 }}>
-                <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 rounded-full"
-                     style={{ width: 4, background: `linear-gradient(180deg, hsl(${ACCENT}) 0%, hsl(${GREEN}) 100%)`, opacity: 0.55 }} />
-                {/* connector dots align roughly with the 3 cards */}
-                {[0, 1, 2].map((i) => (
-                  <div key={i}
-                    className="relative rounded-full border-2 bg-white"
-                    style={{
-                      width: 18, height: 18, borderColor: `hsl(${ACCENT})`,
-                      marginTop: i === 0 ? 24 : "auto", marginBottom: i === 2 ? 24 : 0,
-                    }} />
-                ))}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap font-mono uppercase tracking-[0.22em]"
-                     style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>
-                  LLM at runtime
+              {/* Vertical LLM spine — label on top, rail with nodes, no overlap */}
+              <div className="relative flex flex-col items-center" style={{ width: 56 }}>
+                {/* top cap pill */}
+                <div className="px-2.5 py-1.5 rounded-md font-mono uppercase tracking-[0.16em] text-center leading-tight"
+                  style={{
+                    fontSize: 10,
+                    color: `hsl(${ACCENT})`,
+                    background: `hsl(${ACCENT} / 0.08)`,
+                    border: `1px solid hsl(${ACCENT} / 0.3)`,
+                    minWidth: 48,
+                  }}>
+                  LLM<br/>runtime
+                </div>
+                {/* rail */}
+                <div className="relative flex-1 w-full mt-2">
+                  <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 rounded-full"
+                    style={{ width: 3, background: `linear-gradient(180deg, hsl(${ACCENT}) 0%, hsl(${GREEN}) 100%)`, opacity: 0.5 }} />
+                  {/* 3 nodes evenly spaced to align with layer centers */}
+                  <div className="absolute inset-0 flex flex-col justify-around items-center">
+                    {[0, 1, 2].map((i) => (
+                      <div key={i} className="rounded-full border-2 bg-white relative z-10"
+                        style={{ width: 16, height: 16, borderColor: `hsl(${ACCENT})` }} />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-
-            <p className="mt-6 text-center" style={{ fontSize: 14, color: SUBTLE, fontStyle: "italic" }}>
-              The LLM is not a layer. It is the runtime that threads through every layer.
-            </p>
           </div>
         </div>
       </div>
