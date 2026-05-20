@@ -7,6 +7,7 @@ import {
   Eye, Activity, Users, GraduationCap, MessageSquare, Globe, Compass,
   GitPullRequest, CheckCircle2, AlertTriangle, Send, UserCheck,
   Leaf, HeartHandshake, LineChart, HelpCircle,
+  User, Building2, KeyRound, FileSignature, ArrowLeftRight, Package,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -1332,57 +1333,21 @@ function S09bAugmentationMechanics() {
 // SLIDE 12 — 2030 SKILLS · SOCIETAL IMPACT (Skill-Agent Layer + SDG telemetry)
 // ═════════════════════════════════════════════════════════════════════════════
 function S12SocietalImpact() {
-  // Only the 6 production Skill-Agents are plotted. Coordinates chosen so labels never collide.
-  // x = share of employers considering core in 2025 (50-80 range = "Core skills 2030" quadrant)
-  // y = expected increase in use by 2030 (50-90 range)
+  // Compact WEF 2030 core-skills quadrant (secondary proof, not the hero).
   const core2030 = [
-    { x: 70, y: 88, label: "AI & big data" },
+    { x: 72, y: 88, label: "AI & big data" },
     { x: 56, y: 78, label: "Creative thinking" },
-    { x: 76, y: 70, label: "Resilience & agility" },
+    { x: 78, y: 70, label: "Resilience & agility" },
     { x: 72, y: 60, label: "Analytical thinking" },
-    { x: 58, y: 65, label: "Systems thinking" },
-    { x: 60, y: 54, label: "Curiosity & lifelong learning" },
-  ];
-
-  // Each WEF core skill is realised as a Skill-Agent (a locked Playbook namespace in AACE).
-  const skillAgents = [
-    {
-      skill: "Creative thinking", color: PURPLE,
-      agent: "skill.creative.divergence",
-      mechanic: "Forces ≥3 reframes before any synthesis. Blocks first-draft acceptance.",
-      telemetry: "divergence.count · reframe.depth · novelty.score",
-    },
-    {
-      skill: "Analytical thinking", color: ACCENT,
-      agent: "skill.analytical.decompose",
-      mechanic: "Counter-prompts: assumption check, base-rate check, falsification ask.",
-      telemetry: "assumption.surfaced · evidence.linked · disconfirm.attempted",
-    },
-    {
-      skill: "Systems thinking", color: GREEN,
-      agent: "skill.systems.map",
-      mechanic: "Auto-builds stakeholder + feedback-loop graph from the brief.",
-      telemetry: "nodes.mapped · feedback.loops · 2nd-order.effects",
-    },
-    {
-      skill: "Resilience & agility", color: GOLD,
-      agent: "skill.resilience.stress",
-      mechanic: "Runs pre-mortem and 3-scenario stress-test before lock.",
-      telemetry: "scenarios.run · failure.modes · contingency.linked",
-    },
-    {
-      skill: "Curiosity & lifelong learning", color: "200 60% 55%",
-      agent: "skill.curiosity.questions",
-      mechanic: "Suppresses answer-mode. Returns the 5 questions the user did not ask.",
-      telemetry: "questions.raised · gaps.flagged · followup.opened",
-    },
+    { x: 58, y: 64, label: "Systems thinking" },
+    { x: 62, y: 54, label: "Curiosity & learning" },
   ];
 
   const sdgs = [
-    { n: "SDG 4", label: "Quality Education", color: RED },
-    { n: "SDG 8", label: "Decent Work & Growth", color: ACCENT },
-    { n: "SDG 9", label: "Innovation & Infra", color: GOLD },
-    { n: "SDG 10", label: "Reduced Inequalities", color: PURPLE },
+    { n: "SDG 4",  label: "Quality Education",       color: RED },
+    { n: "SDG 8",  label: "Decent Work & Growth",    color: ACCENT },
+    { n: "SDG 9",  label: "Innovation & Infra",      color: GOLD },
+    { n: "SDG 10", label: "Reduced Inequalities",    color: PURPLE },
   ];
 
   return (
@@ -1391,111 +1356,133 @@ function S12SocietalImpact() {
       <PageNumber n={12} total={TOTAL} />
       <PhaseChip phase="Phase 4 · Societal Impact" color={GREEN} />
       <div className="relative z-10">
-        <Tag label="2030 Skills Infrastructure · Human Contribution, Measured" color={GREEN} />
-        <h2 className="font-bold leading-[1.04] mb-8" style={{ fontSize: 48, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1770 }}>
-          The same engine that meters decisions also <span style={{ color: `hsl(${GREEN})` }}>meters the 2030 skills the AI is exercising</span>.
+        <Tag label="Knowledge Sovereignty · The Portable Career Graph" color={GREEN} />
+        <h2 className="font-bold leading-[1.04] mb-3" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1770 }}>
+          AI&apos;s missing layer: a knowledge graph the <span style={{ color: `hsl(${GREEN})` }}>human owns and carries</span>.
         </h2>
+        <p className="mb-7" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          In the AI era, a person&apos;s career capital is the context graph they encode. LIZA is the infrastructure that lets humans own it, version it, and port it across employers. The consequence is measurable progress on the 2030 skills the WEF says will matter most.
+        </p>
 
-        <div className="grid grid-cols-[1.05fr_1.5fr] gap-10 items-start">
-          {/* LEFT — Abstracted WEF 2030 quadrant */}
-          <div className="rounded-2xl border p-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p className="font-mono uppercase tracking-[0.15em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>
-              WEF Future of Jobs 2025 · core skills 2030
+        <div className="grid grid-cols-[1.45fr_1fr] gap-8 items-start">
+          {/* LEFT — Portability mechanism (the new hero) */}
+          <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
+              Portable Context Bundle · signed to the individual
             </p>
-            <div className="relative" style={{ width: "100%", height: 520, background: "white", borderRadius: 12, border: `1px solid ${CHROME_BORDER}` }}>
-              {/* Quadrant tint — top-right = Core skills 2030 */}
-              <div className="absolute" style={{ left: "50%", top: 0, width: "50%", height: "50%", background: `hsl(${GREEN} / 0.08)` }} />
-              {/* Axes */}
-              <div className="absolute" style={{ left: "50%", top: 0, bottom: 0, width: 1, background: GRID_LINE }} />
-              <div className="absolute" style={{ top: "50%", left: 0, right: 0, height: 1, background: GRID_LINE }} />
-              {/* Quadrant labels */}
-              <p className="absolute" style={{ top: 8, left: 12, fontSize: 11, color: SUBTLE, letterSpacing: "0.1em" }}>EMERGING</p>
-              <p className="absolute font-semibold" style={{ top: 8, right: 12, fontSize: 12, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>CORE SKILLS 2030</p>
-              <p className="absolute" style={{ bottom: 8, left: 12, fontSize: 11, color: SUBTLE, letterSpacing: "0.1em" }}>OUT OF FOCUS</p>
-              <p className="absolute" style={{ bottom: 8, right: 12, fontSize: 11, color: SUBTLE, letterSpacing: "0.1em" }}>STEADY</p>
-              {/* Plotted skills */}
-              {core2030.map(s => (
-                <div key={s.label} className="absolute" style={{ left: `${s.x}%`, top: `${100 - s.y}%`, transform: "translate(-50%, -50%)" }}>
-                  <div className="rounded-full" style={{
-                    width: 16, height: 16,
-                    background: `hsl(${GREEN})`,
-                    boxShadow: `0 0 0 5px hsl(${GREEN} / 0.18)`,
-                  }} />
-                  <p className="absolute whitespace-nowrap font-semibold" style={{
-                    left: 22, top: -6, fontSize: 13, color: TEXT,
-                  }}>{s.label}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 flex items-center gap-2" style={{ color: MUTED, fontSize: 13 }}>
-              <Leaf size={15} style={{ color: `hsl(${GREEN})` }} />
-              <span>One Skill-Agent per node. Mapped on the right.</span>
-            </div>
-          </div>
 
-          {/* RIGHT — Skill → Agent → Telemetry → SDG */}
-          <div className="flex flex-col gap-4">
-            <div className="rounded-2xl border-2 p-5" style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.05)` }}>
-              <p className="font-mono uppercase tracking-[0.15em] mb-3" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
-                Skill-Agent Layer · runtime mapping
-              </p>
-              <div className="grid grid-cols-[1.15fr_1.35fr_1.4fr] gap-x-3 gap-y-2 pb-2 border-b" style={{ borderColor: CHROME_BORDER }}>
-                <p className="font-mono uppercase" style={{ fontSize: 10, color: SUBTLE, letterSpacing: "0.1em" }}>WEF skill</p>
-                <p className="font-mono uppercase" style={{ fontSize: 10, color: SUBTLE, letterSpacing: "0.1em" }}>Agent · counter-mechanic</p>
-                <p className="font-mono uppercase" style={{ fontSize: 10, color: SUBTLE, letterSpacing: "0.1em" }}>Telemetry emitted</p>
+            {/* Person node + Bundle + 3 orgs */}
+            <div className="relative rounded-xl p-5" style={{ background: "white", border: `1px solid ${CHROME_BORDER}`, minHeight: 320 }}>
+              {/* Person */}
+              <div className="absolute" style={{ left: 18, top: "50%", transform: "translateY(-50%)", width: 150 }}>
+                <div className="rounded-xl border-2 p-3 flex flex-col items-center text-center" style={{ borderColor: `hsl(${ACCENT} / 0.5)`, background: `hsl(${ACCENT} / 0.06)` }}>
+                  <User size={22} style={{ color: `hsl(${ACCENT})` }} />
+                  <p className="font-bold mt-1" style={{ fontSize: 13.5, color: TEXT }}>The Individual</p>
+                  <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.3 }}>holds the signing key</p>
+                </div>
               </div>
-              {skillAgents.map(s => (
-                <div key={s.skill} className="grid grid-cols-[1.15fr_1.35fr_1.4fr] gap-x-3 gap-y-1 py-2 border-b" style={{ borderColor: `${CHROME_BORDER}80` }}>
-                  <div className="flex items-center gap-2">
-                    <span className="rounded-full" style={{ width: 8, height: 8, background: `hsl(${s.color})` }} />
-                    <p className="font-semibold" style={{ fontSize: 13.5, color: TEXT }}>{s.skill}</p>
-                  </div>
-                  <div>
-                    <p className="font-mono" style={{ fontSize: 11.5, color: `hsl(${s.color})` }}>{s.agent}</p>
-                    <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.3 }}>{s.mechanic}</p>
-                  </div>
-                  <p className="font-mono" style={{ fontSize: 11, color: MUTED, lineHeight: 1.4 }}>{s.telemetry}</p>
-                </div>
-              ))}
-            </div>
 
-            {/* Measurement loop */}
-            <div className="rounded-2xl border p-5" style={{ borderColor: CHROME_BORDER, background: "white" }}>
-              <p className="font-mono uppercase tracking-[0.15em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>
-                Impact telemetry loop — same engine, two readouts
-              </p>
-              <div className="flex items-stretch gap-2 mb-3">
+              {/* Bundle (center) */}
+              <div className="absolute" style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)", width: 230 }}>
+                <div className="rounded-xl border-2 p-3 text-center" style={{ borderColor: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.10)`, boxShadow: `0 6px 24px hsl(${GREEN} / 0.18)` }}>
+                  <div className="flex items-center justify-center gap-1.5 mb-1">
+                    <Package size={16} style={{ color: `hsl(${GREEN})` }} />
+                    <p className="font-mono font-bold" style={{ fontSize: 11, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>CONTEXT BUNDLE</p>
+                  </div>
+                  <p className="font-bold" style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.25 }}>Playbooks · Skill-Agents · Decisions · Telemetry</p>
+                  <div className="flex items-center justify-center gap-2 mt-2 pt-2 border-t" style={{ borderColor: `hsl(${GREEN} / 0.3)` }}>
+                    <KeyRound size={11} style={{ color: `hsl(${GREEN})` }} />
+                    <span className="font-mono" style={{ fontSize: 10, color: MUTED }}>signed · versioned · exportable</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Arrows person ↔ bundle */}
+              <div className="absolute" style={{ left: 172, top: "50%", transform: "translateY(-50%)" }}>
+                <ArrowLeftRight size={20} style={{ color: `hsl(${ACCENT})` }} />
+              </div>
+
+              {/* Three orgs stacked right */}
+              <div className="absolute flex flex-col gap-2.5" style={{ right: 18, top: 18, bottom: 18, width: 175, justifyContent: "space-between" }}>
                 {[
-                  { i: HelpCircle, l: "Skill-Agent prompts the human", c: GREEN },
-                  { i: Activity, l: "AACE emits skill.* event", c: ACCENT },
-                  { i: LineChart, l: "Aggregate → skill velocity + business KPI", c: GOLD },
-                  { i: HeartHandshake, l: "Roll-up → SDG impact report", c: PURPLE },
-                ].map((step, idx, arr) => (
-                  <div key={step.l} className="flex items-center gap-2 flex-1">
-                    <div className="rounded-xl border-2 p-3 flex-1 flex flex-col items-center text-center"
-                      style={{ borderColor: `hsl(${step.c} / 0.4)`, background: `hsl(${step.c} / 0.06)`, minHeight: 88 }}>
-                      <step.i size={20} style={{ color: `hsl(${step.c})` }} />
-                      <p className="font-semibold mt-1" style={{ fontSize: 12, color: TEXT, lineHeight: 1.25 }}>{step.l}</p>
+                  { l: "Employer A · today",   sub: "deploys bundle", c: GOLD },
+                  { l: "Employer B · next",    sub: "imports bundle", c: PURPLE },
+                  { l: "Own venture · later",  sub: "forks bundle",   c: ACCENT },
+                ].map(o => (
+                  <div key={o.l} className="rounded-lg border p-2.5 flex items-center gap-2" style={{ borderColor: `hsl(${o.c} / 0.4)`, background: `hsl(${o.c} / 0.05)` }}>
+                    <Building2 size={16} style={{ color: `hsl(${o.c})`, flexShrink: 0 }} />
+                    <div>
+                      <p className="font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{o.l}</p>
+                      <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.2 }}>{o.sub}</p>
                     </div>
-                    {idx < arr.length - 1 && <ArrowRight size={16} style={{ color: SUBTLE, flexShrink: 0 }} />}
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-2">
+
+              {/* Arrows bundle → orgs */}
+              <div className="absolute" style={{ right: 195, top: "50%", transform: "translateY(-50%)" }}>
+                <ArrowRight size={20} style={{ color: SUBTLE }} />
+              </div>
+            </div>
+
+            {/* Three guarantees */}
+            <div className="grid grid-cols-3 gap-3 mt-4">
+              {[
+                { i: KeyRound,      t: "Person-owned",   s: "Signed to a user identity, not a tenant" },
+                { i: FileSignature, t: "Standards-based", s: "Maps to WEF Global Skills Taxonomy" },
+                { i: ArrowLeftRight,t: "Zero lock-in",   s: "Export · re-import · fork across orgs" },
+              ].map(g => (
+                <div key={g.t} className="rounded-lg border p-3" style={{ borderColor: CHROME_BORDER, background: "white" }}>
+                  <g.i size={16} style={{ color: `hsl(${GREEN})` }} />
+                  <p className="font-bold mt-1" style={{ fontSize: 12.5, color: TEXT }}>{g.t}</p>
+                  <p style={{ fontSize: 11, color: MUTED, lineHeight: 1.3 }}>{g.s}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* RIGHT — WEF quadrant as proof + SDG outcomes */}
+          <div className="flex flex-col gap-4">
+            <div className="rounded-2xl border p-5" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <p className="font-mono uppercase tracking-[0.15em] mb-2" style={{ fontSize: 10.5, color: SUBTLE }}>
+                Proof of alignment · WEF Future of Jobs 2025
+              </p>
+              <p className="mb-3" style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.35 }}>
+                The skills the bundle exercises sit in the top-right quadrant: <span className="font-semibold" style={{ color: `hsl(${GREEN})` }}>Core Skills 2030</span>.
+              </p>
+              <div className="relative" style={{ width: "100%", height: 300, background: "white", borderRadius: 10, border: `1px solid ${CHROME_BORDER}` }}>
+                <div className="absolute" style={{ left: "50%", top: 0, width: "50%", height: "50%", background: `hsl(${GREEN} / 0.08)` }} />
+                <div className="absolute" style={{ left: "50%", top: 0, bottom: 0, width: 1, background: GRID_LINE }} />
+                <div className="absolute" style={{ top: "50%", left: 0, right: 0, height: 1, background: GRID_LINE }} />
+                <p className="absolute font-semibold" style={{ top: 6, right: 10, fontSize: 10, color: `hsl(${GREEN})`, letterSpacing: "0.1em" }}>CORE 2030</p>
+                {core2030.map(s => (
+                  <div key={s.label} className="absolute" style={{ left: `${s.x}%`, top: `${100 - s.y}%`, transform: "translate(-50%, -50%)" }}>
+                    <div className="rounded-full" style={{ width: 11, height: 11, background: `hsl(${GREEN})`, boxShadow: `0 0 0 4px hsl(${GREEN} / 0.18)` }} />
+                    <p className="absolute whitespace-nowrap font-semibold" style={{ left: 16, top: -5, fontSize: 10.5, color: TEXT }}>{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border p-5" style={{ borderColor: CHROME_BORDER, background: "white" }}>
+              <p className="font-mono uppercase tracking-[0.15em] mb-3" style={{ fontSize: 10.5, color: SUBTLE }}>
+                Outcomes, not claims · measured per bundle
+              </p>
+              <div className="flex flex-col gap-2">
                 {sdgs.map(s => (
-                  <div key={s.n} className="px-3 py-1.5 rounded-lg border flex items-center gap-2"
+                  <div key={s.n} className="px-3 py-2 rounded-lg border flex items-center gap-2.5"
                     style={{ borderColor: `hsl(${s.color} / 0.35)`, background: `hsl(${s.color} / 0.06)` }}>
-                    <Globe size={13} style={{ color: `hsl(${s.color})` }} />
+                    <Globe size={14} style={{ color: `hsl(${s.color})`, flexShrink: 0 }} />
                     <span className="font-mono font-bold" style={{ fontSize: 11, color: `hsl(${s.color})` }}>{s.n}</span>
-                    <span style={{ fontSize: 11.5, color: TEXT }}>{s.label}</span>
+                    <span style={{ fontSize: 12, color: TEXT }}>{s.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="rounded-xl border-2 p-4" style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.08)` }}>
-              <p style={{ fontSize: 15.5, color: TEXT, lineHeight: 1.4 }}>
-                <span className="font-bold">For impact investors:</span> the same Decision-Class meter that prices a run also tags <span className="font-mono">skill.*</span> events. Every euro of revenue carries a verifiable record of which 2030 skills the workforce exercised to earn it.
+              <p style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.4 }}>
+                <span className="font-bold">For Research Impact Ventures:</span> we are the runtime layer for the WEF Global Skills Passport thesis. Knowledge stops being a hostage of the employer and becomes the individual&apos;s compounding asset.
               </p>
             </div>
           </div>
@@ -1519,7 +1506,7 @@ const SLIDES = [
   { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
   { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
   { id: "augmentation-mechanics", title: "Augmentation Mechanics", component: <S09bAugmentationMechanics /> },
-  { id: "societal-impact", title: "2030 Skills · Societal Impact", component: <S12SocietalImpact /> },
+  { id: "societal-impact", title: "Knowledge Sovereignty · Societal Impact", component: <S12SocietalImpact /> },
 ];
 
 // ─── Deck shell ──────────────────────────────────────────────────────────────
