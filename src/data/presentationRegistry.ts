@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import BridgeDeck from "@/pages/BridgeDeck";
+import TechDDDeck from "@/pages/TechDDDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
