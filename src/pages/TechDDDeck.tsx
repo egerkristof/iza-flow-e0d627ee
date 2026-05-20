@@ -6,6 +6,7 @@ import {
   Maximize2, X, Grid3x3, AlertCircle, Sparkles, FileText, Boxes, Radio, Zap,
   Eye, Activity, Users, GraduationCap, MessageSquare, Globe, Compass,
   GitPullRequest, CheckCircle2, AlertTriangle, Send, UserCheck,
+  Leaf, HeartHandshake, LineChart, HelpCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -102,7 +103,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 11;
+const TOTAL = 12;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 01 — COVER
