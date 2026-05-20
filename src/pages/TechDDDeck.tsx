@@ -4,7 +4,7 @@ import {
   Database, Cpu, Layers, GitBranch, Workflow, ShieldCheck, Coins, TrendingDown,
   Gauge, Brain, Lock, Network, ArrowRight, ArrowDown, ChevronLeft, ChevronRight,
   Maximize2, X, Grid3x3, AlertCircle, Sparkles, FileText, Boxes, Radio, Zap,
-  Eye, Activity, Users, GraduationCap,
+  Eye, Activity, Users, GraduationCap, MessageSquare, Globe, Compass,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
