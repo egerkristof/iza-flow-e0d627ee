@@ -898,6 +898,189 @@ function S08PricingMetering() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 09 — DECISION-CLASS CLASSIFIER (How tiering happens technically)
+// ═════════════════════════════════════════════════════════════════════════════
+function S08bClassifier() {
+  const tiers = [
+    {
+      mult: "1×", label: "Operational Execution", color: GREEN,
+      meter: "OD · Operational Decision",
+      tag: "exec.*",
+      scope: "Single artifact",
+      blast: "Reversible · one workflow run",
+      approver: "None or peer review",
+      example: "exec.memo.draft · exec.meeting.summarise · exec.template.fill",
+    },
+    {
+      mult: "5×", label: "Process Design & Governance", color: ACCENT,
+      meter: "GC · Governed Change",
+      tag: "governance.* · process.*",
+      scope: "Standard · Playbook · Procedure (org rules)",
+      blast: "Versioned · affects every future run",
+      approver: "Senior owner sign-off",
+      example: "governance.playbook.update · process.standard.publish · governance.drift.review",
+    },
+    {
+      mult: "25×", label: "Strategic Simulation", color: PURPLE,
+      meter: "SS · Strategic Simulation",
+      tag: "strategy.* · simulation.*",
+      scope: "No production write · scenario sandbox + memo",
+      blast: "Informs investment · market · M&A",
+      approver: "Partner / C-level",
+      example: "strategy.pivot.wargame · simulation.thesis.stress · strategy.scenario.tree",
+    },
+  ];
+
+  const signals = [
+    { icon: GitBranch, label: "Playbook class tag", note: "Registry metadata on the locked Playbook" },
+    { icon: FileText, label: "Write scope", note: "Artifact · Standard · Sandbox-only" },
+    { icon: ShieldCheck, label: "Blast radius / reversibility", note: "Run-level · Org-level · Strategic" },
+    { icon: Users, label: "Required approver role", note: "Peer · Senior · Partner" },
+  ];
+
+  return (
+    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={9} total={TOTAL} />
+      <PhaseChip phase="Phase 3 · Commercial" owner="István" color={GOLD} />
+      <div className="relative z-10">
+        <Tag label="Decision-Class Classifier · Runtime" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          How the system knows what tier this run belongs to. <span style={{ color: `hsl(${GOLD})` }}>Deterministically. At Sense. Before State-Lock.</span>
+        </h2>
+        <p style={{ fontSize: 18, color: MUTED, maxWidth: 1500, marginBottom: 20 }}>
+          Tier is read off the locked Playbook's registry metadata. Not inferred from the prompt. Not a model judgement.
+        </p>
+
+        {/* Pipeline strip */}
+        <div className="rounded-2xl border p-5 mb-5" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+          <div className="flex items-stretch gap-3">
+            {/* Step 1 — Request */}
+            <div className="flex-1 rounded-xl border bg-white px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>01 · Inbound</p>
+              <div className="flex items-center gap-2 mt-1.5">
+                <MessageSquare size={18} style={{ color: SUBTLE }} />
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>User / agent request</p>
+              </div>
+              <p style={{ fontSize: 12, color: MUTED, marginTop: 4 }}>Intent + payload + actor role</p>
+            </div>
+            <div className="flex items-center"><ArrowRight size={22} style={{ color: SUBTLE }} /></div>
+
+            {/* Step 2 — Sense */}
+            <div className="flex-1 rounded-xl border bg-white px-4 py-3" style={{ borderColor: `hsl(${GREEN} / 0.4)` }}>
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>02 · AACE Sense</p>
+              <div className="flex items-center gap-2 mt-1.5">
+                <Radio size={18} style={{ color: `hsl(${GREEN})` }} />
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>Intent classifier</p>
+              </div>
+              <p style={{ fontSize: 12, color: MUTED, marginTop: 4 }}>Selects candidate Playbook</p>
+            </div>
+            <div className="flex items-center"><ArrowRight size={22} style={{ color: SUBTLE }} /></div>
+
+            {/* Step 3 — Registry lookup */}
+            <div className="flex-1 rounded-xl border bg-white px-4 py-3" style={{ borderColor: `hsl(${GREEN} / 0.4)` }}>
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>03 · Registry</p>
+              <div className="flex items-center gap-2 mt-1.5">
+                <Database size={18} style={{ color: `hsl(${GREEN})` }} />
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>Playbook metadata</p>
+              </div>
+              <p style={{ fontSize: 12, color: MUTED, marginTop: 4 }}>Reads class tag + 3 signals</p>
+            </div>
+            <div className="flex items-center"><ArrowRight size={22} style={{ color: `hsl(${GOLD})` }} /></div>
+
+            {/* Step 4 — Classifier */}
+            <div className="flex-1 rounded-xl border-2 px-4 py-3" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.08)` }}>
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>04 · Classify</p>
+              <div className="flex items-center gap-2 mt-1.5">
+                <Gauge size={18} style={{ color: `hsl(${GOLD})` }} />
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>Decision-class</p>
+              </div>
+              <p style={{ fontSize: 12, color: MUTED, marginTop: 4 }}>Deterministic rule, no LLM</p>
+            </div>
+            <div className="flex items-center"><ArrowRight size={22} style={{ color: SUBTLE }} /></div>
+
+            {/* Step 5 — Route */}
+            <div className="flex-1 rounded-xl border bg-white px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>05 · Meter</p>
+              <div className="flex items-center gap-2 mt-1.5">
+                <Coins size={18} style={{ color: SUBTLE }} />
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>Tier-priced unit</p>
+              </div>
+              <p style={{ fontSize: 12, color: MUTED, marginTop: 4 }}>OD · GC · SS written to ledger</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Signal matrix */}
+        <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: CHROME_BORDER, background: "white" }}>
+          {/* Header row */}
+          <div className="grid" style={{ gridTemplateColumns: "340px 1fr 1fr 1fr" }}>
+            <div className="px-4 py-3" style={{ background: CARD_ALT, borderRight: `1px solid ${CHROME_BORDER}` }}>
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>Observable signal</p>
+            </div>
+            {tiers.map(t => (
+              <div key={t.label} className="px-4 py-3" style={{ background: `hsl(${t.color} / 0.08)`, borderRight: `1px solid ${CHROME_BORDER}` }}>
+                <div className="flex items-baseline gap-2">
+                  <span className="font-mono font-bold" style={{ fontSize: 20, color: `hsl(${t.color})`, lineHeight: 1 }}>{t.mult}</span>
+                  <p className="font-bold" style={{ fontSize: 15, color: TEXT }}>{t.label}</p>
+                </div>
+                <p className="font-mono mt-1" style={{ fontSize: 11, color: `hsl(${t.color})` }}>{t.meter}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Signal rows */}
+          {signals.map((sig, idx) => (
+            <div key={sig.label} className="grid border-t" style={{ gridTemplateColumns: "340px 1fr 1fr 1fr", borderColor: CHROME_BORDER }}>
+              <div className="px-4 py-3 flex items-start gap-2.5" style={{ background: CARD_ALT, borderRight: `1px solid ${CHROME_BORDER}` }}>
+                <sig.icon size={16} style={{ color: SUBTLE, marginTop: 2 }} />
+                <div>
+                  <p className="font-semibold" style={{ fontSize: 14, color: TEXT, lineHeight: 1.2 }}>{sig.label}</p>
+                  <p style={{ fontSize: 11, color: MUTED, marginTop: 2, lineHeight: 1.25 }}>{sig.note}</p>
+                </div>
+              </div>
+              {tiers.map(t => {
+                const value = idx === 0 ? t.tag : idx === 1 ? t.scope : idx === 2 ? t.blast : t.approver;
+                return (
+                  <div key={t.label} className="px-4 py-3" style={{ borderRight: `1px solid ${CHROME_BORDER}` }}>
+                    <p style={{ fontSize: idx === 0 ? 13 : 14, color: TEXT, lineHeight: 1.3, fontFamily: idx === 0 ? "ui-monospace, SFMono-Regular, monospace" : undefined }}>
+                      {value}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
+
+          {/* Example row */}
+          <div className="grid border-t" style={{ gridTemplateColumns: "340px 1fr 1fr 1fr", borderColor: CHROME_BORDER }}>
+            <div className="px-4 py-3" style={{ background: CARD_ALT, borderRight: `1px solid ${CHROME_BORDER}` }}>
+              <p className="font-semibold" style={{ fontSize: 14, color: TEXT }}>Example Playbook IDs</p>
+              <p style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>Real registry strings</p>
+            </div>
+            {tiers.map(t => (
+              <div key={t.label} className="px-4 py-3" style={{ borderRight: `1px solid ${CHROME_BORDER}`, background: `hsl(${t.color} / 0.03)` }}>
+                <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.45, fontFamily: "ui-monospace, SFMono-Regular, monospace" }}>{t.example}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Closing assertion */}
+        <div className="mt-5 rounded-2xl border-2 px-6 py-4 flex items-center gap-4"
+          style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.06)` }}>
+          <Lock size={22} style={{ color: `hsl(${GOLD})` }} />
+          <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-bold">Auditable by construction.</span> Every entry in the Rationale Log carries the locked_playbook_id, the class tag, and the meter unit. A CFO can defend the line item by naming the decision it bought.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={PURPLE} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 09 — THE AUGMENTATION ENGINE
 // ═════════════════════════════════════════════════════════════════════════════
 function S09Augmentation() {
