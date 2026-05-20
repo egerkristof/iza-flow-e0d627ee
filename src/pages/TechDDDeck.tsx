@@ -340,13 +340,13 @@ function S03Iceberg() {
         <div>
           <Tag label="The Context Gap" />
           <h2 className="font-bold leading-[1.05]" style={{ fontSize: 72, color: TEXT, letterSpacing: "-0.025em" }}>
-            RAG retrieves the 10%. <br />
-            <span style={{ color: `hsl(${ACCENT})` }}>LIZA OS captures the 90%.</span>
+            Data infrastructure is the 10%. <br />
+            <span style={{ color: `hsl(${ACCENT})` }}>Cognitive infrastructure is the 90%.</span>
           </h2>
           <p className="mt-10" style={{ fontSize: 26, color: MUTED, lineHeight: 1.4, maxWidth: 720 }}>
-            Policies and records are visible and indexable. The reasoning that actually
-            runs the company — exceptions, client memory, regulatory practice —
-            lives in tacit form. LIZA turns it into executable code.
+            Above the waterline sits the data infrastructure RAG and search tools index:
+            policies, records, documents. Below sits the operating reasoning that actually
+            runs the company. LIZA OS turns that 90% into executable cognitive infrastructure.
           </p>
         </div>
 
@@ -361,8 +361,8 @@ function S03Iceberg() {
           <div className="absolute left-1/2 -translate-x-1/2 top-0 w-[420px] h-[180px] rounded-t-2xl border-2 p-6 flex flex-col items-center justify-center text-center"
             style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: "white" }}>
             <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 13, color: SUBTLE }}>Above water · 10%</p>
-            <p className="font-bold mt-2" style={{ fontSize: 28, color: TEXT }}>Policies · Procedures · Records</p>
-            <p style={{ fontSize: 16, color: MUTED, marginTop: 6 }}>What RAG retrieves today</p>
+            <p className="font-bold mt-2" style={{ fontSize: 28, color: TEXT }}>Data Infrastructure</p>
+            <p style={{ fontSize: 16, color: MUTED, marginTop: 6 }}>Documents · records · policies — what RAG retrieves</p>
           </div>
 
           {/* Below water */}
@@ -373,7 +373,8 @@ function S03Iceberg() {
               clipPath: "polygon(0 0, 100% 0, 88% 100%, 12% 100%)",
             }}>
             <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>Below water · 90%</p>
-            <p className="font-bold mt-3" style={{ fontSize: 36, color: TEXT, lineHeight: 1.15 }}>Operating Reasoning</p>
+            <p className="font-bold mt-3" style={{ fontSize: 36, color: TEXT, lineHeight: 1.15 }}>Cognitive Infrastructure</p>
+            <p style={{ fontSize: 18, color: MUTED, marginTop: 4 }}>Operating reasoning · operational intelligence</p>
             <div className="mt-5 flex flex-wrap justify-center gap-2 max-w-[520px]">
               {["Client Memory", "Exceptions", "Regulatory Practice", "Tacit Judgment", "Routing Rules", "Escalation Logic"].map(t => (
                 <span key={t} className="px-3 py-1.5 rounded-full bg-white/80 border"
@@ -384,7 +385,7 @@ function S03Iceberg() {
           </div>
         </div>
       </div>
-      <Footer text="The Context Gap. LIZA OS encodes the 90% as Playbooks, Procedures, Directives, Knowledge and Preferences." />
+      <Footer text="Same shift as slide 3. Above the waterline is data infrastructure. Below is the cognitive infrastructure LIZA OS encodes as Playbooks, Procedures, Directives, Knowledge and Preferences." />
       <SlideBar />
     </div>
   );
