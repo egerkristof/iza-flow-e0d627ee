@@ -431,93 +431,166 @@ function S03Iceberg() {
 // SLIDE 04 — THE OS MAP (System Architecture)
 // ═════════════════════════════════════════════════════════════════════════════
 function S04OSMap() {
+  const surfaceItems = [
+    { icon: Workflow, l: "Workbooks", s: "Guided rooms where teams execute" },
+    { icon: Users, l: "Collaboration", s: "Humans + agents in the same thread" },
+    { icon: Sparkles, l: "Knowledge Capture", s: "Tacit expertise becomes structured" },
+    { icon: Eye, l: "Oversight", s: "Drift, telemetry, live governance" },
+  ];
+  const sourceItems = [
+    { l: "CRM · ERP" }, { l: "Veeva · LIMS" }, { l: "Drive · SharePoint" },
+    { l: "Docs · Wikis" }, { l: "Email · Tickets" }, { l: "Senior interviews" },
+  ];
+  const toolItems = [
+    { l: "Microsoft Copilot" }, { l: "ChatGPT Enterprise" },
+    { l: "Glean" }, { l: "Veeva · NesGPT" }, { l: "Custom agents" },
+  ];
+  const core = [
+    { l: "Playbooks", s: "Multi-step protocols" },
+    { l: "Procedures", s: "Behavior patches" },
+    { l: "Directives", s: "Non-negotiable rules" },
+    { l: "Knowledge", s: "Authoritative facts" },
+    { l: "Artifacts", s: "Versioned outputs" },
+    { l: "Preferences", s: "Voice & format" },
+  ];
   return (
-    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={5} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
       <div className="relative z-10">
-        <Tag label="The LIZA OS System Architecture" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em" }}>
-          The Hibernate Pattern for AI — <span style={{ color: `hsl(${GREEN})` }}>organizational intelligence decoupled from the LLM.</span>
-        </h2>
+        <div className="flex items-end justify-between mb-5">
+          <div>
+            <Tag label="The LIZA OS System Architecture" color={GREEN} />
+            <h2 className="font-bold leading-[1.05] mt-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em" }}>
+              Decision Core at the centre. <span style={{ color: `hsl(${GREEN})` }}>Our surfaces, your stack, any model.</span>
+            </h2>
+          </div>
+          <div className="rounded-lg border px-3 py-2 text-right" style={{ borderColor: `hsl(${GREEN} / 0.35)`, background: `hsl(${GREEN} / 0.06)` }}>
+            <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Full interactive version</p>
+            <p className="font-semibold" style={{ fontSize: 16, color: TEXT }}>lizaos.ai / os</p>
+          </div>
+        </div>
 
         {/* OS Map */}
-        <div className="relative rounded-3xl border-2 p-8" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 600 }}>
-          {/* Top — Leadership */}
-          <div className="absolute left-8 right-8 top-8 rounded-xl border-2 p-4 flex items-center justify-between"
+        <div className="relative rounded-3xl border-2 p-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 700 }}>
+          {/* Top — Leadership / Control Tower */}
+          <div className="rounded-xl border-2 p-3 flex items-center justify-between"
             style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.08)` }}>
-            <div className="flex items-center gap-3">
-              <Sparkles size={24} style={{ color: `hsl(${GOLD})` }} />
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Leadership</p>
+            <div className="flex items-center gap-2.5">
+              <Sparkles size={20} style={{ color: `hsl(${GOLD})` }} />
+              <p className="font-bold" style={{ fontSize: 18, color: TEXT }}>Leadership · Control Tower</p>
             </div>
-            <p style={{ fontSize: 18, color: MUTED }}>Strategy injection ↓ &nbsp; · &nbsp; Telemetry ↑</p>
+            <p style={{ fontSize: 14, color: MUTED }}>Strategy, mandates, sensing jobs ↓ &nbsp;·&nbsp; Execution telemetry ↑</p>
           </div>
 
-          {/* Middle row: Inputs · Core · Surfaces */}
-          <div className="absolute left-8 right-8 top-[120px] bottom-[120px] grid grid-cols-[1fr_1.4fr_1fr] gap-6">
-            <div className="rounded-xl border-2 p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: "white" }}>
-              <div className="flex items-center gap-3 mb-3">
-                <Database size={22} style={{ color: SUBTLE }} />
-                <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>Systems of Record</p>
+          {/* Middle: 3-column surfaces row */}
+          <div className="grid grid-cols-3 gap-4 mt-4">
+            {/* Source systems */}
+            <div className="rounded-xl border-2 p-4" style={{ borderColor: CHROME_BORDER, background: "white" }}>
+              <div className="flex items-center gap-2 mb-2">
+                <Database size={18} style={{ color: SUBTLE }} />
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>Systems of Record</p>
               </div>
-              <div className="flex flex-col gap-2 mt-2">
-                {["CRM · ERP", "Veeva · LIMS", "Docs · Wikis", "Email · Tickets"].map(s => (
-                  <div key={s} className="px-3 py-2 rounded-lg border" style={{ fontSize: 17, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}>{s}</div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {sourceItems.map(s => (
+                  <div key={s.l} className="px-2 py-1.5 rounded-md border" style={{ fontSize: 12, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}>{s.l}</div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-xl border-2 p-5 flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.06)` }}>
-              <div className="flex items-center gap-3 mb-3">
-                <Brain size={22} style={{ color: `hsl(${GREEN})` }} />
-                <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>LIZA Decision Core</p>
+            {/* Native surfaces — OUR UIs (highlighted) */}
+            <div className="rounded-xl border-2 p-4" style={{ borderColor: `hsl(${ACCENT} / 0.5)`, background: `hsl(${ACCENT} / 0.06)` }}>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Boxes size={18} style={{ color: `hsl(${ACCENT})` }} />
+                  <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA Native Surfaces</p>
+                </div>
+                <span className="px-1.5 py-0.5 rounded font-mono uppercase tracking-[0.12em]"
+                  style={{ fontSize: 9, background: `hsl(${ACCENT} / 0.15)`, color: `hsl(${ACCENT})` }}>ours</span>
               </div>
-              <div className="grid grid-cols-2 gap-2 mt-2">
-                {[
-                  { l: "Playbooks", s: "Multi-step protocols" },
-                  { l: "Procedures", s: "Behavior patches" },
-                  { l: "Directives", s: "Non-negotiable rules" },
-                  { l: "Knowledge", s: "Authoritative facts" },
-                  { l: "Artifacts", s: "Versioned outputs" },
-                  { l: "Preferences", s: "Voice & format" },
-                ].map(c => (
-                  <div key={c.l} className="px-3 py-2 rounded-lg border bg-white" style={{ borderColor: `hsl(${GREEN} / 0.3)` }}>
-                    <p className="font-semibold" style={{ fontSize: 16, color: TEXT }}>{c.l}</p>
-                    <p style={{ fontSize: 13, color: MUTED }}>{c.s}</p>
+              <div className="grid grid-cols-2 gap-1.5">
+                {surfaceItems.map(s => (
+                  <div key={s.l} className="px-2 py-1.5 rounded-md border bg-white" style={{ borderColor: `hsl(${ACCENT} / 0.25)` }}>
+                    <div className="flex items-center gap-1.5"><s.icon size={11} style={{ color: `hsl(${ACCENT})` }} /><p className="font-semibold" style={{ fontSize: 12, color: TEXT }}>{s.l}</p></div>
+                    <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.2, marginTop: 1 }}>{s.s}</p>
                   </div>
                 ))}
               </div>
-              <p className="text-center mt-3 font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>AACE v3.3 runtime</p>
             </div>
 
-            <div className="rounded-xl border-2 p-5 flex flex-col" style={{ borderColor: CHROME_BORDER, background: "white" }}>
-              <div className="flex items-center gap-3 mb-3">
-                <Eye size={22} style={{ color: SUBTLE }} />
-                <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>AI Tools (Surfaces)</p>
+            {/* Connected AI tools */}
+            <div className="rounded-xl border-2 p-4" style={{ borderColor: CHROME_BORDER, background: "white" }}>
+              <div className="flex items-center gap-2 mb-2">
+                <Cpu size={18} style={{ color: SUBTLE }} />
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>Connected AI Tools</p>
               </div>
-              <div className="flex flex-col gap-2 mt-2">
-                {["Copilot", "Glean", "ChatGPT Enterprise", "Custom Agents"].map(s => (
-                  <div key={s} className="px-3 py-2 rounded-lg border" style={{ fontSize: 17, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}>{s}</div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {toolItems.map(s => (
+                  <div key={s.l} className="px-2 py-1.5 rounded-md border" style={{ fontSize: 12, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}>{s.l}</div>
                 ))}
               </div>
-              <p style={{ fontSize: 14, color: MUTED, marginTop: 8, fontStyle: "italic" }}>
-                Not competitors — surfaces that get better reading our standard.
+              <p style={{ fontSize: 11, color: MUTED, marginTop: 6, fontStyle: "italic" }}>
+                Surfaces that get better reading our standard.
               </p>
             </div>
           </div>
 
-          {/* Bottom — LLM Fabric */}
-          <div className="absolute left-8 right-8 bottom-8 rounded-xl border-2 p-4 flex items-center justify-between"
-            style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.06)` }}>
-            <div className="flex items-center gap-3">
-              <Cpu size={24} style={{ color: `hsl(${PURPLE})` }} />
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>LLM-Agnostic Fabric</p>
+          {/* Vertical connectors hint */}
+          <div className="flex justify-around mt-2" style={{ color: SUBTLE }}>
+            <ArrowDown size={16} /><ArrowDown size={16} style={{ color: `hsl(${ACCENT})` }} /><ArrowDown size={16} />
+          </div>
+
+          {/* Decision Core — centerpiece */}
+          <div className="mt-2 rounded-xl border-2 p-4" style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.06)` }}>
+            <div className="flex items-center justify-between mb-2.5">
+              <div className="flex items-center gap-2.5">
+                <Brain size={22} style={{ color: `hsl(${GREEN})` }} />
+                <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA Decision Core</p>
+                <span className="px-2 py-0.5 rounded font-mono uppercase tracking-[0.15em]"
+                  style={{ fontSize: 10, background: `hsl(${GREEN} / 0.15)`, color: `hsl(${GREEN})` }}>AACE v3.3 runtime</span>
+              </div>
+              <p style={{ fontSize: 13, color: MUTED }}>State-locked · audit-traceable · model-agnostic</p>
             </div>
-            <p style={{ fontSize: 18, color: MUTED }}>OpenAI · Anthropic · Google · Mistral · on-prem</p>
+            <div className="grid grid-cols-6 gap-2">
+              {core.map(c => (
+                <div key={c.l} className="px-2.5 py-2 rounded-lg border bg-white" style={{ borderColor: `hsl(${GREEN} / 0.3)` }}>
+                  <p className="font-semibold" style={{ fontSize: 13, color: TEXT }}>{c.l}</p>
+                  <p style={{ fontSize: 11, color: MUTED, lineHeight: 1.25, marginTop: 1 }}>{c.s}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Governance bar */}
+          <div className="mt-3 grid grid-cols-3 gap-3">
+            {[
+              { i: GitBranch, l: "Versioning", s: "Every standard has history, owner, diff" },
+              { i: ShieldCheck, l: "Audit trail", s: "Bundle · version · mandate per execution" },
+              { i: Lock, l: "Access & roles", s: "Author · execute · override" },
+            ].map(g => (
+              <div key={g.l} className="rounded-lg border px-3 py-2 flex items-center gap-2.5" style={{ borderColor: CHROME_BORDER, background: "white" }}>
+                <g.i size={16} style={{ color: SUBTLE }} />
+                <div>
+                  <p className="font-semibold" style={{ fontSize: 13, color: TEXT }}>{g.l}</p>
+                  <p style={{ fontSize: 11, color: MUTED }}>{g.s}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom — LLM Fabric */}
+          <div className="mt-3 rounded-xl border-2 p-3 flex items-center justify-between"
+            style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.06)` }}>
+            <div className="flex items-center gap-2.5">
+              <Cpu size={20} style={{ color: `hsl(${PURPLE})` }} />
+              <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>Model Fabric</p>
+            </div>
+            <p style={{ fontSize: 13, color: MUTED }}>OpenAI · Anthropic · Google · Mistral · open-source · on-prem</p>
           </div>
         </div>
       </div>
+      <Footer text="Full interactive version at lizaos.ai/os. Decision Core decoupled from any single model; native surfaces sit next to your existing AI tools." />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
