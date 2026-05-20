@@ -421,7 +421,7 @@ function S03Iceberg() {
           </div>
         </div>
       </div>
-      <Footer text="Same shift as slide 3. Above the waterline is data infrastructure. Below is the cognitive infrastructure LIZA OS encodes as Playbooks, Procedures, Directives, Knowledge and Preferences." />
+      <Footer text="The cognitive infrastructure LIZA OS encodes as Playbooks, Procedures, Directives, Knowledge and Preferences." />
       <SlideBar />
     </div>
   );
