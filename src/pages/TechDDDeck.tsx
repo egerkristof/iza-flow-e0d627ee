@@ -152,7 +152,7 @@ function S02Shift() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={2} total={TOTAL} />
+      <PageNumber n={3} total={TOTAL} />
       <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
       <div className="relative z-10">
         <Tag label="The Infrastructure Shift" />
@@ -215,7 +215,7 @@ function S03Iceberg() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={3} total={TOTAL} />
+      <PageNumber n={4} total={TOTAL} />
       <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
       <div className="relative z-10 grid grid-cols-[1fr_900px] gap-16 items-center">
         <div>
@@ -278,7 +278,7 @@ function S04OSMap() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={4} total={TOTAL} />
+      <PageNumber n={5} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
       <div className="relative z-10">
         <Tag label="The LIZA OS System Architecture" color={GREEN} />
@@ -380,7 +380,7 @@ function S05Loop() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={5} total={TOTAL} />
+      <PageNumber n={6} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
       <div className="relative z-10">
         <Tag label="AACE v3.3 · The 4-Step Orchestration Loop" color={GREEN} />
@@ -435,7 +435,7 @@ function S06Propagation() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={6} total={TOTAL} />
+      <PageNumber n={7} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
       <div className="relative z-10">
         <Tag label="Artifact Graph · State Management · Observability" color={GREEN} />
