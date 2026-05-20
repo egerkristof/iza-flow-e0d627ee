@@ -643,8 +643,9 @@ function S05Loop() {
                 )}
               </div>
               {i < steps.length - 1 && (
-                <div className="absolute top-1/2 -right-4 -translate-y-1/2 z-10">
-                  <ArrowRight size={28} style={{ color: SUBTLE }} />
+                <div className="absolute top-1/2 -translate-y-1/2 z-10 flex items-center justify-center"
+                  style={{ right: -20, width: 20, height: 20 }}>
+                  <ArrowRight size={20} style={{ color: SUBTLE }} />
                 </div>
               )}
             </div>
