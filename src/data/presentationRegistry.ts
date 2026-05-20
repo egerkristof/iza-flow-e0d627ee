@@ -203,7 +203,7 @@ export const presentationRoutes: PresentationRoute[] = [
     title: "Tech Due Diligence Deck",
     path: "/tech-dd",
     sourcePath: "src/pages/TechDDDeck.tsx",
-    description: "8-slide tech due diligence deck for investor TDD teams. Three-phase arc: (1) Paradigm — infrastructure shift from data to cognitive, Context Gap iceberg. (2) Architecture — LIZA OS map (Leadership / Systems of Record / Decision Core / AI Surfaces / LLM Fabric), AACE v3.3 four-step loop with State-Locking, artifact propagation graph and Unified Rationale Log. (3) Commercial — AI margin trap and value-based semantic metering (1×/5×/25× credit multipliers). Pocket slide on the Upskilling Engine for the Impact Hurdle question.",
+    description: "9-slide tech due diligence deck for investor TDD teams. Three-phase arc: (1) Paradigm — Three Horizons collapse (permanent edge state), infrastructure shift from data to cognitive, Context Gap iceberg. (2) Architecture — LIZA OS map (Leadership / Systems of Record / Decision Core / AI Surfaces / LLM Fabric), AACE v3.3 four-step loop with State-Locking, artifact propagation graph and Unified Rationale Log. (3) Commercial + Synthesis — Pricing Inversion (industry converging on usage-based) with the labour-market analogy and 1×/5×/25× value-based metering, then the Augmentation Engine separating human contribution (creativity, self-awareness, ethics) from system contribution (encoded senior judgment, governed execution).",
     component: TechDDDeck,
     showInAdmin: true,
   },

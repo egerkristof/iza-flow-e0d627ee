@@ -102,7 +102,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 8;
+const TOTAL = 9;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 01 — COVER
@@ -136,9 +136,88 @@ function S01Cover() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 02 — INFRASTRUCTURE SHIFT (Data → Cognitive)
+// SLIDE 02 — THE THREE HORIZONS COLLAPSE
 // ═════════════════════════════════════════════════════════════════════════════
-function S02Shift() {
+function S02Horizons() {
+  const past = [
+    { h: "H3 · Transform", sub: "5+ yr bets", w: "55%", color: PURPLE },
+    { h: "H2 · Improve", sub: "1-3 yr programmes", w: "75%", color: ACCENT },
+    { h: "H1 · Run", sub: "Quarter to quarter", w: "100%", color: GREEN },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={2} total={TOTAL} />
+      <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
+      <div className="relative z-10">
+        <Tag label="The Context We Operate In" />
+        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 64, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          The three horizons used to be sequential. <span style={{ color: `hsl(${ACCENT})` }}>They now run simultaneously, at the edge.</span>
+        </h2>
+
+        <div className="grid grid-cols-2 gap-10 mt-12">
+          {/* PAST */}
+          <div className="rounded-2xl border p-10" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 520 }}>
+            <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 14, color: SUBTLE }}>The past · sequential</p>
+            <p className="font-bold mb-8" style={{ fontSize: 32, color: TEXT }}>Staircase of horizons</p>
+            <div className="flex flex-col gap-4 items-start">
+              {past.map(p => (
+                <div key={p.h} className="rounded-xl border-2 px-6 py-4 flex items-center justify-between"
+                  style={{
+                    width: p.w, borderColor: `hsl(${p.color} / 0.4)`,
+                    background: `linear-gradient(90deg, hsl(${p.color} / 0.06), hsl(${p.color} / 0.14))`,
+                  }}>
+                  <span className="font-bold" style={{ fontSize: 22, color: TEXT }}>{p.h}</span>
+                  <span style={{ fontSize: 16, color: MUTED }}>{p.sub}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 italic" style={{ fontSize: 16, color: MUTED }}>
+              Run today. Improve next year. Transform on the five-year plan.
+            </p>
+          </div>
+
+          {/* TODAY */}
+          <div className="rounded-2xl border-2 p-10 relative overflow-hidden"
+            style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.04)`, height: 520 }}>
+            <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>Today · collapsed</p>
+            <p className="font-bold mb-8" style={{ fontSize: 32, color: TEXT }}>Permanent edge state</p>
+
+            <div className="relative mx-auto" style={{ width: 360, height: 280 }}>
+              {/* three overlapping rings */}
+              <div className="absolute rounded-full border-2"
+                style={{ width: 220, height: 220, left: 0, top: 30, borderColor: `hsl(${GREEN} / 0.55)`, background: `hsl(${GREEN} / 0.10)` }} />
+              <div className="absolute rounded-full border-2"
+                style={{ width: 220, height: 220, left: 140, top: 30, borderColor: `hsl(${ACCENT} / 0.55)`, background: `hsl(${ACCENT} / 0.10)` }} />
+              <div className="absolute rounded-full border-2"
+                style={{ width: 220, height: 220, left: 70, top: 0, borderColor: `hsl(${PURPLE} / 0.55)`, background: `hsl(${PURPLE} / 0.10)` }} />
+              {/* labels */}
+              <span className="absolute font-bold" style={{ left: 24, top: 232, fontSize: 16, color: `hsl(${GREEN})` }}>H1 Run</span>
+              <span className="absolute font-bold" style={{ left: 260, top: 232, fontSize: 16, color: `hsl(${ACCENT})` }}>H2 Improve</span>
+              <span className="absolute font-bold text-center" style={{ left: 130, top: -22, fontSize: 16, color: `hsl(${PURPLE})`, width: 120 }}>H3 Transform</span>
+              {/* center label */}
+              <div className="absolute flex items-center justify-center text-center font-bold"
+                style={{ left: 130, top: 110, width: 120, height: 60, fontSize: 14, color: TEXT }}>
+                same week<br />same team
+              </div>
+            </div>
+
+            <p className="mt-6 italic" style={{ fontSize: 16, color: MUTED }}>
+              Every business now runs, improves, and transforms on the same calendar week.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Footer text="Sequential planning cycles and static SOPs cannot hold this state. A runtime can. That is the cognitive infrastructure on the next slide." />
+      <SlideBar from={GREEN} to={PURPLE} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 03 — INFRASTRUCTURE SHIFT (Data → Cognitive)
+// ═════════════════════════════════════════════════════════════════════════════
+function S03Shift() {
   const past = [
     { icon: Database, label: "Database", sub: "Rows, tables, schema" },
     { icon: Layers, label: "ORM / Logic", sub: "Hibernate, services" },
@@ -152,7 +231,7 @@ function S02Shift() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={2} total={TOTAL} />
+      <PageNumber n={3} total={TOTAL} />
       <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
       <div className="relative z-10">
         <Tag label="The Infrastructure Shift" />
@@ -215,7 +294,7 @@ function S03Iceberg() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={3} total={TOTAL} />
+      <PageNumber n={4} total={TOTAL} />
       <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
       <div className="relative z-10 grid grid-cols-[1fr_900px] gap-16 items-center">
         <div>
@@ -278,7 +357,7 @@ function S04OSMap() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={4} total={TOTAL} />
+      <PageNumber n={5} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
       <div className="relative z-10">
         <Tag label="The LIZA OS System Architecture" color={GREEN} />
@@ -380,7 +459,7 @@ function S05Loop() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={5} total={TOTAL} />
+      <PageNumber n={6} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
       <div className="relative z-10">
         <Tag label="AACE v3.3 · The 4-Step Orchestration Loop" color={GREEN} />
@@ -435,7 +514,7 @@ function S06Propagation() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={6} total={TOTAL} />
+      <PageNumber n={7} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
       <div className="relative z-10">
         <Tag label="Artifact Graph · State Management · Observability" color={GREEN} />
@@ -537,140 +616,108 @@ function S06Propagation() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 07 — THE MARGIN TRAP
+// SLIDE 08 — THE PRICING INVERSION → VALUE-BASED METERING (merged)
 // ═════════════════════════════════════════════════════════════════════════════
-function S07MarginTrap() {
-  return (
-    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
-      <SlideGrid />
-      <PageNumber n={7} total={TOTAL} />
-      <PhaseChip phase="Phase 3 · Commercial" owner="István" color={GOLD} />
-      <div className="relative z-10">
-        <Tag label="The AI Margin Trap" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Flat seats and OpenAI markups are a <span style={{ color: `hsl(${RED})` }}>race to the bottom.</span>
-        </h2>
-
-        <div className="grid grid-cols-[1.4fr_1fr] gap-12 items-stretch">
-          {/* Chart */}
-          <div className="rounded-2xl border p-8 relative" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 520 }}>
-            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 13, color: SUBTLE }}>$ per equivalent task · indexed</p>
-            <svg viewBox="0 0 600 380" className="w-full h-[420px]">
-              {/* axes */}
-              <line x1="60" y1="20" x2="60" y2="340" stroke={GRID_LINE} strokeWidth="1" />
-              <line x1="60" y1="340" x2="580" y2="340" stroke={GRID_LINE} strokeWidth="1" />
-              {/* gridlines */}
-              {[80, 160, 240].map(y => (
-                <line key={y} x1="60" y1={y} x2="580" y2={y} stroke={GRID_LINE} strokeWidth="0.5" strokeDasharray="3 4" />
-              ))}
-              {/* Flat SaaS seat */}
-              <line x1="60" y1="100" x2="580" y2="100" stroke={`hsl(${RED})`} strokeWidth="3" />
-              <text x="570" y="92" textAnchor="end" fontSize="14" fill={`hsl(${RED})`} fontWeight="600">SaaS Seat Price — flat, getting squeezed</text>
-              {/* LLM cost decay */}
-              <path d="M 60 120 Q 220 180 360 280 T 580 320" stroke={`hsl(${ACCENT})`} strokeWidth="3" fill="none" />
-              <text x="570" y="312" textAnchor="end" fontSize="14" fill={`hsl(${ACCENT})`} fontWeight="600">LLM API cost → 0</text>
-              {/* Squeeze zone */}
-              <path d="M 360 100 L 360 280 L 580 320 L 580 100 Z" fill={`hsl(${RED} / 0.08)`} />
-              <text x="470" y="180" textAnchor="middle" fontSize="13" fill={`hsl(${RED})`} fontStyle="italic">margin compression</text>
-              {/* axis labels */}
-              <text x="60" y="360" fontSize="12" fill={SUBTLE}>2023</text>
-              <text x="320" y="360" fontSize="12" fill={SUBTLE} textAnchor="middle">2025</text>
-              <text x="580" y="360" fontSize="12" fill={SUBTLE} textAnchor="end">2027+</text>
-            </svg>
-          </div>
-
-          {/* CFO callouts */}
-          <div className="flex flex-col gap-4">
-            {[
-              { icon: TrendingDown, c: RED, h: "Tokens → commodity", s: "Frontier model pricing has dropped 10× in 18 months. Markups disappear." },
-              { icon: Coins, c: RED, h: "Flat seats lose context", s: "Per-seat pricing makes power users a margin liability — and CFOs notice." },
-              { icon: AlertCircle, c: RED, h: "Unanchored consumption", s: "Every token without a governance anchor is the first line a CFO cuts." },
-              { icon: Gauge, c: GREEN, h: "The escape hatch", s: "Charge for governed decisions, not raw inference. → Slide 8." },
-            ].map(c => (
-              <div key={c.h} className="rounded-xl border-2 p-5 flex items-start gap-4"
-                style={{ borderColor: `hsl(${c.c} / 0.3)`, background: `hsl(${c.c} / 0.05)` }}>
-                <c.icon size={26} style={{ color: `hsl(${c.c})`, flexShrink: 0, marginTop: 2 }} />
-                <div>
-                  <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>{c.h}</p>
-                  <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.35, marginTop: 4 }}>{c.s}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <SlideBar from={RED} to={GOLD} />
-    </div>
-  );
-}
-
-// ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 08 — VALUE-BASED SEMANTIC METERING
-// ═════════════════════════════════════════════════════════════════════════════
-function S08Metering() {
+function S08PricingMetering() {
+  const vendors = [
+    { l: "OpenAI", s: "Tokens + minutes + tools" },
+    { l: "Anthropic", s: "Tokens + tool calls" },
+    { l: "Google", s: "Tokens + media units" },
+    { l: "Microsoft", s: "Copilot → metered AI units" },
+  ];
   const tiers = [
-    {
-      mult: "25×", label: "Strategic Simulation", color: PURPLE, w: "60%",
-      example: "War-game a market pivot · scenario-stress an investment thesis",
-      anchor: "Anchored to a Strategy Playbook with board-level rules",
-    },
-    {
-      mult: "5×", label: "Process Design & Governance", color: ACCENT, w: "80%",
-      example: "Update a Playbook · run drift detection · change a Standard",
-      anchor: "Anchored to a Governance Playbook with compliance state-lock",
-    },
-    {
-      mult: "1×", label: "Operational Execution", color: GREEN, w: "100%",
-      example: "Draft a memo · summarise a meeting · fill a template",
-      anchor: "Anchored to an Operational Playbook (single-step Procedure)",
-    },
+    { mult: "25×", label: "Strategic Simulation", color: PURPLE, w: "60%",
+      human: "Partner hour", example: "War-game a market pivot. Scenario-stress a thesis." },
+    { mult: "5×", label: "Process Design & Governance", color: ACCENT, w: "80%",
+      human: "Senior hour", example: "Update a Playbook. Run drift detection. Change a Standard." },
+    { mult: "1×", label: "Operational Execution", color: GREEN, w: "100%",
+      human: "Junior hour", example: "Draft a memo. Summarise a meeting. Fill a template." },
   ];
   return (
-    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
+    <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={8} total={TOTAL} />
       <PhaseChip phase="Phase 3 · Commercial" owner="István" color={GOLD} />
       <div className="relative z-10">
-        <Tag label="Value-Based Semantic Metering" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          We do not charge for the weight of the tokens. <span style={{ color: `hsl(${GOLD})` }}>We charge for the weight of the decision.</span>
+        <Tag label="The Pricing Inversion · Value-Based Metering" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          Every AI vendor is converging on usage-based pricing. <span style={{ color: `hsl(${GOLD})` }}>The question is what you meter.</span>
         </h2>
 
-        <div className="grid grid-cols-[1fr_1.1fr] gap-10 items-start">
-          {/* Pyramid */}
-          <div className="flex flex-col items-center gap-3">
-            {tiers.map(t => (
-              <div key={t.label} className="rounded-2xl border-2 p-5 flex flex-col items-center"
-                style={{
-                  width: t.w, minHeight: 130,
-                  borderColor: `hsl(${t.color} / 0.5)`,
-                  background: `linear-gradient(180deg, hsl(${t.color} / 0.1), hsl(${t.color} / 0.18))`,
-                }}>
-                <div className="flex items-baseline gap-3">
-                  <span className="font-bold font-mono" style={{ fontSize: 44, color: `hsl(${t.color})` }}>{t.mult}</span>
-                  <span className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 13, color: MUTED }}>credit multiplier</span>
-                </div>
-                <p className="font-bold text-center" style={{ fontSize: 22, color: TEXT, marginTop: 4 }}>{t.label}</p>
+        <div className="grid grid-cols-[1fr_1.35fr] gap-10 items-start">
+          {/* LEFT — Pricing Inversion */}
+          <div className="flex flex-col gap-5">
+            <div className="rounded-2xl border p-7" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <p className="font-mono uppercase tracking-[0.15em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>Industry trajectory</p>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="px-3 py-2 rounded-lg border" style={{ fontSize: 15, color: TEXT, borderColor: CHROME_BORDER, background: "white" }}>Per-seat SaaS</span>
+                <ArrowRight size={18} style={{ color: SUBTLE }} />
+                <span className="px-3 py-2 rounded-lg border" style={{ fontSize: 15, color: TEXT, borderColor: CHROME_BORDER, background: "white" }}>Hybrid</span>
+                <ArrowRight size={18} style={{ color: `hsl(${GOLD})` }} />
+                <span className="px-3 py-2 rounded-lg border-2 font-semibold"
+                  style={{ fontSize: 15, color: `hsl(${GOLD})`, borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.08)` }}>Usage-based API</span>
               </div>
-            ))}
+              <div className="grid grid-cols-2 gap-2">
+                {vendors.map(v => (
+                  <div key={v.l} className="px-3 py-2 rounded-lg border bg-white" style={{ borderColor: CHROME_BORDER }}>
+                    <p className="font-semibold" style={{ fontSize: 14, color: TEXT }}>{v.l}</p>
+                    <p style={{ fontSize: 12, color: MUTED }}>{v.s}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${RED} / 0.4)`, background: `hsl(${RED} / 0.05)` }}>
+              <div className="flex items-center gap-3 mb-2">
+                <AlertCircle size={22} style={{ color: `hsl(${RED})` }} />
+                <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>The failure mode: unanchored consumption</p>
+              </div>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+                Per-token billing aligns cost with consumption. Good. But raw tokens are not a business unit. A CFO cannot defend a line item that does not name the decision it bought.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.06)` }}>
+              <p className="font-bold mb-2" style={{ fontSize: 20, color: TEXT }}>The labour-market analogy</p>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+                A company already prices a junior hour differently from a senior hour differently from a partner hour. Not because of electricity. Because of the weight of the decision being made. LIZA reproduces the same structure for machine work.
+              </p>
+            </div>
           </div>
 
-          {/* Explanations */}
-          <div className="flex flex-col gap-4">
-            {tiers.map(t => (
-              <div key={t.label} className="rounded-xl border-l-4 p-5" style={{ borderColor: `hsl(${t.color})`, background: CARD_ALT }}>
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="font-bold font-mono px-3 py-1 rounded" style={{ fontSize: 16, color: `hsl(${t.color})`, background: `hsl(${t.color} / 0.12)` }}>{t.mult}</span>
-                  <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>{t.label}</p>
+          {/* RIGHT — Pyramid + tiers */}
+          <div>
+            <div className="flex flex-col items-center gap-2 mb-5">
+              {tiers.map(t => (
+                <div key={t.label} className="rounded-2xl border-2 px-6 py-3 flex items-center justify-between"
+                  style={{
+                    width: t.w,
+                    borderColor: `hsl(${t.color} / 0.5)`,
+                    background: `linear-gradient(90deg, hsl(${t.color} / 0.1), hsl(${t.color} / 0.2))`,
+                  }}>
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-bold font-mono" style={{ fontSize: 36, color: `hsl(${t.color})` }}>{t.mult}</span>
+                    <span className="font-bold" style={{ fontSize: 18, color: TEXT }}>{t.label}</span>
+                  </div>
+                  <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 12, color: MUTED }}>≈ {t.human}</span>
                 </div>
-                <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{t.example}</p>
-                <p style={{ fontSize: 15, color: MUTED, fontStyle: "italic", marginTop: 4 }}>{t.anchor}</p>
-              </div>
-            ))}
-            <div className="rounded-xl border-2 p-5 mt-2" style={{ borderColor: `hsl(${GOLD} / 0.4)`, background: `hsl(${GOLD} / 0.06)` }}>
-              <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-                <span className="font-bold">Because the state is locked to a Playbook</span>, we know the
-                exact business value of every execution. Revenue decouples from API cost and scales with strategic ROI.
+              ))}
+            </div>
+            <div className="flex flex-col gap-3">
+              {tiers.map(t => (
+                <div key={t.label} className="rounded-xl border-l-4 px-5 py-3" style={{ borderColor: `hsl(${t.color})`, background: CARD_ALT }}>
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold font-mono px-2 py-0.5 rounded" style={{ fontSize: 13, color: `hsl(${t.color})`, background: `hsl(${t.color} / 0.12)` }}>{t.mult}</span>
+                    <p className="font-semibold" style={{ fontSize: 16, color: TEXT }}>{t.label}</p>
+                    <span style={{ fontSize: 13, color: SUBTLE }}>· {t.human}</span>
+                  </div>
+                  <p style={{ fontSize: 14, color: MUTED, marginTop: 2 }}>{t.example}</p>
+                </div>
+              ))}
+            </div>
+            <div className="rounded-xl border-2 mt-4 p-5" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.08)` }}>
+              <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+                <span className="font-bold">State is locked to a Playbook.</span> So we know the decision class of every execution. We charge for the weight of the decision, not the weight of the tokens. Revenue tracks strategic ROI, not API price.
               </p>
             </div>
           </div>
@@ -682,54 +729,103 @@ function S08Metering() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 09 (pocket) — UPSKILLING ENGINE
+// SLIDE 09 — THE AUGMENTATION ENGINE
 // ═════════════════════════════════════════════════════════════════════════════
-function S09Upskilling() {
+function S09Augmentation() {
+  const human = [
+    "Creativity",
+    "Self-awareness",
+    "Ethical judgment",
+    "Re-framing the future of the company",
+  ];
+  const system = [
+    "Encoded senior decision-trees",
+    "Governed Playbooks & Standards",
+    "State-locked execution (AACE)",
+    "Unified Rationale Log",
+  ];
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <div className="absolute top-10 left-12 font-mono" style={{ fontSize: 14, color: SUBTLE, letterSpacing: "0.15em" }}>
-        09 / 09 · POCKET SLIDE
-      </div>
-      <PhaseChip phase="Reserve · Impact Hurdle" owner="Zsombor" color={PURPLE} />
+      <PageNumber n={9} total={TOTAL} />
+      <PhaseChip phase="Synthesis · Talent + Architecture" owner="Zsombor" color={PURPLE} />
       <div className="relative z-10">
-        <Tag label="The Upskilling Engine" color={PURPLE} />
-        <h2 className="font-bold leading-[1.05] mb-14" style={{ fontSize: 64, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Liza prevents the <span style={{ color: `hsl(${PURPLE})` }}>erosion of expertise.</span>
+        <Tag label="The Augmentation Engine" color={PURPLE} />
+        <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          We hire humans for what only humans bring. <span style={{ color: `hsl(${PURPLE})` }}>The system carries the rest.</span>
         </h2>
 
-        <div className="flex items-center justify-between gap-8 px-12">
-          {/* Junior */}
-          <div className="flex-1 rounded-2xl border-2 p-8 flex flex-col items-center text-center"
-            style={{ borderColor: CHROME_BORDER, background: CARD_ALT, minHeight: 360 }}>
-            <Users size={56} style={{ color: SUBTLE }} />
-            <p className="font-bold mt-5" style={{ fontSize: 32, color: TEXT }}>Junior employee</p>
-            <p style={{ fontSize: 20, color: MUTED, marginTop: 8 }}>Ambitious. Capable. No 15-year scar tissue.</p>
+        <div className="grid grid-cols-2 gap-8">
+          {/* Human column */}
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.05)`, minHeight: 460 }}>
+            <div className="flex items-center gap-3 mb-4">
+              <Users size={26} style={{ color: `hsl(${ACCENT})` }} />
+              <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>Human contribution</p>
+              <span className="font-mono uppercase tracking-[0.15em] ml-auto px-2 py-1 rounded"
+                style={{ fontSize: 11, color: `hsl(${ACCENT})`, background: `hsl(${ACCENT} / 0.12)` }}>irreducible</span>
+            </div>
+            <p style={{ fontSize: 16, color: MUTED, marginBottom: 16 }}>
+              What you hire a junior for. What no LLM provides.
+            </p>
+            <div className="flex flex-col gap-3">
+              {human.map(h => (
+                <div key={h} className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white border" style={{ borderColor: `hsl(${ACCENT} / 0.2)` }}>
+                  <Sparkles size={18} style={{ color: `hsl(${ACCENT})` }} />
+                  <p className="font-semibold" style={{ fontSize: 19, color: TEXT }}>{h}</p>
+                </div>
+              ))}
+            </div>
+            <p className="italic mt-5" style={{ fontSize: 14, color: MUTED }}>
+              This is what re-imagines a business at the edge. See slide 2.
+            </p>
           </div>
 
-          <ArrowRight size={48} style={{ color: `hsl(${PURPLE})` }} />
-
-          {/* Playbook */}
-          <div className="flex-1 rounded-2xl border-2 p-8 flex flex-col items-center text-center"
-            style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.06)`, minHeight: 360 }}>
-            <Brain size={56} style={{ color: `hsl(${PURPLE})` }} />
-            <p className="font-bold mt-5" style={{ fontSize: 32, color: TEXT }}>Liza Playbook</p>
-            <p style={{ fontSize: 20, color: MUTED, marginTop: 8 }}>The encoded decision-tree of senior staff. Just-in-time guidance.</p>
+          {/* System column */}
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)`, minHeight: 460 }}>
+            <div className="flex items-center gap-3 mb-4">
+              <Brain size={26} style={{ color: `hsl(${GREEN})` }} />
+              <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>System contribution</p>
+              <span className="font-mono uppercase tracking-[0.15em] ml-auto px-2 py-1 rounded"
+                style={{ fontSize: 11, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.12)` }}>encoded</span>
+            </div>
+            <p style={{ fontSize: 16, color: MUTED, marginBottom: 16 }}>
+              What used to live in senior heads and eroded when they left.
+            </p>
+            <div className="flex flex-col gap-3">
+              {system.map(s => (
+                <div key={s} className="flex items-center gap-3 px-4 py-3 rounded-lg bg-white border" style={{ borderColor: `hsl(${GREEN} / 0.2)` }}>
+                  <Lock size={18} style={{ color: `hsl(${GREEN})` }} />
+                  <p className="font-semibold" style={{ fontSize: 19, color: TEXT }}>{s}</p>
+                </div>
+              ))}
+            </div>
+            <p className="italic mt-5" style={{ fontSize: 14, color: MUTED }}>
+              State-locked at execution. See slide 6. Auditable end to end. See slide 7.
+            </p>
           </div>
+        </div>
 
-          <ArrowRight size={48} style={{ color: `hsl(${PURPLE})` }} />
-
-          {/* Senior output */}
-          <div className="flex-1 rounded-2xl border-2 p-8 flex flex-col items-center text-center"
-            style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.06)`, minHeight: 360 }}>
-            <GraduationCap size={56} style={{ color: `hsl(${GREEN})` }} />
-            <p className="font-bold mt-5" style={{ fontSize: 32, color: TEXT }}>Senior output</p>
-            <p style={{ fontSize: 20, color: MUTED, marginTop: 8 }}>Same quality, same defensibility. Real-time, on-the-job upskilling.</p>
+        {/* Bottom loop */}
+        <div className="mt-8 rounded-2xl border-2 p-5" style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.05)` }}>
+          <p className="font-mono uppercase tracking-[0.18em] mb-3" style={{ fontSize: 12, color: `hsl(${PURPLE})` }}>The compounding loop</p>
+          <div className="flex items-center gap-3 flex-wrap">
+            {[
+              { l: "Junior intent", c: ACCENT },
+              { l: "LIZA Playbook (state-locked)", c: PURPLE },
+              { l: "Senior-quality artifact", c: GREEN },
+              { l: "Junior internalises", c: ACCENT },
+              { l: "Capability compounds", c: GOLD },
+            ].map((n, i, arr) => (
+              <div key={n.l} className="flex items-center gap-3">
+                <div className="px-4 py-2 rounded-lg border-2 font-semibold"
+                  style={{ fontSize: 16, color: TEXT, borderColor: `hsl(${n.c} / 0.4)`, background: `hsl(${n.c} / 0.08)` }}>{n.l}</div>
+                {i < arr.length - 1 && <ArrowRight size={20} style={{ color: SUBTLE }} />}
+              </div>
+            ))}
           </div>
         </div>
       </div>
-      <Footer text="Reserve slide. Use if the Impact Hurdle (talent erosion, skills loss) comes up." />
-      <SlideBar from={PURPLE} to={GREEN} />
+      <SlideBar from={PURPLE} to={GOLD} />
     </div>
   );
 }
@@ -737,14 +833,14 @@ function S09Upskilling() {
 // ─── Deck registry ───────────────────────────────────────────────────────────
 const SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
-  { id: "shift", title: "Infrastructure Shift", component: <S02Shift /> },
+  { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
+  { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
   { id: "os-map", title: "OS Map", component: <S04OSMap /> },
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
   { id: "propagation", title: "Artifact Graph", component: <S06Propagation /> },
-  { id: "trap", title: "Margin Trap", component: <S07MarginTrap /> },
-  { id: "metering", title: "Semantic Metering", component: <S08Metering /> },
-  { id: "upskilling", title: "Upskilling (Pocket)", component: <S09Upskilling /> },
+  { id: "metering", title: "Pricing Inversion + Metering", component: <S08PricingMetering /> },
+  { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
 ];
 
 // ─── Deck shell ──────────────────────────────────────────────────────────────
