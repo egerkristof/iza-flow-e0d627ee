@@ -1719,20 +1719,6 @@ function S11HyperscalerRisk() {
       v: "Glean has shipped FlexCredits — seat + consumption hybrid metered per agent action. Strong retrieval, weak on locked process and rationale chain. They answer 'what do we know?' — we answer 'what is the standard, who is accountable, what decision class.' Often the data-discovery layer feeding our Playbooks.",
     },
     {
-      l: "Vertical LLM + agent platforms",
-      examples: "Writer (Palmyra per-million-token API) · Cohere North",
-      risk: 35, posture: "Adjacent · model-layer overlap",
-      color: GREEN,
-      v: "Full-stack: own model + agent runtime + per-token API. Compete for the same enterprise budget but at the model+content layer. No standards-locking, no decision class, no portable artifact graph. Can be a substitute model behind a LIZA Playbook step.",
-    },
-    {
-      l: "Memory + tacit-knowledge layer",
-      examples: "Mem0 (metered add/retrieval) · Interloom · Edra",
-      risk: 30, posture: "Component · partner",
-      color: GREEN,
-      v: "Mem0 sells metered per-request memory; Interloom and Edra capture tacit ops knowledge and process-mine SOPs. They produce inputs to a standards graph but do not define standards or govern execution. Likely partner / component layer beneath LIZA.",
-    },
-    {
       l: "Productized Big-4 / advisory AI",
       examples: "Deloitte Zora · PwC agent OS · McKinsey Lilli · KPMG Clara",
       risk: 65, posture: "Coopetition · channel partner",
