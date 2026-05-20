@@ -1099,7 +1099,7 @@ function S09Augmentation() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={9} total={TOTAL} />
+      <PageNumber n={10} total={TOTAL} />
       <PhaseChip phase="Synthesis · Talent + Architecture" owner="Zsombor" color={PURPLE} />
       <div className="relative z-10">
         <Tag label="The Augmentation Engine" color={PURPLE} />
@@ -1192,6 +1192,7 @@ const SLIDES = [
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
   { id: "propagation", title: "Artifact Graph", component: <S06Propagation /> },
   { id: "metering", title: "Pricing Inversion + Metering", component: <S08PricingMetering /> },
+  { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
   { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
 ];
 
