@@ -1183,6 +1183,164 @@ function S09Augmentation() {
   );
 }
 
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 11 — AUGMENTATION MECHANICS (Supervision + Edge Intake)
+// ═════════════════════════════════════════════════════════════════════════════
+function S09bAugmentationMechanics() {
+  const roles = [
+    {
+      role: "Junior (Day 1)", color: ACCENT, icon: GraduationCap,
+      authors: "exec.* runs · Playbook PRs · edge.signals",
+      autoMerge: "Operational artifacts only",
+      gated: "Any write to governance.* or strategy.*",
+      approver: "Senior owner of the Playbook",
+    },
+    {
+      role: "Senior / Owner", color: GREEN, icon: UserCheck,
+      authors: "governance.* updates · Playbook merges · standards",
+      autoMerge: "Within their domain of ownership",
+      gated: "Cross-domain changes · strategy.*",
+      approver: "Partner / domain peer review",
+    },
+    {
+      role: "Partner / C-level", color: PURPLE, icon: ShieldCheck,
+      authors: "strategy.* scenarios · org-wide directives",
+      autoMerge: "Sandbox simulations · directives",
+      gated: "Production rollout of new standards",
+      approver: "Council sign-off · logged in Rationale Log",
+    },
+  ];
+
+  const intake = [
+    { n: "01", icon: AlertTriangle, label: "Edge signal", note: "Junior flags exception, drift, or new pattern from the daily reality", color: ACCENT },
+    { n: "02", icon: FileText, label: "Structured capture", note: "LIZA forms it into a typed delta against the relevant Playbook", color: PURPLE },
+    { n: "03", icon: GitPullRequest, label: "Playbook PR", note: "Auto-routed to the senior owner with diff + supporting runs", color: PURPLE },
+    { n: "04", icon: CheckCircle2, label: "Merge & lock", note: "Once approved, version bumps and every future run inherits it", color: GREEN },
+  ];
+
+  return (
+    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={11} total={TOTAL} />
+      <PhaseChip phase="Synthesis · Talent Architecture" owner="Zsombor" color={PURPLE} />
+      <div className="relative z-10">
+        <Tag label="Augmentation Mechanics · How juniors operate inside a senior system" color={PURPLE} />
+        <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          Junior intent, senior-quality output. <span style={{ color: `hsl(${PURPLE})` }}>Supervision is encoded, not scheduled.</span>
+        </h2>
+        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 18 }}>
+          From day one, a junior can author runs, propose Playbook changes, and surface edge insights. What they cannot do is silently rewrite the system. Every elevation passes a deterministic gate.
+        </p>
+
+        {/* Supervised execution pipeline */}
+        <div className="rounded-2xl border-2 p-5 mb-5" style={{ borderColor: `hsl(${PURPLE} / 0.3)`, background: `hsl(${PURPLE} / 0.04)` }}>
+          <p className="font-mono uppercase tracking-[0.18em] mb-3" style={{ fontSize: 11, color: `hsl(${PURPLE})` }}>Supervised execution loop · per run</p>
+          <div className="flex items-stretch gap-2">
+            {[
+              { n: "01", icon: MessageSquare, label: "Junior intent", note: "Free-form ask + role token", color: ACCENT },
+              { n: "02", icon: Database, label: "Playbook scaffold", note: "Locked senior procedure loaded", color: PURPLE },
+              { n: "03", icon: ShieldCheck, label: "Scope gate", note: "Write target checked vs role", color: GOLD },
+              { n: "04", icon: Workflow, label: "AACE execution", note: "State-locked steps + tool calls", color: GREEN },
+              { n: "05", icon: GitPullRequest, label: "Review hook", note: "Senior pinged on out-of-scope writes", color: PURPLE },
+              { n: "06", icon: CheckCircle2, label: "Artifact + log", note: "Rationale Log records actor + gate", color: GREEN },
+            ].map((s, i, arr) => (
+              <div key={s.n} className="flex items-stretch gap-2 flex-1">
+                <div className="flex-1 rounded-xl border bg-white px-3 py-3" style={{ borderColor: `hsl(${s.color} / 0.4)` }}>
+                  <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 10, color: `hsl(${s.color})` }}>{s.n}</p>
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <s.icon size={15} style={{ color: `hsl(${s.color})` }} />
+                    <p className="font-bold" style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.15 }}>{s.label}</p>
+                  </div>
+                  <p style={{ fontSize: 11, color: MUTED, marginTop: 4, lineHeight: 1.3 }}>{s.note}</p>
+                </div>
+                {i < arr.length - 1 && (
+                  <div className="flex items-center"><ArrowRight size={16} style={{ color: SUBTLE }} /></div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-5" style={{ gridTemplateColumns: "1.15fr 1fr" }}>
+          {/* Permission matrix */}
+          <div className="rounded-2xl border-2 overflow-hidden" style={{ borderColor: CHROME_BORDER, background: "white" }}>
+            <div className="px-4 py-2.5 border-b" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>Permission matrix · who can write what, auto vs gated</p>
+            </div>
+            <div className="grid" style={{ gridTemplateColumns: "150px 1fr 1fr 1fr" }}>
+              {["Role", "Authors", "Auto-merge", "Gated · needs approver"].map((h, i) => (
+                <div key={h} className="px-3 py-2 border-b" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, borderRight: i < 3 ? `1px solid ${CHROME_BORDER}` : undefined }}>
+                  <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: SUBTLE }}>{h}</p>
+                </div>
+              ))}
+              {roles.map((r, idx) => (
+                <div key={r.role} className="contents">
+                  <div className="px-3 py-3 flex items-center gap-2" style={{ background: `hsl(${r.color} / 0.06)`, borderRight: `1px solid ${CHROME_BORDER}`, borderBottom: idx < roles.length - 1 ? `1px solid ${CHROME_BORDER}` : undefined }}>
+                    <r.icon size={16} style={{ color: `hsl(${r.color})` }} />
+                    <p className="font-bold" style={{ fontSize: 13, color: TEXT, lineHeight: 1.15 }}>{r.role}</p>
+                  </div>
+                  <div className="px-3 py-3" style={{ borderRight: `1px solid ${CHROME_BORDER}`, borderBottom: idx < roles.length - 1 ? `1px solid ${CHROME_BORDER}` : undefined }}>
+                    <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3, fontFamily: "ui-monospace, SFMono-Regular, monospace" }}>{r.authors}</p>
+                  </div>
+                  <div className="px-3 py-3" style={{ borderRight: `1px solid ${CHROME_BORDER}`, borderBottom: idx < roles.length - 1 ? `1px solid ${CHROME_BORDER}` : undefined }}>
+                    <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3 }}>{r.autoMerge}</p>
+                  </div>
+                  <div className="px-3 py-3" style={{ borderBottom: idx < roles.length - 1 ? `1px solid ${CHROME_BORDER}` : undefined }}>
+                    <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3 }}>{r.gated}</p>
+                    <p style={{ fontSize: 11, color: MUTED, marginTop: 3, lineHeight: 1.3 }}>→ {r.approver}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Edge-insight intake */}
+          <div className="rounded-2xl border-2 p-4" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.04)` }}>
+            <div className="flex items-center gap-2 mb-3">
+              <Send size={16} style={{ color: `hsl(${ACCENT})` }} />
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>Edge-insight intake · juniors as system designers</p>
+            </div>
+            <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4, marginBottom: 12 }}>
+              The junior sits closest to the daily reality. New patterns, exceptions, and customer signals first appear at the edge. We capture them as typed deltas and route them for senior promotion.
+            </p>
+            <div className="flex flex-col gap-2">
+              {intake.map((s, i, arr) => (
+                <div key={s.n}>
+                  <div className="flex items-start gap-3 rounded-lg bg-white border px-3 py-2.5" style={{ borderColor: `hsl(${s.color} / 0.3)` }}>
+                    <div className="flex items-center justify-center rounded-md" style={{ width: 28, height: 28, background: `hsl(${s.color} / 0.12)` }}>
+                      <s.icon size={15} style={{ color: `hsl(${s.color})` }} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-mono" style={{ fontSize: 10, color: `hsl(${s.color})` }}>{s.n}</span>
+                        <p className="font-bold" style={{ fontSize: 13, color: TEXT, lineHeight: 1.15 }}>{s.label}</p>
+                      </div>
+                      <p style={{ fontSize: 11.5, color: MUTED, marginTop: 2, lineHeight: 1.35 }}>{s.note}</p>
+                    </div>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <div className="flex justify-center py-0.5"><ArrowDown size={14} style={{ color: SUBTLE }} /></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Closing assertion */}
+        <div className="mt-5 rounded-2xl border-2 px-6 py-3.5 flex items-center gap-4"
+          style={{ borderColor: `hsl(${PURPLE} / 0.5)`, background: `hsl(${PURPLE} / 0.06)` }}>
+          <Lock size={20} style={{ color: `hsl(${PURPLE})` }} />
+          <p style={{ fontSize: 15.5, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-bold">The org chart becomes a permission graph.</span> Seniority is no longer a meeting calendar — it is a signature on a Playbook. Juniors ship from day one; the system makes sure they ship at senior quality.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={PURPLE} to={ACCENT} />
+    </div>
+  );
+}
+
 // ─── Deck registry ───────────────────────────────────────────────────────────
 const SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
