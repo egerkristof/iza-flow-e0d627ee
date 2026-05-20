@@ -1712,11 +1712,11 @@ function S11HyperscalerRisk() {
       v: "Hottest zone. ServiceNow + Microsoft (Nov 2025) bet governance + orchestration is where platform value sits; Agentforce charges per conversation. They win inside their own data estate, but every standard authored there is locked to their record model. LIZA's wedge: standards-as-code above any one system of record, portable across stacks.",
     },
     {
-      l: "Enterprise search + RAG (Glean class)",
-      examples: "Glean (FlexCredits hybrid) · Guru (per-seat)",
-      risk: 40, posture: "Adjacent · upstream",
+      l: "Knowledge, memory + vertical-LLM layer",
+      examples: "Glean (FlexCredits hybrid) · Writer (per-token API) · Mem0 · Interloom · Edra",
+      risk: 40, posture: "Adjacent · component",
       color: ACCENT,
-      v: "Glean has shipped FlexCredits — seat + consumption hybrid metered per agent action. Strong retrieval, weak on locked process and rationale chain. They answer 'what do we know?' — we answer 'what is the standard, who is accountable, what decision class.' Often the data-discovery layer feeding our Playbooks.",
+      v: "Mostly already metered: Glean's FlexCredits price per agent action, Writer charges per million tokens, Mem0 per memory request. Strong on retrieval, memory, and own-model content. None lock intent to a standard, declare a decision class, or carry portable rationale. They sit upstream as data/memory inputs to a LIZA Playbook; we own the locked execution and accountability layer above them.",
     },
     {
       l: "Productized Big-4 / advisory AI",
