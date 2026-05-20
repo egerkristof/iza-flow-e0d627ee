@@ -1621,6 +1621,9 @@ function S10UnitEconomics() {
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
           Every tier traceable end-to-end: <span style={{ color: `hsl(${GOLD})` }}>tokens → COGS → human work displaced → price → margin.</span>
         </h2>
+        <p className="mb-5" style={{ fontSize: 13.5, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          <span className="font-semibold" style={{ color: TEXT }}>What 1× / 5× / 25× mean:</span> a <span className="font-mono">price-class multiplier</span> normalised to one Operational call (= 1×). It mirrors how firms already price labour — a junior, senior and partner hour have roughly a <span className="font-mono">1 : 5 : 25</span> loaded-cost-plus-leverage ratio. Every call is intent-locked to a Playbook whose registry tag declares its decision class, so the system knows the tier <em>before</em> it bills.
+        </p>
         <div className="grid grid-cols-[1.1fr_1fr] gap-10 items-start">
           <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${GOLD} / 0.4)`, background: `hsl(${GOLD} / 0.05)` }}>
             <p className="font-mono uppercase tracking-[0.15em] mb-3" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>Gross margin per execution · verifiable from public prices</p>
