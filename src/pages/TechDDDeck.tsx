@@ -446,12 +446,14 @@ function S04OSMap() {
     { l: "Glean" }, { l: "Veeva · NesGPT" }, { l: "Custom agents" },
   ];
   const core = [
-    { l: "Playbooks", s: "Multi-step protocols" },
-    { l: "Procedures", s: "Behavior patches" },
-    { l: "Directives", s: "Non-negotiable rules" },
-    { l: "Knowledge", s: "Authoritative facts" },
-    { l: "Artifacts", s: "Versioned outputs" },
-    { l: "Preferences", s: "Voice & format" },
+    { l: "Sense & Classify", s: "Routes inbound to the right standard + decision class" },
+    { l: "Standard Resolver", s: "Locks the playbook, procedure, directive bundle at execution" },
+    { l: "Knowledge Graph", s: "Entities, relations, provenance across artifacts" },
+    { l: "Conflict & Drift Detector", s: "Flags contradictions vs locked standard, semantic debt" },
+    { l: "Rationale Synthesizer", s: "Builds the audit-grade why behind every output" },
+    { l: "Versioning & Audit", s: "Bundle · version · mandate per execution, full diff history" },
+    { l: "Access & Role Gate", s: "Author · execute · override, scoped by tenant & role" },
+    { l: "Mandate Engine", s: "Carries leadership intent into every job downstream" },
   ];
   return (
     <div className="w-full h-full relative px-28 pt-24 pb-20" style={{ background: BG }}>
@@ -531,7 +533,7 @@ function S04OSMap() {
                 ))}
               </div>
               <p style={{ fontSize: 11, color: MUTED, marginTop: 6, fontStyle: "italic" }}>
-                Surfaces that get better reading our standard.
+              Addition layer, not replacement. We make Copilot, Gemini, Glean read the same locked standard.
               </p>
             </div>
           </div>
@@ -552,7 +554,7 @@ function S04OSMap() {
               </div>
               <p style={{ fontSize: 13, color: MUTED }}>State-locked · audit-traceable · model-agnostic</p>
             </div>
-            <div className="grid grid-cols-6 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               {core.map(c => (
                 <div key={c.l} className="px-2.5 py-2 rounded-lg border bg-white" style={{ borderColor: `hsl(${GREEN} / 0.3)` }}>
                   <p className="font-semibold" style={{ fontSize: 13, color: TEXT }}>{c.l}</p>
@@ -562,29 +564,14 @@ function S04OSMap() {
             </div>
           </div>
 
-          {/* Governance bar */}
-          <div className="mt-3 grid grid-cols-3 gap-3">
-            {[
-              { i: GitBranch, l: "Versioning", s: "Every standard has history, owner, diff" },
-              { i: ShieldCheck, l: "Audit trail", s: "Bundle · version · mandate per execution" },
-              { i: Lock, l: "Access & roles", s: "Author · execute · override" },
-            ].map(g => (
-              <div key={g.l} className="rounded-lg border px-3 py-2 flex items-center gap-2.5" style={{ borderColor: CHROME_BORDER, background: "white" }}>
-                <g.i size={16} style={{ color: SUBTLE }} />
-                <div>
-                  <p className="font-semibold" style={{ fontSize: 13, color: TEXT }}>{g.l}</p>
-                  <p style={{ fontSize: 11, color: MUTED }}>{g.s}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
           {/* Bottom — LLM Fabric */}
           <div className="mt-3 rounded-xl border-2 p-3 flex items-center justify-between"
             style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.06)` }}>
             <div className="flex items-center gap-2.5">
               <Cpu size={20} style={{ color: `hsl(${PURPLE})` }} />
               <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>Model Fabric</p>
+              <span className="px-2 py-0.5 rounded font-mono uppercase tracking-[0.15em]"
+                style={{ fontSize: 10, background: `hsl(${PURPLE} / 0.15)`, color: `hsl(${PURPLE})` }}>on-prem deployable</span>
             </div>
             <p style={{ fontSize: 13, color: MUTED }}>OpenAI · Anthropic · Google · Mistral · open-source · on-prem</p>
           </div>
