@@ -77,12 +77,11 @@ function SlideBar({ from = ACCENT, to = GREEN }: { from?: string; to?: string })
 function Tag({ label, color = ACCENT }: { label: string; color?: string }) {
   return <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 24, color: `hsl(${color})` }}>{label}</p>;
 }
-function PhaseChip({ phase, owner, color = ACCENT }: { phase: string; owner: string; color?: string }) {
+function PhaseChip({ phase, color = ACCENT }: { phase: string; color?: string }) {
   return (
     <div className="absolute top-10 right-12 flex items-center gap-2 px-4 py-2 rounded-full"
       style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.25)` }}>
       <span className="font-mono tracking-[0.15em] uppercase font-semibold" style={{ fontSize: 13, color: `hsl(${color})` }}>{phase}</span>
-      <span style={{ fontSize: 13, color: MUTED }}>· Owner: {owner}</span>
     </div>
   );
 }
@@ -149,7 +148,7 @@ function S02Horizons() {
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={2} total={TOTAL} />
-      <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
+      <PhaseChip phase="Phase 1 · Paradigm" color={ACCENT} />
       <div className="relative z-10">
         <Tag label="The Context We Operate In" />
         <h2 className="font-bold leading-[1.05]" style={{ fontSize: 64, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
@@ -228,7 +227,7 @@ function S03Shift() {
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={3} total={TOTAL} />
-      <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
+      <PhaseChip phase="Phase 1 · Paradigm" color={ACCENT} />
       <div className="relative z-10">
         <Tag label="The Infrastructure Shift" />
         <h2 className="font-bold leading-[1.05]" style={{ fontSize: 76, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1600 }}>
@@ -372,7 +371,7 @@ function S03Iceberg() {
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={4} total={TOTAL} />
-      <PhaseChip phase="Phase 1 · Paradigm" owner="Kristóf" color={ACCENT} />
+      <PhaseChip phase="Phase 1 · Paradigm" color={ACCENT} />
       <div className="relative z-10 grid grid-cols-[1fr_900px] gap-16 items-center">
         <div>
           <Tag label="The Context Gap" />
@@ -458,7 +457,7 @@ function S04OSMap() {
     <div className="w-full h-full relative px-28 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={5} total={TOTAL} />
-      <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
       <div className="relative z-10">
         <div className="flex items-end justify-between mb-5">
           <div>
@@ -611,7 +610,7 @@ function S05Loop() {
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={6} total={TOTAL} />
-      <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
       <div className="relative z-10">
         <Tag label="AACE v3.3 · The 4-Step Orchestration Loop" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-12" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em" }}>
@@ -748,7 +747,7 @@ function S06Propagation() {
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={7} total={TOTAL} />
-      <PhaseChip phase="Phase 2 · Architecture" owner="Zoltán" color={GREEN} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
       <div className="relative z-10">
         <Tag label="Artifact Graph · State Management · Observability" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
@@ -815,7 +814,7 @@ function S08PricingMetering() {
     <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={8} total={TOTAL} />
-      <PhaseChip phase="Phase 3 · Commercial" owner="István" color={GOLD} />
+      <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
       <div className="relative z-10">
         <Tag label="The Pricing Inversion · Value-Based Metering" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
@@ -943,7 +942,7 @@ function S08bClassifier() {
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={9} total={TOTAL} />
-      <PhaseChip phase="Phase 3 · Commercial" owner="István" color={GOLD} />
+      <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
       <div className="relative z-10">
         <Tag label="Decision-Class Classifier · Runtime" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
@@ -1101,7 +1100,7 @@ function S09Augmentation() {
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={10} total={TOTAL} />
-      <PhaseChip phase="Synthesis · Talent + Architecture" owner="Zsombor" color={PURPLE} />
+      <PhaseChip phase="Synthesis · Talent + Architecture" color={PURPLE} />
       <div className="relative z-10">
         <Tag label="The Augmentation Engine" color={PURPLE} />
         <h2 className="font-bold leading-[1.05] mb-10" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
@@ -1222,7 +1221,7 @@ function S09bAugmentationMechanics() {
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={11} total={TOTAL} />
-      <PhaseChip phase="Synthesis · Talent Architecture" owner="Zsombor" color={PURPLE} />
+      <PhaseChip phase="Synthesis · Talent Architecture" color={PURPLE} />
       <div className="relative z-10">
         <Tag label="Augmentation Mechanics · How juniors operate inside a senior system" color={PURPLE} />
         <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
