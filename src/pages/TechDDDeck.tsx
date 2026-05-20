@@ -602,7 +602,7 @@ function S04OSMap() {
 function S05Loop() {
   const steps = [
     { icon: Radio, label: "Sense", sub: "Intent classifier reads the request, signals, and Playbook Registry triggers." },
-    { icon: Lock, label: "Decide", sub: "State-Lock. A Playbook is selected; the generalist LLM dies; routing locks the locked_playbook_id.", highlight: true },
+    { icon: Lock, label: "Decide", sub: "State-Lock. A Playbook is selected; the generalist LLM exits the loop; routing locks the locked_playbook_id.", highlight: true },
     { icon: Zap, label: "Execute", sub: "A restricted micro-agent runs with only the approved Directives, Knowledge, Procedures injected as XML.", highlight: true },
     { icon: GitBranch, label: "Propagate", sub: "Outputs become versioned Artifacts; downstream nodes are flagged; the Rationale Log is written." },
   ];
@@ -635,7 +635,7 @@ function S05Loop() {
                   </span>
                 </div>
                 <p className="font-bold mb-3" style={{ fontSize: 32, color: TEXT }}>{s.label}</p>
-                <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{s.sub}</p>
+                <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>{s.sub}</p>
                 {s.highlight && (
                   <p className="mt-auto font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
                     ★ DD focus
