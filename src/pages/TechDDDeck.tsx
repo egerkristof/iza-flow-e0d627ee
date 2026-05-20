@@ -718,15 +718,23 @@ function S06Propagation() {
               ))}
             </div>
 
-            {/* Connecting lines (decorative) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
-              <g stroke={`hsl(${RED} / 0.3)`} strokeWidth="1.5" fill="none">
-                <path d="M 50% 80 L 25% 180" />
-                <path d="M 50% 80 L 75% 180" />
-                <path d="M 25% 210 L 17% 320" />
-                <path d="M 25% 210 L 38% 320" />
-                <path d="M 75% 210 L 62% 320" />
-                <path d="M 75% 210 L 83% 320" />
+            {/* Connecting lines */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none"
+              viewBox="0 0 100 100" preserveAspectRatio="none" style={{ zIndex: 0 }}>
+              <g stroke={`hsl(${RED} / 0.35)`} strokeWidth="0.25" fill="none">
+                {/* root → requirements */}
+                <path d="M 50 12 L 30 30" />
+                <path d="M 50 12 L 70 30" />
+                {/* requirements → specs */}
+                <path d="M 30 36 L 20 55" />
+                <path d="M 30 36 L 42 55" />
+                <path d="M 70 36 L 58 55" />
+                <path d="M 70 36 L 80 55" />
+                {/* specs → reports */}
+                <path d="M 20 60 L 14 86" />
+                <path d="M 42 60 L 38 86" />
+                <path d="M 58 60 L 62 86" />
+                <path d="M 80 60 L 86 86" />
               </g>
             </svg>
           </div>
