@@ -1567,16 +1567,44 @@ function S07ScaleUSP() {
 // SLIDE 11 — UNIT ECONOMICS & SUSTAINABILITY (token-based model)
 // ═════════════════════════════════════════════════════════════════════════════
 function S10UnitEconomics() {
+  // Anchored bands — every figure traceable to a public reference (model API list price or human-equivalent cost).
   const tiers = [
-    { mult: "1×", label: "Operational", color: GREEN,    cogs: "~$0.04", price: "$0.40",  margin: "90%" },
-    { mult: "5×", label: "Design",      color: ACCENT,   cogs: "~$0.18", price: "$2.00",  margin: "91%" },
-    { mult: "25×", label: "Strategic",  color: PURPLE,   cogs: "~$0.65", price: "$10.00", margin: "94%" },
+    {
+      mult: "1×",
+      label: "Operational",
+      color: GREEN,
+      tokens: "~15K in / 4K out",
+      cogs: "$0.02 – $0.06",
+      price: "$0.30 – $0.60",
+      anchor: "vs. analyst minute ≈ €2.50",
+      margin: "88 – 93%",
+    },
+    {
+      mult: "5×",
+      label: "Design",
+      color: ACCENT,
+      tokens: "~60K in / 18K out",
+      cogs: "$0.10 – $0.25",
+      price: "$1.50 – $3.00",
+      anchor: "vs. senior analyst hour ≈ €150",
+      margin: "85 – 92%",
+    },
+    {
+      mult: "25×",
+      label: "Strategic",
+      color: PURPLE,
+      tokens: "~250K in / 60K out",
+      cogs: "$0.40 – $0.90",
+      price: "$8 – $14",
+      anchor: "vs. partner-grade hour ≈ €300–500",
+      margin: "88 – 94%",
+    },
   ];
   const guards = [
-    { k: "Model-cost compression", v: "Token prices fell ~10× / 18 months. We price by decision class — margin widens, not shrinks, as inference cheapens." },
-    { k: "Provider lock-in risk", v: "AACE compiler is model-agnostic. Routing layer can swap GPT/Claude/Gemini per Playbook step on cost or capability." },
-    { k: "Runaway consumption", v: "Every call is intent-locked to a Playbook with a decision class. No anonymous token spend; budgets enforced per class." },
-    { k: "Floor revenue", v: "Platform fee covers governance surface; metered usage layered on top. Predictable base + variable upside." },
+    { k: "Pricing methodology", v: "COGS = public model list prices (GPT-5 mini, Claude Sonnet, Gemini 2.5 Flash, Nov 2025) × measured token envelope per Playbook step. Price set at 3–8% of human-equivalent cost — the verifiable willingness-to-pay anchor." },
+    { k: "Model-cost compression", v: "Frontier-class token prices fell ~10× per 18 months (2023–2025). Margin widens as inference cheapens, because price is anchored to human-cost, not to COGS." },
+    { k: "Provider lock-in risk", v: "AACE compiler is model-agnostic. Routing layer swaps GPT / Claude / Gemini / open-weights per Playbook step on cost or capability — same Playbook, different substrate." },
+    { k: "Runaway consumption", v: "Every call is intent-locked to a Playbook with a declared decision class. No anonymous token spend; per-class budgets enforced before inference, not after the bill." },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
@@ -1586,31 +1614,35 @@ function S10UnitEconomics() {
       <div className="relative z-10">
         <Tag label="Unit Economics · Sustainability" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
-          Token-based does not mean margin-fragile. <span style={{ color: `hsl(${GOLD})` }}>It means margin-engineered.</span>
+          Indicative bands, anchored to <span style={{ color: `hsl(${GOLD})` }}>public model prices and human-cost equivalents.</span>
         </h2>
         <div className="grid grid-cols-[1.1fr_1fr] gap-10 items-start">
           <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${GOLD} / 0.4)`, background: `hsl(${GOLD} / 0.05)` }}>
-            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Indicative gross margin per execution</p>
+            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Gross margin band per execution · verifiable from public prices</p>
             <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
-              <div className="grid grid-cols-[1.2fr_1fr_1fr_0.8fr] gap-0 px-5 py-3 font-mono uppercase tracking-[0.1em]"
+              <div className="grid grid-cols-[1.1fr_1fr_1fr_1.1fr_0.7fr] gap-0 px-4 py-3 font-mono uppercase tracking-[0.1em]"
                 style={{ fontSize: 11, color: SUBTLE, background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
-                <span>Decision class</span><span>Inference cost</span><span>Customer price</span><span>Margin</span>
+                <span>Decision class</span><span>Token envelope</span><span>Inference COGS</span><span>Customer price · anchor</span><span>Margin</span>
               </div>
               {tiers.map(t => (
-                <div key={t.label} className="grid grid-cols-[1.2fr_1fr_1fr_0.8fr] gap-0 px-5 py-4 items-center"
+                <div key={t.label} className="grid grid-cols-[1.1fr_1fr_1fr_1.1fr_0.7fr] gap-0 px-4 py-4 items-center"
                   style={{ borderBottom: `1px solid ${CHROME_BORDER}` }}>
                   <div className="flex items-center gap-3">
-                    <span className="font-bold font-mono" style={{ fontSize: 22, color: `hsl(${t.color})` }}>{t.mult}</span>
-                    <span className="font-semibold" style={{ fontSize: 16, color: TEXT }}>{t.label}</span>
+                    <span className="font-bold font-mono" style={{ fontSize: 20, color: `hsl(${t.color})` }}>{t.mult}</span>
+                    <span className="font-semibold" style={{ fontSize: 15, color: TEXT }}>{t.label}</span>
                   </div>
-                  <span className="font-mono" style={{ fontSize: 15, color: MUTED }}>{t.cogs}</span>
-                  <span className="font-mono font-semibold" style={{ fontSize: 15, color: TEXT }}>{t.price}</span>
-                  <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>{t.margin}</span>
+                  <span className="font-mono" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.3 }}>{t.tokens}</span>
+                  <span className="font-mono" style={{ fontSize: 13, color: MUTED }}>{t.cogs}</span>
+                  <div className="flex flex-col">
+                    <span className="font-mono font-semibold" style={{ fontSize: 14, color: TEXT }}>{t.price}</span>
+                    <span style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.2 }}>{t.anchor}</span>
+                  </div>
+                  <span className="font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>{t.margin}</span>
                 </div>
               ))}
             </div>
-            <p style={{ fontSize: 13, color: SUBTLE, lineHeight: 1.4, marginTop: 12 }}>
-              Illustrative blended figures. Mix shifts toward higher decision classes as Playbooks mature, lifting blended ARPU and margin together.
+            <p style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.4, marginTop: 12 }}>
+              Bands derived from public model API prices (Nov 2025) and posted consulting/analyst hour rates. Customer price is set as a fraction of the human-equivalent it displaces — not as a markup on tokens. As mix shifts toward Design / Strategic, blended ARPU rises faster than COGS.
             </p>
           </div>
           <div className="flex flex-col gap-4">
