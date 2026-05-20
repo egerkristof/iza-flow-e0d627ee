@@ -1859,6 +1859,187 @@ function S11HyperscalerRisk() {
   );
 }
 
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 11b — ACV BRIDGE · top-down meets bottom-up
+// ═════════════════════════════════════════════════════════════════════════════
+function S10bACVBridge() {
+  // Bridges the per-call unit economics (Slide 10) to the three top-down ACV targets
+  // ($40K small, $120-150K mid, $250K enterprise). Two halves: bottom-up seat build, then
+  // top-down segment build, then a single reconciliation row showing they meet in the middle.
+  const seatBuild = [
+    {
+      profile: "Light seat", color: SUBTLE,
+      who: "Occasional operator. ~1 Operational call/workday.",
+      op: 220, design: 20, strat: 2,
+      revenue: "~$165 / seat / year",
+    },
+    {
+      profile: "Standard seat", color: ACCENT,
+      who: "Daily operator inside a Playbook. ~5 Operational calls/workday.",
+      op: 1_100, design: 80, strat: 8,
+      revenue: "~$760 / seat / year",
+    },
+    {
+      profile: "Heavy / Strategic seat", color: PURPLE,
+      who: "Power user or analyst pod. ~10 Operational, regular Strategic runs.",
+      op: 2_200, design: 200, strat: 20,
+      revenue: "~$1,660 / seat / year",
+    },
+  ];
+  // Prices used (mid of Slide 10 bands): Op $0.45, Design $2.25, Strategic $11
+  const segments = [
+    {
+      seg: "Small / team wedge",
+      acv: "$40K",
+      color: GREEN,
+      who: "20-50 person company, one department live on a few Playbooks.",
+      platform: 15_000,
+      seats: "20 standard seats × ~$760",
+      seatsValue: 15_200,
+      strat: "Light Strategic use",
+      stratValue: 8_000,
+      total: "≈ $38-45K",
+      check: "≈ 25 partner-day-equivalents/yr displaced",
+    },
+    {
+      seg: "Mid-market",
+      acv: "$120-150K",
+      color: ACCENT,
+      who: "200-1,000 person company, 2-3 departments live, one Strategic pod.",
+      platform: 40_000,
+      seats: "60 standard seats × ~$760",
+      seatsValue: 45_600,
+      strat: "5 Heavy/Strategic seats × ~$1,660 + Strategic runs",
+      stratValue: 35_000,
+      total: "≈ $120-145K",
+      check: "≈ 95 partner-day-equivalents/yr displaced",
+    },
+    {
+      seg: "Enterprise",
+      acv: "$250K+",
+      color: GOLD,
+      who: "1,000+ person company, 4+ departments, multiple Strategic pods.",
+      platform: 80_000,
+      seats: "100 active seats (standard + heavy mix)",
+      seatsValue: 110_000,
+      strat: "10+ Strategic seats and recurring partner-grade runs",
+      stratValue: 60_000,
+      total: "≈ $230-280K",
+      check: "≈ 155 partner-day-equivalents/yr displaced; < 1 partner-day/workday across the org",
+    },
+  ];
+  const fmt = (n: number) => `$${(n / 1000).toFixed(0)}K`;
+  return (
+    <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={12} total={TOTAL} />
+      <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
+      <div className="relative z-10">
+        <Tag label="ACV Bridge · Bottom-up meets Top-down" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 38, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1780 }}>
+          The per-call math (Slide 11) and the top-down ACV targets <span style={{ color: `hsl(${GOLD})` }}>meet in the middle. Here is the arithmetic that joins them.</span>
+        </h2>
+        <p className="mb-4" style={{ fontSize: 13, color: MUTED, lineHeight: 1.45, maxWidth: 1780 }}>
+          <span className="font-semibold" style={{ color: TEXT }}>How to read this slide:</span> the left panel builds revenue <em>bottom-up</em> from one active seat (calls per workday × mid-band price). The right panel builds revenue <em>top-down</em> for each customer segment (platform fee + metered seats + Strategic pods). The reconciliation row shows the two sides land within ±10% of the published ACV targets.
+          <span className="block" style={{ marginTop: 4, fontSize: 11.5, color: SUBTLE }}>
+            Prices used (mid of Slide 11 bands): Operational $0.45/call · Design $2.25/call · Strategic $11/call. 220 productive workdays/year. Partner-day-equivalent = €1,600 of fully loaded partner time.
+          </span>
+        </p>
+
+        <div className="grid grid-cols-[0.85fr_1.15fr] gap-5 items-start">
+          {/* Bottom-up: one seat */}
+          <div className="rounded-2xl border-2 p-4" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.15em] mb-2" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>Bottom-up · revenue per active seat / year</p>
+            <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
+              <div className="grid grid-cols-[1.1fr_0.55fr_0.55fr_0.55fr_0.85fr] gap-0 px-3 py-2 font-mono uppercase tracking-[0.08em]"
+                style={{ fontSize: 9.5, color: SUBTLE, background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+                <span>Seat profile</span><span>Op / yr</span><span>Design / yr</span><span>Strat / yr</span><span>Revenue</span>
+              </div>
+              {seatBuild.map(s => (
+                <div key={s.profile} className="grid grid-cols-[1.1fr_0.55fr_0.55fr_0.55fr_0.85fr] gap-0 px-3 py-2.5 items-start"
+                  style={{ borderBottom: `1px solid ${CHROME_BORDER}` }}>
+                  <div className="flex flex-col">
+                    <span className="font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{s.profile}</span>
+                    <span style={{ fontSize: 9.5, color: SUBTLE, lineHeight: 1.25, marginTop: 2 }}>{s.who}</span>
+                  </div>
+                  <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.op.toLocaleString()}</span>
+                  <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.design}</span>
+                  <span className="font-mono" style={{ fontSize: 11.5, color: MUTED }}>{s.strat}</span>
+                  <span className="font-mono font-bold" style={{ fontSize: 12.5, color: `hsl(${s.color === SUBTLE ? ACCENT : s.color})` }}>{s.revenue}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px dashed hsl(${GREEN} / 0.35)` }}>
+              <p className="font-mono uppercase tracking-[0.1em] mb-1" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Worked example · one Standard seat</p>
+              <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.45 }}>
+                <span className="font-mono">1,100 × $0.45</span> (Operational) <span className="font-mono">+ 80 × $2.25</span> (Design) <span className="font-mono">+ 8 × $11</span> (Strategic) = <span className="font-mono font-semibold" style={{ color: TEXT }}>$495 + $180 + $88 = $763 / seat / year</span> in metered revenue.
+              </p>
+            </div>
+            <p className="mt-3" style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.4 }}>
+              Pure metered alone is fragile at the small end (10 seats × light usage ≈ $1.6K). The platform fee (Layer 02 on Slide 11) is what makes the small tier viable.
+            </p>
+          </div>
+
+          {/* Top-down: three segments */}
+          <div className="rounded-2xl border-2 p-4" style={{ borderColor: `hsl(${GOLD} / 0.4)`, background: `hsl(${GOLD} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.15em] mb-2" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>Top-down · ACV build per customer segment</p>
+            <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
+              <div className="grid grid-cols-[0.9fr_0.55fr_0.95fr_1.05fr_1.05fr_0.65fr] gap-0 px-3 py-2 font-mono uppercase tracking-[0.08em]"
+                style={{ fontSize: 9.5, color: SUBTLE, background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+                <span>Segment</span><span>Target ACV</span><span>Platform fee</span><span>Metered seats</span><span>Strategic pods</span><span>Total</span>
+              </div>
+              {segments.map(s => (
+                <div key={s.seg} className="grid grid-cols-[0.9fr_0.55fr_0.95fr_1.05fr_1.05fr_0.65fr] gap-0 px-3 py-2.5 items-start"
+                  style={{ borderBottom: `1px solid ${CHROME_BORDER}` }}>
+                  <div className="flex flex-col">
+                    <span className="font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{s.seg}</span>
+                    <span style={{ fontSize: 9.5, color: SUBTLE, lineHeight: 1.25, marginTop: 2 }}>{s.who}</span>
+                  </div>
+                  <span className="font-mono font-bold" style={{ fontSize: 14, color: `hsl(${s.color})`, lineHeight: 1.1 }}>{s.acv}</span>
+                  <div className="flex flex-col">
+                    <span className="font-mono font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{fmt(s.platform)}</span>
+                    <span style={{ fontSize: 9.5, color: SUBTLE, lineHeight: 1.25, marginTop: 2 }}>fixed access + Layer 02-03 value</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-mono font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{fmt(s.seatsValue)}</span>
+                    <span style={{ fontSize: 9.5, color: SUBTLE, lineHeight: 1.25, marginTop: 2 }}>{s.seats}</span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-mono font-semibold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.2 }}>{fmt(s.stratValue)}</span>
+                    <span style={{ fontSize: 9.5, color: SUBTLE, lineHeight: 1.25, marginTop: 2 }}>{s.strat}</span>
+                  </div>
+                  <span className="font-mono font-bold" style={{ fontSize: 12.5, color: `hsl(${GREEN})`, lineHeight: 1.2 }}>{s.total}</span>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              {segments.map(s => (
+                <div key={s.seg + "-check"} className="rounded-lg px-3 py-2" style={{ background: `hsl(${s.color} / 0.08)`, border: `1px dashed hsl(${s.color} / 0.35)` }}>
+                  <p className="font-mono uppercase tracking-[0.1em] mb-1" style={{ fontSize: 9, color: `hsl(${s.color})` }}>Sanity check · {s.seg}</p>
+                  <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.35 }}>{s.check}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Reconciliation strip */}
+        <div className="mt-4 rounded-xl border-2 px-5 py-3" style={{ borderColor: `hsl(${GREEN} / 0.35)`, background: `hsl(${GREEN} / 0.05)` }}>
+          <div className="flex items-center gap-3">
+            <ShieldCheck size={20} style={{ color: `hsl(${GREEN})` }} />
+            <p className="font-bold" style={{ fontSize: 14, color: TEXT }}>Reconciliation</p>
+            <span className="font-mono" style={{ fontSize: 11, color: SUBTLE }}>both sides land within ±10% of the published ACVs</span>
+          </div>
+          <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.45, marginTop: 4 }}>
+            ACVs are driven by <span className="font-semibold" style={{ color: TEXT }}>seats × activation × decision-class mix</span>, not by token volume. The unit economics on Slide 11 produce ≈90% gross margin across the band, so the commercial risk is activation (calls per active seat per workday), not unit economics. The platform fee is what de-risks the small tier and what makes Layers 02 (Collaboration) and 03 (Infrastructure) priceable. As inference prices fall, margin widens because price stays anchored to displaced human cost, not to COGS.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
 const SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
