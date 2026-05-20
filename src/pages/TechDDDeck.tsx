@@ -1748,23 +1748,23 @@ function S11HyperscalerRisk() {
                 <span className="inline-block w-2 h-2 rounded-full ml-2" style={{ background: `hsl(${GOLD})` }} />Overlap
               </div>
             </div>
-            <div className="space-y-2.5">
+            <div className="space-y-2">
               {bands.map(b => (
-                <div key={b.l} className="rounded-xl border bg-white px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
+                <div key={b.l} className="rounded-xl border bg-white px-4 py-2.5" style={{ borderColor: CHROME_BORDER }}>
                   <div className="flex items-baseline justify-between gap-3 mb-1">
                     <div className="flex-1 min-w-0">
-                      <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.2 }}>{b.l}</p>
-                      <p className="font-mono" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.3, marginTop: 1 }}>{b.examples}</p>
+                      <p className="font-bold" style={{ fontSize: 14, color: TEXT, lineHeight: 1.2 }}>{b.l}</p>
+                      <p className="font-mono" style={{ fontSize: 10, color: SUBTLE, lineHeight: 1.3, marginTop: 1 }}>{b.examples}</p>
                     </div>
-                    <span className="font-mono uppercase tracking-[0.08em] whitespace-nowrap" style={{ fontSize: 10, color: `hsl(${b.color})`, fontWeight: 700 }}>{b.posture}</span>
+                    <span className="font-mono uppercase tracking-[0.08em] whitespace-nowrap" style={{ fontSize: 9.5, color: `hsl(${b.color})`, fontWeight: 700 }}>{b.posture}</span>
                   </div>
-                  <div className="flex items-center gap-3 mt-2 mb-1.5">
+                  <div className="flex items-center gap-3 mt-1.5 mb-1">
                     <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: `hsl(${b.color} / 0.12)` }}>
                       <div className="h-full rounded-full" style={{ width: `${b.risk}%`, background: `linear-gradient(90deg, hsl(${GREEN}), hsl(${b.color}))` }} />
                     </div>
                     <span className="font-mono font-bold" style={{ fontSize: 11, color: `hsl(${b.color})`, width: 32, textAlign: "right" }}>{b.risk}%</span>
                   </div>
-                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.4 }}>{b.v}</p>
+                  <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.35 }}>{b.v}</p>
                 </div>
               ))}
             </div>
