@@ -843,37 +843,29 @@ function S08PricingMetering() {
             </div>
           </div>
 
-          {/* RIGHT — Pyramid + tiers */}
+          {/* RIGHT — Pyramid with example inline (no duplication) */}
           <div>
-            <div className="flex flex-col items-center gap-2 mb-5">
+            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Value-based semantic metering</p>
+            <div className="flex flex-col items-center gap-3 mb-5">
               {tiers.map(t => (
-                <div key={t.label} className="rounded-2xl border-2 px-6 py-3 flex items-center justify-between"
+                <div key={t.label} className="rounded-2xl border-2 px-6 py-4"
                   style={{
                     width: t.w,
                     borderColor: `hsl(${t.color} / 0.5)`,
-                    background: `linear-gradient(90deg, hsl(${t.color} / 0.1), hsl(${t.color} / 0.2))`,
+                    background: `linear-gradient(90deg, hsl(${t.color} / 0.08), hsl(${t.color} / 0.18))`,
                   }}>
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-bold font-mono" style={{ fontSize: 36, color: `hsl(${t.color})` }}>{t.mult}</span>
-                    <span className="font-bold" style={{ fontSize: 18, color: TEXT }}>{t.label}</span>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-baseline gap-3">
+                      <span className="font-bold font-mono" style={{ fontSize: 34, color: `hsl(${t.color})`, lineHeight: 1 }}>{t.mult}</span>
+                      <span className="font-bold" style={{ fontSize: 19, color: TEXT }}>{t.label}</span>
+                    </div>
+                    <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 12, color: MUTED }}>≈ {t.human}</span>
                   </div>
-                  <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 12, color: MUTED }}>≈ {t.human}</span>
+                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>{t.example}</p>
                 </div>
               ))}
             </div>
-            <div className="flex flex-col gap-3">
-              {tiers.map(t => (
-                <div key={t.label} className="rounded-xl border-l-4 px-5 py-3" style={{ borderColor: `hsl(${t.color})`, background: CARD_ALT }}>
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold font-mono px-2 py-0.5 rounded" style={{ fontSize: 13, color: `hsl(${t.color})`, background: `hsl(${t.color} / 0.12)` }}>{t.mult}</span>
-                    <p className="font-semibold" style={{ fontSize: 16, color: TEXT }}>{t.label}</p>
-                    <span style={{ fontSize: 13, color: SUBTLE }}>· {t.human}</span>
-                  </div>
-                  <p style={{ fontSize: 14, color: MUTED, marginTop: 2 }}>{t.example}</p>
-                </div>
-              ))}
-            </div>
-            <div className="rounded-xl border-2 mt-4 p-5" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.08)` }}>
+            <div className="rounded-xl border-2 p-5" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.08)` }}>
               <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
                 <span className="font-bold">State is locked to a Playbook.</span> So we know the decision class of every execution. We charge for the weight of the decision, not the weight of the tokens. Revenue tracks strategic ROI, not API price.
               </p>
