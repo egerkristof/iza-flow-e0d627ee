@@ -1353,6 +1353,7 @@ const SLIDES = [
   { id: "metering", title: "Pricing Inversion + Metering", component: <S08PricingMetering /> },
   { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
   { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
+  { id: "augmentation-mechanics", title: "Augmentation Mechanics", component: <S09bAugmentationMechanics /> },
 ];
 
 // ─── Deck shell ──────────────────────────────────────────────────────────────
