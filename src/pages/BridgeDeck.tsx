@@ -101,35 +101,9 @@ function S01Cover() {
         <p className="font-semibold tracking-[0.3em] uppercase mb-10" style={{ fontSize: 24, color: `hsl(${GOLD})` }}>
           LIZA OS · Bridge Round · Confidential
         </p>
-        <h1 className="font-bold leading-[1.02] mb-10" style={{ fontSize: 110, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
+        <h1 className="font-bold leading-[1.02]" style={{ fontSize: 110, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
           LIZA OS: the Context Layer for AI-Native Organizations.
         </h1>
-        <p className="leading-[1.2] mb-14" style={{ fontSize: 46, color: `hsl(${ACCENT} / 0.95)`, fontWeight: 500 }}>
-          A €200K bridge round to turn four paid pilots into a self-serve SaaS engine.
-        </p>
-        <p className="mx-auto mb-14" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.4 }}>
-          We are a live B2B product already running paid workloads with four enterprise design partners. This bridge funds the engineering sprint that takes us from custom delivery to product-led self-serve, and sets up a financeable Seed.
-        </p>
-        <div className="inline-flex items-center gap-8 px-10 py-5 rounded-2xl"
-          style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(0 0% 100% / 0.12)` }}>
-          {[
-            { k: "Round size", v: "€200,000" },
-            { k: "Check size", v: "€10K to €30K" },
-            { k: "Close window", v: "6 weeks, rolling" },
-            { k: "For", v: "Operators · Angels · Micro-funds" },
-          ].map((x, i, arr) => (
-            <div key={x.k} className="flex items-center gap-8">
-              <div className="text-left">
-                <p style={{ fontSize: 16, color: DARK_MUTED, letterSpacing: "0.15em" }} className="uppercase font-semibold">{x.k}</p>
-                <p style={{ fontSize: 28, color: DARK_TEXT, fontWeight: 700 }}>{x.v}</p>
-              </div>
-              {i < arr.length - 1 && <div className="w-px h-12" style={{ background: "hsl(0 0% 100% / 0.15)" }} />}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="absolute bottom-12 left-0 right-0 text-center" style={{ fontSize: 18, color: DARK_MUTED }}>
-        LIZA OS · The Context Layer for AI-Native Organizations
       </div>
       <SlideBar from={GOLD} to={ACCENT} />
     </div>
@@ -861,9 +835,6 @@ function S12Ask() {
               </p>
               <p style={{ fontSize: 19, color: `hsl(${ACCENT})`, fontWeight: 600, marginTop: 10, lineHeight: 1.4 }}>
                 Kristof Eger · kristof.eger@lizaos.ai
-              </p>
-              <p style={{ fontSize: 17, color: DARK_MUTED, marginTop: 8, lineHeight: 1.4 }}>
-                Two slots remaining at first-mover terms. After they close, the round caps and the next entry is the priced Seed.
               </p>
             </div>
           </div>
