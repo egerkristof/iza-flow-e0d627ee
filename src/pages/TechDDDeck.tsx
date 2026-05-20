@@ -192,12 +192,12 @@ function S02Horizons() {
               <div className="absolute rounded-full border-2"
                 style={{ width: 220, height: 220, left: 70, top: 0, borderColor: `hsl(${PURPLE} / 0.55)`, background: `hsl(${PURPLE} / 0.10)` }} />
               {/* labels */}
-              <span className="absolute font-bold" style={{ left: 24, top: 232, fontSize: 16, color: `hsl(${GREEN})` }}>H1 Run</span>
-              <span className="absolute font-bold" style={{ left: 260, top: 232, fontSize: 16, color: `hsl(${ACCENT})` }}>H2 Improve</span>
-              <span className="absolute font-bold text-center" style={{ left: 130, top: -22, fontSize: 16, color: `hsl(${PURPLE})`, width: 120 }}>H3 Transform</span>
+              <span className="absolute font-bold" style={{ left: 18, top: 236, fontSize: 18, color: `hsl(${GREEN})` }}>H1 Run</span>
+              <span className="absolute font-bold" style={{ left: 256, top: 236, fontSize: 18, color: `hsl(${ACCENT})` }}>H2 Improve</span>
+              <span className="absolute font-bold text-center" style={{ left: 130, top: -26, fontSize: 18, color: `hsl(${PURPLE})`, width: 120 }}>H3 Transform</span>
               {/* center label */}
               <div className="absolute flex items-center justify-center text-center font-bold"
-                style={{ left: 130, top: 110, width: 120, height: 60, fontSize: 14, color: TEXT }}>
+                style={{ left: 130, top: 110, width: 120, height: 60, fontSize: 16, color: TEXT, lineHeight: 1.2 }}>
                 same week<br />same team
               </div>
             </div>
