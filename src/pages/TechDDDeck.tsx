@@ -104,7 +104,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 12;
+const TOTAL = 15;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 01 — COVER
@@ -802,7 +802,7 @@ function S08PricingMetering() {
   return (
     <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={8} total={TOTAL} />
+      <PageNumber n={9} total={TOTAL} />
       <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
       <div className="relative z-10">
         <Tag label="The Pricing Inversion · Value-Based Metering" color={GOLD} />
@@ -930,7 +930,7 @@ function S08bClassifier() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={9} total={TOTAL} />
+      <PageNumber n={10} total={TOTAL} />
       <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
       <div className="relative z-10">
         <Tag label="Decision-Class Classifier · Runtime" color={GOLD} />
@@ -1088,7 +1088,7 @@ function S09Augmentation() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={10} total={TOTAL} />
+      <PageNumber n={12} total={TOTAL} />
       <PhaseChip phase="Synthesis · Talent + Architecture" color={PURPLE} />
       <div className="relative z-10">
         <Tag label="The Augmentation Engine" color={PURPLE} />
@@ -1209,7 +1209,7 @@ function S09bAugmentationMechanics() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={11} total={TOTAL} />
+      <PageNumber n={13} total={TOTAL} />
       <PhaseChip phase="Synthesis · Talent Architecture" color={PURPLE} />
       <div className="relative z-10">
         <Tag label="Augmentation Mechanics · How juniors operate inside a senior system" color={PURPLE} />
@@ -1353,7 +1353,7 @@ function S12SocietalImpact() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={12} total={TOTAL} />
+      <PageNumber n={15} total={TOTAL} />
       <PhaseChip phase="Phase 4 · Societal Impact" color={GREEN} />
       <div className="relative z-10">
         <Tag label="Knowledge Sovereignty · The Portable Career Graph" color={GREEN} />
