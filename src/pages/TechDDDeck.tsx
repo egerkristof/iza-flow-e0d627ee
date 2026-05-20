@@ -1575,41 +1575,41 @@ function S10UnitEconomics() {
       mult: "1×", label: "Operational", color: GREEN,
       tokens: "15K in / 4K out",
       tokensWhy: "system + Playbook + retrieved context + user ask / structured answer",
-      cogs: "$0.02 – $0.06",
-      displaces: "15–30 min of junior analyst",
-      displacesValue: "~€20–45  (analyst loaded €90/h)",
+      cogs: "$0.01 – $0.03",
+      displaces: "15–30 min of mid-level analyst",
+      displacesValue: "~€18–35  (loaded €70/h)",
       price: "$0.30 – $0.60",
-      pricePct: "≈ 1–3% of displaced cost",
-      margin: "88 – 93%",
+      pricePct: "≤ 3% of displaced cost",
+      margin: "90 – 95%",
     },
     {
       mult: "5×", label: "Design", color: ACCENT,
       tokens: "60K in / 18K out",
       tokensWhy: "deeper retrieval, multi-turn synthesis, longer artifact",
       cogs: "$0.10 – $0.25",
-      displaces: "1–2 h of senior analyst",
-      displacesValue: "~€180–360  (senior loaded €180/h)",
+      displaces: "1–2 h of senior consultant",
+      displacesValue: "~€140–280  (loaded €140/h)",
       price: "$1.50 – $3.00",
-      pricePct: "≈ 1–2% of displaced cost",
-      margin: "85 – 92%",
+      pricePct: "≤ 2% of displaced cost",
+      margin: "83 – 93%",
     },
     {
       mult: "25×", label: "Strategic", color: PURPLE,
       tokens: "250K in / 60K out",
       tokensWhy: "full case file, cross-doc reasoning, partner-grade artifact",
-      cogs: "$0.40 – $0.90",
+      cogs: "$0.80 – $2.50",
       displaces: "½–1 day of partner-grade work",
-      displacesValue: "~€1 500–4 000  (partner loaded €400/h)",
+      displacesValue: "~€1 600–3 200  (loaded €400/h)",
       price: "$8 – $14",
-      pricePct: "≈ 0.3–1% of displaced cost",
-      margin: "88 – 94%",
+      pricePct: "≤ 1% of displaced cost",
+      margin: "80 – 90%",
     },
   ];
   const guards = [
-    { k: "How the envelope is built", v: "Input tokens = system prompt + locked Playbook + injected context (retrieved standards, prior artifacts) + user request. Output = structured artifact: decision, rationale chain, provenance. Sized from measured AACE traces, not assumed." },
-    { k: "COGS source", v: "Public model API list prices (Nov 2025): GPT-5 mini $0.25 / $2 per M, Claude Sonnet $3 / $15, Gemini 2.5 Flash $0.30 / $2.50. COGS range = blended envelope × routed model mix per Playbook step." },
-    { k: "Price anchor", v: "Customer price set as a small fraction of the loaded human cost displaced — not as a markup on tokens. As inference gets cheaper, margin widens because the price stays anchored to human-equivalent value, not to COGS." },
-    { k: "Runaway-cost guard", v: "Every call is intent-locked to a Playbook with a declared decision class. Per-class token + spend ceilings enforced before inference, not after the bill arrives." },
+    { k: "How the envelope is built", v: "Input tokens = system prompt + locked Playbook + injected context (retrieved standards, prior artifacts) + user request. Output = structured artifact: decision, rationale chain, provenance. Envelopes are measured p50 from production traces. Per-class hard ceilings (Op $0.10, Design $0.60, Strategic $5.00) enforced before inference, so p95 cannot run away." },
+    { k: "COGS source and blend", v: "Public model API list prices (Nov 2025): GPT-5 mini $0.25 / $2 per M, Gemini 2.5 Flash $0.30 / $2.50, Claude Sonnet 4.5 $3 / $15. Operational routes mostly to mini / Flash. Strategic blends Sonnet for partner-grade reasoning. Margins quoted are execution-level; fully-loaded margin (incl. retrieval, evals, observability, on-call) sits 5 to 8 pts lower." },
+    { k: "Price anchor and 1 : 5 : 25 ratio", v: "Customer price set as a fraction of the fully loaded human cost displaced, not as a markup on tokens. The 1 : 5 : 25 ratio mirrors the loaded-cost-plus-leverage gap between junior, senior and partner work that every CFO already accepts. As inference prices fall, margin widens because price stays anchored to human value, not COGS." },
+    { k: "Verifiable from the bill", v: "Every call logs envelope + routed model + COGS against public API prices. Customer can audit each line item back to the decision class it bought. Unique to intent-locked execution; impossible in seat-licence or free-form chat tools." },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
@@ -1661,8 +1661,8 @@ function S10UnitEconomics() {
             <div className="mt-3 rounded-lg px-4 py-3" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px dashed hsl(${GREEN} / 0.35)` }}>
               <p className="font-mono uppercase tracking-[0.1em] mb-1" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Worked example · Operational (1×)</p>
               <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-                15 000 input + 4 000 output tokens, routed to GPT-5 mini → 15K × $0.25/M + 4K × $2/M = <span className="font-mono font-semibold" style={{ color: TEXT }}>$0.012</span> COGS.
-                Charged at <span className="font-mono font-semibold" style={{ color: TEXT }}>$0.40</span>. Replaces ~20 min of an analyst whose fully loaded cost is €90/h → <span className="font-mono font-semibold" style={{ color: TEXT }}>€30</span> of human work removed. Customer pays ~1.2% of the cost they save; we keep <span className="font-bold" style={{ color: `hsl(${GREEN})` }}>~97% margin</span> on that call.
+                15 000 input + 4 000 output tokens routed to GPT-5 mini: 15K × $0.25/M + 4K × $2/M = <span className="font-mono font-semibold" style={{ color: TEXT }}>$0.012</span> execution COGS. Add ~$0.008 for retrieval and observability allocation: fully loaded ~<span className="font-mono font-semibold" style={{ color: TEXT }}>$0.020</span>.
+                Charged at <span className="font-mono font-semibold" style={{ color: TEXT }}>$0.40</span>. Replaces ~20 min of a mid-level analyst whose fully loaded cost is €70/h: <span className="font-mono font-semibold" style={{ color: TEXT }}>€23</span> of human work removed. Customer pays ~1.6% of the cost they save; we keep <span className="font-bold" style={{ color: `hsl(${GREEN})` }}>~95% fully-loaded margin</span> on that call.
               </p>
             </div>
           </div>
