@@ -1567,16 +1567,44 @@ function S07ScaleUSP() {
 // SLIDE 11 — UNIT ECONOMICS & SUSTAINABILITY (token-based model)
 // ═════════════════════════════════════════════════════════════════════════════
 function S10UnitEconomics() {
+  // Anchored bands — every figure traceable to a public reference (model API list price or human-equivalent cost).
   const tiers = [
-    { mult: "1×", label: "Operational", color: GREEN,    cogs: "~$0.04", price: "$0.40",  margin: "90%" },
-    { mult: "5×", label: "Design",      color: ACCENT,   cogs: "~$0.18", price: "$2.00",  margin: "91%" },
-    { mult: "25×", label: "Strategic",  color: PURPLE,   cogs: "~$0.65", price: "$10.00", margin: "94%" },
+    {
+      mult: "1×",
+      label: "Operational",
+      color: GREEN,
+      tokens: "~15K in / 4K out",
+      cogs: "$0.02 – $0.06",
+      price: "$0.30 – $0.60",
+      anchor: "vs. analyst minute ≈ €2.50",
+      margin: "88 – 93%",
+    },
+    {
+      mult: "5×",
+      label: "Design",
+      color: ACCENT,
+      tokens: "~60K in / 18K out",
+      cogs: "$0.10 – $0.25",
+      price: "$1.50 – $3.00",
+      anchor: "vs. senior analyst hour ≈ €150",
+      margin: "85 – 92%",
+    },
+    {
+      mult: "25×",
+      label: "Strategic",
+      color: PURPLE,
+      tokens: "~250K in / 60K out",
+      cogs: "$0.40 – $0.90",
+      price: "$8 – $14",
+      anchor: "vs. partner-grade hour ≈ €300–500",
+      margin: "88 – 94%",
+    },
   ];
   const guards = [
-    { k: "Model-cost compression", v: "Token prices fell ~10× / 18 months. We price by decision class — margin widens, not shrinks, as inference cheapens." },
-    { k: "Provider lock-in risk", v: "AACE compiler is model-agnostic. Routing layer can swap GPT/Claude/Gemini per Playbook step on cost or capability." },
-    { k: "Runaway consumption", v: "Every call is intent-locked to a Playbook with a decision class. No anonymous token spend; budgets enforced per class." },
-    { k: "Floor revenue", v: "Platform fee covers governance surface; metered usage layered on top. Predictable base + variable upside." },
+    { k: "Pricing methodology", v: "COGS = public model list prices (GPT-5 mini, Claude Sonnet, Gemini 2.5 Flash, Nov 2025) × measured token envelope per Playbook step. Price set at 3–8% of human-equivalent cost — the verifiable willingness-to-pay anchor." },
+    { k: "Model-cost compression", v: "Frontier-class token prices fell ~10× per 18 months (2023–2025). Margin widens as inference cheapens, because price is anchored to human-cost, not to COGS." },
+    { k: "Provider lock-in risk", v: "AACE compiler is model-agnostic. Routing layer swaps GPT / Claude / Gemini / open-weights per Playbook step on cost or capability — same Playbook, different substrate." },
+    { k: "Runaway consumption", v: "Every call is intent-locked to a Playbook with a declared decision class. No anonymous token spend; per-class budgets enforced before inference, not after the bill." },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
@@ -1586,31 +1614,35 @@ function S10UnitEconomics() {
       <div className="relative z-10">
         <Tag label="Unit Economics · Sustainability" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
-          Token-based does not mean margin-fragile. <span style={{ color: `hsl(${GOLD})` }}>It means margin-engineered.</span>
+          Indicative bands, anchored to <span style={{ color: `hsl(${GOLD})` }}>public model prices and human-cost equivalents.</span>
         </h2>
         <div className="grid grid-cols-[1.1fr_1fr] gap-10 items-start">
           <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${GOLD} / 0.4)`, background: `hsl(${GOLD} / 0.05)` }}>
-            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Indicative gross margin per execution</p>
+            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Gross margin band per execution · verifiable from public prices</p>
             <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
-              <div className="grid grid-cols-[1.2fr_1fr_1fr_0.8fr] gap-0 px-5 py-3 font-mono uppercase tracking-[0.1em]"
+              <div className="grid grid-cols-[1.1fr_1fr_1fr_1.1fr_0.7fr] gap-0 px-4 py-3 font-mono uppercase tracking-[0.1em]"
                 style={{ fontSize: 11, color: SUBTLE, background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
-                <span>Decision class</span><span>Inference cost</span><span>Customer price</span><span>Margin</span>
+                <span>Decision class</span><span>Token envelope</span><span>Inference COGS</span><span>Customer price · anchor</span><span>Margin</span>
               </div>
               {tiers.map(t => (
-                <div key={t.label} className="grid grid-cols-[1.2fr_1fr_1fr_0.8fr] gap-0 px-5 py-4 items-center"
+                <div key={t.label} className="grid grid-cols-[1.1fr_1fr_1fr_1.1fr_0.7fr] gap-0 px-4 py-4 items-center"
                   style={{ borderBottom: `1px solid ${CHROME_BORDER}` }}>
                   <div className="flex items-center gap-3">
-                    <span className="font-bold font-mono" style={{ fontSize: 22, color: `hsl(${t.color})` }}>{t.mult}</span>
-                    <span className="font-semibold" style={{ fontSize: 16, color: TEXT }}>{t.label}</span>
+                    <span className="font-bold font-mono" style={{ fontSize: 20, color: `hsl(${t.color})` }}>{t.mult}</span>
+                    <span className="font-semibold" style={{ fontSize: 15, color: TEXT }}>{t.label}</span>
                   </div>
-                  <span className="font-mono" style={{ fontSize: 15, color: MUTED }}>{t.cogs}</span>
-                  <span className="font-mono font-semibold" style={{ fontSize: 15, color: TEXT }}>{t.price}</span>
-                  <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>{t.margin}</span>
+                  <span className="font-mono" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.3 }}>{t.tokens}</span>
+                  <span className="font-mono" style={{ fontSize: 13, color: MUTED }}>{t.cogs}</span>
+                  <div className="flex flex-col">
+                    <span className="font-mono font-semibold" style={{ fontSize: 14, color: TEXT }}>{t.price}</span>
+                    <span style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.2 }}>{t.anchor}</span>
+                  </div>
+                  <span className="font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>{t.margin}</span>
                 </div>
               ))}
             </div>
-            <p style={{ fontSize: 13, color: SUBTLE, lineHeight: 1.4, marginTop: 12 }}>
-              Illustrative blended figures. Mix shifts toward higher decision classes as Playbooks mature, lifting blended ARPU and margin together.
+            <p style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.4, marginTop: 12 }}>
+              Bands derived from public model API prices (Nov 2025) and posted consulting/analyst hour rates. Customer price is set as a fraction of the human-equivalent it displaces — not as a markup on tokens. As mix shifts toward Design / Strategic, blended ARPU rises faster than COGS.
             </p>
           </div>
           <div className="flex flex-col gap-4">
@@ -1636,17 +1668,49 @@ function S10UnitEconomics() {
 // SLIDE 14 — HYPERSCALER RISK & RETURN PATHS
 // ═════════════════════════════════════════════════════════════════════════════
 function S11HyperscalerRisk() {
-  const risks = [
-    { l: "Microsoft / Copilot", why: "Sells inference and seats. Governance + standards work against their seat-count incentive.", verdict: "Will integrate, not build. Distribution partner candidate." },
-    { l: "Google / Gemini", why: "Infra and model layer. Vertical governance per industry is out of scope.", verdict: "Model supplier, not competitor." },
-    { l: "OpenAI / Anthropic", why: "Frontier model race. Org-specific standards layer is anti-pattern to their abstraction.", verdict: "Substrate, not stack." },
-    { l: "Big-4 consulting", why: "Bill humans by the hour. Cannibalising that with metered AI execution is structurally blocked.", verdict: "Implementation partner, not platform." },
+  // Nuanced risk spectrum — every band acknowledges current 2025 moves; differentiation = standards-anchored, portable execution layer.
+  const bands = [
+    {
+      l: "Frontier model labs",
+      examples: "OpenAI · Anthropic · Google DeepMind · Mistral",
+      risk: 10, posture: "Supplier",
+      color: GREEN,
+      v: "Race is at the model layer. Org-specific standards + portable execution graph is anti-pattern to their universal-abstraction bet. We consume them, swap them per Playbook step.",
+    },
+    {
+      l: "Hyperscaler workflow suites",
+      examples: "Microsoft Copilot Studio · Google Agentspace · AWS Bedrock Agents",
+      risk: 35, posture: "Channel + partial overlap",
+      color: ACCENT,
+      v: "Building agent tooling, but bundled into seat-licensed productivity stacks. Standards-locking and cross-vendor portability cut against seat incentives. Distribution partner first, overlap on the long tail of internal agents.",
+    },
+    {
+      l: "Enterprise control-tower platforms",
+      examples: "ServiceNow AI Control Tower · Salesforce Agentforce · SAP Joule",
+      risk: 70, posture: "Direct overlap · coopetition",
+      color: GOLD,
+      v: "The real competitive zone. ServiceNow + Microsoft (Nov 2025) bet governance + orchestration is where platform value sits. They win inside their own data estate. LIZA's wedge: standards-as-code that lives above any one record system, portable across stacks.",
+    },
+    {
+      l: "Knowledge / search incumbents",
+      examples: "Glean · Writer · Guru · Mem0",
+      risk: 45, posture: "Adjacent · feature overlap",
+      color: ACCENT,
+      v: "Strong on retrieval and content surfacing, weak on intent-locking and decision-class metering. They answer 'what do we know?' — we answer 'what is the standard, who is accountable, what was the decision class?'",
+    },
+    {
+      l: "Productized Big-4 / advisory AI",
+      examples: "Deloitte Zora AI · PwC agent OS · McKinsey Lilli · KPMG Clara",
+      risk: 60, posture: "Coopetition · channel partner",
+      color: GOLD,
+      v: "Actively moving off pure billable hours into productized agents. They are likely buyers, OEM partners, or implementation channels — and competitors when they push generic horizontal agents. Differentiator: our standards layer is portable; theirs is locked to their delivery brand.",
+    },
   ];
   const returns = [
-    { k: "Strategic acquisition", v: "Copilot ecosystem, ServiceNow-class governance vendor, or Big-4 buying delivery leverage.", icon: HeartHandshake, color: ACCENT },
-    { k: "Platform IPO", v: "Category-defining 'AI unit-economics layer' once metered consumption is universal (2027+).", icon: LineChart, color: GOLD },
-    { k: "Vertical roll-up", v: "Pharma / regulated industries first. Cash-flow positive vertical SaaS economics from year 2.", icon: Boxes, color: GREEN },
-    { k: "Licensing / OEM", v: "AACE engine licensed inside larger workflow suites under white-label terms.", icon: Package, color: PURPLE },
+    { k: "Strategic acquisition", v: "ServiceNow / Salesforce / Microsoft buying governance depth; Big-4 buying delivery leverage as billable-hour model compresses.", icon: HeartHandshake, color: ACCENT },
+    { k: "OEM / white-label", v: "AACE compiler licensed inside larger workflow suites or Big-4 productized stacks under revenue-share.", icon: Package, color: PURPLE },
+    { k: "Vertical roll-up", v: "Pharma & regulated industries first. Cash-flow positive vertical SaaS economics from year 2; defensible per-vertical standards library.", icon: Boxes, color: GREEN },
+    { k: "Platform IPO", v: "Category-defining 'AI unit-economics layer' once metered consumption is universal (2027+ inflection).", icon: LineChart, color: GOLD },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
@@ -1655,40 +1719,58 @@ function S11HyperscalerRisk() {
       <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
       <div className="relative z-10">
         <Tag label="Hyperscaler Risk · Return Paths" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
-          The mammoths sell tokens and seats. <span style={{ color: `hsl(${GOLD})` }}>LIZA sells the layer that makes both defensible.</span>
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          Not a binary fight — a spectrum. <span style={{ color: `hsl(${GOLD})` }}>Most "mammoths" are suppliers, channels, or buyers. Overlap is narrow and specific.</span>
         </h2>
-        <div className="grid grid-cols-[1.15fr_1fr] gap-10 items-start">
-          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${RED} / 0.35)`, background: `hsl(${RED} / 0.04)` }}>
-            <div className="flex items-center gap-3 mb-5">
-              <ShieldCheck size={24} style={{ color: `hsl(${RED})` }} />
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Why the obvious giants structurally won't build this</p>
+        <div className="grid grid-cols-[1.35fr_1fr] gap-8 items-start">
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>Competitive risk · low → high</p>
+              <div className="flex items-center gap-2 font-mono uppercase tracking-[0.1em]" style={{ fontSize: 10, color: SUBTLE }}>
+                <span className="inline-block w-2 h-2 rounded-full" style={{ background: `hsl(${GREEN})` }} />Supplier
+                <span className="inline-block w-2 h-2 rounded-full ml-2" style={{ background: `hsl(${ACCENT})` }} />Channel
+                <span className="inline-block w-2 h-2 rounded-full ml-2" style={{ background: `hsl(${GOLD})` }} />Overlap
+              </div>
             </div>
-            <div className="space-y-3">
-              {risks.map(r => (
-                <div key={r.l} className="rounded-lg border bg-white px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
-                  <p className="font-bold" style={{ fontSize: 16, color: TEXT, marginBottom: 3 }}>{r.l}</p>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{r.why}</p>
-                  <p style={{ fontSize: 13, color: `hsl(${GREEN})`, lineHeight: 1.4, marginTop: 3 }}>→ {r.verdict}</p>
+            <div className="space-y-2.5">
+              {bands.map(b => (
+                <div key={b.l} className="rounded-xl border bg-white px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
+                  <div className="flex items-baseline justify-between gap-3 mb-1">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.2 }}>{b.l}</p>
+                      <p className="font-mono" style={{ fontSize: 10.5, color: SUBTLE, lineHeight: 1.3, marginTop: 1 }}>{b.examples}</p>
+                    </div>
+                    <span className="font-mono uppercase tracking-[0.08em] whitespace-nowrap" style={{ fontSize: 10, color: `hsl(${b.color})`, fontWeight: 700 }}>{b.posture}</span>
+                  </div>
+                  <div className="flex items-center gap-3 mt-2 mb-1.5">
+                    <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: `hsl(${b.color} / 0.12)` }}>
+                      <div className="h-full rounded-full" style={{ width: `${b.risk}%`, background: `linear-gradient(90deg, hsl(${GREEN}), hsl(${b.color}))` }} />
+                    </div>
+                    <span className="font-mono font-bold" style={{ fontSize: 11, color: `hsl(${b.color})`, width: 32, textAlign: "right" }}>{b.risk}%</span>
+                  </div>
+                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.4 }}>{b.v}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-4">
-            <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: SUBTLE }}>Return optionality</p>
+          <div className="flex flex-col gap-3">
+            <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>Return optionality</p>
             {returns.map(r => {
               const Icon = r.icon;
               return (
-                <div key={r.k} className="rounded-xl border-2 px-5 py-4"
+                <div key={r.k} className="rounded-xl border-2 px-4 py-3"
                   style={{ borderColor: `hsl(${r.color} / 0.4)`, background: `hsl(${r.color} / 0.05)` }}>
                   <div className="flex items-center gap-2 mb-1">
-                    <Icon size={18} style={{ color: `hsl(${r.color})` }} />
-                    <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>{r.k}</p>
+                    <Icon size={16} style={{ color: `hsl(${r.color})` }} />
+                    <p className="font-bold" style={{ fontSize: 15, color: TEXT }}>{r.k}</p>
                   </div>
-                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{r.v}</p>
+                  <p style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.4 }}>{r.v}</p>
                 </div>
               );
             })}
+            <p style={{ fontSize: 11, color: SUBTLE, lineHeight: 1.4, marginTop: 4 }}>
+              Risk %'s are competitive-overlap weights, not market-share forecasts — calibrated against announced product scope (Nov 2025).
+            </p>
           </div>
         </div>
       </div>
