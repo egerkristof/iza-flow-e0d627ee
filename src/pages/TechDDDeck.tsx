@@ -958,7 +958,7 @@ function S09Augmentation() {
         {/* Bottom loop */}
         <div className="mt-8 rounded-2xl border-2 p-5" style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.05)` }}>
           <p className="font-mono uppercase tracking-[0.18em] mb-3" style={{ fontSize: 12, color: `hsl(${PURPLE})` }}>The compounding loop</p>
-          <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
             {[
               { l: "Junior intent", c: ACCENT },
               { l: "LIZA Playbook (state-locked)", c: PURPLE },
@@ -966,10 +966,10 @@ function S09Augmentation() {
               { l: "Junior internalises", c: ACCENT },
               { l: "Capability compounds", c: GOLD },
             ].map((n, i, arr) => (
-              <div key={n.l} className="flex items-center gap-3">
-                <div className="px-4 py-2 rounded-lg border-2 font-semibold"
-                  style={{ fontSize: 16, color: TEXT, borderColor: `hsl(${n.c} / 0.4)`, background: `hsl(${n.c} / 0.08)` }}>{n.l}</div>
-                {i < arr.length - 1 && <ArrowRight size={20} style={{ color: SUBTLE }} />}
+              <div key={n.l} className="flex items-center gap-2">
+                <div className="px-3 py-2 rounded-lg border-2 font-semibold whitespace-nowrap"
+                  style={{ fontSize: 15, color: TEXT, borderColor: `hsl(${n.c} / 0.4)`, background: `hsl(${n.c} / 0.08)` }}>{n.l}</div>
+                {i < arr.length - 1 && <ArrowRight size={18} style={{ color: SUBTLE }} />}
               </div>
             ))}
           </div>
