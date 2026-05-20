@@ -1668,42 +1668,58 @@ function S10UnitEconomics() {
 // SLIDE 14 — HYPERSCALER RISK & RETURN PATHS
 // ═════════════════════════════════════════════════════════════════════════════
 function S11HyperscalerRisk() {
-  // Nuanced risk spectrum — every band acknowledges current 2025 moves; differentiation = standards-anchored, portable execution layer.
+  // Nuanced spectrum (Nov 2025) — corrects the assumption that workflow suites are seat-only.
+  // Most of the landscape is already moving to metered / consumption pricing. Our wedge is NOT
+  // the billing model; it is standards-locked, decision-class-accountable, portable execution.
   const bands = [
     {
       l: "Frontier model labs",
       examples: "OpenAI · Anthropic · Google DeepMind · Mistral",
       risk: 10, posture: "Supplier",
       color: GREEN,
-      v: "Race is at the model layer. Org-specific standards + portable execution graph is anti-pattern to their universal-abstraction bet. We consume them, swap them per Playbook step.",
+      v: "Race is at the model layer; pure per-token APIs. Org-specific standards + portable execution graph is anti-pattern to their universal-abstraction bet. We consume them and swap models per Playbook step.",
     },
     {
       l: "Hyperscaler workflow suites",
-      examples: "Microsoft Copilot Studio · Google Agentspace · AWS Bedrock Agents",
-      risk: 35, posture: "Channel + partial overlap",
+      examples: "MSFT Copilot Studio · Google Agentspace · AWS Bedrock Agents",
+      risk: 55, posture: "Channel · partial overlap",
       color: ACCENT,
-      v: "Building agent tooling, but bundled into seat-licensed productivity stacks. Standards-locking and cross-vendor portability cut against seat incentives. Distribution partner first, overlap on the long tail of internal agents.",
+      v: "Already metered, not seat-only. Copilot Studio runs on pay-as-you-go Copilot Credits + prepaid capacity packs; Bedrock Agents is pure consumption; Agentspace bills per query. The gap is not the billing model — they meter compute, we meter decisions against a locked standard. Distribution partner first, overlap on horizontal internal-agent use cases.",
     },
     {
       l: "Enterprise control-tower platforms",
       examples: "ServiceNow AI Control Tower · Salesforce Agentforce · SAP Joule",
-      risk: 70, posture: "Direct overlap · coopetition",
+      risk: 75, posture: "Direct overlap · coopetition",
       color: GOLD,
-      v: "The real competitive zone. ServiceNow + Microsoft (Nov 2025) bet governance + orchestration is where platform value sits. They win inside their own data estate. LIZA's wedge: standards-as-code that lives above any one record system, portable across stacks.",
+      v: "Hottest zone. ServiceNow + Microsoft (Nov 2025) bet governance + orchestration is where platform value sits; Agentforce charges per conversation. They win inside their own data estate, but every standard authored there is locked to their record model. LIZA's wedge: standards-as-code above any one system of record, portable across stacks.",
     },
     {
-      l: "Knowledge / search incumbents",
-      examples: "Glean · Writer · Guru · Mem0",
-      risk: 45, posture: "Adjacent · feature overlap",
+      l: "Enterprise search + RAG (Glean class)",
+      examples: "Glean (FlexCredits hybrid) · Guru (per-seat)",
+      risk: 40, posture: "Adjacent · upstream",
       color: ACCENT,
-      v: "Strong on retrieval and content surfacing, weak on intent-locking and decision-class metering. They answer 'what do we know?' — we answer 'what is the standard, who is accountable, what was the decision class?'",
+      v: "Glean has shipped FlexCredits — seat + consumption hybrid metered per agent action. Strong retrieval, weak on locked process and rationale chain. They answer 'what do we know?' — we answer 'what is the standard, who is accountable, what decision class.' Often the data-discovery layer feeding our Playbooks.",
+    },
+    {
+      l: "Vertical LLM + agent platforms",
+      examples: "Writer (Palmyra per-million-token API) · Cohere North",
+      risk: 35, posture: "Adjacent · model-layer overlap",
+      color: GREEN,
+      v: "Full-stack: own model + agent runtime + per-token API. Compete for the same enterprise budget but at the model+content layer. No standards-locking, no decision class, no portable artifact graph. Can be a substitute model behind a LIZA Playbook step.",
+    },
+    {
+      l: "Memory + tacit-knowledge layer",
+      examples: "Mem0 (metered add/retrieval) · Interloom · Edra",
+      risk: 30, posture: "Component · partner",
+      color: GREEN,
+      v: "Mem0 sells metered per-request memory; Interloom and Edra capture tacit ops knowledge and process-mine SOPs. They produce inputs to a standards graph but do not define standards or govern execution. Likely partner / component layer beneath LIZA.",
     },
     {
       l: "Productized Big-4 / advisory AI",
-      examples: "Deloitte Zora AI · PwC agent OS · McKinsey Lilli · KPMG Clara",
-      risk: 60, posture: "Coopetition · channel partner",
+      examples: "Deloitte Zora · PwC agent OS · McKinsey Lilli · KPMG Clara",
+      risk: 65, posture: "Coopetition · channel partner",
       color: GOLD,
-      v: "Actively moving off pure billable hours into productized agents. They are likely buyers, OEM partners, or implementation channels — and competitors when they push generic horizontal agents. Differentiator: our standards layer is portable; theirs is locked to their delivery brand.",
+      v: "Moving off pure billable hours into productized agents priced per outcome or per engagement. Likely buyers, OEM partners, or implementation channels — competitors only when they push generic horizontal agents. Differentiator: our standards layer is portable and client-owned; theirs is locked to their delivery brand.",
     },
   ];
   const returns = [
@@ -1720,7 +1736,7 @@ function S11HyperscalerRisk() {
       <div className="relative z-10">
         <Tag label="Hyperscaler Risk · Return Paths" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
-          Not a binary fight — a spectrum. <span style={{ color: `hsl(${GOLD})` }}>Most "mammoths" are suppliers, channels, or buyers. Overlap is narrow and specific.</span>
+          A nuanced spectrum, not a binary fight. <span style={{ color: `hsl(${GOLD})` }}>Most of the landscape is already metered. Our wedge is standards-locked decisions, not the billing model.</span>
         </h2>
         <div className="grid grid-cols-[1.35fr_1fr] gap-8 items-start">
           <div>
