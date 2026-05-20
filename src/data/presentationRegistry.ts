@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import BridgeDeck from "@/pages/BridgeDeck";
+import TechDDDeck from "@/pages/TechDDDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
@@ -195,6 +196,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/BridgeDeck.tsx",
     description: "5-slide €200K bridge round deck for $10K–$30K check writers (micro-funds, operator syndicates, angels). Narrative: AACE v3.1 is live with 4 paid enterprise clients (AEC, Pharma, Cyber, Consulting); growth gated by high-touch Guided Kickstart; €200K funds the Self-Serve Wizard to remove the human bottleneck; vertical wedge on Professional Services with a Q4 milestone of 100% self-serve ARR growth — teeing up a premium Seed/Series A markup.",
     component: BridgeDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "tech-dd",
+    title: "Tech Due Diligence Deck",
+    path: "/tech-dd",
+    sourcePath: "src/pages/TechDDDeck.tsx",
+    description: "8-slide tech due diligence deck for investor TDD teams. Three-phase arc: (1) Paradigm — infrastructure shift from data to cognitive, Context Gap iceberg. (2) Architecture — LIZA OS map (Leadership / Systems of Record / Decision Core / AI Surfaces / LLM Fabric), AACE v3.3 four-step loop with State-Locking, artifact propagation graph and Unified Rationale Log. (3) Commercial — AI margin trap and value-based semantic metering (1×/5×/25× credit multipliers). Pocket slide on the Upskilling Engine for the Impact Hurdle question.",
+    component: TechDDDeck,
     showInAdmin: true,
   },
   {
