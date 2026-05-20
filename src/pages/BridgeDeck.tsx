@@ -836,9 +836,6 @@ function S12Ask() {
               <p style={{ fontSize: 19, color: `hsl(${ACCENT})`, fontWeight: 600, marginTop: 10, lineHeight: 1.4 }}>
                 Kristof Eger · kristof.eger@lizaos.ai
               </p>
-              <p style={{ fontSize: 17, color: DARK_MUTED, marginTop: 8, lineHeight: 1.4 }}>
-                Two slots remaining at first-mover terms. After they close, the round caps and the next entry is the priced Seed.
-              </p>
             </div>
           </div>
         </div>
