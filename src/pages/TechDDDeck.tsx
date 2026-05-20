@@ -5,6 +5,7 @@ import {
   Gauge, Brain, Lock, Network, ArrowRight, ArrowDown, ChevronLeft, ChevronRight,
   Maximize2, X, Grid3x3, AlertCircle, Sparkles, FileText, Boxes, Radio, Zap,
   Eye, Activity, Users, GraduationCap, MessageSquare, Globe, Compass,
+  GitPullRequest, CheckCircle2, AlertTriangle, Send, UserCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
