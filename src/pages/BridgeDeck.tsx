@@ -101,14 +101,14 @@ function S01Cover() {
         <p className="font-semibold tracking-[0.3em] uppercase mb-10" style={{ fontSize: 24, color: `hsl(${GOLD})` }}>
           LIZA OS · Bridge Round · Confidential
         </p>
-        <h1 className="font-bold leading-[1.02] mb-10" style={{ fontSize: 120, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
-          From paid pilots to self-serve.
+        <h1 className="font-bold leading-[1.02] mb-10" style={{ fontSize: 110, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
+          LIZA OS: the Context Layer for AI-Native Organizations.
         </h1>
-        <p className="leading-[1.2] mb-14" style={{ fontSize: 52, color: `hsl(${ACCENT} / 0.95)`, fontWeight: 500 }}>
-          A €200K bridge to a financeable Seed.
+        <p className="leading-[1.2] mb-14" style={{ fontSize: 46, color: `hsl(${ACCENT} / 0.95)`, fontWeight: 500 }}>
+          A €200K bridge round to turn four paid pilots into a self-serve SaaS engine.
         </p>
         <p className="mx-auto mb-14" style={{ fontSize: 26, color: DARK_MUTED, maxWidth: 1200, lineHeight: 1.4 }}>
-          We have shipped a working product and four paid design partnerships. This round funds the last engineering sprint that turns custom delivery into a product-led SaaS engine.
+          We are a live B2B product already running paid workloads with four enterprise design partners. This bridge funds the engineering sprint that takes us from custom delivery to product-led self-serve, and sets up a financeable Seed.
         </p>
         <div className="inline-flex items-center gap-8 px-10 py-5 rounded-2xl"
           style={{ background: "hsl(0 0% 100% / 0.05)", border: `1px solid hsl(0 0% 100% / 0.12)` }}>
@@ -856,10 +856,13 @@ function S12Ask() {
             <div className="rounded-2xl p-6"
               style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>
               <p style={{ fontSize: 16, color: `hsl(${RED})`, fontWeight: 700, letterSpacing: "0.18em" }} className="uppercase mb-2">Close mechanics</p>
-              <p style={{ fontSize: 24, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.3 }}>
-                Reply with check size. SAFE in your inbox within 48 hours.
+              <p style={{ fontSize: 22, color: DARK_TEXT, fontWeight: 700, lineHeight: 1.3 }}>
+                Reach out with your check size and we will send the SAFE.
               </p>
-              <p style={{ fontSize: 18, color: DARK_MUTED, marginTop: 8, lineHeight: 1.4 }}>
+              <p style={{ fontSize: 19, color: `hsl(${ACCENT})`, fontWeight: 600, marginTop: 10, lineHeight: 1.4 }}>
+                Kristof Eger · kristof.eger@lizaos.ai
+              </p>
+              <p style={{ fontSize: 17, color: DARK_MUTED, marginTop: 8, lineHeight: 1.4 }}>
                 Two slots remaining at first-mover terms. After they close, the round caps and the next entry is the priced Seed.
               </p>
             </div>
