@@ -1712,11 +1712,11 @@ function S11HyperscalerRisk() {
       v: "Hottest zone. ServiceNow + Microsoft (Nov 2025) bet governance + orchestration is where platform value sits; Agentforce charges per conversation. They win inside their own data estate, but every standard authored there is locked to their record model. LIZA's wedge: standards-as-code above any one system of record, portable across stacks.",
     },
     {
-      l: "Knowledge, memory + vertical-LLM layer",
-      examples: "Glean (FlexCredits hybrid) · Writer (per-token API) · Mem0 · Interloom · Edra",
-      risk: 40, posture: "Adjacent · component",
-      color: ACCENT,
-      v: "Mostly already metered: Glean's FlexCredits price per agent action, Writer charges per million tokens, Mem0 per memory request. Strong on retrieval, memory, and own-model content. None lock intent to a standard, declare a decision class, or carry portable rationale. They sit upstream as data/memory inputs to a LIZA Playbook; we own the locked execution and accountability layer above them.",
+      l: "Adjacent peers · capture, memory, retrieval",
+      examples: "Established: Glean (FlexCredits) · Writer (per-token API)   ·   Early-stage: Mem0 · Interloom · Edra · Paradox.ai",
+      risk: 25, posture: "Adjacent · feeders",
+      color: GREEN,
+      v: "They sit beside the work: capture tacit knowledge (Interloom, Edra), persist memory across sessions (Mem0), index documents (Glean), or wrap a vertical LLM (Writer, Paradox.ai). LIZA sits inside the work as the runtime that orchestrates action against a locked standard and closes the learning loop on every execution. Edra/Mem0/Interloom/Paradox are early Series A with thin published surface — closer to upstream feeders or future acquisitions than head-to-head competitors.",
     },
     {
       l: "Productized Big-4 / advisory AI",
@@ -1740,7 +1740,7 @@ function S11HyperscalerRisk() {
       <div className="relative z-10">
         <Tag label="Hyperscaler Risk · Return Paths" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
-          A nuanced spectrum, not a binary fight. <span style={{ color: `hsl(${GOLD})` }}>Most of the landscape is already metered. Our wedge is standards-locked decisions, not the billing model.</span>
+          Most named "competitors" sit beside the work. <span style={{ color: `hsl(${GOLD})` }}>LIZA sits inside it: orchestrating action against a locked standard and learning from every execution.</span>
         </h2>
         <div className="grid grid-cols-[1.35fr_1fr] gap-8 items-start">
           <div>
