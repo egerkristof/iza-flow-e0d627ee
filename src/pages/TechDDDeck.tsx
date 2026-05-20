@@ -1649,9 +1649,6 @@ function S10UnitEconomics() {
         <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 38, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1780 }}>
           Per-call math is the floor. <span style={{ color: `hsl(${GOLD})` }}>The business is built on three value layers, priced three ways.</span>
         </h2>
-        <p className="mb-3" style={{ fontSize: 13, color: MUTED, lineHeight: 1.45, maxWidth: 1780 }}>
-          <span className="font-semibold" style={{ color: TEXT }}>What 1× / 5× / 25× mean:</span> a price-class multiplier normalised to one Operational call (= 1×). It mirrors how firms already price labour: a junior, senior and partner hour sit at roughly a <span className="font-mono">1 : 5 : 25</span> loaded-cost-plus-leverage ratio. Every call is intent-locked to a Playbook whose registry tag declares its decision class, so the system knows the tier <em>before</em> it bills.
-        </p>
         {/* Legend strip: define every piece of jargon used on the slide */}
         <div className="rounded-lg border bg-white px-4 py-2.5 mb-3" style={{ borderColor: CHROME_BORDER }}>
           <div className="grid grid-cols-6 gap-x-4 gap-y-1">
