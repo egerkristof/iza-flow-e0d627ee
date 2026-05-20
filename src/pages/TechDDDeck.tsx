@@ -104,7 +104,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 12;
+const TOTAL = 15;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 01 — COVER
@@ -802,7 +802,7 @@ function S08PricingMetering() {
   return (
     <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={8} total={TOTAL} />
+      <PageNumber n={9} total={TOTAL} />
       <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
       <div className="relative z-10">
         <Tag label="The Pricing Inversion · Value-Based Metering" color={GOLD} />
@@ -930,7 +930,7 @@ function S08bClassifier() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={9} total={TOTAL} />
+      <PageNumber n={10} total={TOTAL} />
       <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
       <div className="relative z-10">
         <Tag label="Decision-Class Classifier · Runtime" color={GOLD} />
@@ -1088,7 +1088,7 @@ function S09Augmentation() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={10} total={TOTAL} />
+      <PageNumber n={12} total={TOTAL} />
       <PhaseChip phase="Synthesis · Talent + Architecture" color={PURPLE} />
       <div className="relative z-10">
         <Tag label="The Augmentation Engine" color={PURPLE} />
@@ -1209,7 +1209,7 @@ function S09bAugmentationMechanics() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={11} total={TOTAL} />
+      <PageNumber n={13} total={TOTAL} />
       <PhaseChip phase="Synthesis · Talent Architecture" color={PURPLE} />
       <div className="relative z-10">
         <Tag label="Augmentation Mechanics · How juniors operate inside a senior system" color={PURPLE} />
@@ -1353,7 +1353,7 @@ function S12SocietalImpact() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={12} total={TOTAL} />
+      <PageNumber n={15} total={TOTAL} />
       <PhaseChip phase="Phase 4 · Societal Impact" color={GREEN} />
       <div className="relative z-10">
         <Tag label="Knowledge Sovereignty · The Portable Career Graph" color={GREEN} />
@@ -1494,6 +1494,209 @@ function S12SocietalImpact() {
 }
 
 // ─── Deck registry ───────────────────────────────────────────────────────────
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 08 — SCALE & USP (defensibility vs. RAG / Copilot bolt-ons)
+// ═════════════════════════════════════════════════════════════════════════════
+function S07ScaleUSP() {
+  const scale = [
+    { k: "Tenancy model", v: "Per-org isolated graph; shared inference plane", note: "No cross-tenant context leakage by construction" },
+    { k: "Throughput", v: "Horizontally scaled stateless workers; stateful intent locks pinned per session", note: "Bottleneck is LLM provider quota, not LIZA" },
+    { k: "Latency budget", v: "≤ 250 ms context compile · ≤ provider TTFT for inference", note: "Context compile is cache-aware per Playbook version" },
+    { k: "Storage", v: "Postgres + pgvector for semantic index; S3-class for artifact bodies", note: "Graph edges versioned; immutable rationale log" },
+    { k: "Cost shape", v: "Marginal cost = tokens + storage; no per-seat infra tax", note: "Margin expands as Playbooks are reused across users" },
+  ];
+  const moat = [
+    { l: "Glean / Copilot + RAG", weak: "Retrieves text. No locked process, no rationale chain, no decision class.", liza: "Locks intent to a Playbook. Every output is provenance-stamped." },
+    { l: "In-house RAG build", weak: "Solves search. Doesn't solve governance, drift, or metering.", liza: "Ships the loop — capture → lock → execute → propagate → meter." },
+    { l: "Hyperscaler agent platforms", weak: "Generic frameworks. Standards and decision-class semantics are the customer's homework.", liza: "Standards-anchoring is the product, not the assignment." },
+  ];
+  return (
+    <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={8} total={TOTAL} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
+      <div className="relative z-10">
+        <Tag label="Scale Envelope · Defensible USP" color={GREEN} />
+        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          The engine scales on commodity infra. <span style={{ color: `hsl(${GREEN})` }}>The moat is the layer above it.</span>
+        </h2>
+        <div className="grid grid-cols-[1fr_1.1fr] gap-10 items-start">
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${ACCENT} / 0.35)`, background: `hsl(${ACCENT} / 0.04)` }}>
+            <div className="flex items-center gap-3 mb-5">
+              <Gauge size={24} style={{ color: `hsl(${ACCENT})` }} />
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Scale envelope</p>
+            </div>
+            <div className="space-y-3">
+              {scale.map(r => (
+                <div key={r.k} className="rounded-lg border bg-white px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
+                  <p className="font-mono uppercase tracking-[0.12em] mb-1" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>{r.k}</p>
+                  <p className="font-semibold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.3 }}>{r.v}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35, marginTop: 2 }}>{r.note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-5">
+            <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.06)` }}>
+              <p className="font-bold mb-2" style={{ fontSize: 22, color: TEXT }}>The defensible wedge</p>
+              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>
+                Anyone can bolt RAG onto a chat box. The moat is the <span className="font-semibold" style={{ color: TEXT }}>standards-anchoring + portable Context Bundle + decision-class metering</span> running in one loop. That stack does not fall out of a vector DB or a Copilot license.
+              </p>
+            </div>
+            <div className="rounded-2xl border-2 p-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>Why not the obvious alternatives</p>
+              <div className="space-y-3">
+                {moat.map(m => (
+                  <div key={m.l} className="rounded-lg bg-white border px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
+                    <p className="font-bold" style={{ fontSize: 15, color: TEXT, marginBottom: 4 }}>{m.l}</p>
+                    <p style={{ fontSize: 13, color: `hsl(${RED})`, lineHeight: 1.35 }}>Gap: {m.weak}</p>
+                    <p style={{ fontSize: 13, color: `hsl(${GREEN})`, lineHeight: 1.35, marginTop: 2 }}>LIZA: {m.liza}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 11 — UNIT ECONOMICS & SUSTAINABILITY (token-based model)
+// ═════════════════════════════════════════════════════════════════════════════
+function S10UnitEconomics() {
+  const tiers = [
+    { mult: "1×", label: "Operational", color: GREEN,    cogs: "~$0.04", price: "$0.40",  margin: "90%" },
+    { mult: "5×", label: "Design",      color: ACCENT,   cogs: "~$0.18", price: "$2.00",  margin: "91%" },
+    { mult: "25×", label: "Strategic",  color: PURPLE,   cogs: "~$0.65", price: "$10.00", margin: "94%" },
+  ];
+  const guards = [
+    { k: "Model-cost compression", v: "Token prices fell ~10× / 18 months. We price by decision class — margin widens, not shrinks, as inference cheapens." },
+    { k: "Provider lock-in risk", v: "AACE compiler is model-agnostic. Routing layer can swap GPT/Claude/Gemini per Playbook step on cost or capability." },
+    { k: "Runaway consumption", v: "Every call is intent-locked to a Playbook with a decision class. No anonymous token spend; budgets enforced per class." },
+    { k: "Floor revenue", v: "Platform fee covers governance surface; metered usage layered on top. Predictable base + variable upside." },
+  ];
+  return (
+    <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={11} total={TOTAL} />
+      <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
+      <div className="relative z-10">
+        <Tag label="Unit Economics · Sustainability" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          Token-based does not mean margin-fragile. <span style={{ color: `hsl(${GOLD})` }}>It means margin-engineered.</span>
+        </h2>
+        <div className="grid grid-cols-[1.1fr_1fr] gap-10 items-start">
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${GOLD} / 0.4)`, background: `hsl(${GOLD} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Indicative gross margin per execution</p>
+            <div className="rounded-xl bg-white border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
+              <div className="grid grid-cols-[1.2fr_1fr_1fr_0.8fr] gap-0 px-5 py-3 font-mono uppercase tracking-[0.1em]"
+                style={{ fontSize: 11, color: SUBTLE, background: CARD_ALT, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+                <span>Decision class</span><span>Inference cost</span><span>Customer price</span><span>Margin</span>
+              </div>
+              {tiers.map(t => (
+                <div key={t.label} className="grid grid-cols-[1.2fr_1fr_1fr_0.8fr] gap-0 px-5 py-4 items-center"
+                  style={{ borderBottom: `1px solid ${CHROME_BORDER}` }}>
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold font-mono" style={{ fontSize: 22, color: `hsl(${t.color})` }}>{t.mult}</span>
+                    <span className="font-semibold" style={{ fontSize: 16, color: TEXT }}>{t.label}</span>
+                  </div>
+                  <span className="font-mono" style={{ fontSize: 15, color: MUTED }}>{t.cogs}</span>
+                  <span className="font-mono font-semibold" style={{ fontSize: 15, color: TEXT }}>{t.price}</span>
+                  <span className="font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>{t.margin}</span>
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: 13, color: SUBTLE, lineHeight: 1.4, marginTop: 12 }}>
+              Illustrative blended figures. Mix shifts toward higher decision classes as Playbooks mature, lifting blended ARPU and margin together.
+            </p>
+          </div>
+          <div className="flex flex-col gap-4">
+            <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: SUBTLE }}>Sustainability guards</p>
+            {guards.map(g => (
+              <div key={g.k} className="rounded-xl border bg-white px-5 py-4" style={{ borderColor: CHROME_BORDER }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <ShieldCheck size={18} style={{ color: `hsl(${GREEN})` }} />
+                  <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>{g.k}</p>
+                </div>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{g.v}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 14 — HYPERSCALER RISK & RETURN PATHS
+// ═════════════════════════════════════════════════════════════════════════════
+function S11HyperscalerRisk() {
+  const risks = [
+    { l: "Microsoft / Copilot", why: "Sells inference and seats. Governance + standards work against their seat-count incentive.", verdict: "Will integrate, not build. Distribution partner candidate." },
+    { l: "Google / Gemini", why: "Infra and model layer. Vertical governance per industry is out of scope.", verdict: "Model supplier, not competitor." },
+    { l: "OpenAI / Anthropic", why: "Frontier model race. Org-specific standards layer is anti-pattern to their abstraction.", verdict: "Substrate, not stack." },
+    { l: "Big-4 consulting", why: "Bill humans by the hour. Cannibalising that with metered AI execution is structurally blocked.", verdict: "Implementation partner, not platform." },
+  ];
+  const returns = [
+    { k: "Strategic acquisition", v: "Copilot ecosystem, ServiceNow-class governance vendor, or Big-4 buying delivery leverage.", icon: HeartHandshake, color: ACCENT },
+    { k: "Platform IPO", v: "Category-defining 'AI unit-economics layer' once metered consumption is universal (2027+).", icon: LineChart, color: GOLD },
+    { k: "Vertical roll-up", v: "Pharma / regulated industries first. Cash-flow positive vertical SaaS economics from year 2.", icon: Boxes, color: GREEN },
+    { k: "Licensing / OEM", v: "AACE engine licensed inside larger workflow suites under white-label terms.", icon: Package, color: PURPLE },
+  ];
+  return (
+    <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={14} total={TOTAL} />
+      <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
+      <div className="relative z-10">
+        <Tag label="Hyperscaler Risk · Return Paths" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          The mammoths sell tokens and seats. <span style={{ color: `hsl(${GOLD})` }}>LIZA sells the layer that makes both defensible.</span>
+        </h2>
+        <div className="grid grid-cols-[1.15fr_1fr] gap-10 items-start">
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${RED} / 0.35)`, background: `hsl(${RED} / 0.04)` }}>
+            <div className="flex items-center gap-3 mb-5">
+              <ShieldCheck size={24} style={{ color: `hsl(${RED})` }} />
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Why the obvious giants structurally won't build this</p>
+            </div>
+            <div className="space-y-3">
+              {risks.map(r => (
+                <div key={r.l} className="rounded-lg border bg-white px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
+                  <p className="font-bold" style={{ fontSize: 16, color: TEXT, marginBottom: 3 }}>{r.l}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{r.why}</p>
+                  <p style={{ fontSize: 13, color: `hsl(${GREEN})`, lineHeight: 1.4, marginTop: 3 }}>→ {r.verdict}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: SUBTLE }}>Return optionality</p>
+            {returns.map(r => {
+              const Icon = r.icon;
+              return (
+                <div key={r.k} className="rounded-xl border-2 px-5 py-4"
+                  style={{ borderColor: `hsl(${r.color} / 0.4)`, background: `hsl(${r.color} / 0.05)` }}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Icon size={18} style={{ color: `hsl(${r.color})` }} />
+                    <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>{r.k}</p>
+                  </div>
+                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{r.v}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <SlideBar from={RED} to={GOLD} />
+    </div>
+  );
+}
+
 const SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
@@ -1502,10 +1705,13 @@ const SLIDES = [
   { id: "os-map", title: "OS Map", component: <S04OSMap /> },
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
   { id: "propagation", title: "Artifact Graph", component: <S06Propagation /> },
+  { id: "scale-usp", title: "Scale & USP", component: <S07ScaleUSP /> },
   { id: "metering", title: "Pricing Inversion + Metering", component: <S08PricingMetering /> },
   { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
+  { id: "unit-economics", title: "Unit Economics & Sustainability", component: <S10UnitEconomics /> },
   { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
   { id: "augmentation-mechanics", title: "Augmentation Mechanics", component: <S09bAugmentationMechanics /> },
+  { id: "hyperscaler-risk", title: "Hyperscaler Risk & Return Paths", component: <S11HyperscalerRisk /> },
   { id: "societal-impact", title: "Knowledge Sovereignty · Societal Impact", component: <S12SocietalImpact /> },
 ];
 
