@@ -1661,8 +1661,8 @@ function S10UnitEconomics() {
             <div className="mt-3 rounded-lg px-4 py-3" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px dashed hsl(${GREEN} / 0.35)` }}>
               <p className="font-mono uppercase tracking-[0.1em] mb-1" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Worked example · Operational (1×)</p>
               <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-                15 000 input + 4 000 output tokens, routed to GPT-5 mini → 15K × $0.25/M + 4K × $2/M = <span className="font-mono font-semibold" style={{ color: TEXT }}>$0.012</span> COGS.
-                Charged at <span className="font-mono font-semibold" style={{ color: TEXT }}>$0.40</span>. Replaces ~20 min of an analyst whose fully loaded cost is €90/h → <span className="font-mono font-semibold" style={{ color: TEXT }}>€30</span> of human work removed. Customer pays ~1.2% of the cost they save; we keep <span className="font-bold" style={{ color: `hsl(${GREEN})` }}>~97% margin</span> on that call.
+                15 000 input + 4 000 output tokens routed to GPT-5 mini: 15K × $0.25/M + 4K × $2/M = <span className="font-mono font-semibold" style={{ color: TEXT }}>$0.012</span> execution COGS. Add ~$0.008 for retrieval and observability allocation: fully loaded ~<span className="font-mono font-semibold" style={{ color: TEXT }}>$0.020</span>.
+                Charged at <span className="font-mono font-semibold" style={{ color: TEXT }}>$0.40</span>. Replaces ~20 min of a mid-level analyst whose fully loaded cost is €70/h: <span className="font-mono font-semibold" style={{ color: TEXT }}>€23</span> of human work removed. Customer pays ~1.6% of the cost they save; we keep <span className="font-bold" style={{ color: `hsl(${GREEN})` }}>~95% fully-loaded margin</span> on that call.
               </p>
             </div>
           </div>
