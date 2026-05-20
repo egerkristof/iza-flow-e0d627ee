@@ -7,6 +7,7 @@ import {
   Eye, Activity, Users, GraduationCap, MessageSquare, Globe, Compass,
   GitPullRequest, CheckCircle2, AlertTriangle, Send, UserCheck,
   Leaf, HeartHandshake, LineChart, HelpCircle,
+  User, Building2, KeyRound, FileSignature, ArrowLeftRight, Package,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
