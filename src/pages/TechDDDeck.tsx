@@ -1606,10 +1606,10 @@ function S10UnitEconomics() {
     },
   ];
   const guards = [
-    { k: "How the envelope is built", v: "Input tokens = system prompt + locked Playbook + injected context (retrieved standards, prior artifacts) + user request. Output = structured artifact: decision, rationale chain, provenance. Sized from measured AACE traces, not assumed." },
-    { k: "COGS source", v: "Public model API list prices (Nov 2025): GPT-5 mini $0.25 / $2 per M, Claude Sonnet $3 / $15, Gemini 2.5 Flash $0.30 / $2.50. COGS range = blended envelope × routed model mix per Playbook step." },
-    { k: "Price anchor", v: "Customer price set as a small fraction of the loaded human cost displaced — not as a markup on tokens. As inference gets cheaper, margin widens because the price stays anchored to human-equivalent value, not to COGS." },
-    { k: "Runaway-cost guard", v: "Every call is intent-locked to a Playbook with a declared decision class. Per-class token + spend ceilings enforced before inference, not after the bill arrives." },
+    { k: "How the envelope is built", v: "Input tokens = system prompt + locked Playbook + injected context (retrieved standards, prior artifacts) + user request. Output = structured artifact: decision, rationale chain, provenance. Envelopes are measured p50 from production traces. Per-class hard ceilings (Op $0.10, Design $0.60, Strategic $5.00) enforced before inference, so p95 cannot run away." },
+    { k: "COGS source and blend", v: "Public model API list prices (Nov 2025): GPT-5 mini $0.25 / $2 per M, Gemini 2.5 Flash $0.30 / $2.50, Claude Sonnet 4.5 $3 / $15. Operational routes mostly to mini / Flash. Strategic blends Sonnet for partner-grade reasoning. Margins quoted are execution-level; fully-loaded margin (incl. retrieval, evals, observability, on-call) sits 5 to 8 pts lower." },
+    { k: "Price anchor and 1 : 5 : 25 ratio", v: "Customer price set as a fraction of the fully loaded human cost displaced, not as a markup on tokens. The 1 : 5 : 25 ratio mirrors the loaded-cost-plus-leverage gap between junior, senior and partner work that every CFO already accepts. As inference prices fall, margin widens because price stays anchored to human value, not COGS." },
+    { k: "Verifiable from the bill", v: "Every call logs envelope + routed model + COGS against public API prices. Customer can audit each line item back to the decision class it bought. Unique to intent-locked execution; impossible in seat-licence or free-form chat tools." },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
