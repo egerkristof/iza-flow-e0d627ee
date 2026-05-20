@@ -1332,17 +1332,16 @@ function S09bAugmentationMechanics() {
 // SLIDE 12 — 2030 SKILLS · SOCIETAL IMPACT (Skill-Agent Layer + SDG telemetry)
 // ═════════════════════════════════════════════════════════════════════════════
 function S12SocietalImpact() {
-  // Abstracted WEF Future of Jobs 2025 — Core skills in 2030 (top-right quadrant focus)
+  // Only the 6 production Skill-Agents are plotted. Coordinates chosen so labels never collide.
+  // x = share of employers considering core in 2025 (50-80 range = "Core skills 2030" quadrant)
+  // y = expected increase in use by 2030 (50-90 range)
   const core2030 = [
-    { x: 68, y: 88, label: "AI & big data", weight: 1 },
-    { x: 57, y: 67, label: "Creative thinking", weight: 1 },
-    { x: 60, y: 71, label: "Tech literacy", weight: 0 },
-    { x: 49, y: 64, label: "Curiosity & lifelong learning", weight: 0 },
-    { x: 67, y: 67, label: "Resilience & agility", weight: 1 },
-    { x: 69, y: 58, label: "Analytical thinking", weight: 1 },
-    { x: 60, y: 60, label: "Leadership & influence", weight: 0 },
-    { x: 45, y: 55, label: "Systems thinking", weight: 1 },
-    { x: 51, y: 60, label: "Talent management", weight: 0 },
+    { x: 70, y: 88, label: "AI & big data" },
+    { x: 56, y: 78, label: "Creative thinking" },
+    { x: 76, y: 70, label: "Resilience & agility" },
+    { x: 72, y: 60, label: "Analytical thinking" },
+    { x: 58, y: 65, label: "Systems thinking" },
+    { x: 60, y: 54, label: "Curiosity & lifelong learning" },
   ];
 
   // Each WEF core skill is realised as a Skill-Agent (a locked Playbook namespace in AACE).
@@ -1393,20 +1392,17 @@ function S12SocietalImpact() {
       <PhaseChip phase="Phase 4 · Societal Impact" color={GREEN} />
       <div className="relative z-10">
         <Tag label="2030 Skills Infrastructure · Human Contribution, Measured" color={GREEN} />
-        <h2 className="font-bold leading-[1.04] mb-3" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1770 }}>
-          The same engine that meters decision value also <span style={{ color: `hsl(${GREEN})` }}>meters the human skills the AI is exercising</span>. Tied to business output. Tied to UN 2030 goals.
+        <h2 className="font-bold leading-[1.04] mb-8" style={{ fontSize: 48, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1770 }}>
+          The same engine that meters decisions also <span style={{ color: `hsl(${GREEN})` }}>meters the 2030 skills the AI is exercising</span>.
         </h2>
-        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1600, marginBottom: 18 }}>
-          Source: WEF Future of Jobs 2025 — Core skills employers expect to rise by 2030. LIZA ships one Skill-Agent per WEF core skill, runs inside the AACE locked state, and emits a telemetry stream that aggregates into SDG-aligned impact metrics.
-        </p>
 
-        <div className="grid grid-cols-[1.05fr_1.5fr] gap-8 items-start">
+        <div className="grid grid-cols-[1.05fr_1.5fr] gap-10 items-start">
           {/* LEFT — Abstracted WEF 2030 quadrant */}
           <div className="rounded-2xl border p-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
             <p className="font-mono uppercase tracking-[0.15em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>
-              WEF 2025 · skill demand by 2030
+              WEF Future of Jobs 2025 · core skills 2030
             </p>
-            <div className="relative" style={{ width: "100%", height: 440, background: "white", borderRadius: 12, border: `1px solid ${CHROME_BORDER}` }}>
+            <div className="relative" style={{ width: "100%", height: 520, background: "white", borderRadius: 12, border: `1px solid ${CHROME_BORDER}` }}>
               {/* Quadrant tint — top-right = Core skills 2030 */}
               <div className="absolute" style={{ left: "50%", top: 0, width: "50%", height: "50%", background: `hsl(${GREEN} / 0.08)` }} />
               {/* Axes */}
@@ -1418,41 +1414,22 @@ function S12SocietalImpact() {
               <p className="absolute" style={{ bottom: 8, left: 12, fontSize: 11, color: SUBTLE, letterSpacing: "0.1em" }}>OUT OF FOCUS</p>
               <p className="absolute" style={{ bottom: 8, right: 12, fontSize: 11, color: SUBTLE, letterSpacing: "0.1em" }}>STEADY</p>
               {/* Plotted skills */}
-              {core2030.map(s => {
-                const left = `${s.x}%`;
-                const top = `${100 - s.y}%`;
-                const isLiza = s.weight === 1;
-                return (
-                  <div key={s.label} className="absolute" style={{ left, top, transform: "translate(-50%, -50%)" }}>
-                    <div className="rounded-full" style={{
-                      width: isLiza ? 14 : 9, height: isLiza ? 14 : 9,
-                      background: isLiza ? `hsl(${GREEN})` : SUBTLE,
-                      boxShadow: isLiza ? `0 0 0 4px hsl(${GREEN} / 0.18)` : "none",
-                    }} />
-                    <p className="absolute whitespace-nowrap font-medium" style={{
-                      left: 16, top: -4, fontSize: 11.5,
-                      color: isLiza ? TEXT : MUTED,
-                      fontWeight: isLiza ? 600 : 400,
-                    }}>{s.label}</p>
-                  </div>
-                );
-              })}
-              {/* Axis labels */}
-              <p className="absolute -rotate-90 font-mono" style={{ left: -38, top: "50%", transform: "translateY(-50%) rotate(-90deg)", fontSize: 10, color: SUBTLE, letterSpacing: "0.1em" }}>
-                EXPECTED ↑ INCREASE IN USE
-              </p>
-              <p className="absolute font-mono" style={{ bottom: -22, left: "50%", transform: "translateX(-50%)", fontSize: 10, color: SUBTLE, letterSpacing: "0.1em" }}>
-                CORE NOW (% of employers) →
-              </p>
+              {core2030.map(s => (
+                <div key={s.label} className="absolute" style={{ left: `${s.x}%`, top: `${100 - s.y}%`, transform: "translate(-50%, -50%)" }}>
+                  <div className="rounded-full" style={{
+                    width: 16, height: 16,
+                    background: `hsl(${GREEN})`,
+                    boxShadow: `0 0 0 5px hsl(${GREEN} / 0.18)`,
+                  }} />
+                  <p className="absolute whitespace-nowrap font-semibold" style={{
+                    left: 22, top: -6, fontSize: 13, color: TEXT,
+                  }}>{s.label}</p>
+                </div>
+              ))}
             </div>
-            <div className="mt-6 rounded-xl border-2 p-4" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.06)` }}>
-              <div className="flex items-center gap-2 mb-1.5">
-                <Leaf size={18} style={{ color: `hsl(${GREEN})` }} />
-                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>LIZA ships one Skill-Agent per highlighted node.</p>
-              </div>
-              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-                Each green node is a Playbook namespace in production. The grey nodes are on the 2026 roadmap. Every Skill-Agent forces the human to exercise the skill — the AI never substitutes for it.
-              </p>
+            <div className="mt-4 flex items-center gap-2" style={{ color: MUTED, fontSize: 13 }}>
+              <Leaf size={15} style={{ color: `hsl(${GREEN})` }} />
+              <span>One Skill-Agent per node. Mapped on the right.</span>
             </div>
           </div>
 
@@ -1524,7 +1501,6 @@ function S12SocietalImpact() {
           </div>
         </div>
       </div>
-      <Footer text="WEF Future of Jobs 2025 · UN SDG 4 / 8 / 9 / 10 · LIZA Skill-Agent Layer (production + 2026 roadmap)" />
       <SlideBar from={GREEN} to={GOLD} />
     </div>
   );
