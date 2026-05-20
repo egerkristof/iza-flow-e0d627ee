@@ -192,12 +192,12 @@ function S02Horizons() {
               <div className="absolute rounded-full border-2"
                 style={{ width: 220, height: 220, left: 70, top: 0, borderColor: `hsl(${PURPLE} / 0.55)`, background: `hsl(${PURPLE} / 0.10)` }} />
               {/* labels */}
-              <span className="absolute font-bold" style={{ left: 24, top: 232, fontSize: 16, color: `hsl(${GREEN})` }}>H1 Run</span>
-              <span className="absolute font-bold" style={{ left: 260, top: 232, fontSize: 16, color: `hsl(${ACCENT})` }}>H2 Improve</span>
-              <span className="absolute font-bold text-center" style={{ left: 130, top: -22, fontSize: 16, color: `hsl(${PURPLE})`, width: 120 }}>H3 Transform</span>
+              <span className="absolute font-bold" style={{ left: 18, top: 236, fontSize: 18, color: `hsl(${GREEN})` }}>H1 Run</span>
+              <span className="absolute font-bold" style={{ left: 256, top: 236, fontSize: 18, color: `hsl(${ACCENT})` }}>H2 Improve</span>
+              <span className="absolute font-bold text-center" style={{ left: 130, top: -26, fontSize: 18, color: `hsl(${PURPLE})`, width: 120 }}>H3 Transform</span>
               {/* center label */}
               <div className="absolute flex items-center justify-center text-center font-bold"
-                style={{ left: 130, top: 110, width: 120, height: 60, fontSize: 14, color: TEXT }}>
+                style={{ left: 130, top: 110, width: 120, height: 60, fontSize: 16, color: TEXT, lineHeight: 1.2 }}>
                 same week<br />same team
               </div>
             </div>
@@ -421,7 +421,7 @@ function S03Iceberg() {
           </div>
         </div>
       </div>
-      <Footer text="Same shift as slide 3. Above the waterline is data infrastructure. Below is the cognitive infrastructure LIZA OS encodes as Playbooks, Procedures, Directives, Knowledge and Preferences." />
+      <Footer text="The cognitive infrastructure LIZA OS encodes as Playbooks, Procedures, Directives, Knowledge and Preferences." />
       <SlideBar />
     </div>
   );
@@ -602,7 +602,7 @@ function S04OSMap() {
 function S05Loop() {
   const steps = [
     { icon: Radio, label: "Sense", sub: "Intent classifier reads the request, signals, and Playbook Registry triggers." },
-    { icon: Lock, label: "Decide", sub: "State-Lock. A Playbook is selected; the generalist LLM dies; routing locks the locked_playbook_id.", highlight: true },
+    { icon: Lock, label: "Decide", sub: "State-Lock. A Playbook is selected; the generalist LLM exits the loop; routing locks the locked_playbook_id.", highlight: true },
     { icon: Zap, label: "Execute", sub: "A restricted micro-agent runs with only the approved Directives, Knowledge, Procedures injected as XML.", highlight: true },
     { icon: GitBranch, label: "Propagate", sub: "Outputs become versioned Artifacts; downstream nodes are flagged; the Rationale Log is written." },
   ];
@@ -635,7 +635,7 @@ function S05Loop() {
                   </span>
                 </div>
                 <p className="font-bold mb-3" style={{ fontSize: 32, color: TEXT }}>{s.label}</p>
-                <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{s.sub}</p>
+                <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>{s.sub}</p>
                 {s.highlight && (
                   <p className="mt-auto font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
                     ★ DD focus
@@ -718,15 +718,23 @@ function S06Propagation() {
               ))}
             </div>
 
-            {/* Connecting lines (decorative) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
-              <g stroke={`hsl(${RED} / 0.3)`} strokeWidth="1.5" fill="none">
-                <path d="M 50% 80 L 25% 180" />
-                <path d="M 50% 80 L 75% 180" />
-                <path d="M 25% 210 L 17% 320" />
-                <path d="M 25% 210 L 38% 320" />
-                <path d="M 75% 210 L 62% 320" />
-                <path d="M 75% 210 L 83% 320" />
+            {/* Connecting lines */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none"
+              viewBox="0 0 100 100" preserveAspectRatio="none" style={{ zIndex: 0 }}>
+              <g stroke={`hsl(${RED} / 0.35)`} strokeWidth="0.25" fill="none">
+                {/* root → requirements */}
+                <path d="M 50 12 L 30 30" />
+                <path d="M 50 12 L 70 30" />
+                {/* requirements → specs */}
+                <path d="M 30 36 L 20 55" />
+                <path d="M 30 36 L 42 55" />
+                <path d="M 70 36 L 58 55" />
+                <path d="M 70 36 L 80 55" />
+                {/* specs → reports */}
+                <path d="M 20 60 L 14 86" />
+                <path d="M 42 60 L 38 86" />
+                <path d="M 58 60 L 62 86" />
+                <path d="M 80 60 L 86 86" />
               </g>
             </svg>
           </div>
@@ -835,37 +843,29 @@ function S08PricingMetering() {
             </div>
           </div>
 
-          {/* RIGHT — Pyramid + tiers */}
+          {/* RIGHT — Pyramid with example inline (no duplication) */}
           <div>
-            <div className="flex flex-col items-center gap-2 mb-5">
+            <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Value-based semantic metering</p>
+            <div className="flex flex-col items-center gap-3 mb-5">
               {tiers.map(t => (
-                <div key={t.label} className="rounded-2xl border-2 px-6 py-3 flex items-center justify-between"
+                <div key={t.label} className="rounded-2xl border-2 px-6 py-4"
                   style={{
                     width: t.w,
                     borderColor: `hsl(${t.color} / 0.5)`,
-                    background: `linear-gradient(90deg, hsl(${t.color} / 0.1), hsl(${t.color} / 0.2))`,
+                    background: `linear-gradient(90deg, hsl(${t.color} / 0.08), hsl(${t.color} / 0.18))`,
                   }}>
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-bold font-mono" style={{ fontSize: 36, color: `hsl(${t.color})` }}>{t.mult}</span>
-                    <span className="font-bold" style={{ fontSize: 18, color: TEXT }}>{t.label}</span>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-baseline gap-3">
+                      <span className="font-bold font-mono" style={{ fontSize: 34, color: `hsl(${t.color})`, lineHeight: 1 }}>{t.mult}</span>
+                      <span className="font-bold" style={{ fontSize: 19, color: TEXT }}>{t.label}</span>
+                    </div>
+                    <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 12, color: MUTED }}>≈ {t.human}</span>
                   </div>
-                  <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 12, color: MUTED }}>≈ {t.human}</span>
+                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>{t.example}</p>
                 </div>
               ))}
             </div>
-            <div className="flex flex-col gap-3">
-              {tiers.map(t => (
-                <div key={t.label} className="rounded-xl border-l-4 px-5 py-3" style={{ borderColor: `hsl(${t.color})`, background: CARD_ALT }}>
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold font-mono px-2 py-0.5 rounded" style={{ fontSize: 13, color: `hsl(${t.color})`, background: `hsl(${t.color} / 0.12)` }}>{t.mult}</span>
-                    <p className="font-semibold" style={{ fontSize: 16, color: TEXT }}>{t.label}</p>
-                    <span style={{ fontSize: 13, color: SUBTLE }}>· {t.human}</span>
-                  </div>
-                  <p style={{ fontSize: 14, color: MUTED, marginTop: 2 }}>{t.example}</p>
-                </div>
-              ))}
-            </div>
-            <div className="rounded-xl border-2 mt-4 p-5" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.08)` }}>
+            <div className="rounded-xl border-2 p-5" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.08)` }}>
               <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
                 <span className="font-bold">State is locked to a Playbook.</span> So we know the decision class of every execution. We charge for the weight of the decision, not the weight of the tokens. Revenue tracks strategic ROI, not API price.
               </p>
@@ -958,7 +958,7 @@ function S09Augmentation() {
         {/* Bottom loop */}
         <div className="mt-8 rounded-2xl border-2 p-5" style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.05)` }}>
           <p className="font-mono uppercase tracking-[0.18em] mb-3" style={{ fontSize: 12, color: `hsl(${PURPLE})` }}>The compounding loop</p>
-          <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
             {[
               { l: "Junior intent", c: ACCENT },
               { l: "LIZA Playbook (state-locked)", c: PURPLE },
@@ -966,10 +966,10 @@ function S09Augmentation() {
               { l: "Junior internalises", c: ACCENT },
               { l: "Capability compounds", c: GOLD },
             ].map((n, i, arr) => (
-              <div key={n.l} className="flex items-center gap-3">
-                <div className="px-4 py-2 rounded-lg border-2 font-semibold"
-                  style={{ fontSize: 16, color: TEXT, borderColor: `hsl(${n.c} / 0.4)`, background: `hsl(${n.c} / 0.08)` }}>{n.l}</div>
-                {i < arr.length - 1 && <ArrowRight size={20} style={{ color: SUBTLE }} />}
+              <div key={n.l} className="flex items-center gap-2">
+                <div className="px-3 py-2 rounded-lg border-2 font-semibold whitespace-nowrap"
+                  style={{ fontSize: 15, color: TEXT, borderColor: `hsl(${n.c} / 0.4)`, background: `hsl(${n.c} / 0.08)` }}>{n.l}</div>
+                {i < arr.length - 1 && <ArrowRight size={18} style={{ color: SUBTLE }} />}
               </div>
             ))}
           </div>
