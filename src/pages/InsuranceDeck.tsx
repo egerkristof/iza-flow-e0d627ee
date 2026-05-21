@@ -499,7 +499,7 @@ function S08Matrix() {
             <div>Use case</div><div>Owner on your side</div><div>Why it's urgent now</div><div>30-day shape</div><div>What you walk away with</div>
           </div>
           {rows.map((r, i) => (
-            <div key={r.uc} className="grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-6 py-7 border-b items-start" style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "transparent" : "hsl(220 15% 99%)" }}>
+            <div key={r.uc} className={`grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-6 py-7 items-start ${i === rows.length - 1 ? "" : "border-b"}`} style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "transparent" : "hsl(220 15% 99%)" }}>
               <div className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.3 }}>{r.uc}</div>
               <div style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>{r.o}</div>
               <div style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>{r.p}</div>
