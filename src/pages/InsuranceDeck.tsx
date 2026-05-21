@@ -584,11 +584,19 @@ function S09Provenance() {
           ))}
         </div>
 
-        <div className="rounded-2xl border-2 p-6 max-w-[1750px]" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)` }}>
-          <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What carries over to your engagement</p>
-          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
-            The use cases on the previous slides are the ones we already lived inside other carriers. The 30-day shape on the next page reflects how we wish those programs had started: one pod, one standard captured, one measurable readout, before anything goes near a customer.
-          </p>
+        <div className="grid grid-cols-2 gap-6 max-w-[1750px]">
+          <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>Where these relationships stand today</p>
+            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>
+              We are in active conversations with each of these carriers about applying LIZA OS to the same problems we first met inside their walls. No LIZA OS deployment has gone live at any of them yet. The trust is earned, the doors are open, and the timing is the only variable.
+            </p>
+          </div>
+          <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What carries over to your engagement</p>
+            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>
+              The use cases on the previous slides are the ones we already lived inside other carriers. The 30-day shape on the next page reflects how we wish those programs had started: one pod, one standard captured, one measurable readout, before anything goes near a customer.
+            </p>
+          </div>
         </div>
       </div>
       <SlideBar from={PURPLE} to={GREEN} />
