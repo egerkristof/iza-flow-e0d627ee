@@ -3,6 +3,7 @@ import BridgeDeck from "@/pages/BridgeDeck";
 import TechDDDeck from "@/pages/TechDDDeck";
 import ImpactDeck from "@/pages/ImpactDeck";
 import InsuranceDeck from "@/pages/InsuranceDeck";
+import InsuranceUnderwritingDeck from "@/pages/InsuranceUnderwritingDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
