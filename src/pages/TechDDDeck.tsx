@@ -890,158 +890,234 @@ function S08PricingMetering() {
 // SLIDE 07b — WHAT MAKES US UNIQUE · THE MOMENT OF WORK
 // ═════════════════════════════════════════════════════════════════════════════
 function S07bUnique() {
-  const inputs = [
-    {
-      pos: "top",
-      icon: Compass,
-      color: ACCENT,
-      label: "From above · Strategy & Constraints",
-      detail: "Mandates, OKRs, policy, risk and compliance guardrails cascade down so every decision inherits intent.",
-      competitors: "Sits in slide decks and BI tools. Never reaches the agent at runtime.",
-    },
-    {
-      pos: "bottom",
-      icon: Gauge,
-      color: GREEN,
-      label: "From below · KPIs, drifts & anomalies",
-      detail: "Live operational signals — KPI deltas, drift, anomalies, incidents — rise into the moment of work as fresh context.",
-      competitors: "Lives in dashboards no one reads while the work is happening.",
-    },
-    {
-      pos: "left",
-      icon: Globe,
-      color: GOLD,
-      label: "From outside · Market & best practice",
-      detail: "External signals, competitor moves, regulatory change, and the latest reference playbooks for the vertical.",
-      competitors: "Static RAG snapshots. No notion of which best practice applies to this decision class.",
-    },
-    {
-      pos: "right",
-      icon: Package,
-      color: PURPLE,
-      label: "From inside · Artifacts & current state",
-      detail: "The artifacts already in flight — specs, briefs, models, prior decisions — and the dependencies between them.",
-      competitors: "Files in silos. No semantic link between the WHAT (artifacts) and the HOW (playbooks).",
-    },
+  // Four semantic streams that must converge at the moment of work.
+  // Position in % of the diagram canvas.
+  const STREAMS = {
+    strategy: { color: PURPLE, label: "Strategy", sub: "Mandates. OKRs. Policy. Risk.", icon: Compass, x: 50, y: 6 },
+    market:   { color: GOLD,   label: "Market",   sub: "External signals. Regulation. Best practice.", icon: Globe,   x: 5,  y: 50 },
+    state:    { color: ACCENT, label: "State",    sub: "Artifacts. Dependencies. Prior decisions.",    icon: Package, x: 95, y: 50 },
+    signal:   { color: GREEN,  label: "Signal",   sub: "KPIs. Drift. Anomalies. Incidents.",           icon: Gauge,   x: 50, y: 94 },
+  } as const;
+  type StreamKey = keyof typeof STREAMS;
+
+  // Competitors clustered around the perimeter, each tagged with the streams they actually touch.
+  // Honest mapping. Most touch one. A few touch two. None touch all four.
+  const COMPETITORS: { id: string; l: string; s: string; covers: StreamKey[]; x: number; y: number }[] = [
+    // Strategy zone (top)
+    { id: "okr",    l: "Cascade · Quantive",            s: "OKR & strategy tooling",     covers: ["strategy"],         x: 28, y: 16 },
+    { id: "decks",  l: "Strategy decks · static plans", s: "Slide-ware, no runtime hook", covers: ["strategy"],        x: 72, y: 16 },
+    // Market zone (left)
+    { id: "mi",     l: "Crayon · Klue · AlphaSense",    s: "Market intelligence feeds",   covers: ["market"],           x: 14, y: 30 },
+    { id: "rag",    l: "Perplexity · web RAG",           s: "External retrieval, no governance", covers: ["market"],   x: 14, y: 70 },
+    // State zone (right)
+    { id: "chat",   l: "Copilot · ChatGPT · Gemini",    s: "Foundation chat. Black-box graph.", covers: ["state","market"], x: 86, y: 22 },
+    { id: "search", l: "Glean · Guru",                   s: "Enterprise search & retrieval", covers: ["state"],         x: 86, y: 42 },
+    { id: "kg",     l: "Cognee · Mem0",                  s: "Autonomous KGs. Drift risk.",   covers: ["state"],         x: 86, y: 58 },
+    { id: "agent",  l: "Cognition · Devin · agents",    s: "Agent builders. No org model.", covers: ["state"],         x: 86, y: 78 },
+    // Signal zone (bottom)
+    { id: "bi",     l: "Tableau · Power BI · Looker",   s: "Dashboards. Read-only.",         covers: ["signal"],         x: 28, y: 84 },
+    { id: "erp",    l: "Workday · Salesforce · Palantir", s: "Rigid ontology. Signal + records.", covers: ["signal","state"], x: 72, y: 84 },
   ];
 
-  const competitors = [
-    { l: "Copilot / Gemini / ChatGPT", s: "Foundation chat. Black-box graph. No governance, no organisational state.", icon: MessageSquare },
-    { l: "Glean / Guru", s: "Enterprise search. Retrieves documents. Does not govern the decision.", icon: Database },
-    { l: "Cognition / Devin · agent platforms", s: "Strong agent builders. No unified WHAT × HOW model, no audit container.", icon: Cpu },
-    { l: "Cognee / Mem0 · autonomous KGs", s: "Organic ontology. High drift risk, weak audit, no human approval lifecycle.", icon: Network },
-    { l: "Workday / Salesforce Einstein", s: "Rigid enterprise ontology. Strong governance, but cannot adapt to new work.", icon: Lock },
-  ];
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [hoveredStream, setHoveredStream] = useState<StreamKey | null>(null);
 
-  // Geometry for the radial diagram (absolute % positions within the canvas).
-  const cx = 50, cy = 50;
-  const arrowColor = (c: string) => `hsl(${c})`;
+  const isDimmed = (compId: string, covers: StreamKey[]) => {
+    if (hovered) return hovered !== compId;
+    if (hoveredStream) return !covers.includes(hoveredStream);
+    return false;
+  };
 
   return (
-    <div className="w-full h-full relative px-20 pt-24 pb-20" style={{ background: BG }}>
+    <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={8} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
       <div className="relative z-10">
         <Tag label="What makes us unique · The moment of work" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
-          Every other tool builds one slice. <span style={{ color: `hsl(${GREEN})` }}>We wrap the decision moment from all four sides — and govern it.</span>
+        <h2 className="font-bold leading-[1.02] mb-5" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+          What is the value of an <span style={{ color: `hsl(${GREEN})` }}>operator</span> in the age of AI?
         </h2>
-        <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1700, lineHeight: 1.4 }}>
-          In the future agentic organisation, value is created at one point: the moment an operator (human or agent) makes a decision. Strategy from above, KPIs from below, market from outside, artifacts from inside — all four must meet there, under audit. That is the AI-native operating system.
-        </p>
 
-        <div className="grid grid-cols-[1.45fr_1fr] gap-10 items-start">
-          {/* LEFT — Radial diagram */}
-          <div className="rounded-2xl border-2 relative" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 620 }}>
-            {/* Four arrow guides */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <defs>
-                {inputs.map((i, idx) => (
-                  <marker key={idx} id={`arr-${idx}`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-                    <path d="M0,0 L10,5 L0,10 z" fill={arrowColor(i.color)} />
-                  </marker>
-                ))}
-              </defs>
-              {/* Top → center */}
-              <line x1={cx} y1={18} x2={cx} y2={38} stroke={arrowColor(ACCENT)} strokeWidth="0.6" markerEnd="url(#arr-0)" />
-              {/* Bottom → center */}
-              <line x1={cx} y1={82} x2={cx} y2={62} stroke={arrowColor(GREEN)} strokeWidth="0.6" markerEnd="url(#arr-1)" />
-              {/* Left → center */}
-              <line x1={18} y1={cy} x2={38} y2={cy} stroke={arrowColor(GOLD)} strokeWidth="0.6" markerEnd="url(#arr-2)" />
-              {/* Right → center */}
-              <line x1={82} y1={cy} x2={62} y2={cy} stroke={arrowColor(PURPLE)} strokeWidth="0.6" markerEnd="url(#arr-3)" />
-            </svg>
-
-            {/* Center — The decision moment */}
-            <div className="absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 px-7 py-5 text-center shadow-lg"
-              style={{ left: `${cx}%`, top: `${cy}%`, borderColor: `hsl(${GREEN} / 0.6)`, background: "white", maxWidth: 320 }}>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <UserCheck size={22} style={{ color: `hsl(${GREEN})` }} />
-                <Sparkles size={20} style={{ color: `hsl(${GREEN})` }} />
-              </div>
-              <p className="font-bold leading-tight" style={{ fontSize: 19, color: TEXT }}>The moment of work</p>
-              <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3, marginTop: 4 }}>
-                Operator + agent, executing under a locked Playbook. Every input governed. Every output audited.
-              </p>
-              <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded border" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.08)` }}>
-                <ShieldCheck size={12} style={{ color: `hsl(${GREEN})` }} />
-                <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>WHAT × HOW · audited</span>
-              </div>
+        {/* Two-answer kicker bar */}
+        <div className="flex gap-4 mb-5">
+          <div className="rounded-xl border-2 px-5 py-3 flex-1" style={{ borderColor: `hsl(${ACCENT} / 0.45)`, background: `hsl(${ACCENT} / 0.05)` }}>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-mono font-bold" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>ANSWER 01</span>
+              <span style={{ fontSize: 14, color: SUBTLE }}>Why keep humans in the loop at all</span>
             </div>
+            <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
+              The world changes faster than any model. Someone must <b>synthesise four streams of change into one governed decision</b>, semantically, in real time. AI cannot fully automate what the world has not yet declared.
+            </p>
+          </div>
+          <div className="rounded-xl border-2 px-5 py-3 flex-1" style={{ borderColor: `hsl(${GOLD} / 0.45)`, background: `hsl(${GOLD} / 0.05)` }}>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-mono font-bold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>ANSWER 02</span>
+              <span style={{ fontSize: 14, color: SUBTLE }}>Why the leader is also an operator</span>
+            </div>
+            <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
+              Strategy is execution at the edge. Every leader becomes an operator the instant a market shifts. We unify both into one adaptive loop, so the best possible decision is made at <b>every</b> moment of work.
+            </p>
+          </div>
+        </div>
 
-            {/* Four input cards */}
-            {inputs.map((i, idx) => {
-              const Icon = i.icon;
-              const style: React.CSSProperties = { borderColor: `hsl(${i.color} / 0.5)`, background: "white" };
-              const posStyle: React.CSSProperties =
-                i.pos === "top" ? { left: "50%", top: "2%", transform: "translateX(-50%)" } :
-                i.pos === "bottom" ? { left: "50%", bottom: "2%", transform: "translateX(-50%)" } :
-                i.pos === "left" ? { left: "2%", top: "50%", transform: "translateY(-50%)" } :
-                { right: "2%", top: "50%", transform: "translateY(-50%)" };
+        {/* RADIAL CANVAS */}
+        <div
+          className="relative rounded-2xl border"
+          style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 660 }}
+          onMouseLeave={() => { setHovered(null); setHoveredStream(null); }}
+        >
+          {/* Connection layer: lines from each competitor to its covered streams + LIZA lines */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {/* LIZA → all four streams (always bold, signature move) */}
+            {(Object.keys(STREAMS) as StreamKey[]).map((k) => {
+              const s = STREAMS[k];
+              const active = !hovered && !hoveredStream;
+              const highlight = hoveredStream === k;
               return (
-                <div key={i.pos} className="absolute rounded-xl border-2 px-4 py-3"
-                  style={{ ...style, ...posStyle, width: 280 }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <Icon size={18} style={{ color: `hsl(${i.color})` }} />
-                    <p className="font-bold" style={{ fontSize: 14, color: TEXT, lineHeight: 1.2 }}>{i.label}</p>
-                  </div>
-                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>{i.detail}</p>
-                </div>
+                <line
+                  key={`liza-${k}`}
+                  x1={50} y1={50} x2={s.x} y2={s.y}
+                  stroke={`hsl(${s.color})`}
+                  strokeWidth={highlight ? 0.9 : active ? 0.7 : 0.4}
+                  strokeOpacity={hovered ? 0.25 : 1}
+                />
               );
             })}
+            {/* Competitor → stream lines */}
+            {COMPETITORS.flatMap((c) =>
+              c.covers.map((k) => {
+                const s = STREAMS[k];
+                const dim = isDimmed(c.id, c.covers);
+                const highlight = hovered === c.id || hoveredStream === k;
+                return (
+                  <line
+                    key={`${c.id}-${k}`}
+                    x1={c.x} y1={c.y} x2={s.x} y2={s.y}
+                    stroke={highlight ? `hsl(${s.color})` : `hsl(${RED} / 0.35)`}
+                    strokeWidth={highlight ? 0.7 : 0.25}
+                    strokeOpacity={dim ? 0.08 : 1}
+                    strokeDasharray={highlight ? "0" : "0.6 0.4"}
+                  />
+                );
+              })
+            )}
+          </svg>
+
+          {/* STREAM CARDS at the four poles */}
+          {(Object.keys(STREAMS) as StreamKey[]).map((k) => {
+            const s = STREAMS[k];
+            const Icon = s.icon;
+            const active = hoveredStream === k;
+            return (
+              <div
+                key={k}
+                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-xl border-2 px-4 py-3 cursor-default transition-all"
+                style={{
+                  left: `${s.x}%`, top: `${s.y}%`,
+                  width: 240,
+                  borderColor: `hsl(${s.color} / ${active ? 0.9 : 0.55})`,
+                  background: active ? `hsl(${s.color} / 0.12)` : "white",
+                  boxShadow: active ? `0 8px 24px hsl(${s.color} / 0.25)` : "0 1px 3px rgba(0,0,0,0.06)",
+                  zIndex: 3,
+                }}
+                onMouseEnter={() => setHoveredStream(k)}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <Icon size={18} style={{ color: `hsl(${s.color})` }} />
+                  <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1 }}>{s.label}</p>
+                </div>
+                <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.3 }}>{s.sub}</p>
+              </div>
+            );
+          })}
+
+          {/* LIZA CENTER NODE */}
+          <div
+            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 px-6 py-4 text-center"
+            style={{
+              left: "50%", top: "50%",
+              width: 300,
+              borderColor: `hsl(${GREEN} / 0.7)`,
+              background: "white",
+              boxShadow: `0 12px 36px hsl(${GREEN} / 0.18), 0 0 0 6px hsl(${GREEN} / 0.06)`,
+              zIndex: 4,
+            }}
+          >
+            <div className="flex items-center justify-center gap-2 mb-1.5">
+              <UserCheck size={20} style={{ color: `hsl(${GREEN})` }} />
+              <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1 }}>LIZA · The moment of work</p>
+            </div>
+            <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>
+              Operator and agent, deciding together under a locked Playbook. All four streams fused semantically. Every input governed. Every output audited.
+            </p>
+            <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded border"
+              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <ShieldCheck size={12} style={{ color: `hsl(${GREEN})` }} />
+              <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+                Audit & Compliance Container
+              </span>
+            </div>
           </div>
 
-          {/* RIGHT — Competitor coverage strip */}
-          <div className="flex flex-col gap-3">
-            <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: SUBTLE }}>Where competitors land</p>
-            {competitors.map(c => {
-              const Icon = c.icon;
-              return (
-                <div key={c.l} className="rounded-xl border p-4 flex gap-3 items-start" style={{ borderColor: CHROME_BORDER, background: "white" }}>
-                  <div className="rounded-lg p-2" style={{ background: `hsl(${RED} / 0.06)`, border: `1px solid hsl(${RED} / 0.2)` }}>
-                    <Icon size={18} style={{ color: `hsl(${RED})` }} />
-                  </div>
-                  <div>
-                    <p className="font-semibold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.2 }}>{c.l}</p>
-                    <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35, marginTop: 2 }}>{c.s}</p>
+          {/* COMPETITOR PILLS */}
+          {COMPETITORS.map((c) => {
+            const dim = isDimmed(c.id, c.covers);
+            const highlight = hovered === c.id;
+            return (
+              <div
+                key={c.id}
+                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-lg border bg-white px-3 py-2 cursor-default transition-all"
+                style={{
+                  left: `${c.x}%`, top: `${c.y}%`,
+                  width: 220,
+                  borderColor: highlight ? `hsl(${RED} / 0.6)` : CHROME_BORDER,
+                  opacity: dim ? 0.3 : 1,
+                  boxShadow: highlight ? "0 6px 18px rgba(0,0,0,0.12)" : "0 1px 2px rgba(0,0,0,0.04)",
+                  zIndex: 3,
+                }}
+                onMouseEnter={() => setHovered(c.id)}
+              >
+                <div className="flex items-start justify-between gap-2 mb-0.5">
+                  <p className="font-semibold" style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.15 }}>{c.l}</p>
+                  <div className="flex gap-0.5 mt-0.5">
+                    {(Object.keys(STREAMS) as StreamKey[]).map((k) => (
+                      <span key={k} className="rounded-full"
+                        style={{
+                          width: 6, height: 6,
+                          background: c.covers.includes(k) ? `hsl(${STREAMS[k].color})` : `hsl(0 0% 86%)`,
+                        }}
+                      />
+                    ))}
                   </div>
                 </div>
-              );
-            })}
-            <div className="rounded-xl border-2 p-4 mt-1" style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
-              <div className="flex items-center gap-2 mb-1">
-                <CheckCircle2 size={18} style={{ color: `hsl(${GREEN})` }} />
-                <p className="font-bold" style={{ fontSize: 15, color: TEXT }}>LIZA · the unifier</p>
+                <p style={{ fontSize: 11, color: MUTED, lineHeight: 1.25 }}>{c.s}</p>
               </div>
-              <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>
-                One organisational graph that learns the domain ontology under human approval, fuses WHAT × HOW, and pipes all four context streams into the decision moment — inside an audit & compliance container.
-              </p>
-            </div>
+            );
+          })}
+
+          {/* Legend in corner */}
+          <div className="absolute bottom-3 left-3 rounded-lg border bg-white/90 backdrop-blur px-3 py-2 flex items-center gap-3"
+            style={{ borderColor: CHROME_BORDER }}>
+            <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: SUBTLE }}>Coverage</span>
+            {(Object.keys(STREAMS) as StreamKey[]).map((k) => (
+              <div key={k} className="flex items-center gap-1.5">
+                <span className="rounded-full" style={{ width: 8, height: 8, background: `hsl(${STREAMS[k].color})` }} />
+                <span style={{ fontSize: 11, color: TEXT }}>{STREAMS[k].label}</span>
+              </div>
+            ))}
+            <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: SUBTLE, marginLeft: 8 }}>Hover any node</span>
+          </div>
+
+          {/* Conclusion in opposite corner */}
+          <div className="absolute bottom-3 right-3 rounded-lg border-2 px-3 py-2 max-w-md"
+            style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
+            <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.35 }}>
+              <b style={{ color: `hsl(${GREEN})` }}>LIZA is the only node connected to all four streams</b> inside one audit container. Every competitor covers a slice. We collect the slices, semantically, and govern the convergence.
+            </p>
           </div>
         </div>
       </div>
-      <Footer text="Speaker note: competitors build one slice — search, agents, KG, or rigid ontology. The unique surface is the governed convergence at the moment of work." />
       <SlideBar from={GREEN} to={GOLD} />
     </div>
   );
