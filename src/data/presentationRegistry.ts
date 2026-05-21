@@ -3,6 +3,7 @@ import BridgeDeck from "@/pages/BridgeDeck";
 import TechDDDeck from "@/pages/TechDDDeck";
 import ImpactDeck from "@/pages/ImpactDeck";
 import InsuranceDeck from "@/pages/InsuranceDeck";
+import InsuranceUnderwritingDeck from "@/pages/InsuranceUnderwritingDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
@@ -225,6 +226,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/InsuranceDeck.tsx",
     description: "10-slide draft executive brief for a leading Middle East insurance group. Four-section arc (Pull / Pivot / Push / Close) framed around CBUAE 2025/2026 mandates. Covers UAE Insurance Paradox, Digital Insider threat, Context Gap Tax, cognitive infrastructure iceberg, AACE v3.1 compliance loop, value-based metering (1x/5x/25x), three capability stories (Commercial P&C / High-Volume Claims / Actuarial Rehearsal) covering the likely lines of business, then a 90-Second Diagnostic + 30-Day Guided Kickstart wedge, closing on two doors (customer / design partner). Carries DRAFT and HIGHLY CONFIDENTIAL badges on every slide.",
     component: InsuranceDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "insurance-uw",
+    title: "Insurance Agentic Underwriting Brief (UAE · Proxy edition)",
+    path: "/insurance-uw",
+    sourcePath: "src/pages/InsuranceUnderwritingDeck.tsx",
+    description: "7-slide editable working brief for a UAE carrier challenging a $1.2M internal agentic-underwriting build. Designed to travel through a design-proxy partner (proxy is the design + delivery authority; LIZA stays underneath as the execution layer). Side-by-side SME Commercial Property + Motor framing. Arc: cover, the underwriting trap (5 steps x 2 LOBs), why the internal build fails ($400k+$350k+$250k+$200k breakdown + year-2 maintenance trap), the agentic loop with the senior-underwriter feedback edge, who owns what (Proxy / LIZA / Carrier boundary), references carried from /insurance S9 (Generali, Prudential, MSIG), 2-week shape ending at the CRO readout. Strips all LIZA jargon (no AACE, no Unified Rationale Log as product, no Zero Hallucination). DRAFT + HIGHLY CONFIDENTIAL badges on every slide.",
+    component: InsuranceUnderwritingDeck,
     showInAdmin: true,
   },
   {
