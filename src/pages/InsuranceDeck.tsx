@@ -33,7 +33,6 @@ function ScaledSlide({ children, isCover = false }: { children: React.ReactNode;
       }}>
         {children}
         <div style={{ position: "absolute", top: 32, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 14, zIndex: 50, pointerEvents: "none" }}>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 20, fontWeight: 800, letterSpacing: "0.18em", padding: "10px 20px", borderRadius: 6, background: "hsl(45 95% 42% / 0.18)", color: "hsl(38 90% 24%)", border: "2px solid hsl(45 95% 42% / 0.6)" }}>DRAFT</span>
           <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 20, fontWeight: 800, letterSpacing: "0.18em", padding: "10px 20px", borderRadius: 6, background: "hsl(0 72% 50% / 0.15)", color: "hsl(0 72% 36%)", border: "2px solid hsl(0 72% 50% / 0.6)" }}>HIGHLY CONFIDENTIAL</span>
         </div>
         {isCover && (
@@ -41,13 +40,12 @@ function ScaledSlide({ children, isCover = false }: { children: React.ReactNode;
             <div style={{
               transform: "rotate(-22deg)",
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 220, fontWeight: 900, letterSpacing: "0.12em",
-              color: "hsl(0 72% 50% / 0.10)",
+              fontSize: 160, fontWeight: 900, letterSpacing: "0.12em",
+              color: "hsl(0 72% 50% / 0.12)",
               textShadow: "0 0 1px hsl(0 72% 50% / 0.18)",
               whiteSpace: "nowrap", lineHeight: 1, textAlign: "center",
             }}>
-              <div>DRAFT</div>
-              <div style={{ fontSize: 110, color: "hsl(45 95% 38% / 0.14)", marginTop: 20 }}>HIGHLY CONFIDENTIAL</div>
+              HIGHLY CONFIDENTIAL
             </div>
           </div>
         )}
