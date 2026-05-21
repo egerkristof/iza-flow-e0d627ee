@@ -1731,74 +1731,7 @@ function S12SocietalImpact() {
 }
 
 // ─── Deck registry ───────────────────────────────────────────────────────────
-// ═════════════════════════════════════════════════════════════════════════════
-// SLIDE 08 — SCALE & USP (defensibility vs. RAG / Copilot bolt-ons)
-// ═════════════════════════════════════════════════════════════════════════════
-function S07ScaleUSP() {
-  const scale = [
-    { k: "Tenancy model", v: "Per-org isolated graph; shared inference plane", note: "No cross-tenant context leakage by construction" },
-    { k: "Throughput", v: "Horizontally scaled stateless workers; stateful intent locks pinned per session", note: "Bottleneck is LLM provider quota, not LIZA" },
-    { k: "Latency budget", v: "≤ 250 ms context compile · ≤ provider TTFT for inference", note: "Context compile is cache-aware per Playbook version" },
-    { k: "Storage", v: "Postgres + pgvector for semantic index; S3-class for artifact bodies", note: "Graph edges versioned; immutable rationale log" },
-    { k: "Cost shape", v: "Marginal cost = tokens + storage; no per-seat infra tax", note: "Margin expands as Playbooks are reused across users" },
-  ];
-  const moat = [
-    { l: "Glean / Copilot + RAG", weak: "Retrieves text. No locked process, no rationale chain, no decision class.", liza: "Locks intent to a Playbook. Every output is provenance-stamped." },
-    { l: "In-house RAG build", weak: "Solves search. Doesn't solve governance, drift, or metering.", liza: "Ships the loop — capture → lock → execute → propagate → meter." },
-    { l: "Hyperscaler agent platforms", weak: "Generic frameworks. Standards and decision-class semantics are the customer's homework.", liza: "Standards-anchoring is the product, not the assignment." },
-  ];
-  return (
-    <div className="w-full h-full relative px-24 pt-28 pb-24" style={{ background: BG }}>
-      <SlideGrid />
-      <PageNumber n={8} total={TOTAL} />
-      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
-      <div className="relative z-10">
-        <Tag label="Scale Envelope · Defensible USP" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-8" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
-          The engine scales on commodity infra. <span style={{ color: `hsl(${GREEN})` }}>The moat is the layer above it.</span>
-        </h2>
-        <div className="grid grid-cols-[1fr_1.1fr] gap-10 items-start">
-          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${ACCENT} / 0.35)`, background: `hsl(${ACCENT} / 0.04)` }}>
-            <div className="flex items-center gap-3 mb-5">
-              <Gauge size={24} style={{ color: `hsl(${ACCENT})` }} />
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Scale envelope</p>
-            </div>
-            <div className="space-y-3">
-              {scale.map(r => (
-                <div key={r.k} className="rounded-lg border bg-white px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
-                  <p className="font-mono uppercase tracking-[0.12em] mb-1" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>{r.k}</p>
-                  <p className="font-semibold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.3 }}>{r.v}</p>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35, marginTop: 2 }}>{r.note}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-col gap-5">
-            <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${GOLD} / 0.5)`, background: `hsl(${GOLD} / 0.06)` }}>
-              <p className="font-bold mb-2" style={{ fontSize: 22, color: TEXT }}>The defensible wedge</p>
-              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>
-                Anyone can bolt RAG onto a chat box. The moat is the <span className="font-semibold" style={{ color: TEXT }}>standards-anchoring + portable Context Bundle + decision-class metering</span> running in one loop. That stack does not fall out of a vector DB or a Copilot license.
-              </p>
-            </div>
-            <div className="rounded-2xl border-2 p-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-              <p className="font-mono uppercase tracking-[0.15em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>Why not the obvious alternatives</p>
-              <div className="space-y-3">
-                {moat.map(m => (
-                  <div key={m.l} className="rounded-lg bg-white border px-4 py-3" style={{ borderColor: CHROME_BORDER }}>
-                    <p className="font-bold" style={{ fontSize: 15, color: TEXT, marginBottom: 4 }}>{m.l}</p>
-                    <p style={{ fontSize: 13, color: `hsl(${RED})`, lineHeight: 1.35 }}>Gap: {m.weak}</p>
-                    <p style={{ fontSize: 13, color: `hsl(${GREEN})`, lineHeight: 1.35, marginTop: 2 }}>LIZA: {m.liza}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <SlideBar from={ACCENT} to={GREEN} />
-    </div>
-  );
-}
+
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 11 — UNIT ECONOMICS & SUSTAINABILITY (token-based model)
