@@ -7,7 +7,7 @@ import {
   Eye, Activity, Users, GraduationCap, MessageSquare, Globe, Compass,
   GitPullRequest, CheckCircle2, AlertTriangle, Send, UserCheck,
   Leaf, HeartHandshake, LineChart, HelpCircle,
-  User, Building2, KeyRound, FileSignature, ArrowLeftRight, Package,
+  User, Building2, KeyRound, FileSignature, ArrowLeftRight, Package, Scissors,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -104,7 +104,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 16;
+const TOTAL = 17;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 01 — COVER
