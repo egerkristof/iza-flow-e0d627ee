@@ -1037,7 +1037,7 @@ function S07bUnique() {
             className="absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 px-6 py-4 text-center"
             style={{
               left: "50%", top: "50%",
-              width: 300,
+              width: 360,
               borderColor: `hsl(${GREEN} / 0.7)`,
               background: "white",
               boxShadow: `0 12px 36px hsl(${GREEN} / 0.18), 0 0 0 6px hsl(${GREEN} / 0.06)`,
@@ -1048,15 +1048,33 @@ function S07bUnique() {
               <UserCheck size={20} style={{ color: `hsl(${GREEN})` }} />
               <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1 }}>LIZA · The moment of work</p>
             </div>
-            <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>
-              Operator and agent, deciding together under a locked Playbook. All four streams fused semantically. Every input governed. Every output audited.
+            <p style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.35 }}>
+              Operator and agent deciding together under a locked Playbook. Every convergence runs through five live audits before an output is released.
             </p>
-            <div className="mt-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded border"
+            <div className="mt-2.5 mb-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded border"
               style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
               <ShieldCheck size={12} style={{ color: `hsl(${GREEN})` }} />
               <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
                 Audit & Compliance Container
               </span>
+            </div>
+            <div className="grid grid-cols-1 gap-1 text-left">
+              {[
+                { k: "Token & Cost Audit", v: "Prompt envelope, model routing, COGS per call" },
+                { k: "Best Practice Audit", v: "Output conforms to the locked Playbook & standard" },
+                { k: "Data Security & Governance", v: "PII, residency, role scope, retention" },
+                { k: "Decision Audit", v: "Rationale chain, evidence, decision class" },
+                { k: "Drift & Standards Audit", v: "Standard freshness, deviation from prior decisions" },
+              ].map(a => (
+                <div key={a.k} className="flex items-start gap-1.5 rounded px-2 py-1 border"
+                  style={{ borderColor: `hsl(${GREEN} / 0.18)`, background: `hsl(${GREEN} / 0.04)` }}>
+                  <span className="rounded-full mt-1.5" style={{ width: 5, height: 5, background: `hsl(${GREEN})`, flexShrink: 0 }} />
+                  <div className="leading-tight">
+                    <span className="font-semibold" style={{ fontSize: 11.5, color: TEXT }}>{a.k}.</span>{" "}
+                    <span style={{ fontSize: 11, color: MUTED }}>{a.v}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
