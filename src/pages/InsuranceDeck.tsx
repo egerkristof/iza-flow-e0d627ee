@@ -487,19 +487,19 @@ function S08Matrix() {
       <PhaseChip phase="Pick the first one" color={GREEN} />
       <div className="relative z-10 h-full flex flex-col">
         <Tag label="Which of these four is your Friday?" color={GREEN} />
-        <h2 className="font-bold leading-[1.04] mb-5" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+        <h2 className="font-bold leading-[1.04] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
           Same operating pattern underneath. <span style={{ color: `hsl(${GREEN})` }}>Different first wedge per carrier.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+        <p className="mb-6" style={{ fontSize: 21, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
           Four real conversations from the past six months. Each one becomes a clean first 30 days for a different leader. The question is not whether to start. The question is whose Friday looks most like one of these four.
         </p>
 
-        <div className="rounded-2xl border-2 overflow-hidden max-w-[1750px]" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+        <div className="rounded-2xl border-2 overflow-hidden shrink-0 max-w-[1750px]" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
           <div className="grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-6 py-4 font-mono uppercase tracking-[0.12em] font-bold border-b" style={{ fontSize: 14, color: SUBTLE, background: BG, borderColor: CHROME_BORDER }}>
             <div>Use case</div><div>Owner on your side</div><div>Why it's urgent now</div><div>30-day shape</div><div>What you walk away with</div>
           </div>
           {rows.map((r, i) => (
-            <div key={r.uc} className={`grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-6 py-7 items-start ${i === rows.length - 1 ? "" : "border-b"}`} style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "transparent" : "hsl(220 15% 99%)" }}>
+            <div key={r.uc} className={`grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-6 pt-5 items-start ${i === rows.length - 1 ? "pb-7" : "pb-5 border-b"}`} style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "transparent" : "hsl(220 15% 99%)" }}>
               <div className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.3 }}>{r.uc}</div>
               <div style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>{r.o}</div>
               <div style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>{r.p}</div>
