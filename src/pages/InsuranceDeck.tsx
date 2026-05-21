@@ -627,7 +627,7 @@ function S10UnderHood() {
         </div>
 
         <p className="mt-10 max-w-[1750px]" style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5 }}>
-          Next step: 60 minutes with two of your line-of-business owners. We leave with a chosen use case and a 30-day plan, or we do not come back.
+          Next step: 60 minutes with two of your line-of-business owners. We leave with a chosen use case and a 30-day plan.
         </p>
       </div>
       <SlideBar from={GREEN} to={ACCENT} />
