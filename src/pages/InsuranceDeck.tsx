@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
 import { cn } from "@/lib/utils";
+import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 
 // ─── Scaled slide container with DRAFT / CONFIDENTIAL badges ─────────────────
 function ScaledSlide({ children, isCover = false }: { children: React.ReactNode; isCover?: boolean }) {
