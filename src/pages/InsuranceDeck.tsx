@@ -721,6 +721,7 @@ const SLIDES = [
   { id: "uc-fraud",       title: "UC3 · Fraud / SIU memory",        component: <S06UC3 /> },
   { id: "uc-arabic",      title: "UC4 · Arabic customer AI",        component: <S07UC4 /> },
   { id: "matrix",         title: "Which one is your Friday?",       component: <S08Matrix /> },
+  { id: "provenance",     title: "Why us · built from real carriers", component: <S09Provenance /> },
   { id: "thirty-days",    title: "The 30-day shape",                component: <S09ThirtyDays /> },
   { id: "under-hood",     title: "Under the hood · Two doors",      component: <S10UnderHood /> },
 ];
