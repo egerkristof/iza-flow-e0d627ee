@@ -572,9 +572,6 @@ function S09ThirtyDays() {
           </div>
         </div>
 
-        <p className="mt-6 max-w-[1750px]" style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>
-          None of this is unusual for an engagement of this kind. It is written down at the start so that the work can be judged on its merits at the end.
-        </p>
       </div>
       <SlideBar from={GOLD} to={GREEN} />
     </div>
