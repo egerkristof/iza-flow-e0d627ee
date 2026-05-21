@@ -130,7 +130,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
 const TOTAL = 11;
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 01 — COVER
+// 01 , COVER
 // ═════════════════════════════════════════════════════════════════════════════
 function S01Cover() {
   return (
@@ -144,7 +144,7 @@ function S01Cover() {
           Why keep humans <span style={{ color: `hsl(${GREEN})` }}>in the age of AI.</span>
         </h1>
         <p className="mt-10 mx-auto" style={{ fontSize: 26, color: DARK_MUTED, lineHeight: 1.4, maxWidth: 1280 }}>
-          When AI does the execution, the value moves to <span className="font-semibold" style={{ color: DARK_TEXT }}>judgment, taste, and accountability</span> &mdash; and to whoever owns the encoded record of those decisions. This brief explains how LIZA generates measurable impact by giving that record to the individual.
+          When AI does the execution, the value moves to <span className="font-semibold" style={{ color: DARK_TEXT }}>judgment, taste, and accountability</span> , and to whoever owns the encoded record of those decisions. This brief explains how LIZA generates measurable impact by giving that record to the individual.
         </p>
         <div className="mt-14 grid grid-cols-3 gap-6 max-w-5xl mx-auto">
           {[
@@ -167,13 +167,13 @@ function S01Cover() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 02 — THE CORE QUESTION
+// 02 , THE CORE QUESTION
 // ═════════════════════════════════════════════════════════════════════════════
 function S02Question() {
   const layers = [
-    { t: "Execution", s: "Drafting, summarising, coding, searching", who: "AI does this — faster, cheaper, every year more so.", color: SUBTLE, w: 30 },
-    { t: "Judgment",  s: "Choosing what is right, for whom, under which constraint", who: "Human — but only if it is captured, repeatable, defensible.", color: ACCENT, w: 65 },
-    { t: "Accountability", s: "Standing behind the decision when it goes wrong", who: "Human — non-delegable. Law, ethics, and trust live here.", color: GREEN, w: 90 },
+    { t: "Execution", s: "Drafting, summarising, coding, searching", who: "AI does this , faster, cheaper, every year more so.", color: SUBTLE, w: 30 },
+    { t: "Judgment",  s: "Choosing what is right, for whom, under which constraint", who: "Human , but only if it is captured, repeatable, defensible.", color: ACCENT, w: 65 },
+    { t: "Accountability", s: "Standing behind the decision when it goes wrong", who: "Human , non-delegable. Law, ethics, and trust live here.", color: GREEN, w: 90 },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
@@ -183,10 +183,10 @@ function S02Question() {
       <div className="relative z-10">
         <Tag label="The Core Question" />
         <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          If AI does the execution, <span style={{ color: `hsl(${GREEN})` }}>what is the human&apos;s job &mdash; and how do we prove it?</span>
+          If AI does the execution, <span style={{ color: `hsl(${GREEN})` }}>what is the human&apos;s job , and how do we prove it?</span>
         </h2>
         <p className="mb-10" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          The honest answer is not &ldquo;everything as before&rdquo;. The work splits into three layers. Two of them collapse onto AI. One does not &mdash; and it is the layer where impact, value, and dignity now live.
+          The honest answer is not &ldquo;everything as before&rdquo;. The work splits into three layers. Two of them collapse onto AI. One does not , and it is the layer where impact, value, and dignity now live.
         </p>
 
         <div className="grid grid-cols-1 gap-4 max-w-[1600px]">
@@ -209,7 +209,7 @@ function S02Question() {
 
         <div className="mt-8 rounded-xl border-2 px-6 py-4 max-w-[1600px]" style={{ borderColor: `hsl(${GREEN} / 0.35)`, background: `hsl(${GREEN} / 0.05)` }}>
           <p className="font-bold mb-1" style={{ fontSize: 20, color: TEXT }}>
-            Our thesis &mdash; in one line.
+            Our thesis , in one line.
           </p>
           <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>
             The infrastructure that <span className="font-semibold" style={{ color: TEXT }}>captures, versions, and ports the judgment layer</span> back to the individual is what keeps humans valuable, employable, and accountable in an AI-native economy. That infrastructure is LIZA. That is the impact.
@@ -222,20 +222,20 @@ function S02Question() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 03 — WHAT IMPACT INVESTING MEANS (IMP framework)
+// 03 , WHAT IMPACT INVESTING MEANS (IMP framework)
 // ═════════════════════════════════════════════════════════════════════════════
 function S03IMP() {
   const dims = [
     { d: "WHAT",         q: "What outcome does the enterprise contribute to, and how important is it to the people experiencing it?",
       a: "Workers retain economic agency as AI absorbs execution. WEF 2025 names this as the top systemic risk to labour markets.", color: GREEN, i: Target },
     { d: "WHO",          q: "Who experiences the outcome, and how underserved are they relative to it?",
-      a: "Knowledge workers across functions whose tacit judgment is currently uncaptured and non-portable &mdash; the structural majority of the workforce.", color: ACCENT, i: User },
-    { d: "HOW MUCH",     q: "How much of the outcome occurs in the time period &mdash; in scale, depth, and duration?",
+      a: "Knowledge workers across functions whose tacit judgment is currently uncaptured and non-portable , the structural majority of the workforce.", color: ACCENT, i: User },
+    { d: "HOW MUCH",     q: "How much of the outcome occurs in the time period , in scale, depth, and duration?",
       a: "Per active bundle: ≥ 200 captured judgment moments / yr, ≥ 6 Core 2030 skills exercised, lifetime portable record.", color: GOLD, i: LineChart },
     { d: "CONTRIBUTION", q: "Would this outcome occur anyway without the enterprise?",
       a: "No. Without a person-signed standard, the bundle defaults to employer IP. We are the only layer making it individually owned and portable.", color: PURPLE, i: HeartHandshake },
     { d: "RISK",         q: "What is the risk to people and planet that impact does not occur as expected?",
-      a: "Two material risks &mdash; (1) capture by an employer or platform, (2) measurement gaming. Both are mitigated by signed, audited, open-standard bundles.", color: RED, i: AlertTriangle },
+      a: "Two material risks , (1) capture by an employer or platform, (2) measurement gaming. Both are mitigated by signed, audited, open-standard bundles.", color: RED, i: AlertTriangle },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
@@ -245,7 +245,7 @@ function S03IMP() {
       <div className="relative z-10">
         <Tag label="What Impact Investing Actually Asks For" />
         <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          The IMP <span style={{ color: `hsl(${GREEN})` }}>five dimensions</span> &mdash; the standard the committee will apply.
+          The IMP <span style={{ color: `hsl(${GREEN})` }}>five dimensions</span> , the standard the committee will apply.
         </h2>
         <p className="mb-8" style={{ fontSize: 19, color: MUTED, lineHeight: 1.45, maxWidth: 1600 }}>
           The Impact Management Project framework (now stewarded by Impact Frontiers, adopted by GIIN, B Lab, and most DFIs) reduces &ldquo;impact&rdquo; to five answerable questions. Anything that does not answer all five is marketing, not impact. Here is how LIZA answers each.
@@ -272,7 +272,7 @@ function S03IMP() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 04 — STRUCTURAL PROBLEM
+// 04 , STRUCTURAL PROBLEM
 // ═════════════════════════════════════════════════════════════════════════════
 function S04Problem() {
   return (
@@ -292,7 +292,7 @@ function S04Problem() {
         <div className="grid grid-cols-3 gap-5 max-w-[1700px]">
           {[
             { t: "Career capital evaporates", s: "A decade of judgment, encoded into someone else&rsquo;s system. When you leave, you take a CV, not a context graph.", c: RED, n: "01" },
-            { t: "Reskilling becomes brittle", s: "Training programmes target generic skills. The actual reskilling unit &mdash; encoded, role-specific judgment &mdash; is invisible and untransferable.", c: GOLD, n: "02" },
+            { t: "Reskilling becomes brittle", s: "Training programmes target generic skills. The actual reskilling unit , encoded, role-specific judgment , is invisible and untransferable.", c: GOLD, n: "02" },
             { t: "Inequality compounds", s: "Whoever owns the model + the context wins twice. Workers who only supply labour to refine it absorb the downside without the upside.", c: PURPLE, n: "03" },
           ].map(p => (
             <div key={p.t} className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${p.c} / 0.4)`, background: `hsl(${p.c} / 0.05)` }}>
@@ -305,7 +305,7 @@ function S04Problem() {
 
         <div className="mt-7 rounded-xl border px-6 py-4 max-w-[1700px]" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
           <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-            <span className="font-bold">What good looks like.</span> The unit that needs to become portable is not the CV and not the model &mdash; it is the <span className="font-semibold" style={{ color: `hsl(${GREEN})` }}>encoded judgment graph</span>: playbooks, skill-agents, decision rationale, and outcome telemetry, signed to the individual. That object does not exist today. We build it.
+            <span className="font-bold">What good looks like.</span> The unit that needs to become portable is not the CV and not the model , it is the <span className="font-semibold" style={{ color: `hsl(${GREEN})` }}>encoded judgment graph</span>: playbooks, skill-agents, decision rationale, and outcome telemetry, signed to the individual. That object does not exist today. We build it.
           </p>
         </div>
       </div>
@@ -316,7 +316,7 @@ function S04Problem() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 05 — THE UNIT OF IMPACT: PORTABLE CONTEXT BUNDLE
+// 05 , THE UNIT OF IMPACT: PORTABLE CONTEXT BUNDLE
 // ═════════════════════════════════════════════════════════════════════════════
 function S05Bundle() {
   return (
@@ -330,7 +330,7 @@ function S05Bundle() {
           One <span style={{ color: `hsl(${GREEN})` }}>Portable Context Bundle</span> = one human&apos;s encoded judgment, signed and carried.
         </h2>
         <p className="mb-8" style={{ fontSize: 19, color: MUTED, lineHeight: 1.45, maxWidth: 1600 }}>
-          The bundle is the smallest object that satisfies all five IMP dimensions. It is what we count, what we measure, and what we attribute outcomes to. Mechanically it is the same artefact described in the Tech DD deck (Slide 15) &mdash; here, it is reframed as the unit of impact.
+          The bundle is the smallest object that satisfies all five IMP dimensions. It is what we count, what we measure, and what we attribute outcomes to. Mechanically it is the same artefact described in the Tech DD deck (Slide 15) , here, it is reframed as the unit of impact.
         </p>
 
         <div className="grid grid-cols-[1.5fr_1fr] gap-8 items-start">
@@ -410,7 +410,7 @@ function S05Bundle() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 06 — THEORY OF CHANGE
+// 06 , THEORY OF CHANGE
 // ═════════════════════════════════════════════════════════════════════════════
 function S06ToC() {
   const cols = [
@@ -428,10 +428,10 @@ function S06ToC() {
       <div className="relative z-10">
         <Tag label="Theory of Change" />
         <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          From <span style={{ color: `hsl(${ACCENT})` }}>captured judgment</span> to <span style={{ color: `hsl(${GREEN})` }}>retained agency</span> &mdash; the causal chain, made explicit.
+          From <span style={{ color: `hsl(${ACCENT})` }}>captured judgment</span> to <span style={{ color: `hsl(${GREEN})` }}>retained agency</span> , the causal chain, made explicit.
         </h2>
         <p className="mb-8" style={{ fontSize: 19, color: MUTED, lineHeight: 1.45, maxWidth: 1600 }}>
-          A theory of change is the contract between mechanism and impact. Each arrow is a falsifiable claim, and each box is something we can count. If any link breaks, the impact claim breaks &mdash; and we say so.
+          A theory of change is the contract between mechanism and impact. Each arrow is a falsifiable claim, and each box is something we can count. If any link breaks, the impact claim breaks , and we say so.
         </p>
 
         <div className="grid grid-cols-5 gap-3 max-w-[1750px]">
@@ -457,7 +457,7 @@ function S06ToC() {
 
         <div className="mt-7 grid grid-cols-3 gap-4 max-w-[1750px]">
           {[
-            { t: "Falsifiable",  s: "Each arrow is a metric. If bundle-holders do not show wage/re-employment lift vs. controls within 18 months, the chain fails &mdash; we report it." },
+            { t: "Falsifiable",  s: "Each arrow is a metric. If bundle-holders do not show wage/re-employment lift vs. controls within 18 months, the chain fails , we report it." },
             { t: "Attributable", s: "Outcomes attach to a specific bundle, not to LIZA in aggregate. Easy to verify, hard to game." },
             { t: "Comparable",   s: "Schema is open. Other vendors, regulators, and researchers can replicate measurement on their own data." },
           ].map(c => (
@@ -474,7 +474,7 @@ function S06ToC() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 07 — MEASUREMENT
+// 07 , MEASUREMENT
 // ═════════════════════════════════════════════════════════════════════════════
 function S07Measurement() {
   const metrics = [
@@ -500,12 +500,12 @@ function S07Measurement() {
       <PageNumber n={7} total={TOTAL} />
       <PhaseChip phase="Phase 3 · Measurement" color={GREEN} />
       <div className="relative z-10">
-        <Tag label="What We Measure &mdash; Per Bundle" />
+        <Tag label="What We Measure , Per Bundle" />
         <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
           The metric stack the committee can <span style={{ color: `hsl(${GREEN})` }}>audit, replicate, and benchmark</span>.
         </h2>
         <p className="mb-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.45, maxWidth: 1600 }}>
-          Three layers: what we ship (outputs), what changes for the worker (outcomes), and what changes for the labour market (impact). Each row names the metric, its definition, and the source &mdash; so an independent assessor can rebuild the number.
+          Three layers: what we ship (outputs), what changes for the worker (outcomes), and what changes for the labour market (impact). Each row names the metric, its definition, and the source , so an independent assessor can rebuild the number.
         </p>
 
         <div className="flex flex-col gap-3 max-w-[1750px]">
@@ -535,7 +535,7 @@ function S07Measurement() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 08 — WEF 2030 ALIGNMENT
+// 08 , WEF 2030 ALIGNMENT
 // ═════════════════════════════════════════════════════════════════════════════
 function S08WEF() {
   const core2030 = [
@@ -549,10 +549,10 @@ function S08WEF() {
   ];
   const exercises = [
     { skill: "Analytical thinking",      how: "Every decision-class event forces an explicit rationale before output is released." },
-    { skill: "Creative thinking",        how: "The system frames the problem; the human supplies the angle &mdash; logged as a contribution." },
+    { skill: "Creative thinking",        how: "The system frames the problem; the human supplies the angle , logged as a contribution." },
     { skill: "AI & big data",            how: "Workers operate the model + the bundle daily; fluency compounds on real work, not synthetic courses." },
     { skill: "Resilience & agility",     how: "Bundle portability removes the &ldquo;starting from zero&rdquo; cost of changing role or employer." },
-    { skill: "Systems thinking",         how: "Playbooks are graphs of inputs, constraints, and outcomes &mdash; the worker reasons in systems by default." },
+    { skill: "Systems thinking",         how: "Playbooks are graphs of inputs, constraints, and outcomes , the worker reasons in systems by default." },
     { skill: "Curiosity & lifelong learning", how: "Every captured judgment is a self-taught lesson the worker re-uses next time. The bundle is a learning record." },
   ];
   return (
@@ -566,7 +566,7 @@ function S08WEF() {
           The bundle exercises the <span style={{ color: `hsl(${GREEN})` }}>same skills the WEF says will define employability in 2030</span>.
         </h2>
         <p className="mb-6" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45, maxWidth: 1600 }}>
-          We did not invent the skill list. WEF surveyed 1,000+ employers across 55 economies. The top-right quadrant &mdash; high importance, rising demand &mdash; is the Core 2030 set. Below: how the bundle exercises each, on real work, every day.
+          We did not invent the skill list. WEF surveyed 1,000+ employers across 55 economies. The top-right quadrant , high importance, rising demand , is the Core 2030 set. Below: how the bundle exercises each, on real work, every day.
         </p>
 
         <div className="grid grid-cols-[1fr_1.2fr] gap-8 items-start">
@@ -611,21 +611,21 @@ function S08WEF() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 09 — SDG ALIGNMENT
+// 09 , SDG ALIGNMENT
 // ═════════════════════════════════════════════════════════════════════════════
 function S09SDG() {
   const sdgs = [
     { n: "SDG 4",  label: "Quality Education",         color: RED,
-      target: "4.4 — substantially increase the number of youth and adults with relevant skills for employment, decent jobs and entrepreneurship.",
-      claim:  "Each bundle is a lifelong, self-owned learning record &mdash; encoded on real work, not in a course. Directly increases the count of adults with relevant, certifiable skills." },
+      target: "4.4 , substantially increase the number of youth and adults with relevant skills for employment, decent jobs and entrepreneurship.",
+      claim:  "Each bundle is a lifelong, self-owned learning record , encoded on real work, not in a course. Directly increases the count of adults with relevant, certifiable skills." },
     { n: "SDG 8",  label: "Decent Work & Economic Growth", color: ACCENT,
-      target: "8.2 / 8.5 — higher productivity through diversification and tech upgrading; full and productive employment and decent work for all.",
+      target: "8.2 / 8.5 , higher productivity through diversification and tech upgrading; full and productive employment and decent work for all.",
       claim:  "Bundles raise individual productivity without displacing the worker, and create a portable economic asset they retain across employers." },
     { n: "SDG 9",  label: "Industry, Innovation & Infra",  color: GOLD,
-      target: "9.5 / 9.b — enhance scientific research, upgrade technological capabilities; support domestic technology development.",
-      claim:  "The bundle schema is open infrastructure: workers, employers, regulators, and researchers operate on the same standard &mdash; without dependency on a single vendor." },
+      target: "9.5 / 9.b , enhance scientific research, upgrade technological capabilities; support domestic technology development.",
+      claim:  "The bundle schema is open infrastructure: workers, employers, regulators, and researchers operate on the same standard , without dependency on a single vendor." },
     { n: "SDG 10", label: "Reduced Inequalities",      color: PURPLE,
-      target: "10.2 / 10.4 — empower and promote the social, economic and political inclusion of all; adopt policies for greater equality.",
+      target: "10.2 / 10.4 , empower and promote the social, economic and political inclusion of all; adopt policies for greater equality.",
       claim:  "Knowledge sovereignty redistributes the gains of AI from model+platform owners back to the workers whose judgment trains and operates them." },
   ];
   return (
@@ -634,9 +634,9 @@ function S09SDG() {
       <PageNumber n={9} total={TOTAL} />
       <PhaseChip phase="Phase 4 · Alignment" color={GREEN} />
       <div className="relative z-10">
-        <Tag label="UN SDG Alignment &mdash; with explicit targets and claims" />
+        <Tag label="UN SDG Alignment , with explicit targets and claims" />
         <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Four SDGs, named by target sub-clause &mdash; <span style={{ color: `hsl(${GREEN})` }}>not by colour</span>.
+          Four SDGs, named by target sub-clause , <span style={{ color: `hsl(${GREEN})` }}>not by colour</span>.
         </h2>
         <p className="mb-7" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45, maxWidth: 1600 }}>
           Putting an SDG logo on a deck is rainbow-washing. We name the specific UN sub-target, the contribution claim, and how it is measured. The committee can challenge each line independently.
@@ -668,7 +668,7 @@ function S09SDG() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 10 — ADDITIONALITY & COUNTERFACTUAL
+// 10 , ADDITIONALITY & COUNTERFACTUAL
 // ═════════════════════════════════════════════════════════════════════════════
 function S10Additionality() {
   const rows = [
@@ -684,7 +684,7 @@ function S10Additionality() {
     { cf: "Public reskilling programmes (govt, NGO)",
       who: "Generic curricula; no real-work signal.",
       gap: "Teaches skill names, not encoded judgment. Drop-off > 50%; outcome lag > 24 months.", color: ACCENT },
-    { cf: "LIZA — Portable Context Bundle",
+    { cf: "LIZA , Portable Context Bundle",
       who: "Worker owns the bundle; employer rents access; standard is open.",
       gap: "Closes all four gaps. This is the additional contribution.", color: GREEN, us: true },
   ];
@@ -694,9 +694,9 @@ function S10Additionality() {
       <PageNumber n={10} total={TOTAL} />
       <PhaseChip phase="Phase 5 · Additionality" color={GREEN} />
       <div className="relative z-10">
-        <Tag label="Additionality &mdash; Would This Happen Without Us?" />
+        <Tag label="Additionality , Would This Happen Without Us?" />
         <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Counterfactual scan &mdash; <span style={{ color: `hsl(${GREEN})` }}>no other actor in the stack closes the portability gap</span>.
+          Counterfactual scan , <span style={{ color: `hsl(${GREEN})` }}>no other actor in the stack closes the portability gap</span>.
         </h2>
         <p className="mb-6" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45, maxWidth: 1600 }}>
           Impact-investor diligence rejects claims that &ldquo;the market would have done it anyway&rdquo;. Here is the alternative-actor map: who else could produce a Portable Context Bundle, and why none of them will.
@@ -728,7 +728,7 @@ function S10Additionality() {
               <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>Why incumbents will not build this</p>
             </div>
             <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>
-              A person-owned, exportable bundle directly attacks the business model of every actor in rows 1&ndash;3. The lock-in is the moat. Building portability is value-destructive for them.
+              A person-owned, exportable bundle directly attacks the business model of every actor in rows 1-3. The lock-in is the moat. Building portability is value-destructive for them.
             </p>
           </div>
           <div className="rounded-xl border-2 px-5 py-4" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.05)` }}>
@@ -737,7 +737,7 @@ function S10Additionality() {
               <p className="font-bold" style={{ fontSize: 17, color: TEXT }}>Why we can</p>
             </div>
             <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>
-              Our commercial model (Tech DD, Slide 11) is metered on decision-class value &mdash; not on captive context. Portability is aligned with our economics, not against them.
+              Our commercial model (Tech DD, Slide 11) is metered on decision-class value , not on captive context. Portability is aligned with our economics, not against them.
             </p>
           </div>
         </div>
@@ -748,7 +748,7 @@ function S10Additionality() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 11 — DECISION (two-door close)
+// 11 , DECISION (two-door close)
 // ═════════════════════════════════════════════════════════════════════════════
 function S11Decision() {
   return (
@@ -768,7 +768,7 @@ function S11Decision() {
 
         <div className="grid grid-cols-3 gap-6 max-w-[1700px]">
           {[
-            { i: Target, t: "Outcome",        s: "Workers retain economic agency as AI absorbs execution &mdash; via owned, portable, encoded judgment.", c: GREEN },
+            { i: Target, t: "Outcome",        s: "Workers retain economic agency as AI absorbs execution , via owned, portable, encoded judgment.", c: GREEN },
             { i: Compass, t: "Mechanism",     s: "The Portable Context Bundle. Person-signed. Standards-based. Zero lock-in. Auditable.", c: ACCENT },
             { i: LineChart, t: "Measurement", s: "IMP-aligned, IRIS+ mapped, falsifiable Theory of Change. Independent assessor before Series A.", c: GOLD },
           ].map(c => (
