@@ -2430,6 +2430,7 @@ const SLIDES = [
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
   { id: "propagation", title: "Artifact Graph", component: <S06Propagation /> },
   { id: "scale-usp", title: "Scale & USP", component: <S07ScaleUSP /> },
+  { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
   { id: "metering", title: "Pricing Inversion + Metering", component: <S08PricingMetering /> },
   { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
   { id: "unit-economics", title: "Unit Economics & Sustainability", component: <S10UnitEconomics /> },
