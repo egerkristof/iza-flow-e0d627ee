@@ -154,7 +154,6 @@ function S01Cover() {
           ))}
         </div>
       </div>
-      <Footer text="Prepared for a leading Middle East insurance group · Internal working draft · Not for distribution." dark />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -200,7 +199,6 @@ function S02Conversations() {
           </div>
         </div>
       </div>
-      <Footer text="The buyer's words, not ours. If three of these are familiar, the rest of this brief is for you." />
       <SlideBar from={ACCENT} to={GREEN} />
     </div>
   );
@@ -252,7 +250,6 @@ function S03Pressure() {
           The carriers that move first will be the ones that have a <span className="font-semibold">defensible answer</span>, not the ones that have the most AI.
         </p>
       </div>
-      <Footer text="Sources: Estate of Gene B. Lokken v. UnitedHealth (D. Minn. 23-CV-3514) · Nippon Life v. OpenAI · Grant Thornton UAE (Nov 2025) · Tawuniya InsurAI Demo Day (May 2025) · CBUAE." />
       <SlideBar from={RED} to={ACCENT} />
     </div>
   );
@@ -308,7 +305,6 @@ function S04UC1() {
           ))}
         </div>
       </div>
-      <Footer text="Pull signal: every CRO in the GCC is being asked about Lokken right now. This is the cleanest first wedge." />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -368,7 +364,6 @@ function S05UC2() {
           </div>
         </div>
       </div>
-      <Footer text="Pull signal: every Chief Underwriter in the region remembers a market shock where consistency broke. This is the second clean wedge." />
       <SlideBar from={ACCENT} to={GREEN} />
     </div>
   );
@@ -419,7 +414,6 @@ function S06UC3() {
           </p>
         </div>
       </div>
-      <Footer text="Pull signal: every SIU lead in the region is one or two retirements away from a measurable detection drop." />
       <SlideBar from={PURPLE} to={GREEN} />
     </div>
   );
@@ -471,7 +465,6 @@ function S07UC4() {
           Result: Arabic service AI you can put on the front page of the app, with a paper trail your CRO and the regulator can both read.
         </p>
       </div>
-      <Footer text="Pull signal: every Gulf carrier wants Arabic AI on the customer front line. None want to be the next headline." />
       <SlideBar from={GOLD} to={GREEN} />
     </div>
   );
@@ -517,7 +510,6 @@ function S08Matrix() {
           We do not pick the wedge. <span className="font-semibold">You do.</span> Whichever of these four lands you in front of your board with a defensible answer first is the right place to start.
         </p>
       </div>
-      <Footer text="The same execution pattern underneath. Different surface per role, per line of business, per board agenda." />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -561,7 +553,6 @@ function S09ThirtyDays() {
           One pod. Thirty days. A readout your CRO can take to the board. If the numbers do not move, we do not come back.
         </p>
       </div>
-      <Footer text="The first thirty days are about one defensible win. The next conversation is about whether to scale it." />
       <SlideBar from={GOLD} to={GREEN} />
     </div>
   );
@@ -619,7 +610,6 @@ function S10UnderHood() {
           Next step: 60 minutes with two of your line-of-business owners. We leave with a chosen use case and a 30-day plan, or we do not come back.
         </p>
       </div>
-      <Footer text="lizaos.ai · Working brief for insurance leadership · Internal draft" dark />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
