@@ -1037,7 +1037,7 @@ function S07bUnique() {
             className="absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 px-6 py-4 text-center"
             style={{
               left: "50%", top: "50%",
-              width: 360,
+              width: 560,
               borderColor: `hsl(${GREEN} / 0.7)`,
               background: "white",
               boxShadow: `0 12px 36px hsl(${GREEN} / 0.18), 0 0 0 6px hsl(${GREEN} / 0.06)`,
