@@ -887,6 +887,167 @@ function S08PricingMetering() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 07b — WHAT MAKES US UNIQUE · THE MOMENT OF WORK
+// ═════════════════════════════════════════════════════════════════════════════
+function S07bUnique() {
+  const inputs = [
+    {
+      pos: "top",
+      icon: Compass,
+      color: ACCENT,
+      label: "From above · Strategy & Constraints",
+      detail: "Mandates, OKRs, policy, risk and compliance guardrails cascade down so every decision inherits intent.",
+      competitors: "Sits in slide decks and BI tools. Never reaches the agent at runtime.",
+    },
+    {
+      pos: "bottom",
+      icon: Gauge,
+      color: GREEN,
+      label: "From below · KPIs, drifts & anomalies",
+      detail: "Live operational signals — KPI deltas, drift, anomalies, incidents — rise into the moment of work as fresh context.",
+      competitors: "Lives in dashboards no one reads while the work is happening.",
+    },
+    {
+      pos: "left",
+      icon: Globe,
+      color: GOLD,
+      label: "From outside · Market & best practice",
+      detail: "External signals, competitor moves, regulatory change, and the latest reference playbooks for the vertical.",
+      competitors: "Static RAG snapshots. No notion of which best practice applies to this decision class.",
+    },
+    {
+      pos: "right",
+      icon: Package,
+      color: PURPLE,
+      label: "From inside · Artifacts & current state",
+      detail: "The artifacts already in flight — specs, briefs, models, prior decisions — and the dependencies between them.",
+      competitors: "Files in silos. No semantic link between the WHAT (artifacts) and the HOW (playbooks).",
+    },
+  ];
+
+  const competitors = [
+    { l: "Copilot / Gemini / ChatGPT", s: "Foundation chat. Black-box graph. No governance, no organisational state.", icon: MessageSquare },
+    { l: "Glean / Guru", s: "Enterprise search. Retrieves documents. Does not govern the decision.", icon: Database },
+    { l: "Cognition / Devin · agent platforms", s: "Strong agent builders. No unified WHAT × HOW model, no audit container.", icon: Cpu },
+    { l: "Cognee / Mem0 · autonomous KGs", s: "Organic ontology. High drift risk, weak audit, no human approval lifecycle.", icon: Network },
+    { l: "Workday / Salesforce Einstein", s: "Rigid enterprise ontology. Strong governance, but cannot adapt to new work.", icon: Lock },
+  ];
+
+  // Geometry for the radial diagram (absolute % positions within the canvas).
+  const cx = 50, cy = 50;
+  const arrowColor = (c: string) => `hsl(${c})`;
+
+  return (
+    <div className="w-full h-full relative px-20 pt-24 pb-20" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={8} total={TOTAL} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
+      <div className="relative z-10">
+        <Tag label="What makes us unique · The moment of work" color={GREEN} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          Every other tool builds one slice. <span style={{ color: `hsl(${GREEN})` }}>We wrap the decision moment from all four sides — and govern it.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1700, lineHeight: 1.4 }}>
+          In the future agentic organisation, value is created at one point: the moment an operator (human or agent) makes a decision. Strategy from above, KPIs from below, market from outside, artifacts from inside — all four must meet there, under audit. That is the AI-native operating system.
+        </p>
+
+        <div className="grid grid-cols-[1.45fr_1fr] gap-10 items-start">
+          {/* LEFT — Radial diagram */}
+          <div className="rounded-2xl border-2 relative" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 620 }}>
+            {/* Four arrow guides */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <defs>
+                {inputs.map((i, idx) => (
+                  <marker key={idx} id={`arr-${idx}`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 z" fill={arrowColor(i.color)} />
+                  </marker>
+                ))}
+              </defs>
+              {/* Top → center */}
+              <line x1={cx} y1={18} x2={cx} y2={38} stroke={arrowColor(ACCENT)} strokeWidth="0.6" markerEnd="url(#arr-0)" />
+              {/* Bottom → center */}
+              <line x1={cx} y1={82} x2={cx} y2={62} stroke={arrowColor(GREEN)} strokeWidth="0.6" markerEnd="url(#arr-1)" />
+              {/* Left → center */}
+              <line x1={18} y1={cy} x2={38} y2={cy} stroke={arrowColor(GOLD)} strokeWidth="0.6" markerEnd="url(#arr-2)" />
+              {/* Right → center */}
+              <line x1={82} y1={cy} x2={62} y2={cy} stroke={arrowColor(PURPLE)} strokeWidth="0.6" markerEnd="url(#arr-3)" />
+            </svg>
+
+            {/* Center — The decision moment */}
+            <div className="absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 px-7 py-5 text-center shadow-lg"
+              style={{ left: `${cx}%`, top: `${cy}%`, borderColor: `hsl(${GREEN} / 0.6)`, background: "white", maxWidth: 320 }}>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <UserCheck size={22} style={{ color: `hsl(${GREEN})` }} />
+                <Sparkles size={20} style={{ color: `hsl(${GREEN})` }} />
+              </div>
+              <p className="font-bold leading-tight" style={{ fontSize: 19, color: TEXT }}>The moment of work</p>
+              <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3, marginTop: 4 }}>
+                Operator + agent, executing under a locked Playbook. Every input governed. Every output audited.
+              </p>
+              <div className="mt-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded border" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.08)` }}>
+                <ShieldCheck size={12} style={{ color: `hsl(${GREEN})` }} />
+                <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>WHAT × HOW · audited</span>
+              </div>
+            </div>
+
+            {/* Four input cards */}
+            {inputs.map((i, idx) => {
+              const Icon = i.icon;
+              const style: React.CSSProperties = { borderColor: `hsl(${i.color} / 0.5)`, background: "white" };
+              const posStyle: React.CSSProperties =
+                i.pos === "top" ? { left: "50%", top: "2%", transform: "translateX(-50%)" } :
+                i.pos === "bottom" ? { left: "50%", bottom: "2%", transform: "translateX(-50%)" } :
+                i.pos === "left" ? { left: "2%", top: "50%", transform: "translateY(-50%)" } :
+                { right: "2%", top: "50%", transform: "translateY(-50%)" };
+              return (
+                <div key={i.pos} className="absolute rounded-xl border-2 px-4 py-3"
+                  style={{ ...style, ...posStyle, width: 280 }}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Icon size={18} style={{ color: `hsl(${i.color})` }} />
+                    <p className="font-bold" style={{ fontSize: 14, color: TEXT, lineHeight: 1.2 }}>{i.label}</p>
+                  </div>
+                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>{i.detail}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* RIGHT — Competitor coverage strip */}
+          <div className="flex flex-col gap-3">
+            <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: SUBTLE }}>Where competitors land</p>
+            {competitors.map(c => {
+              const Icon = c.icon;
+              return (
+                <div key={c.l} className="rounded-xl border p-4 flex gap-3 items-start" style={{ borderColor: CHROME_BORDER, background: "white" }}>
+                  <div className="rounded-lg p-2" style={{ background: `hsl(${RED} / 0.06)`, border: `1px solid hsl(${RED} / 0.2)` }}>
+                    <Icon size={18} style={{ color: `hsl(${RED})` }} />
+                  </div>
+                  <div>
+                    <p className="font-semibold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.2 }}>{c.l}</p>
+                    <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35, marginTop: 2 }}>{c.s}</p>
+                  </div>
+                </div>
+              );
+            })}
+            <div className="rounded-xl border-2 p-4 mt-1" style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <div className="flex items-center gap-2 mb-1">
+                <CheckCircle2 size={18} style={{ color: `hsl(${GREEN})` }} />
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT }}>LIZA · the unifier</p>
+              </div>
+              <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>
+                One organisational graph that learns the domain ontology under human approval, fuses WHAT × HOW, and pipes all four context streams into the decision moment — inside an audit & compliance container.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer text="Speaker note: competitors build one slice — search, agents, KG, or rigid ontology. The unique surface is the governed convergence at the moment of work." />
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 09 — DECISION-CLASS CLASSIFIER (How tiering happens technically)
 // ═════════════════════════════════════════════════════════════════════════════
 function S08bClassifier() {
