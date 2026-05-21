@@ -533,10 +533,10 @@ function S09ThirtyDays() {
       <div className="relative z-10">
         <Tag label="The 30-day shape" color={GOLD} />
         <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Both sides put skin in the game. <span style={{ color: `hsl(${GREEN})` }}>Signed at day zero,</span> not negotiated at day thirty.
+          A shared engagement, <span style={{ color: `hsl(${GREEN})` }}>agreed together at day zero</span> so the readout has a clear home on day thirty.
         </h2>
         <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1620 }}>
-          One pod. Thirty days. A measured readout. The mechanics below exist because we have seen too many regional pilots succeed and then quietly disappear into next year's budget cycle. We will not run it that way.
+          One pod, one use case, thirty days, a measured readout. The terms below are written down up front out of respect for everyone's time. They give the team room to deliver, and they give your leadership a clean decision at the end.
         </p>
 
         <div className="space-y-3 max-w-[1750px] mb-8">
@@ -551,29 +551,29 @@ function S09ThirtyDays() {
 
         <div className="grid grid-cols-2 gap-5 max-w-[1750px]">
           <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${ACCENT} / 0.45)`, background: `hsl(${ACCENT} / 0.05)` }}>
-            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>What you commit, in writing</p>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>From your side, in the engagement letter</p>
             <ul className="space-y-2" style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              <li>• A <span className="font-bold">named C-level sponsor</span> (CRO, CUO or COO) accountable for the readout.</li>
-              <li>• A <span className="font-bold">paid pilot fee</span>. Symbolic in budget terms, real enough that the program has an owner internally.</li>
-              <li>• The <span className="font-bold">pod, the files, the baseline metrics</span> on day one. No moving the goalposts at day 28.</li>
-              <li>• A <span className="font-bold">pre-signed scale path</span>: if the success bar is hit, the next 90 days and the commercial shape are already agreed. No re-procurement.</li>
-              <li>• A <span className="font-bold">board-level review slot</span> booked for day 32. Success or no-go, the conversation happens.</li>
+              <li>• A <span className="font-bold">named executive sponsor</span> (CRO, CUO or COO) who receives the day-30 readout in person.</li>
+              <li>• A <span className="font-bold">modest engagement fee</span>, set so the work sits inside an existing budget line and has a clear internal owner from day one.</li>
+              <li>• The <span className="font-bold">pod, the files and the baseline metrics</span> confirmed in the first week, so the team can focus on the work, not on definitions.</li>
+              <li>• An <span className="font-bold">agreed scale path</span> outlined in advance, so that if the success bar is met, the next phase can begin without a fresh procurement cycle.</li>
+              <li>• A <span className="font-bold">leadership review slot</span> reserved around day 32, regardless of outcome, so the conversation reaches the right room either way.</li>
             </ul>
           </div>
           <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.05)` }}>
-            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What we commit, in writing</p>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>From our side, in the same document</p>
             <ul className="space-y-2" style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              <li>• A <span className="font-bold">named senior lead</span> on site, not a junior delivery team.</li>
-              <li>• The <span className="font-bold">success bar agreed up front</span>, in your CRO's language and metrics, not ours.</li>
-              <li>• <span className="font-bold">Fee fully credited</span> against the scale-up contract if the bar is hit. Fully refunded if it is not.</li>
-              <li>• <span className="font-bold">Right to walk</span> if the pod, sponsor or baseline change mid-pilot. We will not deliver a pilot we cannot defend.</li>
-              <li>• <span className="font-bold">Exclusivity window</span> on the chosen use case in the Gulf, capped at 90 days, so the first carrier in is genuinely first.</li>
+              <li>• A <span className="font-bold">named senior lead</span> present on site for the engagement, supported by the team behind them.</li>
+              <li>• The <span className="font-bold">success bar drafted in your language</span>, using your CRO's metrics, and signed off before any work begins.</li>
+              <li>• The <span className="font-bold">engagement fee credited in full</span> against the next phase if the bar is met, and <span className="font-bold">fully refunded</span> if it is not.</li>
+              <li>• A <span className="font-bold">discreet regional exclusivity window</span> on the chosen use case, offered to the first carrier we begin with in the Gulf.</li>
+              <li>• <span className="font-bold">Full confidentiality</span> on the work, the readout, and the firm's name, for as long as you prefer.</li>
             </ul>
           </div>
         </div>
 
-        <p className="mt-6 max-w-[1750px]" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
-          The point is simple. Day-30 success has to land somewhere. <span className="font-semibold">These mechanics make sure it does.</span>
+        <p className="mt-6 max-w-[1750px]" style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>
+          None of this is unusual for an engagement of this kind. It is written down at the start so that the work can be judged on its merits at the end.
         </p>
       </div>
       <SlideBar from={GOLD} to={GREEN} />
