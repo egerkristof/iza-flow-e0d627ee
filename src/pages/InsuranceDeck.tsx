@@ -580,7 +580,6 @@ function S09ThirtyDays() {
               <li>• A <span className="font-bold">named senior lead</span> present on site for the engagement, supported by the team behind them.</li>
               <li>• The <span className="font-bold">success bar drafted in your language</span>, using your CRO's metrics, and signed off before any work begins.</li>
               <li>• The <span className="font-bold">engagement fee credited in full</span> against the next phase if the bar is met, and <span className="font-bold">fully refunded</span> if it is not.</li>
-              <li>• A <span className="font-bold">discreet regional exclusivity window</span> on the chosen use case, offered to the first carrier we begin with in the Gulf.</li>
               <li>• <span className="font-bold">Full confidentiality</span> on the work, the readout, and the firm's name, for as long as you prefer.</li>
             </ul>
           </div>
