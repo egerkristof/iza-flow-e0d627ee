@@ -119,7 +119,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 10;
+const TOTAL = 11;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // 01 · COVER — neutral, no category language, no LIZA name in the headline
