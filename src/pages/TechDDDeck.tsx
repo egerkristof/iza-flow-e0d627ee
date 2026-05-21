@@ -1037,7 +1037,7 @@ function S07bUnique() {
             className="absolute -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 px-6 py-4 text-center"
             style={{
               left: "50%", top: "50%",
-              width: 360,
+              width: 560,
               borderColor: `hsl(${GREEN} / 0.7)`,
               background: "white",
               boxShadow: `0 12px 36px hsl(${GREEN} / 0.18), 0 0 0 6px hsl(${GREEN} / 0.06)`,
@@ -1058,7 +1058,7 @@ function S07bUnique() {
                 Audit & Compliance Container
               </span>
             </div>
-            <div className="grid grid-cols-1 gap-1 text-left">
+            <div className="grid grid-cols-2 gap-1.5 text-left">
               {[
                 { k: "Token & Cost Audit", v: "Prompt envelope, model routing, COGS per call" },
                 { k: "Best Practice Audit", v: "Output conforms to the locked Playbook & standard" },
