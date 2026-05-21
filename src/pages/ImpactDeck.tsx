@@ -888,7 +888,7 @@ export default function ImpactDeck() {
             <p className="text-center" style={{ fontSize: 14, color: MUTED }}>for the best viewing experience</p>
           </div>
         )}
-        <ScaledSlide>{slide.component}</ScaledSlide>
+        <ScaledSlide isCover={slide.id === "cover"}>{slide.component}</ScaledSlide>
         {!isPortrait && (
           <>
             <button onClick={(e) => { e.stopPropagation(); prev(); showMobileControls(); }} disabled={current === 0}
@@ -931,7 +931,7 @@ export default function ImpactDeck() {
   if (isFullscreen) {
     return (
       <div className="fixed inset-0 bg-white z-[9999]" style={{ cursor: showNav ? "default" : "none" }}>
-        <ScaledSlide>{slide.component}</ScaledSlide>
+        <ScaledSlide isCover={slide.id === "cover"}>{slide.component}</ScaledSlide>
         {showNav && (
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 px-6 py-3 rounded-full shadow-lg"
             style={{ background: "hsl(0 0% 100% / 0.95)", border: `1px solid ${CHROME_BORDER}` }}>
@@ -987,7 +987,7 @@ export default function ImpactDeck() {
                 i === current ? "border-primary" : "border-transparent opacity-60 hover:opacity-90"
               )}>
               <div className="w-full" style={{ aspectRatio: "16/9", pointerEvents: "none" }}>
-                <ScaledSlide>{s.component}</ScaledSlide>
+                <ScaledSlide isCover={s.id === "cover"}>{s.component}</ScaledSlide>
               </div>
               <p className="text-[10px] px-1.5 py-1" style={{ color: SUBTLE }}>
                 {String(i + 1).padStart(2, "0")} {s.title}
@@ -1006,7 +1006,7 @@ export default function ImpactDeck() {
                       i === current ? "border-primary" : "border-transparent hover:border-border"
                     )}>
                     <div className="w-full" style={{ aspectRatio: "16/9" }}>
-                      <ScaledSlide>{s.component}</ScaledSlide>
+                      <ScaledSlide isCover={s.id === "cover"}>{s.component}</ScaledSlide>
                     </div>
                     <p className="text-xs px-2 pb-2" style={{ color: MUTED }}>
                       <span className="font-mono">{String(i + 1).padStart(2, "0")}</span> · {s.title}
@@ -1019,7 +1019,7 @@ export default function ImpactDeck() {
             <div className="flex-1 overflow-hidden p-6">
               <div className="w-full h-full rounded-2xl overflow-hidden shadow-lg border"
                 style={{ borderColor: CHROME_BORDER }}>
-                <ScaledSlide>{slide.component}</ScaledSlide>
+                <ScaledSlide isCover={slide.id === "cover"}>{slide.component}</ScaledSlide>
               </div>
             </div>
           )}
