@@ -542,7 +542,7 @@ function S09ThirtyDays() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={9} total={TOTAL} />
+      <PageNumber n={10} total={TOTAL} />
       <PhaseChip phase="What you'd actually buy" color={GOLD} />
       <div className="relative z-10">
         <Tag label="The 30-day shape" color={GOLD} />
@@ -598,7 +598,7 @@ function S10UnderHood() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: DARK_BG }}>
       <DarkGrid />
-      <PageNumber n={10} total={TOTAL} dark />
+      <PageNumber n={11} total={TOTAL} dark />
       <PhaseChip phase="Only if you ask" color={ACCENT} />
       <div className="relative z-10">
         <p className="font-semibold tracking-[0.3em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>Under the hood · one slide · only if you want it</p>
