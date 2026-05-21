@@ -154,7 +154,6 @@ function S01Cover() {
           ))}
         </div>
       </div>
-      <Footer text="Prepared for a leading Middle East insurance group · Internal working draft · Not for distribution." dark />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -200,7 +199,6 @@ function S02Conversations() {
           </div>
         </div>
       </div>
-      <Footer text="The buyer's words, not ours. If three of these are familiar, the rest of this brief is for you." />
       <SlideBar from={ACCENT} to={GREEN} />
     </div>
   );
@@ -252,7 +250,6 @@ function S03Pressure() {
           The carriers that move first will be the ones that have a <span className="font-semibold">defensible answer</span>, not the ones that have the most AI.
         </p>
       </div>
-      <Footer text="Sources: Estate of Gene B. Lokken v. UnitedHealth (D. Minn. 23-CV-3514) · Nippon Life v. OpenAI · Grant Thornton UAE (Nov 2025) · Tawuniya InsurAI Demo Day (May 2025) · CBUAE." />
       <SlideBar from={RED} to={ACCENT} />
     </div>
   );
@@ -308,7 +305,6 @@ function S04UC1() {
           ))}
         </div>
       </div>
-      <Footer text="Pull signal: every CRO in the GCC is being asked about Lokken right now. This is the cleanest first wedge." />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -368,7 +364,6 @@ function S05UC2() {
           </div>
         </div>
       </div>
-      <Footer text="Pull signal: every Chief Underwriter in the region remembers a market shock where consistency broke. This is the second clean wedge." />
       <SlideBar from={ACCENT} to={GREEN} />
     </div>
   );
@@ -419,7 +414,6 @@ function S06UC3() {
           </p>
         </div>
       </div>
-      <Footer text="Pull signal: every SIU lead in the region is one or two retirements away from a measurable detection drop." />
       <SlideBar from={PURPLE} to={GREEN} />
     </div>
   );
@@ -471,7 +465,6 @@ function S07UC4() {
           Result: Arabic service AI you can put on the front page of the app, with a paper trail your CRO and the regulator can both read.
         </p>
       </div>
-      <Footer text="Pull signal: every Gulf carrier wants Arabic AI on the customer front line. None want to be the next headline." />
       <SlideBar from={GOLD} to={GREEN} />
     </div>
   );
@@ -517,7 +510,6 @@ function S08Matrix() {
           We do not pick the wedge. <span className="font-semibold">You do.</span> Whichever of these four lands you in front of your board with a defensible answer first is the right place to start.
         </p>
       </div>
-      <Footer text="The same execution pattern underneath. Different surface per role, per line of business, per board agenda." />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -540,28 +532,50 @@ function S09ThirtyDays() {
       <PhaseChip phase="What you'd actually buy" color={GOLD} />
       <div className="relative z-10">
         <Tag label="The 30-day shape" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Not a platform commitment. <span style={{ color: `hsl(${GREEN})` }}>A 30-day proof on one workflow,</span> with a measured readout.
+        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          Both sides put skin in the game. <span style={{ color: `hsl(${GREEN})` }}>Signed at day zero,</span> not negotiated at day thirty.
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          We do not start with an enterprise rollout. We start with one pod, one use case, and the metrics you would defend internally anyway.
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1620 }}>
+          One pod. Thirty days. A measured readout. The mechanics below exist because we have seen too many regional pilots succeed and then quietly disappear into next year's budget cycle. We will not run it that way.
         </p>
 
-        <div className="space-y-4 max-w-[1750px]">
+        <div className="space-y-3 max-w-[1750px] mb-8">
           {days.map(d => (
-            <div key={d.d} className="rounded-xl border p-6 grid grid-cols-[160px_1fr_2.4fr] gap-6 items-center" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-              <span className="font-mono font-bold" style={{ fontSize: 20, color: `hsl(${GREEN})` }}>{d.d}</span>
-              <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>{d.t}</p>
-              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>{d.s}</p>
+            <div key={d.d} className="rounded-xl border p-4 grid grid-cols-[140px_1fr_2.4fr] gap-5 items-center" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <span className="font-mono font-bold" style={{ fontSize: 17, color: `hsl(${GREEN})` }}>{d.d}</span>
+              <p className="font-bold" style={{ fontSize: 19, color: TEXT }}>{d.t}</p>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{d.s}</p>
             </div>
           ))}
         </div>
 
-        <p className="mt-8 max-w-[1750px]" style={{ fontSize: 22, color: TEXT, lineHeight: 1.45 }}>
-          One pod. Thirty days. A readout your CRO can take to the board. If the numbers do not move, we do not come back.
+        <div className="grid grid-cols-2 gap-5 max-w-[1750px]">
+          <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${ACCENT} / 0.45)`, background: `hsl(${ACCENT} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>What you commit, in writing</p>
+            <ul className="space-y-2" style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              <li>• A <span className="font-bold">named C-level sponsor</span> (CRO, CUO or COO) accountable for the readout.</li>
+              <li>• A <span className="font-bold">paid pilot fee</span>. Symbolic in budget terms, real enough that the program has an owner internally.</li>
+              <li>• The <span className="font-bold">pod, the files, the baseline metrics</span> on day one. No moving the goalposts at day 28.</li>
+              <li>• A <span className="font-bold">pre-signed scale path</span>: if the success bar is hit, the next 90 days and the commercial shape are already agreed. No re-procurement.</li>
+              <li>• A <span className="font-bold">board-level review slot</span> booked for day 32. Success or no-go, the conversation happens.</li>
+            </ul>
+          </div>
+          <div className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What we commit, in writing</p>
+            <ul className="space-y-2" style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              <li>• A <span className="font-bold">named senior lead</span> on site, not a junior delivery team.</li>
+              <li>• The <span className="font-bold">success bar agreed up front</span>, in your CRO's language and metrics, not ours.</li>
+              <li>• <span className="font-bold">Fee fully credited</span> against the scale-up contract if the bar is hit. Fully refunded if it is not.</li>
+              <li>• <span className="font-bold">Right to walk</span> if the pod, sponsor or baseline change mid-pilot. We will not deliver a pilot we cannot defend.</li>
+              <li>• <span className="font-bold">Exclusivity window</span> on the chosen use case in the Gulf, capped at 90 days, so the first carrier in is genuinely first.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p className="mt-6 max-w-[1750px]" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+          The point is simple. Day-30 success has to land somewhere. <span className="font-semibold">These mechanics make sure it does.</span>
         </p>
       </div>
-      <Footer text="The first thirty days are about one defensible win. The next conversation is about whether to scale it." />
       <SlideBar from={GOLD} to={GREEN} />
     </div>
   );
@@ -619,7 +633,6 @@ function S10UnderHood() {
           Next step: 60 minutes with two of your line-of-business owners. We leave with a chosen use case and a 30-day plan, or we do not come back.
         </p>
       </div>
-      <Footer text="lizaos.ai · Working brief for insurance leadership · Internal draft" dark />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
