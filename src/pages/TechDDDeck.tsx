@@ -1058,7 +1058,7 @@ function S07bUnique() {
                 Audit & Compliance Container
               </span>
             </div>
-            <div className="grid grid-cols-1 gap-1 text-left">
+            <div className="grid grid-cols-2 gap-1.5 text-left">
               {[
                 { k: "Token & Cost Audit", v: "Prompt envelope, model routing, COGS per call" },
                 { k: "Best Practice Audit", v: "Output conforms to the locked Playbook & standard" },
