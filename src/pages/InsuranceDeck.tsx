@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
-  Scale, ShieldAlert, TrendingDown, Database, Lock, Coins,
-  CloudRain, FileSearch, FlaskConical, QrCode, ArrowRight,
+  ArrowRight, ShieldAlert, TrendingDown, BookOpen, Gavel,
+  Languages, FileSearch,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -124,7 +123,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
 const TOTAL = 10;
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 01 · COVER
+// 01 · COVER — neutral, no category language, no LIZA name in the headline
 // ═════════════════════════════════════════════════════════════════════════════
 function S01Cover() {
   return (
@@ -132,19 +131,21 @@ function S01Cover() {
       <DarkGrid />
       <div className="relative z-10 text-center px-32">
         <p className="font-semibold tracking-[0.3em] uppercase mb-10" style={{ fontSize: 20, color: `hsl(${GREEN})` }}>
-          LIZA OS · UAE Insurance · Executive Brief
+          A working brief · Insurance leadership · 2026
         </p>
-        <h1 className="font-bold leading-[1.02]" style={{ fontSize: 96, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
-          The Execution <span style={{ color: `hsl(${GREEN})` }}>Infrastructure Mandate.</span>
+        <h1 className="font-bold leading-[1.02]" style={{ fontSize: 92, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
+          Five questions on the desk of <br/>
+          <span style={{ color: `hsl(${GREEN})` }}>every insurance leader this quarter.</span>
         </h1>
-        <p className="mt-10 mx-auto" style={{ fontSize: 28, color: DARK_MUTED, lineHeight: 1.4, maxWidth: 1280 }}>
-          Governing AI in the next era of UAE insurance. A response to <span className="font-semibold" style={{ color: DARK_TEXT }}>CBUAE 2025/2026 digital security mandates</span> and the post-2024 hyper-agility shock.
+        <p className="mt-10 mx-auto" style={{ fontSize: 26, color: DARK_MUTED, lineHeight: 1.45, maxWidth: 1280 }}>
+          This brief does not pitch a product. It walks through five concrete situations carriers in the GCC are facing right now,
+          and shows what a defensible answer looks like for each one. If any of them is already on your plate, the last page proposes a 30-day way to act on it.
         </p>
         <div className="mt-14 grid grid-cols-3 gap-6 max-w-5xl mx-auto">
           {[
-            { i: ShieldAlert, t: "Audit-grade AI", s: "Every decision carries a rationale log" },
-            { i: Lock, t: "State-locked playbooks", s: "AI bound to your CBUAE-approved standards" },
-            { i: Coins, t: "Value-based metering", s: "Pay for decision weight, not raw tokens" },
+            { i: Gavel,    t: "Court-defensible AI", s: "The new bar for any AI touching a claim" },
+            { i: Languages, t: "Arabic-safe service",  s: "Customer chat that cannot make up cover" },
+            { i: BookOpen, t: "Senior judgment kept", s: "The know-how that walks out at retirement" },
           ].map(c => (
             <div key={c.t} className="rounded-xl border p-5 text-left" style={{ borderColor: "hsl(0 0% 100% / 0.12)", background: "hsl(0 0% 100% / 0.04)" }}>
               <c.i size={22} style={{ color: `hsl(${GREEN})` }} />
@@ -161,530 +162,481 @@ function S01Cover() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 02 · THE PARADOX (balance scale)
+// 02 · FIVE CONVERSATIONS — composite quotes, the real PULL
 // ═════════════════════════════════════════════════════════════════════════════
-function S02Paradox() {
+function S02Conversations() {
+  const quotes = [
+    { who: "Head of Claims", line: "An adjuster pasted a complex motor file into ChatGPT last week and the summary went out to the customer. It got a coverage clause wrong. Legal is now asking how we'd defend that if it had been a denial." },
+    { who: "Chief Risk Officer", line: "After Lokken, every AI output that touches a claim has to be reviewable in court. I cannot sign off on anything that produces a paragraph my adjuster can't reconstruct line by line." },
+    { who: "Chief Underwriter", line: "After April 2024 the flood book broke overnight. We took six weeks to update the playbooks, and even after that I had three regional offices quoting three different risk loadings on identical SME files." },
+    { who: "Head of Customer", line: "Our Arabic chatbot quoted a benefit we don't sell. We pulled it back in 48 hours. Now the board wants AI for customer service, but nobody wants to be the next headline." },
+    { who: "Head of SIU / Fraud", line: "Our two most senior investigators retire in eighteen months. Half the patterns they catch are not written down anywhere. I do not know how we hand that over." },
+  ];
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={2} total={TOTAL} />
-      <PhaseChip phase="Section 1 · The Pull" color={RED} />
+      <PhaseChip phase="What we keep hearing" color={ACCENT} />
       <div className="relative z-10">
-        <Tag label="The UAE Insurance Paradox" color={RED} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          A market moving <span style={{ color: `hsl(${RED})` }}>faster than ever</span>. Regulators demanding <span style={{ color: `hsl(${ACCENT})` }}>more traceability than ever.</span>
+        <Tag label="Five conversations from the past six months" color={ACCENT} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          None of these are about <span style={{ color: SUBTLE }}>AI strategy.</span> All of them are about <span style={{ color: `hsl(${RED})` }}>this Friday.</span>
         </h2>
-        <p className="mb-12" style={{ fontSize: 24, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          You are trying to bridge this gap with AI. The gap is not a tooling problem. It is an infrastructure problem.
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          Composite quotes drawn from working sessions with GCC carriers in 2025-2026. Names removed. Substance unchanged.
         </p>
 
-        <div className="grid grid-cols-[1fr_140px_1fr] gap-8 items-stretch max-w-[1700px]">
-          <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${RED} / 0.4)`, background: `hsl(${RED} / 0.04)` }}>
-            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-4" style={{ fontSize: 16, color: `hsl(${RED})` }}>Hyper-agility</p>
-            <p className="font-bold mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.2 }}>Market shocks the old book cannot price.</p>
-            <ul className="space-y-2" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
-              <li>• April 2024 floods: historic P&amp;C risk models broken overnight.</li>
-              <li>• Health sector boom: claim volume scaling past manual review.</li>
-              <li>• New Takaful and bancassurance products launching quarterly.</li>
-            </ul>
-          </div>
-          <div className="flex items-center justify-center">
-            <Scale size={120} style={{ color: `hsl(${MUTED})` }} strokeWidth={1.2} />
-          </div>
-          <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.04)` }}>
-            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-4" style={{ fontSize: 16, color: `hsl(${ACCENT})` }}>Absolute traceability</p>
-            <p className="font-bold mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.2 }}>Regulators want every decision evidenced.</p>
-            <ul className="space-y-2" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
-              <li>• CBUAE 2025/2026 digital security and AI mandates.</li>
-              <li>• Consumer protection rules requiring decision rationale.</li>
-              <li>• Cross-border data residency and audit trail enforcement.</li>
-            </ul>
+        <div className="grid grid-cols-2 gap-5 max-w-[1750px]">
+          {quotes.map(q => (
+            <div key={q.who} className="rounded-xl border-l-4 border-2 p-6" style={{ borderLeftColor: `hsl(${ACCENT})`, borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <p className="font-mono uppercase tracking-[0.15em] font-bold mb-2" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>{q.who}</p>
+              <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.45, fontStyle: "italic" }}>&ldquo;{q.line}&rdquo;</p>
+            </div>
+          ))}
+          <div className="rounded-xl border-2 p-6 flex flex-col justify-center" style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.06)` }}>
+            <p className="font-mono uppercase tracking-[0.15em] font-bold mb-2" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>The pattern</p>
+            <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.4, fontWeight: 600 }}>
+              Different functions. Same shape of problem. Generic AI gave a fast answer. Nobody can show the reasoning, defend it, or update it once across the firm.
+            </p>
           </div>
         </div>
-
-        <p className="mt-10 max-w-[1700px]" style={{ fontSize: 22, color: TEXT, lineHeight: 1.45 }}>
-          Most firms try to close this with a chatbot. A chatbot is the wrong shape of object. The right shape is <span className="font-semibold">execution infrastructure</span>.
-        </p>
       </div>
-      <Footer text="Sources: CBUAE regulatory roadmap 2024-2026 · UAE Insurance Authority bulletins · public market commentary." />
-      <SlideBar from={RED} to={ACCENT} />
+      <Footer text="The buyer's words, not ours. If three of these are familiar, the rest of this brief is for you." />
+      <SlideBar from={ACCENT} to={GREEN} />
     </div>
   );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 03 · DIGITAL INSIDER
+// 03 · WHY THIS IS STRUCTURALLY HARDER IN 2026 — third-party evidence
 // ═════════════════════════════════════════════════════════════════════════════
-function S03DigitalInsider() {
-  const roles = [
-    { t: "Chief Underwriter", h: 60 },
-    { t: "Claims Director", h: 60 },
-    { t: "Compliance Officer", h: 60 },
-  ];
-  const juniors = [
-    "Underwriter", "Claims Handler", "Actuary", "Customer Ops",
+function S03Pressure() {
+  const forces = [
+    { i: Gavel,       c: RED,    h: "Lokken v. UnitedHealth",
+      sub: "US Federal court, March 2026",
+      s: "AI outputs used in claim denials are now discoverable in bad-faith litigation. If the adjuster cannot prove they reviewed the AI output, the AI output is the decision. Re-insurers and GCC legal teams are already treating this as the new bar." },
+    { i: ShieldAlert, c: RED,    h: "Nippon Life v. OpenAI",
+      sub: "Filed March 2026",
+      s: "A carrier suing a frontier-model vendor, alleging the chatbot acted as a legal adviser and interfered with a settled long-term care claim. The point is not the verdict. The point is that generic AI now creates direct legal exposure for the carrier that deployed it." },
+    { i: Languages,   c: GOLD,   h: "Gulf reality: Arabic and dialect",
+      sub: "Tawuniya InsurAI accelerator, May 2025",
+      s: "The Gulf market has named the five buckets: claims, fraud, pricing, Arabic distribution, risk prevention. Public benchmarks show frontier LLMs hallucinate coverage and policy terms in Arabic far more than English. Most carriers paused customer-facing AI after their first incident." },
+    { i: BookOpen,    c: ACCENT, h: "CBUAE 2025-2026 governance",
+      sub: "UAE Central Bank regulatory roadmap",
+      s: "Digital security, model governance, and consumer protection rules require traceable decision rationale on automated outputs. Grant Thornton's November 2025 read: most insurers are still early stage and blocked by legacy infrastructure." },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber n={3} total={TOTAL} />
-      <PhaseChip phase="Section 1 · The Pull" color={RED} />
+      <PhaseChip phase="Why now, why structural" color={RED} />
       <div className="relative z-10">
-        <Tag label="The Digital Insider Threat" color={RED} />
-        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          You treat AI like a tool. It is acting like an <span style={{ color: `hsl(${RED})` }}>unsupervised insider.</span>
+        <Tag label="What changed in the last twelve months" color={RED} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          Four forces have moved AI in insurance from <span style={{ color: SUBTLE }}>an innovation question</span> to <span style={{ color: `hsl(${RED})` }}>a board-level risk question.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          A junior underwriter would never sign off on a claim without an audit trail. Today, ungoverned generic AI does exactly that, dozens of times per hour, across every desk.
-        </p>
 
-        <div className="grid grid-cols-[1.3fr_1fr] gap-10 max-w-[1700px]">
-          <div className="rounded-2xl border-2 p-8 relative" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-            <p className="font-mono uppercase tracking-[0.15em] font-bold mb-6" style={{ fontSize: 14, color: SUBTLE }}>Your organisation</p>
-            <div className="flex justify-around mb-8">
-              {roles.map(r => (
-                <div key={r.t} className="rounded-lg border-2 px-5 py-4 text-center" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.06)` }}>
-                  <p className="font-semibold" style={{ fontSize: 16, color: TEXT }}>{r.t}</p>
-                </div>
-              ))}
+        <div className="grid grid-cols-2 gap-5 max-w-[1750px]">
+          {forces.map(f => (
+            <div key={f.h} className="rounded-xl border-2 p-6" style={{ borderColor: `hsl(${f.c} / 0.4)`, background: `hsl(${f.c} / 0.04)` }}>
+              <div className="flex items-center gap-3 mb-2">
+                <f.i size={26} style={{ color: `hsl(${f.c})` }} />
+                <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>{f.h}</p>
+              </div>
+              <p className="font-mono uppercase tracking-[0.12em] mb-3" style={{ fontSize: 13, color: `hsl(${f.c})` }}>{f.sub}</p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{f.s}</p>
             </div>
-            <div className="flex justify-around">
-              {juniors.map(j => (
-                <div key={j} className="rounded-lg border px-4 py-3 text-center" style={{ borderColor: CHROME_BORDER, background: BG }}>
-                  <p style={{ fontSize: 15, color: MUTED }}>{j}</p>
-                </div>
-              ))}
-            </div>
-            <p className="text-center mt-6 font-mono uppercase tracking-[0.12em]" style={{ fontSize: 13, color: SUBTLE }}>Hierarchy · oversight · audit log</p>
-          </div>
-
-          <div className="rounded-2xl border-2 p-8 flex flex-col justify-center relative" style={{ borderColor: `hsl(${RED} / 0.5)`, background: `hsl(${RED} / 0.05)` }}>
-            <p className="font-mono uppercase tracking-[0.15em] font-bold mb-5" style={{ fontSize: 14, color: `hsl(${RED})` }}>Outside the org chart</p>
-            <ShieldAlert size={56} style={{ color: `hsl(${RED})` }} className="mb-4" />
-            <p className="font-bold mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>Generic AI chatbot.</p>
-            <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>
-              Sensitive policyholder data pasted in. Decisions returned without provenance, without state-locking to your standards, without a rationale your CBUAE auditor can read.
-            </p>
-          </div>
+          ))}
         </div>
 
-        <p className="mt-10 max-w-[1700px]" style={{ fontSize: 22, color: TEXT, lineHeight: 1.45 }}>
-          The fix is not banning AI. The fix is <span className="font-semibold">putting AI inside the same governance container</span> as every other actor in the firm.
+        <p className="mt-8 max-w-[1700px]" style={{ fontSize: 22, color: TEXT, lineHeight: 1.45 }}>
+          The carriers that move first will be the ones that have a <span className="font-semibold">defensible answer</span>, not the ones that have the most AI.
         </p>
       </div>
-      <Footer text="Pattern observed across UAE and GCC insurers in 2024-2025 desk research." />
+      <Footer text="Sources: Estate of Gene B. Lokken v. UnitedHealth (D. Minn. 23-CV-3514) · Nippon Life v. OpenAI · Grant Thornton UAE (Nov 2025) · Tawuniya InsurAI Demo Day (May 2025) · CBUAE." />
       <SlideBar from={RED} to={ACCENT} />
     </div>
   );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 04 · CONTEXT GAP TAX & SEMANTIC DEBT
+// 04 · USE CASE 1 · CLAIMS-EXCEPTION DECISIONS WITH DEFENSIBLE RATIONALE
 // ═════════════════════════════════════════════════════════════════════════════
-function S04Tax() {
-  return (
-    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
-      <SlideGrid />
-      <PageNumber n={4} total={TOTAL} />
-      <PhaseChip phase="Section 1 · The Pull" color={RED} />
-      <div className="relative z-10">
-        <Tag label="The Context Gap Tax & Semantic Debt" color={RED} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          AI speed without shared team standards is just <span style={{ color: `hsl(${RED})` }}>faster garbage.</span>
-        </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          Token costs collapse every quarter. Enterprise AI spend climbs. The delta is rework, contradictions, and silent risk. We call it the <span className="font-semibold">Context Gap Tax</span>.
-        </p>
-
-        <div className="grid grid-cols-[1.4fr_1fr] gap-10 max-w-[1700px]">
-          {/* Chart */}
-          <div className="rounded-2xl border-2 p-8 relative" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 460 }}>
-            <p className="font-mono uppercase tracking-[0.15em] font-bold mb-2" style={{ fontSize: 14, color: SUBTLE }}>Token cost vs. enterprise AI spend (illustrative)</p>
-            <svg viewBox="0 0 600 320" className="w-full" style={{ height: 360 }}>
-              {/* axes */}
-              <line x1="60" y1="280" x2="580" y2="280" stroke="hsl(215 15% 75%)" strokeWidth="1.5"/>
-              <line x1="60" y1="20" x2="60" y2="280" stroke="hsl(215 15% 75%)" strokeWidth="1.5"/>
-              {/* token cost dropping */}
-              <path d="M 60 60 Q 200 90 320 180 T 580 250" stroke={`hsl(${ACCENT})`} strokeWidth="3" fill="none"/>
-              <text x="320" y="200" fill={`hsl(${ACCENT})`} fontSize="14" fontWeight="700">Token cost ↓</text>
-              {/* enterprise spend rising */}
-              <path d="M 60 240 Q 220 220 360 130 T 580 50" stroke={`hsl(${RED})`} strokeWidth="3" fill="none"/>
-              <text x="380" y="100" fill={`hsl(${RED})`} fontSize="14" fontWeight="700">Enterprise AI spend ↑</text>
-              {/* gap shading */}
-              <path d="M 360 130 L 580 50 L 580 250 L 320 180 Z" fill={`hsl(${GOLD} / 0.18)`}/>
-              <text x="470" y="170" fill="hsl(38 90% 28%)" fontSize="18" fontWeight="800">~40% rework gap</text>
-              <text x="60" y="305" fill={SUBTLE} fontSize="11">2023</text>
-              <text x="560" y="305" fill={SUBTLE} fontSize="11">2026</text>
-            </svg>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              { i: TrendingDown, c: ACCENT, t: "Token deflation",   s: "OpenAI and Google have cut frontier token prices by 80%+ in 24 months." },
-              { i: Coins,        c: RED,    t: "Enterprise inflation", s: "Real spend rises because every team reruns the same prompt to chase a different answer." },
-              { i: FileSearch,   c: GOLD,   t: "Semantic Debt",     s: "Senior and junior staff use the same words for different things. AI compounds the contradiction at machine speed." },
-            ].map(b => (
-              <div key={b.t} className="rounded-xl border p-5" style={{ borderColor: `hsl(${b.c} / 0.35)`, background: `hsl(${b.c} / 0.04)` }}>
-                <div className="flex items-center gap-3 mb-1">
-                  <b.i size={22} style={{ color: `hsl(${b.c})` }} />
-                  <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>{b.t}</p>
-                </div>
-                <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{b.s}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <Footer text="Context Gap Tax: the hidden rework cost paid when AI scales inconsistent definitions across a firm." />
-      <SlideBar from={RED} to={ACCENT} />
-    </div>
-  );
-}
-
-// ═════════════════════════════════════════════════════════════════════════════
-// 05 · COGNITIVE INFRASTRUCTURE (iceberg)
-// ═════════════════════════════════════════════════════════════════════════════
-function S05Iceberg() {
-  return (
-    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
-      <SlideGrid />
-      <PageNumber n={5} total={TOTAL} />
-      <PhaseChip phase="Section 2 · The Pivot" color={ACCENT} />
-      <div className="relative z-10">
-        <Tag label="From Data Infrastructure to Cognitive Infrastructure" color={ACCENT} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Yesterday&apos;s stack stored <span style={{ color: SUBTLE }}>data.</span> Today&apos;s must store <span style={{ color: `hsl(${ACCENT})` }}>reasoning.</span>
-        </h2>
-
-        <div className="grid grid-cols-[1fr_1fr] gap-10 max-w-[1700px] mt-8">
-          {/* Iceberg visual */}
-          <div className="relative rounded-2xl border-2 overflow-hidden" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 480 }}>
-            <div className="absolute top-0 left-0 right-0 h-[28%] flex items-center justify-center" style={{ background: `hsl(${ACCENT} / 0.10)` }}>
-              <div className="text-center">
-                <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>Above water · 10%</p>
-                <p className="font-bold mt-2" style={{ fontSize: 30, color: TEXT }}>Data</p>
-                <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.35, maxWidth: 360, margin: "8px auto 0" }}>
-                  Policies, claim docs, customer records. Already in your DWH and core systems.
-                </p>
-              </div>
-            </div>
-            <div className="absolute left-0 right-0 top-[28%] h-[1px]" style={{ background: `hsl(${ACCENT} / 0.5)` }} />
-            <div className="absolute top-[28%] left-0 right-0 bottom-0 flex items-center justify-center" style={{ background: `hsl(222 25% 15%)` }}>
-              <div className="text-center">
-                <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Below water · 90%</p>
-                <p className="font-bold mt-2" style={{ fontSize: 36, color: DARK_TEXT }}>Cognitive layer</p>
-                <ul className="mt-4 space-y-1" style={{ fontSize: 18, color: DARK_MUTED, lineHeight: 1.4 }}>
-                  <li>Operating reasoning behind each decision</li>
-                  <li>Tacit judgment of your senior underwriters</li>
-                  <li>Escalation, exception, and override logic</li>
-                  <li>Standards locked to CBUAE compliance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-5">
-            <div className="rounded-xl border-2 p-6" style={{ borderColor: `hsl(${ACCENT} / 0.4)`, background: `hsl(${ACCENT} / 0.05)` }}>
-              <Database size={26} style={{ color: `hsl(${ACCENT})` }} />
-              <p className="font-bold mt-2" style={{ fontSize: 26, color: TEXT }}>LIZA OS is not another chatbot.</p>
-              <p className="mt-2" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
-                It is the <span className="font-semibold" style={{ color: TEXT }}>execution infrastructure</span> that sits between your systems of record and your AI models. It compiles your standards into context the model is forced to obey.
-              </p>
-            </div>
-            <div className="rounded-xl border-2 p-6" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)` }}>
-              <p className="font-mono uppercase tracking-[0.15em] font-bold mb-2" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>What this changes</p>
-              <ul className="space-y-1" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
-                <li>• AI inherits your firm&apos;s judgment, not the open internet&apos;s.</li>
-                <li>• Senior expertise compounds instead of leaving with the person.</li>
-                <li>• Every output is auditable by construction, not by hope.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <Footer text="The cognitive layer is the structural majority of insurance work. It has never had its own infrastructure. Until now." />
-      <SlideBar from={ACCENT} to={GREEN} />
-    </div>
-  );
-}
-
-// ═════════════════════════════════════════════════════════════════════════════
-// 06 · AACE COMPLIANCE LOOP
-// ═════════════════════════════════════════════════════════════════════════════
-function S06AACE() {
+function S04UC1() {
   const steps = [
-    { n: "01", t: "Sense",     s: "Classify intent. Detect which CBUAE-bound playbook applies (claims, underwriting, KYC, complaints).", c: ACCENT },
-    { n: "02", t: "Decide · State-Lock", s: "Lock the AI into the approved playbook. No improvisation, no off-standard answers, for the duration of the task.", c: GREEN },
-    { n: "03", t: "Execute",   s: "Compile your directives, knowledge, procedures, preferences into the model context. Run the action.", c: GOLD },
-    { n: "04", t: "Propagate", s: "Emit a Unified Rationale Log: every input, every standard cited, every output. Auditor-ready by construction.", c: PURPLE },
+    { n: "01", t: "Adjuster opens an exception", s: "Medical claim, ambiguous prior condition. The exception triggers an approved playbook, not a free-form prompt." },
+    { n: "02", t: "Model is locked to your standard", s: "Policy wording, medical schedule, recent regulator guidance, and your firm's underwriting bulletins are loaded as the only context the model is allowed to reason over." },
+    { n: "03", t: "Output is a decision plus a chain", s: "Recommended action, every clause cited, every conflict flagged, the adjuster's review checkbox, timestamped. One artefact per file." },
+    { n: "04", t: "If it goes to court, you can show your work", s: "The rationale chain is the evidence package. Lokken-grade. Your CRO can sign off because the AI never decides alone, but it does the legwork." },
   ];
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={6} total={TOTAL} />
-      <PhaseChip phase="Section 2 · The Pivot" color={ACCENT} />
+      <PageNumber n={4} total={TOTAL} />
+      <PhaseChip phase="Use case 1 of 4 · Claims" color={GREEN} />
       <div className="relative z-10">
-        <Tag label="The Compliance Container · AACE v3.1" color={ACCENT} />
-        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Adaptive Agentic Context Engine. <span style={{ color: `hsl(${ACCENT})` }}>Four steps. One audit trail.</span>
+        <Tag label="Use case 1 · Claims exceptions with a defensible rationale" color={GREEN} />
+        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          What it looks like when an <span style={{ color: `hsl(${GREEN})` }}>AI-assisted denial</span> is court-defensible by construction.
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          AACE is the runtime that turns your firm&apos;s standards into a context the model is locked to. It is how we make AI 100% auditable for CBUAE.
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          The Lokken response, in your environment. The adjuster still owns the decision. The AI does the cross-reference. Every output carries its receipts.
         </p>
 
-        <div className="grid grid-cols-4 gap-5 max-w-[1700px]">
+        <div className="grid grid-cols-4 gap-5 max-w-[1750px]">
           {steps.map((s, i) => (
-            <div key={s.n} className="rounded-2xl border-2 p-6 relative" style={{ borderColor: `hsl(${s.c} / 0.4)`, background: `hsl(${s.c} / 0.04)`, minHeight: 320 }}>
-              <p className="font-mono font-bold" style={{ fontSize: 14, color: `hsl(${s.c})`, letterSpacing: "0.15em" }}>STEP {s.n}</p>
-              <p className="font-bold mt-3 mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{s.t}</p>
+            <div key={s.n} className="rounded-2xl border-2 p-6 relative" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)`, minHeight: 340 }}>
+              <p className="font-mono font-bold" style={{ fontSize: 14, color: `hsl(${GREEN})`, letterSpacing: "0.15em" }}>STEP {s.n}</p>
+              <p className="font-bold mt-3 mb-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>{s.t}</p>
               <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{s.s}</p>
               {i < steps.length - 1 && (
-                <ArrowRight size={28} style={{ position: "absolute", right: -20, top: "50%", color: `hsl(${s.c})`, background: BG, borderRadius: 999 }} />
+                <ArrowRight size={28} style={{ position: "absolute", right: -20, top: "50%", color: `hsl(${GREEN})`, background: BG, borderRadius: 999, zIndex: 5 }} />
               )}
             </div>
           ))}
         </div>
 
-        <div className="mt-10 rounded-xl border-2 px-6 py-5 max-w-[1700px]" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)` }}>
-          <p className="font-bold mb-1" style={{ fontSize: 22, color: TEXT }}>The Unified Rationale Log.</p>
-          <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>
-            One artefact per decision. Cites the directive, the knowledge, the procedure, and the operator. This is what a CBUAE auditor reads. Not a chat transcript.
-          </p>
-        </div>
-      </div>
-      <Footer text="AACE v3.1 master specification on request · State-locked, full-context, just-in-time injection." />
-      <SlideBar from={ACCENT} to={GREEN} />
-    </div>
-  );
-}
-
-// ═════════════════════════════════════════════════════════════════════════════
-// 07 · VALUE-BASED METERING
-// ═════════════════════════════════════════════════════════════════════════════
-function S07Metering() {
-  const tiers = [
-    { x: "1×",  t: "Operational",  s: "Draft a routine policyholder email. Summarise a call. Retrieve a clause.", c: SUBTLE, ex: "Per-token, low" },
-    { x: "5×",  t: "Design",       s: "Underwrite a non-standard SME risk. Triage a complex motor claim with exceptions.", c: ACCENT, ex: "Per decision, mid" },
-    { x: "25×", t: "Strategic",    s: "War-game a new Takaful product. Stress-test a bancassurance launch. Re-price a portfolio after a market shock.", c: GREEN, ex: "Per outcome, high" },
-  ];
-  return (
-    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
-      <SlideGrid />
-      <PageNumber n={7} total={TOTAL} />
-      <PhaseChip phase="Section 2 · The Pivot" color={ACCENT} />
-      <div className="relative z-10">
-        <Tag label="The CFO Mandate · Value-Based Metering" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Pay for the <span style={{ color: `hsl(${GREEN})` }}>weight of the decision</span>, not for raw compute.
-        </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          By 2027, AI moves from flat seats to metered consumption. Without a governance layer, every token is unanchored. LIZA ties every token to a standard and an outcome. Your unit economics become defensible.
-        </p>
-
-        <div className="grid grid-cols-3 gap-6 max-w-[1700px]">
-          {tiers.map(t => (
-            <div key={t.x} className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${t.c} / 0.4)`, background: `hsl(${t.c} / 0.05)`, minHeight: 360 }}>
-              <p className="font-mono font-bold" style={{ fontSize: 64, color: `hsl(${t.c})`, lineHeight: 1 }}>{t.x}</p>
-              <p className="font-bold mt-3 mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>{t.t}</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>{t.s}</p>
-              <div className="mt-5 pt-4 border-t" style={{ borderColor: CHROME_BORDER }}>
-                <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 13, color: SUBTLE }}>Meter</p>
-                <p className="font-semibold mt-1" style={{ fontSize: 18, color: TEXT }}>{t.ex}</p>
-              </div>
+        <div className="mt-8 grid grid-cols-3 gap-5 max-w-[1750px]">
+          {[
+            { k: "Today", v: "Adjuster pastes file into ChatGPT, summary lands in customer email, nobody can reconstruct the reasoning.", c: RED },
+            { k: "30 days in", v: "Same workflow, same speed, plus an evidence package per decision your CRO can sign off on.", c: GOLD },
+            { k: "Measured deltas", v: "Time-to-decision, exception accuracy versus senior review, % of files with a complete rationale chain.", c: GREEN },
+          ].map(b => (
+            <div key={b.k} className="rounded-xl border p-5" style={{ borderColor: `hsl(${b.c} / 0.35)`, background: `hsl(${b.c} / 0.05)` }}>
+              <p className="font-mono uppercase tracking-[0.12em] font-bold mb-2" style={{ fontSize: 13, color: `hsl(${b.c})` }}>{b.k}</p>
+              <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>{b.v}</p>
             </div>
           ))}
         </div>
       </div>
-      <Footer text="Aligned with the 2026-2027 industry shift from flat AI seats to metered consumption." />
-      <SlideBar from={ACCENT} to={GREEN} />
-    </div>
-  );
-}
-
-// ═════════════════════════════════════════════════════════════════════════════
-// 08 · THREE CAPABILITIES
-// ═════════════════════════════════════════════════════════════════════════════
-function S08Capabilities() {
-  const caps = [
-    {
-      i: CloudRain, c: ACCENT, n: "01",
-      t: "Commercial P&C Underwriting",
-      sub: "Adapting to market shocks.",
-      story: "April 2024 floods broke historic risk models. A Senior Underwriter updates the Flood Risk Playbook once. Every junior underwriter, every AI copilot across the firm is instantly locked to the new standard.",
-      out: "Knowledge compounds instantly. No more retraining month.",
-    },
-    {
-      i: FileSearch, c: GREEN, n: "02",
-      t: "High-Volume Claims & Exceptions",
-      sub: "Defensible scaling.",
-      story: "On health and motor claim flows, LIZA cross-references the medical report against UAE policy. Instead of a black-box answer, it flags exceptions and produces an audit-grade rationale chain showing exactly why the claim was routed.",
-      out: "Throughput up. Hallucination risk replaced with provenance.",
-    },
-    {
-      i: FlaskConical, c: PURPLE, n: "03",
-      t: "Actuarial & Strategic Rehearsal",
-      sub: "Decision rehearsal, not war-gaming theatre.",
-      story: "Launching a new Takaful product. LIZA runs multi-agent simulation against UAE market demographics, regulatory constraints, and your internal capital model. Stress-tests the product before capital is committed.",
-      out: "A defensible sounding board for the exco, with a rationale log.",
-    },
-  ];
-  return (
-    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
-      <SlideGrid />
-      <PageNumber n={8} total={TOTAL} />
-      <PhaseChip phase="Section 3 · The Push" color={GREEN} />
-      <div className="relative z-10">
-        <Tag label="Three Risk Centres. One Infrastructure." color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          What execution infrastructure looks like in your <span style={{ color: `hsl(${GREEN})` }}>most regulated workflows.</span>
-        </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          We are vertical-agnostic about which line of business you start in. We are non-negotiable about state-locking, rationale logging, and value-based metering in all three.
-        </p>
-
-        <div className="grid grid-cols-3 gap-5 max-w-[1750px]">
-          {caps.map(c => (
-            <div key={c.n} className="rounded-2xl border-2 p-6 flex flex-col" style={{ borderColor: `hsl(${c.c} / 0.4)`, background: `hsl(${c.c} / 0.04)`, minHeight: 520 }}>
-              <div className="flex items-center justify-between mb-3">
-                <c.i size={32} style={{ color: `hsl(${c.c})` }} />
-                <span className="font-mono font-bold" style={{ fontSize: 14, color: `hsl(${c.c})`, letterSpacing: "0.15em" }}>CAP {c.n}</span>
-              </div>
-              <p className="font-bold mb-1" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{c.t}</p>
-              <p className="font-mono uppercase tracking-[0.12em] mb-4" style={{ fontSize: 13, color: `hsl(${c.c})` }}>{c.sub}</p>
-              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{c.story}</p>
-              <div className="mt-auto pt-5 border-t" style={{ borderColor: `hsl(${c.c} / 0.3)` }}>
-                <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 12, color: SUBTLE }}>Outcome</p>
-                <p className="font-semibold mt-1" style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{c.out}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <Footer text="Same infrastructure. Three risk-bearing surfaces. Pick the wedge with the highest CBUAE exposure first." />
+      <Footer text="Pull signal: every CRO in the GCC is being asked about Lokken right now. This is the cleanest first wedge." />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 09 · THE WEDGE · DIAGNOSTIC + 30-DAY KICKSTART
+// 05 · USE CASE 2 · UNDERWRITING STANDARD PROPAGATION (POST-SHOCK)
 // ═════════════════════════════════════════════════════════════════════════════
-function S09Wedge() {
-  const days = [
-    { d: "Day 0-3",   t: "Scope a single pod", s: "Pick one workflow. Typically claims exceptions or commercial underwriting." },
-    { d: "Day 4-14",  t: "Encode the standard", s: "Capture senior judgment as state-locked playbooks. Wire into LIZA OS." },
-    { d: "Day 15-25", t: "Run in shadow", s: "AI runs alongside the team. Every decision logged. Deltas measured." },
-    { d: "Day 26-30", t: "ROI readout", s: "Time-to-decision, exception accuracy, audit-readiness deltas. Go/no-go to expand." },
-  ];
+function S05UC2() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
       <SlideGrid />
-      <PageNumber n={9} total={TOTAL} />
-      <PhaseChip phase="Section 4 · The Close" color={GOLD} />
+      <PageNumber n={5} total={TOTAL} />
+      <PhaseChip phase="Use case 2 of 4 · Underwriting" color={ACCENT} />
       <div className="relative z-10">
-        <Tag label="The Wedge · Diagnostic + 30-Day Kickstart" color={GOLD} />
-        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          We do not start with a <span style={{ color: `hsl(${RED})` }}>risky enterprise rollout.</span> We start with <span style={{ color: `hsl(${GREEN})` }}>truth.</span>
+        <Tag label="Use case 2 · Updating one standard, once, after a market shock" color={ACCENT} />
+        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          Senior underwriter changes the rule on <span style={{ color: `hsl(${ACCENT})` }}>Monday morning.</span> By Monday afternoon every branch is quoting it.
         </h2>
-        <p className="mb-10" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          Step one: measure the leak. Step two: prove the fix on one pod. Step three: scale only what worked.
+        <p className="mb-10" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          The April 2024 floods broke historic flood books. The carriers that took six weeks to re-align lost the spring renewal cycle. The ones that took a day kept the book.
         </p>
 
-        <div className="grid grid-cols-[1fr_1.6fr] gap-10 max-w-[1750px]">
-          <div className="rounded-2xl border-2 p-7 flex flex-col items-center text-center" style={{ borderColor: `hsl(${GOLD} / 0.45)`, background: `hsl(${GOLD} / 0.06)` }}>
-            <QrCode size={120} style={{ color: `hsl(${GOLD})` }} strokeWidth={1.3} />
-            <p className="font-bold mt-5" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>90-Second AI Diagnostic</p>
-            <p className="mt-3" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>
-              Your department heads measure the firm&apos;s current <span className="font-semibold" style={{ color: TEXT }}>Semantic Debt</span> and Context Gap exposure in under two minutes.
-            </p>
-            <p className="mt-4 font-mono" style={{ fontSize: 15, color: SUBTLE }}>lizaos.ai/diagnostic</p>
+        <div className="grid grid-cols-[1fr_1.2fr] gap-10 max-w-[1750px]">
+          {/* Before / After diagram */}
+          <div className="space-y-5">
+            <div className="rounded-xl border-2 p-6" style={{ borderColor: `hsl(${RED} / 0.4)`, background: `hsl(${RED} / 0.05)` }}>
+              <p className="font-mono uppercase tracking-[0.15em] font-bold mb-2" style={{ fontSize: 14, color: `hsl(${RED})` }}>Today</p>
+              <p className="font-bold mb-2" style={{ fontSize: 22, color: TEXT }}>Six weeks. Three branches. Three answers.</p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>
+                New flood loading is decided in head office. It propagates through training emails, recorded calls, and PDFs. Branch quotes drift. AI copilots still cite the pre-shock playbook for months.
+              </p>
+            </div>
+            <div className="rounded-xl border-2 p-6" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)` }}>
+              <p className="font-mono uppercase tracking-[0.15em] font-bold mb-2" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>30 days in</p>
+              <p className="font-bold mb-2" style={{ fontSize: 22, color: TEXT }}>One change. Locked into the model the same hour.</p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>
+                Senior underwriter edits the flood-risk playbook. Every junior underwriter and every AI copilot is locked to the new version on the next quote. Old quotes flagged for review.
+              </p>
+            </div>
           </div>
 
-          <div>
-            <p className="font-mono uppercase tracking-[0.15em] font-bold mb-4" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>If the leak is severe → 30-Day Guided Kickstart</p>
-            <div className="space-y-3">
-              {days.map((d, i) => (
-                <div key={d.d} className="rounded-xl border p-5 grid grid-cols-[140px_1fr_2fr] gap-5 items-center" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-                  <span className="font-mono font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>{d.d}</span>
-                  <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>{d.t}</p>
-                  <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{d.s}</p>
-                </div>
-              ))}
+          <div className="rounded-2xl border-2 p-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p className="font-mono uppercase tracking-[0.15em] font-bold mb-4" style={{ fontSize: 14, color: SUBTLE }}>What changes mechanically</p>
+            <ul className="space-y-4" style={{ fontSize: 19, color: TEXT, lineHeight: 1.5 }}>
+              <li><span className="font-bold">One source of truth.</span> The playbook is the standard. Nothing else is.</li>
+              <li><span className="font-bold">Versioned.</span> Every quote carries the playbook version it was generated under.</li>
+              <li><span className="font-bold">Locked into the AI.</span> The model cannot quote outside the active version. No "creative" loadings.</li>
+              <li><span className="font-bold">Audit-ready.</span> Re-insurer or regulator can see exactly which version applied to which quote on which day.</li>
+            </ul>
+            <div className="mt-6 pt-5 border-t" style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 13, color: SUBTLE }}>Measured deltas</p>
+              <p className="font-semibold mt-1" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+                Time from senior decision to branch consistency. % of quotes generated under the current standard. Variance on identical risk files across branches.
+              </p>
             </div>
-            <p className="mt-5" style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-              One pod. Thirty days. Measurable deltas. Then we earn the right to expand.
-            </p>
           </div>
         </div>
       </div>
-      <Footer text="Low-friction entry · High-status outcome · ROI proven in your environment before any platform commitment." />
+      <Footer text="Pull signal: every Chief Underwriter in the region remembers a market shock where consistency broke. This is the second clean wedge." />
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// 06 · USE CASE 3 · FRAUD / SIU DESK · SENIOR JUDGMENT CAPTURE
+// ═════════════════════════════════════════════════════════════════════════════
+function S06UC3() {
+  return (
+    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={6} total={TOTAL} />
+      <PhaseChip phase="Use case 3 of 4 · Fraud / SIU" color={PURPLE} />
+      <div className="relative z-10">
+        <Tag label="Use case 3 · Keeping senior investigator judgment when they retire" color={PURPLE} />
+        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          The two patterns that catch <span style={{ color: `hsl(${PURPLE})` }}>70% of your fraud</span> are <span style={{ color: SUBTLE }}>not in any document.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          They live in the head of two SIU veterans. When those two retire, you do not get a hand-over. You get a generation gap. This use case turns tacit judgment into the firm's standing memory.
+        </p>
+
+        <div className="grid grid-cols-3 gap-5 max-w-[1750px]">
+          {[
+            { i: BookOpen, c: PURPLE, t: "Capture, in their own words",
+              s: "Structured working sessions with senior investigators. Each pattern, each tell, each escalation rule, recorded as a playbook the AI can actually use. Not a PDF.",
+            },
+            { i: FileSearch, c: ACCENT, t: "Apply on every new claim",
+              s: "When a claim hits the pipeline, the AI runs it against the senior patterns first. Hits get routed to SIU with the matched patterns annotated. Misses go to standard flow.",
+            },
+            { i: TrendingDown, c: GREEN, t: "Improve as the team learns",
+              s: "Junior investigators add new tells. Veterans review and approve. The playbook compounds instead of decaying. No one person is a single point of failure.",
+            },
+          ].map(c => (
+            <div key={c.t} className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${c.c} / 0.4)`, background: `hsl(${c.c} / 0.05)`, minHeight: 360 }}>
+              <c.i size={32} style={{ color: `hsl(${c.c})` }} />
+              <p className="font-bold mt-3 mb-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>{c.t}</p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{c.s}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 rounded-xl border-2 px-6 py-5 max-w-[1750px]" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)` }}>
+          <p className="font-bold mb-1" style={{ fontSize: 22, color: TEXT }}>The deeper shift.</p>
+          <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>
+            Fraud detection stops being a person. It becomes a firm capability. The senior investigator is still the authority. Their judgment is now a versioned asset, not a hand-shake.
+          </p>
+        </div>
+      </div>
+      <Footer text="Pull signal: every SIU lead in the region is one or two retirements away from a measurable detection drop." />
+      <SlideBar from={PURPLE} to={GREEN} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// 07 · USE CASE 4 · ARABIC / DIALECT-SAFE CUSTOMER SERVICE
+// ═════════════════════════════════════════════════════════════════════════════
+function S07UC4() {
+  return (
+    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={7} total={TOTAL} />
+      <PhaseChip phase="Use case 4 of 4 · Customer" color={GOLD} />
+      <div className="relative z-10">
+        <Tag label="Use case 4 · Customer-facing Arabic AI that cannot invent cover" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          Most GCC carriers have already <span style={{ color: `hsl(${RED})` }}>pulled back</span> their Arabic chatbot once. <span style={{ color: `hsl(${GREEN})` }}>Here is how it ships safely.</span>
+        </h2>
+        <p className="mb-10" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          Frontier LLMs hallucinate coverage terms in Arabic and Gulf dialects far more than in English. The fix is not a bigger model. The fix is a tighter boundary around what the model is allowed to say.
+        </p>
+
+        <div className="grid grid-cols-2 gap-8 max-w-[1750px]">
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${RED} / 0.4)`, background: `hsl(${RED} / 0.04)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 14, color: `hsl(${RED})` }}>The trap</p>
+            <p className="font-bold mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.2 }}>Open chatbot on the policy corpus.</p>
+            <ul className="space-y-2" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              <li>• Model paraphrases policy terms in Arabic.</li>
+              <li>• Paraphrase introduces a benefit you do not sell.</li>
+              <li>• Customer screenshots the reply.</li>
+              <li>• Legal pulls the chatbot inside the week.</li>
+            </ul>
+          </div>
+
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>The safe pattern</p>
+            <p className="font-bold mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.2 }}>Bounded answers, approved phrasing.</p>
+            <ul className="space-y-2" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              <li>• Approved Arabic phrasings for each policy concept, signed off by compliance.</li>
+              <li>• The model is locked to those phrasings. Off-script answers are blocked.</li>
+              <li>• Anything outside scope is routed to a human, in seconds.</li>
+              <li>• Every conversation carries a log: which approved phrasing was used, by which version of the policy.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p className="mt-8 max-w-[1750px]" style={{ fontSize: 22, color: TEXT, lineHeight: 1.45 }}>
+          Result: Arabic service AI you can put on the front page of the app, with a paper trail your CRO and the regulator can both read.
+        </p>
+      </div>
+      <Footer text="Pull signal: every Gulf carrier wants Arabic AI on the customer front line. None want to be the next headline." />
       <SlideBar from={GOLD} to={GREEN} />
     </div>
   );
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// 10 · TWO DOORS · DECISION
+// 08 · WHICH OF THESE FOUR IS YOUR FRIDAY · matrix
 // ═════════════════════════════════════════════════════════════════════════════
-function S10Decision() {
+function S08Matrix() {
+  const rows = [
+    { uc: "Claims-exception decisions",  o: "Head of Claims · CRO",   p: "Lokken exposure, bad-faith risk",         e: "30 days, one claim queue",       v: "Audit-grade rationale on every flagged file" },
+    { uc: "Underwriting consistency",    o: "Chief Underwriter",      p: "Branch drift after a market shock",       e: "30 days, one line of business",   v: "Same standard quoted everywhere, same day" },
+    { uc: "Fraud / SIU memory",          o: "Head of SIU",            p: "Senior retirements within 18 months",     e: "30 days, top two pattern families", v: "Tacit knowledge as a versioned asset" },
+    { uc: "Arabic customer service",     o: "Head of Customer · CMO", p: "Past or feared chatbot incident",         e: "30 days, one intent set",         v: "Bounded chatbot you can put on the app" },
+  ];
+  return (
+    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={8} total={TOTAL} />
+      <PhaseChip phase="Pick the first one" color={GREEN} />
+      <div className="relative z-10">
+        <Tag label="Which of these four is your Friday?" color={GREEN} />
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          Same operating pattern underneath. <span style={{ color: `hsl(${GREEN})` }}>Different first wedge per carrier.</span>
+        </h2>
+
+        <div className="rounded-2xl border-2 overflow-hidden max-w-[1750px]" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+          <div className="grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-5 py-3 font-mono uppercase tracking-[0.12em] font-bold border-b" style={{ fontSize: 13, color: SUBTLE, background: BG, borderColor: CHROME_BORDER }}>
+            <div>Use case</div><div>Owner on your side</div><div>Why it's urgent now</div><div>30-day shape</div><div>What you walk away with</div>
+          </div>
+          {rows.map((r, i) => (
+            <div key={r.uc} className="grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-5 py-5 border-b items-start" style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "transparent" : "hsl(220 15% 99%)" }}>
+              <div className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.3 }}>{r.uc}</div>
+              <div style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{r.o}</div>
+              <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{r.p}</div>
+              <div style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{r.e}</div>
+              <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{r.v}</div>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-8 max-w-[1750px]" style={{ fontSize: 22, color: TEXT, lineHeight: 1.45 }}>
+          We do not pick the wedge. <span className="font-semibold">You do.</span> Whichever of these four lands you in front of your board with a defensible answer first is the right place to start.
+        </p>
+      </div>
+      <Footer text="The same execution pattern underneath. Different surface per role, per line of business, per board agenda." />
+      <SlideBar from={GREEN} to={ACCENT} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// 09 · WHAT THE FIRST 30 DAYS LOOK LIKE · still product-light
+// ═════════════════════════════════════════════════════════════════════════════
+function S09ThirtyDays() {
+  const days = [
+    { d: "Day 0-3",   t: "Pick one use case, one pod", s: "From the four on the previous page. We agree the owner, the baseline metrics, and the success bar with your team." },
+    { d: "Day 4-14",  t: "Capture your standard",     s: "Two to three working sessions with the senior expert. We turn how they actually decide into a structured, versioned playbook." },
+    { d: "Day 15-25", t: "Run the AI in shadow",      s: "AI runs alongside the team on real files. Every output carries its rationale. Nothing customer-facing yet. Deltas measured against the baseline." },
+    { d: "Day 26-30", t: "Readout to your CRO",       s: "Time saved, accuracy versus senior review, % of files with a defensible rationale chain. Clear go / no-go to expand or stop." },
+  ];
+  return (
+    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={9} total={TOTAL} />
+      <PhaseChip phase="What you'd actually buy" color={GOLD} />
+      <div className="relative z-10">
+        <Tag label="The 30-day shape" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          Not a platform commitment. <span style={{ color: `hsl(${GREEN})` }}>A 30-day proof on one workflow,</span> with a measured readout.
+        </h2>
+        <p className="mb-10" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          We do not start with an enterprise rollout. We start with one pod, one use case, and the metrics you would defend internally anyway.
+        </p>
+
+        <div className="space-y-4 max-w-[1750px]">
+          {days.map(d => (
+            <div key={d.d} className="rounded-xl border p-6 grid grid-cols-[160px_1fr_2.4fr] gap-6 items-center" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <span className="font-mono font-bold" style={{ fontSize: 20, color: `hsl(${GREEN})` }}>{d.d}</span>
+              <p className="font-bold" style={{ fontSize: 24, color: TEXT }}>{d.t}</p>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>{d.s}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-8 max-w-[1750px]" style={{ fontSize: 22, color: TEXT, lineHeight: 1.45 }}>
+          One pod. Thirty days. A readout your CRO can take to the board. If the numbers do not move, we do not come back.
+        </p>
+      </div>
+      <Footer text="The first thirty days are about one defensible win. The next conversation is about whether to scale it." />
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// 10 · UNDER THE HOOD (ONLY IF ASKED) + TWO DOORS
+// ═════════════════════════════════════════════════════════════════════════════
+function S10UnderHood() {
   return (
     <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: DARK_BG }}>
       <DarkGrid />
       <PageNumber n={10} total={TOTAL} dark />
-      <PhaseChip phase="Section 4 · The Close" color={GREEN} />
+      <PhaseChip phase="Only if you ask" color={ACCENT} />
       <div className="relative z-10">
-        <p className="font-semibold tracking-[0.3em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>The Decision · Two Doors</p>
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 60, color: DARK_TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          Become a <span style={{ color: `hsl(${GREEN})` }}>customer</span>, or become a <span style={{ color: `hsl(${ACCENT})` }}>design partner</span>.
+        <p className="font-semibold tracking-[0.3em] uppercase mb-6" style={{ fontSize: 18, color: `hsl(${ACCENT})` }}>Under the hood · one slide · only if you want it</p>
+        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 56, color: DARK_TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          The same engine sits behind <span style={{ color: `hsl(${GREEN})` }}>all four use cases.</span>
         </h2>
-        <p className="mb-10" style={{ fontSize: 24, color: DARK_MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
-          Both doors start with the same 30-day proof. The difference is whether you also help define the GCC insurance reference architecture for AI execution.
+        <p className="mb-10" style={{ fontSize: 22, color: DARK_MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          You do not have to buy a category to use any of them. But if your CTO or CISO asks, this is the shape of what runs inside.
         </p>
 
-        <div className="grid grid-cols-2 gap-8 max-w-[1700px]">
-          <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: "hsl(0 0% 100% / 0.04)", minHeight: 420 }}>
-            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Door 1 · Customer</p>
-            <p className="font-bold mb-3" style={{ fontSize: 34, color: DARK_TEXT, lineHeight: 1.15 }}>30-Day Guided Kickstart on one pod.</p>
-            <ul className="space-y-2 mt-4" style={{ fontSize: 19, color: DARK_MUTED, lineHeight: 1.45 }}>
-              <li>• One workflow, state-locked, audit-grade.</li>
-              <li>• Unified Rationale Log live from day 15.</li>
-              <li>• ROI readout against your own baseline.</li>
-              <li>• Path to firm-wide rollout earned, not assumed.</li>
-            </ul>
+        <div className="grid grid-cols-3 gap-6 max-w-[1750px] mb-10">
+          {[
+            { t: "Your standards are loaded as the only context the model is allowed to reason over.", c: GREEN },
+            { t: "The model is locked to the active version of those standards until the task is complete.", c: ACCENT },
+            { t: "Every output emits a rationale chain: which standard, which clause, which operator, when.", c: GOLD },
+          ].map((b, i) => (
+            <div key={i} className="rounded-2xl border-2 p-6" style={{ borderColor: `hsl(${b.c} / 0.5)`, background: "hsl(0 0% 100% / 0.04)", minHeight: 220 }}>
+              <p className="font-mono font-bold" style={{ fontSize: 16, color: `hsl(${b.c})`, letterSpacing: "0.15em" }}>{String(i + 1).padStart(2, "0")}</p>
+              <p className="font-semibold mt-3" style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.35 }}>{b.t}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 max-w-[1750px]">
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: "hsl(0 0% 100% / 0.04)" }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>Door 1 · Use it</p>
+            <p className="font-bold mb-2" style={{ fontSize: 28, color: DARK_TEXT, lineHeight: 1.15 }}>30-day proof on one use case from page 8.</p>
+            <p style={{ fontSize: 18, color: DARK_MUTED, lineHeight: 1.4 }}>
+              Your team, your data, your CRO's metrics. Measured readout at day 30. Earn the right to scale, or walk away.
+            </p>
           </div>
-          <div className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${ACCENT} / 0.5)`, background: "hsl(0 0% 100% / 0.04)", minHeight: 420 }}>
-            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 15, color: `hsl(${ACCENT})` }}>Door 2 · Design Partner</p>
-            <p className="font-bold mb-3" style={{ fontSize: 34, color: DARK_TEXT, lineHeight: 1.15 }}>Co-define the CBUAE-grade reference architecture.</p>
-            <ul className="space-y-2 mt-4" style={{ fontSize: 19, color: DARK_MUTED, lineHeight: 1.45 }}>
-              <li>• Strategic stake in the insurance memory layer.</li>
-              <li>• Co-authorship of the regional standard playbooks.</li>
-              <li>• Priority on regulator-facing audit features.</li>
-              <li>• First-mover position in the Middle East market.</li>
-            </ul>
+          <div className="rounded-2xl border-2 p-7" style={{ borderColor: `hsl(${ACCENT} / 0.5)`, background: "hsl(0 0% 100% / 0.04)" }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 15, color: `hsl(${ACCENT})` }}>Door 2 · Shape it</p>
+            <p className="font-bold mb-2" style={{ fontSize: 28, color: DARK_TEXT, lineHeight: 1.15 }}>Become the GCC reference carrier.</p>
+            <p style={{ fontSize: 18, color: DARK_MUTED, lineHeight: 1.4 }}>
+              Same 30-day proof, plus a deeper relationship to co-define the standard playbooks the region will adopt. First-mover position on the regulator-facing audit story.
+            </p>
           </div>
         </div>
 
-        <p className="mt-10 max-w-[1700px]" style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5 }}>
-          Next step: a 60-minute working session with two of your line-of-business heads and our architect. We leave with a scoped pod and a 30-day plan, or we don&apos;t come back.
+        <p className="mt-10 max-w-[1750px]" style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5 }}>
+          Next step: 60 minutes with two of your line-of-business owners. We leave with a chosen use case and a 30-day plan, or we do not come back.
         </p>
       </div>
-      <Footer text="LIZA OS · Execution Infrastructure for AI-native insurance · lizaos.ai" dark />
+      <Footer text="lizaos.ai · Working brief for insurance leadership · Internal draft" dark />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
 }
 
 const SLIDES = [
-  { id: "cover",         title: "Cover · Execution Mandate",       component: <S01Cover /> },
-  { id: "paradox",       title: "UAE Insurance Paradox",            component: <S02Paradox /> },
-  { id: "insider",       title: "Digital Insider Threat",           component: <S03DigitalInsider /> },
-  { id: "tax",           title: "Context Gap Tax",                  component: <S04Tax /> },
-  { id: "iceberg",       title: "Cognitive Infrastructure",         component: <S05Iceberg /> },
-  { id: "aace",          title: "AACE Compliance Loop",             component: <S06AACE /> },
-  { id: "metering",      title: "Value-Based Metering",             component: <S07Metering /> },
-  { id: "capabilities",  title: "Three Capabilities",               component: <S08Capabilities /> },
-  { id: "wedge",         title: "Diagnostic + 30-Day Kickstart",    component: <S09Wedge /> },
-  { id: "decision",      title: "Two Doors · Decision",             component: <S10Decision /> },
+  { id: "cover",          title: "Cover · Five questions",          component: <S01Cover /> },
+  { id: "conversations",  title: "Five conversations",              component: <S02Conversations /> },
+  { id: "pressure",       title: "Why now, why structural",         component: <S03Pressure /> },
+  { id: "uc-claims",      title: "UC1 · Claims exceptions",         component: <S04UC1 /> },
+  { id: "uc-underwriting",title: "UC2 · Underwriting consistency",  component: <S05UC2 /> },
+  { id: "uc-fraud",       title: "UC3 · Fraud / SIU memory",        component: <S06UC3 /> },
+  { id: "uc-arabic",      title: "UC4 · Arabic customer AI",        component: <S07UC4 /> },
+  { id: "matrix",         title: "Which one is your Friday?",       component: <S08Matrix /> },
+  { id: "thirty-days",    title: "The 30-day shape",                component: <S09ThirtyDays /> },
+  { id: "under-hood",     title: "Under the hood · Two doors",      component: <S10UnderHood /> },
 ];
 
 // ─── Deck shell ──────────────────────────────────────────────────────────────
