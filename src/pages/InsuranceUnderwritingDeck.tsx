@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { Fragment, useState, useEffect, useCallback, useRef } from "react";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
 } from "lucide-react";
@@ -188,18 +188,18 @@ function S02Trap() {
           <div className="px-5 py-3 rounded-lg font-mono uppercase tracking-[0.18em] font-bold text-center" style={{ fontSize: 14, background: `hsl(${ACCENT} / 0.1)`, color: `hsl(${ACCENT})` }}>SME Commercial Property</div>
           <div className="px-5 py-3 rounded-lg font-mono uppercase tracking-[0.18em] font-bold text-center" style={{ fontSize: 14, background: `hsl(${GOLD} / 0.1)`, color: `hsl(${GOLD})` }}>Motor</div>
           {steps.map(s => (
-            <>
-              <div key={s.n + "n"} className="rounded-xl border p-3 flex flex-col items-center justify-center" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <Fragment key={s.n}>
+              <div className="rounded-xl border p-3 flex flex-col items-center justify-center" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
                 <span className="font-mono font-bold" style={{ fontSize: 22, color: `hsl(${RED})` }}>{s.n}</span>
                 <span className="font-bold text-center mt-1" style={{ fontSize: 14, color: TEXT, lineHeight: 1.15 }}>{s.t}</span>
               </div>
-              <div key={s.n + "p"} className="rounded-xl border p-4" style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.04)` }}>
+              <div className="rounded-xl border p-4" style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.04)` }}>
                 <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{s.p}</p>
               </div>
-              <div key={s.n + "m"} className="rounded-xl border p-4" style={{ borderColor: `hsl(${GOLD} / 0.3)`, background: `hsl(${GOLD} / 0.05)` }}>
+              <div className="rounded-xl border p-4" style={{ borderColor: `hsl(${GOLD} / 0.3)`, background: `hsl(${GOLD} / 0.05)` }}>
                 <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{s.m}</p>
               </div>
-            </>
+            </Fragment>
           ))}
         </div>
       </div>
