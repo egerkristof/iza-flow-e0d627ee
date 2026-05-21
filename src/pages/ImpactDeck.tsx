@@ -32,7 +32,13 @@ function ScaledSlide({ children }: { children: React.ReactNode }) {
         position: "absolute", width: 1920, height: 1080,
         left: "50%", top: "50%", marginLeft: -960, marginTop: -540,
         transform: `scale(${scale})`, transformOrigin: "center center",
-      }}>{children}</div>
+      }}>
+        {children}
+        <div style={{ position: "absolute", top: 24, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 8, zIndex: 50, pointerEvents: "none" }}>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", padding: "5px 10px", borderRadius: 4, background: "hsl(45 95% 42% / 0.15)", color: "hsl(38 90% 26%)", border: "1px solid hsl(45 95% 42% / 0.5)" }}>DRAFT</span>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", padding: "5px 10px", borderRadius: 4, background: "hsl(0 72% 50% / 0.12)", color: "hsl(0 72% 38%)", border: "1px solid hsl(0 72% 50% / 0.5)" }}>HIGHLY CONFIDENTIAL</span>
+        </div>
+      </div>
     </div>
   );
 }
