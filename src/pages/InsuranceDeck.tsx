@@ -485,30 +485,44 @@ function S08Matrix() {
       <SlideGrid />
       <PageNumber n={8} total={TOTAL} />
       <PhaseChip phase="Pick the first one" color={GREEN} />
-      <div className="relative z-10">
+      <div className="relative z-10 h-full flex flex-col">
         <Tag label="Which of these four is your Friday?" color={GREEN} />
-        <h2 className="font-bold leading-[1.05] mb-6" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+        <h2 className="font-bold leading-[1.04] mb-5" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
           Same operating pattern underneath. <span style={{ color: `hsl(${GREEN})` }}>Different first wedge per carrier.</span>
         </h2>
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.45, maxWidth: 1500 }}>
+          Four real conversations from the past six months. Each one becomes a clean first 30 days for a different leader. The question is not whether to start. The question is whose Friday looks most like one of these four.
+        </p>
 
         <div className="rounded-2xl border-2 overflow-hidden max-w-[1750px]" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-          <div className="grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-5 py-3 font-mono uppercase tracking-[0.12em] font-bold border-b" style={{ fontSize: 13, color: SUBTLE, background: BG, borderColor: CHROME_BORDER }}>
+          <div className="grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-6 py-4 font-mono uppercase tracking-[0.12em] font-bold border-b" style={{ fontSize: 14, color: SUBTLE, background: BG, borderColor: CHROME_BORDER }}>
             <div>Use case</div><div>Owner on your side</div><div>Why it's urgent now</div><div>30-day shape</div><div>What you walk away with</div>
           </div>
           {rows.map((r, i) => (
-            <div key={r.uc} className="grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-5 py-5 border-b items-start" style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "transparent" : "hsl(220 15% 99%)" }}>
-              <div className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.3 }}>{r.uc}</div>
-              <div style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{r.o}</div>
-              <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{r.p}</div>
-              <div style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{r.e}</div>
-              <div style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>{r.v}</div>
+            <div key={r.uc} className="grid grid-cols-[1.4fr_1.1fr_1.5fr_1.1fr_1.6fr] px-6 py-7 border-b items-start" style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "transparent" : "hsl(220 15% 99%)" }}>
+              <div className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.3 }}>{r.uc}</div>
+              <div style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>{r.o}</div>
+              <div style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>{r.p}</div>
+              <div style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>{r.e}</div>
+              <div style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>{r.v}</div>
             </div>
           ))}
         </div>
 
-        <p className="mt-8 max-w-[1750px]" style={{ fontSize: 22, color: TEXT, lineHeight: 1.45 }}>
-          We do not pick the wedge. <span className="font-semibold">You do.</span> Whichever of these four lands you in front of your board with a defensible answer first is the right place to start.
-        </p>
+        <div className="mt-8 grid grid-cols-[1.4fr_1fr] gap-6 max-w-[1750px]">
+          <div className="rounded-xl border-2 p-6" style={{ borderColor: `hsl(${GREEN} / 0.35)`, background: `hsl(${GREEN} / 0.05)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-2" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>How to read this</p>
+            <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
+              We do not pick the wedge. <span className="font-semibold">You do.</span> Whichever of these four lands your team in front of the board with a defensible answer first is the right place to start.
+            </p>
+          </div>
+          <div className="rounded-xl border p-6 flex flex-col justify-center" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold mb-2" style={{ fontSize: 13, color: SUBTLE }}>Same engine underneath</p>
+            <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.45 }}>
+              The four columns differ. The operating pattern is the same: capture the standard, lock the model, keep the rationale. One choice today, the others stay open for later.
+            </p>
+          </div>
+        </div>
       </div>
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
@@ -627,7 +641,7 @@ function S10UnderHood() {
         </div>
 
         <p className="mt-10 max-w-[1750px]" style={{ fontSize: 22, color: DARK_TEXT, lineHeight: 1.5 }}>
-          Next step: 60 minutes with two of your line-of-business owners. We leave with a chosen use case and a 30-day plan, or we do not come back.
+          Next step: 60 minutes with two of your line-of-business owners. We leave with a chosen use case and a 30-day plan.
         </p>
       </div>
       <SlideBar from={GREEN} to={ACCENT} />
