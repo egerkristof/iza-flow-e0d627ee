@@ -229,6 +229,15 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
+    id: "insurance-uw",
+    title: "Insurance Agentic Underwriting Brief (UAE · Proxy edition)",
+    path: "/insurance-uw",
+    sourcePath: "src/pages/InsuranceUnderwritingDeck.tsx",
+    description: "7-slide editable working brief for a UAE carrier challenging a $1.2M internal agentic-underwriting build. Designed to travel through a design-proxy partner (proxy is the design + delivery authority; LIZA stays underneath as the execution layer). Side-by-side SME Commercial Property + Motor framing. Arc: cover, the underwriting trap (5 steps x 2 LOBs), why the internal build fails ($400k+$350k+$250k+$200k breakdown + year-2 maintenance trap), the agentic loop with the senior-underwriter feedback edge, who owns what (Proxy / LIZA / Carrier boundary), references carried from /insurance S9 (Generali, Prudential, MSIG), 2-week shape ending at the CRO readout. Strips all LIZA jargon (no AACE, no Unified Rationale Log as product, no Zero Hallucination). DRAFT + HIGHLY CONFIDENTIAL badges on every slide.",
+    component: InsuranceUnderwritingDeck,
+    showInAdmin: true,
+  },
+  {
     id: "sales",
     title: "Sales Deck",
     path: "/sales",
