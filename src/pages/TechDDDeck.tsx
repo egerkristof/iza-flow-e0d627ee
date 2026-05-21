@@ -2272,6 +2272,7 @@ const SLIDES = [
   { id: "metering", title: "Pricing Inversion + Metering", component: <S08PricingMetering /> },
   { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
   { id: "unit-economics", title: "Unit Economics & Sustainability", component: <S10UnitEconomics /> },
+  { id: "scissors", title: "The Scissors · Cost Dynamics", component: <S10aScissors /> },
   { id: "acv-bridge", title: "Top-down ACV ↔ Bottom-up Unit Economics", component: <S10bACVBridge /> },
   { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
   { id: "augmentation-mechanics", title: "Augmentation Mechanics", component: <S09bAugmentationMechanics /> },
