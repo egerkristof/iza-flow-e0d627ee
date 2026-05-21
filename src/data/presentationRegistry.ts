@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import BridgeDeck from "@/pages/BridgeDeck";
 import TechDDDeck from "@/pages/TechDDDeck";
+import ImpactDeck from "@/pages/ImpactDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
 import ConsultingTrainingDeck from "@/pages/ConsultingTrainingDeck";
 import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
@@ -205,6 +206,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/TechDDDeck.tsx",
     description: "9-slide tech due diligence deck for investor TDD teams. Three-phase arc: (1) Paradigm — Three Horizons collapse (permanent edge state), infrastructure shift from data to cognitive, Context Gap iceberg. (2) Architecture — LIZA OS map (Leadership / Systems of Record / Decision Core / AI Surfaces / LLM Fabric), AACE v3.3 four-step loop with State-Locking, artifact propagation graph and Unified Rationale Log. (3) Commercial + Synthesis — Pricing Inversion (industry converging on usage-based) with the labour-market analogy and 1×/5×/25× value-based metering, then the Augmentation Engine separating human contribution (creativity, self-awareness, ethics) from system contribution (encoded senior judgment, governed execution).",
     component: TechDDDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "impact",
+    title: "Impact Thesis Deck",
+    path: "/impact",
+    sourcePath: "src/pages/ImpactDeck.tsx",
+    description: "11-slide internal impact-investing brief. Companion to /tech-dd. Frames the core question 'why keep humans in the age of AI', applies the IMP five dimensions (What/Who/HowMuch/Contribution/Risk), names the Portable Context Bundle as the unit of impact, lays out an explicit Theory of Change and a per-bundle measurement stack (outputs/outcomes/lagging impact), maps to WEF Core Skills 2030 and four UN SDG sub-targets, runs a counterfactual/additionality scan vs. big-tech AI, employer Copilots, personal memory tools, and public reskilling, then closes on a two-door decision: capital against the IMP scorecard, or strategic stake to co-define the open bundle schema.",
+    component: ImpactDeck,
     showInAdmin: true,
   },
   {
