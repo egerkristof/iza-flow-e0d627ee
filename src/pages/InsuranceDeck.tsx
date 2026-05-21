@@ -570,7 +570,7 @@ function S09Provenance() {
           We did not design this platform in a vacuum. We built it from the <span style={{ color: `hsl(${GREEN})` }}>scars of deploying AI for major insurers</span>.
         </h2>
         <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1620 }}>
-          Each of these engagements asked us to custom-build the same governance, context and compliance layer from scratch. LIZA OS is that layer, productized, so the next carrier does not have to pay to invent it again.
+          Each of these engagements asked us to custom-build the same governance, context and compliance layer from scratch. LIZA OS is that layer.
         </p>
 
         <div className="grid grid-cols-3 gap-6 max-w-[1750px] mb-8">
