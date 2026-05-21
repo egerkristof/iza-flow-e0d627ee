@@ -532,6 +532,70 @@ function S08Matrix() {
 // ═════════════════════════════════════════════════════════════════════════════
 // 09 · WHAT THE FIRST 30 DAYS LOOK LIKE · still product-light
 // ═════════════════════════════════════════════════════════════════════════════
+// ═════════════════════════════════════════════════════════════════════════════
+// 9 · WHY US · BUILT FROM REAL INSURANCE DEPLOYMENTS
+// ═════════════════════════════════════════════════════════════════════════════
+function S09Provenance() {
+  const carriers = [
+    {
+      name: "Generali",
+      region: "Hungary / Europe",
+      lesson: "Custom agents and Agentspace workshops made it clear: giving employees LLM access is not enough. They needed a central control layer for secure data grounding and enterprise governance.",
+      tag: "Governance · Context grounding",
+      color: ACCENT,
+    },
+    {
+      name: "Prudential",
+      region: "Taiwan",
+      lesson: "Built the Unified Data Platform and Master Data Management foundations, with ClaimAI and product recommender on the roadmap. Hit the wall of strict data governance, metadata tagging and compliance encryption at every step.",
+      tag: "Claims AI · Data governance",
+      color: GREEN,
+    },
+    {
+      name: "MSIG Life",
+      region: "Indonesia",
+      lesson: "Expanded data and AI infrastructure inside one of APAC's most demanding regulatory environments. Same friction surfaced again: compliance, residency and audit had to be architected, not bolted on.",
+      tag: "Regulated AI infrastructure",
+      color: GOLD,
+    },
+  ];
+  return (
+    <div className="w-full h-full relative px-24 pt-24 pb-20" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={9} total={TOTAL} />
+      <PhaseChip phase="Why us · the scars are real" color={PURPLE} />
+      <div className="relative z-10">
+        <Tag label="Built from the inside of insurance" color={PURPLE} />
+        <h2 className="font-bold leading-[1.05] mb-4" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          We did not design this platform in a vacuum. We built it from the <span style={{ color: `hsl(${GREEN})` }}>scars of deploying AI for major insurers</span>.
+        </h2>
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.45, maxWidth: 1620 }}>
+          Each of these engagements asked us to custom-build the same governance, context and compliance layer from scratch. LIZA OS is that layer, productized, so the next carrier does not have to pay to invent it again.
+        </p>
+
+        <div className="grid grid-cols-3 gap-6 max-w-[1750px] mb-8">
+          {carriers.map(c => (
+            <div key={c.name} className="rounded-2xl border-2 p-6 flex flex-col" style={{ borderColor: `hsl(${c.color} / 0.4)`, background: CARD_ALT, minHeight: 340 }}>
+              <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${c.color})` }}>{c.tag}</p>
+              <p className="font-bold" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>{c.name}</p>
+              <p className="font-semibold mb-4" style={{ fontSize: 15, color: SUBTLE, letterSpacing: "0.08em", textTransform: "uppercase" }}>{c.region}</p>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{c.lesson}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl border-2 p-6 max-w-[1750px]" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)` }}>
+          <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>What carries over to your engagement</p>
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            The use cases on the previous slides are the ones we already lived inside other carriers. The 30-day shape on the next page reflects how we wish those programs had started: one pod, one standard captured, one measurable readout, before anything goes near a customer.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={PURPLE} to={GREEN} />
+    </div>
+  );
+}
+
 function S09ThirtyDays() {
   const days = [
     { d: "Day 0-3",   t: "Pick one use case, one pod", s: "From the four on the previous page. We agree the owner, the baseline metrics, and the success bar with your team." },
