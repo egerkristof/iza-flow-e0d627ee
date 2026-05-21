@@ -7,7 +7,7 @@ import {
   Eye, Activity, Users, GraduationCap, MessageSquare, Globe, Compass,
   GitPullRequest, CheckCircle2, AlertTriangle, Send, UserCheck,
   Leaf, HeartHandshake, LineChart, HelpCircle,
-  User, Building2, KeyRound, FileSignature, ArrowLeftRight, Package,
+  User, Building2, KeyRound, FileSignature, ArrowLeftRight, Package, Scissors,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -104,7 +104,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 16;
+const TOTAL = 17;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 01 — COVER
@@ -1857,6 +1857,190 @@ function S11HyperscalerRisk() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 11a — THE SCISSORS · token prices fall, customer AI bills rise
+// ═════════════════════════════════════════════════════════════════════════════
+function S10aScissors() {
+  // Two opposing curves: vendor $/Mtok falling, enterprise AI spend per knowledge worker rising.
+  // LIZA cuts through the middle: value floor (priced to displaced human work) +
+  // efficiency ceiling (governed context compile keeps the bill flat-to-declining).
+  const years = ["2023", "2024", "2025", "2026 E", "2027 E"];
+  // Indexed to 100 at 2023 for visual clarity. Sources cited in footer.
+  const vendorPrice = [100, 42, 18, 9, 5];          // $/M tokens for frontier-grade output
+  const ungovernedBill = [100, 165, 240, 330, 440]; // ungoverned enterprise AI spend per knowledge worker
+  const governedBill   = [100, 95, 88, 82, 78];     // LIZA-governed spend per knowledge worker
+  const chartW = 760, chartH = 280, padL = 44, padR = 16, padT = 14, padB = 28;
+  const innerW = chartW - padL - padR, innerH = chartH - padT - padB;
+  const yMax = 460;
+  const xAt = (i: number) => padL + (i / (years.length - 1)) * innerW;
+  const yAt = (v: number) => padT + innerH - (v / yMax) * innerH;
+  const path = (arr: number[]) => arr.map((v, i) => `${i === 0 ? "M" : "L"} ${xAt(i).toFixed(1)} ${yAt(v).toFixed(1)}`).join(" ");
+  const bandPath = `${path(vendorPrice)} L ${xAt(years.length - 1).toFixed(1)} ${yAt(ungovernedBill[years.length - 1]).toFixed(1)} ${[...ungovernedBill].reverse().map((v, i) => `L ${xAt(years.length - 1 - i).toFixed(1)} ${yAt(v).toFixed(1)}`).join(" ")} Z`;
+
+  const legend = [
+    { k: "Token", v: "one word-piece the model processes. 1 token ≈ 0.75 English words." },
+    { k: "$/M tokens", v: "vendor list price per one million tokens (input + output blended at typical 4:1 ratio, frontier-grade output, indexed to 2023 = 100)." },
+    { k: "Ungoverned bill", v: "enterprise AI spend per knowledge worker when teams paste full documents, run agentic loops and stack RAG without a budget gate. Indexed to 2023 = 100. Pattern reported across hyperscaler and analyst guidance (Microsoft, a16z, Menlo Ventures 2024-25)." },
+    { k: "Governed bill", v: "same workload run through LIZA: each call is locked to a decision class with a hard COGS ceiling (Op $0.10 · Design $0.60 · Strategic $5.00) and a compiled minimum-sufficient context, not the maximum available." },
+    { k: "Decision class", v: "Operational (1×) · Design (5×) · Strategic (25×). Set before the model is called. Determines which model is routed and the maximum spend per call." },
+    { k: "Context compile", v: "AACE assembles only the standards, prior artifacts and user input that the locked Playbook step actually needs. Replaces blind RAG, which retrieves everything that looks similar." },
+  ];
+
+  const pillars = [
+    {
+      n: "01", k: "Value floor", color: GREEN,
+      mech: "Price anchored to displaced human work",
+      v: "Customer price is a small fraction of the loaded human cost the call removes (Slide 10: 1-3% of displaced cost). As inference prices fall, this floor does not move. Margin widens for us; price stays defensible for the buyer because it is a fraction of work removed, not a markup on tokens.",
+    },
+    {
+      n: "02", k: "Efficiency ceiling", color: ACCENT,
+      mech: "Governed context compile + per-class spend cap",
+      v: "Every call passes through AACE: only the standards and artifacts the locked Playbook step needs are compiled in, and a hard COGS ceiling is enforced before the model is called. The customer cannot accidentally pay for a 250K-token agentic loop on an Operational question.",
+    },
+    {
+      n: "03", k: "Governance is the mechanism", color: GOLD,
+      mech: "Decision class + Playbook lock + auditable line items",
+      v: "Both the floor and the ceiling exist because every call is intent-locked to a decision class and a Playbook version. Free-form chat and seat licences cannot price this way; they have no unit of work to price against and no gate to enforce.",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={12} total={TOTAL} />
+      <PhaseChip phase="Phase 3 · Commercial" color={GOLD} />
+      <div className="relative z-10">
+        <Tag label="Cost Dynamics · The Scissors" color={GOLD} />
+        <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 38, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1780 }}>
+          Token prices are falling. Customer AI bills are rising. <span style={{ color: `hsl(${GOLD})` }}>LIZA cuts through the middle.</span>
+        </h2>
+        <p className="mb-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          Vendors keep cutting per-token prices, yet enterprise AI spend per knowledge worker keeps climbing because teams paste larger documents, chain longer agentic loops and stack retrieval without a gate. We price to the human work removed (so our margin holds as inference gets cheaper) and we govern the context compile (so the customer's bill stays flat to declining). The two opposing curves close into a defensible operating band.
+        </p>
+
+        {/* Legend strip — define every term used on the chart */}
+        <div className="rounded-lg border bg-white px-4 py-2.5 mb-3" style={{ borderColor: CHROME_BORDER }}>
+          <div className="grid grid-cols-6 gap-x-4 gap-y-1">
+            {legend.map(l => (
+              <div key={l.k}>
+                <p className="font-mono uppercase tracking-[0.08em]" style={{ fontSize: 9, color: `hsl(${GOLD})` }}>{l.k}</p>
+                <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.3 }}>{l.v}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-[1.15fr_1fr] gap-6 items-start">
+          {/* Chart panel */}
+          <div className="rounded-2xl border-2 p-4" style={{ borderColor: `hsl(${GOLD} / 0.4)`, background: `hsl(${GOLD} / 0.05)` }}>
+            <div className="flex items-baseline justify-between mb-2">
+              <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>The scissors · indexed to 2023 = 100</p>
+              <p style={{ fontSize: 10.5, color: SUBTLE, fontStyle: "italic" }}>Lower vendor price · higher ungoverned bill · flat governed bill</p>
+            </div>
+            <div className="rounded-xl bg-white border p-3" style={{ borderColor: CHROME_BORDER }}>
+              <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full h-auto">
+                {/* y gridlines */}
+                {[0, 100, 200, 300, 400].map(g => (
+                  <g key={g}>
+                    <line x1={padL} x2={chartW - padR} y1={yAt(g)} y2={yAt(g)} stroke={CHROME_BORDER} strokeWidth={1} strokeDasharray={g === 100 ? "" : "2 3"} />
+                    <text x={padL - 6} y={yAt(g) + 3} textAnchor="end" fontSize={9} fill={SUBTLE} fontFamily="monospace">{g}</text>
+                  </g>
+                ))}
+                {/* x labels */}
+                {years.map((y, i) => (
+                  <text key={y} x={xAt(i)} y={chartH - 8} textAnchor="middle" fontSize={10} fill={MUTED} fontFamily="monospace">{y}</text>
+                ))}
+                {/* Divergence band between vendor price and ungoverned bill */}
+                <path d={bandPath} fill={`hsl(${RED} / 0.07)`} stroke="none" />
+                {/* Governed band shading around governed line */}
+                <path
+                  d={`${path(governedBill.map(v => v + 15))} L ${xAt(years.length - 1)} ${yAt(governedBill[governedBill.length - 1] - 15)} ${[...governedBill].reverse().map((v, i) => `L ${xAt(years.length - 1 - i)} ${yAt(v - 15)}`).join(" ")} Z`}
+                  fill={`hsl(${GREEN} / 0.10)`} stroke="none"
+                />
+                {/* Lines */}
+                <path d={path(ungovernedBill)} fill="none" stroke={`hsl(${RED})`} strokeWidth={2.2} />
+                <path d={path(vendorPrice)} fill="none" stroke={`hsl(${ACCENT})`} strokeWidth={2.2} />
+                <path d={path(governedBill)} fill="none" stroke={`hsl(${GREEN})`} strokeWidth={2.6} />
+                {/* Endpoints labels */}
+                {ungovernedBill.map((v, i) => i === ungovernedBill.length - 1 && (
+                  <g key="u">
+                    <circle cx={xAt(i)} cy={yAt(v)} r={3} fill={`hsl(${RED})`} />
+                    <text x={xAt(i) - 6} y={yAt(v) - 6} textAnchor="end" fontSize={10} fontWeight={700} fill={`hsl(${RED})`}>Ungoverned · 440</text>
+                  </g>
+                ))}
+                {vendorPrice.map((v, i) => i === vendorPrice.length - 1 && (
+                  <g key="v">
+                    <circle cx={xAt(i)} cy={yAt(v)} r={3} fill={`hsl(${ACCENT})`} />
+                    <text x={xAt(i) - 6} y={yAt(v) + 14} textAnchor="end" fontSize={10} fontWeight={700} fill={`hsl(${ACCENT})`}>Vendor $/Mtok · 5</text>
+                  </g>
+                ))}
+                {governedBill.map((v, i) => i === governedBill.length - 1 && (
+                  <g key="g">
+                    <circle cx={xAt(i)} cy={yAt(v)} r={3.5} fill={`hsl(${GREEN})`} />
+                    <text x={xAt(i) - 6} y={yAt(v) - 6} textAnchor="end" fontSize={10} fontWeight={700} fill={`hsl(${GREEN})`}>LIZA-governed · 78</text>
+                  </g>
+                ))}
+                {/* Legend chips */}
+                <g transform={`translate(${padL + 4}, ${padT + 6})`}>
+                  <rect width="6" height="6" fill={`hsl(${ACCENT})`} y="2" />
+                  <text x="12" y="8" fontSize="9.5" fill={MUTED}>Vendor list price ($/M tokens)</text>
+                  <rect width="6" height="6" fill={`hsl(${RED})`} y="16" />
+                  <text x="12" y="22" fontSize="9.5" fill={MUTED}>Ungoverned enterprise AI bill / knowledge worker</text>
+                  <rect width="6" height="6" fill={`hsl(${GREEN})`} y="30" />
+                  <text x="12" y="36" fontSize="9.5" fill={MUTED}>LIZA-governed bill / knowledge worker</text>
+                </g>
+              </svg>
+            </div>
+            <div className="mt-3 grid grid-cols-3 gap-2.5">
+              <div className="rounded-lg px-3 py-2" style={{ background: `hsl(${ACCENT} / 0.07)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+                <p className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9, color: `hsl(${ACCENT})` }}>Vendor price · 2023 → 2027 E</p>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>100 → 5  <span style={{ fontSize: 11, color: SUBTLE, fontWeight: 400 }}>(≈ 20× cheaper)</span></p>
+              </div>
+              <div className="rounded-lg px-3 py-2" style={{ background: `hsl(${RED} / 0.07)`, border: `1px solid hsl(${RED} / 0.25)` }}>
+                <p className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9, color: `hsl(${RED})` }}>Ungoverned bill · 2023 → 2027 E</p>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>100 → 440  <span style={{ fontSize: 11, color: SUBTLE, fontWeight: 400 }}>(≈ 4.4× more)</span></p>
+              </div>
+              <div className="rounded-lg px-3 py-2" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+                <p className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>LIZA-governed · 2023 → 2027 E</p>
+                <p className="font-bold" style={{ fontSize: 16, color: TEXT }}>100 → 78  <span style={{ fontSize: 11, color: SUBTLE, fontWeight: 400 }}>(≈ 22% lower)</span></p>
+              </div>
+            </div>
+          </div>
+
+          {/* Three pillars panel */}
+          <div className="flex flex-col gap-2.5">
+            <p className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>How the scissors close · three pillars</p>
+            {pillars.map(p => (
+              <div key={p.k} className="rounded-xl border-2 px-4 py-3" style={{ borderColor: `hsl(${p.color} / 0.4)`, background: `hsl(${p.color} / 0.05)` }}>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="font-mono font-bold" style={{ fontSize: 13, color: `hsl(${p.color})` }}>{p.n}</span>
+                  <p className="font-bold" style={{ fontSize: 14, color: TEXT }}>{p.k}</p>
+                </div>
+                <p className="font-mono uppercase tracking-[0.1em] mb-1.5" style={{ fontSize: 10, color: `hsl(${p.color})` }}>Mechanism: {p.mech}</p>
+                <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.4 }}>{p.v}</p>
+              </div>
+            ))}
+            <div className="rounded-xl px-4 py-3" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px dashed hsl(${GOLD} / 0.4)` }}>
+              <div className="flex items-center gap-2 mb-1">
+                <Scissors size={15} style={{ color: `hsl(${GOLD})` }} />
+                <p className="font-bold" style={{ fontSize: 13, color: TEXT }}>Net commercial position</p>
+              </div>
+              <p style={{ fontSize: 11, color: MUTED, lineHeight: 1.45 }}>
+                Pure-metered vendors get squeezed as token prices fall. Seat-licence vendors get squeezed as buyers refuse to keep paying for unused seats. We are anchored above the falling COGS line and below the rising ungoverned-spend line, so the gap between what the customer would otherwise pay and what we charge widens every year. That gap is the wedge.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p className="mt-3 font-mono" style={{ fontSize: 10, color: SUBTLE }}>
+          Index basis 2023 = 100. Vendor curve: blended frontier-grade output $/M tokens (OpenAI, Anthropic, Google list prices, Nov 2025). Ungoverned curve: pattern of enterprise AI spend growth per knowledge worker reported by Microsoft Work Trend Index, a16z &amp; Menlo Ventures Enterprise AI surveys 2024-25. Governed curve: LIZA modelled outcome with decision-class caps + compiled context. 2026-27 figures are estimates (E).
+        </p>
+      </div>
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 11b — ACV BRIDGE · top-down meets bottom-up
 // ═════════════════════════════════════════════════════════════════════════════
 function S10bACVBridge() {
@@ -2088,6 +2272,7 @@ const SLIDES = [
   { id: "metering", title: "Pricing Inversion + Metering", component: <S08PricingMetering /> },
   { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
   { id: "unit-economics", title: "Unit Economics & Sustainability", component: <S10UnitEconomics /> },
+  { id: "scissors", title: "The Scissors · Cost Dynamics", component: <S10aScissors /> },
   { id: "acv-bridge", title: "Top-down ACV ↔ Bottom-up Unit Economics", component: <S10bACVBridge /> },
   { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
   { id: "augmentation-mechanics", title: "Augmentation Mechanics", component: <S09bAugmentationMechanics /> },
