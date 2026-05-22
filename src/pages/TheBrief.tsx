@@ -11,46 +11,51 @@ import {
   ArrowRight,
   Loader2,
   Sparkles,
-  Wrench,
   AlertTriangle,
-  Eye,
   Check,
   Share2,
   RotateCcw,
+  Compass,
+  ShieldCheck,
+  Layers,
+  Scale,
 } from "lucide-react";
-import { OperatingGrid, type GridState, type GridStatus } from "@/components/brief/OperatingGrid";
 import { TEAM_PROFILES, TEAM_BY_ID, type TeamId } from "@/lib/team-profiles";
+import {
+  STREAMS,
+  AUDITS,
+  DECISION_CLASSES,
+  emptyStreamAnswer,
+  emptyAuditAnswer,
+  streamExamples,
+  deterministicDiagnosis,
+  type StreamId,
+  type StreamStatus,
+  type AuditId,
+  type AuditStatus,
+  type OperatorDiagnosis,
+} from "@/lib/operator-framework";
+import { OperatorCompass } from "@/components/brief/OperatorCompass";
+import { GovernanceBar } from "@/components/brief/GovernanceBar";
+import { BundleGap } from "@/components/brief/BundleGap";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Types
 // ────────────────────────────────────────────────────────────────────────────
 
-type Diagnosis = {
-  title: string;
-  current_model_read: string;
-  tool_limitations: { tool: string; limitation: string }[];
-  grid_status: {
-    intent: { status: GridStatus; why: string };
-    knowledge: { status: GridStatus; why: string };
-    execution: { status: GridStatus; why: string };
-  };
-  blind_spots: { title: string; why: string }[];
-  correction: { move: string; scope: string; liza_capability: string };
-};
-
 type Inputs = {
   team: TeamId | null;
   use_cases: string[];
-  goal: string;
   tools: string[];
-  limitations: string[];
+  streams: Record<StreamId, StreamStatus | null>;
+  audits: Record<AuditId, AuditStatus | null>;
   free_text: string;
 };
 
 type Phase = "input" | "diagnosing" | "result";
 
 // ────────────────────────────────────────────────────────────────────────────
-// Helpers
+// Small helpers
 // ────────────────────────────────────────────────────────────────────────────
 
 function Chip({
@@ -79,51 +84,52 @@ function Chip({
   );
 }
 
-function fallbackDiagnosis(inputs: Inputs): Diagnosis {
-  const tools = inputs.tools.length ? inputs.tools : ["a mixed set of consumer AI tools"];
-  return {
-    title: "Your AI operating model today",
-    current_model_read: `You are trying to ${inputs.goal.toLowerCase()}. Today the work runs through ${tools.join(", ")} sitting on top of individual judgement. There is no shared layer between what you want and what the tools produce, so every output starts from a blank slate.`,
-    tool_limitations: inputs.tools.map((tool) => ({
-      tool,
-      limitation: "No persistent context, no enforced standard, every session restarts.",
-    })),
-    grid_status: {
-      intent: {
-        status: inputs.goal ? "working" : "missing",
-        why: "You know what you want. The goal is stated.",
-      },
-      knowledge: {
-        status: "missing",
-        why: "There is no executable knowledge layer between your intent and the tools. Standards, decisions, and policies live in heads and scattered docs.",
-      },
-      execution: {
-        status: inputs.tools.length ? "partial" : "missing",
-        why: inputs.tools.length
-          ? "Tools are deployed but each one operates on its own context."
-          : "No tools in place yet.",
-      },
-    },
-    blind_spots: [
-      {
-        title: "Every tool is reinventing your standard",
-        why: "Without one place to publish decision logic, each tool guesses. The cost shows up as inconsistency, not error.",
-      },
-      {
-        title: "Nothing compounds",
-        why: "Good prompts and good answers leave with the person who wrote them. The next user starts from zero.",
-      },
-    ],
-    correction: {
-      move: "Publish your operating standards as an executable knowledge layer that every AI surface reads from.",
-      scope: "Two to four weeks. One owner. One bundle that covers your three highest-value decisions.",
-      liza_capability: "LIZA knowledge layer plus context bundles wired into the tools you already use.",
-    },
-  };
+function ThreeWay<T extends string>({
+  options,
+  value,
+  onChange,
+}: {
+  options: { value: T; label: string; color: string }[];
+  value: T | null;
+  onChange: (v: T) => void;
+}) {
+  return (
+    <div className="inline-flex rounded-lg border overflow-hidden" style={{ borderColor: "hsl(var(--border))" }}>
+      {options.map((o) => {
+        const selected = value === o.value;
+        return (
+          <button
+            key={o.value}
+            type="button"
+            onClick={() => onChange(o.value)}
+            className="text-[11px] md:text-xs font-semibold px-3 py-1.5 transition-colors"
+            style={{
+              background: selected ? `hsl(${o.color} / 0.18)` : "transparent",
+              color: selected ? `hsl(${o.color})` : "hsl(var(--muted-foreground))",
+            }}
+          >
+            {o.label}
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
+const STREAM_OPTS: { value: StreamStatus; label: string; color: string }[] = [
+  { value: "lit", label: "Fully", color: "155 72% 46%" },
+  { value: "partial", label: "Partially", color: "38 92% 50%" },
+  { value: "dark", label: "Blind", color: "0 70% 55%" },
+];
+
+const AUDIT_OPTS: { value: AuditStatus; label: string; color: string }[] = [
+  { value: "green", label: "Yes", color: "155 72% 46%" },
+  { value: "amber", label: "Partly", color: "38 92% 50%" },
+  { value: "red", label: "No", color: "0 70% 55%" },
+];
+
 // ────────────────────────────────────────────────────────────────────────────
-// Component
+// Page
 // ────────────────────────────────────────────────────────────────────────────
 
 export default function TheBrief() {
@@ -134,17 +140,16 @@ export default function TheBrief() {
   const [inputs, setInputs] = useState<Inputs>({
     team: null,
     use_cases: [],
-    goal: "",
     tools: [],
-    limitations: [],
+    streams: emptyStreamAnswer(),
+    audits: emptyAuditAnswer(),
     free_text: "",
   });
-  const [diagnosis, setDiagnosis] = useState<Diagnosis | null>(null);
+  const [diagnosis, setDiagnosis] = useState<OperatorDiagnosis | null>(null);
   const [savedId, setSavedId] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
 
-  // Load existing diagnosis from URL
   useEffect(() => {
     if (!id) return;
     (async () => {
@@ -159,13 +164,13 @@ export default function TheBrief() {
         return;
       }
       setInputs(data.inputs as unknown as Inputs);
-      setDiagnosis(data.output as unknown as Diagnosis);
+      setDiagnosis(data.output as unknown as OperatorDiagnosis);
       setSavedId(id);
       setPhase("result");
     })();
   }, [id, navigate]);
 
-  const toggle = (key: "tools" | "limitations" | "use_cases", value: string) => {
+  const toggle = (key: "tools" | "use_cases", value: string) => {
     setInputs((p) => ({
       ...p,
       [key]: p[key].includes(value)
@@ -174,45 +179,60 @@ export default function TheBrief() {
     }));
   };
 
-  const canSubmit =
-    !!inputs.team && (inputs.use_cases.length > 0 || inputs.goal.trim().length > 10);
+  const setStream = (s: StreamId, v: StreamStatus) =>
+    setInputs((p) => ({ ...p, streams: { ...p.streams, [s]: v } }));
+  const setAudit = (a: AuditId, v: AuditStatus) =>
+    setInputs((p) => ({ ...p, audits: { ...p.audits, [a]: v } }));
+
+  const streamsAnswered = STREAMS.every((s) => inputs.streams[s.id] !== null);
+  const auditsAnswered = AUDITS.every((a) => inputs.audits[a.id] !== null);
+  const canSubmit = !!inputs.team && streamsAnswered && auditsAnswered;
 
   const runDiagnosis = async () => {
     if (!canSubmit) {
-      toast.error("Pick your team and at least one use case to continue.");
+      toast.error("Pick your team, then answer the four streams and five audits.");
       return;
     }
     setPhase("diagnosing");
+    const team = inputs.team ? TEAM_BY_ID[inputs.team] : null;
     try {
-      const team = inputs.team ? TEAM_BY_ID[inputs.team] : null;
-      const derivedGoal =
-        inputs.goal.trim() ||
-        (team
-          ? `Help our ${team.label} team with: ${inputs.use_cases.join("; ")}.`
-          : inputs.use_cases.join("; "));
       const { data, error } = await supabase.functions.invoke("generate-brief", {
         body: {
           team: team?.label || null,
           team_sub: team?.sub || null,
           use_cases: inputs.use_cases,
-          goal: derivedGoal,
           tools: inputs.tools,
-          limitations: inputs.limitations,
+          streams: inputs.streams,
+          audits: inputs.audits,
           free_text: inputs.free_text,
         },
       });
-      let result: Diagnosis;
+      let result: OperatorDiagnosis;
       if (error || !data?.diagnosis) {
         console.warn("AI diagnosis unavailable, using fallback:", error);
-        result = fallbackDiagnosis(inputs);
+        result = deterministicDiagnosis({
+          team: team?.label || null,
+          use_cases: inputs.use_cases,
+          tools: inputs.tools,
+          streams: inputs.streams,
+          audits: inputs.audits,
+        });
       } else {
-        result = data.diagnosis as Diagnosis;
+        result = data.diagnosis as OperatorDiagnosis;
       }
       setDiagnosis(result);
       setPhase("result");
     } catch (e) {
       console.error(e);
-      setDiagnosis(fallbackDiagnosis(inputs));
+      setDiagnosis(
+        deterministicDiagnosis({
+          team: team?.label || null,
+          use_cases: inputs.use_cases,
+          tools: inputs.tools,
+          streams: inputs.streams,
+          audits: inputs.audits,
+        }),
+      );
       setPhase("result");
     }
   };
@@ -251,23 +271,16 @@ export default function TheBrief() {
     setSavedId(null);
     setEmail("");
     setPhase("input");
-    setInputs({ team: null, use_cases: [], goal: "", tools: [], limitations: [], free_text: "" });
+    setInputs({
+      team: null,
+      use_cases: [],
+      tools: [],
+      streams: emptyStreamAnswer(),
+      audits: emptyAuditAnswer(),
+      free_text: "",
+    });
     navigate("/the-brief", { replace: true });
   };
-
-  const gridState: GridState | null = diagnosis
-    ? {
-        goal:
-          inputs.goal ||
-          (inputs.team
-            ? `${TEAM_BY_ID[inputs.team].label} team: ${inputs.use_cases.slice(0, 3).join(", ")}`
-            : ""),
-        tools: inputs.tools,
-        ...diagnosis.grid_status,
-      }
-    : null;
-
-  // ─── Render ─────────────────────────────────────────────────────────────
 
   return (
     <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
@@ -279,13 +292,11 @@ export default function TheBrief() {
           >
             ← Liza
           </Link>
-          <h1 className="mt-4 text-3xl md:text-5xl font-black tracking-tight">
-            The Brief
-          </h1>
+          <h1 className="mt-4 text-3xl md:text-5xl font-black tracking-tight">The Brief</h1>
           <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-2xl">
-            Tell us what you are trying to achieve with AI and what is breaking
-            today. Get back a read on your operating model and the one move that
-            closes the gap.
+            AI-native operations require four streams to converge on every decision, under
+            five governance audits. Tell us what your team sees today. Get back a read on the
+            gaps and the one move that closes the biggest.
           </p>
         </header>
 
@@ -294,6 +305,8 @@ export default function TheBrief() {
             inputs={inputs}
             setInputs={setInputs}
             toggle={toggle}
+            setStream={setStream}
+            setAudit={setAudit}
             canSubmit={canSubmit}
             onSubmit={runDiagnosis}
           />
@@ -301,10 +314,10 @@ export default function TheBrief() {
 
         {phase === "diagnosing" && <DiagnosingView />}
 
-        {phase === "result" && diagnosis && gridState && (
+        {phase === "result" && diagnosis && (
           <ResultView
             diagnosis={diagnosis}
-            gridState={gridState}
+            tools={inputs.tools}
             savedId={savedId}
             email={email}
             setEmail={setEmail}
@@ -319,24 +332,29 @@ export default function TheBrief() {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// Sub-views
+// Input
 // ────────────────────────────────────────────────────────────────────────────
 
 function InputView({
   inputs,
   setInputs,
   toggle,
+  setStream,
+  setAudit,
   canSubmit,
   onSubmit,
 }: {
   inputs: Inputs;
   setInputs: React.Dispatch<React.SetStateAction<Inputs>>;
-  toggle: (key: "tools" | "limitations" | "use_cases", value: string) => void;
+  toggle: (key: "tools" | "use_cases", value: string) => void;
+  setStream: (s: StreamId, v: StreamStatus) => void;
+  setAudit: (a: AuditId, v: AuditStatus) => void;
   canSubmit: boolean;
   onSubmit: () => void;
 }) {
   const team = inputs.team ? TEAM_BY_ID[inputs.team] : null;
-  const [showGoal, setShowGoal] = useState(false);
+  const [showExtra, setShowExtra] = useState(false);
+  const examples = streamExamples(inputs.team);
 
   return (
     <motion.div
@@ -345,12 +363,8 @@ function InputView({
       transition={{ duration: 0.4 }}
       className="space-y-8"
     >
-      {/* Step 1 — Team */}
-      <section
-        className="rounded-2xl border p-6 md:p-8"
-        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-      >
-        <StepHeader n={1} title="Which team are you running?" />
+      {/* 1. Team */}
+      <Section n={1} title="Which team are you running?">
         <p className="text-sm text-muted-foreground mb-4">
           We tailor the next questions to your team. Pick the closest fit.
         </p>
@@ -361,16 +375,14 @@ function InputView({
               <button
                 key={t.id}
                 type="button"
-                onClick={() => {
+                onClick={() =>
                   setInputs((p) => ({
                     ...p,
                     team: t.id,
-                    // reset downstream selections when switching team
                     use_cases: p.team === t.id ? p.use_cases : [],
                     tools: p.team === t.id ? p.tools : [],
-                    limitations: p.team === t.id ? p.limitations : [],
-                  }));
-                }}
+                  }))
+                }
                 className="text-left rounded-xl border p-3 transition-all"
                 style={{
                   background: selected ? "hsl(var(--primary) / 0.08)" : "hsl(var(--card))",
@@ -384,21 +396,14 @@ function InputView({
             );
           })}
         </div>
-      </section>
+      </Section>
 
-      {/* Subsequent steps appear only after team is picked */}
       {team && (
         <>
-          {/* Step 2 — Use cases */}
-          <motion.section
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl border p-6 md:p-8"
-            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-          >
-            <StepHeader n={2} title={`What is your ${team.label} team using AI for?`} />
+          {/* 2. Use cases (optional context) */}
+          <Section n={2} title={`What is your ${team.label} team using AI for today?`}>
             <p className="text-sm text-muted-foreground mb-4">
-              Pick the use cases that apply. These are the typical ones for {team.label}.
+              Pick all that apply. Optional, but it sharpens the diagnosis.
             </p>
             <div className="flex flex-wrap gap-2">
               {team.use_cases.map((u) => (
@@ -410,16 +415,10 @@ function InputView({
                 />
               ))}
             </div>
-          </motion.section>
+          </Section>
 
-          {/* Step 3 — Tools */}
-          <motion.section
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl border p-6 md:p-8"
-            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-          >
-            <StepHeader n={3} title="Which tools are in use today?" />
+          {/* 3. Tools */}
+          <Section n={3} title="Which AI tools are in use?">
             <p className="text-sm text-muted-foreground mb-4">
               The usual stack for {team.label}. Pick all that apply.
             </p>
@@ -433,87 +432,105 @@ function InputView({
                 />
               ))}
             </div>
-          </motion.section>
+          </Section>
 
-          {/* Step 4 — Limitations */}
-          <motion.section
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl border p-6 md:p-8"
-            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-          >
-            <StepHeader n={4} title="Where is it falling short?" />
-            <p className="text-sm text-muted-foreground mb-4">
-              The shortcomings we see most often for {team.label} teams.
+          {/* 4. Streams */}
+          <Section n={4} title="Which streams does your AI see?">
+            <p className="text-sm text-muted-foreground mb-5">
+              Every moment of work requires four streams to converge. Mark how much your AI
+              currently sees of each.
             </p>
-            <div className="flex flex-wrap gap-2">
-              {team.limitations.map((l) => (
-                <Chip
-                  key={l}
-                  label={l}
-                  selected={inputs.limitations.includes(l)}
-                  onClick={() => toggle("limitations", l)}
-                />
+            <div className="space-y-3">
+              {STREAMS.map((s) => (
+                <div
+                  key={s.id}
+                  className="rounded-xl border p-4 flex flex-col md:flex-row md:items-center gap-3 md:gap-4"
+                  style={{
+                    background: "hsl(var(--background))",
+                    borderColor: "hsl(var(--border))",
+                  }}
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="w-2 h-2 rounded-full"
+                        style={{ background: `hsl(${s.color})` }}
+                      />
+                      <p className="text-sm font-bold">{s.label}</p>
+                    </div>
+                    <p className="text-[12px] text-muted-foreground mt-0.5">
+                      {examples[s.id]}
+                    </p>
+                  </div>
+                  <ThreeWay
+                    options={STREAM_OPTS}
+                    value={inputs.streams[s.id]}
+                    onChange={(v) => setStream(s.id, v)}
+                  />
+                </div>
               ))}
             </div>
-          </motion.section>
+          </Section>
 
-          {/* Optional context */}
-          <motion.section
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl border p-6 md:p-8"
-            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg md:text-xl font-bold">Add your own context (optional)</h2>
+          {/* 5. Audits */}
+          <Section n={5} title="Which governance audits run on your AI outputs?">
+            <p className="text-sm text-muted-foreground mb-5">
+              Five live audits stand between intent and outcome. Mark which are in place
+              today.
+            </p>
+            <div className="space-y-3">
+              {AUDITS.map((a) => (
+                <div
+                  key={a.id}
+                  className="rounded-xl border p-4 flex flex-col md:flex-row md:items-center gap-3 md:gap-4"
+                  style={{
+                    background: "hsl(var(--background))",
+                    borderColor: "hsl(var(--border))",
+                  }}
+                >
+                  <div className="flex-1">
+                    <p className="text-sm font-bold">{a.label}</p>
+                    <p className="text-[12px] text-muted-foreground mt-0.5">{a.question}</p>
+                  </div>
+                  <ThreeWay
+                    options={AUDIT_OPTS}
+                    value={inputs.audits[a.id]}
+                    onChange={(v) => setAudit(a.id, v)}
+                  />
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          {/* Extra context (optional) */}
+          <Section n={6} title="Anything else worth knowing? (optional)">
+            <div className="flex items-center justify-between -mt-2 mb-3">
+              <p className="text-sm text-muted-foreground">
+                Industry, team size, a recent failed pilot, a constraint we should know.
+              </p>
               <button
                 type="button"
-                onClick={() => setShowGoal((v) => !v)}
+                onClick={() => setShowExtra((v) => !v)}
                 className="text-xs font-semibold text-primary hover:underline"
               >
-                {showGoal ? "Hide" : "Open"}
+                {showExtra ? "Hide" : "Open"}
               </button>
             </div>
-            {showGoal && (
-              <div className="mt-4 space-y-4">
-                <div>
-                  <label className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
-                    Specific goal
-                  </label>
-                  <Textarea
-                    value={inputs.goal}
-                    onChange={(e) => setInputs((p) => ({ ...p, goal: e.target.value }))}
-                    placeholder={`Example for ${team.label}: ${team.use_cases[0]?.toLowerCase()}, but at half the cycle time.`}
-                    rows={2}
-                    className="resize-none mt-1"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
-                    Anything else worth knowing
-                  </label>
-                  <Textarea
-                    value={inputs.free_text}
-                    onChange={(e) => setInputs((p) => ({ ...p, free_text: e.target.value }))}
-                    placeholder="Industry, team size, a recent failed pilot, a constraint we should know."
-                    rows={2}
-                    className="resize-none mt-1"
-                  />
-                </div>
-              </div>
+            {showExtra && (
+              <Textarea
+                value={inputs.free_text}
+                onChange={(e) => setInputs((p) => ({ ...p, free_text: e.target.value }))}
+                placeholder="One or two sentences are enough."
+                rows={3}
+                className="resize-none"
+              />
             )}
-          </motion.section>
+          </Section>
         </>
       )}
 
       <div className="flex justify-end">
-        <Button
-          size="lg"
-          onClick={onSubmit}
-          disabled={!canSubmit}
-          className="font-semibold"
-        >
+        <Button size="lg" onClick={onSubmit} disabled={!canSubmit} className="font-semibold">
           Diagnose my operating model
           <ArrowRight className="ml-2 w-4 h-4" />
         </Button>
@@ -522,37 +539,58 @@ function InputView({
   );
 }
 
-function StepHeader({ n, title }: { n: number; title: string }) {
+function Section({
+  n,
+  title,
+  children,
+}: {
+  n: number;
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex items-center gap-2 mb-3">
-      <span
-        className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
-        style={{
-          background: "hsl(var(--primary) / 0.12)",
-          color: "hsl(var(--primary))",
-        }}
-      >
-        {n}
-      </span>
-      <h2 className="text-lg md:text-xl font-bold">{title}</h2>
-    </div>
+    <motion.section
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="rounded-2xl border p-6 md:p-8"
+      style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+    >
+      <div className="flex items-center gap-2 mb-3">
+        <span
+          className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
+          style={{ background: "hsl(var(--primary) / 0.12)", color: "hsl(var(--primary))" }}
+        >
+          {n}
+        </span>
+        <h2 className="text-lg md:text-xl font-bold">{title}</h2>
+      </div>
+      {children}
+    </motion.section>
   );
 }
+
+// ────────────────────────────────────────────────────────────────────────────
+// Diagnosing
+// ────────────────────────────────────────────────────────────────────────────
 
 function DiagnosingView() {
   return (
     <div className="flex flex-col items-center justify-center py-20">
       <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
       <p className="text-sm text-muted-foreground">
-        Reading your stack, mapping the gaps, naming the correction.
+        Reading your streams. Mapping your audits. Naming the correction.
       </p>
     </div>
   );
 }
 
+// ────────────────────────────────────────────────────────────────────────────
+// Result
+// ────────────────────────────────────────────────────────────────────────────
+
 function ResultView({
   diagnosis,
-  gridState,
+  tools,
   savedId,
   email,
   setEmail,
@@ -560,8 +598,8 @@ function ResultView({
   onSave,
   onReset,
 }: {
-  diagnosis: Diagnosis;
-  gridState: GridState;
+  diagnosis: OperatorDiagnosis;
+  tools: string[];
   savedId: string | null;
   email: string;
   setEmail: (v: string) => void;
@@ -574,52 +612,85 @@ function ResultView({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="space-y-10"
+      className="space-y-12"
     >
       <div>
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mb-2">
           Your diagnosis
         </p>
-        <h2 className="text-2xl md:text-4xl font-black tracking-tight">
-          {diagnosis.title}
-        </h2>
+        <h2 className="text-2xl md:text-4xl font-black tracking-tight">{diagnosis.title}</h2>
         <p className="mt-4 text-base md:text-lg leading-relaxed text-foreground/85 max-w-3xl">
           {diagnosis.current_model_read}
         </p>
       </div>
 
-      {/* Grid */}
+      {/* Compass */}
       <section>
-        <SectionHeading icon={Eye} label="Mapped to the LIZA grid" />
-        <OperatingGrid state={gridState} />
+        <SectionHeading icon={Compass} label="The moment of work — stream coverage" />
+        <OperatorCompass coverage={diagnosis.stream_coverage} tools={tools} />
       </section>
 
-      {/* Tool limitations */}
-      {diagnosis.tool_limitations.length > 0 && (
-        <section>
-          <SectionHeading icon={Wrench} label="What your tools cannot do for this goal" />
-          <div className="grid md:grid-cols-2 gap-3">
-            {diagnosis.tool_limitations.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.05 * i }}
+      {/* Governance */}
+      <section>
+        <SectionHeading icon={ShieldCheck} label="Governance audits — what runs on every output" />
+        <GovernanceBar coverage={diagnosis.audit_coverage} />
+      </section>
+
+      {/* Bundle gap */}
+      <section>
+        <SectionHeading icon={Layers} label="Knowledge bundle — what is encoded today" />
+        <BundleGap gaps={diagnosis.bundle_gaps} />
+      </section>
+
+      {/* Decision class read */}
+      <section
+        className="rounded-2xl border p-6 md:p-8"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        <SectionHeading icon={Scale} label="Decision-class read" />
+        <p className="text-sm md:text-base leading-relaxed text-foreground/85 mb-5">
+          {diagnosis.decision_class_read.exposed}
+        </p>
+        <div className="grid md:grid-cols-3 gap-3">
+          {DECISION_CLASSES.map((c) => {
+            const governed = diagnosis.decision_class_read.governed_today.includes(c.id);
+            return (
+              <div
+                key={c.id}
                 className="rounded-xl border p-4"
                 style={{
-                  background: "hsl(var(--card))",
-                  borderColor: "hsl(var(--border))",
+                  background: governed ? "hsl(155 72% 46% / 0.06)" : "hsl(0 70% 55% / 0.04)",
+                  borderColor: governed
+                    ? "hsl(155 72% 46% / 0.4)"
+                    : "hsl(0 70% 55% / 0.3)",
                 }}
               >
-                <p className="text-sm font-bold">{t.tool}</p>
-                <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                  {t.limitation}
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-sm font-bold">{c.label}</p>
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                    style={{
+                      background: governed
+                        ? "hsl(155 72% 46% / 0.18)"
+                        : "hsl(0 70% 55% / 0.18)",
+                      color: governed ? "hsl(155 72% 36%)" : "hsl(0 70% 50%)",
+                    }}
+                  >
+                    {governed ? "Governed" : "Exposed"}
+                  </span>
+                </div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
+                  Weight {c.multiplier}
                 </p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-      )}
+                <p className="text-[11px] leading-snug text-muted-foreground">{c.scope}</p>
+                <p className="text-[11px] leading-snug text-muted-foreground mt-1">
+                  Approver: {c.approver}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
       {/* Blind spots */}
       <section>
@@ -632,15 +703,10 @@ function ResultView({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.08 * i }}
               className="rounded-xl border p-5"
-              style={{
-                background: "hsl(var(--card))",
-                borderColor: "hsl(var(--border))",
-              }}
+              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
             >
               <p className="text-sm font-bold">{b.title}</p>
-              <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-                {b.why}
-              </p>
+              <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{b.why}</p>
             </motion.div>
           ))}
         </div>
@@ -696,7 +762,9 @@ function ResultView({
               <Button
                 variant="outline"
                 onClick={() => {
-                  navigator.clipboard.writeText(`${window.location.origin}/the-brief/${savedId}`);
+                  navigator.clipboard.writeText(
+                    `${window.location.origin}/the-brief/${savedId}`,
+                  );
                   toast.success("Link copied.");
                 }}
               >
@@ -714,7 +782,7 @@ function ResultView({
             <div className="flex-1">
               <p className="text-sm font-bold mb-1">Save this diagnosis</p>
               <p className="text-xs text-muted-foreground mb-3">
-                Get a shareable link and we will send the brief to your inbox.
+                Get a shareable link. We will send the brief to your inbox.
               </p>
               <Input
                 type="email"
@@ -744,7 +812,7 @@ function SectionHeading({
   icon: Icon,
   label,
 }: {
-  icon: typeof Eye;
+  icon: typeof Compass;
   label: string;
 }) {
   return (

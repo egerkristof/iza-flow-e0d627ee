@@ -7,116 +7,177 @@ const corsHeaders = {
 };
 
 /**
- * The Brief v3: AI Operating Model diagnosis.
+ * The Brief v4 — LIZA Operator Framework diagnosis.
  *
- * Input:  { goal, tools[], limitations[], free_text }
- * Output: structured diagnosis mapped to the LIZA grid (Intent / Knowledge / Execution).
+ * Input:  { team, team_sub, use_cases[], tools[],
+ *           streams: { strategy|market|state|signal: "lit"|"partial"|"dark" },
+ *           audits:  { cost|best_practice|security|decision|drift: "green"|"amber"|"red" },
+ *           free_text }
+ *
+ * Output: structured diagnosis covering streams, audits, bundle gaps,
+ *         decision class read, blind spots, and correction.
  */
 
 const VOICE = `Voice rules (hard):
 - No em-dashes, no en-dashes. Ever.
 - Statement-oriented. No hedging, no flattery, no "great question".
-- Specific to what they said. Quote their own words back when it sharpens the point.
+- Specific to the team's actual stack and answers. Quote their selections back when it sharpens the point.
 - Senior operator voice. Not consultant pitch, not vendor pitch.
 - Never refer to "AI strategy". AI is an input to the operating model.`;
 
-const GRID = `The LIZA grid has three layers stacked top to bottom:
-- INTENT: what the leader is trying to achieve. The goal, the standard, the policy.
-- KNOWLEDGE LAYER: the executable context that turns intent into instructions every AI surface inherits. Decision rules, playbooks, standards, written in one place, versioned, governed.
-- EXECUTION: the AI tools, copilots, agents, and humans that actually do the work in the moment.
+const FRAMEWORK = `LIZA Operator Framework — the dominant logic.
 
-Most teams have INTENT (in their head) and EXECUTION (tools) but no KNOWLEDGE LAYER. That is the gap. Without it, every tool reinvents the standard, every prompt restarts the conversation, and no learning compounds.`;
+THE MOMENT OF WORK
+Every decision requires four streams of context to converge inside one governed container:
+- STRATEGY (top): mandates, OKRs, policy, risk. What leadership has decided.
+- MARKET (left): external signals. Regulation, competitor moves, best practice.
+- STATE (right): prior artifacts, dependencies, decisions already taken.
+- SIGNAL (bottom): KPIs, drift, anomalies, incidents.
+Most teams' AI sees one or two streams. The operator's job is to fuse all four.
 
-const SYSTEM = `You are diagnosing a leader's AI Operating Model.
+THE GOVERNANCE CONTAINER
+Five live audits run on every output before it ships:
+1. Token & Cost: COGS per call, model routing, prompt envelope.
+2. Best Practice: output conforms to the locked standard or playbook.
+3. Data Security: PII, residency, role scope, retention.
+4. Decision Audit: rationale chain, evidence, decision class.
+5. Drift & Standards: standard freshness, deviation from prior decisions.
 
-You receive: a goal, the AI tools they use today, the limitations they report, and optional free text.
+THE KNOWLEDGE BUNDLE (six types, between intent and execution)
+- Playbook: strategic driver, what the work is and why.
+- Procedure: atomic executable steps with gate logic.
+- Directive: non-negotiable compliance constraint.
+- Principle: judgment heuristic for ambiguous decisions.
+- Preference: style, voice, format.
+- Knowledge: reference context that informs but does not direct.
 
-You return a structured diagnosis with five parts:
-1. current_model_read: one short paragraph naming what they are actually running today, in their register. Quote their goal back. Be specific.
-2. tool_limitations: for each tool they named, the structural limitation that matters for their goal. Grounded in what that tool actually is. Do not invent tools they did not mention.
-3. grid_status: status of each LIZA grid layer for them today. Status is "missing", "partial", or "working". Add a one-line why. The Knowledge Layer is almost always "missing" or "partial" for first-time leaders. Be honest.
-4. blind_spots: 2 to 3 things the leader has probably not thought about, given the tools and limits they listed. Each has a title and a why. These should land as "I had not considered that."
-5. correction: the one move that closes the biggest gap. What gets built, what changes, and which LIZA capability does it (knowledge layer / context bundles / executable playbooks / governed agents).
+THREE DECISION CLASSES (priced by weight of decision, not tokens)
+- OD (Operational Decision, 1x): single artifact, reversible, peer review.
+- GC (Governed Change, 5x): standard or playbook change, affects every future run, senior sign-off.
+- SS (Strategic Simulation, 25x): sandbox, informs investment or M&A, partner approval.
+Most teams govern OD by default. GC and SS run free or get the same oversight as OD.
+
+THE GAP
+Most teams have INTENT (in heads) and EXECUTION (tools) but no executable knowledge bundle between them, no convergence of all four streams, and no live governance container. That is what LIZA installs.`;
+
+const SYSTEM = `You are diagnosing a leader's AI Operating Model using the LIZA Operator Framework.
+
+The user has already self-reported their stream coverage (lit/partial/dark) and audit coverage (green/amber/red). Treat these as ground truth. Your job is to interpret them, surface what they imply, and prescribe the one correction that closes the biggest gap.
+
+Return a structured diagnosis:
+1. title: short declarative line naming the operating model state.
+2. current_model_read: one short paragraph naming what they actually run today, grounded in their team, tools, and stream/audit answers.
+3. stream_coverage: echo back each stream with the user's status and a one-line why specific to their team.
+4. audit_coverage: echo back each audit with the user's status and a one-line why specific to their team.
+5. bundle_gaps: for each of the six bundle types (playbook, procedure, directive, principle, preference, knowledge), state status (have/partial/missing) and one-line why. Infer from their answers. Most teams will be missing most of these.
+6. decision_class_read: which classes they currently govern (governed_today) and one paragraph (exposed) naming what they are exposed on.
+7. blind_spots: 2 to 3 things the leader has probably not thought about. Each lands as "I had not considered that."
+8. correction: the one move that closes the biggest gap. Name the move, the scope (owner, weeks, output), and which LIZA capability delivers it (knowledge bundle, state-locked playbook, governance container, decision-class router, etc.).
 
 ${VOICE}
 
-${GRID}
+${FRAMEWORK}
 
 Return via the tool call.`;
+
+const STREAM_STATUS = { type: "string", enum: ["lit", "partial", "dark"] } as const;
+const AUDIT_STATUS = { type: "string", enum: ["green", "amber", "red"] } as const;
+const BUNDLE_STATUS = { type: "string", enum: ["have", "partial", "missing"] } as const;
+const DECISION_CLASS = { type: "string", enum: ["od", "gc", "ss"] } as const;
+
+const streamProp = {
+  type: "object",
+  properties: { status: STREAM_STATUS, why: { type: "string" } },
+  required: ["status", "why"],
+};
+const auditProp = {
+  type: "object",
+  properties: { status: AUDIT_STATUS, why: { type: "string" } },
+  required: ["status", "why"],
+};
 
 const DIAGNOSE_TOOL = {
   type: "function" as const,
   function: {
-    name: "diagnose_operating_model",
-    description: "Return the AI Operating Model diagnosis mapped to the LIZA grid.",
+    name: "diagnose_operator_framework",
+    description: "Return the LIZA Operator Framework diagnosis.",
     parameters: {
       type: "object",
       properties: {
-        title: { type: "string", description: "Short declarative title naming the diagnosis." },
-        current_model_read: { type: "string", description: "One paragraph. What they actually run today." },
-        tool_limitations: {
+        title: { type: "string" },
+        current_model_read: { type: "string" },
+        stream_coverage: {
+          type: "object",
+          properties: {
+            strategy: streamProp,
+            market: streamProp,
+            state: streamProp,
+            signal: streamProp,
+          },
+          required: ["strategy", "market", "state", "signal"],
+        },
+        audit_coverage: {
+          type: "object",
+          properties: {
+            cost: auditProp,
+            best_practice: auditProp,
+            security: auditProp,
+            decision: auditProp,
+            drift: auditProp,
+          },
+          required: ["cost", "best_practice", "security", "decision", "drift"],
+        },
+        bundle_gaps: {
           type: "array",
           items: {
             type: "object",
             properties: {
-              tool: { type: "string" },
-              limitation: { type: "string" },
+              type: {
+                type: "string",
+                enum: ["playbook", "procedure", "directive", "principle", "preference", "knowledge"],
+              },
+              status: BUNDLE_STATUS,
+              why: { type: "string" },
             },
-            required: ["tool", "limitation"],
+            required: ["type", "status", "why"],
           },
         },
-        grid_status: {
+        decision_class_read: {
           type: "object",
           properties: {
-            intent: {
-              type: "object",
-              properties: {
-                status: { type: "string", enum: ["missing", "partial", "working"] },
-                why: { type: "string" },
-              },
-              required: ["status", "why"],
-            },
-            knowledge: {
-              type: "object",
-              properties: {
-                status: { type: "string", enum: ["missing", "partial", "working"] },
-                why: { type: "string" },
-              },
-              required: ["status", "why"],
-            },
-            execution: {
-              type: "object",
-              properties: {
-                status: { type: "string", enum: ["missing", "partial", "working"] },
-                why: { type: "string" },
-              },
-              required: ["status", "why"],
-            },
+            governed_today: { type: "array", items: DECISION_CLASS },
+            exposed: { type: "string" },
           },
-          required: ["intent", "knowledge", "execution"],
+          required: ["governed_today", "exposed"],
         },
         blind_spots: {
           type: "array",
           items: {
             type: "object",
-            properties: {
-              title: { type: "string" },
-              why: { type: "string" },
-            },
+            properties: { title: { type: "string" }, why: { type: "string" } },
             required: ["title", "why"],
           },
         },
         correction: {
           type: "object",
           properties: {
-            move: { type: "string", description: "The single move that closes the gap." },
-            scope: { type: "string", description: "Who, how long, what gets produced." },
-            liza_capability: { type: "string", description: "Which LIZA capability delivers it." },
+            move: { type: "string" },
+            scope: { type: "string" },
+            liza_capability: { type: "string" },
           },
           required: ["move", "scope", "liza_capability"],
         },
       },
-      required: ["title", "current_model_read", "tool_limitations", "grid_status", "blind_spots", "correction"],
+      required: [
+        "title",
+        "current_model_read",
+        "stream_coverage",
+        "audit_coverage",
+        "bundle_gaps",
+        "decision_class_read",
+        "blind_spots",
+        "correction",
+      ],
     },
   },
 };
@@ -149,16 +210,18 @@ serve(async (req) => {
     const team: string | null = payload.team || null;
     const teamSub: string | null = payload.team_sub || null;
     const useCases: string[] = Array.isArray(payload.use_cases) ? payload.use_cases : [];
-    const goal: string = (payload.goal || "").toString().trim();
     const tools: string[] = Array.isArray(payload.tools) ? payload.tools : [];
-    const limitations: string[] = Array.isArray(payload.limitations) ? payload.limitations : [];
+    const streams = (payload.streams || {}) as Record<string, string>;
+    const audits = (payload.audits || {}) as Record<string, string>;
     const freeText: string = (payload.free_text || "").toString().trim();
 
-    if (!goal && useCases.length === 0) {
-      return new Response(JSON.stringify({ error: "use_cases or goal is required" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+    const streamKeys = ["strategy", "market", "state", "signal"];
+    const auditKeys = ["cost", "best_practice", "security", "decision", "drift"];
+    if (!streamKeys.every((k) => streams[k]) || !auditKeys.every((k) => audits[k])) {
+      return new Response(
+        JSON.stringify({ error: "All four streams and five audits must be answered." }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
     }
 
     const userPrompt = `TEAM
@@ -167,19 +230,19 @@ ${team ? `${team}${teamSub ? ` (${teamSub})` : ""}` : "(not specified)"}
 USE CASES THEY SELECTED
 ${useCases.length ? useCases.map((u) => `- ${u}`).join("\n") : "(none selected)"}
 
-GOAL
-${goal}
-
 TOOLS IN USE TODAY
 ${tools.length ? tools.map((t) => `- ${t}`).join("\n") : "(none reported)"}
 
-LIMITATIONS THEY ARE HITTING
-${limitations.length ? limitations.map((l) => `- ${l}`).join("\n") : "(none reported)"}
+STREAM COVERAGE (self-reported)
+${streamKeys.map((k) => `- ${k}: ${streams[k]}`).join("\n")}
+
+GOVERNANCE AUDITS (self-reported)
+${auditKeys.map((k) => `- ${k}: ${audits[k]}`).join("\n")}
 
 ADDITIONAL CONTEXT
 ${freeText || "(none)"}
 
-Diagnose their AI Operating Model for this specific team. Be specific to ${team || "their function"}. Reference their actual use cases and tool stack.`;
+Diagnose their LIZA Operator Framework state for ${team || "this team"}. Echo their stream and audit answers back with a why specific to their function and tool stack. Infer the bundle gaps. Read the decision-class exposure. Name two or three blind spots. End with one correction.`;
 
     const response = await callGateway({
       model: "google/gemini-3-flash-preview",
@@ -188,8 +251,8 @@ Diagnose their AI Operating Model for this specific team. Be specific to ${team 
         { role: "user", content: userPrompt },
       ],
       tools: [DIAGNOSE_TOOL],
-      tool_choice: { type: "function", function: { name: "diagnose_operating_model" } },
-      max_tokens: 3000,
+      tool_choice: { type: "function", function: { name: "diagnose_operator_framework" } },
+      max_tokens: 4000,
     });
 
     if (!response.ok) {
