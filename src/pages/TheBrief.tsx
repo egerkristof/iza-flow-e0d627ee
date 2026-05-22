@@ -21,6 +21,8 @@ import {
   Scale,
   Coins,
   Calendar,
+  TrendingUp,
+  Info,
 } from "lucide-react";
 import { TEAM_PROFILES, TEAM_BY_ID, type TeamId } from "@/lib/team-profiles";
 import {
@@ -28,6 +30,9 @@ import {
   AUDITS,
   DECISION_CLASSES,
   TRIGGERS,
+  MATURITY_STAGES,
+  computeStage,
+  bundleExamples,
   emptyStreamAnswer,
   emptyAuditAnswer,
   streamExamples,
