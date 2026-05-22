@@ -146,19 +146,28 @@ serve(async (req) => {
 
   try {
     const payload = await req.json();
+    const team: string | null = payload.team || null;
+    const teamSub: string | null = payload.team_sub || null;
+    const useCases: string[] = Array.isArray(payload.use_cases) ? payload.use_cases : [];
     const goal: string = (payload.goal || "").toString().trim();
     const tools: string[] = Array.isArray(payload.tools) ? payload.tools : [];
     const limitations: string[] = Array.isArray(payload.limitations) ? payload.limitations : [];
     const freeText: string = (payload.free_text || "").toString().trim();
 
-    if (!goal) {
-      return new Response(JSON.stringify({ error: "goal is required" }), {
+    if (!goal && useCases.length === 0) {
+      return new Response(JSON.stringify({ error: "use_cases or goal is required" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const userPrompt = `GOAL
+    const userPrompt = `TEAM
+${team ? `${team}${teamSub ? ` (${teamSub})` : ""}` : "(not specified)"}
+
+USE CASES THEY SELECTED
+${useCases.length ? useCases.map((u) => `- ${u}`).join("\n") : "(none selected)"}
+
+GOAL
 ${goal}
 
 TOOLS IN USE TODAY
@@ -170,7 +179,7 @@ ${limitations.length ? limitations.map((l) => `- ${l}`).join("\n") : "(none repo
 ADDITIONAL CONTEXT
 ${freeText || "(none)"}
 
-Diagnose their AI Operating Model. Be specific. Quote their goal back.`;
+Diagnose their AI Operating Model for this specific team. Be specific to ${team || "their function"}. Reference their actual use cases and tool stack.`;
 
     const response = await callGateway({
       model: "google/gemini-3-flash-preview",
