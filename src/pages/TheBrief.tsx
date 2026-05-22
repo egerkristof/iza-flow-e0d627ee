@@ -382,7 +382,8 @@ export default function TheBrief() {
           ref={probeRef}
           className="min-h-screen px-6 md:px-12 border-t border-border/40 pt-20 pb-32"
         >
-          <div className="max-w-3xl mx-auto w-full">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-14 items-start">
+            <div className="w-full max-w-2xl">
             {phase === "seat" && (
               <>
                 <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Act 1 of 4 . Seat</div>
