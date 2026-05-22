@@ -1,123 +1,86 @@
+## The reframe
 
-# The Brief v2 — From conversation to diagnosis
+You're right. The current 4-domain maturity probe is the wrong instrument. The leader walking in doesn't want to score themselves on tiers. They want to describe **what they're trying to achieve, the AI tools they're using, and the limitations they're hitting**, and walk out with a read on their **AI Operating Model** seen through the LIZA grid (the same grid that anchors `/os` and `/tech-dd`: in-the-moment execution sitting between intent and outcomes, governed by a knowledge layer).
 
-## What changes vs today
+This makes The Brief consistent with the rest of the system instead of inventing its own vocabulary.
 
-Today: 5 open questions → memo. Generic across any GM.
-
-Tomorrow: **Function selected up front → 4 domains probed with function-specific questions → maturity scored per domain → bridge framework prescribes the moves to reach the LIZA target state.**
-
-The output stops being a memo. It becomes a diagnosis with a prescription.
-
-## Step 1 — Seat selection (30 seconds)
-
-Three dropdowns before any AI call:
-
-- **Function**: GM / Head of Ops / Head of Commercial / Head of Delivery / Head of R&D / Head of Finance / Head of People
-- **Unit shape**: P&L slice / Shared service / Product line / Region
-- **Scale**: <50 / 50–200 / 200–500 / 500–2000 / 2000+
-
-This bounds every prompt downstream. No more "tell me about your unit." The system already knows the rough shape.
-
-## Step 2 — The four decision domains
-
-Every operating role makes decisions in four domains. We probe each one with 2 function-specific questions. The questions a Head of Ops gets are not the questions a Head of Commercial gets.
+## New flow (one screen, three inputs, one diagnosis)
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│  1. DEMAND          What's coming at the unit               │
-│                     Pipeline, orders, tickets, requests     │
-│                     Decision: what do we take, what do we   │
-│                     refuse, what do we price up             │
+│  INPUT — Describe your current AI state                     │
 ├─────────────────────────────────────────────────────────────┤
-│  2. CAPACITY        What the unit can actually deliver      │
-│                     People, machines, hours, skill mix      │
-│                     Decision: where do we add, where do we  │
-│                     stretch, where do we cut                │
+│  1. Goal                                                    │
+│     What are you trying to achieve with AI in your unit?    │
+│                                                             │
+│  2. Current stack                                           │
+│     Which AI tools / copilots / agents are in use today?    │
+│     (multi-select chips + free text)                        │
+│                                                             │
+│  3. Limitations                                             │
+│     What's not working? Where does it break down?           │
+│     (multi-select chips + free text)                        │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  DIAGNOSIS — Your AI Operating Model, mapped to the grid    │
 ├─────────────────────────────────────────────────────────────┤
-│  3. QUALITY         Whether the output meets the bar        │
-│                     Defects, rework, SLA, compliance        │
-│                     Decision: what's the standard, who      │
-│                     enforces it, what's the consequence     │
-├─────────────────────────────────────────────────────────────┤
-│  4. ECONOMICS       Whether the unit math works             │
-│                     Margin, unit cost, leakage, mix         │
-│                     Decision: what do we kill, what do we   │
-│                     double down on, where do we invest      │
+│  A. Read of your current model                              │
+│     One paragraph naming what they're actually running      │
+│                                                             │
+│  B. Tool limitations (per tool they named)                  │
+│     ChatGPT       → no persistent context, every prompt    │
+│                     restarts the conversation               │
+│     Copilot       → bounded to code, no business standard  │
+│     Notion AI     → reads pages, not your decision logic   │
+│                                                             │
+│  C. Gaps on the LIZA grid                                   │
+│     Visualised on the same stack you show at /os:           │
+│       Intent  ──▶  KNOWLEDGE LAYER  ──▶  Execution  ──▶ Out │
+│       (goal)      (where they're empty)   (their tools)     │
+│     Red/amber/green per layer.                              │
+│                                                             │
+│  D. What they haven't thought about yet                     │
+│     2 to 3 specific blind spots, grounded in their stack    │
+│                                                             │
+│  E. The correction                                          │
+│     One move that closes the biggest gap. Named, scoped,    │
+│     tied to LIZA capability.                                │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-For each domain we ask:
-- **What signal do you trust today?** (the input)
-- **What system produces it?** (the substrate — ERP, CRM, spreadsheet, Slack, head)
+## What I'd build
 
-The second question is the one that exposes maturity. "I look at the dashboard" vs "I ask Maria" vs "I feel it" are three different operating states.
+**Frontend — rewrite `src/pages/TheBrief.tsx`**
+- Replace seat → 4 probes → blueprint with a single input screen (goal, tool chips + other, limitation chips + other).
+- Tool chip set, curated: ChatGPT, Claude, Gemini, Copilot (M365), GitHub Copilot, Cursor, Glean, Notion AI, custom GPTs, internal RAG, agent framework (LangChain/CrewAI), none yet.
+- Limitation chip set, curated: hallucinations, no memory across sessions, can't enforce our standards, no audit trail, siloed per user, doesn't know our data, output quality inconsistent, no governance, can't hand off between tools.
+- Submit shows a **single diagnosis view** rendered on the LIZA grid (reuse the visual language from `/os` — three horizontal layers: Intent → Knowledge → Execution).
 
-## Step 3 — The bridge framework
+**Edge function — replace `generate-brief` modes**
+- One mode: `diagnose_operating_model`. Takes `{ goal, tools[], limitations[], freeText }`, returns a structured diagnosis via tool call:
+  - `current_model_read` (paragraph)
+  - `tool_limitations[]` — `{ tool, limitation }` (only for tools they named, grounded in known properties of each tool)
+  - `grid_status` — `{ intent: status, knowledge: status, execution: status }` with one-line `why` each
+  - `blind_spots[]` — 2 to 3 items, each `{ title, why }`
+  - `correction` — `{ move, scope, liza_capability }`
+- Model: `google/gemini-3-flash-preview`, 18s timeout, deterministic fallback if it times out (same pattern we have now).
 
-For each domain we score the unit against four maturity tiers. This is the **LIZA target state** mapped to a real operating function.
+**Visual — the grid panel**
+- Inline component (not a new page). Three horizontal bands stacked: **Intent**, **Knowledge Layer**, **Execution**. Each band shows status colour (red = missing, amber = partial, green = working). Their tools render as chips inside the Execution band. The Knowledge Layer is the one we expect to be empty — that's the punchline.
 
-```text
-TIER 0 — TACIT          Decision lives in someone's head
-TIER 1 — RECORDED       Decision logic exists, in scattered files/people
-TIER 2 — STANDARDISED   Decision logic is one place, one version
-TIER 3 — EXECUTABLE     Decision logic runs as code or AI can use it directly
-```
+## What goes away
+- Seat selection (function / unit shape / scale) — gone, or collapsed into one optional dropdown.
+- The 4-domain probes (Demand / Capacity / Quality / Economics) — gone for this surface. They remain valid for a future consulting-grade audit but are the wrong instrument for first contact.
+- The blueprint pillar animation — replaced with the LIZA grid diagram (which already exists conceptually on /os and is on-brand).
 
-The diagnosis output looks like this, per domain:
+## One thing to confirm before I build
 
-```text
-DEMAND          Tier 1   →   needs to reach Tier 3
-                Today: pipeline lives in CRM + 3 spreadsheets + Maria's head
-                Bridge: codify deal-scoring rules, expose to AI, retire Maria-as-router
-                Effort: 6 weeks, 1 ops analyst
-                Unlock: 8 hrs/week back to GM, faster qualification
+**Scope of this rewrite.** Two options:
 
-CAPACITY        Tier 0   →   needs to reach Tier 2
-                ...
+**A. Replace the existing `/the-brief` entirely** with this new flow. Old seat + 4-domain code is removed. This is what I'd recommend — keeps one surface, one story.
 
-QUALITY         Tier 2   →   already healthy, hold
-                ...
+**B. Keep the existing flow at `/the-brief` and add the new diagnosis at `/the-brief/quick`** so we can A/B. More code to maintain, more places for the user to get lost.
 
-ECONOMICS       Tier 1   →   needs to reach Tier 3
-                ...
-```
-
-## Step 4 — The economic anchor
-
-You said it: *the cost of tokens must be in line with the value created*. So the diagnosis closes with a **token-economics view**:
-
-```text
-WHERE AI EARNS ITS KEEP IN YOUR UNIT
-
-DEMAND          High ROI on AI    — repetitive, structured, high-volume decisions
-CAPACITY        Medium ROI        — needs human judgement, AI augments
-QUALITY         High ROI          — pattern detection, AI catches what humans miss
-ECONOMICS       Low ROI today     — needs Tier 2 data first, then high ROI
-
-START HERE: Demand. Move it from Tier 1 to Tier 3 first.
-That's where tokens convert to margin fastest in a unit your size.
-```
-
-## What the user experiences
-
-1. Picks function + unit shape + scale (15 seconds, no AI)
-2. Sees 4 domain cards, opens each, answers 2 questions per domain (5–8 minutes total)
-3. Sees per-domain maturity tier with a one-line "why this tier" justification
-4. Sees the bridge: current → target, with the move, the effort, the unlock
-5. Sees the token-economics ranking telling them **where to start**
-
-## Technical sketch
-
-- New file `src/lib/brief-framework.ts`: function profiles, domain definitions, tier definitions, question banks per function × domain
-- `TheBrief.tsx` becomes a 4-step flow: seat → domain probes (4 sub-steps) → diagnosis → bridge
-- `generate-brief` edge function gains two new modes:
-  - `score_domain` — given function + domain + user answers, returns tier (0–3) + one-line justification + bridge move + effort estimate + unlock
-  - `synthesize_diagnosis` — given all 4 domain scores, returns the token-economics ranking and the "start here" call
-- Persists the full diagnosis (function, unit shape, scale, per-domain tier, per-domain bridge, ranking) in `briefs.output` so it can be re-opened, exported, or revisited.
-
-## One thing I want you to confirm
-
-**The four domains.** I proposed Demand / Capacity / Quality / Economics because they apply across functions (a Head of R&D has demand=requests from business, capacity=scientists, quality=experimental rigor, economics=cost-per-insight).
-
-If you have a different four — say, the LIZA canonical four are different — tell me now and I'll build against those instead. Otherwise I proceed with these.
+I'll proceed with **A** unless you say otherwise.
