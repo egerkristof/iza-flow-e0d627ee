@@ -339,6 +339,7 @@ export default function TheBrief() {
           <ResultView
             diagnosis={diagnosis}
             tools={inputs.tools}
+            team={inputs.team}
             savedId={savedId}
             email={email}
             setEmail={setEmail}
@@ -721,6 +722,7 @@ function DiagnosingView() {
 function ResultView({
   diagnosis,
   tools,
+  team,
   savedId,
   email,
   setEmail,
@@ -730,6 +732,7 @@ function ResultView({
 }: {
   diagnosis: OperatorDiagnosis;
   tools: string[];
+  team: TeamId | null;
   savedId: string | null;
   email: string;
   setEmail: (v: string) => void;
@@ -737,6 +740,27 @@ function ResultView({
   onSave: () => void;
   onReset: () => void;
 }) {
+  // Derive maturity stage from the same answers powering the visuals
+  const streamAns = Object.fromEntries(
+    (Object.keys(diagnosis.stream_coverage) as StreamId[]).map((k) => [
+      k,
+      diagnosis.stream_coverage[k].status,
+    ]),
+  ) as Record<StreamId, StreamStatus | null>;
+  const auditAns = Object.fromEntries(
+    (Object.keys(diagnosis.audit_coverage) as AuditId[]).map((k) => [
+      k,
+      diagnosis.audit_coverage[k].status,
+    ]),
+  ) as Record<AuditId, AuditStatus | null>;
+  const { stage, next } = computeStage({
+    streams: streamAns,
+    audits: auditAns,
+  });
+  const currentStage = MATURITY_STAGES.find((s) => s.id === stage)!;
+  const nextStage = next ? MATURITY_STAGES.find((s) => s.id === next) : null;
+  const examples = bundleExamples(team);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -764,9 +788,17 @@ function ResultView({
         </p>
       </div>
 
+      {/* 1b. MATURITY ARC — pin them on the map */}
+      <MaturityArc currentId={stage} />
+
       {/* 2. DIAGNOSIS — the compass tells the story */}
       <section>
         <SectionHeading icon={Compass} label="The moment of work / stream coverage" />
+        <ReadAs>
+          Every AI decision your team makes needs four streams of context to land. The
+          arms below show how many of them your AI actually sees today. Dim arms are
+          the parts of reality it is guessing at.
+        </ReadAs>
         <OperatorCompass coverage={diagnosis.stream_coverage} tools={tools} />
       </section>
 
@@ -780,6 +812,10 @@ function ResultView({
           }}
         >
           <SectionHeading icon={Coins} label="What this gap costs you" />
+          <ReadAs tone="warn">
+            Translation of the dim arms and missing audits above into hours and people.
+            Not a quote, an order of magnitude.
+          </ReadAs>
           <p className="text-lg md:text-2xl font-bold leading-snug">
             {diagnosis.cost_of_gap.headline}
           </p>
@@ -792,6 +828,10 @@ function ResultView({
       {/* 4. BLIND SPOTS — what you have not seen */}
       <section>
         <SectionHeading icon={AlertTriangle} label="What you probably have not seen" />
+        <ReadAs>
+          Second-order effects of the gaps above. The things that bite quietly because
+          nothing in your current setup catches them.
+        </ReadAs>
         <div className="space-y-2">
           {diagnosis.blind_spots.map((b, i) => (
             <motion.div
