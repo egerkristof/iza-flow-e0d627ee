@@ -502,6 +502,25 @@ export default function TheBrief() {
                 </div>
               </>
             )}
+            </div>
+
+            {/* Right pane: live blueprint */}
+            <div className="hidden lg:block sticky top-8">
+              <div className="aspect-[770/430] w-full">
+                <BlueprintCanvas state={blueprintState} />
+              </div>
+              <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
+                Every answer places a pillar. Tier 0 reads thin and red; Tier 3 reads tall and green.
+                Beams connect at diagnosis. A keystone lands on the one place to start.
+              </p>
+            </div>
+
+            {/* Mobile blueprint, stacked below */}
+            <div className="lg:hidden">
+              <div className="aspect-[770/430] w-full">
+                <BlueprintCanvas state={blueprintState} />
+              </div>
+            </div>
           </div>
         </section>
       )}
