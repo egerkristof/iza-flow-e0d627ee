@@ -273,7 +273,7 @@ export default function TheBrief() {
       {phase !== "intro" && phase !== "diagnosis" && phase !== "scoring" && phase !== "synthesizing" && !id && (
         <section
           ref={probeRef}
-          className="min-h-screen flex items-center px-6 md:px-12 border-t border-border/40 py-20"
+          className="min-h-screen px-6 md:px-12 border-t border-border/40 pt-20 pb-32"
         >
           <div className="max-w-3xl mx-auto w-full">
             {phase === "seat" && (
@@ -295,25 +295,30 @@ export default function TheBrief() {
                       setSeat({ ...seat, function_id: v as FunctionId, function_label: fn?.label || "" });
                     }}
                     options={FUNCTIONS.map((f) => ({ value: f.id, label: f.label, helper: f.blurb }))}
+                    columns={2}
                   />
                   <SelectField
                     label="Unit shape"
                     value={seat.unit_shape}
                     onChange={(v) => setSeat({ ...seat, unit_shape: v as UnitShape })}
                     options={UNIT_SHAPES.map((s) => ({ value: s.id, label: s.label }))}
+                    columns={2}
                   />
                   <SelectField
                     label="Scale"
                     value={seat.scale}
                     onChange={(v) => setSeat({ ...seat, scale: v as Scale })}
                     options={SCALES.map((s) => ({ value: s.id, label: s.label }))}
+                    columns={5}
                   />
                 </div>
 
-                <div className="flex items-center justify-end mt-12">
-                  <Button onClick={startProbe} className="rounded-full px-8">
-                    Begin the four domains
-                  </Button>
+                <div className="sticky bottom-4 mt-12 flex justify-end">
+                  <div className="rounded-full bg-background/90 backdrop-blur border border-border/60 shadow-lg p-1.5">
+                    <Button onClick={startProbe} className="rounded-full px-8">
+                      Begin the four domains
+                    </Button>
+                  </div>
                 </div>
               </>
             )}
@@ -356,7 +361,7 @@ export default function TheBrief() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between mt-12">
+                <div className="sticky bottom-4 mt-12 flex items-center justify-between gap-2 rounded-full bg-background/90 backdrop-blur border border-border/60 shadow-lg p-1.5">
                   <Button variant="ghost" onClick={back} disabled={domainIndex === 0} className="rounded-full">
                     Back
                   </Button>
@@ -590,16 +595,26 @@ function SelectField({
   value,
   onChange,
   options,
+  columns = 1,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   options: { value: string; label: string; helper?: string }[];
+  columns?: 1 | 2 | 3 | 5;
 }) {
+  const colClass =
+    columns === 5
+      ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5"
+      : columns === 3
+        ? "grid-cols-1 sm:grid-cols-3"
+        : columns === 2
+          ? "grid-cols-1 sm:grid-cols-2"
+          : "grid-cols-1";
   return (
     <div>
       <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">{label}</div>
-      <div className="grid gap-2">
+      <div className={`grid gap-2 ${colClass}`}>
         {options.map((o) => {
           const selected = o.value === value;
           return (
