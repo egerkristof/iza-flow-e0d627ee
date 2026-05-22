@@ -2811,62 +2811,73 @@ function SlideWhyNowFused() {
 }
 
 function SlidePricingMetering() {
-  const tiers = [
-    {
-      mult: "1×", label: "Operational Execution", human: "Junior hour", color: TEAL,
-      examples: "Draft, summarise, fill a template, file a record.",
-    },
-    {
-      mult: "5×", label: "Process Design & Governance", human: "Senior hour", color: SEAFOAM,
-      examples: "Update a Playbook, run drift detection, redesign a workflow.",
-    },
-    {
-      mult: "25×", label: "Strategic Simulation", human: "Partner hour", color: GOLD,
-      examples: "War-game a pivot, model a policy change, simulate a scenario.",
-    },
-  ];
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>The Economics</p>
-        <h2 className="font-black mb-2" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          We meter the{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>weight of the decision</span>,
-          not the weight of the tokens.
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>The Economics</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          We meter the decision, <span style={{ color: `hsl(${GREEN})` }}>not the tokens.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
-          A company already prices a junior hour, a senior hour and a partner hour differently. We reproduce that for machine work,
-          because state is locked to a Playbook. We know the <strong style={{ color: TEXT }}>decision class</strong> of every execution.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          State is locked to a Playbook. <span style={{ color: TEXT, fontWeight: 700 }}>We know the decision class of every execution, and price it like a junior, senior or partner hour.</span>
         </p>
+      </div>
 
-        <div className="flex-1 grid grid-cols-3 gap-6">
-          {tiers.map((t) => (
-            <div key={t.mult} className="rounded-2xl border p-7 flex flex-col"
-              style={{ borderColor: `hsl(${t.color} / 0.3)`, background: `hsl(${t.color} / 0.05)` }}>
-              <p className="font-black" style={{ fontSize: 72, color: `hsl(${t.color})`, lineHeight: 1 }}>{t.mult}</p>
-              <p className="font-bold mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>{t.label}</p>
-              <p className="mt-1 font-semibold" style={{ fontSize: 16, color: `hsl(${t.color})` }}>≈ {t.human}</p>
-              <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{t.examples}</p>
-            </div>
-          ))}
-        </div>
+      {/* One picture — decision-class pyramid above a falling token baseline */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="tierTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${GOLD} / 0.45)`} />
+              <stop offset="100%" stopColor={`hsl(${GOLD} / 0.22)`} />
+            </linearGradient>
+            <linearGradient id="tierMid" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${SEAFOAM} / 0.40)`} />
+              <stop offset="100%" stopColor={`hsl(${SEAFOAM} / 0.20)`} />
+            </linearGradient>
+            <linearGradient id="tierBot" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.38)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.18)`} />
+            </linearGradient>
+          </defs>
 
-        <div className="mt-6 grid grid-cols-2 gap-6">
-          <div className="rounded-xl px-6 py-4"
-            style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.2)` }}>
-            <p className="font-bold mb-1" style={{ fontSize: 16, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>The trap</p>
-            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Unanchored token consumption. As inference cost falls, flat per-token revenue compresses to zero.
-            </p>
-          </div>
-          <div className="rounded-xl px-6 py-4"
-            style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
-            <p className="font-bold mb-1" style={{ fontSize: 16, color: `hsl(${GREEN})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Our floor</p>
-            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Revenue tracks strategic ROI, not API price. Decision-weighted metering survives token deflation.
-            </p>
-          </div>
+          {/* Pyramid — three tiers */}
+          {/* Top tier (Strategic 25×) */}
+          <polygon points="860,80 1060,80 1110,220 810,220" fill="url(#tierTop)" stroke={`hsl(${GOLD})`} strokeWidth="2" />
+          <text x="960" y="135" textAnchor="middle" style={{ fontSize: 44, fontWeight: 900, fill: `hsl(${GOLD})`, letterSpacing: 1 }}>25×</text>
+          <text x="960" y="178" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: TEXT, letterSpacing: 1.5 }}>STRATEGIC SIMULATION</text>
+          <text x="960" y="202" textAnchor="middle" style={{ fontSize: 13, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>≈ partner hour</text>
+
+          {/* Middle tier (5×) */}
+          <polygon points="810,220 1110,220 1170,380 750,380" fill="url(#tierMid)" stroke={`hsl(${SEAFOAM})`} strokeWidth="2" />
+          <text x="960" y="285" textAnchor="middle" style={{ fontSize: 44, fontWeight: 900, fill: `hsl(${SEAFOAM})`, letterSpacing: 1 }}>5×</text>
+          <text x="960" y="328" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: TEXT, letterSpacing: 1.5 }}>PROCESS DESIGN &amp; GOVERNANCE</text>
+          <text x="960" y="352" textAnchor="middle" style={{ fontSize: 13, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>≈ senior hour</text>
+
+          {/* Bottom tier (1×) */}
+          <polygon points="750,380 1170,380 1250,560 670,560" fill="url(#tierBot)" stroke={`hsl(${TEAL})`} strokeWidth="2" />
+          <text x="960" y="455" textAnchor="middle" style={{ fontSize: 44, fontWeight: 900, fill: `hsl(${TEAL})`, letterSpacing: 1 }}>1×</text>
+          <text x="960" y="498" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: TEXT, letterSpacing: 1.5 }}>OPERATIONAL EXECUTION</text>
+          <text x="960" y="522" textAnchor="middle" style={{ fontSize: 13, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>≈ junior hour</text>
+
+          {/* Token baseline — thin, going down */}
+          <line x1="280" y1="650" x2="1640" y2="650" stroke={SUBTLE} strokeWidth="1" strokeDasharray="3 5" />
+          <path d="M 280 640 C 600 660, 1000 700, 1640 720" fill="none" stroke={`hsl(${RED} / 0.55)`} strokeWidth="2.5" />
+          <text x="280" y="628" style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${RED})`, letterSpacing: 1.5 }}>TOKEN COST</text>
+          <text x="280" y="648" style={{ fontSize: 11, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>compressing toward zero</text>
+          <text x="1640" y="710" textAnchor="end" style={{ fontSize: 12, fontWeight: 700, fill: MUTED, letterSpacing: 1 }}>flat per-token revenue → 0</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${GREEN} / 0.08)`, border: `1.5px solid hsl(${GREEN} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Decision-class metering survives <span style={{ color: `hsl(${GREEN})` }}>token deflation.</span>
+          </p>
         </div>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
