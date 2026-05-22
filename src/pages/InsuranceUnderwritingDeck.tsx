@@ -106,7 +106,7 @@ function Footer({ text }: { text: string }) {
   );
 }
 
-const TOTAL = 7;
+const TOTAL = 8;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // 01 · COVER
