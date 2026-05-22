@@ -2752,66 +2752,56 @@ function SlideWhyNowFused() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>Why Now</p>
-        <h2 className="font-black mb-2" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          Two shifts collide.{" "}
-          <span style={{ color: `hsl(${WARM})` }}>The moment of action becomes the only place value compounds.</span>
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>Why Now</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          Tokens get cheaper. <span style={{ color: `hsl(${WARM})` }}>Decisions get more expensive.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
-          Run, improve, transform used to be sequential. Per-seat AI used to be the floor. Both broke this year.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          Two curves cross this year. <span style={{ color: TEXT, fontWeight: 700 }}>The crossing point is the operator&apos;s moment of decision.</span>
         </p>
+      </div>
 
-        <div className="flex-1 grid grid-cols-2 gap-8">
-          {/* Shift 1 — Three Horizons collapse */}
-          <div className="rounded-2xl border p-7 flex flex-col"
-            style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${WARM})` }}>Shift 01 · Business model</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>The Three Horizons collapse.</p>
-            <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              Run, improve and transform now happen on the same calendar week, at the edge.
-              You cannot solve a permanent-edge state with sequential planning cycles or static SOPs.
-            </p>
-            <div className="mt-5 grid grid-cols-3 gap-2">
-              {["Run", "Improve", "Transform"].map((h) => (
-                <div key={h} className="rounded-lg px-3 py-3 text-center font-bold"
-                  style={{ fontSize: 16, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.10)`, border: `1px solid hsl(${WARM} / 0.25)` }}>
-                  {h}
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 font-semibold" style={{ fontSize: 17, color: TEXT }}>
-              You need a runtime that holds the company's reasoning and updates it continuously.
-            </p>
-          </div>
+      {/* One picture — scissors chart */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          {/* axes */}
+          <line x1="280" y1="640" x2="1640" y2="640" stroke={SUBTLE} strokeWidth="1.5" />
+          <line x1="280" y1="80" x2="280" y2="640" stroke={SUBTLE} strokeWidth="1.5" />
 
-          {/* Shift 2 — Pricing inversion */}
-          <div className="rounded-2xl border p-7 flex flex-col"
-            style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.05)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>Shift 02 · Economics</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>The pricing inversion.</p>
-            <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              Every major AI vendor is converging on usage-based pricing. Per-seat is the legacy floor.
-              Raw tokens are not a business unit a CFO can defend.
-            </p>
-            <div className="mt-5 flex items-center gap-3">
-              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: MUTED, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>Per-seat SaaS</div>
-              <ArrowRight size={20} style={{ color: SUBTLE }} />
-              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: MUTED, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>Hybrid</div>
-              <ArrowRight size={20} style={{ color: SUBTLE }} />
-              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: `hsl(${ACCENT})`, background: `hsl(${ACCENT} / 0.10)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>Usage / API-metered</div>
-            </div>
-            <p className="mt-4 font-semibold" style={{ fontSize: 17, color: `hsl(${RED})` }}>
-              Failure mode: unanchored consumption. First line CFOs cut.
-            </p>
-          </div>
-        </div>
+          {/* time axis labels */}
+          <text x="280"  y="680" textAnchor="middle" style={{ fontSize: 16, fontWeight: 700, fill: MUTED, letterSpacing: 1.5 }}>2022</text>
+          <text x="960"  y="680" textAnchor="middle" style={{ fontSize: 16, fontWeight: 700, fill: MUTED, letterSpacing: 1.5 }}>TODAY</text>
+          <text x="1640" y="680" textAnchor="middle" style={{ fontSize: 16, fontWeight: 700, fill: MUTED, letterSpacing: 1.5 }}>2028</text>
 
-        <div className="mt-6 rounded-xl px-6 py-4"
-          style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
-            One conclusion. The only durable place to anchor both the runtime and the bill is{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>the operator's moment of decision.</strong>
+          {/* Curve A — cost per token (falling) */}
+          <path d="M 280 140 C 600 180, 820 520, 1640 620" fill="none"
+            stroke={`hsl(${ACCENT})`} strokeWidth="5" strokeLinecap="round" />
+          <text x="320" y="120" style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${ACCENT})`, letterSpacing: 1.5 }}>COST PER TOKEN</text>
+          <text x="320" y="146" style={{ fontSize: 14, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>collapsing toward zero</text>
+
+          {/* Curve B — value of a governed decision (rising) */}
+          <path d="M 280 600 C 600 580, 820 240, 1640 100" fill="none"
+            stroke={`hsl(${GREEN})`} strokeWidth="5" strokeLinecap="round" />
+          <text x="1620" y="84" textAnchor="end" style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>VALUE OF A GOVERNED DECISION</text>
+          <text x="1620" y="110" textAnchor="end" style={{ fontSize: 14, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>compounding</text>
+
+          {/* Crossing point — the moment */}
+          <circle cx="960" cy="380" r="60" fill="none" stroke={`hsl(${WARM})`} strokeWidth="2.5" strokeDasharray="4 5" />
+          <circle cx="960" cy="380" r="12" fill={`hsl(${WARM})`} />
+          <line x1="960" y1="380" x2="960" y2="640" stroke={`hsl(${WARM} / 0.45)`} strokeWidth="1.5" strokeDasharray="4 6" />
+          <rect x="780" y="280" width="360" height="44" rx="22" fill={BG} stroke={`hsl(${WARM})`} strokeWidth="1.5" />
+          <text x="960" y="309" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>THE MOMENT OF ACTION</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Anchor the runtime and the bill to the moment, <span style={{ color: `hsl(${WARM})` }}>or lose both.</span>
           </p>
         </div>
       </div>
