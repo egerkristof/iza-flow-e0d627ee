@@ -2605,29 +2605,318 @@ function SlideAppendixDivider() {
   );
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// V3 SPINE — NEW SLIDES (operator-moment thesis)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function SlideOperatorMoment() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>The Bet</p>
+        <h2 className="font-black mb-6" style={{ fontSize: 64, color: TEXT, lineHeight: 1.05 }}>
+          The unit of work is no longer the task.{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>It is the operator's moment of decision.</span>
+        </h2>
+
+        <div className="flex gap-10 items-center mt-4">
+          {/* Diagram */}
+          <div className="relative w-[720px] h-[520px] shrink-0">
+            {/* Inbound arrows + labels */}
+            {[
+              { label: "Standards", color: TEAL, pos: { left: 0, top: 40 } },
+              { label: "Prior decisions", color: SEAFOAM, pos: { right: 0, top: 40 } },
+              { label: "Governance constraints", color: GOLD, pos: { left: 0, bottom: 160 } },
+              { label: "Live context", color: ACCENT, pos: { right: 0, bottom: 160 } },
+            ].map((n) => (
+              <div key={n.label} className="absolute rounded-xl px-5 py-3 font-bold"
+                style={{ ...n.pos, fontSize: 20, color: `hsl(${n.color})`, background: `hsl(${n.color} / 0.08)`, border: `1px solid hsl(${n.color} / 0.25)` }}>
+                {n.label}
+              </div>
+            ))}
+            {/* Center operator node */}
+            <div className="absolute left-1/2 top-[200px] -translate-x-1/2 w-[260px] h-[180px] rounded-2xl flex flex-col items-center justify-center"
+              style={{ background: `hsl(${TEAL} / 0.10)`, border: `2px solid hsl(${TEAL} / 0.45)` }}>
+              <User size={48} style={{ color: `hsl(${TEAL})` }} />
+              <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT }}>The Operator</p>
+              <p style={{ fontSize: 14, color: MUTED }}>moment of decision</p>
+            </div>
+            {/* Outbound */}
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 rounded-xl px-6 py-3 font-bold flex items-center gap-3"
+              style={{ fontSize: 20, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <ArrowRight size={22} /> Executed action · full audit trail
+            </div>
+          </div>
+
+          {/* Thesis copy */}
+          <div className="flex-1">
+            <p style={{ fontSize: 26, color: TEXT, lineHeight: 1.4 }}>
+              In the AI age, value is created or destroyed at the moment an operator decides what to do.
+            </p>
+            <p className="mt-5" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5 }}>
+              LIZA makes that moment the highest-leverage moment in the company. We bring every relevant standard,
+              every prior decision, and every governance constraint into it, and execute the chosen action with full traceability.
+            </p>
+            <div className="mt-6 rounded-xl px-5 py-4" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
+                Everything that follows is a consequence of this bet.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={SEAFOAM} />
+    </div>
+  );
+}
+
+function SlideMomentGoverned() {
+  const inputs = [
+    { icon: <BookOpen size={20} />, label: "Standards", color: TEAL },
+    { icon: <GitBranch size={20} />, label: "Prior decisions", color: SEAFOAM },
+    { icon: <Shield size={20} />, label: "Governance", color: GOLD },
+    { icon: <Database size={20} />, label: "Live context", color: ACCENT },
+  ];
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 py-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Proof in market</p>
+        <h2 className="font-black mb-2" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
+          We don't sell AI.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>We sell governed moments of action.</span>
+        </h2>
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
+          The first artefact in market that makes the thesis visible. Human judgment on top. AI executes inside a bounded standard.
+        </p>
+
+        <div className="flex-1 grid grid-cols-3 gap-6">
+          {/* Left: human on top */}
+          <div className="rounded-2xl border p-6 flex flex-col"
+            style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.05)` }}>
+            <div className="flex items-center gap-3 mb-3">
+              <User size={28} style={{ color: `hsl(${TEAL})` }} />
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Human on top</p>
+            </div>
+            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              Judgment, approval, accountability. Sets intent and signs off on the action.
+            </p>
+            <ul className="mt-4 space-y-2" style={{ fontSize: 16, color: TEXT }}>
+              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Sees what would happen before it happens</li>
+              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Approves, edits, or stops</li>
+              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Owns the decision</li>
+            </ul>
+          </div>
+
+          {/* Middle: the moment */}
+          <div className="rounded-2xl border-2 p-6 flex flex-col items-center justify-center text-center"
+            style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.06)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>The moment</p>
+            <div className="grid grid-cols-2 gap-2 w-full mb-4">
+              {inputs.map((i) => (
+                <div key={i.label} className="rounded-lg px-3 py-2 flex items-center gap-2"
+                  style={{ background: `hsl(${i.color} / 0.08)`, border: `1px solid hsl(${i.color} / 0.2)`, color: `hsl(${i.color})` }}>
+                  {i.icon}<span className="font-semibold" style={{ fontSize: 14 }}>{i.label}</span>
+                </div>
+              ))}
+            </div>
+            <Sparkles size={32} style={{ color: `hsl(${GREEN})` }} />
+            <p className="font-black mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
+              Decision, governed in place
+            </p>
+          </div>
+
+          {/* Right: AI inside the standard */}
+          <div className="rounded-2xl border p-6 flex flex-col"
+            style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.05)` }}>
+            <div className="flex items-center gap-3 mb-3">
+              <Cpu size={28} style={{ color: `hsl(${ACCENT})` }} />
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>AI executes inside the standard</p>
+            </div>
+            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              State-locked to a Playbook. Cannot wander outside the bounded reasoning surface.
+            </p>
+            <ul className="mt-4 space-y-2" style={{ fontSize: 16, color: TEXT }}>
+              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Every action tied to a Playbook</li>
+              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Rationale logged automatically</li>
+              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Replayable, auditable, reversible</li>
+            </ul>
+          </div>
+        </div>
+
+        <p className="mt-6" style={{ fontSize: 18, color: SUBTLE }}>
+          Running today across four paid engagements. Proof on slide 15.
+        </p>
+      </div>
+      <SlideBar from={GREEN} to={TEAL} />
+    </div>
+  );
+}
+
+function SlideWhyNowFused() {
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 py-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>Why Now</p>
+        <h2 className="font-black mb-2" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
+          Two shifts collide.{" "}
+          <span style={{ color: `hsl(${WARM})` }}>The moment of action becomes the only place value compounds.</span>
+        </h2>
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
+          Run, improve, transform used to be sequential. Per-seat AI used to be the floor. Both broke this year.
+        </p>
+
+        <div className="flex-1 grid grid-cols-2 gap-8">
+          {/* Shift 1 — Three Horizons collapse */}
+          <div className="rounded-2xl border p-7 flex flex-col"
+            style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.05)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${WARM})` }}>Shift 01 · Business model</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>The Three Horizons collapse.</p>
+            <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              Run, improve and transform now happen on the same calendar week, at the edge.
+              You cannot solve a permanent-edge state with sequential planning cycles or static SOPs.
+            </p>
+            <div className="mt-5 grid grid-cols-3 gap-2">
+              {["Run", "Improve", "Transform"].map((h) => (
+                <div key={h} className="rounded-lg px-3 py-3 text-center font-bold"
+                  style={{ fontSize: 16, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.10)`, border: `1px solid hsl(${WARM} / 0.25)` }}>
+                  {h}
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 font-semibold" style={{ fontSize: 17, color: TEXT }}>
+              You need a runtime that holds the company's reasoning and updates it continuously.
+            </p>
+          </div>
+
+          {/* Shift 2 — Pricing inversion */}
+          <div className="rounded-2xl border p-7 flex flex-col"
+            style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.05)` }}>
+            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>Shift 02 · Economics</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>The pricing inversion.</p>
+            <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              Every major AI vendor is converging on usage-based pricing. Per-seat is the legacy floor.
+              Raw tokens are not a business unit a CFO can defend.
+            </p>
+            <div className="mt-5 flex items-center gap-3">
+              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: MUTED, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>Per-seat SaaS</div>
+              <ArrowRight size={20} style={{ color: SUBTLE }} />
+              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: MUTED, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>Hybrid</div>
+              <ArrowRight size={20} style={{ color: SUBTLE }} />
+              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: `hsl(${ACCENT})`, background: `hsl(${ACCENT} / 0.10)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>Usage / API-metered</div>
+            </div>
+            <p className="mt-4 font-semibold" style={{ fontSize: 17, color: `hsl(${RED})` }}>
+              Failure mode: unanchored consumption. First line CFOs cut.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-xl px-6 py-4"
+          style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
+          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
+            One conclusion. The only durable place to anchor both the runtime and the bill is{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>the operator's moment of decision.</strong>
+          </p>
+        </div>
+      </div>
+      <SlideBar from={WARM} to={ACCENT} />
+    </div>
+  );
+}
+
+function SlidePricingMetering() {
+  const tiers = [
+    {
+      mult: "1×", label: "Operational Execution", human: "Junior hour", color: TEAL,
+      examples: "Draft, summarise, fill a template, file a record.",
+    },
+    {
+      mult: "5×", label: "Process Design & Governance", human: "Senior hour", color: SEAFOAM,
+      examples: "Update a Playbook, run drift detection, redesign a workflow.",
+    },
+    {
+      mult: "25×", label: "Strategic Simulation", human: "Partner hour", color: GOLD,
+      examples: "War-game a pivot, model a policy change, simulate a scenario.",
+    },
+  ];
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 py-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>The Economics</p>
+        <h2 className="font-black mb-2" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
+          We meter the{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>weight of the decision</span>,
+          not the weight of the tokens.
+        </h2>
+        <p className="mb-7" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
+          A company already prices a junior hour, a senior hour and a partner hour differently. We reproduce that for machine work,
+          because state is locked to a Playbook. We know the <strong style={{ color: TEXT }}>decision class</strong> of every execution.
+        </p>
+
+        <div className="flex-1 grid grid-cols-3 gap-6">
+          {tiers.map((t) => (
+            <div key={t.mult} className="rounded-2xl border p-7 flex flex-col"
+              style={{ borderColor: `hsl(${t.color} / 0.3)`, background: `hsl(${t.color} / 0.05)` }}>
+              <p className="font-black" style={{ fontSize: 72, color: `hsl(${t.color})`, lineHeight: 1 }}>{t.mult}</p>
+              <p className="font-bold mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>{t.label}</p>
+              <p className="mt-1 font-semibold" style={{ fontSize: 16, color: `hsl(${t.color})` }}>≈ {t.human}</p>
+              <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{t.examples}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-6">
+          <div className="rounded-xl px-6 py-4"
+            style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.2)` }}>
+            <p className="font-bold mb-1" style={{ fontSize: 16, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>The trap</p>
+            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              Unanchored token consumption. As inference cost falls, flat per-token revenue compresses to zero.
+            </p>
+          </div>
+          <div className="rounded-xl px-6 py-4"
+            style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
+            <p className="font-bold mb-1" style={{ fontSize: 16, color: `hsl(${GREEN})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Our floor</p>
+            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              Revenue tracks strategic ROI, not API price. Decision-weighted metering survives token deflation.
+            </p>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
 // ─── Slide registry ──────────────────────────────────────────────────────────
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 4, title: "Where Missing Context Shows Up", component: <Slide03 /> },
-  { id: 5, title: "What Missing Context Costs", component: <Slide03Cost /> },
-  { id: 6, title: "Persona-Level Reality", component: <Slide03WorkflowProof /> },
-  { id: 7, title: "Early Validation", component: <Slide08 /> },
-  { id: 8, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 9, title: "The Context Layer", component: <Slide05 /> },
+  { id: 2, title: "The Operator's Moment", component: <SlideOperatorMoment /> },
+  { id: 3, title: "The Moment, Governed", component: <SlideMomentGoverned /> },
+  { id: 4, title: "The Context Gap", component: <Slide02 /> },
+  { id: 5, title: "Why Now", component: <SlideWhyNowFused /> },
+  { id: 6, title: "Where Missing Context Shows Up", component: <Slide03 /> },
+  { id: 7, title: "What Missing Context Costs", component: <Slide03Cost /> },
+  { id: 8, title: "The Context Layer", component: <Slide05 /> },
+  { id: 9, title: "Shape of the Company", component: <SlideShape /> },
+  { id: 10, title: "What's Built", component: <Slide10 /> },
   { id: 11, title: "Strategic Shift", component: <Slide06Shift /> },
-  { id: 12, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 13, title: "Expansion Path", component: <Slide09 /> },
-  { id: 14, title: "Shape of the Company", component: <SlideShape /> },
-  { id: 15, title: "What's Built", component: <Slide10 /> },
-  { id: 16, title: "Business Model", component: <Slide11 /> },
-  { id: 17, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 12, title: "Value-Based Metering", component: <SlidePricingMetering /> },
+  { id: 13, title: "Business Model", component: <Slide11 /> },
+  { id: 14, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 15, title: "Early Validation", component: <Slide08 /> },
+  { id: 16, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 17, title: "Expansion Path", component: <Slide09 /> },
   { id: 18, title: "Team", component: <Slide12 /> },
   { id: 19, title: "The Ask", component: <Slide13 /> },
   { id: 20, title: "Appendix", component: <SlideAppendixDivider /> },
   { id: 21, title: "Appendix: How It Works", component: <Slide07 /> },
   { id: 22, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 23, title: "Appendix: Why Now (old)", component: <SlideWhyNow /> },
+  { id: 24, title: "Appendix: Persona-Level Reality", component: <Slide03WorkflowProof /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
