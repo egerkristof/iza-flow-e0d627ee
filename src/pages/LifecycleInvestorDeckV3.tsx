@@ -2613,57 +2613,69 @@ function SlideOperatorMoment() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>The Bet</p>
-        <h2 className="font-black mb-6" style={{ fontSize: 64, color: TEXT, lineHeight: 1.05 }}>
-          The unit of work is no longer the task.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>It is the operator's moment of decision.</span>
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>The Unit of Work</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          The operator&apos;s moment of decision.
         </h2>
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          The task used to be the unit of work. <span style={{ color: TEXT, fontWeight: 700 }}>In the AI age, value is created or destroyed at the moment an operator decides what to do.</span>
+        </p>
+      </div>
 
-        <div className="flex gap-10 items-center mt-4">
-          {/* Diagram */}
-          <div className="relative w-[720px] h-[520px] shrink-0">
-            {/* Inbound arrows + labels */}
-            {[
-              { label: "Standards", color: TEAL, pos: { left: 0, top: 40 } },
-              { label: "Prior decisions", color: SEAFOAM, pos: { right: 0, top: 40 } },
-              { label: "Governance constraints", color: GOLD, pos: { left: 0, bottom: 160 } },
-              { label: "Live context", color: ACCENT, pos: { right: 0, bottom: 160 } },
-            ].map((n) => (
-              <div key={n.label} className="absolute rounded-xl px-5 py-3 font-bold"
-                style={{ ...n.pos, fontSize: 20, color: `hsl(${n.color})`, background: `hsl(${n.color} / 0.08)`, border: `1px solid hsl(${n.color} / 0.25)` }}>
-                {n.label}
-              </div>
-            ))}
-            {/* Center operator node */}
-            <div className="absolute left-1/2 top-[200px] -translate-x-1/2 w-[260px] h-[180px] rounded-2xl flex flex-col items-center justify-center"
-              style={{ background: `hsl(${TEAL} / 0.10)`, border: `2px solid hsl(${TEAL} / 0.45)` }}>
-              <User size={48} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT }}>The Operator</p>
-              <p style={{ fontSize: 14, color: MUTED }}>moment of decision</p>
-            </div>
-            {/* Outbound */}
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 rounded-xl px-6 py-3 font-bold flex items-center gap-3"
-              style={{ fontSize: 20, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <ArrowRight size={22} /> Executed action · full audit trail
-            </div>
-          </div>
+      {/* One picture */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="opMomentGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.30)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+            </radialGradient>
+            <marker id="arrIn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${TEAL})`} />
+            </marker>
+            <marker id="arrOut" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${GREEN})`} />
+            </marker>
+          </defs>
 
-          {/* Thesis copy */}
-          <div className="flex-1">
-            <p style={{ fontSize: 26, color: TEXT, lineHeight: 1.4 }}>
-              In the AI age, value is created or destroyed at the moment an operator decides what to do.
-            </p>
-            <p className="mt-5" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5 }}>
-              LIZA makes that moment the highest-leverage moment in the company. We bring every relevant standard,
-              every prior decision, and every governance constraint into it, and execute the chosen action with full traceability.
-            </p>
-            <div className="mt-6 rounded-xl px-5 py-4" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-                Everything that follows is a consequence of this bet.
-              </p>
-            </div>
-          </div>
+          {/* Inbound labels (four ingredients) */}
+          {[
+            { label: "STANDARDS",       x: 340,  y: 200, ax: 760,  ay: 360 },
+            { label: "PRIOR DECISIONS", x: 1580, y: 200, ax: 1160, ay: 360 },
+            { label: "GOVERNANCE",      x: 340,  y: 560, ax: 760,  ay: 420 },
+            { label: "LIVE CONTEXT",    x: 1580, y: 560, ax: 1160, ay: 420 },
+          ].map((n) => (
+            <g key={n.label}>
+              <text x={n.x} y={n.y} textAnchor="middle"
+                style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>{n.label}</text>
+              <line x1={n.x} y1={n.y + 18} x2={n.ax} y2={n.ay}
+                stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrIn)" />
+            </g>
+          ))}
+
+          {/* Glow + center operator node */}
+          <circle cx="960" cy="390" r="240" fill="url(#opMomentGlow)" />
+          <circle cx="960" cy="390" r="150" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="3" />
+          <circle cx="960" cy="350" r="34" fill={`hsl(${TEAL} / 0.18)`} stroke={`hsl(${TEAL})`} strokeWidth="2" />
+          <text x="960" y="430" textAnchor="middle" style={{ fontSize: 22, fontWeight: 900, fill: TEXT, letterSpacing: 1 }}>THE OPERATOR</text>
+          <text x="960" y="455" textAnchor="middle" style={{ fontSize: 14, fontWeight: 600, fill: MUTED, letterSpacing: 2 }}>MOMENT OF DECISION</text>
+
+          {/* Outbound action */}
+          <line x1="960" y1="540" x2="960" y2="650" stroke={`hsl(${GREEN})`} strokeWidth="3" markerEnd="url(#arrOut)" />
+          <rect x="720" y="650" width="480" height="60" rx="30" fill={`hsl(${GREEN} / 0.08)`} stroke={`hsl(${GREEN} / 0.45)`} strokeWidth="1.5" />
+          <text x="960" y="690" textAnchor="middle" style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>EXECUTED ACTION · FULL AUDIT TRAIL</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${TEAL} / 0.08)`, border: `1.5px solid hsl(${TEAL} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Everything that follows is a consequence of <span style={{ color: `hsl(${TEAL})` }}>this bet.</span>
+          </p>
         </div>
       </div>
       <SlideBar from={TEAL} to={SEAFOAM} />
@@ -2672,82 +2684,64 @@ function SlideOperatorMoment() {
 }
 
 function SlideMomentGoverned() {
-  const inputs = [
-    { icon: <BookOpen size={20} />, label: "Standards", color: TEAL },
-    { icon: <GitBranch size={20} />, label: "Prior decisions", color: SEAFOAM },
-    { icon: <Shield size={20} />, label: "Governance", color: GOLD },
-    { icon: <Database size={20} />, label: "Live context", color: ACCENT },
-  ];
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Proof in market</p>
-        <h2 className="font-black mb-2" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          We don't sell AI.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>We sell governed moments of action.</span>
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>The Bet</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          We don&apos;t sell AI. <span style={{ color: `hsl(${GREEN})` }}>We sell governed moments of action.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
-          The first artefact in market that makes the thesis visible. Human judgment on top. AI executes inside a bounded standard.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          Human on top. AI executes inside a bounded standard. <span style={{ color: TEXT, fontWeight: 700 }}>Every action tied to a Playbook, every rationale logged.</span>
         </p>
+      </div>
 
-        <div className="flex-1 grid grid-cols-3 gap-6">
-          {/* Left: human on top */}
-          <div className="rounded-2xl border p-6 flex flex-col"
-            style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.05)` }}>
-            <div className="flex items-center gap-3 mb-3">
-              <User size={28} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Human on top</p>
-            </div>
-            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              Judgment, approval, accountability. Sets intent and signs off on the action.
-            </p>
-            <ul className="mt-4 space-y-2" style={{ fontSize: 16, color: TEXT }}>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Sees what would happen before it happens</li>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Approves, edits, or stops</li>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Owns the decision</li>
-            </ul>
-          </div>
+      {/* One picture — operator wrapped in four governance rings */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="govGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={`hsl(${GREEN} / 0.18)`} />
+              <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+            </radialGradient>
+          </defs>
+          <circle cx="960" cy="380" r="340" fill="url(#govGlow)" />
 
-          {/* Middle: the moment */}
-          <div className="rounded-2xl border-2 p-6 flex flex-col items-center justify-center text-center"
-            style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>The moment</p>
-            <div className="grid grid-cols-2 gap-2 w-full mb-4">
-              {inputs.map((i) => (
-                <div key={i.label} className="rounded-lg px-3 py-2 flex items-center gap-2"
-                  style={{ background: `hsl(${i.color} / 0.08)`, border: `1px solid hsl(${i.color} / 0.2)`, color: `hsl(${i.color})` }}>
-                  {i.icon}<span className="font-semibold" style={{ fontSize: 14 }}>{i.label}</span>
-                </div>
-              ))}
-            </div>
-            <Sparkles size={32} style={{ color: `hsl(${GREEN})` }} />
-            <p className="font-black mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-              Decision, governed in place
-            </p>
-          </div>
+          {/* Four concentric rings, each labelled with one ingredient at a compass point */}
+          {[
+            { r: 300, color: TEAL,    label: "STANDARDS",       lx: 960,  ly: 64 },
+            { r: 250, color: SEAFOAM, label: "PRIOR DECISIONS", lx: 1690, ly: 388 },
+            { r: 200, color: ACCENT,  label: "LIVE CONTEXT",    lx: 960,  ly: 712 },
+            { r: 150, color: GOLD,    label: "GOVERNANCE",      lx: 230,  ly: 388 },
+          ].map((ring) => (
+            <g key={ring.label}>
+              <circle cx="960" cy="380" r={ring.r} fill="none"
+                stroke={`hsl(${ring.color} / 0.55)`} strokeWidth="1.5" strokeDasharray="4 6" />
+              <rect x={ring.lx - 150} y={ring.ly - 22} width="300" height="44" rx="22"
+                fill={BG} stroke={`hsl(${ring.color} / 0.5)`} strokeWidth="1.2" />
+              <text x={ring.lx} y={ring.ly + 7} textAnchor="middle"
+                style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${ring.color})`, letterSpacing: 2 }}>{ring.label}</text>
+            </g>
+          ))}
 
-          {/* Right: AI inside the standard */}
-          <div className="rounded-2xl border p-6 flex flex-col"
-            style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.05)` }}>
-            <div className="flex items-center gap-3 mb-3">
-              <Cpu size={28} style={{ color: `hsl(${ACCENT})` }} />
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>AI executes inside the standard</p>
-            </div>
-            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              State-locked to a Playbook. Cannot wander outside the bounded reasoning surface.
-            </p>
-            <ul className="mt-4 space-y-2" style={{ fontSize: 16, color: TEXT }}>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Every action tied to a Playbook</li>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Rationale logged automatically</li>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Replayable, auditable, reversible</li>
-            </ul>
-          </div>
+          {/* Center operator + governed moment */}
+          <circle cx="960" cy="380" r="100" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="3" />
+          <circle cx="960" cy="350" r="26" fill={`hsl(${GREEN} / 0.18)`} stroke={`hsl(${GREEN})`} strokeWidth="2" />
+          <text x="960" y="410" textAnchor="middle" style={{ fontSize: 16, fontWeight: 900, fill: TEXT, letterSpacing: 1 }}>OPERATOR</text>
+          <text x="960" y="432" textAnchor="middle" style={{ fontSize: 12, fontWeight: 700, fill: MUTED, letterSpacing: 1.5 }}>JUDGMENT &amp; SIGN-OFF</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${GREEN} / 0.08)`, border: `1.5px solid hsl(${GREEN} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            The moment is the product. <span style={{ color: `hsl(${GREEN})` }}>Governance is in place by default.</span>
+          </p>
         </div>
-
-        <p className="mt-6" style={{ fontSize: 18, color: SUBTLE }}>
-          Running today across four paid engagements. Proof on slide 15.
-        </p>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
     </div>
@@ -2758,66 +2752,56 @@ function SlideWhyNowFused() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${WARM})` }}>Why Now</p>
-        <h2 className="font-black mb-2" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          Two shifts collide.{" "}
-          <span style={{ color: `hsl(${WARM})` }}>The moment of action becomes the only place value compounds.</span>
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${WARM})` }}>Why Now</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          Tokens get cheaper. <span style={{ color: `hsl(${WARM})` }}>Decisions get more expensive.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
-          Run, improve, transform used to be sequential. Per-seat AI used to be the floor. Both broke this year.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          Two curves cross this year. <span style={{ color: TEXT, fontWeight: 700 }}>The crossing point is the operator&apos;s moment of decision.</span>
         </p>
+      </div>
 
-        <div className="flex-1 grid grid-cols-2 gap-8">
-          {/* Shift 1 — Three Horizons collapse */}
-          <div className="rounded-2xl border p-7 flex flex-col"
-            style={{ borderColor: `hsl(${WARM} / 0.25)`, background: `hsl(${WARM} / 0.05)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${WARM})` }}>Shift 01 · Business model</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>The Three Horizons collapse.</p>
-            <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              Run, improve and transform now happen on the same calendar week, at the edge.
-              You cannot solve a permanent-edge state with sequential planning cycles or static SOPs.
-            </p>
-            <div className="mt-5 grid grid-cols-3 gap-2">
-              {["Run", "Improve", "Transform"].map((h) => (
-                <div key={h} className="rounded-lg px-3 py-3 text-center font-bold"
-                  style={{ fontSize: 16, color: `hsl(${WARM})`, background: `hsl(${WARM} / 0.10)`, border: `1px solid hsl(${WARM} / 0.25)` }}>
-                  {h}
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 font-semibold" style={{ fontSize: 17, color: TEXT }}>
-              You need a runtime that holds the company's reasoning and updates it continuously.
-            </p>
-          </div>
+      {/* One picture — scissors chart */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          {/* axes */}
+          <line x1="280" y1="640" x2="1640" y2="640" stroke={SUBTLE} strokeWidth="1.5" />
+          <line x1="280" y1="80" x2="280" y2="640" stroke={SUBTLE} strokeWidth="1.5" />
 
-          {/* Shift 2 — Pricing inversion */}
-          <div className="rounded-2xl border p-7 flex flex-col"
-            style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.05)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>Shift 02 · Economics</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15 }}>The pricing inversion.</p>
-            <p className="mt-3" style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              Every major AI vendor is converging on usage-based pricing. Per-seat is the legacy floor.
-              Raw tokens are not a business unit a CFO can defend.
-            </p>
-            <div className="mt-5 flex items-center gap-3">
-              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: MUTED, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>Per-seat SaaS</div>
-              <ArrowRight size={20} style={{ color: SUBTLE }} />
-              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: MUTED, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>Hybrid</div>
-              <ArrowRight size={20} style={{ color: SUBTLE }} />
-              <div className="rounded-lg px-3 py-2 font-bold" style={{ fontSize: 16, color: `hsl(${ACCENT})`, background: `hsl(${ACCENT} / 0.10)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>Usage / API-metered</div>
-            </div>
-            <p className="mt-4 font-semibold" style={{ fontSize: 17, color: `hsl(${RED})` }}>
-              Failure mode: unanchored consumption. First line CFOs cut.
-            </p>
-          </div>
-        </div>
+          {/* time axis labels */}
+          <text x="280"  y="680" textAnchor="middle" style={{ fontSize: 16, fontWeight: 700, fill: MUTED, letterSpacing: 1.5 }}>2022</text>
+          <text x="960"  y="680" textAnchor="middle" style={{ fontSize: 16, fontWeight: 700, fill: MUTED, letterSpacing: 1.5 }}>TODAY</text>
+          <text x="1640" y="680" textAnchor="middle" style={{ fontSize: 16, fontWeight: 700, fill: MUTED, letterSpacing: 1.5 }}>2028</text>
 
-        <div className="mt-6 rounded-xl px-6 py-4"
-          style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
-            One conclusion. The only durable place to anchor both the runtime and the bill is{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>the operator's moment of decision.</strong>
+          {/* Curve A — cost per token (falling) */}
+          <path d="M 280 140 C 600 180, 820 520, 1640 620" fill="none"
+            stroke={`hsl(${ACCENT})`} strokeWidth="5" strokeLinecap="round" />
+          <text x="320" y="120" style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${ACCENT})`, letterSpacing: 1.5 }}>COST PER TOKEN</text>
+          <text x="320" y="146" style={{ fontSize: 14, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>collapsing toward zero</text>
+
+          {/* Curve B — value of a governed decision (rising) */}
+          <path d="M 280 600 C 600 580, 820 240, 1640 100" fill="none"
+            stroke={`hsl(${GREEN})`} strokeWidth="5" strokeLinecap="round" />
+          <text x="1620" y="84" textAnchor="end" style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>VALUE OF A GOVERNED DECISION</text>
+          <text x="1620" y="110" textAnchor="end" style={{ fontSize: 14, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>compounding</text>
+
+          {/* Crossing point — the moment */}
+          <circle cx="960" cy="380" r="60" fill="none" stroke={`hsl(${WARM})`} strokeWidth="2.5" strokeDasharray="4 5" />
+          <circle cx="960" cy="380" r="12" fill={`hsl(${WARM})`} />
+          <line x1="960" y1="380" x2="960" y2="640" stroke={`hsl(${WARM} / 0.45)`} strokeWidth="1.5" strokeDasharray="4 6" />
+          <rect x="780" y="280" width="360" height="44" rx="22" fill={BG} stroke={`hsl(${WARM})`} strokeWidth="1.5" />
+          <text x="960" y="309" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${WARM})`, letterSpacing: 2 }}>THE MOMENT OF ACTION</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${WARM} / 0.08)`, border: `1.5px solid hsl(${WARM} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Anchor the runtime and the bill to the moment, <span style={{ color: `hsl(${WARM})` }}>or lose both.</span>
           </p>
         </div>
       </div>
@@ -2827,62 +2811,73 @@ function SlideWhyNowFused() {
 }
 
 function SlidePricingMetering() {
-  const tiers = [
-    {
-      mult: "1×", label: "Operational Execution", human: "Junior hour", color: TEAL,
-      examples: "Draft, summarise, fill a template, file a record.",
-    },
-    {
-      mult: "5×", label: "Process Design & Governance", human: "Senior hour", color: SEAFOAM,
-      examples: "Update a Playbook, run drift detection, redesign a workflow.",
-    },
-    {
-      mult: "25×", label: "Strategic Simulation", human: "Partner hour", color: GOLD,
-      examples: "War-game a pivot, model a policy change, simulate a scenario.",
-    },
-  ];
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>The Economics</p>
-        <h2 className="font-black mb-2" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05 }}>
-          We meter the{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>weight of the decision</span>,
-          not the weight of the tokens.
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>The Economics</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          We meter the decision, <span style={{ color: `hsl(${GREEN})` }}>not the tokens.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>
-          A company already prices a junior hour, a senior hour and a partner hour differently. We reproduce that for machine work,
-          because state is locked to a Playbook. We know the <strong style={{ color: TEXT }}>decision class</strong> of every execution.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          State is locked to a Playbook. <span style={{ color: TEXT, fontWeight: 700 }}>We know the decision class of every execution, and price it like a junior, senior or partner hour.</span>
         </p>
+      </div>
 
-        <div className="flex-1 grid grid-cols-3 gap-6">
-          {tiers.map((t) => (
-            <div key={t.mult} className="rounded-2xl border p-7 flex flex-col"
-              style={{ borderColor: `hsl(${t.color} / 0.3)`, background: `hsl(${t.color} / 0.05)` }}>
-              <p className="font-black" style={{ fontSize: 72, color: `hsl(${t.color})`, lineHeight: 1 }}>{t.mult}</p>
-              <p className="font-bold mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>{t.label}</p>
-              <p className="mt-1 font-semibold" style={{ fontSize: 16, color: `hsl(${t.color})` }}>≈ {t.human}</p>
-              <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{t.examples}</p>
-            </div>
-          ))}
-        </div>
+      {/* One picture — decision-class pyramid above a falling token baseline */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="tierTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${GOLD} / 0.45)`} />
+              <stop offset="100%" stopColor={`hsl(${GOLD} / 0.22)`} />
+            </linearGradient>
+            <linearGradient id="tierMid" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${SEAFOAM} / 0.40)`} />
+              <stop offset="100%" stopColor={`hsl(${SEAFOAM} / 0.20)`} />
+            </linearGradient>
+            <linearGradient id="tierBot" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.38)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0.18)`} />
+            </linearGradient>
+          </defs>
 
-        <div className="mt-6 grid grid-cols-2 gap-6">
-          <div className="rounded-xl px-6 py-4"
-            style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.2)` }}>
-            <p className="font-bold mb-1" style={{ fontSize: 16, color: `hsl(${RED})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>The trap</p>
-            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Unanchored token consumption. As inference cost falls, flat per-token revenue compresses to zero.
-            </p>
-          </div>
-          <div className="rounded-xl px-6 py-4"
-            style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
-            <p className="font-bold mb-1" style={{ fontSize: 16, color: `hsl(${GREEN})`, letterSpacing: "0.1em", textTransform: "uppercase" }}>Our floor</p>
-            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-              Revenue tracks strategic ROI, not API price. Decision-weighted metering survives token deflation.
-            </p>
-          </div>
+          {/* Pyramid — three tiers */}
+          {/* Top tier (Strategic 25×) */}
+          <polygon points="860,80 1060,80 1110,220 810,220" fill="url(#tierTop)" stroke={`hsl(${GOLD})`} strokeWidth="2" />
+          <text x="960" y="135" textAnchor="middle" style={{ fontSize: 44, fontWeight: 900, fill: `hsl(${GOLD})`, letterSpacing: 1 }}>25×</text>
+          <text x="960" y="178" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: TEXT, letterSpacing: 1.5 }}>STRATEGIC SIMULATION</text>
+          <text x="960" y="202" textAnchor="middle" style={{ fontSize: 13, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>≈ partner hour</text>
+
+          {/* Middle tier (5×) */}
+          <polygon points="810,220 1110,220 1170,380 750,380" fill="url(#tierMid)" stroke={`hsl(${SEAFOAM})`} strokeWidth="2" />
+          <text x="960" y="285" textAnchor="middle" style={{ fontSize: 44, fontWeight: 900, fill: `hsl(${SEAFOAM})`, letterSpacing: 1 }}>5×</text>
+          <text x="960" y="328" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: TEXT, letterSpacing: 1.5 }}>PROCESS DESIGN &amp; GOVERNANCE</text>
+          <text x="960" y="352" textAnchor="middle" style={{ fontSize: 13, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>≈ senior hour</text>
+
+          {/* Bottom tier (1×) */}
+          <polygon points="750,380 1170,380 1250,560 670,560" fill="url(#tierBot)" stroke={`hsl(${TEAL})`} strokeWidth="2" />
+          <text x="960" y="455" textAnchor="middle" style={{ fontSize: 44, fontWeight: 900, fill: `hsl(${TEAL})`, letterSpacing: 1 }}>1×</text>
+          <text x="960" y="498" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: TEXT, letterSpacing: 1.5 }}>OPERATIONAL EXECUTION</text>
+          <text x="960" y="522" textAnchor="middle" style={{ fontSize: 13, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>≈ junior hour</text>
+
+          {/* Token baseline — thin, going down */}
+          <line x1="280" y1="650" x2="1640" y2="650" stroke={SUBTLE} strokeWidth="1" strokeDasharray="3 5" />
+          <path d="M 280 640 C 600 660, 1000 700, 1640 720" fill="none" stroke={`hsl(${RED} / 0.55)`} strokeWidth="2.5" />
+          <text x="280" y="628" style={{ fontSize: 14, fontWeight: 800, fill: `hsl(${RED})`, letterSpacing: 1.5 }}>TOKEN COST</text>
+          <text x="280" y="648" style={{ fontSize: 11, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>compressing toward zero</text>
+          <text x="1640" y="710" textAnchor="end" style={{ fontSize: 12, fontWeight: 700, fill: MUTED, letterSpacing: 1 }}>flat per-token revenue → 0</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${GREEN} / 0.08)`, border: `1.5px solid hsl(${GREEN} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Decision-class metering survives <span style={{ color: `hsl(${GREEN})` }}>token deflation.</span>
+          </p>
         </div>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
@@ -2891,60 +2886,69 @@ function SlidePricingMetering() {
 }
 
 function SlideSovereignty() {
-  const pillars = [
-    {
-      title: "Knowledge stays with the company",
-      body: "Standards, decisions and rationale live in the customer's tenant. The reasoning that runs the business is owned by the business, not by a model vendor.",
-      color: TEAL,
-      icon: <Shield size={28} />,
-    },
-    {
-      title: "Models are interchangeable",
-      body: "We route across model providers per decision class. No customer is locked to a single foundation model. The moat lives in the standard, not the model.",
-      color: SEAFOAM,
-      icon: <Network size={28} />,
-    },
-    {
-      title: "Portable across vendors",
-      body: "Playbooks, rationale and audit trails export as code. If we disappear, the standards keep running. Sovereignty is the customer's exit option, not ours.",
-      color: MINT,
-      icon: <GitBranch size={28} />,
-    },
-  ];
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>The Long Shape</p>
-        <h2 className="font-black mb-3" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          The moat is{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>knowledge sovereignty</span>.
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>The Long Shape</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          Knowledge stays. <span style={{ color: `hsl(${TEAL})` }}>Models are interchangeable.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
-          Foundation models will keep getting cheaper, faster and more capable. The durable asset of the AI age is not the model.
-          It is the encoded reasoning of the company that uses it, in a form the company actually owns.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          The durable asset of the AI age is not the model. <span style={{ color: TEXT, fontWeight: 700 }}>It is the encoded reasoning of the company that uses it.</span>
         </p>
+      </div>
 
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          {pillars.map((p) => (
-            <div key={p.title} className="rounded-2xl border p-7 flex flex-col"
-              style={{ borderColor: `hsl(${p.color} / 0.25)`, background: `hsl(${p.color} / 0.05)` }}>
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: `hsl(${p.color} / 0.12)`, color: `hsl(${p.color})` }}>
-                {p.icon}
-              </div>
-              <p className="font-bold mb-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>{p.title}</p>
-              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-            </div>
+      {/* One picture — central vault, models orbit and swap */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="vaultGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.18)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+            </radialGradient>
+          </defs>
+          <circle cx="960" cy="380" r="320" fill="url(#vaultGlow)" />
+
+          {/* Orbit ring */}
+          <ellipse cx="960" cy="380" rx="540" ry="220" fill="none" stroke={`hsl(${SEAFOAM} / 0.4)`} strokeWidth="1.5" strokeDasharray="6 8" />
+
+          {/* Central vault */}
+          <rect x="700" y="260" width="520" height="240" rx="16"
+            fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="3" />
+          <rect x="700" y="260" width="520" height="56" rx="16"
+            fill={`hsl(${TEAL} / 0.18)`} />
+          <text x="960" y="298" textAnchor="middle" style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>CUSTOMER KNOWLEDGE VAULT</text>
+          <text x="960" y="358" textAnchor="middle" style={{ fontSize: 20, fontWeight: 800, fill: TEXT, letterSpacing: 1.5 }}>STANDARDS · DECISIONS · RATIONALE</text>
+          <text x="960" y="402" textAnchor="middle" style={{ fontSize: 16, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>Lives in the customer&apos;s tenant.</text>
+          <text x="960" y="430" textAnchor="middle" style={{ fontSize: 16, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>Exports as code. Portable across vendors.</text>
+          <text x="960" y="472" textAnchor="middle" style={{ fontSize: 14, fontWeight: 700, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>OWNED BY THE BUSINESS</text>
+
+          {/* Orbiting models */}
+          {[
+            { cx: 380,  cy: 380, label: "GPT" },
+            { cx: 1540, cy: 380, label: "Claude" },
+            { cx: 700,  cy: 160, label: "Gemini" },
+            { cx: 1220, cy: 600, label: "Open-source" },
+          ].map((m) => (
+            <g key={m.label}>
+              <circle cx={m.cx} cy={m.cy} r="56" fill={BG} stroke={`hsl(${SEAFOAM})`} strokeWidth="2" />
+              <text x={m.cx} y={m.cy + 6} textAnchor="middle" style={{ fontSize: 16, fontWeight: 900, fill: `hsl(${SEAFOAM})`, letterSpacing: 1 }}>{m.label}</text>
+            </g>
           ))}
-        </div>
 
-        <div className="mt-6 rounded-xl px-6 py-4"
-          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
-          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
-            Our category bet is that the next decade's defensible enterprise software is the one that{" "}
-            <strong style={{ color: `hsl(${GREEN})` }}>treats the customer's encoded reasoning as the asset</strong>,
-            and the model as the engine. LIZA is built that way from day one.
+          {/* Caption */}
+          <text x="960" y="720" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${SEAFOAM})`, letterSpacing: 2 }}>MODELS SWAP IN. THE VAULT STAYS.</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${TEAL} / 0.08)`, border: `1.5px solid hsl(${TEAL} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Sovereignty is <span style={{ color: `hsl(${TEAL})` }}>the customer&apos;s exit option, not ours.</span>
           </p>
         </div>
       </div>
