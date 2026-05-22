@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -63,6 +64,80 @@ type Phase =
   | "diagnosis";
 
 const DOMAIN_ORDER: DomainId[] = ["demand", "capacity", "quality", "economics"];
+
+const DOMAIN_BRIDGES: Record<DomainId, { bridge: string; unlock: string; role: string }> = {
+  demand: {
+    bridge: "Create one owned demand backlog with a clear intake rule, priority rule, and weekly decision cadence.",
+    unlock: "Demand stops arriving as noise. The leader can trade off work before the unit is already committed.",
+    role: "unit lead plus one operations analyst",
+  },
+  capacity: {
+    bridge: "Create one capacity view that connects skills, allocation, bottlenecks, and the next planning cycle.",
+    unlock: "Capacity becomes visible before work breaks. The leader can move people and scope with evidence.",
+    role: "unit lead plus people or planning partner",
+  },
+  quality: {
+    bridge: "Turn the quality bar into one current playbook with review triggers, ownership, and consequences.",
+    unlock: "Quality moves from late escalation to early control. The team sees drift before customers do.",
+    role: "domain owner plus delivery or quality lead",
+  },
+  economics: {
+    bridge: "Build one unit economics view that shows margin, cost drivers, and low-yield work at decision level.",
+    unlock: "The leader can stop subsidising bad work and put capacity behind the work that pays back.",
+    role: "unit lead plus finance partner",
+  },
+};
+
+const clampTier = (value: number): 0 | 1 | 2 | 3 => Math.max(0, Math.min(3, Math.round(value))) as 0 | 1 | 2 | 3;
+
+const buildDomainScore = (domain: DomainId, a: Answers, scale: Scale): DomainScore => {
+  const current = clampTier(Math.min(a.signal_tier ?? 0, a.substrate_tier ?? 0));
+  const target = clampTier(current + (scale === "<50" || scale === "50-200" ? 1 : 2));
+  const gap = Math.max(1, target - current);
+  const sizeMultiplier = scale === "<50" ? 1 : scale === "50-200" ? 1.5 : scale === "200-500" ? 2 : 3;
+  const weeks = Math.min(26, Math.max(2, Math.round(gap * 3 * sizeMultiplier)));
+  const bridge = DOMAIN_BRIDGES[domain];
+
+  return {
+    current_tier: current,
+    target_tier: target,
+    justification: `The signal is "${a.signal_label}" and the system is "${a.substrate_label}".`,
+    bridge: bridge.bridge,
+    effort_weeks: weeks,
+    effort_role: bridge.role,
+    unlock: bridge.unlock,
+  };
+};
+
+const buildFallbackDiagnosis = (seat: Seat, scores: Partial<Record<DomainId, DomainScore>>): Diagnosis => {
+  const completeScores = DOMAIN_ORDER.map((domain) => ({ domain, score: scores[domain]! })).filter((x) => x.score);
+  const lowest = completeScores.reduce((pick, item) => item.score.current_tier < pick.score.current_tier ? item : pick, completeScores[0]);
+  const bestReady = [...completeScores].sort((a, b) => b.score.current_tier - a.score.current_tier)[0] || lowest;
+  const start = lowest?.score.current_tier <= 1 ? lowest : bestReady;
+
+  return {
+    title: `${seat.function_label} operating diagnosis`,
+    narrative: [
+      `This ${seat.unit_shape.replace("_", " ")} is run through a mix of judgement, recorded artefacts, and partial systems. The work is visible enough to manage, but not yet structured enough for the system to carry routine decisions without the leader in the loop.`,
+      `The practical constraint is substrate quality. Where the unit is still at Tier 0 or Tier 1, AI will amplify gaps rather than produce reliable leverage. Where the unit reaches Tier 2, the same AI spend starts converting into faster prioritisation, routing, control, and margin decisions.`,
+      `The next move is not a broad AI programme. It is one domain bridge, owned clearly, with the operating rule written down and wired into the cadence the unit already uses.`,
+    ],
+    ai_ranking: completeScores
+      .sort((a, b) => b.score.current_tier - a.score.current_tier)
+      .map(({ domain, score }) => ({
+        domain,
+        roi: score.current_tier >= 2 ? "high" : score.current_tier === 1 ? "medium" : "low",
+        why: score.current_tier >= 2
+          ? `${DOMAINS.find((x) => x.id === domain)?.label} has enough structure for AI to work against the operating system.`
+          : `${DOMAINS.find((x) => x.id === domain)?.label} needs a stronger substrate before AI spend becomes reliable.`,
+      })),
+    start_here: {
+      domain: start?.domain || "demand",
+      reason: start ? `${DOMAINS.find((x) => x.id === start.domain)?.label} is the clearest bridge from today's Tier ${start.score.current_tier} state to a more executable operating rhythm.` : "Start with Demand because it shapes what the rest of the unit has to absorb.",
+    },
+    trade_off: "The trade-off is speed versus explicitness. The unit has to slow down long enough to name the rule, or it will keep paying for ambiguity later.",
+  };
+};
 
 export default function TheBrief() {
   const { id } = useParams<{ id?: string }>();
@@ -151,29 +226,12 @@ export default function TheBrief() {
   };
 
   const scoreDomain = async (domain: DomainId): Promise<DomainScore | null> => {
-    const probe = getProbe(seat.function_id, domain);
     const a = answers[domain];
     if (!a || !answerComplete(a)) return null;
-    const signalText = `[Tier ${a.signal_tier}] ${a.signal_label}${a.signal_note ? ` — Note: ${a.signal_note}` : ""}`;
-    const substrateText = `[Tier ${a.substrate_tier}] ${a.substrate_label}${a.substrate_note ? ` — Note: ${a.substrate_note}` : ""}`;
     setScoringDomain(domain);
+    await new Promise((resolve) => setTimeout(resolve, 250));
     try {
-      const { data, error } = await supabase.functions.invoke("generate-brief", {
-        body: {
-          mode: "score_domain",
-          seat,
-          domain,
-          probe: { signal_prompt: probe.signal.prompt, substrate_prompt: probe.substrate.prompt },
-          answers: { signal: signalText, substrate: substrateText },
-        },
-      });
-      if (error) throw error;
-      if (!data?.score) throw new Error("No score returned.");
-      return data.score as DomainScore;
-    } catch (e: any) {
-      console.error(e);
-      toast.error(e?.message || `Could not score ${domain}.`);
-      return null;
+      return buildDomainScore(domain, a, seat.scale);
     } finally {
       setScoringDomain(null);
     }
@@ -214,14 +272,15 @@ export default function TheBrief() {
           },
         });
         if (error) throw error;
-        if (!data?.diagnosis) throw new Error("No diagnosis returned.");
-        setDiagnosis(data.diagnosis);
+        setDiagnosis(data?.diagnosis || buildFallbackDiagnosis(seat, collected));
         setPhase("diagnosis");
         scrollTo(diagnosisRef.current);
-      } catch (e: any) {
+      } catch (e) {
         console.error(e);
-        toast.error(e?.message || "Could not synthesise diagnosis.");
-        setPhase("probe");
+        toast.error("AI narrative timed out. Showing the deterministic diagnosis.");
+        setDiagnosis(buildFallbackDiagnosis(seat, collected));
+        setPhase("diagnosis");
+        scrollTo(diagnosisRef.current);
       }
     }
   };
@@ -245,8 +304,8 @@ export default function TheBrief() {
         .from("briefs")
         .insert({
           email,
-          inputs: { seat, answers, scores } as any,
-          output: diagnosis as any,
+          inputs: { seat, answers, scores } as unknown as Json,
+          output: diagnosis as unknown as Json,
         })
         .select("id")
         .single();
