@@ -739,87 +739,54 @@ function ResultView({
       transition={{ duration: 0.5 }}
       className="space-y-12"
     >
-      <div>
+      {/* 1. VERDICT — the line they would read aloud to their CEO */}
+      <div
+        className="rounded-2xl border-2 p-6 md:p-10"
+        style={{
+          background:
+            "linear-gradient(135deg, hsl(var(--primary) / 0.06) 0%, hsl(var(--card)) 60%)",
+          borderColor: "hsl(var(--primary) / 0.4)",
+        }}
+      >
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mb-2">
-          Your diagnosis
+          The verdict
         </p>
-        <h2 className="text-2xl md:text-4xl font-black tracking-tight">{diagnosis.title}</h2>
-        <p className="mt-4 text-base md:text-lg leading-relaxed text-foreground/85 max-w-3xl">
+        <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-tight">
+          {diagnosis.verdict || diagnosis.title}
+        </h2>
+        <p className="mt-4 text-sm md:text-base leading-relaxed text-muted-foreground max-w-3xl">
           {diagnosis.current_model_read}
         </p>
       </div>
 
-      {/* Compass */}
+      {/* 2. DIAGNOSIS — the compass tells the story */}
       <section>
-        <SectionHeading icon={Compass} label="The moment of work — stream coverage" />
+        <SectionHeading icon={Compass} label="The moment of work / stream coverage" />
         <OperatorCompass coverage={diagnosis.stream_coverage} tools={tools} />
       </section>
 
-      {/* Governance */}
-      <section>
-        <SectionHeading icon={ShieldCheck} label="Governance audits — what runs on every output" />
-        <GovernanceBar coverage={diagnosis.audit_coverage} />
-      </section>
+      {/* 3. COST OF THE GAP — turns diagnostic into budget */}
+      {diagnosis.cost_of_gap && (
+        <section
+          className="rounded-2xl border p-6 md:p-8"
+          style={{
+            background: "hsl(0 70% 55% / 0.04)",
+            borderColor: "hsl(0 70% 55% / 0.3)",
+          }}
+        >
+          <SectionHeading icon={Coins} label="What this gap costs you" />
+          <p className="text-lg md:text-2xl font-bold leading-snug">
+            {diagnosis.cost_of_gap.headline}
+          </p>
+          <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed max-w-3xl">
+            {diagnosis.cost_of_gap.math}
+          </p>
+        </section>
+      )}
 
-      {/* Bundle gap */}
+      {/* 4. BLIND SPOTS — what you have not seen */}
       <section>
-        <SectionHeading icon={Layers} label="Knowledge bundle — what is encoded today" />
-        <BundleGap gaps={diagnosis.bundle_gaps} />
-      </section>
-
-      {/* Decision class read */}
-      <section
-        className="rounded-2xl border p-6 md:p-8"
-        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-      >
-        <SectionHeading icon={Scale} label="Decision-class read" />
-        <p className="text-sm md:text-base leading-relaxed text-foreground/85 mb-5">
-          {diagnosis.decision_class_read.exposed}
-        </p>
-        <div className="grid md:grid-cols-3 gap-3">
-          {DECISION_CLASSES.map((c) => {
-            const governed = diagnosis.decision_class_read.governed_today.includes(c.id);
-            return (
-              <div
-                key={c.id}
-                className="rounded-xl border p-4"
-                style={{
-                  background: governed ? "hsl(155 72% 46% / 0.06)" : "hsl(0 70% 55% / 0.04)",
-                  borderColor: governed
-                    ? "hsl(155 72% 46% / 0.4)"
-                    : "hsl(0 70% 55% / 0.3)",
-                }}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <p className="text-sm font-bold">{c.label}</p>
-                  <span
-                    className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
-                    style={{
-                      background: governed
-                        ? "hsl(155 72% 46% / 0.18)"
-                        : "hsl(0 70% 55% / 0.18)",
-                      color: governed ? "hsl(155 72% 36%)" : "hsl(0 70% 50%)",
-                    }}
-                  >
-                    {governed ? "Governed" : "Exposed"}
-                  </span>
-                </div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">
-                  Weight {c.multiplier}
-                </p>
-                <p className="text-[11px] leading-snug text-muted-foreground">{c.scope}</p>
-                <p className="text-[11px] leading-snug text-muted-foreground mt-1">
-                  Approver: {c.approver}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Blind spots */}
-      <section>
-        <SectionHeading icon={AlertTriangle} label="What you probably have not thought about" />
+        <SectionHeading icon={AlertTriangle} label="What you probably have not seen" />
         <div className="space-y-2">
           {diagnosis.blind_spots.map((b, i) => (
             <motion.div
@@ -837,7 +804,7 @@ function ResultView({
         </div>
       </section>
 
-      {/* Correction */}
+      {/* 5. THE MOVE — promoted, sequenced, CTA attached */}
       <section
         className="rounded-2xl p-6 md:p-8 border-2"
         style={{
@@ -848,10 +815,10 @@ function ResultView({
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="w-4 h-4 text-primary" />
           <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-            The correction
+            The move
           </span>
         </div>
-        <h3 className="text-xl md:text-2xl font-bold leading-snug">
+        <h3 className="text-2xl md:text-3xl font-black leading-tight tracking-tight">
           {diagnosis.correction.move}
         </h3>
         <div className="grid md:grid-cols-2 gap-4 mt-5">
@@ -866,6 +833,138 @@ function ResultView({
               How LIZA delivers it
             </p>
             <p className="text-sm leading-relaxed">{diagnosis.correction.liza_capability}</p>
+          </div>
+        </div>
+
+        {/* 30 / 60 / 90 sequence */}
+        {diagnosis.correction.sequence && (
+          <div className="mt-6">
+            <div className="flex items-center gap-2 mb-3">
+              <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                The sequence
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-3">
+              {(["now", "next", "later"] as const).map((k, i) => {
+                const step = diagnosis.correction.sequence![k];
+                return (
+                  <div
+                    key={k}
+                    className="rounded-xl border p-4"
+                    style={{
+                      background: "hsl(var(--background))",
+                      borderColor: "hsl(var(--border))",
+                    }}
+                  >
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span
+                        className="inline-flex w-5 h-5 rounded-full items-center justify-center text-[10px] font-black"
+                        style={{
+                          background: "hsl(var(--primary))",
+                          color: "hsl(var(--primary-foreground))",
+                        }}
+                      >
+                        {i + 1}
+                      </span>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
+                        {step.label}
+                      </p>
+                    </div>
+                    <p className="text-sm leading-snug">{step.what}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Inline CTA at peak intent */}
+        <div className="mt-6 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between pt-5 border-t" style={{ borderColor: "hsl(var(--primary) / 0.2)" }}>
+          <p className="text-sm text-muted-foreground">
+            Want this delivered? We can walk it through with you in 30 minutes.
+          </p>
+          <Button asChild className="font-semibold">
+            <a href="/sprint">
+              Book a 30-min readout
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </a>
+          </Button>
+        </div>
+      </section>
+
+      {/* 6. THE UNDERNEATH — collapsed proof: audits, bundle, decision-class */}
+      <section>
+        <SectionHeading icon={Layers} label="The underneath / proof of diagnosis" />
+        <div className="space-y-6">
+          {/* Governance */}
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <ShieldCheck className="w-3.5 h-3.5 text-muted-foreground" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                Governance audits / what runs on every output
+              </p>
+            </div>
+            <GovernanceBar coverage={diagnosis.audit_coverage} />
+          </div>
+
+          {/* Bundle gap */}
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Layers className="w-3.5 h-3.5 text-muted-foreground" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                Knowledge bundle / what is encoded today
+              </p>
+            </div>
+            <BundleGap gaps={diagnosis.bundle_gaps} />
+          </div>
+
+          {/* Decision class */}
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <Scale className="w-3.5 h-3.5 text-muted-foreground" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                Decision-class read
+              </p>
+            </div>
+            <p className="text-sm leading-relaxed text-foreground/85 mb-3 max-w-3xl">
+              {diagnosis.decision_class_read.exposed}
+            </p>
+            <div className="grid md:grid-cols-3 gap-3">
+              {DECISION_CLASSES.map((c) => {
+                const governed = diagnosis.decision_class_read.governed_today.includes(c.id);
+                return (
+                  <div
+                    key={c.id}
+                    className="rounded-xl border p-3"
+                    style={{
+                      background: governed ? "hsl(155 72% 46% / 0.06)" : "hsl(0 70% 55% / 0.04)",
+                      borderColor: governed
+                        ? "hsl(155 72% 46% / 0.4)"
+                        : "hsl(0 70% 55% / 0.3)",
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-xs font-bold">{c.label}</p>
+                      <span
+                        className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+                        style={{
+                          background: governed
+                            ? "hsl(155 72% 46% / 0.18)"
+                            : "hsl(0 70% 55% / 0.18)",
+                          color: governed ? "hsl(155 72% 36%)" : "hsl(0 70% 50%)",
+                        }}
+                      >
+                        {governed ? "Governed" : "Exposed"}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-muted-foreground">
+                      Weight {c.multiplier} / {c.scope}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
