@@ -19,6 +19,7 @@ import {
   type Scale,
   type DomainId,
 } from "@/lib/brief-framework";
+import { BlueprintCanvas, type BlueprintState } from "@/components/brief/BlueprintCanvas";
 
 type Seat = {
   function_id: FunctionId;
@@ -196,6 +197,27 @@ export default function TheBrief() {
   const currentAnswers: Answers = currentDomain ? answers[currentDomain] || {} : {};
   const currentChoices = currentDomain ? DOMAIN_CHOICES[currentDomain] : null;
 
+  // Build the live blueprint state from current phase + answers
+  const pillarTiers: BlueprintState["pillarTiers"] = {};
+  DOMAIN_ORDER.forEach((d) => {
+    const a = answers[d];
+    if (a && a.substrate_tier !== undefined) {
+      pillarTiers[d] = a.substrate_tier;
+    } else if (scores[d]) {
+      pillarTiers[d] = scores[d]!.current_tier;
+    }
+  });
+  const blueprintState: BlueprintState = {
+    function_label: seat.function_label,
+    unit_shape: seat.unit_shape,
+    scale: seat.scale,
+    seatPlaced: phase !== "intro",
+    pillarTiers,
+    activeDomain: phase === "probe" ? currentDomain ?? null : null,
+    showBeams: phase === "scoring" || phase === "synthesizing" || phase === "diagnosis",
+    keystoneDomain: phase === "diagnosis" ? diagnosis?.start_here.domain ?? null : null,
+  };
+
   const pickChoice = (which: "signal" | "substrate", choice: { tier: 0 | 1 | 2 | 3; label: string }) => {
     if (!currentDomain) return;
     setAnswers((prev) => ({
@@ -360,7 +382,8 @@ export default function TheBrief() {
           ref={probeRef}
           className="min-h-screen px-6 md:px-12 border-t border-border/40 pt-20 pb-32"
         >
-          <div className="max-w-3xl mx-auto w-full">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-14 items-start">
+            <div className="w-full max-w-2xl">
             {phase === "seat" && (
               <>
                 <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Act 1 of 4 . Seat</div>
@@ -479,6 +502,25 @@ export default function TheBrief() {
                 </div>
               </>
             )}
+            </div>
+
+            {/* Right pane: live blueprint */}
+            <div className="hidden lg:block sticky top-8">
+              <div className="aspect-[770/430] w-full">
+                <BlueprintCanvas state={blueprintState} />
+              </div>
+              <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
+                Every answer places a pillar. Tier 0 reads thin and red; Tier 3 reads tall and green.
+                Beams connect at diagnosis. A keystone lands on the one place to start.
+              </p>
+            </div>
+
+            {/* Mobile blueprint, stacked below */}
+            <div className="lg:hidden">
+              <div className="aspect-[770/430] w-full">
+                <BlueprintCanvas state={blueprintState} />
+              </div>
+            </div>
           </div>
         </section>
       )}
@@ -487,20 +529,23 @@ export default function TheBrief() {
       {(phase === "scoring" || phase === "synthesizing") && (
         <section
           ref={diagnosisRef}
-          className="min-h-screen flex items-center px-6 md:px-12 border-t border-border/40"
+          className="min-h-screen px-6 md:px-12 border-t border-border/40 pt-20 pb-32"
         >
-          <div className="max-w-2xl mx-auto py-20 w-full">
+          <div className="max-w-6xl mx-auto w-full">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
               Act 3 of 4 . Diagnosis . {phase === "scoring" ? "Scoring" : "Synthesising"}
             </div>
-            <div className="text-2xl font-light text-foreground mb-8">
+            <div className="text-2xl md:text-3xl font-light text-foreground mb-10 max-w-3xl">
               {phase === "scoring"
                 ? scoringDomain
                   ? `Reading your ${scoringDomain} answers against the four-tier scale.`
                   : "Reading your answers."
                 : "Synthesising the four domains into one page."}
             </div>
-            <div className="space-y-3">
+            <div className="aspect-[770/430] w-full mb-10">
+              <BlueprintCanvas state={blueprintState} />
+            </div>
+            <div className="space-y-3 max-w-2xl">
               {DOMAIN_ORDER.map((d) => {
                 const done = !!scores[d];
                 const active = scoringDomain === d;
@@ -538,7 +583,7 @@ export default function TheBrief() {
           ref={diagnosisRef}
           className="px-6 md:px-12 border-t border-border/40 py-20 md:py-32"
         >
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">
               Act 4 of 4 . Diagnosis and Prescription . {seat.function_label}
             </div>
@@ -550,6 +595,12 @@ export default function TheBrief() {
               {diagnosis.title}
             </h1>
 
+            {/* The finished architecture */}
+            <div className="aspect-[770/430] w-full mb-16">
+              <BlueprintCanvas state={blueprintState} />
+            </div>
+
+            <div className="max-w-3xl">
             {/* Narrative */}
             <SectionHeading>The unit today</SectionHeading>
             <div className="space-y-6" style={{ fontFamily: 'Georgia, "Iowan Old Style", serif' }}>
@@ -677,6 +728,7 @@ export default function TheBrief() {
                   </Button>
                 )}
               </div>
+            </div>
             </div>
           </div>
         </section>
