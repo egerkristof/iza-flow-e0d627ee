@@ -7,98 +7,70 @@ const corsHeaders = {
 };
 
 /**
- * The Brief, GM edition.
+ * The Brief v2: function-specific operating diagnosis across four decision domains.
  *
- * One edge function, two modes:
- *   mode: "next_question"  -> returns the next sharp question to ask, given intake + history
- *   mode: "final_brief"    -> returns the asymmetric brief, given intake + full history
- *
- * Audience is locked: Head of a Business Unit / GM / P&L owner of a slice of the company.
- * Not abstract architects. Not chiefs of staff. The seat that owns numbers.
+ * Modes:
+ *   "score_domain"         -> score one domain (tier 0..3 + bridge + effort + unlock)
+ *   "synthesize_diagnosis" -> takes all 4 domain scores + seat, returns token-economics ranking
+ *                             and the "start here" call, plus the one-page leader narrative.
  */
 
-const SHARED_VOICE = `Voice rules (hard):
+const VOICE = `Voice rules (hard):
 - No em-dashes, no en-dashes. Ever.
-- Statement-oriented. No hedging, no flattery, no "great question", no "it sounds like".
+- Statement-oriented. No hedging, no flattery, no "great question", no "sounds like".
 - Specific to what they said. Quote their own words back when it sharpens the point.
-- Talk like a senior operator who has run a P&L, not a strategy consultant pitching.
-- Never say "AI strategy" as a noun. AI is an input to the function, not the function.`;
+- Senior operator voice. Not consultant, not vendor.
+- AI is an input to the function. Never refer to "AI strategy" as the thing being built.`;
 
-const PERSONA_CONTEXT = `Who you are talking to:
-A GM or Head of a Business Unit. They own a P&L slice. Region, product line, segment, BU. 200 to 2,000 people under them. They get measured every quarter on a small set of numbers. They already run a private model in their head of how the unit should work. They have not written it down. Their boss has not asked them to. They want to.
+const TIER_LEGEND = `Maturity tiers (use these exact names):
+- Tier 0 Tacit: decision lives in someone's head, cannot be handed off.
+- Tier 1 Recorded: exists in scattered files, decks, or people. Not one source.
+- Tier 2 Standardised: one place, one version, everyone references it.
+- Tier 3 Executable: runs as code or AI can use it directly. The system can make routine calls.`;
 
-They do not need:
-- a generic AI primer
-- a framework lecture
-- another vendor pitch
-- vague encouragement
+const SCORE_DOMAIN_SYSTEM = `You are scoring one decision domain for a specific operating leader, on a 4-tier maturity scale.
 
-They need:
-- someone who engages with their actual unit
-- pushback that names the trade-off they are dodging
-- a frame they can put in front of their boss next week`;
+${TIER_LEGEND}
 
-const NEXT_QUESTION_SYSTEM = `You are a sparring partner for a GM, working through a 10 minute session to externalise their private model of how their business unit should run over the next 18 months.
+You receive: the leader's seat (function, unit shape, scale), the domain being scored, and their two answers (the signal they trust + the substrate that produces it).
 
-${PERSONA_CONTEXT}
+Your job:
+1. Pick the tier (0, 1, 2, or 3) the answers actually describe. Be honest. "I ask Maria" is Tier 0. "Spreadsheet I update" is Tier 1. "Live dashboard everyone uses" is Tier 2. "System makes the routine call itself" is Tier 3.
+2. Pick a target tier they should reach. Usually current+1 or current+2 if the leap is realistic for their scale.
+3. Write the bridge: the one move that closes the gap. Name what gets built, who owns it. No "explore" verbs.
+4. Estimate effort: weeks + headcount role.
+5. Name the unlock: the concrete thing that changes for the leader if this gets done.
+6. Write a one-line justification quoting their own words.
 
-Your job in this turn: produce the single next question, given intake and prior answers.
-
-Question design rules:
-1. Each question must be specific to their unit, their KPI, and their prior answers. Never generic.
-2. Reference what they already said. If their last answer was thin or evasive, push on that.
-3. Mix the question types across the session:
-   - a numbers question (what moves the KPI, what blocks it, where margin leaks)
-   - a people/work question (where the work breaks, where knowledge sits in heads, who carries the unit on their back)
-   - a market question (what is shifting that they will have to absorb in 12 to 18 months)
-   - a pushback question (name a trade-off they are avoiding, ask them to confront it)
-   - a future-state question (what the unit looks like in 18 months if they get to design it)
-4. Exactly one of the questions in the session must be explicit pushback. Phrase it bluntly. Example shape: "You said X. You did not mention Y. In a unit like yours that usually means Z. Is Z true here, or are you protecting something?"
-5. Never ask two questions at once. One clean question per turn.
-6. Keep it under 45 words. Punchy. No preamble.
-
-${SHARED_VOICE}
+${VOICE}
 
 Return via the tool call.`;
 
-const FINAL_BRIEF_SYSTEM = `You are writing The Brief: a one-page working document for a GM, synthesised from a 10 minute sparring session you just ran with them.
+const SYNTHESIZE_SYSTEM = `You are synthesising a one-page operating diagnosis for a leader, after scoring four decision domains: Demand, Capacity, Quality, Economics.
 
-${PERSONA_CONTEXT}
+You receive: the seat (function, unit shape, scale), and the four domain scores with their bridges.
 
-The Brief is what they will put in front of their boss, their peers, or their own leadership team. It must read like a senior operator wrote it, not a consultant deck. Specific to their unit. Asymmetric, shaped by what they said. No template feel.
+Your job:
+1. Write the leader narrative: 3 to 5 short paragraphs naming the unit as it actually runs today, in the leader's own register. Specific. No template feel.
+2. Rank the four domains for AI economic return in this leader's unit. Use "high", "medium", or "low". Anchor to the substrate: a domain at Tier 0 or 1 with no data is "low" today even if structurally high. A domain at Tier 2 with high-volume decisions is "high".
+3. Pick the single START HERE domain. The one where tokens convert to margin fastest given current substrate. Justify in one sentence.
+4. Write the trade-off: the one thing the leader is avoiding that has to give. Direct.
 
-Output shape (return via tool call):
+${VOICE}
+${TIER_LEGEND}
 
-- title: short, declarative, names their unit. Example: "A working brief on the EMEA mid-market unit, next 18 months." No colons or dashes, plain prose.
-- the_unit_today: 3 to 5 sentences. The unit as it actually runs today. Concrete: what it sells, to whom, how the work moves, what the number is. Use their own language.
-- the_number: 2 to 3 sentences. The KPI their boss tracks them on, what currently moves it, what currently blocks it. Name the blocker directly.
-- the_eighteen_month_picture: 3 to 5 short paragraphs. The version of the unit in 18 months if their private model gets built. Concrete shifts, not principles. Each paragraph picks one part of the unit and shows it operating differently. At least one paragraph must describe how the leader's own week changes.
-- the_three_moves: array of exactly 3 items. Each item is one specific move that closes the gap between today and the 18 month picture. Each move names: what gets built, who owns it, what it changes about the number. Sharp. No "explore" or "consider" verbs.
-- the_trade_off: 2 to 3 sentences. Name the trade-off they are avoiding. The thing that has to give for this picture to be real. Be direct. This is the part their boss will respect.
-- what_it_takes_underneath: array of exactly 3 items. The foundation that has to exist for the three moves to compound instead of evaporate. Frame as: a defined context for the unit, captured standards from the people doing the work, one system that holds both and feeds every tool. Tie each item to something specific they said. Do not say "LIZA". The handoff happens in the UI, not in the brief.
+Return via the tool call.`;
 
-${SHARED_VOICE}
-
-Total length: 450 to 700 words across all fields. Tight. No filler.`;
-
-function formatHistory(history: Array<{ question: string; answer: string }>): string {
-  if (!history.length) return "(no prior questions yet)";
-  return history
-    .map((h, i) => `Q${i + 1}: ${h.question}\nA${i + 1}: ${h.answer}`)
-    .join("\n\n");
-}
-
-function formatIntake(intake: Record<string, string>): string {
-  return `Unit type: ${intake.unit || "(not given)"}
-Scope and size: ${intake.scope || "(not given)"}
-The number they are measured on: ${intake.kpi || "(not given)"}`;
+function formatSeat(seat: Record<string, string>): string {
+  return `Function: ${seat.function_label || seat.function_id || "(?)"}
+Unit shape: ${seat.unit_shape || "(?)"}
+Scale: ${seat.scale || "(?)"}`;
 }
 
 async function callGateway(body: unknown) {
   const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
   if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
-
-  const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+  return await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${LOVABLE_API_KEY}`,
@@ -106,142 +78,164 @@ async function callGateway(body: unknown) {
     },
     body: JSON.stringify(body),
   });
-  return res;
 }
+
+const SCORE_DOMAIN_TOOL = {
+  type: "function" as const,
+  function: {
+    name: "score_domain",
+    description: "Return tier, target, bridge, effort, unlock, justification.",
+    parameters: {
+      type: "object",
+      properties: {
+        current_tier: { type: "integer", enum: [0, 1, 2, 3] },
+        target_tier: { type: "integer", enum: [0, 1, 2, 3] },
+        justification: { type: "string", description: "One line. Quote their words." },
+        bridge: { type: "string", description: "The one move that closes the gap. What gets built, who owns it." },
+        effort_weeks: { type: "integer", minimum: 1, maximum: 26 },
+        effort_role: { type: "string", description: "Headcount role required, e.g. 'one ops analyst plus a sponsor'." },
+        unlock: { type: "string", description: "What changes for the leader if this gets done. Specific." },
+      },
+      required: ["current_tier", "target_tier", "justification", "bridge", "effort_weeks", "effort_role", "unlock"],
+      additionalProperties: false,
+    },
+  },
+};
+
+const SYNTHESIZE_TOOL = {
+  type: "function" as const,
+  function: {
+    name: "synthesize_diagnosis",
+    description: "Return narrative, AI ROI ranking, start-here pick, and the trade-off.",
+    parameters: {
+      type: "object",
+      properties: {
+        title: { type: "string", description: "Short declarative title naming the unit." },
+        narrative: { type: "array", items: { type: "string" }, minItems: 3, maxItems: 5 },
+        ai_ranking: {
+          type: "array",
+          minItems: 4,
+          maxItems: 4,
+          items: {
+            type: "object",
+            properties: {
+              domain: { type: "string", enum: ["demand", "capacity", "quality", "economics"] },
+              roi: { type: "string", enum: ["high", "medium", "low"] },
+              why: { type: "string", description: "One line, unit-specific." },
+            },
+            required: ["domain", "roi", "why"],
+            additionalProperties: false,
+          },
+        },
+        start_here: {
+          type: "object",
+          properties: {
+            domain: { type: "string", enum: ["demand", "capacity", "quality", "economics"] },
+            reason: { type: "string" },
+          },
+          required: ["domain", "reason"],
+          additionalProperties: false,
+        },
+        trade_off: { type: "string", description: "The thing they are avoiding that has to give." },
+      },
+      required: ["title", "narrative", "ai_ranking", "start_here", "trade_off"],
+      additionalProperties: false,
+    },
+  },
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
     const payload = await req.json();
-    const mode: "next_question" | "final_brief" = payload.mode;
-    const intake = payload.intake ?? {};
-    const history: Array<{ question: string; answer: string }> = payload.history ?? [];
+    const mode: "score_domain" | "synthesize_diagnosis" = payload.mode;
 
-    if (!mode || (mode !== "next_question" && mode !== "final_brief")) {
-      return new Response(JSON.stringify({ error: "mode must be next_question or final_brief" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-    if (!intake.unit || !intake.scope || !intake.kpi) {
-      return new Response(JSON.stringify({ error: "intake.unit, intake.scope, intake.kpi are required" }), {
+    if (mode !== "score_domain" && mode !== "synthesize_diagnosis") {
+      return new Response(JSON.stringify({ error: "mode must be score_domain or synthesize_diagnosis" }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    const userPrompt = `INTAKE
-${formatIntake(intake)}
+    const seat = payload.seat ?? {};
+    let userPrompt = "";
+    let tool;
+    let toolName: string;
+    let systemPrompt: string;
 
-SESSION SO FAR
-${formatHistory(history)}
+    if (mode === "score_domain") {
+      const domain = payload.domain;
+      const probe = payload.probe ?? {};
+      const answers = payload.answers ?? {};
+      if (!domain || !answers.signal || !answers.substrate) {
+        return new Response(JSON.stringify({ error: "domain, probe, answers.signal, answers.substrate required" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      systemPrompt = SCORE_DOMAIN_SYSTEM;
+      tool = SCORE_DOMAIN_TOOL;
+      toolName = "score_domain";
+      userPrompt = `SEAT
+${formatSeat(seat)}
 
-${
-  mode === "next_question"
-    ? `Produce the next question. This is question ${history.length + 1} of 5. ${
-        history.length + 1 === 5
-          ? "This is the final question, make it the future-state question: what the unit looks like in 18 months if they get to design it."
-          : history.length + 1 === 3 || history.length + 1 === 4
-            ? "If you have not yet produced an explicit pushback question this session, this is the turn to do it."
-            : ""
-      }`
-    : "Write The Brief now. Use everything they said. Be specific. Be asymmetric. No template feel."
-}`;
+DOMAIN: ${domain}
 
-    const tools =
-      mode === "next_question"
-        ? [
-            {
-              type: "function",
-              function: {
-                name: "next_question",
-                description: "Return the next single question for the GM.",
-                parameters: {
-                  type: "object",
-                  properties: {
-                    label: {
-                      type: "string",
-                      description:
-                        "One or two word category, e.g. 'The number', 'Where it breaks', 'Pushback', 'Eighteen months out'.",
-                    },
-                    question: { type: "string", description: "The question itself, under 45 words." },
-                    helper: {
-                      type: "string",
-                      description: "One short line of context or framing. Optional but preferred. Max 20 words.",
-                    },
-                  },
-                  required: ["label", "question"],
-                  additionalProperties: false,
-                },
-              },
-            },
-          ]
-        : [
-            {
-              type: "function",
-              function: {
-                name: "render_brief",
-                description: "Return the asymmetric working brief for the GM.",
-                parameters: {
-                  type: "object",
-                  properties: {
-                    title: { type: "string" },
-                    the_unit_today: { type: "string" },
-                    the_number: { type: "string" },
-                    the_eighteen_month_picture: {
-                      type: "array",
-                      items: { type: "string" },
-                      minItems: 3,
-                      maxItems: 5,
-                    },
-                    the_three_moves: {
-                      type: "array",
-                      items: { type: "string" },
-                      minItems: 3,
-                      maxItems: 3,
-                    },
-                    the_trade_off: { type: "string" },
-                    what_it_takes_underneath: {
-                      type: "array",
-                      items: { type: "string" },
-                      minItems: 3,
-                      maxItems: 3,
-                    },
-                  },
-                  required: [
-                    "title",
-                    "the_unit_today",
-                    "the_number",
-                    "the_eighteen_month_picture",
-                    "the_three_moves",
-                    "the_trade_off",
-                    "what_it_takes_underneath",
-                  ],
-                  additionalProperties: false,
-                },
-              },
-            },
-          ];
+SIGNAL QUESTION: ${probe.signal_prompt || "(signal)"}
+SIGNAL ANSWER: ${answers.signal}
 
-    const toolName = mode === "next_question" ? "next_question" : "render_brief";
+SUBSTRATE QUESTION: ${probe.substrate_prompt || "(substrate)"}
+SUBSTRATE ANSWER: ${answers.substrate}
+
+Score this domain. Tier choice should be honest, not generous.`;
+    } else {
+      const scores = payload.scores;
+      if (!scores || typeof scores !== "object") {
+        return new Response(JSON.stringify({ error: "scores object required" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      systemPrompt = SYNTHESIZE_SYSTEM;
+      tool = SYNTHESIZE_TOOL;
+      toolName = "synthesize_diagnosis";
+      userPrompt = `SEAT
+${formatSeat(seat)}
+
+DOMAIN SCORES
+${(["demand", "capacity", "quality", "economics"] as const)
+  .map((d) => {
+    const s = scores[d];
+    if (!s) return `${d.toUpperCase()}: (no score)`;
+    return `${d.toUpperCase()}
+  current tier: ${s.current_tier} -> target tier: ${s.target_tier}
+  why: ${s.justification}
+  bridge: ${s.bridge}
+  effort: ${s.effort_weeks} weeks, ${s.effort_role}
+  unlock: ${s.unlock}`;
+  })
+  .join("\n\n")}
+
+RAW ANSWERS (for narrative voice)
+${JSON.stringify(payload.raw_answers || {}, null, 2)}
+
+Synthesise the diagnosis.`;
+    }
 
     const response = await callGateway({
       model: "google/gemini-2.5-pro",
       messages: [
-        {
-          role: "system",
-          content: mode === "next_question" ? NEXT_QUESTION_SYSTEM : FINAL_BRIEF_SYSTEM,
-        },
+        { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt },
       ],
-      tools,
+      tools: [tool],
       tool_choice: { type: "function", function: { name: toolName } },
     });
 
     if (!response.ok) {
       if (response.status === 429) {
-        return new Response(JSON.stringify({ error: "Rate limit reached. Try again in a moment." }), {
+        return new Response(JSON.stringify({ error: "Rate limit reached. Try again shortly." }), {
           status: 429,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
@@ -271,9 +265,10 @@ ${
     }
 
     const parsed = JSON.parse(toolCall.function.arguments);
-    const responseBody = mode === "next_question" ? { question: parsed } : { brief: parsed };
+    const body =
+      mode === "score_domain" ? { score: parsed } : { diagnosis: parsed };
 
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(body), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {

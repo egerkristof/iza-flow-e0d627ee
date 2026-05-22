@@ -1,50 +1,85 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/sonner";
+import {
+  FUNCTIONS,
+  UNIT_SHAPES,
+  SCALES,
+  DOMAINS,
+  TIERS,
+  getProbe,
+  type FunctionId,
+  type UnitShape,
+  type Scale,
+  type DomainId,
+} from "@/lib/brief-framework";
 
-type Intake = { unit: string; scope: string; kpi: string };
-type Turn = { question: string; label: string; helper?: string; answer: string };
-
-type Brief = {
-  title: string;
-  the_unit_today: string;
-  the_number: string;
-  the_eighteen_month_picture: string[];
-  the_three_moves: string[];
-  the_trade_off: string;
-  what_it_takes_underneath: string[];
+type Seat = {
+  function_id: FunctionId;
+  function_label: string;
+  unit_shape: UnitShape;
+  scale: Scale;
 };
 
-type Step = "intro" | "intake" | "session" | "loading_question" | "generating_brief" | "brief";
+type Answers = { signal: string; substrate: string };
+type DomainAnswers = Partial<Record<DomainId, Answers>>;
 
-const TOTAL_QUESTIONS = 5;
+type DomainScore = {
+  current_tier: 0 | 1 | 2 | 3;
+  target_tier: 0 | 1 | 2 | 3;
+  justification: string;
+  bridge: string;
+  effort_weeks: number;
+  effort_role: string;
+  unlock: string;
+};
+
+type Diagnosis = {
+  title: string;
+  narrative: string[];
+  ai_ranking: { domain: DomainId; roi: "high" | "medium" | "low"; why: string }[];
+  start_here: { domain: DomainId; reason: string };
+  trade_off: string;
+};
+
+type Phase =
+  | "intro"
+  | "seat"
+  | "probe"
+  | "scoring"
+  | "synthesizing"
+  | "diagnosis";
+
+const DOMAIN_ORDER: DomainId[] = ["demand", "capacity", "quality", "economics"];
 
 export default function TheBrief() {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
 
-  const [step, setStep] = useState<Step>("intro");
-  const [intake, setIntake] = useState<Intake>({ unit: "", scope: "", kpi: "" });
-  const [turns, setTurns] = useState<Turn[]>([]);
-  const [pendingQuestion, setPendingQuestion] = useState<{
-    label: string;
-    question: string;
-    helper?: string;
-  } | null>(null);
-  const [currentAnswer, setCurrentAnswer] = useState("");
-  const [brief, setBrief] = useState<Brief | null>(null);
+  const [phase, setPhase] = useState<Phase>("intro");
+  const [seat, setSeat] = useState<Seat>({
+    function_id: "gm",
+    function_label: FUNCTIONS[0].label,
+    unit_shape: "pnl",
+    scale: "200-500",
+  });
+  const [domainIndex, setDomainIndex] = useState(0);
+  const [answers, setAnswers] = useState<DomainAnswers>({});
+  const [scores, setScores] = useState<Partial<Record<DomainId, DomainScore>>>({});
+  const [diagnosis, setDiagnosis] = useState<Diagnosis | null>(null);
+  const [scoringDomain, setScoringDomain] = useState<DomainId | null>(null);
   const [savedId, setSavedId] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
 
-  const sessionRef = useRef<HTMLDivElement>(null);
-  const briefRef = useRef<HTMLDivElement>(null);
+  const probeRef = useRef<HTMLDivElement>(null);
+  const diagnosisRef = useRef<HTMLDivElement>(null);
 
-  // Load shared brief by id
+  // Load saved diagnosis
   useEffect(() => {
     if (!id) return;
     (async () => {
@@ -53,118 +88,139 @@ export default function TheBrief() {
         .select("inputs, output")
         .eq("id", id)
         .maybeSingle();
-      if (error || !data) {
-        toast.error("Brief not found.");
+      if (error || !data?.output) {
+        toast.error("Diagnosis not found.");
         navigate("/the-brief", { replace: true });
         return;
       }
-      const inputs = data.inputs as { intake: Intake; turns: Turn[] };
-      setIntake(inputs.intake);
-      setTurns(inputs.turns);
-      setBrief(data.output as Brief);
+      const inputs = data.inputs as { seat: Seat; answers: DomainAnswers; scores: typeof scores };
+      const output = data.output as Diagnosis;
+      setSeat(inputs.seat);
+      setAnswers(inputs.answers);
+      setScores(inputs.scores);
+      setDiagnosis(output);
       setSavedId(id);
-      setStep("brief");
+      setPhase("diagnosis");
     })();
-  }, [id, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
-  const scrollTo = (el: HTMLElement | null) => {
+  const scrollTo = (el: HTMLElement | null) =>
     setTimeout(() => el?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+
+  const currentDomain = DOMAIN_ORDER[domainIndex];
+  const currentProbe = currentDomain ? getProbe(seat.function_id, currentDomain) : null;
+  const currentAnswers = currentDomain ? answers[currentDomain] || { signal: "", substrate: "" } : null;
+
+  const setAnswer = (field: "signal" | "substrate", value: string) => {
+    if (!currentDomain) return;
+    setAnswers((prev) => ({
+      ...prev,
+      [currentDomain]: { ...(prev[currentDomain] || { signal: "", substrate: "" }), [field]: value },
+    }));
   };
 
-  const startSession = async () => {
-    if (!intake.unit.trim() || !intake.scope.trim() || !intake.kpi.trim()) {
-      toast.error("Fill the three lines to start.");
-      return;
-    }
-    setStep("loading_question");
-    scrollTo(sessionRef.current);
-    await fetchNextQuestion([]);
+  const startProbe = () => {
+    setPhase("probe");
+    setDomainIndex(0);
+    scrollTo(probeRef.current);
   };
 
-  const fetchNextQuestion = async (history: Turn[]) => {
+  const scoreDomain = async (domain: DomainId): Promise<DomainScore | null> => {
+    const probe = getProbe(seat.function_id, domain);
+    const a = answers[domain];
+    if (!a) return null;
+    setScoringDomain(domain);
     try {
       const { data, error } = await supabase.functions.invoke("generate-brief", {
         body: {
-          mode: "next_question",
-          intake,
-          history: history.map((t) => ({ question: t.question, answer: t.answer })),
+          mode: "score_domain",
+          seat,
+          domain,
+          probe: { signal_prompt: probe.signal.prompt, substrate_prompt: probe.substrate.prompt },
+          answers: a,
         },
       });
       if (error) throw error;
-      if (!data?.question) throw new Error("No question returned.");
-      setPendingQuestion(data.question);
-      setCurrentAnswer("");
-      setStep("session");
-      scrollTo(sessionRef.current);
+      if (!data?.score) throw new Error("No score returned.");
+      return data.score as DomainScore;
     } catch (e: any) {
       console.error(e);
-      toast.error(e?.message || "Could not load the next question.");
-      setStep(history.length === 0 ? "intake" : "session");
+      toast.error(e?.message || `Could not score ${domain}.`);
+      return null;
+    } finally {
+      setScoringDomain(null);
     }
   };
 
-  const submitAnswer = async () => {
-    if (!pendingQuestion) return;
-    if (currentAnswer.trim().length < 10) {
-      toast.error("Give it a real sentence.");
+  const advance = async () => {
+    if (!currentDomain || !currentAnswers) return;
+    if (currentAnswers.signal.trim().length < 8 || currentAnswers.substrate.trim().length < 8) {
+      toast.error("Give both questions a real sentence.");
       return;
     }
-    const newTurn: Turn = {
-      label: pendingQuestion.label,
-      question: pendingQuestion.question,
-      helper: pendingQuestion.helper,
-      answer: currentAnswer.trim(),
-    };
-    const nextTurns = [...turns, newTurn];
-    setTurns(nextTurns);
-    setPendingQuestion(null);
-    setCurrentAnswer("");
-
-    if (nextTurns.length >= TOTAL_QUESTIONS) {
-      await generateBrief(nextTurns);
+    if (domainIndex < DOMAIN_ORDER.length - 1) {
+      setDomainIndex(domainIndex + 1);
+      scrollTo(probeRef.current);
     } else {
-      setStep("loading_question");
-      await fetchNextQuestion(nextTurns);
+      // All four answered. Score each, then synthesise.
+      setPhase("scoring");
+      scrollTo(diagnosisRef.current);
+      const collected: Partial<Record<DomainId, DomainScore>> = {};
+      for (const d of DOMAIN_ORDER) {
+        const s = await scoreDomain(d);
+        if (!s) {
+          setPhase("probe");
+          return;
+        }
+        collected[d] = s;
+        setScores({ ...collected });
+      }
+      // Synthesise
+      setPhase("synthesizing");
+      try {
+        const { data, error } = await supabase.functions.invoke("generate-brief", {
+          body: {
+            mode: "synthesize_diagnosis",
+            seat,
+            scores: collected,
+            raw_answers: answers,
+          },
+        });
+        if (error) throw error;
+        if (!data?.diagnosis) throw new Error("No diagnosis returned.");
+        setDiagnosis(data.diagnosis);
+        setPhase("diagnosis");
+        scrollTo(diagnosisRef.current);
+      } catch (e: any) {
+        console.error(e);
+        toast.error(e?.message || "Could not synthesise diagnosis.");
+        setPhase("probe");
+      }
     }
   };
 
-  const generateBrief = async (finalTurns: Turn[]) => {
-    setStep("generating_brief");
-    scrollTo(briefRef.current);
-    try {
-      const { data, error } = await supabase.functions.invoke("generate-brief", {
-        body: {
-          mode: "final_brief",
-          intake,
-          history: finalTurns.map((t) => ({ question: t.question, answer: t.answer })),
-        },
-      });
-      if (error) throw error;
-      if (!data?.brief) throw new Error("No brief returned.");
-      setBrief(data.brief);
-      setStep("brief");
-      setTimeout(() => scrollTo(briefRef.current), 100);
-    } catch (e: any) {
-      console.error(e);
-      toast.error(e?.message || "Could not write the brief. Try again.");
-      setStep("session");
+  const back = () => {
+    if (domainIndex > 0) {
+      setDomainIndex(domainIndex - 1);
+      scrollTo(probeRef.current);
     }
   };
 
   const saveAndShare = async () => {
     if (!email || !email.includes("@")) {
-      toast.error("Add an email to save the brief.");
+      toast.error("Add an email to save.");
       return;
     }
-    if (!brief) return;
+    if (!diagnosis) return;
     setSaving(true);
     try {
       const { data, error } = await supabase
         .from("briefs")
         .insert({
           email,
-          inputs: { intake, turns } as any,
-          output: brief as any,
+          inputs: { seat, answers, scores } as any,
+          output: diagnosis as any,
         })
         .select("id")
         .single();
@@ -172,18 +228,15 @@ export default function TheBrief() {
       setSavedId(data.id);
       const url = `${window.location.origin}/the-brief/${data.id}`;
       await navigator.clipboard.writeText(url).catch(() => {});
-      toast.success("Saved. Link copied to clipboard.");
+      toast.success("Saved. Link copied.");
       navigate(`/the-brief/${data.id}`, { replace: true });
-    } catch (e: any) {
+    } catch (e) {
       console.error(e);
       toast.error("Could not save. Try again.");
     } finally {
       setSaving(false);
     }
   };
-
-  const answeredCount = turns.length;
-  const progressIndex = step === "session" || step === "loading_question" ? answeredCount : answeredCount;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -192,150 +245,135 @@ export default function TheBrief() {
         <div className="max-w-3xl mx-auto">
           <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">The Brief</div>
           <h1 className="text-4xl md:text-6xl font-light leading-[1.05] tracking-tight text-foreground mb-8">
-            A working brief on the unit you actually run, for the next 18 months.
+            A working diagnosis of the unit you run, and where AI actually earns its keep.
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-4 max-w-2xl">
-            Built for GMs and heads of business units who already run a private model of how the unit should
-            work, and want it on the page.
+            Built for operating leaders who already run a private model of how the unit should work,
+            and want it on the page with the next move named.
           </p>
           <p className="text-base text-muted-foreground leading-relaxed mb-12 max-w-2xl">
-            Ten minutes. Three intake lines, five questions shaped by what you say. One brief at the end you
-            could hand to your boss.
+            Eight questions across the four domains every operator decides on: demand, capacity, quality,
+            economics. Out comes a maturity tier per domain, the bridge to the next tier, and the one place
+            to start so token spend converts to margin.
           </p>
-          {step === "intro" && (
-            <Button
-              size="lg"
-              onClick={() => {
-                setStep("intake");
-                scrollTo(sessionRef.current);
-              }}
-              className="rounded-full px-8 h-12"
-            >
-              Start the session
+          {phase === "intro" && (
+            <Button size="lg" onClick={() => { setPhase("seat"); scrollTo(probeRef.current); }} className="rounded-full px-8 h-12">
+              Start the diagnosis
             </Button>
           )}
-          {step !== "intro" && (
+          {phase !== "intro" && (
             <div className="text-sm text-muted-foreground">
-              {step === "brief" ? "Brief ready below." : "Scroll down."}
+              {phase === "diagnosis" ? "Diagnosis ready below." : "Scroll down."}
             </div>
           )}
         </div>
       </section>
 
-      {/* Intake + Session */}
-      {step !== "intro" && !id && step !== "brief" && step !== "generating_brief" && (
+      {/* Seat + Probe */}
+      {phase !== "intro" && phase !== "diagnosis" && phase !== "scoring" && phase !== "synthesizing" && !id && (
         <section
-          ref={sessionRef}
-          className="min-h-screen flex items-center px-6 md:px-12 border-t border-border/40"
+          ref={probeRef}
+          className="min-h-screen flex items-center px-6 md:px-12 border-t border-border/40 py-20"
         >
-          <div className="max-w-3xl mx-auto w-full py-20">
-            {step === "intake" && (
+          <div className="max-w-3xl mx-auto w-full">
+            {phase === "seat" && (
               <>
-                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
-                  Three lines to start
-                </div>
+                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Step 1 of 5 . Seat</div>
                 <h2 className="text-2xl md:text-4xl font-light leading-tight text-foreground mb-3">
-                  Tell me what you run.
+                  Which seat are you in?
                 </h2>
                 <p className="text-sm text-muted-foreground mb-10">
-                  Not the slide version. The version you would say in a room with two people.
+                  This decides every question that follows. The probe for a Head of Ops is not the probe for a Head of Commercial.
                 </p>
 
                 <div className="space-y-8">
-                  <IntakeField
-                    label="Your unit"
-                    helper="Region, product line, segment, BU. One line."
-                    placeholder="EMEA mid-market. Or: the underwriting unit. Or: the cardiology product line."
-                    value={intake.unit}
-                    onChange={(v) => setIntake({ ...intake, unit: v })}
+                  <SelectField
+                    label="Function"
+                    value={seat.function_id}
+                    onChange={(v) => {
+                      const fn = FUNCTIONS.find((f) => f.id === v);
+                      setSeat({ ...seat, function_id: v as FunctionId, function_label: fn?.label || "" });
+                    }}
+                    options={FUNCTIONS.map((f) => ({ value: f.id, label: f.label, helper: f.blurb }))}
                   />
-                  <IntakeField
-                    label="Scope and size"
-                    helper="Revenue, headcount, customers. Whatever frames it fastest."
-                    placeholder="80M EUR, 220 people, 400 active accounts."
-                    value={intake.scope}
-                    onChange={(v) => setIntake({ ...intake, scope: v })}
+                  <SelectField
+                    label="Unit shape"
+                    value={seat.unit_shape}
+                    onChange={(v) => setSeat({ ...seat, unit_shape: v as UnitShape })}
+                    options={UNIT_SHAPES.map((s) => ({ value: s.id, label: s.label }))}
                   />
-                  <IntakeField
-                    label="The number you are measured on"
-                    helper="The one your boss tracks every quarter. Not a list."
-                    placeholder="Net new ARR. Or: contribution margin. Or: on-time deliveries above 95%."
-                    value={intake.kpi}
-                    onChange={(v) => setIntake({ ...intake, kpi: v })}
+                  <SelectField
+                    label="Scale"
+                    value={seat.scale}
+                    onChange={(v) => setSeat({ ...seat, scale: v as Scale })}
+                    options={SCALES.map((s) => ({ value: s.id, label: s.label }))}
                   />
                 </div>
 
-                <div className="flex items-center justify-end mt-10">
-                  <Button onClick={startSession} className="rounded-full px-8">
-                    Start the session
+                <div className="flex items-center justify-end mt-12">
+                  <Button onClick={startProbe} className="rounded-full px-8">
+                    Begin the four domains
                   </Button>
                 </div>
               </>
             )}
 
-            {step === "loading_question" && (
-              <div className="py-20">
-                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
-                  {answeredCount === 0 ? "Opening question" : "Next question"}
-                </div>
-                <div className="text-2xl font-light text-foreground mb-3">
-                  {answeredCount === 0
-                    ? "Reading your unit."
-                    : "Reading what you just said."}
-                </div>
-                <div className="text-muted-foreground">A few seconds.</div>
-                <div className="mt-10">
-                  <div className="w-2 h-2 rounded-full bg-foreground animate-pulse" />
-                </div>
-              </div>
-            )}
-
-            {step === "session" && pendingQuestion && (
+            {phase === "probe" && currentDomain && currentProbe && currentAnswers && (
               <>
-                <div className="flex items-center justify-between mb-12">
+                <div className="flex items-center justify-between mb-8">
                   <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    {pendingQuestion.label}
+                    Step {domainIndex + 2} of 5 . {DOMAINS[domainIndex].label}
                   </div>
                   <div className="text-xs text-muted-foreground tabular-nums">
-                    {answeredCount + 1} of {TOTAL_QUESTIONS}
+                    Domain {domainIndex + 1} of {DOMAIN_ORDER.length}
                   </div>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-light leading-tight text-foreground mb-4">
-                  {pendingQuestion.question}
+
+                <h2 className="text-3xl md:text-4xl font-light leading-tight text-foreground mb-3">
+                  {DOMAINS[domainIndex].label}
                 </h2>
-                {pendingQuestion.helper && (
-                  <p className="text-sm text-muted-foreground mb-8">{pendingQuestion.helper}</p>
-                )}
-                <Textarea
-                  value={currentAnswer}
-                  onChange={(e) => setCurrentAnswer(e.target.value)}
-                  className="min-h-[200px] text-base leading-relaxed resize-none bg-card border-border/60 focus-visible:ring-1"
-                  placeholder="Say what you actually think. The more concrete, the sharper the brief."
-                  autoFocus
-                />
-                <div className="flex items-center justify-between mt-8">
-                  <div className="text-xs text-muted-foreground">
-                    {turns.length > 0 && (
-                      <span>
-                        Last: <span className="text-foreground/70">{turns[turns.length - 1].label}</span>
-                      </span>
-                    )}
-                  </div>
+                <p className="text-base text-muted-foreground mb-2">{DOMAINS[domainIndex].one_liner}</p>
+                <p className="text-sm text-muted-foreground mb-12">
+                  Decision you own here: {DOMAINS[domainIndex].decision}
+                </p>
+
+                <div className="space-y-10">
+                  <ProbeField
+                    label="The signal you trust"
+                    prompt={currentProbe.signal.prompt}
+                    helper={currentProbe.signal.helper}
+                    placeholder={currentProbe.signal.placeholder}
+                    value={currentAnswers.signal}
+                    onChange={(v) => setAnswer("signal", v)}
+                  />
+                  <ProbeField
+                    label="The system that produces it"
+                    prompt={currentProbe.substrate.prompt}
+                    helper={currentProbe.substrate.helper}
+                    placeholder={currentProbe.substrate.placeholder}
+                    value={currentAnswers.substrate}
+                    onChange={(v) => setAnswer("substrate", v)}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between mt-12">
+                  <Button variant="ghost" onClick={back} disabled={domainIndex === 0} className="rounded-full">
+                    Back
+                  </Button>
                   <Button
-                    onClick={submitAnswer}
-                    disabled={currentAnswer.trim().length < 10}
+                    onClick={advance}
+                    disabled={currentAnswers.signal.trim().length < 8 || currentAnswers.substrate.trim().length < 8}
                     className="rounded-full px-8"
                   >
-                    {answeredCount + 1 === TOTAL_QUESTIONS ? "Write the brief" : "Next"}
+                    {domainIndex === DOMAIN_ORDER.length - 1 ? "Score the diagnosis" : "Next domain"}
                   </Button>
                 </div>
+
                 <div className="mt-10 flex gap-1">
-                  {Array.from({ length: TOTAL_QUESTIONS }).map((_, i) => (
+                  {DOMAIN_ORDER.map((d, i) => (
                     <div
-                      key={i}
-                      className={`h-0.5 flex-1 transition-colors ${
-                        i <= progressIndex ? "bg-foreground/60" : "bg-border"
-                      }`}
+                      key={d}
+                      className={`h-0.5 flex-1 transition-colors ${i <= domainIndex ? "bg-foreground/60" : "bg-border"}`}
                     />
                   ))}
                 </div>
@@ -345,91 +383,169 @@ export default function TheBrief() {
         </section>
       )}
 
-      {/* Generating */}
-      {step === "generating_brief" && (
-        <section className="min-h-screen flex items-center px-6 md:px-12 border-t border-border/40">
-          <div className="max-w-2xl mx-auto text-center py-20">
+      {/* Scoring / synthesising */}
+      {(phase === "scoring" || phase === "synthesizing") && (
+        <section
+          ref={diagnosisRef}
+          className="min-h-screen flex items-center px-6 md:px-12 border-t border-border/40"
+        >
+          <div className="max-w-2xl mx-auto py-20 w-full">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
-              Writing the brief
+              {phase === "scoring" ? "Scoring each domain" : "Writing the diagnosis"}
             </div>
-            <div className="text-2xl font-light text-foreground mb-3">
-              Reading your five answers against your unit.
+            <div className="text-2xl font-light text-foreground mb-8">
+              {phase === "scoring"
+                ? scoringDomain
+                  ? `Reading your ${scoringDomain} answers against the four-tier scale.`
+                  : "Reading your answers."
+                : "Synthesising the four domains into one page."}
             </div>
-            <div className="text-muted-foreground">About thirty seconds.</div>
-            <div className="mt-12 flex justify-center">
-              <div className="w-2 h-2 rounded-full bg-foreground animate-pulse" />
+            <div className="space-y-3">
+              {DOMAIN_ORDER.map((d) => {
+                const done = !!scores[d];
+                const active = scoringDomain === d;
+                return (
+                  <div
+                    key={d}
+                    className={`flex items-center justify-between py-2 px-4 rounded-md border ${
+                      done ? "border-emerald-500/40 bg-emerald-500/5" : active ? "border-foreground/40" : "border-border/40"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          done ? "bg-emerald-500" : active ? "bg-foreground animate-pulse" : "bg-border"
+                        }`}
+                      />
+                      <span className="text-sm font-medium">{DOMAINS.find((x) => x.id === d)?.label}</span>
+                    </div>
+                    {done && (
+                      <span className="text-xs text-muted-foreground">
+                        Tier {scores[d]!.current_tier} . target Tier {scores[d]!.target_tier}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
       )}
 
-      {/* Brief */}
-      {step === "brief" && brief && (
+      {/* Diagnosis */}
+      {phase === "diagnosis" && diagnosis && (
         <section
-          ref={briefRef}
+          ref={diagnosisRef}
           className="px-6 md:px-12 border-t border-border/40 py-20 md:py-32"
         >
-          <div className="max-w-2xl mx-auto">
-            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-10">
-              The Brief
+          <div className="max-w-3xl mx-auto">
+            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">
+              The Diagnosis . {seat.function_label}
             </div>
 
-            <article
-              className="prose-brief"
-              style={{ fontFamily: 'Georgia, "Iowan Old Style", "Apple Garamond", serif' }}
+            <h1
+              className="text-3xl md:text-4xl font-normal leading-tight text-foreground mb-12"
+              style={{ fontFamily: 'Georgia, "Iowan Old Style", serif' }}
             >
-              <h1 className="text-3xl md:text-4xl font-normal leading-tight text-foreground mb-12">
-                {brief.title}
-              </h1>
+              {diagnosis.title}
+            </h1>
 
-              <Section heading="The unit today">{brief.the_unit_today}</Section>
-              <Section heading="The number">{brief.the_number}</Section>
+            {/* Narrative */}
+            <SectionHeading>The unit today</SectionHeading>
+            <div className="space-y-6" style={{ fontFamily: 'Georgia, "Iowan Old Style", serif' }}>
+              {diagnosis.narrative.map((p, i) => (
+                <p key={i} className="text-lg leading-[1.75] text-foreground">{p}</p>
+              ))}
+            </div>
 
-              <SectionHeading>Eighteen months out</SectionHeading>
-              <div className="space-y-6">
-                {brief.the_eighteen_month_picture.map((p, i) => (
-                  <p key={i} className="text-lg leading-[1.75] text-foreground">
-                    {p}
-                  </p>
-                ))}
+            {/* Bridge per domain */}
+            <SectionHeading>The four domains, scored</SectionHeading>
+            <div className="space-y-6">
+              {DOMAIN_ORDER.map((d) => {
+                const s = scores[d];
+                const def = DOMAINS.find((x) => x.id === d)!;
+                if (!s) return null;
+                return (
+                  <div key={d} className="border border-border/60 rounded-lg p-6">
+                    <div className="flex items-baseline justify-between mb-3">
+                      <h3 className="text-lg font-medium text-foreground">{def.label}</h3>
+                      <div className="text-xs tabular-nums text-muted-foreground">
+                        Tier {s.current_tier} {TIERS[s.current_tier].label} → Tier {s.target_tier} {TIERS[s.target_tier].label}
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground italic mb-4">"{s.justification}"</p>
+                    <div className="space-y-2 text-sm">
+                      <div>
+                        <span className="text-muted-foreground uppercase tracking-wider text-xs mr-2">Bridge</span>
+                        <span className="text-foreground">{s.bridge}</span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground uppercase tracking-wider text-xs mr-2">Effort</span>
+                        <span className="text-foreground">{s.effort_weeks} weeks, {s.effort_role}</span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground uppercase tracking-wider text-xs mr-2">Unlock</span>
+                        <span className="text-foreground">{s.unlock}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* AI economics */}
+            <SectionHeading>Where AI earns its keep in your unit</SectionHeading>
+            <div className="border border-border/60 rounded-lg overflow-hidden">
+              {diagnosis.ai_ranking.map((r, i) => {
+                const def = DOMAINS.find((x) => x.id === r.domain);
+                const roiColor =
+                  r.roi === "high"
+                    ? "text-emerald-600 dark:text-emerald-400"
+                    : r.roi === "medium"
+                      ? "text-amber-600 dark:text-amber-400"
+                      : "text-muted-foreground";
+                return (
+                  <div
+                    key={r.domain}
+                    className={`p-5 ${i > 0 ? "border-t border-border/40" : ""}`}
+                  >
+                    <div className="flex items-baseline justify-between mb-1">
+                      <span className="font-medium text-foreground">{def?.label}</span>
+                      <span className={`text-xs uppercase tracking-wider font-semibold ${roiColor}`}>
+                        {r.roi} ROI
+                      </span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{r.why}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Start here */}
+            <SectionHeading>Start here</SectionHeading>
+            <div className="border-l-2 border-foreground pl-5 py-2">
+              <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-1">
+                {DOMAINS.find((x) => x.id === diagnosis.start_here.domain)?.label}
               </div>
+              <p className="text-lg leading-snug text-foreground">{diagnosis.start_here.reason}</p>
+            </div>
 
-              <SectionHeading>The three moves</SectionHeading>
-              <ol className="space-y-5 list-none pl-0">
-                {brief.the_three_moves.map((p, i) => (
-                  <li key={i} className="text-lg leading-[1.75] text-foreground flex gap-4">
-                    <span className="text-muted-foreground tabular-nums shrink-0 w-6">
-                      {i + 1}.
-                    </span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ol>
-
-              <SectionHeading>The trade-off you are avoiding</SectionHeading>
-              <p className="text-lg leading-[1.75] text-foreground">{brief.the_trade_off}</p>
-
-              <SectionHeading>What it takes underneath</SectionHeading>
-              <ul className="space-y-4 list-none pl-0">
-                {brief.what_it_takes_underneath.map((p, i) => (
-                  <li key={i} className="text-lg leading-[1.75] text-foreground flex gap-4">
-                    <span className="text-muted-foreground shrink-0 w-6">·</span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </article>
+            {/* Trade-off */}
+            <SectionHeading>The trade-off you are avoiding</SectionHeading>
+            <p className="text-lg leading-[1.75] text-foreground" style={{ fontFamily: 'Georgia, "Iowan Old Style", serif' }}>
+              {diagnosis.trade_off}
+            </p>
 
             {/* Handoff */}
-            <div className="mt-24 pt-12 border-t border-border/40 font-sans">
+            <div className="mt-24 pt-12 border-t border-border/40">
               <p className="text-xl font-light text-foreground leading-snug mb-3">
-                The brief points at a system underneath it. That system is what LIZA is.
+                The diagnosis points at a substrate underneath. That substrate is what LIZA is.
               </p>
               <p className="text-muted-foreground mb-8">
-                Defined context for the unit, captured standards from the people doing the work, one place
-                that holds them and feeds every tool. The brief names the shape. LIZA is the build.
+                Defined context for the unit, captured standards from the people doing the work, one system
+                that holds them and feeds every tool. The diagnosis names the gap. LIZA is the build.
               </p>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 items-center">
                 <Button onClick={() => navigate("/")} variant="outline" className="rounded-full">
                   See LIZA
                 </Button>
@@ -469,14 +585,54 @@ export default function TheBrief() {
   );
 }
 
-function IntakeField({
+function SelectField({
   label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: { value: string; label: string; helper?: string }[];
+}) {
+  return (
+    <div>
+      <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">{label}</div>
+      <div className="grid gap-2">
+        {options.map((o) => {
+          const selected = o.value === value;
+          return (
+            <button
+              key={o.value}
+              type="button"
+              onClick={() => onChange(o.value)}
+              className={`text-left px-4 py-3 rounded-md border transition-colors ${
+                selected
+                  ? "border-foreground bg-foreground/5"
+                  : "border-border/60 hover:border-foreground/40"
+              }`}
+            >
+              <div className="text-sm font-medium text-foreground">{o.label}</div>
+              {o.helper && <div className="text-xs text-muted-foreground mt-0.5">{o.helper}</div>}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ProbeField({
+  label,
+  prompt,
   helper,
   placeholder,
   value,
   onChange,
 }: {
   label: string;
+  prompt: string;
   helper: string;
   placeholder: string;
   value: string;
@@ -485,30 +641,22 @@ function IntakeField({
   return (
     <div>
       <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">{label}</div>
-      <Input
+      <div className="text-base text-foreground mb-1">{prompt}</div>
+      <div className="text-xs text-muted-foreground mb-3">{helper}</div>
+      <Textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        className="min-h-[110px] text-base leading-relaxed resize-none bg-card border-border/60 focus-visible:ring-1"
         placeholder={placeholder}
-        className="bg-card border-border/60 h-12 text-base"
       />
-      <div className="text-xs text-muted-foreground mt-2">{helper}</div>
     </div>
   );
 }
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-14 mb-5 font-sans font-medium">
+    <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-16 mb-5 font-medium">
       {children}
     </h2>
-  );
-}
-
-function Section({ heading, children }: { heading: string; children: React.ReactNode }) {
-  return (
-    <>
-      <SectionHeading>{heading}</SectionHeading>
-      <p className="text-lg leading-[1.75] text-foreground">{children}</p>
-    </>
   );
 }

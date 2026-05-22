@@ -1,87 +1,123 @@
-# The Brief — Page Spec
 
-A single-page guided experience for the proto-architects hiding inside middle management. They already think holistically about what comes next in their patch. The Brief gives them a frame to externalise that thinking into a one-screen document their boss will read.
+# The Brief v2 — From conversation to diagnosis
 
-## Route
+## What changes vs today
 
-- **Path:** `/the-brief`
-- **Access:** Public, no signup until the final share/save step
-- **Audience:** Self-selecting. The page does not explain itself in HR language. People who recognise themselves will start; people who don't, won't.
+Today: 5 open questions → memo. Generic across any GM.
 
-## Page Structure (single scroll, four movements)
+Tomorrow: **Function selected up front → 4 domains probed with function-specific questions → maturity scored per domain → bridge framework prescribes the moves to reach the LIZA target state.**
 
-### 1. Intro (above the fold)
+The output stops being a memo. It becomes a diagnosis with a prescription.
 
-- **Headline:** *"A working brief on what comes next, for the patch you actually run."*
-- **Sub:** One sentence naming the reader without flattering them. Example: *"For the people in the org who already think in foundations, end to end, and need a frame to put it down."*
-- **Primary CTA:** "Start the Brief" (scrolls into prompt 1)
-- **No nav chrome, no testimonials, no logos.** Quiet page.
+## Step 1 — Seat selection (30 seconds)
 
-### 2. The Four Prompts (the frame)
+Three dropdowns before any AI call:
 
-Sequential, one prompt visible at a time, soft scroll between them. Each prompt is a short question plus a textarea. No character limits shown. Optional helper text below each input as a single example line in muted tone.
+- **Function**: GM / Head of Ops / Head of Commercial / Head of Delivery / Head of R&D / Head of Finance / Head of People
+- **Unit shape**: P&L slice / Shared service / Product line / Region
+- **Scale**: <50 / 50–200 / 200–500 / 500–2000 / 2000+
 
-1. **Strategy** — *"What is the organisation actually trying to become over the next 18 months?"*
-2. **Market reality** — *"What is moving in your market that your function will have to absorb?"*
-3. **Team reality** — *"What does your team actually do day to day, and where does the work currently break?"*
-4. **AI reality** — *"What AI is already in and around your patch, and what is it doing or failing to do?"*
+This bounds every prompt downstream. No more "tell me about your unit." The system already knows the rough shape.
 
-Progress indicator: small "1 of 4" in a corner. No gamification.
+## Step 2 — The four decision domains
 
-### 3. The Brief (rendered output, one screen)
+Every operating role makes decisions in four domains. We probe each one with 2 function-specific questions. The questions a Head of Ops gets are not the questions a Head of Commercial gets.
 
-Generated from the four answers. Rendered as a real document, not a dashboard.
+```text
+┌─────────────────────────────────────────────────────────────┐
+│  1. DEMAND          What's coming at the unit               │
+│                     Pipeline, orders, tickets, requests     │
+│                     Decision: what do we take, what do we   │
+│                     refuse, what do we price up             │
+├─────────────────────────────────────────────────────────────┤
+│  2. CAPACITY        What the unit can actually deliver      │
+│                     People, machines, hours, skill mix      │
+│                     Decision: where do we add, where do we  │
+│                     stretch, where do we cut                │
+├─────────────────────────────────────────────────────────────┤
+│  3. QUALITY         Whether the output meets the bar        │
+│                     Defects, rework, SLA, compliance        │
+│                     Decision: what's the standard, who      │
+│                     enforces it, what's the consequence     │
+├─────────────────────────────────────────────────────────────┤
+│  4. ECONOMICS       Whether the unit math works             │
+│                     Margin, unit cost, leakage, mix         │
+│                     Decision: what do we kill, what do we   │
+│                     double down on, where do we invest      │
+└─────────────────────────────────────────────────────────────┘
+```
 
-Sections, in order:
-- **Title line:** auto-generated from inputs. Example: *"A brief on [Function] in the next 18 months."*
-- **The shape of the patch** — two or three sentences synthesising strategy + team reality.
-- **What is coming for it** — synthesis of market + AI reality.
-- **What an AI-shaped version of this function looks like** — three short paragraphs. Concrete, specific to the four inputs. This is the centre of gravity.
-- **What it would take to make this real** — three bullets. Each bullet names a foundation that has to exist: defined context, captured standards, a system that holds them.
+For each domain we ask:
+- **What signal do you trust today?** (the input)
+- **What system produces it?** (the substrate — ERP, CRM, spreadsheet, Slack, head)
 
-Style: serif body, generous line height, looks like a memo, not a SaaS screen. Printable. Shareable as a link.
+The second question is the one that exposes maturity. "I look at the dashboard" vs "I ask Maria" vs "I feel it" are three different operating states.
 
-### 4. The Handoff (bottom of the brief)
+## Step 3 — The bridge framework
 
-A single quiet block under the brief, not a hard sell.
+For each domain we score the unit against four maturity tiers. This is the **LIZA target state** mapped to a real operating function.
 
-- **Line:** *"The brief points at a system underneath it. That system is what LIZA is."*
-- **Secondary line:** one sentence on why a context layer is the thing the brief is implicitly asking for.
-- **CTA:** "See LIZA" (link to existing positioning page) and "Save and share this brief" (gated: email required to keep the brief at a permanent URL).
+```text
+TIER 0 — TACIT          Decision lives in someone's head
+TIER 1 — RECORDED       Decision logic exists, in scattered files/people
+TIER 2 — STANDARDISED   Decision logic is one place, one version
+TIER 3 — EXECUTABLE     Decision logic runs as code or AI can use it directly
+```
 
-## Generation
+The diagnosis output looks like this, per domain:
 
-- Use Lovable AI Gateway. Default model: `google/gemini-2.5-pro` for synthesis quality on long-form input.
-- Single prompt template assembles the four inputs into the five brief sections.
-- Output streamed into the rendered brief section as it generates, no spinner theatre.
+```text
+DEMAND          Tier 1   →   needs to reach Tier 3
+                Today: pipeline lives in CRM + 3 spreadsheets + Maria's head
+                Bridge: codify deal-scoring rules, expose to AI, retire Maria-as-router
+                Effort: 6 weeks, 1 ops analyst
+                Unlock: 8 hrs/week back to GM, faster qualification
 
-## Persistence
+CAPACITY        Tier 0   →   needs to reach Tier 2
+                ...
 
-- Briefs are only stored when the user gates with email at the share step.
-- Stored row: `briefs` table with `id`, `email`, `inputs jsonb`, `output jsonb`, `created_at`.
-- Public read by `id` for the shareable URL. RLS: insert open, select by `id` open, update/delete locked.
+QUALITY         Tier 2   →   already healthy, hold
+                ...
 
-## Out of Scope (for v1)
+ECONOMICS       Tier 1   →   needs to reach Tier 3
+                ...
+```
 
-- No editing the rendered brief inline. Regenerate or accept.
-- No multi-user / team version.
-- No PDF export in v1. Shareable URL is the artefact.
-- No A/B of prompts. One frame, ship it.
+## Step 4 — The economic anchor
 
-## Naming and Voice
+You said it: *the cost of tokens must be in line with the value created*. So the diagnosis closes with a **token-economics view**:
 
-- Product name in UI: **The Brief**.
-- No em-dashes or en-dashes anywhere in copy.
-- Voice: statement-oriented, quiet, assumes the reader is already thinking.
+```text
+WHERE AI EARNS ITS KEEP IN YOUR UNIT
 
-## Technical Notes
+DEMAND          High ROI on AI    — repetitive, structured, high-volume decisions
+CAPACITY        Medium ROI        — needs human judgement, AI augments
+QUALITY         High ROI          — pattern detection, AI catches what humans miss
+ECONOMICS       Low ROI today     — needs Tier 2 data first, then high ROI
 
-- New page component at `src/pages/TheBrief.tsx`, registered in the router.
-- Generation via a new edge function `generate-brief` calling the AI Gateway.
-- Save/share via a second edge function `save-brief` writing to the `briefs` table.
-- Light theme, white background per the project's presentation standard. Serif for the rendered brief, sans for the prompts and chrome.
-- Framer Motion pinned at `^10.18.0` for any prompt transitions.
+START HERE: Demand. Move it from Tier 1 to Tier 3 first.
+That's where tokens convert to margin fastest in a unit your size.
+```
 
-## Success Signal
+## What the user experiences
 
-A user finishes the four prompts, reads the rendered brief, and either saves it with their email or sends the link to someone in their org. Save rate and share rate are the only two metrics that matter for v1.
+1. Picks function + unit shape + scale (15 seconds, no AI)
+2. Sees 4 domain cards, opens each, answers 2 questions per domain (5–8 minutes total)
+3. Sees per-domain maturity tier with a one-line "why this tier" justification
+4. Sees the bridge: current → target, with the move, the effort, the unlock
+5. Sees the token-economics ranking telling them **where to start**
+
+## Technical sketch
+
+- New file `src/lib/brief-framework.ts`: function profiles, domain definitions, tier definitions, question banks per function × domain
+- `TheBrief.tsx` becomes a 4-step flow: seat → domain probes (4 sub-steps) → diagnosis → bridge
+- `generate-brief` edge function gains two new modes:
+  - `score_domain` — given function + domain + user answers, returns tier (0–3) + one-line justification + bridge move + effort estimate + unlock
+  - `synthesize_diagnosis` — given all 4 domain scores, returns the token-economics ranking and the "start here" call
+- Persists the full diagnosis (function, unit shape, scale, per-domain tier, per-domain bridge, ranking) in `briefs.output` so it can be re-opened, exported, or revisited.
+
+## One thing I want you to confirm
+
+**The four domains.** I proposed Demand / Capacity / Quality / Economics because they apply across functions (a Head of R&D has demand=requests from business, capacity=scientists, quality=experimental rigor, economics=cost-per-insight).
+
+If you have a different four — say, the LIZA canonical four are different — tell me now and I'll build against those instead. Otherwise I proceed with these.
