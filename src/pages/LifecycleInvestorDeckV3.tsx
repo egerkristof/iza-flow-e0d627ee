@@ -2684,82 +2684,64 @@ function SlideOperatorMoment() {
 }
 
 function SlideMomentGoverned() {
-  const inputs = [
-    { icon: <BookOpen size={20} />, label: "Standards", color: TEAL },
-    { icon: <GitBranch size={20} />, label: "Prior decisions", color: SEAFOAM },
-    { icon: <Shield size={20} />, label: "Governance", color: GOLD },
-    { icon: <Database size={20} />, label: "Live context", color: ACCENT },
-  ];
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${GREEN})` }}>Proof in market</p>
-        <h2 className="font-black mb-2" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          We don't sell AI.{" "}
-          <span style={{ color: `hsl(${GREEN})` }}>We sell governed moments of action.</span>
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${GREEN})` }}>The Bet</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          We don&apos;t sell AI. <span style={{ color: `hsl(${GREEN})` }}>We sell governed moments of action.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
-          The first artefact in market that makes the thesis visible. Human judgment on top. AI executes inside a bounded standard.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          Human on top. AI executes inside a bounded standard. <span style={{ color: TEXT, fontWeight: 700 }}>Every action tied to a Playbook, every rationale logged.</span>
         </p>
+      </div>
 
-        <div className="flex-1 grid grid-cols-3 gap-6">
-          {/* Left: human on top */}
-          <div className="rounded-2xl border p-6 flex flex-col"
-            style={{ borderColor: `hsl(${TEAL} / 0.25)`, background: `hsl(${TEAL} / 0.05)` }}>
-            <div className="flex items-center gap-3 mb-3">
-              <User size={28} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>Human on top</p>
-            </div>
-            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              Judgment, approval, accountability. Sets intent and signs off on the action.
-            </p>
-            <ul className="mt-4 space-y-2" style={{ fontSize: 16, color: TEXT }}>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Sees what would happen before it happens</li>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Approves, edits, or stops</li>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${TEAL})` }} className="mt-1 shrink-0" /> Owns the decision</li>
-            </ul>
-          </div>
+      {/* One picture — operator wrapped in four governance rings */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="govGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={`hsl(${GREEN} / 0.18)`} />
+              <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+            </radialGradient>
+          </defs>
+          <circle cx="960" cy="380" r="340" fill="url(#govGlow)" />
 
-          {/* Middle: the moment */}
-          <div className="rounded-2xl border-2 p-6 flex flex-col items-center justify-center text-center"
-            style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.06)` }}>
-            <p className="font-bold tracking-[0.15em] uppercase mb-3" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>The moment</p>
-            <div className="grid grid-cols-2 gap-2 w-full mb-4">
-              {inputs.map((i) => (
-                <div key={i.label} className="rounded-lg px-3 py-2 flex items-center gap-2"
-                  style={{ background: `hsl(${i.color} / 0.08)`, border: `1px solid hsl(${i.color} / 0.2)`, color: `hsl(${i.color})` }}>
-                  {i.icon}<span className="font-semibold" style={{ fontSize: 14 }}>{i.label}</span>
-                </div>
-              ))}
-            </div>
-            <Sparkles size={32} style={{ color: `hsl(${GREEN})` }} />
-            <p className="font-black mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-              Decision, governed in place
-            </p>
-          </div>
+          {/* Four concentric rings, each labelled with one ingredient at a compass point */}
+          {[
+            { r: 300, color: TEAL,    label: "STANDARDS",       lx: 960,  ly: 64 },
+            { r: 250, color: SEAFOAM, label: "PRIOR DECISIONS", lx: 1690, ly: 388 },
+            { r: 200, color: ACCENT,  label: "LIVE CONTEXT",    lx: 960,  ly: 712 },
+            { r: 150, color: GOLD,    label: "GOVERNANCE",      lx: 230,  ly: 388 },
+          ].map((ring) => (
+            <g key={ring.label}>
+              <circle cx="960" cy="380" r={ring.r} fill="none"
+                stroke={`hsl(${ring.color} / 0.55)`} strokeWidth="1.5" strokeDasharray="4 6" />
+              <rect x={ring.lx - 150} y={ring.ly - 22} width="300" height="44" rx="22"
+                fill={BG} stroke={`hsl(${ring.color} / 0.5)`} strokeWidth="1.2" />
+              <text x={ring.lx} y={ring.ly + 7} textAnchor="middle"
+                style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${ring.color})`, letterSpacing: 2 }}>{ring.label}</text>
+            </g>
+          ))}
 
-          {/* Right: AI inside the standard */}
-          <div className="rounded-2xl border p-6 flex flex-col"
-            style={{ borderColor: `hsl(${ACCENT} / 0.25)`, background: `hsl(${ACCENT} / 0.05)` }}>
-            <div className="flex items-center gap-3 mb-3">
-              <Cpu size={28} style={{ color: `hsl(${ACCENT})` }} />
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT }}>AI executes inside the standard</p>
-            </div>
-            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              State-locked to a Playbook. Cannot wander outside the bounded reasoning surface.
-            </p>
-            <ul className="mt-4 space-y-2" style={{ fontSize: 16, color: TEXT }}>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Every action tied to a Playbook</li>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Rationale logged automatically</li>
-              <li className="flex gap-2"><Check size={16} style={{ color: `hsl(${ACCENT})` }} className="mt-1 shrink-0" /> Replayable, auditable, reversible</li>
-            </ul>
-          </div>
+          {/* Center operator + governed moment */}
+          <circle cx="960" cy="380" r="100" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="3" />
+          <circle cx="960" cy="350" r="26" fill={`hsl(${GREEN} / 0.18)`} stroke={`hsl(${GREEN})`} strokeWidth="2" />
+          <text x="960" y="410" textAnchor="middle" style={{ fontSize: 16, fontWeight: 900, fill: TEXT, letterSpacing: 1 }}>OPERATOR</text>
+          <text x="960" y="432" textAnchor="middle" style={{ fontSize: 12, fontWeight: 700, fill: MUTED, letterSpacing: 1.5 }}>JUDGMENT &amp; SIGN-OFF</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${GREEN} / 0.08)`, border: `1.5px solid hsl(${GREEN} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            The moment is the product. <span style={{ color: `hsl(${GREEN})` }}>Governance is in place by default.</span>
+          </p>
         </div>
-
-        <p className="mt-6" style={{ fontSize: 18, color: SUBTLE }}>
-          Running today across four paid engagements. Proof on slide 15.
-        </p>
       </div>
       <SlideBar from={GREEN} to={TEAL} />
     </div>
