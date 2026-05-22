@@ -2613,57 +2613,69 @@ function SlideOperatorMoment() {
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col justify-center h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>The Bet</p>
-        <h2 className="font-black mb-6" style={{ fontSize: 64, color: TEXT, lineHeight: 1.05 }}>
-          The unit of work is no longer the task.{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>It is the operator's moment of decision.</span>
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>The Unit of Work</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          The operator&apos;s moment of decision.
         </h2>
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          The task used to be the unit of work. <span style={{ color: TEXT, fontWeight: 700 }}>In the AI age, value is created or destroyed at the moment an operator decides what to do.</span>
+        </p>
+      </div>
 
-        <div className="flex gap-10 items-center mt-4">
-          {/* Diagram */}
-          <div className="relative w-[720px] h-[520px] shrink-0">
-            {/* Inbound arrows + labels */}
-            {[
-              { label: "Standards", color: TEAL, pos: { left: 0, top: 40 } },
-              { label: "Prior decisions", color: SEAFOAM, pos: { right: 0, top: 40 } },
-              { label: "Governance constraints", color: GOLD, pos: { left: 0, bottom: 160 } },
-              { label: "Live context", color: ACCENT, pos: { right: 0, bottom: 160 } },
-            ].map((n) => (
-              <div key={n.label} className="absolute rounded-xl px-5 py-3 font-bold"
-                style={{ ...n.pos, fontSize: 20, color: `hsl(${n.color})`, background: `hsl(${n.color} / 0.08)`, border: `1px solid hsl(${n.color} / 0.25)` }}>
-                {n.label}
-              </div>
-            ))}
-            {/* Center operator node */}
-            <div className="absolute left-1/2 top-[200px] -translate-x-1/2 w-[260px] h-[180px] rounded-2xl flex flex-col items-center justify-center"
-              style={{ background: `hsl(${TEAL} / 0.10)`, border: `2px solid hsl(${TEAL} / 0.45)` }}>
-              <User size={48} style={{ color: `hsl(${TEAL})` }} />
-              <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT }}>The Operator</p>
-              <p style={{ fontSize: 14, color: MUTED }}>moment of decision</p>
-            </div>
-            {/* Outbound */}
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 rounded-xl px-6 py-3 font-bold flex items-center gap-3"
-              style={{ fontSize: 20, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <ArrowRight size={22} /> Executed action · full audit trail
-            </div>
-          </div>
+      {/* One picture */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="opMomentGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.30)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+            </radialGradient>
+            <marker id="arrIn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${TEAL})`} />
+            </marker>
+            <marker id="arrOut" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${GREEN})`} />
+            </marker>
+          </defs>
 
-          {/* Thesis copy */}
-          <div className="flex-1">
-            <p style={{ fontSize: 26, color: TEXT, lineHeight: 1.4 }}>
-              In the AI age, value is created or destroyed at the moment an operator decides what to do.
-            </p>
-            <p className="mt-5" style={{ fontSize: 22, color: MUTED, lineHeight: 1.5 }}>
-              LIZA makes that moment the highest-leverage moment in the company. We bring every relevant standard,
-              every prior decision, and every governance constraint into it, and execute the chosen action with full traceability.
-            </p>
-            <div className="mt-6 rounded-xl px-5 py-4" style={{ background: `hsl(${TEAL} / 0.06)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
-              <p className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>
-                Everything that follows is a consequence of this bet.
-              </p>
-            </div>
-          </div>
+          {/* Inbound labels (four ingredients) */}
+          {[
+            { label: "STANDARDS",       x: 340,  y: 200, ax: 760,  ay: 360 },
+            { label: "PRIOR DECISIONS", x: 1580, y: 200, ax: 1160, ay: 360 },
+            { label: "GOVERNANCE",      x: 340,  y: 560, ax: 760,  ay: 420 },
+            { label: "LIVE CONTEXT",    x: 1580, y: 560, ax: 1160, ay: 420 },
+          ].map((n) => (
+            <g key={n.label}>
+              <text x={n.x} y={n.y} textAnchor="middle"
+                style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>{n.label}</text>
+              <line x1={n.x} y1={n.y + 18} x2={n.ax} y2={n.ay}
+                stroke={`hsl(${TEAL} / 0.55)`} strokeWidth="2" strokeDasharray="6 6" markerEnd="url(#arrIn)" />
+            </g>
+          ))}
+
+          {/* Glow + center operator node */}
+          <circle cx="960" cy="390" r="240" fill="url(#opMomentGlow)" />
+          <circle cx="960" cy="390" r="150" fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="3" />
+          <circle cx="960" cy="350" r="34" fill={`hsl(${TEAL} / 0.18)`} stroke={`hsl(${TEAL})`} strokeWidth="2" />
+          <text x="960" y="430" textAnchor="middle" style={{ fontSize: 22, fontWeight: 900, fill: TEXT, letterSpacing: 1 }}>THE OPERATOR</text>
+          <text x="960" y="455" textAnchor="middle" style={{ fontSize: 14, fontWeight: 600, fill: MUTED, letterSpacing: 2 }}>MOMENT OF DECISION</text>
+
+          {/* Outbound action */}
+          <line x1="960" y1="540" x2="960" y2="650" stroke={`hsl(${GREEN})`} strokeWidth="3" markerEnd="url(#arrOut)" />
+          <rect x="720" y="650" width="480" height="60" rx="30" fill={`hsl(${GREEN} / 0.08)`} stroke={`hsl(${GREEN} / 0.45)`} strokeWidth="1.5" />
+          <text x="960" y="690" textAnchor="middle" style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>EXECUTED ACTION · FULL AUDIT TRAIL</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${TEAL} / 0.08)`, border: `1.5px solid hsl(${TEAL} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Everything that follows is a consequence of <span style={{ color: `hsl(${TEAL})` }}>this bet.</span>
+          </p>
         </div>
       </div>
       <SlideBar from={TEAL} to={SEAFOAM} />
