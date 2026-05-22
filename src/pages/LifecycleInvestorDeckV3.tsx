@@ -2956,25 +2956,26 @@ function SlideSovereignty() {
 // ─── Slide registry ──────────────────────────────────────────────────────────
 
 const SLIDES = [
-  // Act I — The Bet
+  // Beat 1 — Character with a Problem
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "The Operator's Moment", component: <SlideOperatorMoment /> },
-  { id: 3, title: "The Moment, Governed", component: <SlideMomentGoverned /> },
-  // Act II — The World
-  { id: 4, title: "Why Now · Two Shifts Collide", component: <SlideWhyNowFused /> },
-  { id: 5, title: "The Context Gap", component: <Slide02 /> },
-  { id: 6, title: "What Missing Context Costs", component: <Slide03Cost /> },
-  // Act III — The Product
-  { id: 7, title: "The Context Layer", component: <Slide05 /> },
-  { id: 8, title: "Shape of the Company", component: <SlideShape /> },
-  { id: 9, title: "What's Built", component: <Slide10 /> },
-  { id: 10, title: "AACE · The Mechanism of the Moment", component: <Slide07 /> },
-  // Act IV — The Economics
-  { id: 11, title: "Value-Based Metering", component: <SlidePricingMetering /> },
-  { id: 12, title: "Business Model", component: <Slide11 /> },
-  { id: 13, title: "30-Day Execution Challenge", component: <SlideExecutionChallenge /> },
-  // Act V — The Company
-  { id: 14, title: "Early Validation", component: <Slide08 /> },
+  { id: 2, title: "The Context Gap", component: <Slide02 /> },
+  // Beat 2 — Agitate the Stakes
+  { id: 3, title: "What Missing Context Costs", component: <Slide03Cost /> },
+  { id: 4, title: "The Operator's Moment", component: <SlideOperatorMoment /> },
+  { id: 5, title: "The Moment, Governed", component: <SlideMomentGoverned /> },
+  // Beat 3 — Proof + Why Now
+  { id: 6, title: "Early Validation", component: <Slide08 /> },
+  { id: 7, title: "Why Now · Two Shifts Collide", component: <SlideWhyNowFused /> },
+  // Beat 4 — Meet the Guide
+  { id: 8, title: "The Context Layer", component: <Slide05 /> },
+  { id: 9, title: "AACE · The Mechanism of the Moment", component: <Slide07 /> },
+  { id: 10, title: "What's Built", component: <Slide10 /> },
+  { id: 11, title: "Shape of the Company", component: <SlideShape /> },
+  // Beat 5 — Business
+  { id: 12, title: "Value-Based Metering", component: <SlidePricingMetering /> },
+  { id: 13, title: "Business Model", component: <Slide11 /> },
+  { id: 14, title: "30-Day Execution Challenge", component: <SlideExecutionChallenge /> },
+  // Beat 6 — Long-Shape Claim, Team, Ask
   { id: 15, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 16, title: "Knowledge Sovereignty", component: <SlideSovereignty /> },
   { id: 17, title: "Expansion Path", component: <Slide09 /> },
