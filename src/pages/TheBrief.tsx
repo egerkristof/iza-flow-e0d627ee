@@ -19,38 +19,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { OperatingGrid, type GridState, type GridStatus } from "@/components/brief/OperatingGrid";
-
-// ────────────────────────────────────────────────────────────────────────────
-// Curated input chips
-// ────────────────────────────────────────────────────────────────────────────
-
-const TOOL_CHIPS = [
-  "ChatGPT",
-  "Claude",
-  "Gemini",
-  "Copilot (M365)",
-  "GitHub Copilot",
-  "Cursor",
-  "Glean",
-  "Notion AI",
-  "Custom GPTs",
-  "Internal RAG",
-  "Agent framework (LangChain, CrewAI)",
-  "None yet",
-];
-
-const LIMITATION_CHIPS = [
-  "Hallucinations",
-  "No memory across sessions",
-  "Cannot enforce our standards",
-  "No audit trail",
-  "Siloed per user",
-  "Does not know our data",
-  "Output quality inconsistent",
-  "No governance",
-  "Cannot hand off between tools",
-  "Adoption is patchy",
-];
+import { TEAM_PROFILES, TEAM_BY_ID, type TeamId } from "@/lib/team-profiles";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Types
@@ -70,6 +39,8 @@ type Diagnosis = {
 };
 
 type Inputs = {
+  team: TeamId | null;
+  use_cases: string[];
   goal: string;
   tools: string[];
   limitations: string[];
@@ -161,6 +132,8 @@ export default function TheBrief() {
 
   const [phase, setPhase] = useState<Phase>("input");
   const [inputs, setInputs] = useState<Inputs>({
+    team: null,
+    use_cases: [],
     goal: "",
     tools: [],
     limitations: [],
@@ -192,7 +165,7 @@ export default function TheBrief() {
     })();
   }, [id, navigate]);
 
-  const toggle = (key: "tools" | "limitations", value: string) => {
+  const toggle = (key: "tools" | "limitations" | "use_cases", value: string) => {
     setInputs((p) => ({
       ...p,
       [key]: p[key].includes(value)
@@ -201,17 +174,32 @@ export default function TheBrief() {
     }));
   };
 
-  const canSubmit = inputs.goal.trim().length > 10;
+  const canSubmit =
+    !!inputs.team && (inputs.use_cases.length > 0 || inputs.goal.trim().length > 10);
 
   const runDiagnosis = async () => {
     if (!canSubmit) {
-      toast.error("Tell us the goal in one or two sentences first.");
+      toast.error("Pick your team and at least one use case to continue.");
       return;
     }
     setPhase("diagnosing");
     try {
+      const team = inputs.team ? TEAM_BY_ID[inputs.team] : null;
+      const derivedGoal =
+        inputs.goal.trim() ||
+        (team
+          ? `Help our ${team.label} team with: ${inputs.use_cases.join("; ")}.`
+          : inputs.use_cases.join("; "));
       const { data, error } = await supabase.functions.invoke("generate-brief", {
-        body: inputs,
+        body: {
+          team: team?.label || null,
+          team_sub: team?.sub || null,
+          use_cases: inputs.use_cases,
+          goal: derivedGoal,
+          tools: inputs.tools,
+          limitations: inputs.limitations,
+          free_text: inputs.free_text,
+        },
       });
       let result: Diagnosis;
       if (error || !data?.diagnosis) {
@@ -263,12 +251,17 @@ export default function TheBrief() {
     setSavedId(null);
     setEmail("");
     setPhase("input");
+    setInputs({ team: null, use_cases: [], goal: "", tools: [], limitations: [], free_text: "" });
     navigate("/the-brief", { replace: true });
   };
 
   const gridState: GridState | null = diagnosis
     ? {
-        goal: inputs.goal,
+        goal:
+          inputs.goal ||
+          (inputs.team
+            ? `${TEAM_BY_ID[inputs.team].label} team: ${inputs.use_cases.slice(0, 3).join(", ")}`
+            : ""),
         tools: inputs.tools,
         ...diagnosis.grid_status,
       }
@@ -338,10 +331,13 @@ function InputView({
 }: {
   inputs: Inputs;
   setInputs: React.Dispatch<React.SetStateAction<Inputs>>;
-  toggle: (key: "tools" | "limitations", value: string) => void;
+  toggle: (key: "tools" | "limitations" | "use_cases", value: string) => void;
   canSubmit: boolean;
   onSubmit: () => void;
 }) {
+  const team = inputs.team ? TEAM_BY_ID[inputs.team] : null;
+  const [showGoal, setShowGoal] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -349,113 +345,167 @@ function InputView({
       transition={{ duration: 0.4 }}
       className="space-y-8"
     >
-      {/* Goal */}
+      {/* Step 1 — Team */}
       <section
         className="rounded-2xl border p-6 md:p-8"
         style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
       >
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
-            style={{
-              background: "hsl(var(--primary) / 0.12)",
-              color: "hsl(var(--primary))",
-            }}
-          >
-            1
-          </span>
-          <h2 className="text-lg md:text-xl font-bold">What are you trying to achieve?</h2>
-        </div>
+        <StepHeader n={1} title="Which team are you running?" />
         <p className="text-sm text-muted-foreground mb-4">
-          One or two sentences. The goal you want AI to help you reach in your unit.
+          We tailor the next questions to your team. Pick the closest fit.
         </p>
-        <Textarea
-          value={inputs.goal}
-          onChange={(e) => setInputs((p) => ({ ...p, goal: e.target.value }))}
-          placeholder="Example: cut sales cycle by 30% by letting reps draft and personalise outreach at scale, without losing brand voice."
-          rows={3}
-          className="resize-none"
-        />
-      </section>
-
-      {/* Tools */}
-      <section
-        className="rounded-2xl border p-6 md:p-8"
-        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
-            style={{
-              background: "hsl(var(--primary) / 0.12)",
-              color: "hsl(var(--primary))",
-            }}
-          >
-            2
-          </span>
-          <h2 className="text-lg md:text-xl font-bold">Which AI tools are in use today?</h2>
-        </div>
-        <p className="text-sm text-muted-foreground mb-4">
-          Pick all that apply. Anything custom goes in the free text below.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {TOOL_CHIPS.map((t) => (
-            <Chip
-              key={t}
-              label={t}
-              selected={inputs.tools.includes(t)}
-              onClick={() => toggle("tools", t)}
-            />
-          ))}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+          {TEAM_PROFILES.map((t) => {
+            const selected = inputs.team === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => {
+                  setInputs((p) => ({
+                    ...p,
+                    team: t.id,
+                    // reset downstream selections when switching team
+                    use_cases: p.team === t.id ? p.use_cases : [],
+                    tools: p.team === t.id ? p.tools : [],
+                    limitations: p.team === t.id ? p.limitations : [],
+                  }));
+                }}
+                className="text-left rounded-xl border p-3 transition-all"
+                style={{
+                  background: selected ? "hsl(var(--primary) / 0.08)" : "hsl(var(--card))",
+                  borderColor: selected ? "hsl(var(--primary))" : "hsl(var(--border))",
+                  boxShadow: selected ? "0 0 0 1px hsl(var(--primary))" : "none",
+                }}
+              >
+                <p className="text-sm font-bold">{t.label}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{t.sub}</p>
+              </button>
+            );
+          })}
         </div>
       </section>
 
-      {/* Limitations */}
-      <section
-        className="rounded-2xl border p-6 md:p-8"
-        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <span
-            className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
-            style={{
-              background: "hsl(var(--primary) / 0.12)",
-              color: "hsl(var(--primary))",
-            }}
+      {/* Subsequent steps appear only after team is picked */}
+      {team && (
+        <>
+          {/* Step 2 — Use cases */}
+          <motion.section
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border p-6 md:p-8"
+            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
           >
-            3
-          </span>
-          <h2 className="text-lg md:text-xl font-bold">What is not working?</h2>
-        </div>
-        <p className="text-sm text-muted-foreground mb-4">
-          Pick the limitations you are hitting. Be honest.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {LIMITATION_CHIPS.map((l) => (
-            <Chip
-              key={l}
-              label={l}
-              selected={inputs.limitations.includes(l)}
-              onClick={() => toggle("limitations", l)}
-            />
-          ))}
-        </div>
-      </section>
+            <StepHeader n={2} title={`What is your ${team.label} team using AI for?`} />
+            <p className="text-sm text-muted-foreground mb-4">
+              Pick the use cases that apply. These are the typical ones for {team.label}.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {team.use_cases.map((u) => (
+                <Chip
+                  key={u}
+                  label={u}
+                  selected={inputs.use_cases.includes(u)}
+                  onClick={() => toggle("use_cases", u)}
+                />
+              ))}
+            </div>
+          </motion.section>
 
-      {/* Optional free text */}
-      <section
-        className="rounded-2xl border p-6 md:p-8"
-        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-      >
-        <h2 className="text-lg md:text-xl font-bold mb-3">Anything else worth knowing? (optional)</h2>
-        <Textarea
-          value={inputs.free_text}
-          onChange={(e) => setInputs((p) => ({ ...p, free_text: e.target.value }))}
-          placeholder="Industry, team size, specific workflow, recent failed pilot, anything that adds context."
-          rows={3}
-          className="resize-none"
-        />
-      </section>
+          {/* Step 3 — Tools */}
+          <motion.section
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border p-6 md:p-8"
+            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+          >
+            <StepHeader n={3} title="Which tools are in use today?" />
+            <p className="text-sm text-muted-foreground mb-4">
+              The usual stack for {team.label}. Pick all that apply.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {team.tools.map((t) => (
+                <Chip
+                  key={t}
+                  label={t}
+                  selected={inputs.tools.includes(t)}
+                  onClick={() => toggle("tools", t)}
+                />
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Step 4 — Limitations */}
+          <motion.section
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border p-6 md:p-8"
+            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+          >
+            <StepHeader n={4} title="Where is it falling short?" />
+            <p className="text-sm text-muted-foreground mb-4">
+              The shortcomings we see most often for {team.label} teams.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {team.limitations.map((l) => (
+                <Chip
+                  key={l}
+                  label={l}
+                  selected={inputs.limitations.includes(l)}
+                  onClick={() => toggle("limitations", l)}
+                />
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Optional context */}
+          <motion.section
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border p-6 md:p-8"
+            style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+          >
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg md:text-xl font-bold">Add your own context (optional)</h2>
+              <button
+                type="button"
+                onClick={() => setShowGoal((v) => !v)}
+                className="text-xs font-semibold text-primary hover:underline"
+              >
+                {showGoal ? "Hide" : "Open"}
+              </button>
+            </div>
+            {showGoal && (
+              <div className="mt-4 space-y-4">
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
+                    Specific goal
+                  </label>
+                  <Textarea
+                    value={inputs.goal}
+                    onChange={(e) => setInputs((p) => ({ ...p, goal: e.target.value }))}
+                    placeholder={`Example for ${team.label}: ${team.use_cases[0]?.toLowerCase()}, but at half the cycle time.`}
+                    rows={2}
+                    className="resize-none mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">
+                    Anything else worth knowing
+                  </label>
+                  <Textarea
+                    value={inputs.free_text}
+                    onChange={(e) => setInputs((p) => ({ ...p, free_text: e.target.value }))}
+                    placeholder="Industry, team size, a recent failed pilot, a constraint we should know."
+                    rows={2}
+                    className="resize-none mt-1"
+                  />
+                </div>
+              </div>
+            )}
+          </motion.section>
+        </>
+      )}
 
       <div className="flex justify-end">
         <Button
@@ -469,6 +519,23 @@ function InputView({
         </Button>
       </div>
     </motion.div>
+  );
+}
+
+function StepHeader({ n, title }: { n: number; title: string }) {
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <span
+        className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
+        style={{
+          background: "hsl(var(--primary) / 0.12)",
+          color: "hsl(var(--primary))",
+        }}
+      >
+        {n}
+      </span>
+      <h2 className="text-lg md:text-xl font-bold">{title}</h2>
+    </div>
   );
 }
 
