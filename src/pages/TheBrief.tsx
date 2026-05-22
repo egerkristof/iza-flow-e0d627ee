@@ -529,20 +529,23 @@ export default function TheBrief() {
       {(phase === "scoring" || phase === "synthesizing") && (
         <section
           ref={diagnosisRef}
-          className="min-h-screen flex items-center px-6 md:px-12 border-t border-border/40"
+          className="min-h-screen px-6 md:px-12 border-t border-border/40 pt-20 pb-32"
         >
-          <div className="max-w-2xl mx-auto py-20 w-full">
+          <div className="max-w-6xl mx-auto w-full">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
               Act 3 of 4 . Diagnosis . {phase === "scoring" ? "Scoring" : "Synthesising"}
             </div>
-            <div className="text-2xl font-light text-foreground mb-8">
+            <div className="text-2xl md:text-3xl font-light text-foreground mb-10 max-w-3xl">
               {phase === "scoring"
                 ? scoringDomain
                   ? `Reading your ${scoringDomain} answers against the four-tier scale.`
                   : "Reading your answers."
                 : "Synthesising the four domains into one page."}
             </div>
-            <div className="space-y-3">
+            <div className="aspect-[770/430] w-full mb-10">
+              <BlueprintCanvas state={blueprintState} />
+            </div>
+            <div className="space-y-3 max-w-2xl">
               {DOMAIN_ORDER.map((d) => {
                 const done = !!scores[d];
                 const active = scoringDomain === d;
