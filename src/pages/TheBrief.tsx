@@ -163,28 +163,6 @@ export default function TheBrief() {
   const probeRef = useRef<HTMLDivElement>(null);
   const diagnosisRef = useRef<HTMLDivElement>(null);
 
-  // Build the live blueprint state from current phase + answers
-  const pillarTiers: BlueprintState["pillarTiers"] = {};
-  DOMAIN_ORDER.forEach((d) => {
-    const a = answers[d];
-    if (a && a.substrate_tier !== undefined) {
-      // Pillar height reads off the substrate tier (the maturity tell)
-      pillarTiers[d] = a.substrate_tier;
-    } else if (scores[d]) {
-      pillarTiers[d] = scores[d]!.current_tier;
-    }
-  });
-  const blueprintState: BlueprintState = {
-    function_label: seat.function_label,
-    unit_shape: seat.unit_shape,
-    scale: seat.scale,
-    seatPlaced: phase !== "intro",
-    pillarTiers,
-    activeDomain: phase === "probe" ? currentDomain ?? null : null,
-    showBeams: phase === "scoring" || phase === "synthesizing" || phase === "diagnosis",
-    keystoneDomain: phase === "diagnosis" ? diagnosis?.start_here.domain ?? null : null,
-  };
-
   // Load saved diagnosis
   useEffect(() => {
     if (!id) return;
