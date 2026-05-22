@@ -729,6 +729,7 @@ export default function TheBrief() {
                 )}
               </div>
             </div>
+            </div>
           </div>
         </section>
       )}
