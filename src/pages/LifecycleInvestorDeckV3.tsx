@@ -2886,60 +2886,69 @@ function SlidePricingMetering() {
 }
 
 function SlideSovereignty() {
-  const pillars = [
-    {
-      title: "Knowledge stays with the company",
-      body: "Standards, decisions and rationale live in the customer's tenant. The reasoning that runs the business is owned by the business, not by a model vendor.",
-      color: TEAL,
-      icon: <Shield size={28} />,
-    },
-    {
-      title: "Models are interchangeable",
-      body: "We route across model providers per decision class. No customer is locked to a single foundation model. The moat lives in the standard, not the model.",
-      color: SEAFOAM,
-      icon: <Network size={28} />,
-    },
-    {
-      title: "Portable across vendors",
-      body: "Playbooks, rationale and audit trails export as code. If we disappear, the standards keep running. Sovereignty is the customer's exit option, not ours.",
-      color: MINT,
-      icon: <GitBranch size={28} />,
-    },
-  ];
   return (
     <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
       <SlideGrid />
-      <div className="relative z-10 flex flex-col h-full px-28 py-12">
-        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>The Long Shape</p>
-        <h2 className="font-black mb-3" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
-          The moat is{" "}
-          <span style={{ color: `hsl(${TEAL})` }}>knowledge sovereignty</span>.
+      {/* Header */}
+      <div className="relative z-20 px-28 pt-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 22, color: `hsl(${TEAL})` }}>The Long Shape</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 78, color: TEXT, lineHeight: 1.02, letterSpacing: "-0.02em" }}>
+          Knowledge stays. <span style={{ color: `hsl(${TEAL})` }}>Models are interchangeable.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
-          Foundation models will keep getting cheaper, faster and more capable. The durable asset of the AI age is not the model.
-          It is the encoded reasoning of the company that uses it, in a form the company actually owns.
+        <p className="font-medium" style={{ fontSize: 26, color: MUTED, lineHeight: 1.35, maxWidth: 1500 }}>
+          The durable asset of the AI age is not the model. <span style={{ color: TEXT, fontWeight: 700 }}>It is the encoded reasoning of the company that uses it.</span>
         </p>
+      </div>
 
-        <div className="grid grid-cols-3 gap-6 flex-1">
-          {pillars.map((p) => (
-            <div key={p.title} className="rounded-2xl border p-7 flex flex-col"
-              style={{ borderColor: `hsl(${p.color} / 0.25)`, background: `hsl(${p.color} / 0.05)` }}>
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-                style={{ background: `hsl(${p.color} / 0.12)`, color: `hsl(${p.color})` }}>
-                {p.icon}
-              </div>
-              <p className="font-bold mb-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>{p.title}</p>
-              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
-            </div>
+      {/* One picture — central vault, models orbit and swap */}
+      <div className="relative z-10 flex-1 mt-2">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1920 760" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="vaultGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor={`hsl(${TEAL} / 0.18)`} />
+              <stop offset="100%" stopColor={`hsl(${TEAL} / 0)`} />
+            </radialGradient>
+          </defs>
+          <circle cx="960" cy="380" r="320" fill="url(#vaultGlow)" />
+
+          {/* Orbit ring */}
+          <ellipse cx="960" cy="380" rx="540" ry="220" fill="none" stroke={`hsl(${SEAFOAM} / 0.4)`} strokeWidth="1.5" strokeDasharray="6 8" />
+
+          {/* Central vault */}
+          <rect x="700" y="260" width="520" height="240" rx="16"
+            fill={BG} stroke={`hsl(${TEAL})`} strokeWidth="3" />
+          <rect x="700" y="260" width="520" height="56" rx="16"
+            fill={`hsl(${TEAL} / 0.18)`} />
+          <text x="960" y="298" textAnchor="middle" style={{ fontSize: 22, fontWeight: 900, fill: `hsl(${TEAL})`, letterSpacing: 2 }}>CUSTOMER KNOWLEDGE VAULT</text>
+          <text x="960" y="358" textAnchor="middle" style={{ fontSize: 20, fontWeight: 800, fill: TEXT, letterSpacing: 1.5 }}>STANDARDS · DECISIONS · RATIONALE</text>
+          <text x="960" y="402" textAnchor="middle" style={{ fontSize: 16, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>Lives in the customer&apos;s tenant.</text>
+          <text x="960" y="430" textAnchor="middle" style={{ fontSize: 16, fontWeight: 600, fill: MUTED, letterSpacing: 1 }}>Exports as code. Portable across vendors.</text>
+          <text x="960" y="472" textAnchor="middle" style={{ fontSize: 14, fontWeight: 700, fill: `hsl(${GREEN})`, letterSpacing: 1.5 }}>OWNED BY THE BUSINESS</text>
+
+          {/* Orbiting models */}
+          {[
+            { cx: 380,  cy: 380, label: "GPT" },
+            { cx: 1540, cy: 380, label: "Claude" },
+            { cx: 700,  cy: 160, label: "Gemini" },
+            { cx: 1220, cy: 600, label: "Open-source" },
+          ].map((m) => (
+            <g key={m.label}>
+              <circle cx={m.cx} cy={m.cy} r="56" fill={BG} stroke={`hsl(${SEAFOAM})`} strokeWidth="2" />
+              <text x={m.cx} y={m.cy + 6} textAnchor="middle" style={{ fontSize: 16, fontWeight: 900, fill: `hsl(${SEAFOAM})`, letterSpacing: 1 }}>{m.label}</text>
+            </g>
           ))}
-        </div>
 
-        <div className="mt-6 rounded-xl px-6 py-4"
-          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
-          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
-            Our category bet is that the next decade's defensible enterprise software is the one that{" "}
-            <strong style={{ color: `hsl(${GREEN})` }}>treats the customer's encoded reasoning as the asset</strong>,
-            and the model as the engine. LIZA is built that way from day one.
+          {/* Caption */}
+          <text x="960" y="720" textAnchor="middle" style={{ fontSize: 18, fontWeight: 900, fill: `hsl(${SEAFOAM})`, letterSpacing: 2 }}>MODELS SWAP IN. THE VAULT STAYS.</text>
+        </svg>
+      </div>
+
+      {/* Punchline */}
+      <div className="relative z-20 px-28 pb-8">
+        <div className="rounded-xl px-10 py-4 text-center"
+          style={{ background: `hsl(${TEAL} / 0.08)`, border: `1.5px solid hsl(${TEAL} / 0.28)` }}>
+          <p className="font-black" style={{ fontSize: 24, color: TEXT }}>
+            Sovereignty is <span style={{ color: `hsl(${TEAL})` }}>the customer&apos;s exit option, not ours.</span>
           </p>
         </div>
       </div>
