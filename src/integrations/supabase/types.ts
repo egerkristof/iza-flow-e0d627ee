@@ -121,6 +121,30 @@ export type Database = {
         }
         Relationships: []
       }
+      briefs: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          inputs: Json
+          output: Json
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          inputs: Json
+          output: Json
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          inputs?: Json
+          output?: Json
+        }
+        Relationships: []
+      }
       bundle_domains: {
         Row: {
           bundle_id: string
