@@ -19,12 +19,15 @@ import {
   ShieldCheck,
   Layers,
   Scale,
+  Coins,
+  Calendar,
 } from "lucide-react";
 import { TEAM_PROFILES, TEAM_BY_ID, type TeamId } from "@/lib/team-profiles";
 import {
   STREAMS,
   AUDITS,
   DECISION_CLASSES,
+  TRIGGERS,
   emptyStreamAnswer,
   emptyAuditAnswer,
   streamExamples,
@@ -33,6 +36,7 @@ import {
   type StreamStatus,
   type AuditId,
   type AuditStatus,
+  type TriggerId,
   type OperatorDiagnosis,
 } from "@/lib/operator-framework";
 import { OperatorCompass } from "@/components/brief/OperatorCompass";
@@ -49,6 +53,7 @@ type Inputs = {
   tools: string[];
   streams: Record<StreamId, StreamStatus | null>;
   audits: Record<AuditId, AuditStatus | null>;
+  trigger: TriggerId | null;
   free_text: string;
 };
 
@@ -143,6 +148,7 @@ export default function TheBrief() {
     tools: [],
     streams: emptyStreamAnswer(),
     audits: emptyAuditAnswer(),
+    trigger: null,
     free_text: "",
   });
   const [diagnosis, setDiagnosis] = useState<OperatorDiagnosis | null>(null);
@@ -204,6 +210,9 @@ export default function TheBrief() {
           tools: inputs.tools,
           streams: inputs.streams,
           audits: inputs.audits,
+          trigger: inputs.trigger
+            ? TRIGGERS.find((t) => t.id === inputs.trigger)?.label
+            : null,
           free_text: inputs.free_text,
         },
       });
@@ -216,6 +225,7 @@ export default function TheBrief() {
           tools: inputs.tools,
           streams: inputs.streams,
           audits: inputs.audits,
+          trigger: inputs.trigger,
         });
       } else {
         result = data.diagnosis as OperatorDiagnosis;
@@ -231,6 +241,7 @@ export default function TheBrief() {
           tools: inputs.tools,
           streams: inputs.streams,
           audits: inputs.audits,
+          trigger: inputs.trigger,
         }),
       );
       setPhase("result");
@@ -277,6 +288,7 @@ export default function TheBrief() {
       tools: [],
       streams: emptyStreamAnswer(),
       audits: emptyAuditAnswer(),
+      trigger: null,
       free_text: "",
     });
     navigate("/the-brief", { replace: true });
@@ -292,11 +304,15 @@ export default function TheBrief() {
           >
             ← Liza
           </Link>
-          <h1 className="mt-4 text-3xl md:text-5xl font-black tracking-tight">The Brief</h1>
-          <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-2xl">
-            AI-native operations require four streams to converge on every decision, under
-            five governance audits. Tell us what your team sees today. Get back a read on the
-            gaps and the one move that closes the biggest.
+          <p className="mt-4 text-xs font-bold tracking-[0.18em] uppercase text-primary">
+            The Brief
+          </p>
+          <h1 className="mt-2 text-3xl md:text-5xl font-black tracking-tight max-w-3xl">
+            You have AI everywhere in your org. You cannot see what it is doing.
+          </h1>
+          <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl">
+            Three minutes. Five sections. You get back a read on where your AI is blind,
+            what it costs you, and the one move that closes the biggest gap.
           </p>
         </header>
 
