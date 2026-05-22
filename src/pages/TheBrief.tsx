@@ -197,6 +197,27 @@ export default function TheBrief() {
   const currentAnswers: Answers = currentDomain ? answers[currentDomain] || {} : {};
   const currentChoices = currentDomain ? DOMAIN_CHOICES[currentDomain] : null;
 
+  // Build the live blueprint state from current phase + answers
+  const pillarTiers: BlueprintState["pillarTiers"] = {};
+  DOMAIN_ORDER.forEach((d) => {
+    const a = answers[d];
+    if (a && a.substrate_tier !== undefined) {
+      pillarTiers[d] = a.substrate_tier;
+    } else if (scores[d]) {
+      pillarTiers[d] = scores[d]!.current_tier;
+    }
+  });
+  const blueprintState: BlueprintState = {
+    function_label: seat.function_label,
+    unit_shape: seat.unit_shape,
+    scale: seat.scale,
+    seatPlaced: phase !== "intro",
+    pillarTiers,
+    activeDomain: phase === "probe" ? currentDomain ?? null : null,
+    showBeams: phase === "scoring" || phase === "synthesizing" || phase === "diagnosis",
+    keystoneDomain: phase === "diagnosis" ? diagnosis?.start_here.domain ?? null : null,
+  };
+
   const pickChoice = (which: "signal" | "substrate", choice: { tier: 0 | 1 | 2 | 3; label: string }) => {
     if (!currentDomain) return;
     setAnswers((prev) => ({
