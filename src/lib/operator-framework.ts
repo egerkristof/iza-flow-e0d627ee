@@ -14,6 +14,23 @@
 
 import type { TeamId } from "./team-profiles";
 
+// ─── Triggers (what brought you here today) ──────────────────────────────────
+
+export type TriggerId =
+  | "incident"
+  | "board"
+  | "pilot_stalled"
+  | "audit"
+  | "exploring";
+
+export const TRIGGERS: { id: TriggerId; label: string; sub: string }[] = [
+  { id: "incident", label: "Recent incident or near-miss", sub: "Something went wrong with AI output." },
+  { id: "board", label: "Board or exec pressure on ROI", sub: "Need to show what AI is returning." },
+  { id: "pilot_stalled", label: "Pilot stalled or did not scale", sub: "Worked once. Will not generalise." },
+  { id: "audit", label: "Audit, compliance, or risk finding", sub: "Governance gap flagged." },
+  { id: "exploring", label: "Exploring, no specific trigger", sub: "Mapping the territory first." },
+];
+
 // ─── Streams ─────────────────────────────────────────────────────────────────
 
 export type StreamId = "strategy" | "market" | "state" | "signal";
@@ -273,6 +290,7 @@ export type AuditCoverage = Record<AuditId, { status: AuditStatus; why: string }
 
 export type OperatorDiagnosis = {
   title: string;
+  verdict: string;
   current_model_read: string;
   stream_coverage: StreamCoverage;
   audit_coverage: AuditCoverage;
@@ -281,8 +299,21 @@ export type OperatorDiagnosis = {
     governed_today: DecisionClassId[]; // which classes they currently govern
     exposed: string; // what they are exposed on
   };
+  cost_of_gap: {
+    headline: string;
+    math: string;
+  };
   blind_spots: { title: string; why: string }[];
-  correction: { move: string; scope: string; liza_capability: string };
+  correction: {
+    move: string;
+    scope: string;
+    liza_capability: string;
+    sequence: {
+      now: { label: string; what: string };
+      next: { label: string; what: string };
+      later: { label: string; what: string };
+    };
+  };
 };
 
 // ─── User input shape ────────────────────────────────────────────────────────
@@ -307,6 +338,7 @@ export function deterministicDiagnosis(args: {
   tools: string[];
   streams: StreamAnswer;
   audits: AuditAnswer;
+  trigger?: TriggerId | null;
 }): OperatorDiagnosis {
   const teamLabel = args.team || "your team";
   const litStreams = (Object.keys(args.streams) as StreamId[]).filter(
@@ -355,6 +387,15 @@ export function deterministicDiagnosis(args: {
 
   return {
     title: `${teamLabel}: operating on ${litStreams.length} of 4 streams`,
+    verdict: `${teamLabel} runs AI on ${args.tools.length || "a handful of"} surfaces with no shared standard between them. ${
+      darkStreams.length
+        ? `Your AI is blind on ${darkStreams.join(" and ")}. `
+        : ""
+    }${
+      redAudits.length
+        ? `${redAudits.length} of 5 governance audits are not in place. `
+        : ""
+    }The cost shows up as inconsistency, not failure.`,
     current_model_read: `${teamLabel} runs AI on top of ${
       args.tools.length ? args.tools.join(", ") : "consumer AI tools"
     }. ${
@@ -378,6 +419,10 @@ export function deterministicDiagnosis(args: {
       exposed:
         "Operational decisions run free. Governed changes and strategic simulations are not classified, so the wrong decisions get the same oversight as the trivial ones.",
     },
+    cost_of_gap: {
+      headline: "Roughly 1 FTE of quiet rework per 20 people on the team.",
+      math: "Estimate: 2 hours per person per week reinventing standards, rewriting prompts, and reconciling AI output against the actual operating rule. At 20 people that is ~40 hours per week. Over a quarter, that compounds into one full-time-equivalent of work that produces nothing new.",
+    },
     blind_spots: [
       {
         title: "Every tool reinvents your standard",
@@ -392,7 +437,21 @@ export function deterministicDiagnosis(args: {
       move: `Publish ${teamLabel}'s operating standard as an executable bundle that every AI surface reads from.`,
       scope: "Two to four weeks. One owner. One bundle covering your three highest-value decisions.",
       liza_capability:
-        "LIZA knowledge layer plus state-locked playbooks wired into the tools you already use.",
+        "LIZA Knowledge Bundle plus state-locked Playbooks wired into the tools you already use.",
+      sequence: {
+        now: {
+          label: "Next 30 days",
+          what: `Pick the three highest-value decisions ${teamLabel} makes weekly. Write the standard for each as one Playbook plus Directives.`,
+        },
+        next: {
+          label: "60 days",
+          what: "Wire the bundle into the two AI surfaces with the highest usage. Every output reads from the standard before it ships.",
+        },
+        later: {
+          label: "90 days",
+          what: "Turn on the audit container. Drift, cost, and decision-class are tracked per output. Standards get versioned.",
+        },
+      },
     },
   };
 }
