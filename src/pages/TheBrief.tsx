@@ -692,32 +692,73 @@ function SelectField({
   );
 }
 
-function ProbeField({
+function ChoiceField({
   label,
   prompt,
   helper,
-  placeholder,
-  value,
-  onChange,
+  choices,
+  selectedTier,
+  onPick,
+  note,
+  onNoteChange,
 }: {
   label: string;
   prompt: string;
   helper: string;
-  placeholder: string;
-  value: string;
-  onChange: (v: string) => void;
+  choices: { tier: 0 | 1 | 2 | 3; label: string; sub?: string }[];
+  selectedTier: 0 | 1 | 2 | 3 | undefined;
+  onPick: (c: { tier: 0 | 1 | 2 | 3; label: string }) => void;
+  note: string;
+  onNoteChange: (v: string) => void;
 }) {
   return (
     <div>
       <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">{label}</div>
       <div className="text-base text-foreground mb-1">{prompt}</div>
-      <div className="text-xs text-muted-foreground mb-3">{helper}</div>
-      <Textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="min-h-[110px] text-base leading-relaxed resize-none bg-card border-border/60 focus-visible:ring-1"
-        placeholder={placeholder}
-      />
+      <div className="text-xs text-muted-foreground mb-4">{helper}</div>
+      <div className="grid gap-2">
+        {choices.map((c) => {
+          const selected = selectedTier === c.tier;
+          return (
+            <button
+              key={c.tier}
+              type="button"
+              onClick={() => onPick({ tier: c.tier, label: c.label })}
+              aria-pressed={selected}
+              className={`text-left px-4 py-3 rounded-md border transition-colors cursor-pointer flex items-start gap-3 ${
+                selected
+                  ? "border-foreground bg-foreground/5"
+                  : "border-border/60 hover:border-foreground/60 hover:bg-foreground/[0.02]"
+              }`}
+            >
+              <span
+                className={`mt-1 h-4 w-4 rounded-full border flex items-center justify-center shrink-0 ${
+                  selected ? "border-foreground" : "border-border"
+                }`}
+              >
+                {selected && <span className="h-2 w-2 rounded-full bg-foreground" />}
+              </span>
+              <span className="flex-1">
+                <span className="block text-sm font-medium text-foreground leading-snug">{c.label}</span>
+                {c.sub && (
+                  <span className="block text-xs text-muted-foreground mt-0.5">{c.sub}</span>
+                )}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      <details className="mt-3 group">
+        <summary className="text-xs text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors">
+          Add a sentence of context (optional)
+        </summary>
+        <Textarea
+          value={note}
+          onChange={(e) => onNoteChange(e.target.value)}
+          className="mt-2 min-h-[70px] text-sm leading-relaxed resize-none bg-card border-border/60 focus-visible:ring-1"
+          placeholder="Anything specific about how this actually shows up in your unit."
+        />
+      </details>
     </div>
   );
 }
