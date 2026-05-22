@@ -583,7 +583,7 @@ export default function TheBrief() {
           ref={diagnosisRef}
           className="px-6 md:px-12 border-t border-border/40 py-20 md:py-32"
         >
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">
               Act 4 of 4 . Diagnosis and Prescription . {seat.function_label}
             </div>
@@ -595,6 +595,12 @@ export default function TheBrief() {
               {diagnosis.title}
             </h1>
 
+            {/* The finished architecture */}
+            <div className="aspect-[770/430] w-full mb-16">
+              <BlueprintCanvas state={blueprintState} />
+            </div>
+
+            <div className="max-w-3xl">
             {/* Narrative */}
             <SectionHeading>The unit today</SectionHeading>
             <div className="space-y-6" style={{ fontFamily: 'Georgia, "Iowan Old Style", serif' }}>
