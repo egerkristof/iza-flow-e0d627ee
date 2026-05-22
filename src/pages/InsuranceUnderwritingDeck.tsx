@@ -106,7 +106,7 @@ function Footer({ text }: { text: string }) {
   );
 }
 
-const TOTAL = 7;
+const TOTAL = 8;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // 01 · COVER
@@ -487,6 +487,107 @@ function S07TwoWeek() {
   );
 }
 
+// ═════════════════════════════════════════════════════════════════════════════
+// 08 · PARTNERSHIP APPENDIX (Proxy-only · not for carrier)
+// ═════════════════════════════════════════════════════════════════════════════
+function S08Partnership() {
+  const columns = [
+    {
+      tag: "01 · Co-sell margin",
+      color: ACCENT,
+      headline: "20% of LIZA ARR for 24 months",
+      get: [
+        "20% recurring margin on every carrier ARR the proxy originates and stays attached to",
+        "Renewals included for the first two cycles",
+        "Deal registration: 18-month protected window on any carrier the proxy introduces",
+      ],
+      ask: [
+        "Stay attached through the 30-day shape and the first commercial conversation",
+        "If the proxy disengages after intro, drops to a 10% referral fee",
+      ],
+    },
+    {
+      tag: "02 · Standards-capture services",
+      color: GREEN,
+      headline: "100% of the services revenue stays with the proxy",
+      get: [
+        "The 200K to 400K of workshop, interview and workflow-extraction work in the first 60 days of any deployment",
+        "Co-branded delivery of the 30-Day Execution Sprint methodology",
+        "Two of the proxy's people trained and badged as Certified Architects on LIZA standards capture",
+      ],
+      ask: [
+        "LIZA never quotes services directly to a carrier the proxy is fronting",
+        "Joint delivery quality bar: every engagement ends in a CRO-grade readout",
+      ],
+    },
+    {
+      tag: "03 · Vertical IP share",
+      color: GOLD,
+      headline: "10% rev-share on any productized vertical pack, 36 months",
+      get: [
+        "Named GCC Insurance Design Partner status after three carrier deployments",
+        "Co-authored case studies and reference rights into Generali, MSIG, Prudential under joint engagement (case-by-case)",
+        "10% revenue share for 36 months on any vertical pack we productize from the proxy's accounts (e.g. UAE Motor Underwriting Pack)",
+      ],
+      ask: [
+        "Three or more insurance carriers brought into joint motion within 18 months",
+        "Co-branded, never white-labeled. LIZA remains the named standards engine",
+      ],
+    },
+  ];
+  return (
+    <div className="w-full h-full relative px-24 pt-24 pb-16" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={8} total={TOTAL} />
+      <PhaseChip phase="Appendix · proxy conversation only" color={PURPLE} />
+      <div className="relative z-10">
+        <Tag label="How we work together long term" color={PURPLE} />
+        <h2 className="font-bold leading-[1.05] mb-3" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1740 }}>
+          Not a reseller program. <span style={{ color: `hsl(${PURPLE})` }}>A design and deploy alliance</span> that makes the proxy structurally richer every time LIZA is underneath the work.
+        </h2>
+        <p className="mb-7" style={{ fontSize: 18, color: MUTED, lineHeight: 1.4, maxWidth: 1740 }}>
+          A flat margin commoditizes the design firm and kills the next three referrals. Three stacked layers instead: one rewards the deal, one rewards the work, one rewards the pattern. The proxy gets richer the more carriers they bring, not the more they discount.
+        </p>
+
+        <div className="grid grid-cols-3 gap-5 max-w-[1780px] mb-6">
+          {columns.map(c => (
+            <div key={c.tag} className="rounded-2xl border-2 p-6 flex flex-col" style={{ borderColor: `hsl(${c.color} / 0.35)`, background: `hsl(${c.color} / 0.04)` }}>
+              <p className="font-mono uppercase tracking-[0.18em] font-bold mb-3" style={{ fontSize: 13, color: `hsl(${c.color})` }}>{c.tag}</p>
+              <p className="font-bold mb-5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>{c.headline}</p>
+
+              <p className="font-mono uppercase tracking-[0.15em] font-semibold mb-2" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What the proxy gets</p>
+              <ul className="space-y-1.5 mb-5">
+                {c.get.map((g, i) => (
+                  <li key={i} className="flex gap-2" style={{ fontSize: 14, color: TEXT, lineHeight: 1.35 }}>
+                    <span style={{ color: `hsl(${GREEN})`, fontWeight: 700 }}>+</span><span>{g}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <p className="font-mono uppercase tracking-[0.15em] font-semibold mb-2" style={{ fontSize: 12, color: MUTED }}>What we ask in return</p>
+              <ul className="space-y-1.5">
+                {c.ask.map((a, i) => (
+                  <li key={i} className="flex gap-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>
+                    <span style={{ color: MUTED, fontWeight: 700 }}>·</span><span>{a}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-xl border p-4 max-w-[1780px]" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+          <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>
+            <span className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${RED})` }}>Out of scope today: </span>
+            White-label or OEM. The carrier's CRO needs to know who is accountable for the AI standard. Hiding LIZA under another brand kills the audit-trail story. Revisit at Series A.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={PURPLE} to={GOLD} />
+    </div>
+  );
+}
+
 // ─── Slide registry ──────────────────────────────────────────────────────────
 const SLIDES = [
   { id: "cover",       title: "Cover · Agentic underwriting brief",   component: <S01Cover /> },
@@ -496,6 +597,7 @@ const SLIDES = [
   { id: "boundary",    title: "Who owns what (Proxy / LIZA / Carrier)", component: <S05Boundary /> },
   { id: "references",  title: "References · built from real carriers",  component: <S06References /> },
   { id: "two-week",    title: "The two-week shape",                   component: <S07TwoWeek /> },
+  { id: "partnership", title: "Appendix · long-term partnership (proxy only)", component: <S08Partnership /> },
 ];
 
 // ─── Deck shell (mirrors InsuranceDeck) ──────────────────────────────────────
