@@ -283,12 +283,13 @@ export default function TheBrief() {
                   Which seat are you in?
                 </h2>
                 <p className="text-sm text-muted-foreground mb-10">
-                  This decides every question that follows. The probe for a Head of Ops is not the probe for a Head of Commercial.
+                  Pick one option in each of the three groups below. These three answers decide every
+                  question that follows. The probe for a Head of Ops is not the probe for a Head of Commercial.
                 </p>
 
                 <div className="space-y-8">
                   <SelectField
-                    label="Function"
+                    label="1. Function — the role you sit in"
                     value={seat.function_id}
                     onChange={(v) => {
                       const fn = FUNCTIONS.find((f) => f.id === v);
@@ -298,14 +299,15 @@ export default function TheBrief() {
                     columns={2}
                   />
                   <SelectField
-                    label="Unit shape"
+                    label="2. What you are accountable for"
+                    helperText="The shape of the unit you run. Pick the closest match."
                     value={seat.unit_shape}
                     onChange={(v) => setSeat({ ...seat, unit_shape: v as UnitShape })}
                     options={UNIT_SHAPES.map((s) => ({ value: s.id, label: s.label }))}
                     columns={2}
                   />
                   <SelectField
-                    label="Scale"
+                    label="3. Scale — total headcount of the company"
                     value={seat.scale}
                     onChange={(v) => setSeat({ ...seat, scale: v as Scale })}
                     options={SCALES.map((s) => ({ value: s.id, label: s.label }))}
@@ -596,12 +598,14 @@ function SelectField({
   onChange,
   options,
   columns = 1,
+  helperText,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   options: { value: string; label: string; helper?: string }[];
   columns?: 1 | 2 | 3 | 5;
+  helperText?: string;
 }) {
   const colClass =
     columns === 5
@@ -613,7 +617,11 @@ function SelectField({
           : "grid-cols-1";
   return (
     <div>
-      <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-3">{label}</div>
+      <div className="text-sm font-medium text-foreground mb-1">{label}</div>
+      {helperText && (
+        <div className="text-xs text-muted-foreground mb-3">{helperText}</div>
+      )}
+      {!helperText && <div className="mb-3" />}
       <div className={`grid gap-2 ${colClass}`}>
         {options.map((o) => {
           const selected = o.value === value;
@@ -622,14 +630,26 @@ function SelectField({
               key={o.value}
               type="button"
               onClick={() => onChange(o.value)}
-              className={`text-left px-4 py-3 rounded-md border transition-colors ${
+              aria-pressed={selected}
+              className={`text-left px-4 py-3 rounded-md border transition-colors cursor-pointer flex items-start gap-3 ${
                 selected
                   ? "border-foreground bg-foreground/5"
-                  : "border-border/60 hover:border-foreground/40"
+                  : "border-border/60 hover:border-foreground/60 hover:bg-foreground/[0.02]"
               }`}
             >
-              <div className="text-sm font-medium text-foreground">{o.label}</div>
-              {o.helper && <div className="text-xs text-muted-foreground mt-0.5">{o.helper}</div>}
+              <span
+                className={`mt-1 h-4 w-4 rounded-full border flex items-center justify-center shrink-0 ${
+                  selected ? "border-foreground" : "border-border"
+                }`}
+              >
+                {selected && <span className="h-2 w-2 rounded-full bg-foreground" />}
+              </span>
+              <span className="flex-1">
+                <span className="block text-sm font-medium text-foreground">{o.label}</span>
+                {o.helper && (
+                  <span className="block text-xs text-muted-foreground mt-0.5">{o.helper}</span>
+                )}
+              </span>
             </button>
           );
         })}
