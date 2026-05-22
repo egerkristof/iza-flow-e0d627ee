@@ -372,6 +372,18 @@ function InputView({
   const [showExtra, setShowExtra] = useState(false);
   const examples = streamExamples(inputs.team);
 
+  // Progress: 6 milestones (team, use_cases optional, tools optional, all streams, all audits, trigger)
+  const milestones = [
+    !!inputs.team,
+    !!inputs.team, // we count team twice so progress starts moving
+    STREAMS.every((s) => inputs.streams[s.id] !== null),
+    AUDITS.every((a) => inputs.audits[a.id] !== null),
+    !!inputs.trigger,
+  ];
+  const progress = Math.round(
+    (milestones.filter(Boolean).length / milestones.length) * 100,
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -379,6 +391,32 @@ function InputView({
       transition={{ duration: 0.4 }}
       className="space-y-8"
     >
+      {/* Sticky progress */}
+      <div
+        className="sticky top-0 z-20 -mx-4 md:-mx-8 px-4 md:px-8 py-3 backdrop-blur-sm"
+        style={{ background: "hsl(var(--background) / 0.85)" }}
+      >
+        <div className="flex items-center justify-between mb-1.5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+            {progress < 100 ? "Diagnostic in progress" : "Ready to diagnose"}
+          </p>
+          <p className="text-[10px] font-bold tracking-wider text-muted-foreground">
+            {progress}%
+          </p>
+        </div>
+        <div className="h-1 rounded-full overflow-hidden" style={{ background: "hsl(var(--muted))" }}>
+          <motion.div
+            className="h-full"
+            style={{ background: "hsl(var(--primary))" }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.4 }}
+          />
+        </div>
+      </div>
+
+      {/* Stage 1: About you */}
+      <StageHeader stage="A" title="About you" sub="Two minutes. Pick. Pick. Pick." />
+
       {/* 1. Team */}
       <Section n={1} title="Which team are you running?">
         <p className="text-sm text-muted-foreground mb-4">
@@ -434,9 +472,9 @@ function InputView({
           </Section>
 
           {/* 3. Tools */}
-          <Section n={3} title="Which AI tools are in use?">
+          <Section n={3} title="Your AI stack today">
             <p className="text-sm text-muted-foreground mb-4">
-              The usual stack for {team.label}. Pick all that apply.
+              Inventory, not preference. Pick everything actually in use.
             </p>
             <div className="flex flex-wrap gap-2">
               {team.tools.map((t) => (
@@ -449,6 +487,13 @@ function InputView({
               ))}
             </div>
           </Section>
+
+          {/* Stage 2: The diagnostic */}
+          <StageHeader
+            stage="B"
+            title="The diagnostic"
+            sub="Two governance questions. Same answer pattern."
+          />
 
           {/* 4. Streams */}
           <Section n={4} title="Which streams does your AI see?">
@@ -489,10 +534,10 @@ function InputView({
           </Section>
 
           {/* 5. Audits */}
-          <Section n={5} title="Which governance audits run on your AI outputs?">
+          <Section n={5} title="Which governance audits run on every AI output?">
             <p className="text-sm text-muted-foreground mb-5">
-              Five live audits stand between intent and outcome. Mark which are in place
-              today.
+              These are the five live checks that stand between intent and outcome. Be
+              honest. The diagnosis is only as sharp as the answers.
             </p>
             <div className="space-y-3">
               {AUDITS.map((a) => (
@@ -518,8 +563,43 @@ function InputView({
             </div>
           </Section>
 
+          {/* Stage 3: Closing */}
+          <StageHeader
+            stage="C"
+            title="One last thing"
+            sub="Helps us tailor the read to your actual situation."
+          />
+
+          {/* 6. Trigger */}
+          <Section n={6} title="What brought you here today?">
+            <p className="text-sm text-muted-foreground mb-4">
+              Pick one. Shapes the verdict.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {TRIGGERS.map((t) => {
+                const selected = inputs.trigger === t.id;
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setInputs((p) => ({ ...p, trigger: t.id }))}
+                    className="text-left rounded-xl border p-3 transition-all"
+                    style={{
+                      background: selected ? "hsl(var(--primary) / 0.08)" : "hsl(var(--card))",
+                      borderColor: selected ? "hsl(var(--primary))" : "hsl(var(--border))",
+                      boxShadow: selected ? "0 0 0 1px hsl(var(--primary))" : "none",
+                    }}
+                  >
+                    <p className="text-sm font-bold">{t.label}</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">{t.sub}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </Section>
+
           {/* Extra context (optional) */}
-          <Section n={6} title="Anything else worth knowing? (optional)">
+          <Section n={7} title="Anything else worth knowing? (optional)">
             <div className="flex items-center justify-between -mt-2 mb-3">
               <p className="text-sm text-muted-foreground">
                 Industry, team size, a recent failed pilot, a constraint we should know.
@@ -552,6 +632,35 @@ function InputView({
         </Button>
       </div>
     </motion.div>
+  );
+}
+
+function StageHeader({
+  stage,
+  title,
+  sub,
+}: {
+  stage: string;
+  title: string;
+  sub: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 pt-2">
+      <span
+        className="inline-flex w-7 h-7 rounded-full items-center justify-center text-[11px] font-black"
+        style={{
+          background: "hsl(var(--foreground))",
+          color: "hsl(var(--background))",
+        }}
+      >
+        {stage}
+      </span>
+      <div>
+        <p className="text-sm md:text-base font-bold">{title}</p>
+        <p className="text-[11px] text-muted-foreground">{sub}</p>
+      </div>
+      <div className="flex-1 h-px ml-2" style={{ background: "hsl(var(--border))" }} />
+    </div>
   );
 }
 
