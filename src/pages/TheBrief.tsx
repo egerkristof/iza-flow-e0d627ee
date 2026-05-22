@@ -1141,3 +1141,123 @@ function SectionHeading({
     </div>
   );
 }
+
+// Plain-language "read this as" line under section headings. Teaches what the
+// visual means before showing the visual.
+function ReadAs({
+  children,
+  tone = "default",
+}: {
+  children: React.ReactNode;
+  tone?: "default" | "warn";
+}) {
+  const colorVar =
+    tone === "warn" ? "0 70% 55%" : "var(--primary)";
+  return (
+    <div
+      className="flex gap-2 rounded-lg p-3 mb-4 max-w-3xl"
+      style={{
+        background:
+          tone === "warn"
+            ? "hsl(0 70% 55% / 0.06)"
+            : "hsl(var(--primary) / 0.04)",
+        borderLeft: `2px solid hsl(${colorVar})`,
+      }}
+    >
+      <Info
+        className="w-3.5 h-3.5 shrink-0 mt-0.5"
+        style={{ color: `hsl(${colorVar})` }}
+      />
+      <p className="text-xs md:text-[13px] leading-relaxed text-foreground/85">
+        <span className="font-bold">Read this as: </span>
+        {children}
+      </p>
+    </div>
+  );
+}
+
+// Maturity arc: pin the user on the 5-stage map and show direction of travel.
+function MaturityArc({ currentId }: { currentId: string }) {
+  const idx = MATURITY_STAGES.findIndex((s) => s.id === currentId);
+  const current = MATURITY_STAGES[idx];
+  return (
+    <section
+      className="rounded-2xl border p-6 md:p-8"
+      style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+    >
+      <SectionHeading icon={TrendingUp} label="Where you are on the arc" />
+      <ReadAs>
+        Five stages from ad-hoc to compounding. Every team passes through them in
+        order. Knowing where you are tells you which problem to solve next.
+      </ReadAs>
+
+      {/* Arc rail */}
+      <div className="relative mt-2 mb-6">
+        <div
+          className="absolute left-0 right-0 top-3 h-0.5"
+          style={{ background: "hsl(var(--border))" }}
+        />
+        <div
+          className="absolute left-0 top-3 h-0.5 transition-all"
+          style={{
+            width: `${(idx / (MATURITY_STAGES.length - 1)) * 100}%`,
+            background: "hsl(var(--primary))",
+          }}
+        />
+        <div className="relative flex justify-between">
+          {MATURITY_STAGES.map((s, i) => {
+            const reached = i <= idx;
+            const isCurrent = i === idx;
+            return (
+              <div key={s.id} className="flex flex-col items-center" style={{ width: "20%" }}>
+                <span
+                  className="w-6 h-6 rounded-full border-2 flex items-center justify-center text-[10px] font-black mb-2"
+                  style={{
+                    background: isCurrent
+                      ? "hsl(var(--primary))"
+                      : reached
+                      ? "hsl(var(--primary) / 0.2)"
+                      : "hsl(var(--background))",
+                    borderColor: reached ? "hsl(var(--primary))" : "hsl(var(--border))",
+                    color: isCurrent
+                      ? "hsl(var(--primary-foreground))"
+                      : reached
+                      ? "hsl(var(--primary))"
+                      : "hsl(var(--muted-foreground))",
+                  }}
+                >
+                  {i + 1}
+                </span>
+                <p
+                  className="text-[10px] md:text-xs font-bold text-center leading-tight"
+                  style={{
+                    color: isCurrent
+                      ? "hsl(var(--primary))"
+                      : reached
+                      ? "hsl(var(--foreground))"
+                      : "hsl(var(--muted-foreground))",
+                  }}
+                >
+                  {s.label}
+                </p>
+                {isCurrent && (
+                  <span className="mt-1 text-[9px] font-bold uppercase tracking-wider text-primary">
+                    You are here
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* What this stage looks like */}
+      <div className="mt-8 rounded-xl border p-4" style={{ borderColor: "hsl(var(--border))" }}>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-1.5">
+          What {current.label.toLowerCase()} looks like
+        </p>
+        <p className="text-sm leading-relaxed text-foreground/90">{current.what}</p>
+      </div>
+    </section>
+  );
+}
