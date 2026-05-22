@@ -64,6 +64,80 @@ type Phase =
 
 const DOMAIN_ORDER: DomainId[] = ["demand", "capacity", "quality", "economics"];
 
+const DOMAIN_BRIDGES: Record<DomainId, { bridge: string; unlock: string; role: string }> = {
+  demand: {
+    bridge: "Create one owned demand backlog with a clear intake rule, priority rule, and weekly decision cadence.",
+    unlock: "Demand stops arriving as noise. The leader can trade off work before the unit is already committed.",
+    role: "unit lead plus one operations analyst",
+  },
+  capacity: {
+    bridge: "Create one capacity view that connects skills, allocation, bottlenecks, and the next planning cycle.",
+    unlock: "Capacity becomes visible before work breaks. The leader can move people and scope with evidence.",
+    role: "unit lead plus people or planning partner",
+  },
+  quality: {
+    bridge: "Turn the quality bar into one current playbook with review triggers, ownership, and consequences.",
+    unlock: "Quality moves from late escalation to early control. The team sees drift before customers do.",
+    role: "domain owner plus delivery or quality lead",
+  },
+  economics: {
+    bridge: "Build one unit economics view that shows margin, cost drivers, and low-yield work at decision level.",
+    unlock: "The leader can stop subsidising bad work and put capacity behind the work that pays back.",
+    role: "unit lead plus finance partner",
+  },
+};
+
+const clampTier = (value: number): 0 | 1 | 2 | 3 => Math.max(0, Math.min(3, Math.round(value))) as 0 | 1 | 2 | 3;
+
+const buildDomainScore = (domain: DomainId, a: Answers, scale: Scale): DomainScore => {
+  const current = clampTier(Math.min(a.signal_tier ?? 0, a.substrate_tier ?? 0));
+  const target = clampTier(current + (scale === "<50" || scale === "50-200" ? 1 : 2));
+  const gap = Math.max(1, target - current);
+  const sizeMultiplier = scale === "<50" ? 1 : scale === "50-200" ? 1.5 : scale === "200-500" ? 2 : 3;
+  const weeks = Math.min(26, Math.max(2, Math.round(gap * 3 * sizeMultiplier)));
+  const bridge = DOMAIN_BRIDGES[domain];
+
+  return {
+    current_tier: current,
+    target_tier: target,
+    justification: `The signal is "${a.signal_label}" and the system is "${a.substrate_label}".`,
+    bridge: bridge.bridge,
+    effort_weeks: weeks,
+    effort_role: bridge.role,
+    unlock: bridge.unlock,
+  };
+};
+
+const buildFallbackDiagnosis = (seat: Seat, scores: Partial<Record<DomainId, DomainScore>>): Diagnosis => {
+  const completeScores = DOMAIN_ORDER.map((domain) => ({ domain, score: scores[domain]! })).filter((x) => x.score);
+  const lowest = completeScores.reduce((pick, item) => item.score.current_tier < pick.score.current_tier ? item : pick, completeScores[0]);
+  const bestReady = [...completeScores].sort((a, b) => b.score.current_tier - a.score.current_tier)[0] || lowest;
+  const start = lowest?.score.current_tier <= 1 ? lowest : bestReady;
+
+  return {
+    title: `${seat.function_label} operating diagnosis`,
+    narrative: [
+      `This ${seat.unit_shape.replace("_", " ")} is run through a mix of judgement, recorded artefacts, and partial systems. The work is visible enough to manage, but not yet structured enough for the system to carry routine decisions without the leader in the loop.`,
+      `The practical constraint is substrate quality. Where the unit is still at Tier 0 or Tier 1, AI will amplify gaps rather than produce reliable leverage. Where the unit reaches Tier 2, the same AI spend starts converting into faster prioritisation, routing, control, and margin decisions.`,
+      `The next move is not a broad AI programme. It is one domain bridge, owned clearly, with the operating rule written down and wired into the cadence the unit already uses.`,
+    ],
+    ai_ranking: completeScores
+      .sort((a, b) => b.score.current_tier - a.score.current_tier)
+      .map(({ domain, score }) => ({
+        domain,
+        roi: score.current_tier >= 2 ? "high" : score.current_tier === 1 ? "medium" : "low",
+        why: score.current_tier >= 2
+          ? `${DOMAINS.find((x) => x.id === domain)?.label} has enough structure for AI to work against the operating system.`
+          : `${DOMAINS.find((x) => x.id === domain)?.label} needs a stronger substrate before AI spend becomes reliable.`,
+      })),
+    start_here: {
+      domain: start?.domain || "demand",
+      reason: start ? `${DOMAINS.find((x) => x.id === start.domain)?.label} is the clearest bridge from today's Tier ${start.score.current_tier} state to a more executable operating rhythm.` : "Start with Demand because it shapes what the rest of the unit has to absorb.",
+    },
+    trade_off: "The trade-off is speed versus explicitness. The unit has to slow down long enough to name the rule, or it will keep paying for ambiguity later.",
+  };
+};
+
 export default function TheBrief() {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
