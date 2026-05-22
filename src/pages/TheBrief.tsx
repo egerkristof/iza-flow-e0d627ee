@@ -225,29 +225,12 @@ export default function TheBrief() {
   };
 
   const scoreDomain = async (domain: DomainId): Promise<DomainScore | null> => {
-    const probe = getProbe(seat.function_id, domain);
     const a = answers[domain];
     if (!a || !answerComplete(a)) return null;
-    const signalText = `[Tier ${a.signal_tier}] ${a.signal_label}${a.signal_note ? ` — Note: ${a.signal_note}` : ""}`;
-    const substrateText = `[Tier ${a.substrate_tier}] ${a.substrate_label}${a.substrate_note ? ` — Note: ${a.substrate_note}` : ""}`;
     setScoringDomain(domain);
+    await new Promise((resolve) => setTimeout(resolve, 250));
     try {
-      const { data, error } = await supabase.functions.invoke("generate-brief", {
-        body: {
-          mode: "score_domain",
-          seat,
-          domain,
-          probe: { signal_prompt: probe.signal.prompt, substrate_prompt: probe.substrate.prompt },
-          answers: { signal: signalText, substrate: substrateText },
-        },
-      });
-      if (error) throw error;
-      if (!data?.score) throw new Error("No score returned.");
-      return data.score as DomainScore;
-    } catch (e: any) {
-      console.error(e);
-      toast.error(e?.message || `Could not score ${domain}.`);
-      return null;
+      return buildDomainScore(domain, a, seat.scale);
     } finally {
       setScoringDomain(null);
     }
@@ -288,14 +271,15 @@ export default function TheBrief() {
           },
         });
         if (error) throw error;
-        if (!data?.diagnosis) throw new Error("No diagnosis returned.");
-        setDiagnosis(data.diagnosis);
+        setDiagnosis(data?.diagnosis || buildFallbackDiagnosis(seat, collected));
         setPhase("diagnosis");
         scrollTo(diagnosisRef.current);
       } catch (e: any) {
         console.error(e);
-        toast.error(e?.message || "Could not synthesise diagnosis.");
-        setPhase("probe");
+        toast.error("AI narrative timed out. Showing the deterministic diagnosis.");
+        setDiagnosis(buildFallbackDiagnosis(seat, collected));
+        setPhase("diagnosis");
+        scrollTo(diagnosisRef.current);
       }
     }
   };
