@@ -849,6 +849,49 @@ function ResultView({
         </div>
       </section>
 
+      {/* 4b. HOW TO GET FURTHER — pedagogical bridge from "here" to "next" */}
+      {nextStage && (
+        <section
+          className="rounded-2xl border p-6 md:p-8"
+          style={{
+            background: "hsl(var(--card))",
+            borderColor: "hsl(var(--border))",
+          }}
+        >
+          <SectionHeading icon={TrendingUp} label="How to get further" />
+          <ReadAs>
+            You are currently at <strong>{currentStage.label}</strong>. The next stage
+            on the arc is <strong>{nextStage.label}</strong>. These are the three
+            concrete shifts that get you there. They are universal. Not LIZA-specific.
+          </ReadAs>
+          <div className="mt-2 rounded-xl border p-5" style={{ borderColor: "hsl(var(--border))" }}>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
+              {currentStage.label} &nbsp;→&nbsp; {nextStage.label}
+            </p>
+            <ol className="space-y-2.5">
+              {currentStage.next_shifts.map((shift, i) => (
+                <li key={i} className="flex gap-3">
+                  <span
+                    className="inline-flex shrink-0 w-5 h-5 rounded-full items-center justify-center text-[10px] font-black mt-0.5"
+                    style={{
+                      background: "hsl(var(--foreground))",
+                      color: "hsl(var(--background))",
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <p className="text-sm leading-snug">{shift}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-4 pt-4 text-xs text-muted-foreground border-t" style={{ borderColor: "hsl(var(--border))" }}>
+              The move below is the first of these three, compressed into a 90-day
+              sequence with LIZA doing the encoding work.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* 5. THE MOVE — promoted, sequenced, CTA attached */}
       <section
         className="rounded-2xl p-6 md:p-8 border-2"
@@ -961,7 +1004,12 @@ function ResultView({
                 Knowledge bundle / what is encoded today
               </p>
             </div>
-            <BundleGap gaps={diagnosis.bundle_gaps} />
+            <ReadAs>
+              Six layers of knowledge an AI surface needs in order to act like a
+              member of your team, not a stranger from the internet. The ones marked
+              missing are the parts your team carries in their heads today.
+            </ReadAs>
+            <BundleGap gaps={diagnosis.bundle_gaps} examples={examples} />
           </div>
 
           {/* Decision class */}
