@@ -66,13 +66,22 @@ The user has already self-reported their stream coverage (lit/partial/dark) and 
 
 Return a structured diagnosis:
 1. title: short declarative line naming the operating model state.
-2. current_model_read: one short paragraph naming what they actually run today, grounded in their team, tools, and stream/audit answers.
-3. stream_coverage: echo back each stream with the user's status and a one-line why specific to their team.
-4. audit_coverage: echo back each audit with the user's status and a one-line why specific to their team.
-5. bundle_gaps: for each of the six bundle types (playbook, procedure, directive, principle, preference, knowledge), state status (have/partial/missing) and one-line why. Infer from their answers. Most teams will be missing most of these.
-6. decision_class_read: which classes they currently govern (governed_today) and one paragraph (exposed) naming what they are exposed on.
-7. blind_spots: 2 to 3 things the leader has probably not thought about. Each lands as "I had not considered that."
-8. correction: the one move that closes the biggest gap. Name the move, the scope (owner, weeks, output), and which LIZA capability delivers it (knowledge bundle, state-locked playbook, governance container, decision-class router, etc.).
+2. verdict: ONE sentence in the buyer's own language naming what is actually happening in their org today. Lead with their team and their tools. No framework jargon. This is the line they would read aloud to their CEO. 25 to 40 words.
+3. current_model_read: one short paragraph naming what they actually run today, grounded in their team, tools, and stream/audit answers.
+4. stream_coverage: echo back each stream with the user's status and a one-line why specific to their team.
+5. audit_coverage: echo back each audit with the user's status and a one-line why specific to their team.
+6. bundle_gaps: for each of the six bundle types, status (have/partial/missing) and one-line why. Infer from their answers.
+7. decision_class_read: which classes they currently govern and one paragraph (exposed) naming what they are exposed on.
+8. cost_of_gap: a headline (one sentence translating their gaps into hours, FTEs, or quarters) and math (2 to 3 sentences showing the back-of-envelope). Use the team size if implied by tools/use-cases, otherwise assume ~20 people. Anchor: ~2 hours per person per week of rework when standards are not encoded.
+9. blind_spots: 2 to 3 things the leader has probably not thought about. Each lands as "I had not considered that."
+10. correction: the one move that closes the biggest gap. Include:
+   - move: the move itself.
+   - scope: owner, weeks, output.
+   - liza_capability: name the LIZA capability concretely (Knowledge Bundle, Playbook, Standards Engine, Audit Container, Decision-class Router, Workbook). No vague "AI platform".
+   - sequence.now (30 days), sequence.next (60 days), sequence.later (90 days): each has a label and a 1 to 2 sentence what.
+
+HARD RULE on grounding:
+Every claim in verdict, current_model_read, blind_spots, and correction MUST cite at least one concrete input the user gave: a tool name, a use case, a stream they marked dark/partial, or an audit they marked red/amber. Quote their selection verbatim when it sharpens the point. Generic claims that could apply to any team are unacceptable.
 
 ${VOICE}
 
@@ -105,6 +114,7 @@ const DIAGNOSE_TOOL = {
       type: "object",
       properties: {
         title: { type: "string" },
+        verdict: { type: "string" },
         current_model_read: { type: "string" },
         stream_coverage: {
           type: "object",
@@ -150,6 +160,14 @@ const DIAGNOSE_TOOL = {
           },
           required: ["governed_today", "exposed"],
         },
+        cost_of_gap: {
+          type: "object",
+          properties: {
+            headline: { type: "string" },
+            math: { type: "string" },
+          },
+          required: ["headline", "math"],
+        },
         blind_spots: {
           type: "array",
           items: {
@@ -164,17 +182,40 @@ const DIAGNOSE_TOOL = {
             move: { type: "string" },
             scope: { type: "string" },
             liza_capability: { type: "string" },
+            sequence: {
+              type: "object",
+              properties: {
+                now: {
+                  type: "object",
+                  properties: { label: { type: "string" }, what: { type: "string" } },
+                  required: ["label", "what"],
+                },
+                next: {
+                  type: "object",
+                  properties: { label: { type: "string" }, what: { type: "string" } },
+                  required: ["label", "what"],
+                },
+                later: {
+                  type: "object",
+                  properties: { label: { type: "string" }, what: { type: "string" } },
+                  required: ["label", "what"],
+                },
+              },
+              required: ["now", "next", "later"],
+            },
           },
-          required: ["move", "scope", "liza_capability"],
+          required: ["move", "scope", "liza_capability", "sequence"],
         },
       },
       required: [
         "title",
+        "verdict",
         "current_model_read",
         "stream_coverage",
         "audit_coverage",
         "bundle_gaps",
         "decision_class_read",
+        "cost_of_gap",
         "blind_spots",
         "correction",
       ],
@@ -214,6 +255,7 @@ serve(async (req) => {
     const streams = (payload.streams || {}) as Record<string, string>;
     const audits = (payload.audits || {}) as Record<string, string>;
     const freeText: string = (payload.free_text || "").toString().trim();
+    const trigger: string = (payload.trigger || "").toString().trim();
 
     const streamKeys = ["strategy", "market", "state", "signal"];
     const auditKeys = ["cost", "best_practice", "security", "decision", "drift"];
@@ -226,6 +268,9 @@ serve(async (req) => {
 
     const userPrompt = `TEAM
 ${team ? `${team}${teamSub ? ` (${teamSub})` : ""}` : "(not specified)"}
+
+WHAT BROUGHT THEM HERE
+${trigger || "(not specified)"}
 
 USE CASES THEY SELECTED
 ${useCases.length ? useCases.map((u) => `- ${u}`).join("\n") : "(none selected)"}
