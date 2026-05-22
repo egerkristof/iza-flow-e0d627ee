@@ -2890,34 +2890,108 @@ function SlidePricingMetering() {
   );
 }
 
+function SlideSovereignty() {
+  const pillars = [
+    {
+      title: "Knowledge stays with the company",
+      body: "Standards, decisions and rationale live in the customer's tenant. The reasoning that runs the business is owned by the business, not by a model vendor.",
+      color: TEAL,
+      icon: <Shield size={28} />,
+    },
+    {
+      title: "Models are interchangeable",
+      body: "We route across model providers per decision class. No customer is locked to a single foundation model. The moat lives in the standard, not the model.",
+      color: SEAFOAM,
+      icon: <Network size={28} />,
+    },
+    {
+      title: "Portable across vendors",
+      body: "Playbooks, rationale and audit trails export as code. If we disappear, the standards keep running. Sovereignty is the customer's exit option, not ours.",
+      color: MINT,
+      icon: <GitBranch size={28} />,
+    },
+  ];
+  return (
+    <div className="w-full h-full flex flex-col relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="relative z-10 flex flex-col h-full px-28 py-12">
+        <p className="font-semibold tracking-[0.25em] uppercase mb-3" style={{ fontSize: 24, color: `hsl(${TEAL})` }}>The Long Shape</p>
+        <h2 className="font-black mb-3" style={{ fontSize: 60, color: TEXT, lineHeight: 1.05 }}>
+          The moat is{" "}
+          <span style={{ color: `hsl(${TEAL})` }}>knowledge sovereignty</span>.
+        </h2>
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
+          Foundation models will keep getting cheaper, faster and more capable. The durable asset of the AI age is not the model.
+          It is the encoded reasoning of the company that uses it, in a form the company actually owns.
+        </p>
+
+        <div className="grid grid-cols-3 gap-6 flex-1">
+          {pillars.map((p) => (
+            <div key={p.title} className="rounded-2xl border p-7 flex flex-col"
+              style={{ borderColor: `hsl(${p.color} / 0.25)`, background: `hsl(${p.color} / 0.05)` }}>
+              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: `hsl(${p.color} / 0.12)`, color: `hsl(${p.color})` }}>
+                {p.icon}
+              </div>
+              <p className="font-bold mb-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.2 }}>{p.title}</p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.5 }}>{p.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 rounded-xl px-6 py-4"
+          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.25)` }}>
+          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
+            Our category bet is that the next decade's defensible enterprise software is the one that{" "}
+            <strong style={{ color: `hsl(${GREEN})` }}>treats the customer's encoded reasoning as the asset</strong>,
+            and the model as the engine. LIZA is built that way from day one.
+          </p>
+        </div>
+      </div>
+      <SlideBar from={TEAL} to={GREEN} />
+    </div>
+  );
+}
+
 // ─── Slide registry ──────────────────────────────────────────────────────────
 
 const SLIDES = [
+  // Act I — The Bet
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 4, title: "Where Missing Context Shows Up", component: <Slide03 /> },
-  { id: 5, title: "What Missing Context Costs", component: <Slide03Cost /> },
-  { id: 6, title: "Persona-Level Reality", component: <Slide03WorkflowProof /> },
-  { id: 7, title: "Early Validation", component: <Slide08 /> },
-  { id: 8, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 9, title: "The Context Layer", component: <Slide05 /> },
-  { id: 11, title: "Strategic Shift", component: <Slide06Shift /> },
-  { id: 12, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 13, title: "Expansion Path", component: <Slide09 /> },
-  { id: 14, title: "Shape of the Company", component: <SlideShape /> },
-  { id: 15, title: "What's Built", component: <Slide10 /> },
-  { id: 16, title: "Business Model", component: <Slide11 /> },
-  { id: 17, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 2, title: "The Operator's Moment", component: <SlideOperatorMoment /> },
+  { id: 3, title: "The Moment, Governed", component: <SlideMomentGoverned /> },
+  // Act II — The World
+  { id: 4, title: "Why Now · Two Shifts Collide", component: <SlideWhyNowFused /> },
+  { id: 5, title: "The Context Gap", component: <Slide02 /> },
+  { id: 6, title: "What Missing Context Costs", component: <Slide03Cost /> },
+  // Act III — The Product
+  { id: 7, title: "The Context Layer", component: <Slide05 /> },
+  { id: 8, title: "Shape of the Company", component: <SlideShape /> },
+  { id: 9, title: "What's Built", component: <Slide10 /> },
+  { id: 10, title: "AACE · The Mechanism of the Moment", component: <Slide07 /> },
+  // Act IV — The Economics
+  { id: 11, title: "Value-Based Metering", component: <SlidePricingMetering /> },
+  { id: 12, title: "Business Model", component: <Slide11 /> },
+  { id: 13, title: "30-Day Execution Challenge", component: <SlideExecutionChallenge /> },
+  // Act V — The Company
+  { id: 14, title: "Early Validation", component: <Slide08 /> },
+  { id: 15, title: "Category Thesis & Moat", component: <Slide06 /> },
+  { id: 16, title: "Knowledge Sovereignty", component: <SlideSovereignty /> },
+  { id: 17, title: "Expansion Path", component: <Slide09 /> },
   { id: 18, title: "Team", component: <Slide12 /> },
   { id: 19, title: "The Ask", component: <Slide13 /> },
+  // Appendix
   { id: 20, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 21, title: "Appendix: How It Works", component: <Slide07 /> },
-  { id: 22, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 21, title: "Appendix · Architecture", component: <SlideArchitecture /> },
+  { id: 22, title: "Appendix · Strategic Shift", component: <Slide06Shift /> },
+  { id: 23, title: "Appendix · Where Missing Context Shows Up", component: <Slide03 /> },
+  { id: 24, title: "Appendix · Persona-Level Reality", component: <Slide03WorkflowProof /> },
+  { id: 25, title: "Appendix · Why Now (legacy)", component: <SlideWhyNow /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function LifecycleInvestorDeck() {
+export default function LifecycleInvestorDeckV3() {
   const [current, setCurrent] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
@@ -3032,7 +3106,7 @@ export default function LifecycleInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck-V3" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -3081,7 +3155,7 @@ export default function LifecycleInvestorDeck() {
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
           <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck-V3" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -3123,7 +3197,7 @@ export default function LifecycleInvestorDeck() {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Investor-Deck-V3" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>

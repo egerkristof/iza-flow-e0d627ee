@@ -10,6 +10,7 @@ import PharmaPitchDeck from "@/pages/PharmaPitchDeck";
 import LinkedInImageCard from "@/pages/LinkedInImageCard";
 import LifecycleInvestorDeck from "@/pages/LifecycleInvestorDeck";
 import LifecycleInvestorDeckV2 from "@/pages/LifecycleInvestorDeckV2";
+import LifecycleInvestorDeckV3 from "@/pages/LifecycleInvestorDeckV3";
 import LCVInvestorDeck from "@/pages/LCVInvestorDeck";
 import AuditOffer from "@/pages/offers/AuditOffer";
 import AECInvestorDeck from "@/pages/AECInvestorDeck";
@@ -55,6 +56,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/LifecycleInvestorDeck.tsx",
     description: "Previous primary investor deck — archived for reference. The new primary deck lives at /investor.",
     component: LifecycleInvestorDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-v3",
+    title: "Investor Deck V3 (Draft)",
+    path: "/investor-v3",
+    sourcePath: "src/pages/LifecycleInvestorDeckV3.tsx",
+    description: "Draft V3 spine. Operator-moment thesis (slides 2-3), Two-Shifts Why Now (4), Decision-class metering (11), Knowledge Sovereignty (16). Lifts visual language from /impact and /tech-dd. Will replace /investor once approved.",
+    component: LifecycleInvestorDeckV3,
     showInAdmin: true,
   },
   {
