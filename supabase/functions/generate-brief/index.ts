@@ -88,16 +88,15 @@ const SCORE_DOMAIN_TOOL = {
     parameters: {
       type: "object",
       properties: {
-        current_tier: { type: "integer", enum: [0, 1, 2, 3] },
-        target_tier: { type: "integer", enum: [0, 1, 2, 3] },
+        current_tier: { type: "number", description: "0, 1, 2, or 3." },
+        target_tier: { type: "number", description: "0, 1, 2, or 3." },
         justification: { type: "string", description: "One line. Quote their words." },
         bridge: { type: "string", description: "The one move that closes the gap. What gets built, who owns it." },
-        effort_weeks: { type: "integer", minimum: 1, maximum: 26 },
+        effort_weeks: { type: "number", description: "Whole number of weeks, 1 to 26." },
         effort_role: { type: "string", description: "Headcount role required, e.g. 'one ops analyst plus a sponsor'." },
         unlock: { type: "string", description: "What changes for the leader if this gets done. Specific." },
       },
       required: ["current_tier", "target_tier", "justification", "bridge", "effort_weeks", "effort_role", "unlock"],
-      additionalProperties: false,
     },
   },
 };
@@ -111,11 +110,10 @@ const SYNTHESIZE_TOOL = {
       type: "object",
       properties: {
         title: { type: "string", description: "Short declarative title naming the unit." },
-        narrative: { type: "array", items: { type: "string" }, minItems: 3, maxItems: 5 },
+        narrative: { type: "array", items: { type: "string" }, description: "3 to 5 short paragraphs." },
         ai_ranking: {
           type: "array",
-          minItems: 4,
-          maxItems: 4,
+          description: "Exactly 4 items, one per domain.",
           items: {
             type: "object",
             properties: {
@@ -124,7 +122,6 @@ const SYNTHESIZE_TOOL = {
               why: { type: "string", description: "One line, unit-specific." },
             },
             required: ["domain", "roi", "why"],
-            additionalProperties: false,
           },
         },
         start_here: {
@@ -134,12 +131,10 @@ const SYNTHESIZE_TOOL = {
             reason: { type: "string" },
           },
           required: ["domain", "reason"],
-          additionalProperties: false,
         },
         trade_off: { type: "string", description: "The thing they are avoiding that has to give." },
       },
       required: ["title", "narrative", "ai_ranking", "start_here", "trade_off"],
-      additionalProperties: false,
     },
   },
 };
