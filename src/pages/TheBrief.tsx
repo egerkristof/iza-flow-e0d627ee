@@ -12,6 +12,7 @@ import {
   DOMAINS,
   TIERS,
   getProbe,
+  DOMAIN_CHOICES,
   type FunctionId,
   type UnitShape,
   type Scale,
@@ -25,7 +26,14 @@ type Seat = {
   scale: Scale;
 };
 
-type Answers = { signal: string; substrate: string };
+type Answers = {
+  signal_tier?: 0 | 1 | 2 | 3;
+  signal_label?: string;
+  signal_note?: string;
+  substrate_tier?: 0 | 1 | 2 | 3;
+  substrate_label?: string;
+  substrate_note?: string;
+};
 type DomainAnswers = Partial<Record<DomainId, Answers>>;
 
 type DomainScore = {
@@ -110,15 +118,31 @@ export default function TheBrief() {
 
   const currentDomain = DOMAIN_ORDER[domainIndex];
   const currentProbe = currentDomain ? getProbe(seat.function_id, currentDomain) : null;
-  const currentAnswers = currentDomain ? answers[currentDomain] || { signal: "", substrate: "" } : null;
+  const currentAnswers: Answers = currentDomain ? answers[currentDomain] || {} : {};
+  const currentChoices = currentDomain ? DOMAIN_CHOICES[currentDomain] : null;
 
-  const setAnswer = (field: "signal" | "substrate", value: string) => {
+  const pickChoice = (which: "signal" | "substrate", choice: { tier: 0 | 1 | 2 | 3; label: string }) => {
     if (!currentDomain) return;
     setAnswers((prev) => ({
       ...prev,
-      [currentDomain]: { ...(prev[currentDomain] || { signal: "", substrate: "" }), [field]: value },
+      [currentDomain]: {
+        ...(prev[currentDomain] || {}),
+        [`${which}_tier`]: choice.tier,
+        [`${which}_label`]: choice.label,
+      },
     }));
   };
+
+  const setNote = (which: "signal" | "substrate", value: string) => {
+    if (!currentDomain) return;
+    setAnswers((prev) => ({
+      ...prev,
+      [currentDomain]: { ...(prev[currentDomain] || {}), [`${which}_note`]: value },
+    }));
+  };
+
+  const answerComplete = (a: Answers) =>
+    a.signal_tier !== undefined && a.substrate_tier !== undefined;
 
   const startProbe = () => {
     setPhase("probe");
@@ -129,7 +153,9 @@ export default function TheBrief() {
   const scoreDomain = async (domain: DomainId): Promise<DomainScore | null> => {
     const probe = getProbe(seat.function_id, domain);
     const a = answers[domain];
-    if (!a) return null;
+    if (!a || !answerComplete(a)) return null;
+    const signalText = `[Tier ${a.signal_tier}] ${a.signal_label}${a.signal_note ? ` — Note: ${a.signal_note}` : ""}`;
+    const substrateText = `[Tier ${a.substrate_tier}] ${a.substrate_label}${a.substrate_note ? ` — Note: ${a.substrate_note}` : ""}`;
     setScoringDomain(domain);
     try {
       const { data, error } = await supabase.functions.invoke("generate-brief", {
@@ -138,7 +164,7 @@ export default function TheBrief() {
           seat,
           domain,
           probe: { signal_prompt: probe.signal.prompt, substrate_prompt: probe.substrate.prompt },
-          answers: a,
+          answers: { signal: signalText, substrate: substrateText },
         },
       });
       if (error) throw error;
@@ -154,9 +180,9 @@ export default function TheBrief() {
   };
 
   const advance = async () => {
-    if (!currentDomain || !currentAnswers) return;
-    if (currentAnswers.signal.trim().length < 8 || currentAnswers.substrate.trim().length < 8) {
-      toast.error("Give both questions a real sentence.");
+    if (!currentDomain) return;
+    if (!answerComplete(currentAnswers)) {
+      toast.error("Pick an option for both questions.");
       return;
     }
     if (domainIndex < DOMAIN_ORDER.length - 1) {
@@ -278,13 +304,13 @@ export default function TheBrief() {
           <div className="max-w-3xl mx-auto w-full">
             {phase === "seat" && (
               <>
-                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Step 1 of 5 . Seat</div>
+                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Act 1 of 4 . Seat</div>
                 <h2 className="text-2xl md:text-4xl font-light leading-tight text-foreground mb-3">
                   Which seat are you in?
                 </h2>
                 <p className="text-sm text-muted-foreground mb-10">
-                  Pick one option in each of the three groups below. These three answers decide every
-                  question that follows. The probe for a Head of Ops is not the probe for a Head of Commercial.
+                  Three picks. They bound every question that follows. The examination for a Head of Ops is
+                  not the examination for a Head of Commercial.
                 </p>
 
                 <div className="space-y-8">
@@ -329,7 +355,7 @@ export default function TheBrief() {
               <>
                 <div className="flex items-center justify-between mb-8">
                   <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Step {domainIndex + 2} of 5 . {DOMAINS[domainIndex].label}
+                    Act 2 of 4 . Examination . {DOMAINS[domainIndex].label}
                   </div>
                   <div className="text-xs text-muted-foreground tabular-nums">
                     Domain {domainIndex + 1} of {DOMAIN_ORDER.length}
@@ -345,22 +371,30 @@ export default function TheBrief() {
                 </p>
 
                 <div className="space-y-10">
-                  <ProbeField
-                    label="The signal you trust"
-                    prompt={currentProbe.signal.prompt}
-                    helper={currentProbe.signal.helper}
-                    placeholder={currentProbe.signal.placeholder}
-                    value={currentAnswers.signal}
-                    onChange={(v) => setAnswer("signal", v)}
-                  />
-                  <ProbeField
-                    label="The system that produces it"
-                    prompt={currentProbe.substrate.prompt}
-                    helper={currentProbe.substrate.helper}
-                    placeholder={currentProbe.substrate.placeholder}
-                    value={currentAnswers.substrate}
-                    onChange={(v) => setAnswer("substrate", v)}
-                  />
+                  {currentChoices && (
+                    <>
+                      <ChoiceField
+                        label="The signal you trust"
+                        prompt={currentProbe.signal.prompt}
+                        helper={currentProbe.signal.helper}
+                        choices={currentChoices.signal}
+                        selectedTier={currentAnswers.signal_tier}
+                        onPick={(c) => pickChoice("signal", c)}
+                        note={currentAnswers.signal_note || ""}
+                        onNoteChange={(v) => setNote("signal", v)}
+                      />
+                      <ChoiceField
+                        label="The system that produces it"
+                        prompt={currentProbe.substrate.prompt}
+                        helper={currentProbe.substrate.helper}
+                        choices={currentChoices.substrate}
+                        selectedTier={currentAnswers.substrate_tier}
+                        onPick={(c) => pickChoice("substrate", c)}
+                        note={currentAnswers.substrate_note || ""}
+                        onNoteChange={(v) => setNote("substrate", v)}
+                      />
+                    </>
+                  )}
                 </div>
 
                 <div className="sticky bottom-4 mt-12 flex items-center justify-between gap-2 rounded-full bg-background/90 backdrop-blur border border-border/60 shadow-lg p-1.5">
@@ -369,7 +403,7 @@ export default function TheBrief() {
                   </Button>
                   <Button
                     onClick={advance}
-                    disabled={currentAnswers.signal.trim().length < 8 || currentAnswers.substrate.trim().length < 8}
+                    disabled={!answerComplete(currentAnswers)}
                     className="rounded-full px-8"
                   >
                     {domainIndex === DOMAIN_ORDER.length - 1 ? "Score the diagnosis" : "Next domain"}
@@ -398,7 +432,7 @@ export default function TheBrief() {
         >
           <div className="max-w-2xl mx-auto py-20 w-full">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
-              {phase === "scoring" ? "Scoring each domain" : "Writing the diagnosis"}
+              Act 3 of 4 . Diagnosis . {phase === "scoring" ? "Scoring" : "Synthesising"}
             </div>
             <div className="text-2xl font-light text-foreground mb-8">
               {phase === "scoring"
@@ -447,7 +481,7 @@ export default function TheBrief() {
         >
           <div className="max-w-3xl mx-auto">
             <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">
-              The Diagnosis . {seat.function_label}
+              Act 4 of 4 . Diagnosis and Prescription . {seat.function_label}
             </div>
 
             <h1
@@ -658,32 +692,73 @@ function SelectField({
   );
 }
 
-function ProbeField({
+function ChoiceField({
   label,
   prompt,
   helper,
-  placeholder,
-  value,
-  onChange,
+  choices,
+  selectedTier,
+  onPick,
+  note,
+  onNoteChange,
 }: {
   label: string;
   prompt: string;
   helper: string;
-  placeholder: string;
-  value: string;
-  onChange: (v: string) => void;
+  choices: { tier: 0 | 1 | 2 | 3; label: string; sub?: string }[];
+  selectedTier: 0 | 1 | 2 | 3 | undefined;
+  onPick: (c: { tier: 0 | 1 | 2 | 3; label: string }) => void;
+  note: string;
+  onNoteChange: (v: string) => void;
 }) {
   return (
     <div>
       <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">{label}</div>
       <div className="text-base text-foreground mb-1">{prompt}</div>
-      <div className="text-xs text-muted-foreground mb-3">{helper}</div>
-      <Textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="min-h-[110px] text-base leading-relaxed resize-none bg-card border-border/60 focus-visible:ring-1"
-        placeholder={placeholder}
-      />
+      <div className="text-xs text-muted-foreground mb-4">{helper}</div>
+      <div className="grid gap-2">
+        {choices.map((c) => {
+          const selected = selectedTier === c.tier;
+          return (
+            <button
+              key={c.tier}
+              type="button"
+              onClick={() => onPick({ tier: c.tier, label: c.label })}
+              aria-pressed={selected}
+              className={`text-left px-4 py-3 rounded-md border transition-colors cursor-pointer flex items-start gap-3 ${
+                selected
+                  ? "border-foreground bg-foreground/5"
+                  : "border-border/60 hover:border-foreground/60 hover:bg-foreground/[0.02]"
+              }`}
+            >
+              <span
+                className={`mt-1 h-4 w-4 rounded-full border flex items-center justify-center shrink-0 ${
+                  selected ? "border-foreground" : "border-border"
+                }`}
+              >
+                {selected && <span className="h-2 w-2 rounded-full bg-foreground" />}
+              </span>
+              <span className="flex-1">
+                <span className="block text-sm font-medium text-foreground leading-snug">{c.label}</span>
+                {c.sub && (
+                  <span className="block text-xs text-muted-foreground mt-0.5">{c.sub}</span>
+                )}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      <details className="mt-3 group">
+        <summary className="text-xs text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors">
+          Add a sentence of context (optional)
+        </summary>
+        <Textarea
+          value={note}
+          onChange={(e) => onNoteChange(e.target.value)}
+          className="mt-2 min-h-[70px] text-sm leading-relaxed resize-none bg-card border-border/60 focus-visible:ring-1"
+          placeholder="Anything specific about how this actually shows up in your unit."
+        />
+      </details>
     </div>
   );
 }

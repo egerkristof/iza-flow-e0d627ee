@@ -105,6 +105,74 @@ export const TIERS: TierDef[] = [
   { tier: 3, label: "Executable", description: "Runs as code or AI can use it directly. Decisions can be made by the system." },
 ];
 
+// Pre-defined answer ladder per (domain × question). Each option carries the
+// maturity tier it implies. Lets the leader click instead of write, while still
+// giving the AI a clean signal to score against.
+export interface TierChoice {
+  tier: Tier;
+  label: string;
+  sub?: string;
+}
+
+export const DOMAIN_CHOICES: Record<DomainId, { signal: TierChoice[]; substrate: TierChoice[] }> = {
+  demand: {
+    signal: [
+      { tier: 0, label: "Gut feel plus what my team tells me in 1:1s", sub: "No number I would defend in a board meeting." },
+      { tier: 1, label: "A spreadsheet or report I update by hand", sub: "Stale within a week. Multiple versions in circulation." },
+      { tier: 2, label: "One dashboard everyone in the unit references", sub: "Same number whoever you ask. Updated automatically." },
+      { tier: 3, label: "A live system that flags changes and triggers action", sub: "The routine call gets made without me being in the room." },
+    ],
+    substrate: [
+      { tier: 0, label: "Lives in my head and a few senior people", sub: "If I'm out, the picture goes with me." },
+      { tier: 1, label: "Scattered across files, decks, and email threads", sub: "Findable, but only if you know who to ask." },
+      { tier: 2, label: "One named system, one version, everyone uses it", sub: "CRM, ERP, planning tool, with hygiene rules enforced." },
+      { tier: 3, label: "Structured data the AI can read and act on directly", sub: "Decisions can be made by the system, not just reported." },
+    ],
+  },
+  capacity: {
+    signal: [
+      { tier: 0, label: "I ask the team leads and trust their read", sub: "No system view. People-mediated." },
+      { tier: 1, label: "A planning spreadsheet I review periodically", sub: "Out of date the moment something shifts." },
+      { tier: 2, label: "One workforce or planning view everyone trusts", sub: "Skills, allocations, bench in one place." },
+      { tier: 3, label: "Live capacity signal that re-allocates work itself", sub: "Shifts, queues, or assignments adjust automatically." },
+    ],
+    substrate: [
+      { tier: 0, label: "Lives in the team leads' heads", sub: "Re-built from scratch every quarter." },
+      { tier: 1, label: "Spreadsheets and HRIS exports that disagree", sub: "Two sources, neither current." },
+      { tier: 2, label: "Workforce or PSA tool everyone updates", sub: "One source of truth, kept current." },
+      { tier: 3, label: "Capacity data wired into planning and routing", sub: "AI can reason over it without a human export." },
+    ],
+  },
+  quality: {
+    signal: [
+      { tier: 0, label: "I find out when a customer escalates", sub: "Reactive. Always after the fact." },
+      { tier: 1, label: "A monthly review surfaces issues after they happen", sub: "Pattern visible only in hindsight." },
+      { tier: 2, label: "A live quality dashboard the team watches", sub: "Drift caught within days, not months." },
+      { tier: 3, label: "Automated checks block work that fails the bar", sub: "The system enforces the standard, not a person." },
+    ],
+    substrate: [
+      { tier: 0, label: "The standard lives in senior people's judgement", sub: "Different reviewers, different bars." },
+      { tier: 1, label: "Standards docs exist but nobody updates them", sub: "Real practice diverges from written practice." },
+      { tier: 2, label: "One playbook everyone follows, kept current", sub: "Reviewed, owned, versioned." },
+      { tier: 3, label: "Standards encoded as checks the system runs", sub: "Compliance is a property of the workflow." },
+    ],
+  },
+  economics: {
+    signal: [
+      { tier: 0, label: "Instinct about where margin leaks", sub: "No number that proves the leak." },
+      { tier: 1, label: "A finance report once a quarter, often late", sub: "Aggregated, not actionable per unit." },
+      { tier: 2, label: "Live unit economics by segment, deal, or job", sub: "I can point at the line that hurts." },
+      { tier: 3, label: "The system flags low-yield spend and routes around it", sub: "Margin is defended without me intervening." },
+    ],
+    substrate: [
+      { tier: 0, label: "Lives in finance's head and one ugly spreadsheet", sub: "Re-derived every time someone asks." },
+      { tier: 1, label: "Reports exist but the per-unit math is opaque", sub: "Totals, not breakdowns." },
+      { tier: 2, label: "Unit economics modelled and refreshed automatically", sub: "Same number across finance, ops, commercial." },
+      { tier: 3, label: "Cost and margin data wired into operational decisions", sub: "Pricing, staffing, routing react to the math." },
+    ],
+  },
+};
+
 // Question bank: function × domain × { signal, substrate }
 // Signal = what input they trust today. Substrate = the system that produces it. The substrate question is the maturity tell.
 const Q: Record<FunctionId, Record<DomainId, DomainProbe>> = {
