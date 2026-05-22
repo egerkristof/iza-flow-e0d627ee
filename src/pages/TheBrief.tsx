@@ -21,6 +21,8 @@ import {
   Scale,
   Coins,
   Calendar,
+  TrendingUp,
+  Info,
 } from "lucide-react";
 import { TEAM_PROFILES, TEAM_BY_ID, type TeamId } from "@/lib/team-profiles";
 import {
@@ -28,6 +30,9 @@ import {
   AUDITS,
   DECISION_CLASSES,
   TRIGGERS,
+  MATURITY_STAGES,
+  computeStage,
+  bundleExamples,
   emptyStreamAnswer,
   emptyAuditAnswer,
   streamExamples,
@@ -334,6 +339,7 @@ export default function TheBrief() {
           <ResultView
             diagnosis={diagnosis}
             tools={inputs.tools}
+            team={inputs.team}
             savedId={savedId}
             email={email}
             setEmail={setEmail}
@@ -716,6 +722,7 @@ function DiagnosingView() {
 function ResultView({
   diagnosis,
   tools,
+  team,
   savedId,
   email,
   setEmail,
@@ -725,6 +732,7 @@ function ResultView({
 }: {
   diagnosis: OperatorDiagnosis;
   tools: string[];
+  team: TeamId | null;
   savedId: string | null;
   email: string;
   setEmail: (v: string) => void;
@@ -732,6 +740,27 @@ function ResultView({
   onSave: () => void;
   onReset: () => void;
 }) {
+  // Derive maturity stage from the same answers powering the visuals
+  const streamAns = Object.fromEntries(
+    (Object.keys(diagnosis.stream_coverage) as StreamId[]).map((k) => [
+      k,
+      diagnosis.stream_coverage[k].status,
+    ]),
+  ) as Record<StreamId, StreamStatus | null>;
+  const auditAns = Object.fromEntries(
+    (Object.keys(diagnosis.audit_coverage) as AuditId[]).map((k) => [
+      k,
+      diagnosis.audit_coverage[k].status,
+    ]),
+  ) as Record<AuditId, AuditStatus | null>;
+  const { stage, next } = computeStage({
+    streams: streamAns,
+    audits: auditAns,
+  });
+  const currentStage = MATURITY_STAGES.find((s) => s.id === stage)!;
+  const nextStage = next ? MATURITY_STAGES.find((s) => s.id === next) : null;
+  const examples = bundleExamples(team);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -759,9 +788,17 @@ function ResultView({
         </p>
       </div>
 
+      {/* 1b. MATURITY ARC — pin them on the map */}
+      <MaturityArc currentId={stage} />
+
       {/* 2. DIAGNOSIS — the compass tells the story */}
       <section>
         <SectionHeading icon={Compass} label="The moment of work / stream coverage" />
+        <ReadAs>
+          Every AI decision your team makes needs four streams of context to land. The
+          arms below show how many of them your AI actually sees today. Dim arms are
+          the parts of reality it is guessing at.
+        </ReadAs>
         <OperatorCompass coverage={diagnosis.stream_coverage} tools={tools} />
       </section>
 
@@ -775,6 +812,10 @@ function ResultView({
           }}
         >
           <SectionHeading icon={Coins} label="What this gap costs you" />
+          <ReadAs tone="warn">
+            Translation of the dim arms and missing audits above into hours and people.
+            Not a quote, an order of magnitude.
+          </ReadAs>
           <p className="text-lg md:text-2xl font-bold leading-snug">
             {diagnosis.cost_of_gap.headline}
           </p>
@@ -787,6 +828,10 @@ function ResultView({
       {/* 4. BLIND SPOTS — what you have not seen */}
       <section>
         <SectionHeading icon={AlertTriangle} label="What you probably have not seen" />
+        <ReadAs>
+          Second-order effects of the gaps above. The things that bite quietly because
+          nothing in your current setup catches them.
+        </ReadAs>
         <div className="space-y-2">
           {diagnosis.blind_spots.map((b, i) => (
             <motion.div
@@ -803,6 +848,49 @@ function ResultView({
           ))}
         </div>
       </section>
+
+      {/* 4b. HOW TO GET FURTHER — pedagogical bridge from "here" to "next" */}
+      {nextStage && (
+        <section
+          className="rounded-2xl border p-6 md:p-8"
+          style={{
+            background: "hsl(var(--card))",
+            borderColor: "hsl(var(--border))",
+          }}
+        >
+          <SectionHeading icon={TrendingUp} label="How to get further" />
+          <ReadAs>
+            You are currently at <strong>{currentStage.label}</strong>. The next stage
+            on the arc is <strong>{nextStage.label}</strong>. These are the three
+            concrete shifts that get you there. They are universal. Not LIZA-specific.
+          </ReadAs>
+          <div className="mt-2 rounded-xl border p-5" style={{ borderColor: "hsl(var(--border))" }}>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
+              {currentStage.label} &nbsp;→&nbsp; {nextStage.label}
+            </p>
+            <ol className="space-y-2.5">
+              {currentStage.next_shifts.map((shift, i) => (
+                <li key={i} className="flex gap-3">
+                  <span
+                    className="inline-flex shrink-0 w-5 h-5 rounded-full items-center justify-center text-[10px] font-black mt-0.5"
+                    style={{
+                      background: "hsl(var(--foreground))",
+                      color: "hsl(var(--background))",
+                    }}
+                  >
+                    {i + 1}
+                  </span>
+                  <p className="text-sm leading-snug">{shift}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-4 pt-4 text-xs text-muted-foreground border-t" style={{ borderColor: "hsl(var(--border))" }}>
+              The move below is the first of these three, compressed into a 90-day
+              sequence with LIZA doing the encoding work.
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* 5. THE MOVE — promoted, sequenced, CTA attached */}
       <section
@@ -916,7 +1004,12 @@ function ResultView({
                 Knowledge bundle / what is encoded today
               </p>
             </div>
-            <BundleGap gaps={diagnosis.bundle_gaps} />
+            <ReadAs>
+              Six layers of knowledge an AI surface needs in order to act like a
+              member of your team, not a stranger from the internet. The ones marked
+              missing are the parts your team carries in their heads today.
+            </ReadAs>
+            <BundleGap gaps={diagnosis.bundle_gaps} examples={examples} />
           </div>
 
           {/* Decision class */}
@@ -1046,5 +1139,125 @@ function SectionHeading({
         {label}
       </p>
     </div>
+  );
+}
+
+// Plain-language "read this as" line under section headings. Teaches what the
+// visual means before showing the visual.
+function ReadAs({
+  children,
+  tone = "default",
+}: {
+  children: React.ReactNode;
+  tone?: "default" | "warn";
+}) {
+  const colorVar =
+    tone === "warn" ? "0 70% 55%" : "var(--primary)";
+  return (
+    <div
+      className="flex gap-2 rounded-lg p-3 mb-4 max-w-3xl"
+      style={{
+        background:
+          tone === "warn"
+            ? "hsl(0 70% 55% / 0.06)"
+            : "hsl(var(--primary) / 0.04)",
+        borderLeft: `2px solid hsl(${colorVar})`,
+      }}
+    >
+      <Info
+        className="w-3.5 h-3.5 shrink-0 mt-0.5"
+        style={{ color: `hsl(${colorVar})` }}
+      />
+      <p className="text-xs md:text-[13px] leading-relaxed text-foreground/85">
+        <span className="font-bold">Read this as: </span>
+        {children}
+      </p>
+    </div>
+  );
+}
+
+// Maturity arc: pin the user on the 5-stage map and show direction of travel.
+function MaturityArc({ currentId }: { currentId: string }) {
+  const idx = MATURITY_STAGES.findIndex((s) => s.id === currentId);
+  const current = MATURITY_STAGES[idx];
+  return (
+    <section
+      className="rounded-2xl border p-6 md:p-8"
+      style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+    >
+      <SectionHeading icon={TrendingUp} label="Where you are on the arc" />
+      <ReadAs>
+        Five stages from ad-hoc to compounding. Every team passes through them in
+        order. Knowing where you are tells you which problem to solve next.
+      </ReadAs>
+
+      {/* Arc rail */}
+      <div className="relative mt-2 mb-6">
+        <div
+          className="absolute left-0 right-0 top-3 h-0.5"
+          style={{ background: "hsl(var(--border))" }}
+        />
+        <div
+          className="absolute left-0 top-3 h-0.5 transition-all"
+          style={{
+            width: `${(idx / (MATURITY_STAGES.length - 1)) * 100}%`,
+            background: "hsl(var(--primary))",
+          }}
+        />
+        <div className="relative flex justify-between">
+          {MATURITY_STAGES.map((s, i) => {
+            const reached = i <= idx;
+            const isCurrent = i === idx;
+            return (
+              <div key={s.id} className="flex flex-col items-center" style={{ width: "20%" }}>
+                <span
+                  className="w-6 h-6 rounded-full border-2 flex items-center justify-center text-[10px] font-black mb-2"
+                  style={{
+                    background: isCurrent
+                      ? "hsl(var(--primary))"
+                      : reached
+                      ? "hsl(var(--primary) / 0.2)"
+                      : "hsl(var(--background))",
+                    borderColor: reached ? "hsl(var(--primary))" : "hsl(var(--border))",
+                    color: isCurrent
+                      ? "hsl(var(--primary-foreground))"
+                      : reached
+                      ? "hsl(var(--primary))"
+                      : "hsl(var(--muted-foreground))",
+                  }}
+                >
+                  {i + 1}
+                </span>
+                <p
+                  className="text-[10px] md:text-xs font-bold text-center leading-tight"
+                  style={{
+                    color: isCurrent
+                      ? "hsl(var(--primary))"
+                      : reached
+                      ? "hsl(var(--foreground))"
+                      : "hsl(var(--muted-foreground))",
+                  }}
+                >
+                  {s.label}
+                </p>
+                {isCurrent && (
+                  <span className="mt-1 text-[9px] font-bold uppercase tracking-wider text-primary">
+                    You are here
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* What this stage looks like */}
+      <div className="mt-8 rounded-xl border p-4" style={{ borderColor: "hsl(var(--border))" }}>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-1.5">
+          What {current.label.toLowerCase()} looks like
+        </p>
+        <p className="text-sm leading-relaxed text-foreground/90">{current.what}</p>
+      </div>
+    </section>
   );
 }

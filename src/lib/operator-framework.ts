@@ -212,40 +212,231 @@ export const BUNDLE_TYPES: BundleTypeDef[] = [
   {
     id: "playbook",
     label: "Playbook",
-    role: "Strategic driver",
-    what: "What the work is and why it matters. One per bundle.",
+    role: "The work itself",
+    what: "Names what the work is and why it matters. Without it, every person invents their own version of the job.",
   },
   {
     id: "procedure",
     label: "Procedure",
-    role: "Executable steps",
-    what: "Atomic, sequenced action steps with gate logic.",
+    role: "The steps you actually take",
+    what: "The sequence of moves that produces the output. Without it, AI guesses the order and skips the gates.",
   },
   {
     id: "directive",
     label: "Directive",
-    role: "Compliance gate",
-    what: "Non-negotiable constraints. Cannot be overridden at run time.",
+    role: "The things you must never do",
+    what: "Hard constraints. Cannot be overridden at run time. Without it, AI quietly breaks your policy on the user's behalf.",
   },
   {
     id: "principle",
     label: "Principle",
-    role: "Judgment heuristic",
-    what: "How to decide at ambiguous points. Wisdom, not rules.",
+    role: "How you decide when it is grey",
+    what: "Judgment rules for the cases the procedure does not cover. Without it, AI defaults to the safest bland answer.",
   },
   {
     id: "preference",
     label: "Preference",
-    role: "Style and voice",
-    what: "Soft constraint. Format, tone, register.",
+    role: "How it has to sound and look",
+    what: "Voice, format, register. Soft constraint. Without it, output drifts off-brand within a week.",
   },
   {
     id: "knowledge",
     label: "Knowledge",
-    role: "Reference context",
-    what: "Frameworks, definitions, market data. Informs, does not direct.",
+    role: "What you know that AI does not",
+    what: "Frameworks, ICP, prior wins, market data. Informs the answer. Without it, AI uses the public internet as your truth.",
   },
 ];
+
+// Per-team concrete example for each bundle type. One sentence in the user's world.
+export function bundleExamples(
+  team: TeamId | null,
+): Record<BundleTypeId, string> {
+  const generic: Record<BundleTypeId, string> = {
+    playbook: "Example: how your team actually runs its weekly cycle.",
+    procedure: "Example: the steps from request to shipped output.",
+    directive: "Example: never share customer data outside approved tools.",
+    principle: "Example: when in doubt, escalate before automating.",
+    preference: "Example: short sentences, no jargon, active voice.",
+    knowledge: "Example: your ICP definition, your pricing logic, your wins.",
+  };
+  const byTeam: Partial<Record<TeamId, Record<BundleTypeId, string>>> = {
+    sales: {
+      playbook: "Example: Discovery to proposal in five touches.",
+      procedure: "Example: Call notes to CRM update to follow-up draft.",
+      directive: "Example: Never quote pricing without deal-desk approval.",
+      principle: "Example: When a deal stalls two weeks, change the sponsor.",
+      preference: "Example: First-person, no hype words, three sentences max.",
+      knowledge: "Example: ICP, won-deal anatomy, competitor traps.",
+    },
+    marketing: {
+      playbook: "Example: Campaign brief to launch in 14 days.",
+      procedure: "Example: Insight to angle to draft to QA to publish.",
+      directive: "Example: Never publish without legal review on claims.",
+      principle: "Example: Lead with the buyer's loss, not our gain.",
+      preference: "Example: Brand voice, headline cadence, hero asset rules.",
+      knowledge: "Example: Audience segments, prior campaign results.",
+    },
+    customer_success: {
+      playbook: "Example: From renewal flag to retained account.",
+      procedure: "Example: Health check to QBR to expansion plan.",
+      directive: "Example: Never commit to roadmap items in writing.",
+      principle: "Example: Solve the unspoken problem first.",
+      preference: "Example: Calm, specific, never defensive.",
+      knowledge: "Example: Account history, prior incidents, comparables.",
+    },
+    operations: {
+      playbook: "Example: Incident to root cause to standard update.",
+      procedure: "Example: Ticket triage and escalation ladder.",
+      directive: "Example: Never bypass change control on production.",
+      principle: "Example: When in doubt, restore service before explaining.",
+      preference: "Example: Status updates every 15 minutes during incident.",
+      knowledge: "Example: Runbooks, dependency map, vendor SLAs.",
+    },
+    product_engineering: {
+      playbook: "Example: Idea to PRD to ship in two sprints.",
+      procedure: "Example: ADR to PR to review to deploy.",
+      directive: "Example: Never merge without test coverage on critical paths.",
+      principle: "Example: Reversible decisions move fast, irreversible slow.",
+      preference: "Example: Naming conventions, commit format, doc tone.",
+      knowledge: "Example: Architecture, ADR history, incident post-mortems.",
+    },
+    rnd: {
+      playbook: "Example: Hypothesis to experiment to validated finding.",
+      procedure: "Example: Protocol design, run, analysis, report.",
+      directive: "Example: Never publish before peer review on regulated work.",
+      principle: "Example: Prefer reproducibility over novelty.",
+      preference: "Example: Lab notebook format, figure conventions.",
+      knowledge: "Example: Prior art, internal datasets, regulator guidance.",
+    },
+    finance: {
+      playbook: "Example: Month-end close to commentary in five days.",
+      procedure: "Example: Reconcile, classify, review, sign-off.",
+      directive: "Example: Never override controls without dual approval.",
+      principle: "Example: Materiality threshold over rules of thumb.",
+      preference: "Example: Variance commentary in plain language.",
+      knowledge: "Example: Chart of accounts, prior commentary, covenants.",
+    },
+    people: {
+      playbook: "Example: From open role to filled in 45 days.",
+      procedure: "Example: Scorecard, sourcing, interview loop, offer.",
+      directive: "Example: Never share comp data outside approved channels.",
+      principle: "Example: Hire for the role one year from now.",
+      preference: "Example: Inclusive language, no superlatives.",
+      knowledge: "Example: Competency framework, comp bands, exit data.",
+    },
+    strategy: {
+      playbook: "Example: Question to evidence to recommendation in three weeks.",
+      procedure: "Example: Hypothesis, data pull, synthesis, readout.",
+      directive: "Example: Never present without prior counter-argument.",
+      principle: "Example: Anchor on cost of inaction, not cost of action.",
+      preference: "Example: Single-page memo, claim then evidence.",
+      knowledge: "Example: Prior decisions, board commitments, market map.",
+    },
+  };
+  return byTeam[team as TeamId] ?? generic;
+}
+
+// ─── Maturity arc ────────────────────────────────────────────────────────────
+
+export type MaturityStageId =
+  | "reactive"
+  | "coordinated"
+  | "standardised"
+  | "governed"
+  | "compounding";
+
+export type MaturityStageDef = {
+  id: MaturityStageId;
+  label: string;
+  what: string; // what life looks like at this stage
+  next_shifts: string[]; // what it takes to reach the next stage
+};
+
+export const MATURITY_STAGES: MaturityStageDef[] = [
+  {
+    id: "reactive",
+    label: "Reactive",
+    what: "AI is used per-person. Each user invents their own prompts. Nothing is shared. Quality depends on who logged in.",
+    next_shifts: [
+      "Name the three decisions your team makes weekly that AI already touches.",
+      "Write the standard for each as a one-page playbook.",
+      "Pick one AI surface and pilot the standard there.",
+    ],
+  },
+  {
+    id: "coordinated",
+    label: "Coordinated",
+    what: "Some teams share prompts, custom GPTs, or templates. Standards exist as docs but no system enforces them.",
+    next_shifts: [
+      "Turn the shared docs into an executable bundle every AI surface can read.",
+      "Add hard directives where policy must hold.",
+      "Wire the bundle into your two highest-usage AI surfaces.",
+    ],
+  },
+  {
+    id: "standardised",
+    label: "Standardised",
+    what: "Standards are encoded and most AI surfaces read from them. Drift still happens because nothing audits the output.",
+    next_shifts: [
+      "Turn on the governance container: cost, best practice, security, decision audit, drift.",
+      "Classify decisions by weight (operational, governed change, strategic).",
+      "Make every output cite which standard it followed.",
+    ],
+  },
+  {
+    id: "governed",
+    label: "Governed",
+    what: "Every output runs under the five audits. You can reconstruct why any decision was made.",
+    next_shifts: [
+      "Version standards so you can prove what was true on any date.",
+      "Feed run-time signal back into standards on a weekly cadence.",
+      "Open the bundle to other teams so the knowledge compounds.",
+    ],
+  },
+  {
+    id: "compounding",
+    label: "Compounding",
+    what: "Standards improve from every run. New hires inherit your operating model on day one. AI is a true operating layer.",
+    next_shifts: [],
+  },
+];
+
+// Compute stage deterministically from inputs. Score: 0..9
+// = lit streams (0..4) + green audits (0..5).
+export function computeStage(args: {
+  streams: StreamAnswer;
+  audits: AuditAnswer;
+}): { stage: MaturityStageId; score: number; next: MaturityStageId | null } {
+  const lit = (Object.keys(args.streams) as StreamId[]).filter(
+    (s) => args.streams[s] === "lit",
+  ).length;
+  const partials = (Object.keys(args.streams) as StreamId[]).filter(
+    (s) => args.streams[s] === "partial",
+  ).length;
+  const green = (Object.keys(args.audits) as AuditId[]).filter(
+    (a) => args.audits[a] === "green",
+  ).length;
+  const amber = (Object.keys(args.audits) as AuditId[]).filter(
+    (a) => args.audits[a] === "amber",
+  ).length;
+  const score = lit + green + Math.floor((partials + amber) / 2);
+  let stage: MaturityStageId;
+  if (score <= 1) stage = "reactive";
+  else if (score <= 3) stage = "coordinated";
+  else if (score <= 5) stage = "standardised";
+  else if (score <= 7) stage = "governed";
+  else stage = "compounding";
+  const order: MaturityStageId[] = [
+    "reactive",
+    "coordinated",
+    "standardised",
+    "governed",
+    "compounding",
+  ];
+  const idx = order.indexOf(stage);
+  const next = idx < order.length - 1 ? order[idx + 1] : null;
+  return { stage, score, next };
+}
 
 // ─── Decision classes ────────────────────────────────────────────────────────
 

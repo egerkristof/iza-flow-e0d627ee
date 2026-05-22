@@ -14,21 +14,30 @@ const STATUS_ICON: Record<BundleStatus, typeof Check> = {
   missing: X,
 };
 
+const STATUS_LABEL: Record<BundleStatus, string> = {
+  have: "In place",
+  partial: "Partial",
+  missing: "Missing",
+};
+
 export function BundleGap({
   gaps,
+  examples,
 }: {
   gaps: { type: BundleTypeId; status: BundleStatus; why: string }[];
+  examples?: Record<BundleTypeId, string>;
 }) {
   const byType = Object.fromEntries(gaps.map((g) => [g.type, g])) as Record<
     BundleTypeId,
     { type: BundleTypeId; status: BundleStatus; why: string }
   >;
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
       {BUNDLE_TYPES.map((b, i) => {
         const g = byType[b.id] ?? { status: "missing" as BundleStatus, why: "Not in place." };
         const color = STATUS_COLOR[g.status];
         const Icon = STATUS_ICON[g.status];
+        const example = examples?.[b.id];
         return (
           <motion.div
             key={b.id}
@@ -41,19 +50,34 @@ export function BundleGap({
               borderColor: `hsl(${color} / 0.4)`,
             }}
           >
-            <div className="flex items-center justify-between mb-1">
-              <p className="text-sm font-bold">{b.label}</p>
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  {b.label}
+                </p>
+                <p className="text-sm font-bold leading-snug mt-0.5">{b.role}</p>
+              </div>
               <span
-                className="inline-flex items-center justify-center w-5 h-5 rounded-full"
-                style={{ background: `hsl(${color} / 0.18)`, color: `hsl(${color})` }}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shrink-0"
+                style={{ background: `hsl(${color} / 0.15)`, color: `hsl(${color})` }}
               >
-                <Icon className="w-3 h-3" strokeWidth={3} />
+                <Icon className="w-2.5 h-2.5" strokeWidth={3} />
+                {STATUS_LABEL[g.status]}
               </span>
             </div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1.5">
-              {b.role}
+            {example && (
+              <p className="text-[11px] leading-snug text-foreground/80 mb-1.5">{example}</p>
+            )}
+            <p
+              className="text-[11px] leading-snug pt-1.5 mt-1.5 border-t"
+              style={{
+                borderColor: "hsl(var(--border))",
+                color: g.status === "missing" ? `hsl(${color})` : "hsl(var(--muted-foreground))",
+              }}
+            >
+              {g.status === "missing" ? "Without it: " : "Note: "}
+              <span className="text-muted-foreground">{g.why || b.what}</span>
             </p>
-            <p className="text-[11px] leading-snug text-muted-foreground">{g.why || b.what}</p>
           </motion.div>
         );
       })}
