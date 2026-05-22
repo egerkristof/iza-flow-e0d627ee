@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -274,7 +275,7 @@ export default function TheBrief() {
         setDiagnosis(data?.diagnosis || buildFallbackDiagnosis(seat, collected));
         setPhase("diagnosis");
         scrollTo(diagnosisRef.current);
-      } catch (e: any) {
+      } catch (e) {
         console.error(e);
         toast.error("AI narrative timed out. Showing the deterministic diagnosis.");
         setDiagnosis(buildFallbackDiagnosis(seat, collected));
@@ -303,8 +304,8 @@ export default function TheBrief() {
         .from("briefs")
         .insert({
           email,
-          inputs: { seat, answers, scores } as any,
-          output: diagnosis as any,
+          inputs: { seat, answers, scores } as unknown as Json,
+          output: diagnosis as unknown as Json,
         })
         .select("id")
         .single();
