@@ -1,169 +1,177 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/sonner";
+import { motion } from "framer-motion";
 import {
-  FUNCTIONS,
-  UNIT_SHAPES,
-  SCALES,
-  DOMAINS,
-  TIERS,
-  getProbe,
-  DOMAIN_CHOICES,
-  type FunctionId,
-  type UnitShape,
-  type Scale,
-  type DomainId,
-} from "@/lib/brief-framework";
-import { BlueprintCanvas, type BlueprintState } from "@/components/brief/BlueprintCanvas";
+  ArrowRight,
+  Loader2,
+  Sparkles,
+  Wrench,
+  AlertTriangle,
+  Eye,
+  Check,
+  Share2,
+  RotateCcw,
+} from "lucide-react";
+import { OperatingGrid, type GridState, type GridStatus } from "@/components/brief/OperatingGrid";
 
-type Seat = {
-  function_id: FunctionId;
-  function_label: string;
-  unit_shape: UnitShape;
-  scale: Scale;
-};
+// ────────────────────────────────────────────────────────────────────────────
+// Curated input chips
+// ────────────────────────────────────────────────────────────────────────────
 
-type Answers = {
-  signal_tier?: 0 | 1 | 2 | 3;
-  signal_label?: string;
-  signal_note?: string;
-  substrate_tier?: 0 | 1 | 2 | 3;
-  substrate_label?: string;
-  substrate_note?: string;
-};
-type DomainAnswers = Partial<Record<DomainId, Answers>>;
+const TOOL_CHIPS = [
+  "ChatGPT",
+  "Claude",
+  "Gemini",
+  "Copilot (M365)",
+  "GitHub Copilot",
+  "Cursor",
+  "Glean",
+  "Notion AI",
+  "Custom GPTs",
+  "Internal RAG",
+  "Agent framework (LangChain, CrewAI)",
+  "None yet",
+];
 
-type DomainScore = {
-  current_tier: 0 | 1 | 2 | 3;
-  target_tier: 0 | 1 | 2 | 3;
-  justification: string;
-  bridge: string;
-  effort_weeks: number;
-  effort_role: string;
-  unlock: string;
-};
+const LIMITATION_CHIPS = [
+  "Hallucinations",
+  "No memory across sessions",
+  "Cannot enforce our standards",
+  "No audit trail",
+  "Siloed per user",
+  "Does not know our data",
+  "Output quality inconsistent",
+  "No governance",
+  "Cannot hand off between tools",
+  "Adoption is patchy",
+];
+
+// ────────────────────────────────────────────────────────────────────────────
+// Types
+// ────────────────────────────────────────────────────────────────────────────
 
 type Diagnosis = {
   title: string;
-  narrative: string[];
-  ai_ranking: { domain: DomainId; roi: "high" | "medium" | "low"; why: string }[];
-  start_here: { domain: DomainId; reason: string };
-  trade_off: string;
-};
-
-type Phase =
-  | "intro"
-  | "seat"
-  | "probe"
-  | "scoring"
-  | "synthesizing"
-  | "diagnosis";
-
-const DOMAIN_ORDER: DomainId[] = ["demand", "capacity", "quality", "economics"];
-
-const DOMAIN_BRIDGES: Record<DomainId, { bridge: string; unlock: string; role: string }> = {
-  demand: {
-    bridge: "Create one owned demand backlog with a clear intake rule, priority rule, and weekly decision cadence.",
-    unlock: "Demand stops arriving as noise. The leader can trade off work before the unit is already committed.",
-    role: "unit lead plus one operations analyst",
-  },
-  capacity: {
-    bridge: "Create one capacity view that connects skills, allocation, bottlenecks, and the next planning cycle.",
-    unlock: "Capacity becomes visible before work breaks. The leader can move people and scope with evidence.",
-    role: "unit lead plus people or planning partner",
-  },
-  quality: {
-    bridge: "Turn the quality bar into one current playbook with review triggers, ownership, and consequences.",
-    unlock: "Quality moves from late escalation to early control. The team sees drift before customers do.",
-    role: "domain owner plus delivery or quality lead",
-  },
-  economics: {
-    bridge: "Build one unit economics view that shows margin, cost drivers, and low-yield work at decision level.",
-    unlock: "The leader can stop subsidising bad work and put capacity behind the work that pays back.",
-    role: "unit lead plus finance partner",
-  },
-};
-
-const clampTier = (value: number): 0 | 1 | 2 | 3 => Math.max(0, Math.min(3, Math.round(value))) as 0 | 1 | 2 | 3;
-
-const buildDomainScore = (domain: DomainId, a: Answers, scale: Scale): DomainScore => {
-  const current = clampTier(Math.min(a.signal_tier ?? 0, a.substrate_tier ?? 0));
-  const target = clampTier(current + (scale === "<50" || scale === "50-200" ? 1 : 2));
-  const gap = Math.max(1, target - current);
-  const sizeMultiplier = scale === "<50" ? 1 : scale === "50-200" ? 1.5 : scale === "200-500" ? 2 : 3;
-  const weeks = Math.min(26, Math.max(2, Math.round(gap * 3 * sizeMultiplier)));
-  const bridge = DOMAIN_BRIDGES[domain];
-
-  return {
-    current_tier: current,
-    target_tier: target,
-    justification: `The signal is "${a.signal_label}" and the system is "${a.substrate_label}".`,
-    bridge: bridge.bridge,
-    effort_weeks: weeks,
-    effort_role: bridge.role,
-    unlock: bridge.unlock,
+  current_model_read: string;
+  tool_limitations: { tool: string; limitation: string }[];
+  grid_status: {
+    intent: { status: GridStatus; why: string };
+    knowledge: { status: GridStatus; why: string };
+    execution: { status: GridStatus; why: string };
   };
+  blind_spots: { title: string; why: string }[];
+  correction: { move: string; scope: string; liza_capability: string };
 };
 
-const buildFallbackDiagnosis = (seat: Seat, scores: Partial<Record<DomainId, DomainScore>>): Diagnosis => {
-  const completeScores = DOMAIN_ORDER.map((domain) => ({ domain, score: scores[domain]! })).filter((x) => x.score);
-  const lowest = completeScores.reduce((pick, item) => item.score.current_tier < pick.score.current_tier ? item : pick, completeScores[0]);
-  const bestReady = [...completeScores].sort((a, b) => b.score.current_tier - a.score.current_tier)[0] || lowest;
-  const start = lowest?.score.current_tier <= 1 ? lowest : bestReady;
+type Inputs = {
+  goal: string;
+  tools: string[];
+  limitations: string[];
+  free_text: string;
+};
 
+type Phase = "input" | "diagnosing" | "result";
+
+// ────────────────────────────────────────────────────────────────────────────
+// Helpers
+// ────────────────────────────────────────────────────────────────────────────
+
+function Chip({
+  label,
+  selected,
+  onClick,
+}: {
+  label: string;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="text-xs md:text-sm font-medium px-3 py-1.5 rounded-full border transition-all"
+      style={{
+        background: selected ? "hsl(var(--primary))" : "hsl(var(--card))",
+        color: selected ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground))",
+        borderColor: selected ? "hsl(var(--primary))" : "hsl(var(--border))",
+      }}
+    >
+      {selected ? <Check className="inline w-3 h-3 mr-1 -mt-0.5" /> : null}
+      {label}
+    </button>
+  );
+}
+
+function fallbackDiagnosis(inputs: Inputs): Diagnosis {
+  const tools = inputs.tools.length ? inputs.tools : ["a mixed set of consumer AI tools"];
   return {
-    title: `${seat.function_label} operating diagnosis`,
-    narrative: [
-      `This ${seat.unit_shape.replace("_", " ")} is run through a mix of judgement, recorded artefacts, and partial systems. The work is visible enough to manage, but not yet structured enough for the system to carry routine decisions without the leader in the loop.`,
-      `The practical constraint is substrate quality. Where the unit is still at Tier 0 or Tier 1, AI will amplify gaps rather than produce reliable leverage. Where the unit reaches Tier 2, the same AI spend starts converting into faster prioritisation, routing, control, and margin decisions.`,
-      `The next move is not a broad AI programme. It is one domain bridge, owned clearly, with the operating rule written down and wired into the cadence the unit already uses.`,
-    ],
-    ai_ranking: completeScores
-      .sort((a, b) => b.score.current_tier - a.score.current_tier)
-      .map(({ domain, score }) => ({
-        domain,
-        roi: score.current_tier >= 2 ? "high" : score.current_tier === 1 ? "medium" : "low",
-        why: score.current_tier >= 2
-          ? `${DOMAINS.find((x) => x.id === domain)?.label} has enough structure for AI to work against the operating system.`
-          : `${DOMAINS.find((x) => x.id === domain)?.label} needs a stronger substrate before AI spend becomes reliable.`,
-      })),
-    start_here: {
-      domain: start?.domain || "demand",
-      reason: start ? `${DOMAINS.find((x) => x.id === start.domain)?.label} is the clearest bridge from today's Tier ${start.score.current_tier} state to a more executable operating rhythm.` : "Start with Demand because it shapes what the rest of the unit has to absorb.",
+    title: "Your AI operating model today",
+    current_model_read: `You are trying to ${inputs.goal.toLowerCase()}. Today the work runs through ${tools.join(", ")} sitting on top of individual judgement. There is no shared layer between what you want and what the tools produce, so every output starts from a blank slate.`,
+    tool_limitations: inputs.tools.map((tool) => ({
+      tool,
+      limitation: "No persistent context, no enforced standard, every session restarts.",
+    })),
+    grid_status: {
+      intent: {
+        status: inputs.goal ? "working" : "missing",
+        why: "You know what you want. The goal is stated.",
+      },
+      knowledge: {
+        status: "missing",
+        why: "There is no executable knowledge layer between your intent and the tools. Standards, decisions, and policies live in heads and scattered docs.",
+      },
+      execution: {
+        status: inputs.tools.length ? "partial" : "missing",
+        why: inputs.tools.length
+          ? "Tools are deployed but each one operates on its own context."
+          : "No tools in place yet.",
+      },
     },
-    trade_off: "The trade-off is speed versus explicitness. The unit has to slow down long enough to name the rule, or it will keep paying for ambiguity later.",
+    blind_spots: [
+      {
+        title: "Every tool is reinventing your standard",
+        why: "Without one place to publish decision logic, each tool guesses. The cost shows up as inconsistency, not error.",
+      },
+      {
+        title: "Nothing compounds",
+        why: "Good prompts and good answers leave with the person who wrote them. The next user starts from zero.",
+      },
+    ],
+    correction: {
+      move: "Publish your operating standards as an executable knowledge layer that every AI surface reads from.",
+      scope: "Two to four weeks. One owner. One bundle that covers your three highest-value decisions.",
+      liza_capability: "LIZA knowledge layer plus context bundles wired into the tools you already use.",
+    },
   };
-};
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Component
+// ────────────────────────────────────────────────────────────────────────────
 
 export default function TheBrief() {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
 
-  const [phase, setPhase] = useState<Phase>("intro");
-  const [seat, setSeat] = useState<Seat>({
-    function_id: "gm",
-    function_label: FUNCTIONS[0].label,
-    unit_shape: "pnl",
-    scale: "200-500",
+  const [phase, setPhase] = useState<Phase>("input");
+  const [inputs, setInputs] = useState<Inputs>({
+    goal: "",
+    tools: [],
+    limitations: [],
+    free_text: "",
   });
-  const [domainIndex, setDomainIndex] = useState(0);
-  const [answers, setAnswers] = useState<DomainAnswers>({});
-  const [scores, setScores] = useState<Partial<Record<DomainId, DomainScore>>>({});
   const [diagnosis, setDiagnosis] = useState<Diagnosis | null>(null);
-  const [scoringDomain, setScoringDomain] = useState<DomainId | null>(null);
   const [savedId, setSavedId] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
 
-  const probeRef = useRef<HTMLDivElement>(null);
-  const diagnosisRef = useRef<HTMLDivElement>(null);
-
-  // Load saved diagnosis
+  // Load existing diagnosis from URL
   useEffect(() => {
     if (!id) return;
     (async () => {
@@ -177,166 +185,71 @@ export default function TheBrief() {
         navigate("/the-brief", { replace: true });
         return;
       }
-      const inputs = data.inputs as { seat: Seat; answers: DomainAnswers; scores: typeof scores };
-      const output = data.output as Diagnosis;
-      setSeat(inputs.seat);
-      setAnswers(inputs.answers);
-      setScores(inputs.scores);
-      setDiagnosis(output);
+      setInputs(data.inputs as unknown as Inputs);
+      setDiagnosis(data.output as unknown as Diagnosis);
       setSavedId(id);
-      setPhase("diagnosis");
+      setPhase("result");
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, navigate]);
 
-  const scrollTo = (el: HTMLElement | null) =>
-    setTimeout(() => el?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
-
-  const currentDomain = DOMAIN_ORDER[domainIndex];
-  const currentProbe = currentDomain ? getProbe(seat.function_id, currentDomain) : null;
-  const currentAnswers: Answers = currentDomain ? answers[currentDomain] || {} : {};
-  const currentChoices = currentDomain ? DOMAIN_CHOICES[currentDomain] : null;
-
-  // Build the live blueprint state from current phase + answers
-  const pillarTiers: BlueprintState["pillarTiers"] = {};
-  DOMAIN_ORDER.forEach((d) => {
-    const a = answers[d];
-    if (a && a.substrate_tier !== undefined) {
-      pillarTiers[d] = a.substrate_tier;
-    } else if (scores[d]) {
-      pillarTiers[d] = scores[d]!.current_tier;
-    }
-  });
-  const blueprintState: BlueprintState = {
-    function_label: seat.function_label,
-    unit_shape: seat.unit_shape,
-    scale: seat.scale,
-    seatPlaced: phase !== "intro",
-    pillarTiers,
-    activeDomain: phase === "probe" ? currentDomain ?? null : null,
-    showBeams: phase === "scoring" || phase === "synthesizing" || phase === "diagnosis",
-    keystoneDomain: phase === "diagnosis" ? diagnosis?.start_here.domain ?? null : null,
-  };
-
-  const pickChoice = (which: "signal" | "substrate", choice: { tier: 0 | 1 | 2 | 3; label: string }) => {
-    if (!currentDomain) return;
-    setAnswers((prev) => ({
-      ...prev,
-      [currentDomain]: {
-        ...(prev[currentDomain] || {}),
-        [`${which}_tier`]: choice.tier,
-        [`${which}_label`]: choice.label,
-      },
+  const toggle = (key: "tools" | "limitations", value: string) => {
+    setInputs((p) => ({
+      ...p,
+      [key]: p[key].includes(value)
+        ? p[key].filter((x) => x !== value)
+        : [...p[key], value],
     }));
   };
 
-  const setNote = (which: "signal" | "substrate", value: string) => {
-    if (!currentDomain) return;
-    setAnswers((prev) => ({
-      ...prev,
-      [currentDomain]: { ...(prev[currentDomain] || {}), [`${which}_note`]: value },
-    }));
-  };
+  const canSubmit = inputs.goal.trim().length > 10;
 
-  const answerComplete = (a: Answers) =>
-    a.signal_tier !== undefined && a.substrate_tier !== undefined;
-
-  const startProbe = () => {
-    setPhase("probe");
-    setDomainIndex(0);
-    scrollTo(probeRef.current);
-  };
-
-  const scoreDomain = async (domain: DomainId): Promise<DomainScore | null> => {
-    const a = answers[domain];
-    if (!a || !answerComplete(a)) return null;
-    setScoringDomain(domain);
-    await new Promise((resolve) => setTimeout(resolve, 250));
-    try {
-      return buildDomainScore(domain, a, seat.scale);
-    } finally {
-      setScoringDomain(null);
-    }
-  };
-
-  const advance = async () => {
-    if (!currentDomain) return;
-    if (!answerComplete(currentAnswers)) {
-      toast.error("Pick an option for both questions.");
+  const runDiagnosis = async () => {
+    if (!canSubmit) {
+      toast.error("Tell us the goal in one or two sentences first.");
       return;
     }
-    if (domainIndex < DOMAIN_ORDER.length - 1) {
-      setDomainIndex(domainIndex + 1);
-      scrollTo(probeRef.current);
-    } else {
-      // All four answered. Score each, then synthesise.
-      setPhase("scoring");
-      scrollTo(diagnosisRef.current);
-      const collected: Partial<Record<DomainId, DomainScore>> = {};
-      for (const d of DOMAIN_ORDER) {
-        const s = await scoreDomain(d);
-        if (!s) {
-          setPhase("probe");
-          return;
-        }
-        collected[d] = s;
-        setScores({ ...collected });
+    setPhase("diagnosing");
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-brief", {
+        body: inputs,
+      });
+      let result: Diagnosis;
+      if (error || !data?.diagnosis) {
+        console.warn("AI diagnosis unavailable, using fallback:", error);
+        result = fallbackDiagnosis(inputs);
+      } else {
+        result = data.diagnosis as Diagnosis;
       }
-      // Synthesise
-      setPhase("synthesizing");
-      try {
-        const { data, error } = await supabase.functions.invoke("generate-brief", {
-          body: {
-            mode: "synthesize_diagnosis",
-            seat,
-            scores: collected,
-            raw_answers: answers,
-          },
-        });
-        if (error) throw error;
-        setDiagnosis(data?.diagnosis || buildFallbackDiagnosis(seat, collected));
-        setPhase("diagnosis");
-        scrollTo(diagnosisRef.current);
-      } catch (e) {
-        console.error(e);
-        toast.error("AI narrative timed out. Showing the deterministic diagnosis.");
-        setDiagnosis(buildFallbackDiagnosis(seat, collected));
-        setPhase("diagnosis");
-        scrollTo(diagnosisRef.current);
-      }
-    }
-  };
-
-  const back = () => {
-    if (domainIndex > 0) {
-      setDomainIndex(domainIndex - 1);
-      scrollTo(probeRef.current);
+      setDiagnosis(result);
+      setPhase("result");
+    } catch (e) {
+      console.error(e);
+      setDiagnosis(fallbackDiagnosis(inputs));
+      setPhase("result");
     }
   };
 
   const saveAndShare = async () => {
-    if (!email || !email.includes("@")) {
-      toast.error("Add an email to save.");
+    if (!diagnosis) return;
+    if (!email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
+      toast.error("Enter a work email to save.");
       return;
     }
-    if (!diagnosis) return;
     setSaving(true);
     try {
       const { data, error } = await supabase
         .from("briefs")
         .insert({
           email,
-          inputs: { seat, answers, scores } as unknown as Json,
+          inputs: inputs as unknown as Json,
           output: diagnosis as unknown as Json,
         })
         .select("id")
         .single();
       if (error) throw error;
       setSavedId(data.id);
-      const url = `${window.location.origin}/the-brief/${data.id}`;
-      await navigator.clipboard.writeText(url).catch(() => {});
-      toast.success("Saved. Link copied.");
       navigate(`/the-brief/${data.id}`, { replace: true });
+      toast.success("Diagnosis saved. Link is shareable.");
     } catch (e) {
       console.error(e);
       toast.error("Could not save. Try again.");
@@ -345,539 +258,434 @@ export default function TheBrief() {
     }
   };
 
+  const reset = () => {
+    setDiagnosis(null);
+    setSavedId(null);
+    setEmail("");
+    setPhase("input");
+    navigate("/the-brief", { replace: true });
+  };
+
+  const gridState: GridState | null = diagnosis
+    ? {
+        goal: inputs.goal,
+        tools: inputs.tools,
+        ...diagnosis.grid_status,
+      }
+    : null;
+
+  // ─── Render ─────────────────────────────────────────────────────────────
+
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Intro */}
-      <section className="min-h-screen flex items-center px-6 md:px-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">The Brief</div>
-          <h1 className="text-4xl md:text-6xl font-light leading-[1.05] tracking-tight text-foreground mb-8">
-            A working diagnosis of the unit you run, and where AI actually earns its keep.
+    <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16">
+        <header className="mb-10 md:mb-14">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1 text-xs font-semibold tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+          >
+            ← Liza
+          </Link>
+          <h1 className="mt-4 text-3xl md:text-5xl font-black tracking-tight">
+            The Brief
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-4 max-w-2xl">
-            Built for operating leaders who already run a private model of how the unit should work,
-            and want it on the page with the next move named.
+          <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-2xl">
+            Tell us what you are trying to achieve with AI and what is breaking
+            today. Get back a read on your operating model and the one move that
+            closes the gap.
           </p>
-          <p className="text-base text-muted-foreground leading-relaxed mb-12 max-w-2xl">
-            Eight questions across the four domains every operator decides on: demand, capacity, quality,
-            economics. Out comes a maturity tier per domain, the bridge to the next tier, and the one place
-            to start so token spend converts to margin.
-          </p>
-          {phase === "intro" && (
-            <Button size="lg" onClick={() => { setPhase("seat"); scrollTo(probeRef.current); }} className="rounded-full px-8 h-12">
-              Start the diagnosis
-            </Button>
-          )}
-          {phase !== "intro" && (
-            <div className="text-sm text-muted-foreground">
-              {phase === "diagnosis" ? "Diagnosis ready below." : "Scroll down."}
-            </div>
-          )}
+        </header>
+
+        {phase === "input" && (
+          <InputView
+            inputs={inputs}
+            setInputs={setInputs}
+            toggle={toggle}
+            canSubmit={canSubmit}
+            onSubmit={runDiagnosis}
+          />
+        )}
+
+        {phase === "diagnosing" && <DiagnosingView />}
+
+        {phase === "result" && diagnosis && gridState && (
+          <ResultView
+            diagnosis={diagnosis}
+            gridState={gridState}
+            savedId={savedId}
+            email={email}
+            setEmail={setEmail}
+            saving={saving}
+            onSave={saveAndShare}
+            onReset={reset}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Sub-views
+// ────────────────────────────────────────────────────────────────────────────
+
+function InputView({
+  inputs,
+  setInputs,
+  toggle,
+  canSubmit,
+  onSubmit,
+}: {
+  inputs: Inputs;
+  setInputs: React.Dispatch<React.SetStateAction<Inputs>>;
+  toggle: (key: "tools" | "limitations", value: string) => void;
+  canSubmit: boolean;
+  onSubmit: () => void;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="space-y-8"
+    >
+      {/* Goal */}
+      <section
+        className="rounded-2xl border p-6 md:p-8"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
+            style={{
+              background: "hsl(var(--primary) / 0.12)",
+              color: "hsl(var(--primary))",
+            }}
+          >
+            1
+          </span>
+          <h2 className="text-lg md:text-xl font-bold">What are you trying to achieve?</h2>
+        </div>
+        <p className="text-sm text-muted-foreground mb-4">
+          One or two sentences. The goal you want AI to help you reach in your unit.
+        </p>
+        <Textarea
+          value={inputs.goal}
+          onChange={(e) => setInputs((p) => ({ ...p, goal: e.target.value }))}
+          placeholder="Example: cut sales cycle by 30% by letting reps draft and personalise outreach at scale, without losing brand voice."
+          rows={3}
+          className="resize-none"
+        />
+      </section>
+
+      {/* Tools */}
+      <section
+        className="rounded-2xl border p-6 md:p-8"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
+            style={{
+              background: "hsl(var(--primary) / 0.12)",
+              color: "hsl(var(--primary))",
+            }}
+          >
+            2
+          </span>
+          <h2 className="text-lg md:text-xl font-bold">Which AI tools are in use today?</h2>
+        </div>
+        <p className="text-sm text-muted-foreground mb-4">
+          Pick all that apply. Anything custom goes in the free text below.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {TOOL_CHIPS.map((t) => (
+            <Chip
+              key={t}
+              label={t}
+              selected={inputs.tools.includes(t)}
+              onClick={() => toggle("tools", t)}
+            />
+          ))}
         </div>
       </section>
 
-      {/* Seat + Probe */}
-      {phase !== "intro" && phase !== "diagnosis" && phase !== "scoring" && phase !== "synthesizing" && !id && (
-        <section
-          ref={probeRef}
-          className="min-h-screen px-6 md:px-12 border-t border-border/40 pt-20 pb-32"
-        >
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-10 lg:gap-14 items-start">
-            <div className="w-full max-w-2xl">
-            {phase === "seat" && (
-              <>
-                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">Act 1 of 4 . Seat</div>
-                <h2 className="text-2xl md:text-4xl font-light leading-tight text-foreground mb-3">
-                  Which seat are you in?
-                </h2>
-                <p className="text-sm text-muted-foreground mb-10">
-                  Three picks. They bound every question that follows. The examination for a Head of Ops is
-                  not the examination for a Head of Commercial.
-                </p>
+      {/* Limitations */}
+      <section
+        className="rounded-2xl border p-6 md:p-8"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className="inline-flex w-7 h-7 rounded-full items-center justify-center text-xs font-bold"
+            style={{
+              background: "hsl(var(--primary) / 0.12)",
+              color: "hsl(var(--primary))",
+            }}
+          >
+            3
+          </span>
+          <h2 className="text-lg md:text-xl font-bold">What is not working?</h2>
+        </div>
+        <p className="text-sm text-muted-foreground mb-4">
+          Pick the limitations you are hitting. Be honest.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {LIMITATION_CHIPS.map((l) => (
+            <Chip
+              key={l}
+              label={l}
+              selected={inputs.limitations.includes(l)}
+              onClick={() => toggle("limitations", l)}
+            />
+          ))}
+        </div>
+      </section>
 
-                <div className="space-y-8">
-                  <SelectField
-                    label="1. Function — the role you sit in"
-                    value={seat.function_id}
-                    onChange={(v) => {
-                      const fn = FUNCTIONS.find((f) => f.id === v);
-                      setSeat({ ...seat, function_id: v as FunctionId, function_label: fn?.label || "" });
-                    }}
-                    options={FUNCTIONS.map((f) => ({ value: f.id, label: f.label, helper: f.blurb }))}
-                    columns={2}
-                  />
-                  <SelectField
-                    label="2. What you are accountable for"
-                    helperText="The shape of the unit you run. Pick the closest match."
-                    value={seat.unit_shape}
-                    onChange={(v) => setSeat({ ...seat, unit_shape: v as UnitShape })}
-                    options={UNIT_SHAPES.map((s) => ({ value: s.id, label: s.label }))}
-                    columns={2}
-                  />
-                  <SelectField
-                    label="3. Scale — total headcount of the company"
-                    value={seat.scale}
-                    onChange={(v) => setSeat({ ...seat, scale: v as Scale })}
-                    options={SCALES.map((s) => ({ value: s.id, label: s.label }))}
-                    columns={5}
-                  />
-                </div>
-
-                <div className="sticky bottom-4 mt-12 flex justify-end">
-                  <div className="rounded-full bg-background/90 backdrop-blur border border-border/60 shadow-lg p-1.5">
-                    <Button onClick={startProbe} className="rounded-full px-8">
-                      Begin the four domains
-                    </Button>
-                  </div>
-                </div>
-              </>
-            )}
-
-            {phase === "probe" && currentDomain && currentProbe && currentAnswers && (
-              <>
-                <div className="flex items-center justify-between mb-8">
-                  <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Act 2 of 4 . Examination . {DOMAINS[domainIndex].label}
-                  </div>
-                  <div className="text-xs text-muted-foreground tabular-nums">
-                    Domain {domainIndex + 1} of {DOMAIN_ORDER.length}
-                  </div>
-                </div>
-
-                <h2 className="text-3xl md:text-4xl font-light leading-tight text-foreground mb-3">
-                  {DOMAINS[domainIndex].label}
-                </h2>
-                <p className="text-base text-muted-foreground mb-2">{DOMAINS[domainIndex].one_liner}</p>
-                <p className="text-sm text-muted-foreground mb-12">
-                  Decision you own here: {DOMAINS[domainIndex].decision}
-                </p>
-
-                <div className="space-y-10">
-                  {currentChoices && (
-                    <>
-                      <ChoiceField
-                        label="The signal you trust"
-                        prompt={currentProbe.signal.prompt}
-                        helper={currentProbe.signal.helper}
-                        choices={currentChoices.signal}
-                        selectedTier={currentAnswers.signal_tier}
-                        onPick={(c) => pickChoice("signal", c)}
-                        note={currentAnswers.signal_note || ""}
-                        onNoteChange={(v) => setNote("signal", v)}
-                      />
-                      <ChoiceField
-                        label="The system that produces it"
-                        prompt={currentProbe.substrate.prompt}
-                        helper={currentProbe.substrate.helper}
-                        choices={currentChoices.substrate}
-                        selectedTier={currentAnswers.substrate_tier}
-                        onPick={(c) => pickChoice("substrate", c)}
-                        note={currentAnswers.substrate_note || ""}
-                        onNoteChange={(v) => setNote("substrate", v)}
-                      />
-                    </>
-                  )}
-                </div>
-
-                <div className="sticky bottom-4 mt-12 flex items-center justify-between gap-2 rounded-full bg-background/90 backdrop-blur border border-border/60 shadow-lg p-1.5">
-                  <Button variant="ghost" onClick={back} disabled={domainIndex === 0} className="rounded-full">
-                    Back
-                  </Button>
-                  <Button
-                    onClick={advance}
-                    disabled={!answerComplete(currentAnswers)}
-                    className="rounded-full px-8"
-                  >
-                    {domainIndex === DOMAIN_ORDER.length - 1 ? "Score the diagnosis" : "Next domain"}
-                  </Button>
-                </div>
-
-                <div className="mt-10 flex gap-1">
-                  {DOMAIN_ORDER.map((d, i) => (
-                    <div
-                      key={d}
-                      className={`h-0.5 flex-1 transition-colors ${i <= domainIndex ? "bg-foreground/60" : "bg-border"}`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-            </div>
-
-            {/* Right pane: live blueprint */}
-            <div className="hidden lg:block sticky top-8">
-              <div className="aspect-[770/430] w-full">
-                <BlueprintCanvas state={blueprintState} />
-              </div>
-              <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
-                Every answer places a pillar. Tier 0 reads thin and red; Tier 3 reads tall and green.
-                Beams connect at diagnosis. A keystone lands on the one place to start.
-              </p>
-            </div>
-
-            {/* Mobile blueprint, stacked below */}
-            <div className="lg:hidden">
-              <div className="aspect-[770/430] w-full">
-                <BlueprintCanvas state={blueprintState} />
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Scoring / synthesising */}
-      {(phase === "scoring" || phase === "synthesizing") && (
-        <section
-          ref={diagnosisRef}
-          className="min-h-screen px-6 md:px-12 border-t border-border/40 pt-20 pb-32"
-        >
-          <div className="max-w-6xl mx-auto w-full">
-            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-6">
-              Act 3 of 4 . Diagnosis . {phase === "scoring" ? "Scoring" : "Synthesising"}
-            </div>
-            <div className="text-2xl md:text-3xl font-light text-foreground mb-10 max-w-3xl">
-              {phase === "scoring"
-                ? scoringDomain
-                  ? `Reading your ${scoringDomain} answers against the four-tier scale.`
-                  : "Reading your answers."
-                : "Synthesising the four domains into one page."}
-            </div>
-            <div className="aspect-[770/430] w-full mb-10">
-              <BlueprintCanvas state={blueprintState} />
-            </div>
-            <div className="space-y-3 max-w-2xl">
-              {DOMAIN_ORDER.map((d) => {
-                const done = !!scores[d];
-                const active = scoringDomain === d;
-                return (
-                  <div
-                    key={d}
-                    className={`flex items-center justify-between py-2 px-4 rounded-md border ${
-                      done ? "border-emerald-500/40 bg-emerald-500/5" : active ? "border-foreground/40" : "border-border/40"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-2 h-2 rounded-full ${
-                          done ? "bg-emerald-500" : active ? "bg-foreground animate-pulse" : "bg-border"
-                        }`}
-                      />
-                      <span className="text-sm font-medium">{DOMAINS.find((x) => x.id === d)?.label}</span>
-                    </div>
-                    {done && (
-                      <span className="text-xs text-muted-foreground">
-                        Tier {scores[d]!.current_tier} . target Tier {scores[d]!.target_tier}
-                      </span>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Diagnosis */}
-      {phase === "diagnosis" && diagnosis && (
-        <section
-          ref={diagnosisRef}
-          className="px-6 md:px-12 border-t border-border/40 py-20 md:py-32"
-        >
-          <div className="max-w-5xl mx-auto">
-            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-8">
-              Act 4 of 4 . Diagnosis and Prescription . {seat.function_label}
-            </div>
-
-            <h1
-              className="text-3xl md:text-4xl font-normal leading-tight text-foreground mb-12"
-              style={{ fontFamily: 'Georgia, "Iowan Old Style", serif' }}
-            >
-              {diagnosis.title}
-            </h1>
-
-            {/* The finished architecture */}
-            <div className="aspect-[770/430] w-full mb-16">
-              <BlueprintCanvas state={blueprintState} />
-            </div>
-
-            <div className="max-w-3xl">
-            {/* Narrative */}
-            <SectionHeading>The unit today</SectionHeading>
-            <div className="space-y-6" style={{ fontFamily: 'Georgia, "Iowan Old Style", serif' }}>
-              {diagnosis.narrative.map((p, i) => (
-                <p key={i} className="text-lg leading-[1.75] text-foreground">{p}</p>
-              ))}
-            </div>
-
-            {/* Bridge per domain */}
-            <SectionHeading>The four domains, scored</SectionHeading>
-            <div className="space-y-6">
-              {DOMAIN_ORDER.map((d) => {
-                const s = scores[d];
-                const def = DOMAINS.find((x) => x.id === d)!;
-                if (!s) return null;
-                return (
-                  <div key={d} className="border border-border/60 rounded-lg p-6">
-                    <div className="flex items-baseline justify-between mb-3">
-                      <h3 className="text-lg font-medium text-foreground">{def.label}</h3>
-                      <div className="text-xs tabular-nums text-muted-foreground">
-                        Tier {s.current_tier} {TIERS[s.current_tier].label} → Tier {s.target_tier} {TIERS[s.target_tier].label}
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground italic mb-4">"{s.justification}"</p>
-                    <div className="space-y-2 text-sm">
-                      <div>
-                        <span className="text-muted-foreground uppercase tracking-wider text-xs mr-2">Bridge</span>
-                        <span className="text-foreground">{s.bridge}</span>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground uppercase tracking-wider text-xs mr-2">Effort</span>
-                        <span className="text-foreground">{s.effort_weeks} weeks, {s.effort_role}</span>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground uppercase tracking-wider text-xs mr-2">Unlock</span>
-                        <span className="text-foreground">{s.unlock}</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* AI economics */}
-            <SectionHeading>Where AI earns its keep in your unit</SectionHeading>
-            <div className="border border-border/60 rounded-lg overflow-hidden">
-              {diagnosis.ai_ranking.map((r, i) => {
-                const def = DOMAINS.find((x) => x.id === r.domain);
-                const roiColor =
-                  r.roi === "high"
-                    ? "text-emerald-600 dark:text-emerald-400"
-                    : r.roi === "medium"
-                      ? "text-amber-600 dark:text-amber-400"
-                      : "text-muted-foreground";
-                return (
-                  <div
-                    key={r.domain}
-                    className={`p-5 ${i > 0 ? "border-t border-border/40" : ""}`}
-                  >
-                    <div className="flex items-baseline justify-between mb-1">
-                      <span className="font-medium text-foreground">{def?.label}</span>
-                      <span className={`text-xs uppercase tracking-wider font-semibold ${roiColor}`}>
-                        {r.roi} ROI
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{r.why}</p>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Start here */}
-            <SectionHeading>Start here</SectionHeading>
-            <div className="border-l-2 border-foreground pl-5 py-2">
-              <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-1">
-                {DOMAINS.find((x) => x.id === diagnosis.start_here.domain)?.label}
-              </div>
-              <p className="text-lg leading-snug text-foreground">{diagnosis.start_here.reason}</p>
-            </div>
-
-            {/* Trade-off */}
-            <SectionHeading>The trade-off you are avoiding</SectionHeading>
-            <p className="text-lg leading-[1.75] text-foreground" style={{ fontFamily: 'Georgia, "Iowan Old Style", serif' }}>
-              {diagnosis.trade_off}
-            </p>
-
-            {/* Handoff */}
-            <div className="mt-24 pt-12 border-t border-border/40">
-              <p className="text-xl font-light text-foreground leading-snug mb-3">
-                The diagnosis points at a substrate underneath. That substrate is what LIZA is.
-              </p>
-              <p className="text-muted-foreground mb-8">
-                Defined context for the unit, captured standards from the people doing the work, one system
-                that holds them and feeds every tool. The diagnosis names the gap. LIZA is the build.
-              </p>
-              <div className="flex flex-wrap gap-3 items-center">
-                <Button onClick={() => navigate("/")} variant="outline" className="rounded-full">
-                  See LIZA
-                </Button>
-                {!savedId && (
-                  <div className="flex items-center gap-2">
-                    <Input
-                      type="email"
-                      placeholder="you@company.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-64 rounded-full"
-                    />
-                    <Button onClick={saveAndShare} disabled={saving} className="rounded-full">
-                      {saving ? "Saving" : "Save and share"}
-                    </Button>
-                  </div>
-                )}
-                {savedId && (
-                  <Button
-                    variant="outline"
-                    className="rounded-full"
-                    onClick={() => {
-                      const url = `${window.location.origin}/the-brief/${savedId}`;
-                      navigator.clipboard.writeText(url).catch(() => {});
-                      toast.success("Link copied.");
-                    }}
-                  >
-                    Copy share link
-                  </Button>
-                )}
-              </div>
-            </div>
-            </div>
-          </div>
-        </section>
-      )}
-    </div>
-  );
-}
-
-function SelectField({
-  label,
-  value,
-  onChange,
-  options,
-  columns = 1,
-  helperText,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string; helper?: string }[];
-  columns?: 1 | 2 | 3 | 5;
-  helperText?: string;
-}) {
-  const colClass =
-    columns === 5
-      ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-5"
-      : columns === 3
-        ? "grid-cols-1 sm:grid-cols-3"
-        : columns === 2
-          ? "grid-cols-1 sm:grid-cols-2"
-          : "grid-cols-1";
-  return (
-    <div>
-      <div className="text-sm font-medium text-foreground mb-1">{label}</div>
-      {helperText && (
-        <div className="text-xs text-muted-foreground mb-3">{helperText}</div>
-      )}
-      {!helperText && <div className="mb-3" />}
-      <div className={`grid gap-2 ${colClass}`}>
-        {options.map((o) => {
-          const selected = o.value === value;
-          return (
-            <button
-              key={o.value}
-              type="button"
-              onClick={() => onChange(o.value)}
-              aria-pressed={selected}
-              className={`text-left px-4 py-3 rounded-md border transition-colors cursor-pointer flex items-start gap-3 ${
-                selected
-                  ? "border-foreground bg-foreground/5"
-                  : "border-border/60 hover:border-foreground/60 hover:bg-foreground/[0.02]"
-              }`}
-            >
-              <span
-                className={`mt-1 h-4 w-4 rounded-full border flex items-center justify-center shrink-0 ${
-                  selected ? "border-foreground" : "border-border"
-                }`}
-              >
-                {selected && <span className="h-2 w-2 rounded-full bg-foreground" />}
-              </span>
-              <span className="flex-1">
-                <span className="block text-sm font-medium text-foreground">{o.label}</span>
-                {o.helper && (
-                  <span className="block text-xs text-muted-foreground mt-0.5">{o.helper}</span>
-                )}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function ChoiceField({
-  label,
-  prompt,
-  helper,
-  choices,
-  selectedTier,
-  onPick,
-  note,
-  onNoteChange,
-}: {
-  label: string;
-  prompt: string;
-  helper: string;
-  choices: { tier: 0 | 1 | 2 | 3; label: string; sub?: string }[];
-  selectedTier: 0 | 1 | 2 | 3 | undefined;
-  onPick: (c: { tier: 0 | 1 | 2 | 3; label: string }) => void;
-  note: string;
-  onNoteChange: (v: string) => void;
-}) {
-  return (
-    <div>
-      <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground mb-2">{label}</div>
-      <div className="text-base text-foreground mb-1">{prompt}</div>
-      <div className="text-xs text-muted-foreground mb-4">{helper}</div>
-      <div className="grid gap-2">
-        {choices.map((c) => {
-          const selected = selectedTier === c.tier;
-          return (
-            <button
-              key={c.tier}
-              type="button"
-              onClick={() => onPick({ tier: c.tier, label: c.label })}
-              aria-pressed={selected}
-              className={`text-left px-4 py-3 rounded-md border transition-colors cursor-pointer flex items-start gap-3 ${
-                selected
-                  ? "border-foreground bg-foreground/5"
-                  : "border-border/60 hover:border-foreground/60 hover:bg-foreground/[0.02]"
-              }`}
-            >
-              <span
-                className={`mt-1 h-4 w-4 rounded-full border flex items-center justify-center shrink-0 ${
-                  selected ? "border-foreground" : "border-border"
-                }`}
-              >
-                {selected && <span className="h-2 w-2 rounded-full bg-foreground" />}
-              </span>
-              <span className="flex-1">
-                <span className="block text-sm font-medium text-foreground leading-snug">{c.label}</span>
-                {c.sub && (
-                  <span className="block text-xs text-muted-foreground mt-0.5">{c.sub}</span>
-                )}
-              </span>
-            </button>
-          );
-        })}
-      </div>
-      <details className="mt-3 group">
-        <summary className="text-xs text-muted-foreground cursor-pointer select-none hover:text-foreground transition-colors">
-          Add a sentence of context (optional)
-        </summary>
+      {/* Optional free text */}
+      <section
+        className="rounded-2xl border p-6 md:p-8"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        <h2 className="text-lg md:text-xl font-bold mb-3">Anything else worth knowing? (optional)</h2>
         <Textarea
-          value={note}
-          onChange={(e) => onNoteChange(e.target.value)}
-          className="mt-2 min-h-[70px] text-sm leading-relaxed resize-none bg-card border-border/60 focus-visible:ring-1"
-          placeholder="Anything specific about how this actually shows up in your unit."
+          value={inputs.free_text}
+          onChange={(e) => setInputs((p) => ({ ...p, free_text: e.target.value }))}
+          placeholder="Industry, team size, specific workflow, recent failed pilot, anything that adds context."
+          rows={3}
+          className="resize-none"
         />
-      </details>
+      </section>
+
+      <div className="flex justify-end">
+        <Button
+          size="lg"
+          onClick={onSubmit}
+          disabled={!canSubmit}
+          className="font-semibold"
+        >
+          Diagnose my operating model
+          <ArrowRight className="ml-2 w-4 h-4" />
+        </Button>
+      </div>
+    </motion.div>
+  );
+}
+
+function DiagnosingView() {
+  return (
+    <div className="flex flex-col items-center justify-center py-20">
+      <Loader2 className="w-8 h-8 animate-spin text-primary mb-4" />
+      <p className="text-sm text-muted-foreground">
+        Reading your stack, mapping the gaps, naming the correction.
+      </p>
     </div>
   );
 }
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
+function ResultView({
+  diagnosis,
+  gridState,
+  savedId,
+  email,
+  setEmail,
+  saving,
+  onSave,
+  onReset,
+}: {
+  diagnosis: Diagnosis;
+  gridState: GridState;
+  savedId: string | null;
+  email: string;
+  setEmail: (v: string) => void;
+  saving: boolean;
+  onSave: () => void;
+  onReset: () => void;
+}) {
   return (
-    <h2 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-16 mb-5 font-medium">
-      {children}
-    </h2>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="space-y-10"
+    >
+      <div>
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mb-2">
+          Your diagnosis
+        </p>
+        <h2 className="text-2xl md:text-4xl font-black tracking-tight">
+          {diagnosis.title}
+        </h2>
+        <p className="mt-4 text-base md:text-lg leading-relaxed text-foreground/85 max-w-3xl">
+          {diagnosis.current_model_read}
+        </p>
+      </div>
+
+      {/* Grid */}
+      <section>
+        <SectionHeading icon={Eye} label="Mapped to the LIZA grid" />
+        <OperatingGrid state={gridState} />
+      </section>
+
+      {/* Tool limitations */}
+      {diagnosis.tool_limitations.length > 0 && (
+        <section>
+          <SectionHeading icon={Wrench} label="What your tools cannot do for this goal" />
+          <div className="grid md:grid-cols-2 gap-3">
+            {diagnosis.tool_limitations.map((t, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * i }}
+                className="rounded-xl border p-4"
+                style={{
+                  background: "hsl(var(--card))",
+                  borderColor: "hsl(var(--border))",
+                }}
+              >
+                <p className="text-sm font-bold">{t.tool}</p>
+                <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                  {t.limitation}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Blind spots */}
+      <section>
+        <SectionHeading icon={AlertTriangle} label="What you probably have not thought about" />
+        <div className="space-y-2">
+          {diagnosis.blind_spots.map((b, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08 * i }}
+              className="rounded-xl border p-5"
+              style={{
+                background: "hsl(var(--card))",
+                borderColor: "hsl(var(--border))",
+              }}
+            >
+              <p className="text-sm font-bold">{b.title}</p>
+              <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                {b.why}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Correction */}
+      <section
+        className="rounded-2xl p-6 md:p-8 border-2"
+        style={{
+          background: "hsl(var(--primary) / 0.04)",
+          borderColor: "hsl(var(--primary) / 0.3)",
+        }}
+      >
+        <div className="flex items-center gap-2 mb-3">
+          <Sparkles className="w-4 h-4 text-primary" />
+          <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+            The correction
+          </span>
+        </div>
+        <h3 className="text-xl md:text-2xl font-bold leading-snug">
+          {diagnosis.correction.move}
+        </h3>
+        <div className="grid md:grid-cols-2 gap-4 mt-5">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1">
+              Scope
+            </p>
+            <p className="text-sm leading-relaxed">{diagnosis.correction.scope}</p>
+          </div>
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1">
+              How LIZA delivers it
+            </p>
+            <p className="text-sm leading-relaxed">{diagnosis.correction.liza_capability}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Save / share / restart */}
+      <section
+        className="rounded-2xl border p-6 md:p-8"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        {savedId ? (
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-bold">Saved. Share this link.</p>
+              <p className="text-xs text-muted-foreground mt-1 break-all">
+                {window.location.origin}/the-brief/{savedId}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  navigator.clipboard.writeText(`${window.location.origin}/the-brief/${savedId}`);
+                  toast.success("Link copied.");
+                }}
+              >
+                <Share2 className="w-4 h-4 mr-2" />
+                Copy link
+              </Button>
+              <Button variant="ghost" onClick={onReset}>
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Run another
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col md:flex-row md:items-end gap-3">
+            <div className="flex-1">
+              <p className="text-sm font-bold mb-1">Save this diagnosis</p>
+              <p className="text-xs text-muted-foreground mb-3">
+                Get a shareable link and we will send the brief to your inbox.
+              </p>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@company.com"
+              />
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={onSave} disabled={saving}>
+                {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
+                Save and share
+              </Button>
+              <Button variant="ghost" onClick={onReset}>
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Run another
+              </Button>
+            </div>
+          </div>
+        )}
+      </section>
+    </motion.div>
+  );
+}
+
+function SectionHeading({
+  icon: Icon,
+  label,
+}: {
+  icon: typeof Eye;
+  label: string;
+}) {
+  return (
+    <div className="flex items-center gap-2 mb-4">
+      <Icon className="w-4 h-4 text-muted-foreground" />
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+        {label}
+      </p>
+    </div>
   );
 }
