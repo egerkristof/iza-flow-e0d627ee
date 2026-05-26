@@ -388,7 +388,7 @@ function InputView({
 }: {
   inputs: Inputs;
   setInputs: React.Dispatch<React.SetStateAction<Inputs>>;
-  toggle: (key: "tools" | "use_cases", value: string) => void;
+  toggle: (key: "tools" | "use_cases" | "handoff", value: string) => void;
   setStream: (s: StreamId, v: StreamStatus) => void;
   setAudit: (a: AuditId, v: AuditStatus) => void;
   canSubmit: boolean;
