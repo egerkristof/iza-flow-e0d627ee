@@ -966,53 +966,60 @@ function ResultView({
       transition={{ duration: 0.5 }}
       className="space-y-12"
     >
-      {/* 0. READING MAP — tells the reader the shape of what follows */}
-      <ReadingMap />
+      {/* 1. THE MAP IS THE MIRROR — verdict rendered as caption */}
+      {(() => {
+        const sMap = streamMapFromCoverage(diagnosis.stream_coverage);
+        const aMap = auditMapFromCoverage(diagnosis.audit_coverage);
+        const bMap = bundleMapFromGaps(diagnosis.bundle_gaps as any);
+        const highlight = pickHighlightStream(sMap);
+        return (
+          <section className="grid lg:grid-cols-[1fr_440px] gap-8 items-start">
+            <div className="space-y-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                The verdict
+              </p>
+              <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05]">
+                {diagnosis.verdict || diagnosis.title}
+              </h2>
+              <p className="text-sm text-muted-foreground max-w-md">
+                The picture on the right is your operating model as we heard it. The arm
+                pulsing is where the next move lives.
+              </p>
+            </div>
+            <DiagnosticMap
+              streams={sMap}
+              audits={aMap}
+              bundle={bMap}
+              highlightStream={highlight}
+            />
+          </section>
+        );
+      })()}
 
-      {/* 1. VERDICT — the line they would read aloud to their CEO */}
-      <div
-        className="rounded-2xl border-2 p-6 md:p-10"
-        style={{
-          background:
-            "linear-gradient(135deg, hsl(var(--primary) / 0.06) 0%, hsl(var(--card)) 60%)",
-          borderColor: "hsl(var(--primary) / 0.4)",
-        }}
-      >
-        <FlowLabel step="1" label="The verdict" sub="What is actually true today" />
-        <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-tight">
-          {diagnosis.verdict || diagnosis.title}
-        </h2>
-      </div>
-
-      <FlowConnector text="Because of this..." />
-
-      {/* 2. MIRROR — quote their own selections back at them */}
-      <Mirror diagnosis={diagnosis} inputs={inputs} />
-
-      <FlowConnector text="Which costs you..." />
-
-      {/* 3. COST OF THE GAP — turns diagnostic into budget */}
+      {/* 2. COST — one number, one caption */}
       {diagnosis.cost_of_gap && (
         <section
-          className="rounded-2xl border p-6 md:p-8"
+          className="rounded-2xl border p-6 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
           style={{
             background: "hsl(0 70% 55% / 0.04)",
             borderColor: "hsl(0 70% 55% / 0.3)",
           }}
         >
-          <FlowLabel step="3" label="The cost" sub="Order of magnitude, not a quote" tone="warn" />
-          <p className="text-lg md:text-2xl font-bold leading-snug">
-            {diagnosis.cost_of_gap.headline}
-          </p>
-          <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-3xl">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: "hsl(0 70% 50%)" }}>
+              The cost of the gap
+            </p>
+            <p className="text-2xl md:text-4xl font-black leading-tight mt-1.5">
+              {diagnosis.cost_of_gap.headline}
+            </p>
+          </div>
+          <p className="text-xs text-muted-foreground max-w-xs md:text-right">
             {diagnosis.cost_of_gap.math}
           </p>
         </section>
       )}
 
-      <FlowConnector text="So the one move is..." />
-
-      {/* 4. THE MOVE — promoted to right after Cost */}
+      {/* 3. THE MOVE — one imperative + three stops */}
       <section
         className="rounded-2xl p-6 md:p-8 border-2"
         style={{
@@ -1020,7 +1027,9 @@ function ResultView({
           borderColor: "hsl(var(--primary) / 0.3)",
         }}
       >
-        <FlowLabel step="4" label="The move" sub="One correction, sequenced" />
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-2">
+          The one move
+        </p>
         <h3 className="text-2xl md:text-3xl font-black leading-tight tracking-tight">
           {diagnosis.correction.move}
         </h3>
