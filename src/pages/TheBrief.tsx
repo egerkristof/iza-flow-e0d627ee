@@ -226,9 +226,11 @@ export default function TheBrief() {
   const setAudit = (a: AuditId, v: AuditStatus) =>
     setInputs((p) => ({ ...p, audits: { ...p.audits, [a]: v } }));
 
-  const streamsAnswered = STREAMS.every((s) => inputs.streams[s.id] !== null);
-  const auditsAnswered = AUDITS.every((a) => inputs.audits[a.id] !== null);
-  const canSubmit = !!inputs.team && streamsAnswered && auditsAnswered;
+  // Relaxed for narrative-first flow: any extracted signal is enough to draw a read.
+  // Nulls are handled by the deterministic fallback inside the engine.
+  const streamsAnswered = STREAMS.some((s) => inputs.streams[s.id] !== null);
+  const auditsAnswered = AUDITS.some((a) => inputs.audits[a.id] !== null);
+  const canSubmit = !!inputs.team || streamsAnswered || auditsAnswered;
 
   const runDiagnosis = async () => {
     if (!canSubmit) {
