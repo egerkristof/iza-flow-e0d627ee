@@ -159,7 +159,12 @@ export default function TheBrief() {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
 
-  const [phase, setPhase] = useState<Phase>("input");
+  const [phase, setPhase] = useState<Phase>("narrative");
+  const [narrative, setNarrative] = useState("");
+  const [followUp, setFollowUp] = useState<{ question: string; focus: string } | null>(null);
+  const [followUpAnswer, setFollowUpAnswer] = useState("");
+  const [extracting, setExtracting] = useState(false);
+  const [confidenceNote, setConfidenceNote] = useState<string>("");
   const [inputs, setInputs] = useState<Inputs>({
     team: null,
     vantage: null,
