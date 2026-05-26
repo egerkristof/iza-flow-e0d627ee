@@ -50,6 +50,13 @@ import {
 import { OperatorCompass } from "@/components/brief/OperatorCompass";
 import { GovernanceBar } from "@/components/brief/GovernanceBar";
 import { BundleGap } from "@/components/brief/BundleGap";
+import {
+  DiagnosticMap,
+  streamMapFromCoverage,
+  auditMapFromCoverage,
+  bundleMapFromGaps,
+  pickHighlightStream,
+} from "@/components/brief/DiagnosticMap";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Types
@@ -68,7 +75,7 @@ type Inputs = {
   free_text: string;
 };
 
-type Phase = "input" | "diagnosing" | "result";
+type Phase = "narrative" | "extracting" | "confirm" | "diagnosing" | "result";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Small helpers
@@ -148,11 +155,26 @@ const AUDIT_OPTS: { value: AuditStatus; label: string; color: string }[] = [
 // Page
 // ────────────────────────────────────────────────────────────────────────────
 
+// Strip nulls from extracted status objects so we never overwrite with null.
+function cleanStatus<T extends string>(obj: Record<string, T | null> | undefined): Record<string, T> {
+  if (!obj) return {};
+  const out: Record<string, T> = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (v) out[k] = v;
+  }
+  return out;
+}
+
 export default function TheBrief() {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
 
-  const [phase, setPhase] = useState<Phase>("input");
+  const [phase, setPhase] = useState<Phase>("narrative");
+  const [narrative, setNarrative] = useState("");
+  const [followUp, setFollowUp] = useState<{ question: string; focus: string } | null>(null);
+  const [followUpAnswer, setFollowUpAnswer] = useState("");
+  const [extracting, setExtracting] = useState(false);
+  const [confidenceNote, setConfidenceNote] = useState<string>("");
   const [inputs, setInputs] = useState<Inputs>({
     team: null,
     vantage: null,
@@ -204,9 +226,11 @@ export default function TheBrief() {
   const setAudit = (a: AuditId, v: AuditStatus) =>
     setInputs((p) => ({ ...p, audits: { ...p.audits, [a]: v } }));
 
-  const streamsAnswered = STREAMS.every((s) => inputs.streams[s.id] !== null);
-  const auditsAnswered = AUDITS.every((a) => inputs.audits[a.id] !== null);
-  const canSubmit = !!inputs.team && streamsAnswered && auditsAnswered;
+  // Relaxed for narrative-first flow: any extracted signal is enough to draw a read.
+  // Nulls are handled by the deterministic fallback inside the engine.
+  const streamsAnswered = STREAMS.some((s) => inputs.streams[s.id] !== null);
+  const auditsAnswered = AUDITS.some((a) => inputs.audits[a.id] !== null);
+  const canSubmit = !!inputs.team || streamsAnswered || auditsAnswered;
 
   const runDiagnosis = async () => {
     if (!canSubmit) {
@@ -304,7 +328,11 @@ export default function TheBrief() {
     setDiagnosis(null);
     setSavedId(null);
     setEmail("");
-    setPhase("input");
+    setPhase("narrative");
+    setNarrative("");
+    setFollowUp(null);
+    setFollowUpAnswer("");
+    setConfidenceNote("");
     setInputs({
       team: null,
       vantage: null,
@@ -323,7 +351,7 @@ export default function TheBrief() {
   return (
     <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <header className="mb-10 md:mb-14">
+        <header className="mb-8 md:mb-10">
           <Link
             to="/"
             className="inline-flex items-center gap-1 text-xs font-semibold tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition-colors"
@@ -334,23 +362,67 @@ export default function TheBrief() {
             The Brief
           </p>
           <h1 className="mt-2 text-3xl md:text-5xl font-black tracking-tight max-w-3xl">
-            You have AI everywhere in your org. You cannot see what it is doing.
+            Tell us one story. We will draw your operating model back at you.
           </h1>
           <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl">
-            Three minutes. Five sections. You get back a read on where your AI is blind,
-            what it costs you, and the one move that closes the biggest gap.
+            One paragraph. The map on the right fills in as you talk. Then a verdict, a
+            cost, and one move.
           </p>
         </header>
 
-        {phase === "input" && (
-          <InputView
+        {(phase === "narrative" || phase === "extracting" || phase === "confirm") && (
+          <NarrativeFlow
+            phase={phase}
+            narrative={narrative}
+            setNarrative={setNarrative}
             inputs={inputs}
             setInputs={setInputs}
-            toggle={toggle}
             setStream={setStream}
             setAudit={setAudit}
-            canSubmit={canSubmit}
-            onSubmit={runDiagnosis}
+            toggle={toggle}
+            extracting={extracting}
+            confidenceNote={confidenceNote}
+            followUp={followUp}
+            followUpAnswer={followUpAnswer}
+            setFollowUpAnswer={setFollowUpAnswer}
+            onExtract={async () => {
+              if (narrative.trim().length < 20) {
+                toast.error("A couple of sentences sharpen the read.");
+                return;
+              }
+              setExtracting(true);
+              setPhase("extracting");
+              try {
+                const { data, error } = await supabase.functions.invoke("extract-brief", {
+                  body: { narrative, follow_up_answer: followUpAnswer || undefined },
+                });
+                if (error || !data?.extraction) {
+                  throw error || new Error("No extraction");
+                }
+                const ex = data.extraction;
+                setInputs((p) => ({
+                  ...p,
+                  team: (ex.team as TeamId) || p.team,
+                  vantage: (ex.vantage as VantageId) || p.vantage,
+                  bruise: ex.bruise || p.bruise,
+                  tools: Array.isArray(ex.tools) ? ex.tools : p.tools,
+                  handoff: Array.isArray(ex.handoff) ? ex.handoff : p.handoff,
+                  streams: { ...p.streams, ...cleanStatus(ex.streams) },
+                  audits: { ...p.audits, ...cleanStatus(ex.audits) },
+                  free_text: narrative,
+                }));
+                setConfidenceNote(ex.confidence_note || "");
+                setFollowUp(data.follow_up || null);
+                setPhase("confirm");
+              } catch (e) {
+                console.error(e);
+                toast.error("Could not read that. Try again or use the chips below.");
+                setPhase("confirm");
+              } finally {
+                setExtracting(false);
+              }
+            }}
+            onDiagnose={runDiagnosis}
           />
         )}
 
@@ -894,53 +966,60 @@ function ResultView({
       transition={{ duration: 0.5 }}
       className="space-y-12"
     >
-      {/* 0. READING MAP — tells the reader the shape of what follows */}
-      <ReadingMap />
+      {/* 1. THE MAP IS THE MIRROR — verdict rendered as caption */}
+      {(() => {
+        const sMap = streamMapFromCoverage(diagnosis.stream_coverage);
+        const aMap = auditMapFromCoverage(diagnosis.audit_coverage);
+        const bMap = bundleMapFromGaps(diagnosis.bundle_gaps as any);
+        const highlight = pickHighlightStream(sMap);
+        return (
+          <section className="grid lg:grid-cols-[1fr_440px] gap-8 items-start">
+            <div className="space-y-4">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                The verdict
+              </p>
+              <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05]">
+                {diagnosis.verdict || diagnosis.title}
+              </h2>
+              <p className="text-sm text-muted-foreground max-w-md">
+                The picture on the right is your operating model as we heard it. The arm
+                pulsing is where the next move lives.
+              </p>
+            </div>
+            <DiagnosticMap
+              streams={sMap}
+              audits={aMap}
+              bundle={bMap}
+              highlightStream={highlight}
+            />
+          </section>
+        );
+      })()}
 
-      {/* 1. VERDICT — the line they would read aloud to their CEO */}
-      <div
-        className="rounded-2xl border-2 p-6 md:p-10"
-        style={{
-          background:
-            "linear-gradient(135deg, hsl(var(--primary) / 0.06) 0%, hsl(var(--card)) 60%)",
-          borderColor: "hsl(var(--primary) / 0.4)",
-        }}
-      >
-        <FlowLabel step="1" label="The verdict" sub="What is actually true today" />
-        <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-tight">
-          {diagnosis.verdict || diagnosis.title}
-        </h2>
-      </div>
-
-      <FlowConnector text="Because of this..." />
-
-      {/* 2. MIRROR — quote their own selections back at them */}
-      <Mirror diagnosis={diagnosis} inputs={inputs} />
-
-      <FlowConnector text="Which costs you..." />
-
-      {/* 3. COST OF THE GAP — turns diagnostic into budget */}
+      {/* 2. COST — one number, one caption */}
       {diagnosis.cost_of_gap && (
         <section
-          className="rounded-2xl border p-6 md:p-8"
+          className="rounded-2xl border p-6 md:p-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
           style={{
             background: "hsl(0 70% 55% / 0.04)",
             borderColor: "hsl(0 70% 55% / 0.3)",
           }}
         >
-          <FlowLabel step="3" label="The cost" sub="Order of magnitude, not a quote" tone="warn" />
-          <p className="text-lg md:text-2xl font-bold leading-snug">
-            {diagnosis.cost_of_gap.headline}
-          </p>
-          <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-3xl">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: "hsl(0 70% 50%)" }}>
+              The cost of the gap
+            </p>
+            <p className="text-2xl md:text-4xl font-black leading-tight mt-1.5">
+              {diagnosis.cost_of_gap.headline}
+            </p>
+          </div>
+          <p className="text-xs text-muted-foreground max-w-xs md:text-right">
             {diagnosis.cost_of_gap.math}
           </p>
         </section>
       )}
 
-      <FlowConnector text="So the one move is..." />
-
-      {/* 4. THE MOVE — promoted to right after Cost */}
+      {/* 3. THE MOVE — one imperative + three stops */}
       <section
         className="rounded-2xl p-6 md:p-8 border-2"
         style={{
@@ -948,7 +1027,9 @@ function ResultView({
           borderColor: "hsl(var(--primary) / 0.3)",
         }}
       >
-        <FlowLabel step="4" label="The move" sub="One correction, sequenced" />
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary mb-2">
+          The one move
+        </p>
         <h3 className="text-2xl md:text-3xl font-black leading-tight tracking-tight">
           {diagnosis.correction.move}
         </h3>
@@ -1564,5 +1645,320 @@ function MaturityArc({ currentId }: { currentId: string }) {
         <p className="text-sm leading-relaxed text-foreground/90">{current.what}</p>
       </div>
     </section>
+  );
+}
+// ────────────────────────────────────────────────────────────────────────────
+// Narrative-first input flow (the new front door)
+// ────────────────────────────────────────────────────────────────────────────
+
+const STREAM_LABEL: Record<StreamId, string> = {
+  strategy: "Strategy",
+  market: "Market",
+  state: "State",
+  signal: "Signal",
+};
+
+const AUDIT_LABEL: Record<AuditId, string> = {
+  cost: "Cost",
+  best_practice: "Best practice",
+  security: "Security",
+  decision: "Decision audit",
+  drift: "Drift",
+};
+
+function NarrativeFlow({
+  phase,
+  narrative,
+  setNarrative,
+  inputs,
+  setInputs,
+  setStream,
+  setAudit,
+  toggle,
+  extracting,
+  confidenceNote,
+  followUp,
+  followUpAnswer,
+  setFollowUpAnswer,
+  onExtract,
+  onDiagnose,
+}: {
+  phase: Phase;
+  narrative: string;
+  setNarrative: (v: string) => void;
+  inputs: Inputs;
+  setInputs: React.Dispatch<React.SetStateAction<Inputs>>;
+  setStream: (s: StreamId, v: StreamStatus) => void;
+  setAudit: (a: AuditId, v: AuditStatus) => void;
+  toggle: (key: "tools" | "use_cases" | "handoff", value: string) => void;
+  extracting: boolean;
+  confidenceNote: string;
+  followUp: { question: string; focus: string } | null;
+  followUpAnswer: string;
+  setFollowUpAnswer: (v: string) => void;
+  onExtract: () => void;
+  onDiagnose: () => void;
+}) {
+  const showConfirm = phase === "confirm";
+
+  return (
+    <div className="grid lg:grid-cols-[1fr_420px] gap-8 items-start">
+      {/* LEFT: the conversation */}
+      <div className="space-y-6">
+        {/* Pre-qualifier — vantage as one quiet row */}
+        <div className="flex flex-wrap gap-2 items-center">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mr-1">
+            I come from
+          </span>
+          {VANTAGES.map((v) => {
+            const selected = inputs.vantage === v.id;
+            return (
+              <button
+                key={v.id}
+                type="button"
+                onClick={() => setInputs((p) => ({ ...p, vantage: v.id }))}
+                className="text-xs font-semibold px-3 py-1.5 rounded-full border transition-all"
+                style={{
+                  background: selected ? "hsl(var(--primary))" : "transparent",
+                  color: selected ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground))",
+                  borderColor: selected ? "hsl(var(--primary))" : "hsl(var(--border))",
+                }}
+              >
+                {v.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Narrative input */}
+        <section
+          className="rounded-2xl border p-6 md:p-8"
+          style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <h2 className="text-lg md:text-xl font-bold">
+              Describe one recent decision where AI was in the loop.
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+            Two or three sentences. What were you trying to decide, what tools were used,
+            who else touched the output, and what was hard about it. The map fills in as
+            you talk.
+          </p>
+          <Textarea
+            value={narrative}
+            onChange={(e) => setNarrative(e.target.value)}
+            placeholder="e.g. Last week my AE drafted a proposal in ChatGPT, deal desk caught a pricing miss on review, and I have no way to know how often that happens across the team."
+            rows={6}
+            className="resize-none text-base"
+            disabled={extracting}
+          />
+          <div className="flex items-center justify-between mt-3">
+            <p className="text-[11px] text-muted-foreground">
+              {narrative.length} characters · stays private until you save.
+            </p>
+            <Button onClick={onExtract} disabled={extracting || narrative.trim().length < 20}>
+              {extracting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Listening
+                </>
+              ) : showConfirm ? (
+                <>
+                  Re-read with edits <ArrowRight className="w-4 h-4 ml-2" />
+                </>
+              ) : (
+                <>
+                  Draw my map <ArrowRight className="w-4 h-4 ml-2" />
+                </>
+              )}
+            </Button>
+          </div>
+        </section>
+
+        {showConfirm && (
+          <>
+            {confidenceNote && (
+              <p className="text-xs text-muted-foreground italic px-1">
+                <Info className="inline w-3 h-3 mr-1 -mt-0.5" />
+                What I heard: {confidenceNote}
+              </p>
+            )}
+
+            {/* Confirm chips — quick fixes only, not a survey */}
+            <section
+              className="rounded-2xl border p-6"
+              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+            >
+              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-4">
+                Confirm or correct
+              </p>
+
+              {/* Team */}
+              <div className="mb-5">
+                <p className="text-xs font-semibold mb-2">Team</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {TEAM_PROFILES.map((t) => (
+                    <Chip
+                      key={t.id}
+                      label={t.label}
+                      selected={inputs.team === t.id}
+                      onClick={() => setInputs((p) => ({ ...p, team: t.id }))}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Streams */}
+              <div className="mb-5">
+                <p className="text-xs font-semibold mb-2">
+                  Streams the AI sees
+                  <span className="text-muted-foreground font-normal"> · click to flip</span>
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {STREAMS.map((s) => (
+                    <StatusToggle
+                      key={s.id}
+                      label={STREAM_LABEL[s.id]}
+                      value={inputs.streams[s.id]}
+                      options={["lit", "partial", "dark"] as StreamStatus[]}
+                      onChange={(v) => setStream(s.id, v as StreamStatus)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Audits */}
+              <div className="mb-5">
+                <p className="text-xs font-semibold mb-2">Governance in place</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                  {AUDITS.map((a) => (
+                    <StatusToggle
+                      key={a.id}
+                      label={AUDIT_LABEL[a.id]}
+                      value={inputs.audits[a.id]}
+                      options={["green", "amber", "red"] as AuditStatus[]}
+                      onChange={(v) => setAudit(a.id, v as AuditStatus)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Bruise — one line */}
+              <div className="mb-4">
+                <p className="text-xs font-semibold mb-2">The bruise</p>
+                <Input
+                  value={inputs.bruise}
+                  onChange={(e) => setInputs((p) => ({ ...p, bruise: e.target.value }))}
+                  placeholder="What hurt about it, in one line."
+                />
+              </div>
+
+              {/* Adaptive follow-up */}
+              {followUp && (
+                <div
+                  className="rounded-xl border p-4 mt-4"
+                  style={{ background: "hsl(var(--primary) / 0.04)", borderColor: "hsl(var(--primary) / 0.25)" }}
+                >
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-primary mb-2">
+                    One more, to sharpen the read
+                  </p>
+                  <p className="text-sm font-semibold mb-2">{followUp.question}</p>
+                  <Textarea
+                    value={followUpAnswer}
+                    onChange={(e) => setFollowUpAnswer(e.target.value)}
+                    placeholder="One sentence is enough."
+                    rows={2}
+                    className="resize-none text-sm"
+                  />
+                </div>
+              )}
+            </section>
+
+            <div className="flex justify-end">
+              <Button size="lg" onClick={onDiagnose} className="font-semibold">
+                Give me the verdict
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* RIGHT: the live map */}
+      <aside className="lg:sticky lg:top-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
+          Your operating model · live
+        </p>
+        <DiagnosticMap
+          streams={inputs.streams as any}
+          audits={inputs.audits as any}
+          compact
+          caption={
+            showConfirm
+              ? "Confirm or flip a node. Then ask for the verdict."
+              : extracting
+              ? "Reading."
+              : "Tell the story. The picture fills itself in."
+          }
+        />
+      </aside>
+    </div>
+  );
+}
+
+// Three-state toggle used in the confirm step. Cycles on click.
+function StatusToggle({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string | null;
+  options: string[];
+  onChange: (v: string) => void;
+}) {
+  const COLOR_MAP: Record<string, string> = {
+    lit: "155 72% 46%",
+    green: "155 72% 46%",
+    partial: "38 92% 50%",
+    amber: "38 92% 50%",
+    dark: "0 70% 55%",
+    red: "0 70% 55%",
+  };
+  const NAME_MAP: Record<string, string> = {
+    lit: "Sees it",
+    partial: "Partial",
+    dark: "Blind",
+    green: "Yes",
+    amber: "Partly",
+    red: "No",
+  };
+  const next = () => {
+    const idx = value ? options.indexOf(value) : -1;
+    const n = options[(idx + 1) % options.length];
+    onChange(n);
+  };
+  const color = value ? COLOR_MAP[value] : "var(--border)";
+  return (
+    <button
+      type="button"
+      onClick={next}
+      className="text-left rounded-lg border p-2.5 transition-all hover:border-foreground/30"
+      style={{
+        background: value ? `hsl(${color} / 0.08)` : "hsl(var(--background))",
+        borderColor: value ? `hsl(${color} / 0.5)` : "hsl(var(--border))",
+      }}
+    >
+      <p className="text-[11px] font-bold leading-tight">{label}</p>
+      <p
+        className="text-[10px] font-semibold mt-0.5"
+        style={{ color: value ? `hsl(${color})` : "hsl(var(--muted-foreground))" }}
+      >
+        {value ? NAME_MAP[value] : "Not set"}
+      </p>
+    </button>
   );
 }
