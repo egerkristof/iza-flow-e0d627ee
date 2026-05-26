@@ -398,6 +398,7 @@ function InputView({
   const [showExtra, setShowExtra] = useState(false);
   const examples = streamExamples(inputs.team);
   const handoffs = handoffOptions(inputs.team);
+  const isEnabler = inputs.vantage === "enabler";
 
   // Progress: 6 milestones (team, use_cases optional, tools optional, all streams, all audits, trigger)
   const milestones = [
@@ -473,9 +474,18 @@ function InputView({
       </Section>
 
       {/* 1. Team */}
-      <Section n={1} title="Which team are you running?">
+      <Section
+        n={1}
+        title={
+          isEnabler
+            ? "Which function do you want to diagnose first?"
+            : "Which team are you running?"
+        }
+      >
         <p className="text-sm text-muted-foreground mb-4">
-          We tailor the next questions to your team. Pick the closest fit.
+          {isEnabler
+            ? "Pick the function you see the sharpest gap in. You can rerun this for every other function later — the diagnosis is per-function, the pattern is org-wide."
+            : "We tailor the next questions to your team. Pick the closest fit."}
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
           {TEAM_PROFILES.map((t) => {
@@ -510,7 +520,14 @@ function InputView({
       {team && (
         <>
           {/* 1b. Bruise — one free-text line, the most grounded signal */}
-          <Section n={2} title="What happened last week that made you open this page?">
+          <Section
+            n={2}
+            title={
+              isEnabler
+                ? `What happened in ${team.label} last week that made you open this page?`
+                : "What happened last week that made you open this page?"
+            }
+          >
             <p className="text-sm text-muted-foreground mb-3">
               One line is enough. The specific bruise sharpens everything below.
             </p>
@@ -523,7 +540,14 @@ function InputView({
           </Section>
 
           {/* 2. Use cases (optional context) */}
-          <Section n={3} title={`What is your ${team.label} team using AI for today?`}>
+          <Section
+            n={3}
+            title={
+              isEnabler
+                ? `What is the ${team.label} team using AI for today?`
+                : `What is your ${team.label} team using AI for today?`
+            }
+          >
             <p className="text-sm text-muted-foreground mb-4">
               Pick all that apply. Optional, but it sharpens the diagnosis.
             </p>
@@ -540,7 +564,10 @@ function InputView({
           </Section>
 
           {/* 3. Tools */}
-          <Section n={4} title="Your AI stack today">
+          <Section
+            n={4}
+            title={isEnabler ? `${team.label}'s AI stack today` : "Your AI stack today"}
+          >
             <p className="text-sm text-muted-foreground mb-4">
               Inventory, not preference. Pick everything actually in use.
             </p>
@@ -557,7 +584,14 @@ function InputView({
           </Section>
 
           {/* 3b. Handoff — who else touches the output (the seam) */}
-          <Section n={5} title="Who else touches the output of this work before it lands?">
+          <Section
+            n={5}
+            title={
+              isEnabler
+                ? `Who else touches ${team.label}'s AI output before it lands?`
+                : "Who else touches the output of this work before it lands?"
+            }
+          >
             <p className="text-sm text-muted-foreground mb-4">
               The seam is where convergence breaks. Pick everyone in the chain.
             </p>
@@ -581,10 +615,17 @@ function InputView({
           />
 
           {/* 4. Streams */}
-          <Section n={6} title="Which streams does your AI see?">
+          <Section
+            n={6}
+            title={
+              isEnabler
+                ? `Which streams does ${team.label}'s AI see?`
+                : "Which streams does your AI see?"
+            }
+          >
             <p className="text-sm text-muted-foreground mb-5">
-              Every moment of work requires four streams to converge. Mark how much your AI
-              currently sees of each.
+              Every moment of work requires four streams to converge. Mark how much the AI
+              this team uses currently sees of each.
             </p>
             <div className="space-y-3">
               {STREAMS.map((s) => (
@@ -619,7 +660,14 @@ function InputView({
           </Section>
 
           {/* 5. Audits */}
-          <Section n={7} title="Which governance audits run on every AI output?">
+          <Section
+            n={7}
+            title={
+              isEnabler
+                ? `Which governance audits run on every output ${team.label} ships with AI?`
+                : "Which governance audits run on every AI output?"
+            }
+          >
             <p className="text-sm text-muted-foreground mb-5">
               These are the five live checks that stand between intent and outcome. Be
               honest. The diagnosis is only as sharp as the answers.
