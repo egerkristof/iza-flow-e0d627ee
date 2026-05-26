@@ -14,6 +14,43 @@
 
 import type { TeamId } from "./team-profiles";
 
+// ─── Vantage (operator vs enabler) ───────────────────────────────────────────
+// Soft toggle. Does NOT fork the questions. Only re-voices the diagnosis.
+
+export type VantageId = "operator" | "enabler";
+
+export const VANTAGES: { id: VantageId; label: string; sub: string }[] = [
+  {
+    id: "operator",
+    label: "I run this function",
+    sub: "You own the output and the team that ships it.",
+  },
+  {
+    id: "enabler",
+    label: "I enable AI across functions",
+    sub: "You set the standard others have to follow. Platform, AI, transformation.",
+  },
+];
+
+// ─── Handoff (who else touches the output) ───────────────────────────────────
+// Per-team list of likely downstream / upstream collaborators on AI output.
+
+export function handoffOptions(team: TeamId | null): string[] {
+  const generic = ["My manager", "A peer team", "Legal or compliance", "A customer or partner", "Nobody, it ships as-is"];
+  const byTeam: Partial<Record<TeamId, string[]>> = {
+    sales: ["Sales engineering", "Deal desk", "Marketing", "Legal", "The prospect directly"],
+    marketing: ["Brand or design", "Legal", "Sales", "The CEO or founder", "Published direct to channel"],
+    customer_success: ["Account exec", "Support", "Product", "The customer directly"],
+    operations: ["Engineering", "Vendor or supplier", "Compliance", "The end user"],
+    product_engineering: ["Design", "QA", "Another engineer", "The customer in production"],
+    rnd: ["Lab lead", "QA / regulatory", "Another scientist", "External reviewer"],
+    finance: ["Controller", "Auditor", "The CFO", "The board"],
+    people: ["Hiring manager", "Legal", "The candidate", "The employee directly"],
+    strategy: ["The exec team", "A function owner", "The board", "External advisor"],
+  };
+  return byTeam[team as TeamId] ?? generic;
+}
+
 // ─── Triggers (what brought you here today) ──────────────────────────────────
 
 export type TriggerId =
@@ -483,6 +520,7 @@ export type OperatorDiagnosis = {
   title: string;
   verdict: string;
   current_model_read: string;
+  mirror?: string; // optional: a single sentence that quotes the user's own inputs back at them
   stream_coverage: StreamCoverage;
   audit_coverage: AuditCoverage;
   bundle_gaps: { type: BundleTypeId; status: BundleStatus; why: string }[];
