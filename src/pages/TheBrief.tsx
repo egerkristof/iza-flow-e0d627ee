@@ -31,6 +31,8 @@ import {
   DECISION_CLASSES,
   TRIGGERS,
   MATURITY_STAGES,
+  VANTAGES,
+  handoffOptions,
   computeStage,
   bundleExamples,
   emptyStreamAnswer,
@@ -42,6 +44,7 @@ import {
   type AuditId,
   type AuditStatus,
   type TriggerId,
+  type VantageId,
   type OperatorDiagnosis,
 } from "@/lib/operator-framework";
 import { OperatorCompass } from "@/components/brief/OperatorCompass";
@@ -54,6 +57,9 @@ import { BundleGap } from "@/components/brief/BundleGap";
 
 type Inputs = {
   team: TeamId | null;
+  vantage: VantageId | null;
+  bruise: string;
+  handoff: string[];
   use_cases: string[];
   tools: string[];
   streams: Record<StreamId, StreamStatus | null>;
@@ -149,6 +155,9 @@ export default function TheBrief() {
   const [phase, setPhase] = useState<Phase>("input");
   const [inputs, setInputs] = useState<Inputs>({
     team: null,
+    vantage: null,
+    bruise: "",
+    handoff: [],
     use_cases: [],
     tools: [],
     streams: emptyStreamAnswer(),
@@ -181,7 +190,7 @@ export default function TheBrief() {
     })();
   }, [id, navigate]);
 
-  const toggle = (key: "tools" | "use_cases", value: string) => {
+  const toggle = (key: "tools" | "use_cases" | "handoff", value: string) => {
     setInputs((p) => ({
       ...p,
       [key]: p[key].includes(value)
@@ -211,6 +220,9 @@ export default function TheBrief() {
         body: {
           team: team?.label || null,
           team_sub: team?.sub || null,
+          vantage: inputs.vantage,
+          bruise: inputs.bruise,
+          handoff: inputs.handoff,
           use_cases: inputs.use_cases,
           tools: inputs.tools,
           streams: inputs.streams,
@@ -231,6 +243,9 @@ export default function TheBrief() {
           streams: inputs.streams,
           audits: inputs.audits,
           trigger: inputs.trigger,
+          vantage: inputs.vantage,
+          bruise: inputs.bruise,
+          handoff: inputs.handoff,
         });
       } else {
         result = data.diagnosis as OperatorDiagnosis;
@@ -247,6 +262,9 @@ export default function TheBrief() {
           streams: inputs.streams,
           audits: inputs.audits,
           trigger: inputs.trigger,
+          vantage: inputs.vantage,
+          bruise: inputs.bruise,
+          handoff: inputs.handoff,
         }),
       );
       setPhase("result");
@@ -289,6 +307,9 @@ export default function TheBrief() {
     setPhase("input");
     setInputs({
       team: null,
+      vantage: null,
+      bruise: "",
+      handoff: [],
       use_cases: [],
       tools: [],
       streams: emptyStreamAnswer(),
@@ -338,8 +359,7 @@ export default function TheBrief() {
         {phase === "result" && diagnosis && (
           <ResultView
             diagnosis={diagnosis}
-            tools={inputs.tools}
-            team={inputs.team}
+            inputs={inputs}
             savedId={savedId}
             email={email}
             setEmail={setEmail}
