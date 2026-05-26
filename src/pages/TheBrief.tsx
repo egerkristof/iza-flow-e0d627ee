@@ -894,6 +894,9 @@ function ResultView({
       transition={{ duration: 0.5 }}
       className="space-y-12"
     >
+      {/* 0. READING MAP — tells the reader the shape of what follows */}
+      <ReadingMap />
+
       {/* 1. VERDICT — the line they would read aloud to their CEO */}
       <div
         className="rounded-2xl border-2 p-6 md:p-10"
@@ -903,19 +906,18 @@ function ResultView({
           borderColor: "hsl(var(--primary) / 0.4)",
         }}
       >
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mb-2">
-          The verdict
-        </p>
+        <FlowLabel step="1" label="The verdict" sub="What is actually true today" />
         <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-tight">
           {diagnosis.verdict || diagnosis.title}
         </h2>
-        <p className="mt-4 text-sm md:text-base leading-relaxed text-muted-foreground max-w-3xl">
-          {diagnosis.current_model_read}
-        </p>
       </div>
+
+      <FlowConnector text="Because of this..." />
 
       {/* 2. MIRROR — quote their own selections back at them */}
       <Mirror diagnosis={diagnosis} inputs={inputs} />
+
+      <FlowConnector text="Which costs you..." />
 
       {/* 3. COST OF THE GAP — turns diagnostic into budget */}
       {diagnosis.cost_of_gap && (
@@ -926,19 +928,17 @@ function ResultView({
             borderColor: "hsl(0 70% 55% / 0.3)",
           }}
         >
-          <SectionHeading icon={Coins} label="What this gap costs you" />
-          <ReadAs tone="warn">
-            Translation of the dim arms and missing audits above into hours and people.
-            Not a quote, an order of magnitude.
-          </ReadAs>
+          <FlowLabel step="3" label="The cost" sub="Order of magnitude, not a quote" tone="warn" />
           <p className="text-lg md:text-2xl font-bold leading-snug">
             {diagnosis.cost_of_gap.headline}
           </p>
-          <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed max-w-3xl">
+          <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-3xl">
             {diagnosis.cost_of_gap.math}
           </p>
         </section>
       )}
+
+      <FlowConnector text="So the one move is..." />
 
       {/* 4. THE MOVE — promoted to right after Cost */}
       <section
@@ -948,39 +948,18 @@ function ResultView({
           borderColor: "hsl(var(--primary) / 0.3)",
         }}
       >
-        <div className="flex items-center gap-2 mb-3">
-          <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-            The move
-          </span>
-        </div>
+        <FlowLabel step="4" label="The move" sub="One correction, sequenced" />
         <h3 className="text-2xl md:text-3xl font-black leading-tight tracking-tight">
           {diagnosis.correction.move}
         </h3>
-        <div className="grid md:grid-cols-2 gap-4 mt-5">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1">
-              Scope
-            </p>
-            <p className="text-sm leading-relaxed">{diagnosis.correction.scope}</p>
-          </div>
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1">
-              How LIZA delivers it
-            </p>
-            <p className="text-sm leading-relaxed">{diagnosis.correction.liza_capability}</p>
-          </div>
-        </div>
+        <p className="text-sm text-muted-foreground leading-relaxed mt-3 max-w-3xl">
+          <span className="font-semibold text-foreground/80">Scope: </span>
+          {diagnosis.correction.scope}
+        </p>
 
         {/* 30 / 60 / 90 sequence */}
         {diagnosis.correction.sequence && (
           <div className="mt-6">
-            <div className="flex items-center gap-2 mb-3">
-              <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                The sequence
-              </p>
-            </div>
             <div className="grid md:grid-cols-3 gap-3">
               {(["now", "next", "later"] as const).map((k, i) => {
                 const step = diagnosis.correction.sequence![k];
@@ -1012,6 +991,9 @@ function ResultView({
                 );
               })}
             </div>
+            <p className="mt-4 text-xs text-muted-foreground italic max-w-3xl">
+              Delivered through LIZA's {diagnosis.correction.liza_capability}.
+            </p>
           </div>
         )}
 
