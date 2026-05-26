@@ -398,6 +398,7 @@ function InputView({
   const [showExtra, setShowExtra] = useState(false);
   const examples = streamExamples(inputs.team);
   const handoffs = handoffOptions(inputs.team);
+  const isEnabler = inputs.vantage === "enabler";
 
   // Progress: 6 milestones (team, use_cases optional, tools optional, all streams, all audits, trigger)
   const milestones = [
@@ -473,9 +474,18 @@ function InputView({
       </Section>
 
       {/* 1. Team */}
-      <Section n={1} title="Which team are you running?">
+      <Section
+        n={1}
+        title={
+          isEnabler
+            ? "Which function do you want to diagnose first?"
+            : "Which team are you running?"
+        }
+      >
         <p className="text-sm text-muted-foreground mb-4">
-          We tailor the next questions to your team. Pick the closest fit.
+          {isEnabler
+            ? "Pick the function you see the sharpest gap in. You can rerun this for every other function later — the diagnosis is per-function, the pattern is org-wide."
+            : "We tailor the next questions to your team. Pick the closest fit."}
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
           {TEAM_PROFILES.map((t) => {
@@ -510,7 +520,14 @@ function InputView({
       {team && (
         <>
           {/* 1b. Bruise — one free-text line, the most grounded signal */}
-          <Section n={2} title="What happened last week that made you open this page?">
+          <Section
+            n={2}
+            title={
+              isEnabler
+                ? `What happened in ${team.label} last week that made you open this page?`
+                : "What happened last week that made you open this page?"
+            }
+          >
             <p className="text-sm text-muted-foreground mb-3">
               One line is enough. The specific bruise sharpens everything below.
             </p>
@@ -523,7 +540,14 @@ function InputView({
           </Section>
 
           {/* 2. Use cases (optional context) */}
-          <Section n={3} title={`What is your ${team.label} team using AI for today?`}>
+          <Section
+            n={3}
+            title={
+              isEnabler
+                ? `What is the ${team.label} team using AI for today?`
+                : `What is your ${team.label} team using AI for today?`
+            }
+          >
             <p className="text-sm text-muted-foreground mb-4">
               Pick all that apply. Optional, but it sharpens the diagnosis.
             </p>
@@ -540,7 +564,10 @@ function InputView({
           </Section>
 
           {/* 3. Tools */}
-          <Section n={4} title="Your AI stack today">
+          <Section
+            n={4}
+            title={isEnabler ? `${team.label}'s AI stack today` : "Your AI stack today"}
+          >
             <p className="text-sm text-muted-foreground mb-4">
               Inventory, not preference. Pick everything actually in use.
             </p>
@@ -557,7 +584,14 @@ function InputView({
           </Section>
 
           {/* 3b. Handoff — who else touches the output (the seam) */}
-          <Section n={5} title="Who else touches the output of this work before it lands?">
+          <Section
+            n={5}
+            title={
+              isEnabler
+                ? `Who else touches ${team.label}'s AI output before it lands?`
+                : "Who else touches the output of this work before it lands?"
+            }
+          >
             <p className="text-sm text-muted-foreground mb-4">
               The seam is where convergence breaks. Pick everyone in the chain.
             </p>
@@ -581,10 +615,17 @@ function InputView({
           />
 
           {/* 4. Streams */}
-          <Section n={6} title="Which streams does your AI see?">
+          <Section
+            n={6}
+            title={
+              isEnabler
+                ? `Which streams does ${team.label}'s AI see?`
+                : "Which streams does your AI see?"
+            }
+          >
             <p className="text-sm text-muted-foreground mb-5">
-              Every moment of work requires four streams to converge. Mark how much your AI
-              currently sees of each.
+              Every moment of work requires four streams to converge. Mark how much the AI
+              this team uses currently sees of each.
             </p>
             <div className="space-y-3">
               {STREAMS.map((s) => (
@@ -619,7 +660,14 @@ function InputView({
           </Section>
 
           {/* 5. Audits */}
-          <Section n={7} title="Which governance audits run on every AI output?">
+          <Section
+            n={7}
+            title={
+              isEnabler
+                ? `Which governance audits run on every output ${team.label} ships with AI?`
+                : "Which governance audits run on every AI output?"
+            }
+          >
             <p className="text-sm text-muted-foreground mb-5">
               These are the five live checks that stand between intent and outcome. Be
               honest. The diagnosis is only as sharp as the answers.
@@ -846,6 +894,9 @@ function ResultView({
       transition={{ duration: 0.5 }}
       className="space-y-12"
     >
+      {/* 0. READING MAP — tells the reader the shape of what follows */}
+      <ReadingMap />
+
       {/* 1. VERDICT — the line they would read aloud to their CEO */}
       <div
         className="rounded-2xl border-2 p-6 md:p-10"
@@ -855,19 +906,18 @@ function ResultView({
           borderColor: "hsl(var(--primary) / 0.4)",
         }}
       >
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary mb-2">
-          The verdict
-        </p>
+        <FlowLabel step="1" label="The verdict" sub="What is actually true today" />
         <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-tight">
           {diagnosis.verdict || diagnosis.title}
         </h2>
-        <p className="mt-4 text-sm md:text-base leading-relaxed text-muted-foreground max-w-3xl">
-          {diagnosis.current_model_read}
-        </p>
       </div>
+
+      <FlowConnector text="Because of this..." />
 
       {/* 2. MIRROR — quote their own selections back at them */}
       <Mirror diagnosis={diagnosis} inputs={inputs} />
+
+      <FlowConnector text="Which costs you..." />
 
       {/* 3. COST OF THE GAP — turns diagnostic into budget */}
       {diagnosis.cost_of_gap && (
@@ -878,19 +928,17 @@ function ResultView({
             borderColor: "hsl(0 70% 55% / 0.3)",
           }}
         >
-          <SectionHeading icon={Coins} label="What this gap costs you" />
-          <ReadAs tone="warn">
-            Translation of the dim arms and missing audits above into hours and people.
-            Not a quote, an order of magnitude.
-          </ReadAs>
+          <FlowLabel step="3" label="The cost" sub="Order of magnitude, not a quote" tone="warn" />
           <p className="text-lg md:text-2xl font-bold leading-snug">
             {diagnosis.cost_of_gap.headline}
           </p>
-          <p className="mt-3 text-sm md:text-base text-muted-foreground leading-relaxed max-w-3xl">
+          <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-3xl">
             {diagnosis.cost_of_gap.math}
           </p>
         </section>
       )}
+
+      <FlowConnector text="So the one move is..." />
 
       {/* 4. THE MOVE — promoted to right after Cost */}
       <section
@@ -900,39 +948,18 @@ function ResultView({
           borderColor: "hsl(var(--primary) / 0.3)",
         }}
       >
-        <div className="flex items-center gap-2 mb-3">
-          <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-            The move
-          </span>
-        </div>
+        <FlowLabel step="4" label="The move" sub="One correction, sequenced" />
         <h3 className="text-2xl md:text-3xl font-black leading-tight tracking-tight">
           {diagnosis.correction.move}
         </h3>
-        <div className="grid md:grid-cols-2 gap-4 mt-5">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1">
-              Scope
-            </p>
-            <p className="text-sm leading-relaxed">{diagnosis.correction.scope}</p>
-          </div>
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1">
-              How LIZA delivers it
-            </p>
-            <p className="text-sm leading-relaxed">{diagnosis.correction.liza_capability}</p>
-          </div>
-        </div>
+        <p className="text-sm text-muted-foreground leading-relaxed mt-3 max-w-3xl">
+          <span className="font-semibold text-foreground/80">Scope: </span>
+          {diagnosis.correction.scope}
+        </p>
 
         {/* 30 / 60 / 90 sequence */}
         {diagnosis.correction.sequence && (
           <div className="mt-6">
-            <div className="flex items-center gap-2 mb-3">
-              <Calendar className="w-3.5 h-3.5 text-muted-foreground" />
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                The sequence
-              </p>
-            </div>
             <div className="grid md:grid-cols-3 gap-3">
               {(["now", "next", "later"] as const).map((k, i) => {
                 const step = diagnosis.correction.sequence![k];
@@ -964,6 +991,9 @@ function ResultView({
                 );
               })}
             </div>
+            <p className="mt-4 text-xs text-muted-foreground italic max-w-3xl">
+              Delivered through LIZA's {diagnosis.correction.liza_capability}.
+            </p>
           </div>
         )}
 
@@ -1150,6 +1180,16 @@ function EvidenceCollapse({
 
       {open && (
         <div className="px-6 md:px-8 pb-8 space-y-10">
+          {/* Context read — the longer prose we removed from the verdict */}
+          {diagnosis.current_model_read && (
+            <div>
+              <SectionHeading icon={Info} label="The full read on your current model" />
+              <p className="text-sm md:text-base leading-relaxed text-foreground/85 max-w-3xl">
+                {diagnosis.current_model_read}
+              </p>
+            </div>
+          )}
+
           {/* Maturity arc */}
           <MaturityArc currentId={stage} />
 
@@ -1306,6 +1346,103 @@ function SectionHeading({
       <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
         {label}
       </p>
+    </div>
+  );
+}
+
+// ReadingMap: a 4-stop legend that tells the reader the shape of the debrief
+// before they start reading. Reduces cognitive load by making the structure
+// visible.
+function ReadingMap() {
+  const stops = [
+    { n: "1", label: "Verdict", sub: "What is true" },
+    { n: "2", label: "Mirror", sub: "Why we say it" },
+    { n: "3", label: "Cost", sub: "What it costs" },
+    { n: "4", label: "Move", sub: "What to do" },
+  ];
+  return (
+    <div
+      className="rounded-xl border p-4 md:p-5"
+      style={{ background: "hsl(var(--muted) / 0.4)", borderColor: "hsl(var(--border))" }}
+    >
+      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-3">
+        How to read this debrief
+      </p>
+      <div className="flex items-center gap-1 md:gap-2 overflow-x-auto">
+        {stops.map((s, i) => (
+          <div key={s.n} className="flex items-center gap-1 md:gap-2 shrink-0">
+            <div className="flex items-center gap-2">
+              <span
+                className="inline-flex w-5 h-5 rounded-full items-center justify-center text-[10px] font-black"
+                style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
+              >
+                {s.n}
+              </span>
+              <div className="leading-tight">
+                <p className="text-xs font-bold">{s.label}</p>
+                <p className="text-[10px] text-muted-foreground">{s.sub}</p>
+              </div>
+            </div>
+            {i < stops.length - 1 && (
+              <ArrowRight className="w-3.5 h-3.5 text-muted-foreground mx-1 md:mx-2" />
+            )}
+          </div>
+        ))}
+        <span className="ml-auto pl-3 text-[10px] text-muted-foreground italic shrink-0 hidden md:inline">
+          Evidence at the bottom
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// FlowLabel: numbered step header on each result block. Mirrors ReadingMap so
+// the reader always knows which stop they are at.
+function FlowLabel({
+  step,
+  label,
+  sub,
+  tone = "default",
+}: {
+  step: string;
+  label: string;
+  sub?: string;
+  tone?: "default" | "warn";
+}) {
+  const color = tone === "warn" ? "0 70% 55%" : "var(--primary)";
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <span
+        className="inline-flex w-6 h-6 rounded-full items-center justify-center text-[10px] font-black"
+        style={{ background: `hsl(${color})`, color: "hsl(var(--primary-foreground))" }}
+      >
+        {step}
+      </span>
+      <span
+        className="text-xs font-bold uppercase tracking-[0.18em]"
+        style={{ color: `hsl(${color})` }}
+      >
+        {label}
+      </span>
+      {sub && (
+        <span className="text-[11px] text-muted-foreground hidden sm:inline">
+          / {sub}
+        </span>
+      )}
+    </div>
+  );
+}
+
+// FlowConnector: the connective tissue between blocks. Names the causal link
+// so the page reads as one argument, not five panels.
+function FlowConnector({ text }: { text: string }) {
+  return (
+    <div className="flex items-center gap-3 -my-4 max-w-3xl mx-auto px-2">
+      <div className="flex-1 h-px" style={{ background: "hsl(var(--border))" }} />
+      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        {text}
+      </p>
+      <div className="flex-1 h-px" style={{ background: "hsl(var(--border))" }} />
     </div>
   );
 }
