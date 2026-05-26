@@ -1636,3 +1636,318 @@ function MaturityArc({ currentId }: { currentId: string }) {
     </section>
   );
 }
+// ────────────────────────────────────────────────────────────────────────────
+// Narrative-first input flow (the new front door)
+// ────────────────────────────────────────────────────────────────────────────
+
+const STREAM_LABEL: Record<StreamId, string> = {
+  strategy: "Strategy",
+  market: "Market",
+  state: "State",
+  signal: "Signal",
+};
+
+const AUDIT_LABEL: Record<AuditId, string> = {
+  cost: "Cost",
+  best_practice: "Best practice",
+  security: "Security",
+  decision: "Decision audit",
+  drift: "Drift",
+};
+
+function NarrativeFlow({
+  phase,
+  narrative,
+  setNarrative,
+  inputs,
+  setInputs,
+  setStream,
+  setAudit,
+  toggle,
+  extracting,
+  confidenceNote,
+  followUp,
+  followUpAnswer,
+  setFollowUpAnswer,
+  onExtract,
+  onDiagnose,
+}: {
+  phase: Phase;
+  narrative: string;
+  setNarrative: (v: string) => void;
+  inputs: Inputs;
+  setInputs: React.Dispatch<React.SetStateAction<Inputs>>;
+  setStream: (s: StreamId, v: StreamStatus) => void;
+  setAudit: (a: AuditId, v: AuditStatus) => void;
+  toggle: (key: "tools" | "use_cases" | "handoff", value: string) => void;
+  extracting: boolean;
+  confidenceNote: string;
+  followUp: { question: string; focus: string } | null;
+  followUpAnswer: string;
+  setFollowUpAnswer: (v: string) => void;
+  onExtract: () => void;
+  onDiagnose: () => void;
+}) {
+  const showConfirm = phase === "confirm";
+
+  return (
+    <div className="grid lg:grid-cols-[1fr_420px] gap-8 items-start">
+      {/* LEFT: the conversation */}
+      <div className="space-y-6">
+        {/* Pre-qualifier — vantage as one quiet row */}
+        <div className="flex flex-wrap gap-2 items-center">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mr-1">
+            I come from
+          </span>
+          {VANTAGES.map((v) => {
+            const selected = inputs.vantage === v.id;
+            return (
+              <button
+                key={v.id}
+                type="button"
+                onClick={() => setInputs((p) => ({ ...p, vantage: v.id }))}
+                className="text-xs font-semibold px-3 py-1.5 rounded-full border transition-all"
+                style={{
+                  background: selected ? "hsl(var(--primary))" : "transparent",
+                  color: selected ? "hsl(var(--primary-foreground))" : "hsl(var(--foreground))",
+                  borderColor: selected ? "hsl(var(--primary))" : "hsl(var(--border))",
+                }}
+              >
+                {v.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Narrative input */}
+        <section
+          className="rounded-2xl border p-6 md:p-8"
+          style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkles className="w-4 h-4 text-primary" />
+            <h2 className="text-lg md:text-xl font-bold">
+              Describe one recent decision where AI was in the loop.
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+            Two or three sentences. What were you trying to decide, what tools were used,
+            who else touched the output, and what was hard about it. The map fills in as
+            you talk.
+          </p>
+          <Textarea
+            value={narrative}
+            onChange={(e) => setNarrative(e.target.value)}
+            placeholder="e.g. Last week my AE drafted a proposal in ChatGPT, deal desk caught a pricing miss on review, and I have no way to know how often that happens across the team."
+            rows={6}
+            className="resize-none text-base"
+            disabled={extracting}
+          />
+          <div className="flex items-center justify-between mt-3">
+            <p className="text-[11px] text-muted-foreground">
+              {narrative.length} characters · stays private until you save.
+            </p>
+            <Button onClick={onExtract} disabled={extracting || narrative.trim().length < 20}>
+              {extracting ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Listening
+                </>
+              ) : showConfirm ? (
+                <>
+                  Re-read with edits <ArrowRight className="w-4 h-4 ml-2" />
+                </>
+              ) : (
+                <>
+                  Draw my map <ArrowRight className="w-4 h-4 ml-2" />
+                </>
+              )}
+            </Button>
+          </div>
+        </section>
+
+        {showConfirm && (
+          <>
+            {confidenceNote && (
+              <p className="text-xs text-muted-foreground italic px-1">
+                <Info className="inline w-3 h-3 mr-1 -mt-0.5" />
+                What I heard: {confidenceNote}
+              </p>
+            )}
+
+            {/* Confirm chips — quick fixes only, not a survey */}
+            <section
+              className="rounded-2xl border p-6"
+              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+            >
+              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-4">
+                Confirm or correct
+              </p>
+
+              {/* Team */}
+              <div className="mb-5">
+                <p className="text-xs font-semibold mb-2">Team</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {TEAM_PROFILES.map((t) => (
+                    <Chip
+                      key={t.id}
+                      label={t.label}
+                      selected={inputs.team === t.id}
+                      onClick={() => setInputs((p) => ({ ...p, team: t.id }))}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Streams */}
+              <div className="mb-5">
+                <p className="text-xs font-semibold mb-2">
+                  Streams the AI sees
+                  <span className="text-muted-foreground font-normal"> · click to flip</span>
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {STREAMS.map((s) => (
+                    <StatusToggle
+                      key={s.id}
+                      label={STREAM_LABEL[s.id]}
+                      value={inputs.streams[s.id]}
+                      options={["lit", "partial", "dark"] as StreamStatus[]}
+                      onChange={(v) => setStream(s.id, v as StreamStatus)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Audits */}
+              <div className="mb-5">
+                <p className="text-xs font-semibold mb-2">Governance in place</p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                  {AUDITS.map((a) => (
+                    <StatusToggle
+                      key={a.id}
+                      label={AUDIT_LABEL[a.id]}
+                      value={inputs.audits[a.id]}
+                      options={["green", "amber", "red"] as AuditStatus[]}
+                      onChange={(v) => setAudit(a.id, v as AuditStatus)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Bruise — one line */}
+              <div className="mb-4">
+                <p className="text-xs font-semibold mb-2">The bruise</p>
+                <Input
+                  value={inputs.bruise}
+                  onChange={(e) => setInputs((p) => ({ ...p, bruise: e.target.value }))}
+                  placeholder="What hurt about it, in one line."
+                />
+              </div>
+
+              {/* Adaptive follow-up */}
+              {followUp && (
+                <div
+                  className="rounded-xl border p-4 mt-4"
+                  style={{ background: "hsl(var(--primary) / 0.04)", borderColor: "hsl(var(--primary) / 0.25)" }}
+                >
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-primary mb-2">
+                    One more, to sharpen the read
+                  </p>
+                  <p className="text-sm font-semibold mb-2">{followUp.question}</p>
+                  <Textarea
+                    value={followUpAnswer}
+                    onChange={(e) => setFollowUpAnswer(e.target.value)}
+                    placeholder="One sentence is enough."
+                    rows={2}
+                    className="resize-none text-sm"
+                  />
+                </div>
+              )}
+            </section>
+
+            <div className="flex justify-end">
+              <Button size="lg" onClick={onDiagnose} className="font-semibold">
+                Give me the verdict
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* RIGHT: the live map */}
+      <aside className="lg:sticky lg:top-6">
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
+          Your operating model · live
+        </p>
+        <DiagnosticMap
+          streams={inputs.streams as any}
+          audits={inputs.audits as any}
+          compact
+          caption={
+            showConfirm
+              ? "Confirm or flip a node. Then ask for the verdict."
+              : extracting
+              ? "Reading."
+              : "Tell the story. The picture fills itself in."
+          }
+        />
+      </aside>
+    </div>
+  );
+}
+
+// Three-state toggle used in the confirm step. Cycles on click.
+function StatusToggle({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: string | null;
+  options: string[];
+  onChange: (v: string) => void;
+}) {
+  const COLOR_MAP: Record<string, string> = {
+    lit: "155 72% 46%",
+    green: "155 72% 46%",
+    partial: "38 92% 50%",
+    amber: "38 92% 50%",
+    dark: "0 70% 55%",
+    red: "0 70% 55%",
+  };
+  const NAME_MAP: Record<string, string> = {
+    lit: "Sees it",
+    partial: "Partial",
+    dark: "Blind",
+    green: "Yes",
+    amber: "Partly",
+    red: "No",
+  };
+  const next = () => {
+    const idx = value ? options.indexOf(value) : -1;
+    const n = options[(idx + 1) % options.length];
+    onChange(n);
+  };
+  const color = value ? COLOR_MAP[value] : "var(--border)";
+  return (
+    <button
+      type="button"
+      onClick={next}
+      className="text-left rounded-lg border p-2.5 transition-all hover:border-foreground/30"
+      style={{
+        background: value ? `hsl(${color} / 0.08)` : "hsl(var(--background))",
+        borderColor: value ? `hsl(${color} / 0.5)` : "hsl(var(--border))",
+      }}
+    >
+      <p className="text-[11px] font-bold leading-tight">{label}</p>
+      <p
+        className="text-[10px] font-semibold mt-0.5"
+        style={{ color: value ? `hsl(${color})` : "hsl(var(--muted-foreground))" }}
+      >
+        {value ? NAME_MAP[value] : "Not set"}
+      </p>
+    </button>
+  );
+}
