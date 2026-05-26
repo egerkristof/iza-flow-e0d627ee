@@ -50,6 +50,13 @@ import {
 import { OperatorCompass } from "@/components/brief/OperatorCompass";
 import { GovernanceBar } from "@/components/brief/GovernanceBar";
 import { BundleGap } from "@/components/brief/BundleGap";
+import {
+  DiagnosticMap,
+  streamMapFromCoverage,
+  auditMapFromCoverage,
+  bundleMapFromGaps,
+  pickHighlightStream,
+} from "@/components/brief/DiagnosticMap";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Types
@@ -68,7 +75,7 @@ type Inputs = {
   free_text: string;
 };
 
-type Phase = "input" | "diagnosing" | "result";
+type Phase = "narrative" | "extracting" | "confirm" | "diagnosing" | "result";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Small helpers
