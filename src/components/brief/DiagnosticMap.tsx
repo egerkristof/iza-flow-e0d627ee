@@ -11,6 +11,16 @@ import {
   type BundleTypeId,
 } from "@/lib/operator-framework";
 
+// Exec-register relabels for the audit ring. Keeps the engine intact while
+// surfacing language a Head of AI Strategy can hand to a CFO or board.
+const AUDIT_EXEC_LABEL: Record<AuditId, string> = {
+  cost: "Throughput",
+  best_practice: "Trust",
+  security: "Exposure",
+  decision: "Auditability",
+  drift: "Defensibility",
+};
+
 // ─── DiagnosticMap ───────────────────────────────────────────────────────────
 // One persistent visual that travels with the user from the first question
 // through the verdict. Renders the LIZA operator framework as a single picture:
@@ -163,7 +173,7 @@ export function DiagnosticMap({
                       : "hsl(var(--muted-foreground))",
                   }}
                 >
-                  {audit.label}
+                  {AUDIT_EXEC_LABEL[audit.id]}
                 </text>
               </g>
             );
