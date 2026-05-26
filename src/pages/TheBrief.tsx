@@ -316,7 +316,11 @@ export default function TheBrief() {
     setDiagnosis(null);
     setSavedId(null);
     setEmail("");
-    setPhase("input");
+    setPhase("narrative");
+    setNarrative("");
+    setFollowUp(null);
+    setFollowUpAnswer("");
+    setConfidenceNote("");
     setInputs({
       team: null,
       vantage: null,
@@ -335,7 +339,7 @@ export default function TheBrief() {
   return (
     <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <header className="mb-10 md:mb-14">
+        <header className="mb-8 md:mb-10">
           <Link
             to="/"
             className="inline-flex items-center gap-1 text-xs font-semibold tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition-colors"
@@ -346,23 +350,67 @@ export default function TheBrief() {
             The Brief
           </p>
           <h1 className="mt-2 text-3xl md:text-5xl font-black tracking-tight max-w-3xl">
-            You have AI everywhere in your org. You cannot see what it is doing.
+            Tell us one story. We will draw your operating model back at you.
           </h1>
           <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl">
-            Three minutes. Five sections. You get back a read on where your AI is blind,
-            what it costs you, and the one move that closes the biggest gap.
+            One paragraph. The map on the right fills in as you talk. Then a verdict, a
+            cost, and one move.
           </p>
         </header>
 
-        {phase === "input" && (
-          <InputView
+        {(phase === "narrative" || phase === "extracting" || phase === "confirm") && (
+          <NarrativeFlow
+            phase={phase}
+            narrative={narrative}
+            setNarrative={setNarrative}
             inputs={inputs}
             setInputs={setInputs}
-            toggle={toggle}
             setStream={setStream}
             setAudit={setAudit}
-            canSubmit={canSubmit}
-            onSubmit={runDiagnosis}
+            toggle={toggle}
+            extracting={extracting}
+            confidenceNote={confidenceNote}
+            followUp={followUp}
+            followUpAnswer={followUpAnswer}
+            setFollowUpAnswer={setFollowUpAnswer}
+            onExtract={async () => {
+              if (narrative.trim().length < 20) {
+                toast.error("A couple of sentences sharpen the read.");
+                return;
+              }
+              setExtracting(true);
+              setPhase("extracting");
+              try {
+                const { data, error } = await supabase.functions.invoke("extract-brief", {
+                  body: { narrative, follow_up_answer: followUpAnswer || undefined },
+                });
+                if (error || !data?.extraction) {
+                  throw error || new Error("No extraction");
+                }
+                const ex = data.extraction;
+                setInputs((p) => ({
+                  ...p,
+                  team: (ex.team as TeamId) || p.team,
+                  vantage: (ex.vantage as VantageId) || p.vantage,
+                  bruise: ex.bruise || p.bruise,
+                  tools: Array.isArray(ex.tools) ? ex.tools : p.tools,
+                  handoff: Array.isArray(ex.handoff) ? ex.handoff : p.handoff,
+                  streams: { ...p.streams, ...cleanStatus(ex.streams) },
+                  audits: { ...p.audits, ...cleanStatus(ex.audits) },
+                  free_text: narrative,
+                }));
+                setConfidenceNote(ex.confidence_note || "");
+                setFollowUp(data.follow_up || null);
+                setPhase("confirm");
+              } catch (e) {
+                console.error(e);
+                toast.error("Could not read that. Try again or use the chips below.");
+                setPhase("confirm");
+              } finally {
+                setExtracting(false);
+              }
+            }}
+            onDiagnose={runDiagnosis}
           />
         )}
 
