@@ -1758,11 +1758,11 @@ const STREAM_LABEL: Record<StreamId, string> = {
 };
 
 const AUDIT_LABEL: Record<AuditId, string> = {
-  cost: "Cost",
-  best_practice: "Best practice",
-  security: "Security",
-  decision: "Decision audit",
-  drift: "Drift",
+  cost: "Throughput",
+  best_practice: "Trust",
+  security: "Exposure",
+  decision: "Auditability",
+  drift: "Defensibility",
 };
 
 function NarrativeFlow({
