@@ -1837,22 +1837,35 @@ function NarrativeFlow({
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-4 h-4 text-primary" />
             <h2 className="text-lg md:text-xl font-bold">
-              Describe one recent decision where AI was in the loop.
+              {inputs.vantage === "enabler"
+                ? "Which function bleeds you the most right now?"
+                : "Describe one recent decision where AI was in the loop."}
             </h2>
           </div>
           <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
-            Two or three sentences. What were you trying to decide, what tools were used,
-            who else touched the output, and what was hard about it. The map fills in as
-            you talk.
+            {inputs.vantage === "enabler"
+              ? "Name the function, then two or three sentences on what is hard about AI execution there today. The map fills in as you talk."
+              : "Two or three sentences. What were you trying to decide, what tools were used, who else touched the output, and what was hard about it."}
           </p>
           <Textarea
             value={narrative}
             onChange={(e) => setNarrative(e.target.value)}
-            placeholder="e.g. Last week my AE drafted a proposal in ChatGPT, deal desk caught a pricing miss on review, and I have no way to know how often that happens across the team."
-            rows={6}
+            placeholder={
+              inputs.vantage === "enabler"
+                ? "e.g. Sales. AEs draft proposals in ChatGPT, deal desk catches pricing misses on review, and we have no signal on how often it happens across the team."
+                : "e.g. Last week my AE drafted a proposal in ChatGPT, deal desk caught a pricing miss on review, and I have no way to know how often that happens across the team."
+            }
+            rows={4}
             className="resize-none text-base"
             disabled={extracting}
           />
+          <div className="mt-3 flex items-start gap-2 text-[11px] text-muted-foreground">
+            <Lock className="w-3 h-3 mt-0.5 shrink-0" />
+            <p>
+              Stays in your browser until you choose to save. Never used to train
+              models. Deletable on request.
+            </p>
+          </div>
           <div className="flex items-center justify-between mt-3">
             <p className="text-[11px] text-muted-foreground">
               {narrative.length} characters · stays private until you save.
