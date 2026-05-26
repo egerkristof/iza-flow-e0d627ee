@@ -1340,6 +1340,103 @@ function SectionHeading({
   );
 }
 
+// ReadingMap: a 4-stop legend that tells the reader the shape of the debrief
+// before they start reading. Reduces cognitive load by making the structure
+// visible.
+function ReadingMap() {
+  const stops = [
+    { n: "1", label: "Verdict", sub: "What is true" },
+    { n: "2", label: "Mirror", sub: "Why we say it" },
+    { n: "3", label: "Cost", sub: "What it costs" },
+    { n: "4", label: "Move", sub: "What to do" },
+  ];
+  return (
+    <div
+      className="rounded-xl border p-4 md:p-5"
+      style={{ background: "hsl(var(--muted) / 0.4)", borderColor: "hsl(var(--border))" }}
+    >
+      <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-3">
+        How to read this debrief
+      </p>
+      <div className="flex items-center gap-1 md:gap-2 overflow-x-auto">
+        {stops.map((s, i) => (
+          <div key={s.n} className="flex items-center gap-1 md:gap-2 shrink-0">
+            <div className="flex items-center gap-2">
+              <span
+                className="inline-flex w-5 h-5 rounded-full items-center justify-center text-[10px] font-black"
+                style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
+              >
+                {s.n}
+              </span>
+              <div className="leading-tight">
+                <p className="text-xs font-bold">{s.label}</p>
+                <p className="text-[10px] text-muted-foreground">{s.sub}</p>
+              </div>
+            </div>
+            {i < stops.length - 1 && (
+              <ArrowRight className="w-3.5 h-3.5 text-muted-foreground mx-1 md:mx-2" />
+            )}
+          </div>
+        ))}
+        <span className="ml-auto pl-3 text-[10px] text-muted-foreground italic shrink-0 hidden md:inline">
+          Evidence at the bottom
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// FlowLabel: numbered step header on each result block. Mirrors ReadingMap so
+// the reader always knows which stop they are at.
+function FlowLabel({
+  step,
+  label,
+  sub,
+  tone = "default",
+}: {
+  step: string;
+  label: string;
+  sub?: string;
+  tone?: "default" | "warn";
+}) {
+  const color = tone === "warn" ? "0 70% 55%" : "var(--primary)";
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <span
+        className="inline-flex w-6 h-6 rounded-full items-center justify-center text-[10px] font-black"
+        style={{ background: `hsl(${color})`, color: "hsl(var(--primary-foreground))" }}
+      >
+        {step}
+      </span>
+      <span
+        className="text-xs font-bold uppercase tracking-[0.18em]"
+        style={{ color: `hsl(${color})` }}
+      >
+        {label}
+      </span>
+      {sub && (
+        <span className="text-[11px] text-muted-foreground hidden sm:inline">
+          / {sub}
+        </span>
+      )}
+    </div>
+  );
+}
+
+// FlowConnector: the connective tissue between blocks. Names the causal link
+// so the page reads as one argument, not five panels.
+function FlowConnector({ text }: { text: string }) {
+  return (
+    <div className="flex items-center gap-3 -my-4 max-w-3xl mx-auto px-2">
+      <div className="flex-1 h-px" style={{ background: "hsl(var(--border))" }} />
+      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        {text}
+      </p>
+      <div className="flex-1 h-px" style={{ background: "hsl(var(--border))" }} />
+    </div>
+  );
+}
+
 // Plain-language "read this as" line under section headings. Teaches what the
 // visual means before showing the visual.
 function ReadAs({
