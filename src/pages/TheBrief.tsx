@@ -155,6 +155,16 @@ const AUDIT_OPTS: { value: AuditStatus; label: string; color: string }[] = [
 // Page
 // ────────────────────────────────────────────────────────────────────────────
 
+// Strip nulls from extracted status objects so we never overwrite with null.
+function cleanStatus<T extends string>(obj: Record<string, T | null> | undefined): Record<string, T> {
+  if (!obj) return {};
+  const out: Record<string, T> = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (v) out[k] = v;
+  }
+  return out;
+}
+
 export default function TheBrief() {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
