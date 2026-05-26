@@ -397,6 +397,7 @@ function InputView({
   const team = inputs.team ? TEAM_BY_ID[inputs.team] : null;
   const [showExtra, setShowExtra] = useState(false);
   const examples = streamExamples(inputs.team);
+  const handoffs = handoffOptions(inputs.team);
 
   // Progress: 6 milestones (team, use_cases optional, tools optional, all streams, all audits, trigger)
   const milestones = [
@@ -443,6 +444,34 @@ function InputView({
       {/* Stage 1: About you */}
       <StageHeader stage="A" title="About you" sub="Two minutes. Pick. Pick. Pick." />
 
+      {/* 0. Vantage — soft toggle, does not fork the questions */}
+      <Section n={0} title="How do you see this problem?">
+        <p className="text-sm text-muted-foreground mb-4">
+          Same diagnosis either way. We just re-voice the read for who you are in the org.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          {VANTAGES.map((v) => {
+            const selected = inputs.vantage === v.id;
+            return (
+              <button
+                key={v.id}
+                type="button"
+                onClick={() => setInputs((p) => ({ ...p, vantage: v.id }))}
+                className="text-left rounded-xl border p-3 transition-all"
+                style={{
+                  background: selected ? "hsl(var(--primary) / 0.08)" : "hsl(var(--card))",
+                  borderColor: selected ? "hsl(var(--primary))" : "hsl(var(--border))",
+                  boxShadow: selected ? "0 0 0 1px hsl(var(--primary))" : "none",
+                }}
+              >
+                <p className="text-sm font-bold">{v.label}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{v.sub}</p>
+              </button>
+            );
+          })}
+        </div>
+      </Section>
+
       {/* 1. Team */}
       <Section n={1} title="Which team are you running?">
         <p className="text-sm text-muted-foreground mb-4">
@@ -480,8 +509,21 @@ function InputView({
 
       {team && (
         <>
+          {/* 1b. Bruise — one free-text line, the most grounded signal */}
+          <Section n={2} title="What happened last week that made you open this page?">
+            <p className="text-sm text-muted-foreground mb-3">
+              One line is enough. The specific bruise sharpens everything below.
+            </p>
+            <Input
+              value={inputs.bruise}
+              onChange={(e) => setInputs((p) => ({ ...p, bruise: e.target.value }))}
+              placeholder="e.g. AE sent a quote with the wrong discount tier, again."
+              maxLength={200}
+            />
+          </Section>
+
           {/* 2. Use cases (optional context) */}
-          <Section n={2} title={`What is your ${team.label} team using AI for today?`}>
+          <Section n={3} title={`What is your ${team.label} team using AI for today?`}>
             <p className="text-sm text-muted-foreground mb-4">
               Pick all that apply. Optional, but it sharpens the diagnosis.
             </p>
@@ -498,7 +540,7 @@ function InputView({
           </Section>
 
           {/* 3. Tools */}
-          <Section n={3} title="Your AI stack today">
+          <Section n={4} title="Your AI stack today">
             <p className="text-sm text-muted-foreground mb-4">
               Inventory, not preference. Pick everything actually in use.
             </p>
@@ -514,6 +556,23 @@ function InputView({
             </div>
           </Section>
 
+          {/* 3b. Handoff — who else touches the output (the seam) */}
+          <Section n={5} title="Who else touches the output of this work before it lands?">
+            <p className="text-sm text-muted-foreground mb-4">
+              The seam is where convergence breaks. Pick everyone in the chain.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {handoffs.map((h) => (
+                <Chip
+                  key={h}
+                  label={h}
+                  selected={inputs.handoff.includes(h)}
+                  onClick={() => toggle("handoff", h)}
+                />
+              ))}
+            </div>
+          </Section>
+
           {/* Stage 2: The diagnostic */}
           <StageHeader
             stage="B"
@@ -522,7 +581,7 @@ function InputView({
           />
 
           {/* 4. Streams */}
-          <Section n={4} title="Which streams does your AI see?">
+          <Section n={6} title="Which streams does your AI see?">
             <p className="text-sm text-muted-foreground mb-5">
               Every moment of work requires four streams to converge. Mark how much your AI
               currently sees of each.
@@ -560,7 +619,7 @@ function InputView({
           </Section>
 
           {/* 5. Audits */}
-          <Section n={5} title="Which governance audits run on every AI output?">
+          <Section n={7} title="Which governance audits run on every AI output?">
             <p className="text-sm text-muted-foreground mb-5">
               These are the five live checks that stand between intent and outcome. Be
               honest. The diagnosis is only as sharp as the answers.
@@ -597,7 +656,7 @@ function InputView({
           />
 
           {/* 6. Trigger */}
-          <Section n={6} title="What brought you here today?">
+          <Section n={8} title="What brought you here today?">
             <p className="text-sm text-muted-foreground mb-4">
               Pick one. Shapes the verdict.
             </p>
@@ -625,7 +684,7 @@ function InputView({
           </Section>
 
           {/* Extra context (optional) */}
-          <Section n={7} title="Anything else worth knowing? (optional)">
+          <Section n={9} title="Anything else worth knowing? (optional)">
             <div className="flex items-center justify-between -mt-2 mb-3">
               <p className="text-sm text-muted-foreground">
                 Industry, team size, a recent failed pilot, a constraint we should know.
