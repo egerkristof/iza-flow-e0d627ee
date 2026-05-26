@@ -568,6 +568,9 @@ export function deterministicDiagnosis(args: {
   streams: StreamAnswer;
   audits: AuditAnswer;
   trigger?: TriggerId | null;
+  vantage?: VantageId | null;
+  bruise?: string;
+  handoff?: string[];
 }): OperatorDiagnosis {
   const teamLabel = args.team || "your team";
   const litStreams = (Object.keys(args.streams) as StreamId[]).filter(
@@ -579,6 +582,8 @@ export function deterministicDiagnosis(args: {
   const redAudits = (Object.keys(args.audits) as AuditId[]).filter(
     (a) => args.audits[a] === "red",
   );
+  const handoffList = (args.handoff || []).filter((h) => h !== "Nobody, it ships as-is");
+  const bruise = (args.bruise || "").trim();
 
   const stream_coverage: StreamCoverage = (Object.keys(args.streams) as StreamId[]).reduce(
     (acc, s) => {
@@ -625,6 +630,11 @@ export function deterministicDiagnosis(args: {
         ? `${redAudits.length} of 5 governance audits are not in place. `
         : ""
     }The cost shows up as inconsistency, not failure.`,
+    mirror: `You said ${teamLabel} runs on ${args.tools.length ? args.tools.slice(0, 3).join(", ") : "consumer AI tools"}${
+      darkStreams.length ? `, blind on ${darkStreams.join(" and ")}` : ""
+    }${redAudits.length ? `, with ${redAudits.length} of 5 audits not in place` : ""}${
+      handoffList.length ? `, and the output gets touched by ${handoffList.slice(0, 2).join(" and ")} before it lands` : ""
+    }${bruise ? `. Your trigger: "${bruise.slice(0, 140)}"` : ""}.`,
     current_model_read: `${teamLabel} runs AI on top of ${
       args.tools.length ? args.tools.join(", ") : "consumer AI tools"
     }. ${
