@@ -64,10 +64,19 @@ const SYSTEM = `You are diagnosing a leader's AI Operating Model using the LIZA 
 
 The user has already self-reported their stream coverage (lit/partial/dark) and audit coverage (green/amber/red). Treat these as ground truth. Your job is to interpret them, surface what they imply, and prescribe the one correction that closes the biggest gap.
 
+VANTAGE re-voicing (soft):
+- If vantage = "operator": speak to a function owner. Anchor in their team's output, their tools, their Monday. The voice is "your sales team's playbook lives in a PDF".
+- If vantage = "enabler": speak to someone who sets the standard across many functions. The voice is "you have N functions running AI off N different definitions of 'good'". Same diagnosis, broader framing.
+
+BRUISE is the user's own words for what made them open this page. Quote it verbatim in the mirror, and let it shape the verdict. It is the most grounded signal you have.
+
+HANDOFF tells you who else touches the output. Use it to name where the seam breaks: "your output goes to {handoff}, but they have no visibility into how it was reasoned." Convergence and the seam are the whole framework.
+
 Return a structured diagnosis:
 1. title: short declarative line naming the operating model state.
 2. verdict: ONE sentence in the buyer's own language naming what is actually happening in their org today. Lead with their team and their tools. No framework jargon. This is the line they would read aloud to their CEO. 25 to 40 words.
-3. current_model_read: one short paragraph naming what they actually run today, grounded in their team, tools, and stream/audit answers.
+3. mirror: ONE sentence that quotes the user's own selections back to them. Format: "You said X. You picked Y. Your trigger was Z. That means W." 30 to 50 words. Use their tool names, their dark streams, their red audits, their handoff list, and their bruise text verbatim. This is the "earned diagnosis" move.
+4. current_model_read: one short paragraph naming what they actually run today, grounded in their team, tools, and stream/audit answers.
 4. stream_coverage: echo back each stream with the user's status and a one-line why specific to their team.
 5. audit_coverage: echo back each audit with the user's status and a one-line why specific to their team.
 6. bundle_gaps: for each of the six bundle types, status (have/partial/missing) and one-line why. Infer from their answers.
@@ -81,7 +90,7 @@ Return a structured diagnosis:
    - sequence.now (30 days), sequence.next (60 days), sequence.later (90 days): each has a label and a 1 to 2 sentence what.
 
 HARD RULE on grounding:
-Every claim in verdict, current_model_read, blind_spots, and correction MUST cite at least one concrete input the user gave: a tool name, a use case, a stream they marked dark/partial, or an audit they marked red/amber. Quote their selection verbatim when it sharpens the point. Generic claims that could apply to any team are unacceptable.
+Every claim in verdict, mirror, current_model_read, blind_spots, and correction MUST cite at least one concrete input the user gave: a tool name, a use case, a stream they marked dark/partial, an audit they marked red/amber, a handoff role, or their bruise text. Quote their selection verbatim when it sharpens the point. Generic claims that could apply to any team are unacceptable.
 
 ${VOICE}
 
@@ -115,6 +124,7 @@ const DIAGNOSE_TOOL = {
       properties: {
         title: { type: "string" },
         verdict: { type: "string" },
+        mirror: { type: "string" },
         current_model_read: { type: "string" },
         stream_coverage: {
           type: "object",
@@ -210,6 +220,7 @@ const DIAGNOSE_TOOL = {
       required: [
         "title",
         "verdict",
+        "mirror",
         "current_model_read",
         "stream_coverage",
         "audit_coverage",
@@ -256,6 +267,9 @@ serve(async (req) => {
     const audits = (payload.audits || {}) as Record<string, string>;
     const freeText: string = (payload.free_text || "").toString().trim();
     const trigger: string = (payload.trigger || "").toString().trim();
+    const vantage: string = (payload.vantage || "").toString().trim();
+    const bruise: string = (payload.bruise || "").toString().trim();
+    const handoff: string[] = Array.isArray(payload.handoff) ? payload.handoff : [];
 
     const streamKeys = ["strategy", "market", "state", "signal"];
     const auditKeys = ["cost", "best_practice", "security", "decision", "drift"];
@@ -269,6 +283,12 @@ serve(async (req) => {
     const userPrompt = `TEAM
 ${team ? `${team}${teamSub ? ` (${teamSub})` : ""}` : "(not specified)"}
 
+VANTAGE (how this person sees the problem)
+${vantage || "(not specified)"}
+
+BRUISE (their own words for what made them open this page)
+${bruise || "(none given)"}
+
 WHAT BROUGHT THEM HERE
 ${trigger || "(not specified)"}
 
@@ -277,6 +297,9 @@ ${useCases.length ? useCases.map((u) => `- ${u}`).join("\n") : "(none selected)"
 
 TOOLS IN USE TODAY
 ${tools.length ? tools.map((t) => `- ${t}`).join("\n") : "(none reported)"}
+
+WHO ELSE TOUCHES THE OUTPUT (the seam)
+${handoff.length ? handoff.map((h) => `- ${h}`).join("\n") : "(not specified)"}
 
 STREAM COVERAGE (self-reported)
 ${streamKeys.map((k) => `- ${k}: ${streams[k]}`).join("\n")}
@@ -287,7 +310,7 @@ ${auditKeys.map((k) => `- ${k}: ${audits[k]}`).join("\n")}
 ADDITIONAL CONTEXT
 ${freeText || "(none)"}
 
-Diagnose their LIZA Operator Framework state for ${team || "this team"}. Echo their stream and audit answers back with a why specific to their function and tool stack. Infer the bundle gaps. Read the decision-class exposure. Name two or three blind spots. End with one correction.`;
+Diagnose their LIZA Operator Framework state for ${team || "this team"}. Open with the verdict in their CEO's voice. Write the mirror sentence using their literal selections (tools, dark streams, red audits, handoff, bruise). Echo their stream and audit answers back with a why specific to their function and tool stack. Infer the bundle gaps. Read the decision-class exposure. Name two or three blind spots. End with one correction. Re-voice everything for vantage = ${vantage || "operator"}.`;
 
     const response = await callGateway({
       model: "google/gemini-3-flash-preview",
