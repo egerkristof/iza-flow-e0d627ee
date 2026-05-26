@@ -800,8 +800,7 @@ function DiagnosingView() {
 
 function ResultView({
   diagnosis,
-  tools,
-  team,
+  inputs,
   savedId,
   email,
   setEmail,
@@ -810,8 +809,7 @@ function ResultView({
   onReset,
 }: {
   diagnosis: OperatorDiagnosis;
-  tools: string[];
-  team: TeamId | null;
+  inputs: Inputs;
   savedId: string | null;
   email: string;
   setEmail: (v: string) => void;
@@ -819,6 +817,7 @@ function ResultView({
   onSave: () => void;
   onReset: () => void;
 }) {
+  const { tools, team } = inputs;
   // Derive maturity stage from the same answers powering the visuals
   const streamAns = Object.fromEntries(
     (Object.keys(diagnosis.stream_coverage) as StreamId[]).map((k) => [
