@@ -866,19 +866,8 @@ function ResultView({
         </p>
       </div>
 
-      {/* 1b. MATURITY ARC — pin them on the map */}
-      <MaturityArc currentId={stage} />
-
-      {/* 2. DIAGNOSIS — the compass tells the story */}
-      <section>
-        <SectionHeading icon={Compass} label="The moment of work / stream coverage" />
-        <ReadAs>
-          Every AI decision your team makes needs four streams of context to land. The
-          arms below show how many of them your AI actually sees today. Dim arms are
-          the parts of reality it is guessing at.
-        </ReadAs>
-        <OperatorCompass coverage={diagnosis.stream_coverage} tools={tools} />
-      </section>
+      {/* 2. MIRROR — quote their own selections back at them */}
+      <Mirror diagnosis={diagnosis} inputs={inputs} />
 
       {/* 3. COST OF THE GAP — turns diagnostic into budget */}
       {diagnosis.cost_of_gap && (
@@ -903,74 +892,7 @@ function ResultView({
         </section>
       )}
 
-      {/* 4. BLIND SPOTS — what you have not seen */}
-      <section>
-        <SectionHeading icon={AlertTriangle} label="What you probably have not seen" />
-        <ReadAs>
-          Second-order effects of the gaps above. The things that bite quietly because
-          nothing in your current setup catches them.
-        </ReadAs>
-        <div className="space-y-2">
-          {diagnosis.blind_spots.map((b, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08 * i }}
-              className="rounded-xl border p-5"
-              style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-            >
-              <p className="text-sm font-bold">{b.title}</p>
-              <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{b.why}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* 4b. HOW TO GET FURTHER — pedagogical bridge from "here" to "next" */}
-      {nextStage && (
-        <section
-          className="rounded-2xl border p-6 md:p-8"
-          style={{
-            background: "hsl(var(--card))",
-            borderColor: "hsl(var(--border))",
-          }}
-        >
-          <SectionHeading icon={TrendingUp} label="How to get further" />
-          <ReadAs>
-            You are currently at <strong>{currentStage.label}</strong>. The next stage
-            on the arc is <strong>{nextStage.label}</strong>. These are the three
-            concrete shifts that get you there. They are universal. Not LIZA-specific.
-          </ReadAs>
-          <div className="mt-2 rounded-xl border p-5" style={{ borderColor: "hsl(var(--border))" }}>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
-              {currentStage.label} &nbsp;→&nbsp; {nextStage.label}
-            </p>
-            <ol className="space-y-2.5">
-              {currentStage.next_shifts.map((shift, i) => (
-                <li key={i} className="flex gap-3">
-                  <span
-                    className="inline-flex shrink-0 w-5 h-5 rounded-full items-center justify-center text-[10px] font-black mt-0.5"
-                    style={{
-                      background: "hsl(var(--foreground))",
-                      color: "hsl(var(--background))",
-                    }}
-                  >
-                    {i + 1}
-                  </span>
-                  <p className="text-sm leading-snug">{shift}</p>
-                </li>
-              ))}
-            </ol>
-            <p className="mt-4 pt-4 text-xs text-muted-foreground border-t" style={{ borderColor: "hsl(var(--border))" }}>
-              The move below is the first of these three, compressed into a 90-day
-              sequence with LIZA doing the encoding work.
-            </p>
-          </div>
-        </section>
-      )}
-
-      {/* 5. THE MOVE — promoted, sequenced, CTA attached */}
+      {/* 4. THE MOVE — promoted to right after Cost */}
       <section
         className="rounded-2xl p-6 md:p-8 border-2"
         style={{
@@ -1059,10 +981,189 @@ function ResultView({
         </div>
       </section>
 
-      {/* 6. THE UNDERNEATH — collapsed proof: audits, bundle, decision-class */}
-      <section>
-        <SectionHeading icon={Layers} label="The underneath / proof of diagnosis" />
-        <div className="space-y-6">
+      {/* 5. THE EVIDENCE — everything collapses here behind one disclosure */}
+      <EvidenceCollapse
+        diagnosis={diagnosis}
+        tools={tools}
+        team={team}
+        stage={stage}
+        currentStage={currentStage}
+        nextStage={nextStage}
+        examples={examples}
+      />
+
+      {/* Save / share / restart */}
+      <section
+        className="rounded-2xl border p-6 md:p-8"
+        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+      >
+        {savedId ? (
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-bold">Saved. Share this link.</p>
+              <p className="text-xs text-muted-foreground mt-1 break-all">
+                {window.location.origin}/the-brief/{savedId}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${window.location.origin}/the-brief/${savedId}`,
+                  );
+                  toast.success("Link copied.");
+                }}
+              >
+                <Share2 className="w-4 h-4 mr-2" />
+                Copy link
+              </Button>
+              <Button variant="ghost" onClick={onReset}>
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Run another
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col md:flex-row md:items-end gap-3">
+            <div className="flex-1">
+              <p className="text-sm font-bold mb-1">Save this diagnosis</p>
+              <p className="text-xs text-muted-foreground mb-3">
+                Get a shareable link. We will send the brief to your inbox.
+              </p>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@company.com"
+              />
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={onSave} disabled={saving}>
+                {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
+                Save and share
+              </Button>
+              <Button variant="ghost" onClick={onReset}>
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Run another
+              </Button>
+            </div>
+          </div>
+        )}
+      </section>
+    </motion.div>
+  );
+}
+
+// Mirror: quotes the user's inputs back. The "earned diagnosis" move.
+function Mirror({
+  diagnosis,
+  inputs,
+}: {
+  diagnosis: OperatorDiagnosis;
+  inputs: Inputs;
+}) {
+  // Prefer AI mirror; otherwise reconstruct from inputs
+  const teamLabel = inputs.team ? TEAM_BY_ID[inputs.team].label : "your team";
+  const darkStreams = (Object.keys(inputs.streams) as StreamId[]).filter(
+    (s) => inputs.streams[s] === "dark",
+  );
+  const redAudits = (Object.keys(inputs.audits) as AuditId[]).filter(
+    (a) => inputs.audits[a] === "red",
+  );
+  const handoffList = inputs.handoff.filter((h) => h !== "Nobody, it ships as-is");
+  const fallback =
+    `You said ${teamLabel} runs on ${
+      inputs.tools.length ? inputs.tools.slice(0, 3).join(", ") : "consumer AI tools"
+    }${darkStreams.length ? `, blind on ${darkStreams.join(" and ")}` : ""}${
+      redAudits.length ? `, with ${redAudits.length} of 5 audits not in place` : ""
+    }${
+      handoffList.length
+        ? `, and the output gets touched by ${handoffList.slice(0, 2).join(" and ")} before it lands`
+        : ""
+    }${inputs.bruise ? `. Your trigger: "${inputs.bruise}"` : ""}.`;
+  const line = diagnosis.mirror || fallback;
+  return (
+    <section
+      className="rounded-2xl border p-6 md:p-8"
+      style={{
+        background: "hsl(var(--card))",
+        borderColor: "hsl(var(--border))",
+      }}
+    >
+      <SectionHeading icon={Info} label="Your words, back at you" />
+      <p className="text-lg md:text-xl leading-relaxed font-medium text-foreground/90 max-w-3xl">
+        {line}
+      </p>
+      <p className="mt-4 text-xs text-muted-foreground italic">
+        If this does not sound like your org, change an answer and rerun. The diagnosis is only as sharp as the input.
+      </p>
+    </section>
+  );
+}
+
+// EvidenceCollapse: all secondary panels go under one disclosure so the
+// debrief shape (Verdict → Mirror → Cost → Move) reads as one flow above.
+function EvidenceCollapse({
+  diagnosis,
+  tools,
+  team,
+  stage,
+  currentStage,
+  nextStage,
+  examples,
+}: {
+  diagnosis: OperatorDiagnosis;
+  tools: string[];
+  team: TeamId | null;
+  stage: string;
+  currentStage: typeof MATURITY_STAGES[number];
+  nextStage: typeof MATURITY_STAGES[number] | null | undefined;
+  examples: ReturnType<typeof bundleExamples>;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <section
+      className="rounded-2xl border"
+      style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between p-6 md:p-8 text-left"
+      >
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1">
+            The evidence
+          </p>
+          <p className="text-base md:text-lg font-bold">
+            How we got to that verdict and move
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Stream compass, audits, knowledge bundle, decision class, blind spots, maturity arc.
+          </p>
+        </div>
+        <span className="text-xs font-bold text-primary shrink-0">
+          {open ? "Hide" : "Show"}
+        </span>
+      </button>
+
+      {open && (
+        <div className="px-6 md:px-8 pb-8 space-y-10">
+          {/* Maturity arc */}
+          <MaturityArc currentId={stage} />
+
+          {/* Stream compass */}
+          <div>
+            <SectionHeading icon={Compass} label="The moment of work / stream coverage" />
+            <ReadAs>
+              Every AI decision your team makes needs four streams of context to land. The
+              arms below show how many of them your AI actually sees today. Dim arms are
+              the parts of reality it is guessing at.
+            </ReadAs>
+            <OperatorCompass coverage={diagnosis.stream_coverage} tools={tools} />
+          </div>
+
           {/* Governance */}
           <div>
             <div className="flex items-center gap-2 mb-2">
@@ -1137,69 +1238,58 @@ function ResultView({
               })}
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Save / share / restart */}
-      <section
-        className="rounded-2xl border p-6 md:p-8"
-        style={{ background: "hsl(var(--card))", borderColor: "hsl(var(--border))" }}
-      >
-        {savedId ? (
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <p className="text-sm font-bold">Saved. Share this link.</p>
-              <p className="text-xs text-muted-foreground mt-1 break-all">
-                {window.location.origin}/the-brief/{savedId}
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    `${window.location.origin}/the-brief/${savedId}`,
-                  );
-                  toast.success("Link copied.");
-                }}
-              >
-                <Share2 className="w-4 h-4 mr-2" />
-                Copy link
-              </Button>
-              <Button variant="ghost" onClick={onReset}>
-                <RotateCcw className="w-4 h-4 mr-2" />
-                Run another
-              </Button>
+          {/* Blind spots */}
+          <div>
+            <SectionHeading icon={AlertTriangle} label="What you probably have not seen" />
+            <ReadAs>
+              Second-order effects of the gaps above. The things that bite quietly because
+              nothing in your current setup catches them.
+            </ReadAs>
+            <div className="space-y-2">
+              {diagnosis.blind_spots.map((b, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl border p-5"
+                  style={{ background: "hsl(var(--background))", borderColor: "hsl(var(--border))" }}
+                >
+                  <p className="text-sm font-bold">{b.title}</p>
+                  <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{b.why}</p>
+                </div>
+              ))}
             </div>
           </div>
-        ) : (
-          <div className="flex flex-col md:flex-row md:items-end gap-3">
-            <div className="flex-1">
-              <p className="text-sm font-bold mb-1">Save this diagnosis</p>
-              <p className="text-xs text-muted-foreground mb-3">
-                Get a shareable link. We will send the brief to your inbox.
-              </p>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@company.com"
-              />
+
+          {/* How to get further */}
+          {nextStage && (
+            <div className="rounded-xl border p-5" style={{ borderColor: "hsl(var(--border))" }}>
+              <SectionHeading icon={TrendingUp} label="How to get further" />
+              <ReadAs>
+                You are currently at <strong>{currentStage.label}</strong>. The next stage
+                is <strong>{nextStage.label}</strong>. These are the three concrete shifts
+                that get you there. Universal. Not LIZA-specific.
+              </ReadAs>
+              <ol className="space-y-2.5 mt-2">
+                {currentStage.next_shifts.map((shift, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span
+                      className="inline-flex shrink-0 w-5 h-5 rounded-full items-center justify-center text-[10px] font-black mt-0.5"
+                      style={{
+                        background: "hsl(var(--foreground))",
+                        color: "hsl(var(--background))",
+                      }}
+                    >
+                      {i + 1}
+                    </span>
+                    <p className="text-sm leading-snug">{shift}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
-            <div className="flex gap-2">
-              <Button onClick={onSave} disabled={saving}>
-                {saving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-                Save and share
-              </Button>
-              <Button variant="ghost" onClick={onReset}>
-                <RotateCcw className="w-4 h-4 mr-2" />
-                Run another
-              </Button>
-            </div>
-          </div>
-        )}
-      </section>
-    </motion.div>
+          )}
+        </div>
+      )}
+    </section>
   );
 }
 
