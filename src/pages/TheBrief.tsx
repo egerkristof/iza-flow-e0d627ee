@@ -1071,15 +1071,49 @@ function ResultView({
         const aMap = auditMapFromCoverage(diagnosis.audit_coverage);
         const bMap = bundleMapFromGaps(diagnosis.bundle_gaps as any);
         const highlight = pickHighlightStream(sMap);
+        // Compute exposure score from audits/streams for the peer benchmark.
+        const auditScore = (Object.values(diagnosis.audit_coverage) as { status: AuditStatus }[]).reduce(
+          (acc, a) => acc + (a.status === "green" ? 20 : a.status === "amber" ? 10 : 0),
+          0,
+        );
+        const streamScore = (Object.values(diagnosis.stream_coverage) as { status: StreamStatus }[]).reduce(
+          (acc, s) => acc + (s.status === "lit" ? 12 : s.status === "partial" ? 6 : 0),
+          0,
+        );
+        const score = Math.min(100, auditScore + streamScore);
+        const bench = peerBenchmark(score);
         return (
           <section className="grid lg:grid-cols-[1fr_440px] gap-8 items-start">
             <div className="space-y-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
-                The verdict
-              </p>
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                  The verdict · {inputs.team ? TEAM_BY_ID[inputs.team].label : "your function"}
+                </p>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="print:hidden"
+                  onClick={() => window.print()}
+                >
+                  <Download className="w-3.5 h-3.5 mr-1.5" />
+                  Download brief
+                </Button>
+              </div>
               <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05]">
                 {diagnosis.verdict || diagnosis.title}
               </h2>
+              <div
+                className="inline-flex flex-col gap-1 rounded-xl border px-4 py-3"
+                style={{
+                  background: "hsl(var(--muted) / 0.4)",
+                  borderColor: "hsl(var(--border))",
+                }}
+              >
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                  Peer benchmark · score {score}/100
+                </p>
+                <p className="text-sm font-semibold leading-snug">{bench.line}</p>
+              </div>
               <p className="text-sm text-muted-foreground max-w-md">
                 The picture on the right is your operating model as we heard it. The arm
                 pulsing is where the next move lives.
