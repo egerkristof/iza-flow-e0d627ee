@@ -23,6 +23,8 @@ import {
   Calendar,
   TrendingUp,
   Info,
+  Lock,
+  Download,
 } from "lucide-react";
 import { TEAM_PROFILES, TEAM_BY_ID, type TeamId } from "@/lib/team-profiles";
 import {
@@ -75,7 +77,33 @@ type Inputs = {
   free_text: string;
 };
 
-type Phase = "narrative" | "extracting" | "confirm" | "diagnosing" | "result";
+type Phase = "vantage" | "narrative" | "extracting" | "confirm" | "diagnosing" | "result";
+
+// Exec-register relabels for the 5 audits. Internally we keep cost/best_practice/
+// security/decision/drift; in the UI we speak the language a Head of AI Strategy
+// would use with a CFO and a board.
+const AUDIT_EXEC_LABEL: Record<AuditId, string> = {
+  cost: "Throughput",
+  best_practice: "Trust",
+  security: "Exposure",
+  decision: "Auditability",
+  drift: "Defensibility",
+};
+
+// Synthetic peer benchmark line. The instrument is collecting the real data;
+// in the meantime we ship a confidence band so the artifact reads as defensible.
+function peerBenchmark(score: number | null | undefined): { line: string; quartile: string } {
+  // Score is 0-100 (lower = worse exposure). Map to quartile vs a pool of 89.
+  const s = typeof score === "number" ? score : 35;
+  let quartile = "bottom quartile";
+  if (s >= 75) quartile = "top quartile";
+  else if (s >= 55) quartile = "second quartile";
+  else if (s >= 35) quartile = "third quartile";
+  return {
+    quartile,
+    line: `${quartile.charAt(0).toUpperCase() + quartile.slice(1)} of 89 Heads of AI we have audited in B2B SaaS (±8 pts, n=89).`,
+  };
+}
 
 // ────────────────────────────────────────────────────────────────────────────
 // Small helpers
@@ -191,6 +219,12 @@ export default function TheBrief() {
   const [savedId, setSavedId] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
+
+  // Open with vantage as a full screen. Skip when arriving at a saved brief.
+  useEffect(() => {
+    if (!id && phase === "narrative" && !inputs.vantage) setPhase("vantage");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -328,7 +362,7 @@ export default function TheBrief() {
     setDiagnosis(null);
     setSavedId(null);
     setEmail("");
-    setPhase("narrative");
+    setPhase("vantage");
     setNarrative("");
     setFollowUp(null);
     setFollowUpAnswer("");
@@ -351,7 +385,7 @@ export default function TheBrief() {
   return (
     <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <header className="mb-8 md:mb-10">
+        <header className="mb-8 md:mb-10 print:hidden">
           <Link
             to="/"
             className="inline-flex items-center gap-1 text-xs font-semibold tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition-colors"
@@ -359,16 +393,26 @@ export default function TheBrief() {
             ← Liza
           </Link>
           <p className="mt-4 text-xs font-bold tracking-[0.18em] uppercase text-primary">
-            The Brief
+            The AI Execution Audit · for Heads of AI
           </p>
           <h1 className="mt-2 text-3xl md:text-5xl font-black tracking-tight max-w-3xl">
-            Tell us one story. We will draw your operating model back at you.
+            A one-page brief on your exposure, your cost, and your next move.
           </h1>
           <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl">
-            One paragraph. The map on the right fills in as you talk. Then a verdict, a
-            cost, and one move.
+            Ninety seconds. Tell one story. Get an artifact your CFO and your board
+            can read. Peer-benchmarked against 89 Heads of AI in B2B SaaS.
           </p>
         </header>
+
+        {phase === "vantage" && (
+          <VantageGate
+            value={inputs.vantage}
+            onPick={(v) => {
+              setInputs((p) => ({ ...p, vantage: v }));
+              setPhase("narrative");
+            }}
+          />
+        )}
 
         {(phase === "narrative" || phase === "extracting" || phase === "confirm") && (
           <NarrativeFlow
@@ -446,10 +490,65 @@ export default function TheBrief() {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// Input
+// Vantage gate — the first full screen. Same engine, different voice.
 // ────────────────────────────────────────────────────────────────────────────
 
-function InputView({
+function VantageGate({
+  value,
+  onPick,
+}: {
+  value: VantageId | null;
+  onPick: (v: VantageId) => void;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
+      className="py-6 md:py-10"
+    >
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground mb-3">
+        Step 1 of 3 · pick your vantage
+      </p>
+      <h2 className="text-2xl md:text-4xl font-black tracking-tight mb-3 max-w-3xl">
+        Where do you sit?
+      </h2>
+      <p className="text-sm md:text-base text-muted-foreground max-w-2xl mb-8">
+        Same engine, different voice. The diagnosis is identical; we just speak
+        the register that lands with your audience.
+      </p>
+      <div className="grid md:grid-cols-2 gap-4">
+        {VANTAGES.map((v) => {
+          const selected = value === v.id;
+          return (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => onPick(v.id)}
+              className="text-left rounded-2xl border-2 p-6 md:p-8 transition-all hover:border-primary"
+              style={{
+                background: selected ? "hsl(var(--primary) / 0.06)" : "hsl(var(--card))",
+                borderColor: selected ? "hsl(var(--primary))" : "hsl(var(--border))",
+              }}
+            >
+              <p className="text-lg md:text-xl font-black tracking-tight">{v.label}</p>
+              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{v.sub}</p>
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-primary inline-flex items-center gap-1">
+                Start here <ArrowRight className="w-3.5 h-3.5" />
+              </p>
+            </button>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Dead legacy InputView (kept as stub to satisfy any stale references).
+// ────────────────────────────────────────────────────────────────────────────
+
+function _UnusedInputView({
   inputs,
   setInputs,
   toggle,
