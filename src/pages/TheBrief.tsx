@@ -1180,6 +1180,16 @@ function EvidenceCollapse({
 
       {open && (
         <div className="px-6 md:px-8 pb-8 space-y-10">
+          {/* Context read — the longer prose we removed from the verdict */}
+          {diagnosis.current_model_read && (
+            <div>
+              <SectionHeading icon={Info} label="The full read on your current model" />
+              <p className="text-sm md:text-base leading-relaxed text-foreground/85 max-w-3xl">
+                {diagnosis.current_model_read}
+              </p>
+            </div>
+          )}
+
           {/* Maturity arc */}
           <MaturityArc currentId={stage} />
 
