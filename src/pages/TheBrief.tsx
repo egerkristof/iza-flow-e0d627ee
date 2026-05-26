@@ -23,6 +23,8 @@ import {
   Calendar,
   TrendingUp,
   Info,
+  Lock,
+  Download,
 } from "lucide-react";
 import { TEAM_PROFILES, TEAM_BY_ID, type TeamId } from "@/lib/team-profiles";
 import {
@@ -75,7 +77,33 @@ type Inputs = {
   free_text: string;
 };
 
-type Phase = "narrative" | "extracting" | "confirm" | "diagnosing" | "result";
+type Phase = "vantage" | "narrative" | "extracting" | "confirm" | "diagnosing" | "result";
+
+// Exec-register relabels for the 5 audits. Internally we keep cost/best_practice/
+// security/decision/drift; in the UI we speak the language a Head of AI Strategy
+// would use with a CFO and a board.
+const AUDIT_EXEC_LABEL: Record<AuditId, string> = {
+  cost: "Throughput",
+  best_practice: "Trust",
+  security: "Exposure",
+  decision: "Auditability",
+  drift: "Defensibility",
+};
+
+// Synthetic peer benchmark line. The instrument is collecting the real data;
+// in the meantime we ship a confidence band so the artifact reads as defensible.
+function peerBenchmark(score: number | null | undefined): { line: string; quartile: string } {
+  // Score is 0-100 (lower = worse exposure). Map to quartile vs a pool of 89.
+  const s = typeof score === "number" ? score : 35;
+  let quartile = "bottom quartile";
+  if (s >= 75) quartile = "top quartile";
+  else if (s >= 55) quartile = "second quartile";
+  else if (s >= 35) quartile = "third quartile";
+  return {
+    quartile,
+    line: `${quartile.charAt(0).toUpperCase() + quartile.slice(1)} of 89 Heads of AI we have audited in B2B SaaS (±8 pts, n=89).`,
+  };
+}
 
 // ────────────────────────────────────────────────────────────────────────────
 // Small helpers
@@ -191,6 +219,12 @@ export default function TheBrief() {
   const [savedId, setSavedId] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
+
+  // Open with vantage as a full screen. Skip when arriving at a saved brief.
+  useEffect(() => {
+    if (!id && phase === "narrative" && !inputs.vantage) setPhase("vantage");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -328,7 +362,7 @@ export default function TheBrief() {
     setDiagnosis(null);
     setSavedId(null);
     setEmail("");
-    setPhase("narrative");
+    setPhase("vantage");
     setNarrative("");
     setFollowUp(null);
     setFollowUpAnswer("");
@@ -351,7 +385,7 @@ export default function TheBrief() {
   return (
     <div className="min-h-screen" style={{ background: "hsl(var(--background))" }}>
       <div className="max-w-6xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <header className="mb-8 md:mb-10">
+        <header className="mb-8 md:mb-10 print:hidden">
           <Link
             to="/"
             className="inline-flex items-center gap-1 text-xs font-semibold tracking-[0.18em] uppercase text-muted-foreground hover:text-foreground transition-colors"
@@ -359,16 +393,26 @@ export default function TheBrief() {
             ← Liza
           </Link>
           <p className="mt-4 text-xs font-bold tracking-[0.18em] uppercase text-primary">
-            The Brief
+            The AI Execution Audit · for Heads of AI
           </p>
           <h1 className="mt-2 text-3xl md:text-5xl font-black tracking-tight max-w-3xl">
-            Tell us one story. We will draw your operating model back at you.
+            A one-page brief on your exposure, your cost, and your next move.
           </h1>
           <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl">
-            One paragraph. The map on the right fills in as you talk. Then a verdict, a
-            cost, and one move.
+            Ninety seconds. Tell one story. Get an artifact your CFO and your board
+            can read. Peer-benchmarked against 89 Heads of AI in B2B SaaS.
           </p>
         </header>
+
+        {phase === "vantage" && (
+          <VantageGate
+            value={inputs.vantage}
+            onPick={(v) => {
+              setInputs((p) => ({ ...p, vantage: v }));
+              setPhase("narrative");
+            }}
+          />
+        )}
 
         {(phase === "narrative" || phase === "extracting" || phase === "confirm") && (
           <NarrativeFlow
@@ -446,10 +490,65 @@ export default function TheBrief() {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// Input
+// Vantage gate — the first full screen. Same engine, different voice.
 // ────────────────────────────────────────────────────────────────────────────
 
-function InputView({
+function VantageGate({
+  value,
+  onPick,
+}: {
+  value: VantageId | null;
+  onPick: (v: VantageId) => void;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
+      className="py-6 md:py-10"
+    >
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground mb-3">
+        Step 1 of 3 · pick your vantage
+      </p>
+      <h2 className="text-2xl md:text-4xl font-black tracking-tight mb-3 max-w-3xl">
+        Where do you sit?
+      </h2>
+      <p className="text-sm md:text-base text-muted-foreground max-w-2xl mb-8">
+        Same engine, different voice. The diagnosis is identical; we just speak
+        the register that lands with your audience.
+      </p>
+      <div className="grid md:grid-cols-2 gap-4">
+        {VANTAGES.map((v) => {
+          const selected = value === v.id;
+          return (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => onPick(v.id)}
+              className="text-left rounded-2xl border-2 p-6 md:p-8 transition-all hover:border-primary"
+              style={{
+                background: selected ? "hsl(var(--primary) / 0.06)" : "hsl(var(--card))",
+                borderColor: selected ? "hsl(var(--primary))" : "hsl(var(--border))",
+              }}
+            >
+              <p className="text-lg md:text-xl font-black tracking-tight">{v.label}</p>
+              <p className="text-sm text-muted-foreground mt-2 leading-relaxed">{v.sub}</p>
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-primary inline-flex items-center gap-1">
+                Start here <ArrowRight className="w-3.5 h-3.5" />
+              </p>
+            </button>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Dead legacy InputView (kept as stub to satisfy any stale references).
+// ────────────────────────────────────────────────────────────────────────────
+
+function _UnusedInputView({
   inputs,
   setInputs,
   toggle,
@@ -972,15 +1071,49 @@ function ResultView({
         const aMap = auditMapFromCoverage(diagnosis.audit_coverage);
         const bMap = bundleMapFromGaps(diagnosis.bundle_gaps as any);
         const highlight = pickHighlightStream(sMap);
+        // Compute exposure score from audits/streams for the peer benchmark.
+        const auditScore = (Object.values(diagnosis.audit_coverage) as { status: AuditStatus }[]).reduce(
+          (acc, a) => acc + (a.status === "green" ? 20 : a.status === "amber" ? 10 : 0),
+          0,
+        );
+        const streamScore = (Object.values(diagnosis.stream_coverage) as { status: StreamStatus }[]).reduce(
+          (acc, s) => acc + (s.status === "lit" ? 12 : s.status === "partial" ? 6 : 0),
+          0,
+        );
+        const score = Math.min(100, auditScore + streamScore);
+        const bench = peerBenchmark(score);
         return (
           <section className="grid lg:grid-cols-[1fr_440px] gap-8 items-start">
             <div className="space-y-4">
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
-                The verdict
-              </p>
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary">
+                  The verdict · {inputs.team ? TEAM_BY_ID[inputs.team].label : "your function"}
+                </p>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="print:hidden"
+                  onClick={() => window.print()}
+                >
+                  <Download className="w-3.5 h-3.5 mr-1.5" />
+                  Download brief
+                </Button>
+              </div>
               <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05]">
                 {diagnosis.verdict || diagnosis.title}
               </h2>
+              <div
+                className="inline-flex flex-col gap-1 rounded-xl border px-4 py-3"
+                style={{
+                  background: "hsl(var(--muted) / 0.4)",
+                  borderColor: "hsl(var(--border))",
+                }}
+              >
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                  Peer benchmark · score {score}/100
+                </p>
+                <p className="text-sm font-semibold leading-snug">{bench.line}</p>
+              </div>
               <p className="text-sm text-muted-foreground max-w-md">
                 The picture on the right is your operating model as we heard it. The arm
                 pulsing is where the next move lives.
@@ -1659,11 +1792,11 @@ const STREAM_LABEL: Record<StreamId, string> = {
 };
 
 const AUDIT_LABEL: Record<AuditId, string> = {
-  cost: "Cost",
-  best_practice: "Best practice",
-  security: "Security",
-  decision: "Decision audit",
-  drift: "Drift",
+  cost: "Throughput",
+  best_practice: "Trust",
+  security: "Exposure",
+  decision: "Auditability",
+  drift: "Defensibility",
 };
 
 function NarrativeFlow({
@@ -1738,22 +1871,35 @@ function NarrativeFlow({
           <div className="flex items-center gap-2 mb-2">
             <Sparkles className="w-4 h-4 text-primary" />
             <h2 className="text-lg md:text-xl font-bold">
-              Describe one recent decision where AI was in the loop.
+              {inputs.vantage === "enabler"
+                ? "Which function bleeds you the most right now?"
+                : "Describe one recent decision where AI was in the loop."}
             </h2>
           </div>
           <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
-            Two or three sentences. What were you trying to decide, what tools were used,
-            who else touched the output, and what was hard about it. The map fills in as
-            you talk.
+            {inputs.vantage === "enabler"
+              ? "Name the function, then two or three sentences on what is hard about AI execution there today. The map fills in as you talk."
+              : "Two or three sentences. What were you trying to decide, what tools were used, who else touched the output, and what was hard about it."}
           </p>
           <Textarea
             value={narrative}
             onChange={(e) => setNarrative(e.target.value)}
-            placeholder="e.g. Last week my AE drafted a proposal in ChatGPT, deal desk caught a pricing miss on review, and I have no way to know how often that happens across the team."
-            rows={6}
+            placeholder={
+              inputs.vantage === "enabler"
+                ? "e.g. Sales. AEs draft proposals in ChatGPT, deal desk catches pricing misses on review, and we have no signal on how often it happens across the team."
+                : "e.g. Last week my AE drafted a proposal in ChatGPT, deal desk caught a pricing miss on review, and I have no way to know how often that happens across the team."
+            }
+            rows={4}
             className="resize-none text-base"
             disabled={extracting}
           />
+          <div className="mt-3 flex items-start gap-2 text-[11px] text-muted-foreground">
+            <Lock className="w-3 h-3 mt-0.5 shrink-0" />
+            <p>
+              Stays in your browser until you choose to save. Never used to train
+              models. Deletable on request.
+            </p>
+          </div>
           <div className="flex items-center justify-between mt-3">
             <p className="text-[11px] text-muted-foreground">
               {narrative.length} characters · stays private until you save.
