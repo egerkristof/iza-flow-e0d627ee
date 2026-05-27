@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Check, X, Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -24,11 +24,27 @@ interface Props {
   expanded: boolean;
   onToggle: () => void;
   onDefine: () => void;
+  onSaveSignal: (signalId: string) => void;
+  onDismissSignal: (signalId: string) => void;
+  savedSignalIds: string[];
+  dismissedSignalIds: string[];
 }
 
-export function FrameTile({ tile, signals, hasUnread, expanded, onToggle, onDefine }: Props) {
+export function FrameTile({
+  tile,
+  signals,
+  hasUnread,
+  expanded,
+  onToggle,
+  onDefine,
+  onSaveSignal,
+  onDismissSignal,
+  savedSignalIds,
+  dismissedSignalIds,
+}: Props) {
   const Icon = tile.icon;
-  const latest = signals[signals.length - 1];
+  const visibleSignals = signals.filter((s) => !dismissedSignalIds.includes(s.id));
+  const latest = visibleSignals[visibleSignals.length - 1];
   const subtitle = latest ? latest.text : tile.state;
   return (
     <div
@@ -74,31 +90,71 @@ export function FrameTile({ tile, signals, hasUnread, expanded, onToggle, onDefi
             </span>
             <span className="text-xs font-medium">{STATUS_LABEL[tile.status]}</span>
           </div>
-          {signals.length === 0 ? (
+          {visibleSignals.length === 0 ? (
             <p className="text-xs italic text-muted-foreground">
               {emptyObservationLine(tile.id)}
             </p>
           ) : (
             <ul className="space-y-2">
-              {signals.map((s) => (
-                <li key={s.id} className="flex gap-2 text-xs leading-relaxed">
-                  <span className="shrink-0 text-[10px] tabular-nums text-muted-foreground pt-0.5">
-                    {s.ts}
-                  </span>
-                  <span
-                    className={cn(
-                      "flex-1",
-                      s.tone === "offer"
-                        ? "text-foreground font-medium"
-                        : s.tone === "warn"
-                          ? "text-destructive"
-                          : "text-foreground/70",
+              {visibleSignals.map((s) => {
+                const saved = savedSignalIds.includes(s.id);
+                return (
+                  <li key={s.id} className="text-xs leading-relaxed">
+                    <div className="flex gap-2">
+                      <span className="shrink-0 text-[10px] tabular-nums text-muted-foreground pt-0.5">
+                        {s.ts}
+                      </span>
+                      <span
+                        className={cn(
+                          "flex-1",
+                          s.tone === "offer"
+                            ? "text-foreground font-medium"
+                            : s.tone === "warn"
+                              ? "text-destructive"
+                              : "text-foreground/70",
+                        )}
+                      >
+                        {s.text}
+                      </span>
+                    </div>
+                    {s.tone === "offer" && !saved && (
+                      <div className="mt-1.5 ml-6 flex flex-wrap gap-1">
+                        <Button
+                          size="sm"
+                          variant="default"
+                          className="h-6 px-2 text-[11px]"
+                          onClick={() => onSaveSignal(s.id)}
+                        >
+                          <Check className="h-3 w-3 mr-1" /> Save as standard
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="h-6 px-2 text-[11px]"
+                          asChild
+                        >
+                          <Link to={tile.conditionsPath}>
+                            <Pencil className="h-3 w-3 mr-1" /> Edit first
+                          </Link>
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-[11px] text-muted-foreground"
+                          onClick={() => onDismissSignal(s.id)}
+                        >
+                          <X className="h-3 w-3 mr-1" /> Dismiss
+                        </Button>
+                      </div>
                     )}
-                  >
-                    {s.text}
-                  </span>
-                </li>
-              ))}
+                    {s.tone === "offer" && saved && (
+                      <p className="mt-1 ml-6 text-[11px] text-emerald-600 flex items-center gap-1">
+                        <Check className="h-3 w-3" /> Saved to {tile.label}
+                      </p>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           )}
           <div className="flex flex-wrap gap-2 pt-1">
