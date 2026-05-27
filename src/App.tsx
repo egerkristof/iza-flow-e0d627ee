@@ -54,6 +54,8 @@ import OSPage from "./pages/marketing/OS";
 import ByFunctionPage from "./pages/marketing/ByFunction";
 import ForPersonaPage from "./pages/marketing/ForPersona";
 import TheBriefPage from "./pages/TheBrief";
+import FramedChatPage from "./pages/FramedChat";
+import ConditionsPage from "./pages/Conditions";
 
 const queryClient = new QueryClient();
 
@@ -120,6 +122,8 @@ const App = () => (
             <Route path="/audit" element={<AuditLandingPage />} />
             <Route path="/the-brief" element={<TheBriefPage />} />
             <Route path="/the-brief/:id" element={<TheBriefPage />} />
+            <Route path="/framed-chat" element={<FramedChatPage />} />
+            <Route path="/conditions" element={<ConditionsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
 
