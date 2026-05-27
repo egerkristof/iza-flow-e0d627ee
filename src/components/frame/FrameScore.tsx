@@ -1,11 +1,14 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Users } from "lucide-react";
 
 interface Props {
   score: number;
   tokenCount: number;
   onSanction: () => void;
+  onShare?: () => void;
+  shared?: boolean;
+  sanctioned?: boolean;
 }
 
 const COST_PER_1K_TOKENS = 0.005; // illustrative
@@ -15,12 +18,13 @@ function formatTokens(n: number): string {
   return `${n}`;
 }
 
-export function FrameScore({ score, tokenCount, onSanction }: Props) {
+export function FrameScore({ score, tokenCount, onSanction, onShare, shared, sanctioned: alreadySanctioned }: Props) {
   const tone =
     score >= 90 ? "text-emerald-600" : score >= 50 ? "text-amber-600" : "text-destructive";
   const bar =
     score >= 90 ? "bg-emerald-500" : score >= 50 ? "bg-amber-500" : "bg-destructive";
-  const sanctioned = score >= 100;
+  const canSanction = score >= 100;
+  const canShare = score >= 40;
   const cost = (tokenCount / 1000) * COST_PER_1K_TOKENS;
 
   return (
@@ -54,22 +58,44 @@ export function FrameScore({ score, tokenCount, onSanction }: Props) {
         />
       </div>
       <p className="text-[11px] text-muted-foreground leading-snug">
-        {sanctioned
+        {alreadySanctioned
+          ? "Sanctioned. This chat is a reusable workflow."
+          : canSanction
           ? "All conditions defined. This chat can be sanctioned as a reusable workflow."
           : score >= 50
             ? "Some conditions are partial. Resolve the remaining tiles to sanction this chat."
+            : score >= 40
+              ? "Enough is defined to share with your team. Resolve more tiles to sanction."
             : "This chat is operating without sufficient conditions. Define them to graduate it from a POC."}
       </p>
-      <Button
-        size="sm"
-        variant={sanctioned ? "default" : "outline"}
-        disabled={!sanctioned}
-        onClick={onSanction}
-        className="w-full h-8 text-xs"
-      >
-        <ShieldCheck className="h-3.5 w-3.5 mr-1.5" />
-        {sanctioned ? "Sanction as workflow" : "Sanction locked"}
-      </Button>
+      <div className="space-y-1.5">
+        {!alreadySanctioned && (
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={!canShare || shared}
+            onClick={onShare}
+            className="w-full h-8 text-xs"
+          >
+            <Users className="h-3.5 w-3.5 mr-1.5" />
+            {shared ? "Shared with team" : canShare ? "Share with team" : "Share unlocks at 40"}
+          </Button>
+        )}
+        <Button
+          size="sm"
+          variant={canSanction || alreadySanctioned ? "default" : "outline"}
+          disabled={!canSanction || alreadySanctioned}
+          onClick={onSanction}
+          className="w-full h-8 text-xs"
+        >
+          <ShieldCheck className="h-3.5 w-3.5 mr-1.5" />
+          {alreadySanctioned
+            ? "Sanctioned"
+            : canSanction
+              ? "Sanction as workflow"
+              : "Sanction locked"}
+        </Button>
+      </div>
     </div>
   );
 }
