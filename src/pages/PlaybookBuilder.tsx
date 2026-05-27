@@ -1,14 +1,17 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Send, Sparkles, Check, ArrowRight, RotateCcw, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Send, Sparkles, Check, ArrowRight, RotateCcw, ShieldCheck, MessageSquare, FileCode2, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { AaceRail } from "@/components/playbook/AaceRail";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
 import {
   STEPS,
   type Answers,
   type Step,
   type StepId,
+  compilePlaybook,
 } from "@/components/playbook/aace-builder";
 
 type Turn =
@@ -35,7 +38,11 @@ export default function PlaybookBuilder() {
   const [selected, setSelected] = useState<string[]>([]);
   const [phase, setPhase] = useState<"flow" | "ready" | "testdrive">("flow");
   const [testDraft, setTestDraft] = useState("");
+  const [tab, setTab] = useState<"chat" | "playbook">("chat");
+  const [sending, setSending] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const compiledPrompt = useMemo(() => compilePlaybook(answers), [answers]);
 
   const currentStep: Step | null = phase === "flow" && stepIdx < STEPS.length ? STEPS[stepIdx] : null;
 
@@ -115,18 +122,31 @@ export default function PlaybookBuilder() {
     setPhase("testdrive");
   };
 
-  const sendTestMessage = () => {
+  const sendTestMessage = async () => {
     const t = testDraft.trim();
-    if (!t) return;
-    setTurns((prev) => [
-      ...prev,
-      { kind: "user", text: t },
-      {
-        kind: "ai",
-        text: testDriveReply(t, answers),
-      },
-    ]);
+    if (!t || sending) return;
+    const history = turns
+      .filter((x): x is { kind: "ai" | "user"; text: string } => x.kind === "ai" || x.kind === "user")
+      .map((x) => ({ role: x.kind === "ai" ? "assistant" : "user", content: x.text }));
+    setTurns((prev) => [...prev, { kind: "user", text: t }]);
     setTestDraft("");
+    setSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("playbook-chat", {
+        body: {
+          systemPrompt: compiledPrompt,
+          messages: [...history, { role: "user", content: t }],
+        },
+      });
+      if (error) throw error;
+      const reply = (data as { reply?: string })?.reply ?? "(no response)";
+      setTurns((prev) => [...prev, { kind: "ai", text: reply }]);
+    } catch (e: any) {
+      toast({ title: "Playbook run failed", description: e?.message ?? String(e), variant: "destructive" });
+      setTurns((prev) => [...prev, { kind: "ai", text: "⚠️ Couldn't reach the model. Try again." }]);
+    } finally {
+      setSending(false);
+    }
   };
 
   const reset = () => {
@@ -157,6 +177,22 @@ export default function PlaybookBuilder() {
         </div>
         <div className="flex items-center gap-2">
           {phase !== "flow" && (
+            <div className="flex items-center rounded-md border p-0.5">
+              <button
+                onClick={() => setTab("chat")}
+                className={`text-xs px-2 py-1 rounded ${tab === "chat" ? "bg-muted font-medium" : "text-muted-foreground"}`}
+              >
+                <MessageSquare className="h-3 w-3 inline mr-1" /> Chat
+              </button>
+              <button
+                onClick={() => setTab("playbook")}
+                className={`text-xs px-2 py-1 rounded ${tab === "playbook" ? "bg-muted font-medium" : "text-muted-foreground"}`}
+              >
+                <FileCode2 className="h-3 w-3 inline mr-1" /> Playbook
+              </button>
+            </div>
+          )}
+          {phase !== "flow" && (
             <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={reset}>
               <RotateCcw className="h-3 w-3 mr-1" /> Restart
             </Button>
@@ -166,6 +202,10 @@ export default function PlaybookBuilder() {
 
       <div className="flex flex-1 overflow-hidden">
         <section className="flex flex-1 flex-col min-w-0">
+          {tab === "playbook" && phase !== "flow" ? (
+            <PlaybookView prompt={compiledPrompt} />
+          ) : (
+          <>
           <div ref={scrollRef} className="flex-1 overflow-auto px-6 py-6">
             <div className="mx-auto max-w-2xl space-y-4">
               {turns.map((t, i) =>
@@ -179,6 +219,14 @@ export default function PlaybookBuilder() {
                 ) : (
                   <ChatBubble key={i} role={t.kind} text={t.text} />
                 ),
+              )}
+              {sending && (
+                <div className="flex gap-2.5">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+                    <Sparkles className="h-3.5 w-3.5 animate-pulse" />
+                  </div>
+                  <div className="pt-1 text-sm text-muted-foreground">Running playbook…</div>
+                </div>
               )}
             </div>
           </div>
@@ -262,7 +310,7 @@ export default function PlaybookBuilder() {
                   />
                   <div className="flex items-center justify-between px-1 pt-1">
                     <span className="text-[11px] text-muted-foreground">Cmd/Ctrl + Enter to send</span>
-                    <Button size="sm" className="h-7" onClick={sendTestMessage} disabled={!testDraft.trim()}>
+                    <Button size="sm" className="h-7" onClick={sendTestMessage} disabled={!testDraft.trim() || sending}>
                       <Send className="h-3.5 w-3.5 mr-1.5" /> Send
                     </Button>
                   </div>
@@ -274,9 +322,36 @@ export default function PlaybookBuilder() {
               )}
             </div>
           </div>
+          </>
+          )}
         </section>
 
         <AaceRail answers={answers} />
+      </div>
+    </div>
+  );
+}
+
+function PlaybookView({ prompt }: { prompt: string }) {
+  const copy = () => {
+    navigator.clipboard.writeText(prompt);
+    toast({ title: "Copied", description: "Compiled playbook copied to clipboard." });
+  };
+  return (
+    <div className="flex-1 overflow-auto px-6 py-6">
+      <div className="mx-auto max-w-3xl">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h2 className="text-sm font-semibold">Compiled playbook</h2>
+            <p className="text-xs text-muted-foreground">This is the AACE system prompt the model runs under during test-drive.</p>
+          </div>
+          <Button size="sm" variant="outline" className="h-7" onClick={copy}>
+            <Copy className="h-3 w-3 mr-1.5" /> Copy
+          </Button>
+        </div>
+        <pre className="rounded-lg border bg-muted/40 p-4 text-xs leading-relaxed whitespace-pre-wrap font-mono">
+          {prompt}
+        </pre>
       </div>
     </div>
   );
