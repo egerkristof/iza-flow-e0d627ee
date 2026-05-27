@@ -43,7 +43,7 @@ export function FrameScore({ score, tokenCount, onSanction }: Props) {
       </div>
       <div className="flex items-center justify-between">
         <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-          Frame Score
+          {score === 0 ? "Not yet framed" : "Frame Score"}
         </span>
         <span className={cn("text-lg font-bold tabular-nums", tone)}>{score}</span>
       </div>
