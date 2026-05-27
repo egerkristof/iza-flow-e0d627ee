@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Send, Users } from "lucide-react";
+import { ArrowLeft, Send, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
@@ -25,54 +25,20 @@ interface Message {
   ts: string;
 }
 
-const SEED_MESSAGES: Message[] = [
-  {
-    id: "m1",
-    author: "You",
-    initials: "YO",
-    role: "user",
-    text: "Let's draft an outbound campaign to 50 enterprise CFOs about our new metered AI pricing. Use the call transcripts from last week.",
-    ts: "09:14",
-  },
-  {
-    id: "m2",
-    author: "AI",
-    initials: "AI",
-    role: "ai",
-    text: "Ready to draft. I can see the campaign scope and the transcript reference. Check the monitors on the right — a few conditions need your attention before the output is sanction-ready.",
-    ts: "09:14",
-  },
-  {
-    id: "m3",
-    author: "Maya (Legal)",
-    initials: "MA",
-    role: "teammate",
-    text: "Before this goes out we need the EU AI Act risk tier bound and a CFO-comms disclosure clause. Can we set that now?",
-    ts: "09:16",
-  },
-];
-
+const SEED_MESSAGES: Message[] = [];
 const TOKENS_PER_MESSAGE = 250;
-const SEED_TOKEN_COUNT = SEED_MESSAGES.length * TOKENS_PER_MESSAGE;
 const MAX_UNREAD = 2;
 
 export default function FramedChatPage() {
   const [tiles, setTiles] = useState<ConditionTile[]>(INITIAL_TILES);
-  const [expanded, setExpanded] = useState<TileId | null>("compliance");
+  const [expanded, setExpanded] = useState<TileId | null>(null);
   const [messages, setMessages] = useState<Message[]>(SEED_MESSAGES);
   const [draft, setDraft] = useState("");
-  const [tokenCount, setTokenCount] = useState(SEED_TOKEN_COUNT);
+  const [tokenCount, setTokenCount] = useState(0);
   const [signals, setSignals] = useState<Record<TileId, CopilotSignal[]>>(() =>
-    Object.fromEntries(
-      INITIAL_TILES.map((t) => [t.id, deriveSignals(t.id, SEED_MESSAGES)]),
-    ) as Record<TileId, CopilotSignal[]>,
+    Object.fromEntries(INITIAL_TILES.map((t) => [t.id, []])) as Record<TileId, CopilotSignal[]>,
   );
-  const [unread, setUnread] = useState<Set<TileId>>(() => {
-    const ids = INITIAL_TILES.map((t) => t.id).filter(
-      (id) => deriveSignals(id, SEED_MESSAGES).length > 0,
-    );
-    return new Set(ids.slice(0, MAX_UNREAD) as TileId[]);
-  });
+  const [unread, setUnread] = useState<Set<TileId>>(() => new Set());
 
   const score = useMemo(() => frameScore(tiles), [tiles]);
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -143,13 +109,13 @@ export default function FramedChatPage() {
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold">Framed Chat</span>
             <span className="text-[10px] uppercase tracking-wider text-muted-foreground rounded border px-1.5 py-0.5">
-              Prototype
+              Beta
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Users className="h-3.5 w-3.5" />
-          <span>You · Maya (Legal) · Jonas (Finance)</span>
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <Lock className="h-3 w-3" />
+          <span>Private chat</span>
         </div>
       </header>
 
@@ -158,18 +124,15 @@ export default function FramedChatPage() {
         <section className="flex flex-1 flex-col border-r min-w-0">
           <div className="flex-1 overflow-auto px-6 py-6">
             <div className="mx-auto max-w-2xl space-y-5">
-              <div className="rounded-lg border border-dashed bg-muted/30 p-4">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
-                  Campaign · Q2 CFO Outbound
-                </p>
-                <p className="text-sm text-foreground/80">
-                  The five monitors on the right read this conversation and surface what is defined,
-                  what is missing, and what to do next.
-                </p>
-              </div>
-              {messages.map((m) => (
-                <MessageRow key={m.id} m={m} />
-              ))}
+              {messages.length === 0 ? (
+                <div className="mt-24 text-center">
+                  <p className="text-sm text-muted-foreground">
+                    This chat is private. The five monitors on the right read what you write.
+                  </p>
+                </div>
+              ) : (
+                messages.map((m) => <MessageRow key={m.id} m={m} />)
+              )}
               <div ref={chatEndRef} />
             </div>
           </div>
@@ -187,7 +150,7 @@ export default function FramedChatPage() {
                     }
                   }}
                   rows={2}
-                  placeholder="Chat here. The five monitors on the right read what you write."
+                  placeholder="What are you trying to get done?"
                   className="border-0 shadow-none focus-visible:ring-0 resize-none p-2"
                 />
                 <div className="flex items-center justify-between px-1 pt-1">
