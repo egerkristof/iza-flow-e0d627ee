@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Send, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { FrameTile } from "@/components/frame/FrameTile";
 import { FrameScore } from "@/components/frame/FrameScore";
-import { INITIAL_TILES, frameScore, nextStatus, type ConditionTile } from "@/components/frame/frame-data";
+import {
+  INITIAL_TILES,
+  frameScore,
+  nextStatus,
+  deriveSignals,
+  type ConditionTile,
+  type CopilotSignal,
+  type TileId,
+} from "@/components/frame/frame-data";
 
 interface Message {
   id: string;
@@ -23,17 +31,15 @@ const SEED_MESSAGES: Message[] = [
     author: "You",
     initials: "YO",
     role: "user",
-    text:
-      "Let's draft an outbound campaign to 50 enterprise CFOs about our new metered AI pricing. Use the call transcripts from last week.",
+    text: "Let's draft an outbound campaign to 50 enterprise CFOs about our new metered AI pricing. Use the call transcripts from last week.",
     ts: "09:14",
   },
   {
     id: "m2",
-    author: "LIZA",
-    initials: "LZ",
+    author: "AI",
+    initials: "AI",
     role: "ai",
-    text:
-      "I can draft this. Before I do, two of the conditions on this chat are undefined: there is no compliance binding and no value standard attached. I'll proceed, but the output will not be sanction-ready.",
+    text: "Ready to draft. I can see the campaign scope and the transcript reference. Check the monitors on the right — a few conditions need your attention before the output is sanction-ready.",
     ts: "09:14",
   },
   {
@@ -41,68 +47,97 @@ const SEED_MESSAGES: Message[] = [
     author: "Maya (Legal)",
     initials: "MA",
     role: "teammate",
-    text:
-      "Hold on — before this goes out we need the EU AI Act risk tier bound and a CFO-comms disclosure clause. Can we set that now?",
+    text: "Before this goes out we need the EU AI Act risk tier bound and a CFO-comms disclosure clause. Can we set that now?",
     ts: "09:16",
   },
 ];
 
+const TOKENS_PER_MESSAGE = 250;
+const SEED_TOKEN_COUNT = SEED_MESSAGES.length * TOKENS_PER_MESSAGE;
+const MAX_UNREAD = 2;
+
 export default function FramedChatPage() {
   const [tiles, setTiles] = useState<ConditionTile[]>(INITIAL_TILES);
-  const [expanded, setExpanded] = useState<string | null>("compliance");
+  const [expanded, setExpanded] = useState<TileId | null>("compliance");
   const [messages, setMessages] = useState<Message[]>(SEED_MESSAGES);
   const [draft, setDraft] = useState("");
+  const [tokenCount, setTokenCount] = useState(SEED_TOKEN_COUNT);
+  const [signals, setSignals] = useState<Record<TileId, CopilotSignal[]>>(() =>
+    Object.fromEntries(
+      INITIAL_TILES.map((t) => [t.id, deriveSignals(t.id, SEED_MESSAGES)]),
+    ) as Record<TileId, CopilotSignal[]>,
+  );
+  const [unread, setUnread] = useState<Set<TileId>>(() => {
+    const ids = INITIAL_TILES.map((t) => t.id).filter(
+      (id) => deriveSignals(id, SEED_MESSAGES).length > 0,
+    );
+    return new Set(ids.slice(0, MAX_UNREAD) as TileId[]);
+  });
 
   const score = useMemo(() => frameScore(tiles), [tiles]);
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
-  const advance = (id: ConditionTile["id"]) => {
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const advance = (id: TileId) => {
     setTiles((prev) =>
-      prev.map((t) => {
-        if (t.id !== id) return t;
-        const ns = nextStatus(t.status);
-        return {
-          ...t,
-          status: ns,
-          state:
-            ns === "ready"
-              ? `${t.label} fully defined`
-              : ns === "partial"
-                ? `${t.label} partially defined`
-                : t.state,
-        };
-      }),
+      prev.map((t) => (t.id !== id ? t : { ...t, status: nextStatus(t.status) })),
     );
-    toast.success("Condition advanced", {
-      description: "Frame Score updated. Tile color reflects the new state.",
+  };
+
+  const handleToggle = (id: TileId) => {
+    setExpanded((prev) => (prev === id ? null : id));
+    setUnread((prev) => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
     });
   };
 
   const send = () => {
     const text = draft.trim();
     if (!text) return;
-    setMessages((m) => [
-      ...m,
-      {
-        id: crypto.randomUUID(),
-        author: "You",
-        initials: "YO",
-        role: "user",
-        text,
-        ts: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      },
-    ]);
+    const ts = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const newMsg: Message = {
+      id: crypto.randomUUID(),
+      author: "You",
+      initials: "YO",
+      role: "user",
+      text,
+      ts,
+    };
+    const updatedMessages = [...messages, newMsg];
+    setMessages(updatedMessages);
+    setTokenCount((c) => c + TOKENS_PER_MESSAGE);
     setDraft("");
+
+    // Re-derive signals and apply WIP limit for unread
+    const newUnread: TileId[] = [];
+    const newSignals: Record<TileId, CopilotSignal[]> = { ...signals };
+    for (const tile of INITIAL_TILES) {
+      const prev = signals[tile.id];
+      const next = deriveSignals(tile.id, updatedMessages);
+      newSignals[tile.id] = next;
+      if (next.length > prev.length && expanded !== tile.id) {
+        newUnread.push(tile.id);
+      }
+    }
+    setSignals(newSignals);
+    setUnread((prev) => {
+      const combined = new Set([...prev, ...newUnread]);
+      const limited = [...combined].slice(0, MAX_UNREAD);
+      return new Set(limited as TileId[]);
+    });
   };
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      {/* Header */}
       <header className="flex h-12 items-center justify-between border-b px-4">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" asChild className="h-8 -ml-2">
-            <Link to="/">
-              <ArrowLeft className="h-4 w-4 mr-1" /> Home
-            </Link>
+            <Link to="/"><ArrowLeft className="h-4 w-4 mr-1" /> Home</Link>
           </Button>
           <div className="h-4 w-px bg-border" />
           <div className="flex items-center gap-2">
@@ -118,7 +153,6 @@ export default function FramedChatPage() {
         </div>
       </header>
 
-      {/* Body */}
       <div className="flex flex-1 overflow-hidden">
         {/* Chat column */}
         <section className="flex flex-1 flex-col border-r min-w-0">
@@ -129,19 +163,17 @@ export default function FramedChatPage() {
                   Campaign · Q2 CFO Outbound
                 </p>
                 <p className="text-sm text-foreground/80">
-                  Private group chat. The tiles on the right show the conditions this conversation
-                  is operating under. Resolve them to graduate this chat from a POC to a sanctioned
-                  workflow.
+                  The five monitors on the right read this conversation and surface what is defined,
+                  what is missing, and what to do next.
                 </p>
               </div>
-
               {messages.map((m) => (
                 <MessageRow key={m.id} m={m} />
               ))}
+              <div ref={chatEndRef} />
             </div>
           </div>
 
-          {/* Composer */}
           <div className="border-t bg-background/80 p-4">
             <div className="mx-auto max-w-2xl">
               <div className="rounded-lg border bg-card p-2">
@@ -155,13 +187,11 @@ export default function FramedChatPage() {
                     }
                   }}
                   rows={2}
-                  placeholder="Message the chat. The tiles read what you type."
+                  placeholder="Chat here. The five monitors on the right read what you write."
                   className="border-0 shadow-none focus-visible:ring-0 resize-none p-2"
                 />
                 <div className="flex items-center justify-between px-1 pt-1">
-                  <span className="text-[11px] text-muted-foreground">
-                    Cmd/Ctrl + Enter to send
-                  </span>
+                  <span className="text-[11px] text-muted-foreground">Cmd/Ctrl + Enter to send</span>
                   <Button size="sm" className="h-7" onClick={send} disabled={!draft.trim()}>
                     <Send className="h-3.5 w-3.5 mr-1.5" /> Send
                   </Button>
@@ -173,34 +203,26 @@ export default function FramedChatPage() {
 
         {/* Conditions rail */}
         <aside className="w-[340px] shrink-0 overflow-auto bg-muted/20 p-3 space-y-3">
-          <FrameScore
-            score={score}
-            onSanction={() =>
-              toast.success("Chat sanctioned", {
-                description:
-                  "This conversation is now a reusable workflow. Other teams can inherit it.",
-              })
-            }
-          />
+          <FrameScore score={score} tokenCount={tokenCount} onSanction={() =>
+            toast.success("Chat sanctioned", {
+              description: "This conversation is now a reusable workflow.",
+            })
+          } />
           <div>
-            <div className="flex items-center justify-between px-1 pb-2">
+            <div className="px-1 pb-2">
               <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                Conditions
+                Live Monitors
               </span>
-              <Link
-                to="/conditions"
-                className="text-[10px] uppercase tracking-wider text-primary hover:underline"
-              >
-                Manage
-              </Link>
             </div>
             <div className="space-y-2">
               {tiles.map((t) => (
                 <FrameTile
                   key={t.id}
                   tile={t}
+                  signals={signals[t.id] ?? []}
+                  hasUnread={unread.has(t.id)}
                   expanded={expanded === t.id}
-                  onToggle={() => setExpanded(expanded === t.id ? null : t.id)}
+                  onToggle={() => handleToggle(t.id)}
                   onDefine={() => advance(t.id)}
                 />
               ))}
