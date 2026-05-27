@@ -57,6 +57,7 @@ import TheBriefPage from "./pages/TheBrief";
 import FramedChatPage from "./pages/FramedChat";
 import ConditionsPage from "./pages/Conditions";
 import SanctionedPage from "./pages/Sanctioned";
+import PlaybookBuilderPage from "./pages/PlaybookBuilder";
 
 const queryClient = new QueryClient();
 
@@ -127,6 +128,7 @@ const App = () => (
             <Route path="/framed-chat/:chatId" element={<FramedChatPage />} />
             <Route path="/conditions" element={<ConditionsPage />} />
             <Route path="/sanctioned" element={<SanctionedPage />} />
+            <Route path="/playbook-builder" element={<PlaybookBuilderPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
 
