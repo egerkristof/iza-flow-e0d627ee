@@ -468,17 +468,3 @@ function ackFor(id: StepId, values: string[]): string {
     case "preference": return `Voice set. ${v}.`;
   }
 }
-
-function testDriveReply(_msg: string, answers: Answers): string {
-  const intent = answers.intent?.join(", ") ?? "your stated outcome";
-  const std = answers.standards?.[0];
-  const dir = answers.directives?.find((d) => d.toLowerCase() !== "none");
-  const pref = answers.preference?.[0];
-  const pieces: string[] = [];
-  pieces.push(`Working against ${intent}.`);
-  if (std) pieces.push(`Applying ${std}.`);
-  if (dir) pieces.push(`Holding to ${dir}.`);
-  if (pref) pieces.push(`Tone: ${pref}.`);
-  pieces.push("This is a preview — connect LIZA to ground the response in your real data.");
-  return pieces.join(" ");
-}
