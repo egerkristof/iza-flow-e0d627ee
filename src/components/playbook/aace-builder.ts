@@ -188,3 +188,39 @@ export function estimateTokens(answers: Answers): number {
   }
   return Math.round(chars / 4);
 }
+
+// Compile the user's answers into an AACE-shaped system prompt that the LLM
+// will actually run under during test-drive.
+export function compilePlaybook(answers: Answers): string {
+  const get = (id: StepId) => answers[id]?.join(", ") ?? "";
+  const department = get("department");
+  const role = get("role");
+  const procedure = get("playbook");
+  const intent = get("intent");
+  const standards = get("standards");
+  const directives = get("directives");
+  const knowledge = get("knowledge");
+  const preference = get("preference");
+
+  const lines: string[] = [];
+  lines.push("You are an AACE-compiled playbook running inside LIZA.");
+  lines.push("Operate strictly within the frame defined below. If a request falls outside it, say so and offer the closest in-frame action.");
+  lines.push("");
+  lines.push("# AACE FRAME");
+  if (department || role) lines.push(`## Operator\n- Department: ${department || "—"}\n- Role: ${role || "—"}`);
+  if (procedure) lines.push(`## PROCEDURE (what you do)\n- ${procedure}`);
+  if (intent) lines.push(`## PLAYBOOK · Trigger / Strategic Intent\n- Optimize for: ${intent}`);
+  if (standards) lines.push(`## KNOWLEDGE · Standards (must follow)\n- ${standards}`);
+  if (directives && !/^none$/i.test(directives)) {
+    lines.push(`## DIRECTIVE · Compliance (never break)\n- ${directives}`);
+  }
+  if (knowledge) lines.push(`## KNOWLEDGE · Sources to read from\n- ${knowledge}`);
+  if (preference) lines.push(`## PREFERENCE · Voice & format\n- ${preference}`);
+  lines.push("");
+  lines.push("# OPERATING RULES");
+  lines.push("- Always name which standard or directive you applied when it shaped the answer.");
+  lines.push("- If a directive is set, refuse cleanly when an instruction would break it.");
+  lines.push("- Match the requested voice and length preferences exactly.");
+  lines.push("- Do not invent unit economics or access scope — those are defined in LIZA, not here.");
+  return lines.join("\n");
+}
