@@ -1978,6 +1978,7 @@ function S07dOrgLoop() {
 // SLIDE 07e — THIS IS AACE, NOT RAG
 // ═════════════════════════════════════════════════════════════════════════════
 function S07eAaceNotRag() {
+  const [activeRoute, setActiveRoute] = useState<number | null>(null);
   const PRIMITIVES = [
     { k: "Standard",    icon: Compass,       color: PURPLE, ex: "EU-first launches this quarter",          why: "Governs scope. Versioned. Auditable." },
     { k: "Procedure",   icon: Workflow,      color: ACCENT, ex: "3-step memo flow: draft → cite → review", why: "Executable, not described." },
@@ -2175,21 +2176,27 @@ skill:        series-b-narrative@v3 (reused 47×)`}
             </div>
           </div>
 
-          {/* ══ Promotion bridge · 6 curves morph RAG chunks into AACE primitives ══ */}
+          {/* ══ Promotion bridge · numbered routes, no pill overlap, click to focus ══ */}
           {(() => {
-            // ly / ry are vertical positions inside each card (% of 700px height).
-            // Left = chunk row in RAG panel. Right = primitive cell in AACE panel.
-            const BRIDGES: { ly: number; ry: number; verb: string; color: string }[] = [
-              { ly: 38.5, ry: 35.0, verb: "typed + versioned",  color: PURPLE }, // wiki/eu-launch → Standard
-              { ly: 45.0, ry: 35.0, verb: "made executable",    color: ACCENT }, // memo-2023 → Procedure
-              { ly: 51.5, ry: 45.0, verb: "enforced as block",  color: RED },    // gdpr-faq → Prohibition
-              { ly: 58.0, ry: 55.0, verb: "deduped + pinned",   color: GOLD },   // board-draft → Fact
-              { ly: 64.5, ry: 55.0, verb: "deduped + pinned",   color: GOLD },   // board-final → Fact (merge)
-              { ly: 71.0, ry: 45.0, verb: "resolved + owned",   color: GREEN },  // handbook/p47 → Preference
+            // ly = chunk row Y% inside RAG card. ry = primitive cell Y% inside AACE card.
+            // midY = evenly spaced position of the numbered badge in the gutter — guarantees
+            // no overlap regardless of source/target row collisions (e.g. both board chunks → Fact).
+            const ROUTES: {
+              ly: number; ry: number; midY: number;
+              src: string; dst: string; verb: string; why: string; color: string;
+            }[] = [
+              { ly: 38.5, ry: 35.0, midY: 18, src: "wiki/eu-launch.md",   dst: "Standard",    verb: "typed + versioned", why: "Becomes a governed scope rule the compiler can enforce on every prompt — not a fuzzy match.", color: PURPLE },
+              { ly: 45.0, ry: 35.0, midY: 31, src: "templates/memo-2023", dst: "Procedure",   verb: "made executable",   why: "A described template becomes a runnable 3-step procedure with checkpoints — not a stale paste-in.", color: ACCENT },
+              { ly: 51.5, ry: 45.0, midY: 44, src: "legal/gdpr-faq.pdf", dst: "Prohibition", verb: "enforced as block", why: "Policy text becomes a hard pre-flight gate. PII-to-vendor calls are blocked, not hopefully avoided.", color: RED },
+              { ly: 58.0, ry: 55.0, midY: 57, src: "decks/board-q3-draft", dst: "Fact",       verb: "deduped + pinned",  why: "Draft + final collapse into one pinned Fact with provenance — duplicates can't compete anymore.", color: GOLD },
+              { ly: 64.5, ry: 55.0, midY: 70, src: "decks/board-q3-final", dst: "Fact",       verb: "deduped + pinned",  why: "Same Fact, second source. The graph keeps the canonical version; the model can't pick the older one.", color: GOLD },
+              { ly: 71.0, ry: 45.0, midY: 83, src: "handbook/p47",        dst: "Preference",  verb: "resolved + owned",  why: "Conflicting style guidance is resolved into one owned Preference with an author — drift stops here.", color: GREEN },
             ];
+            const isActive = (i: number) => activeRoute === i;
+            const isDim    = (i: number) => activeRoute !== null && activeRoute !== i;
             return (
               <>
-                {/* Curves: SVG stretched horizontally, only abstract shape matters */}
+                {/* Curves — each one enters at chunk row, hits its numbered badge, exits at primitive row */}
                 <svg
                   className="absolute inset-0 w-full h-full pointer-events-none"
                   viewBox="0 0 100 100"
@@ -2197,54 +2204,69 @@ skill:        series-b-narrative@v3 (reused 47×)`}
                   style={{ zIndex: 5 }}
                 >
                   <defs>
-                    {BRIDGES.map((b, i) => (
+                    {ROUTES.map((b, i) => (
                       <linearGradient key={i} id={`bridge-${i}`} x1="0" x2="1" y1="0" y2="0">
                         <stop offset="0%"   stopColor={`hsl(${RED} / 0.55)`} />
-                        <stop offset="50%"  stopColor={`hsl(${b.color} / 0.85)`} />
-                        <stop offset="100%" stopColor={`hsl(${b.color} / 0.85)`} />
+                        <stop offset="50%"  stopColor={`hsl(${b.color} / 0.95)`} />
+                        <stop offset="100%" stopColor={`hsl(${b.color} / 0.95)`} />
                       </linearGradient>
                     ))}
                   </defs>
-                  {BRIDGES.map((b, i) => (
+                  {ROUTES.map((b, i) => (
                     <path
                       key={i}
-                      d={`M 47 ${b.ly} C 49.5 ${b.ly}, 50.5 ${b.ry}, 53 ${b.ry}`}
+                      d={`M 47 ${b.ly} C 49 ${b.ly}, 49.5 ${b.midY}, 50 ${b.midY} S 51 ${b.ry}, 53 ${b.ry}`}
                       stroke={`url(#bridge-${i})`}
-                      strokeWidth={0.35}
+                      strokeWidth={isActive(i) ? 1.1 : 0.4}
+                      opacity={isDim(i) ? 0.15 : 1}
                       fill="none"
                       vectorEffect="non-scaling-stroke"
+                      style={{ transition: "all 200ms ease" }}
                     />
                   ))}
                 </svg>
 
-                {/* Verb pills: HTML so type stays crisp and unscaled */}
-                <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 6 }}>
-                  {BRIDGES.map((b, i) => {
-                    const midY = (b.ly + b.ry) / 2;
+                {/* Numbered route badges — evenly spaced, clickable */}
+                <div className="absolute inset-0" style={{ zIndex: 6 }}>
+                  {ROUTES.map((b, i) => {
+                    const active = isActive(i);
+                    const dim    = isDim(i);
+                    const size   = active ? 26 : 20;
                     return (
-                      <div
+                      <button
                         key={i}
-                        className="absolute font-mono uppercase tracking-[0.1em] rounded-full border whitespace-nowrap"
+                        onClick={() => setActiveRoute(active ? null : i)}
+                        onMouseEnter={() => setActiveRoute(i)}
+                        onMouseLeave={() => setActiveRoute(null)}
+                        className="absolute rounded-full border-2 font-mono flex items-center justify-center"
                         style={{
-                          top: `${midY}%`,
+                          top: `${b.midY}%`,
                           left: "50%",
+                          width: size,
+                          height: size,
                           transform: "translate(-50%, -50%)",
-                          fontSize: 9,
-                          fontWeight: 800,
+                          fontSize: active ? 12 : 10,
+                          fontWeight: 900,
                           color: `hsl(${b.color})`,
                           background: "white",
-                          borderColor: `hsl(${b.color} / 0.55)`,
-                          padding: "2px 7px",
-                          boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                          borderColor: `hsl(${b.color} / ${active ? 1 : 0.6})`,
+                          opacity: dim ? 0.3 : 1,
+                          boxShadow: active
+                            ? `0 0 0 4px hsl(${b.color} / 0.18), 0 4px 12px rgba(0,0,0,0.12)`
+                            : "0 1px 3px rgba(0,0,0,0.08)",
+                          cursor: "pointer",
+                          transition: "all 180ms ease",
+                          zIndex: active ? 8 : 6,
                         }}
+                        aria-label={`Route ${i + 1}: ${b.src} promoted to ${b.dst}`}
                       >
-                        {b.verb}
-                      </div>
+                        {i + 1}
+                      </button>
                     );
                   })}
                 </div>
 
-                {/* Header banner over the gutter explaining what the curves mean */}
+                {/* Header banner over the gutter */}
                 <div
                   className="absolute pointer-events-none rounded-md border font-mono uppercase tracking-[0.14em] whitespace-nowrap"
                   style={{
@@ -2254,10 +2276,42 @@ skill:        series-b-narrative@v3 (reused 47×)`}
                     borderColor: CHROME_BORDER, padding: "3px 9px",
                   }}
                 >
-                  <span style={{ color: `hsl(${RED})` }}>chunks</span>
+                  <span style={{ color: `hsl(${RED})` }}>6 chunks</span>
                   <span style={{ color: SUBTLE, margin: "0 6px" }}>promote into</span>
-                  <span style={{ color: `hsl(${GREEN})` }}>typed primitives</span>
+                  <span style={{ color: `hsl(${GREEN})` }}>5 typed primitives</span>
+                  <span style={{ color: SUBTLE, margin: "0 6px" }}>·</span>
+                  <span style={{ color: SUBTLE }}>hover or click a number</span>
                 </div>
+
+                {/* Active-route explanation card — appears beside the active badge */}
+                {activeRoute !== null && (() => {
+                  const b = ROUTES[activeRoute];
+                  return (
+                    <div
+                      className="absolute rounded-lg border-2 bg-white"
+                      style={{
+                        top: `${b.midY}%`,
+                        left: "50%",
+                        transform: "translate(-50%, calc(-50% + 36px))",
+                        zIndex: 9,
+                        borderColor: `hsl(${b.color} / 0.7)`,
+                        padding: "8px 10px",
+                        width: 280,
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.14)",
+                      }}
+                    >
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="font-mono" style={{ fontSize: 9, color: `hsl(${RED})`, fontWeight: 800 }}>{b.src}</span>
+                        <ArrowRight size={10} style={{ color: SUBTLE }} />
+                        <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: `hsl(${b.color})`, fontWeight: 800 }}>{b.dst}</span>
+                      </div>
+                      <div className="font-mono uppercase tracking-[0.08em] mb-1" style={{ fontSize: 9, fontWeight: 800, color: `hsl(${b.color})` }}>
+                        {b.verb}
+                      </div>
+                      <p style={{ fontSize: 10.5, lineHeight: 1.35, color: TEXT }}>{b.why}</p>
+                    </div>
+                  );
+                })()}
               </>
             );
           })()}
