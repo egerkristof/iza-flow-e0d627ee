@@ -1841,13 +1841,26 @@ function S07eAaceNotRag() {
     { k: "Skill",       icon: Sparkles,      color: GREEN,  ex: "Series-B narrative skill v3",             why: "Reusable. Composable. Compounds." },
   ];
 
-  const RAG_FRAGMENTS = [
-    "“…last quarter we shipped EU launches first because of…”",
-    "“…internal memo template circa 2023 mentions bullets…”",
-    "“…GDPR FAQ doc says vendors must be reviewed…”",
-    "“…board update draft v2 references investor pipeline…”",
-    "“…sales handbook page 47 about pricing memo style…”",
+  // Variable-width, distressed retrieved fragments. Each chunk has its own
+  // similarity score, source label, and a visual treatment (duplicated,
+  // contradictory, stale) that mirrors how RAG actually behaves.
+  const RAG_FRAGMENTS: {
+    text: string; sim: string; src: string; w: number; tag?: "dup" | "stale" | "conflict" | "irrelevant";
+  }[] = [
+    { text: "…last quarter we shipped EU launches first because of…", sim: "0.82", src: "wiki/eu-launch.md",     w: 92 },
+    { text: "…internal memo template circa 2023 mentions bullets…",   sim: "0.71", src: "templates/memo-2023",   w: 80, tag: "stale" },
+    { text: "…GDPR FAQ doc says vendors must be reviewed…",           sim: "0.68", src: "legal/gdpr-faq.pdf",    w: 86, tag: "irrelevant" },
+    { text: "…board update draft v2 references investor pipeline…",   sim: "0.66", src: "decks/board-q3-draft",  w: 74, tag: "dup" },
+    { text: "…board update draft v3 references investor pipeline…",   sim: "0.65", src: "decks/board-q3-final",  w: 76, tag: "dup" },
+    { text: "…sales handbook page 47 about pricing memo style…",      sim: "0.62", src: "handbook/p47",          w: 70, tag: "conflict" },
   ];
+
+  const TAG_STYLE: Record<string, { label: string; color: string }> = {
+    dup:        { label: "duplicate",   color: RED },
+    stale:      { label: "stale 2023",  color: GOLD },
+    conflict:   { label: "conflicts",   color: RED },
+    irrelevant: { label: "off-intent",  color: SUBTLE },
+  };
 
   return (
     <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
@@ -1856,7 +1869,8 @@ function S07eAaceNotRag() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="The architectural difference" color={GREEN} />
+        <ArcStepper current={2} next="the org learns laterally" />
+        <Tag label="The defence. Why this is not RAG." color={GREEN} />
         <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 54, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           This is <span style={{ color: `hsl(${RED})` }}>not RAG.</span> This is <span style={{ color: `hsl(${GREEN})` }}>AACE</span>.
         </h2>
@@ -1892,22 +1906,52 @@ function S07eAaceNotRag() {
             <div className="rounded-lg border bg-white p-2 flex-1 overflow-hidden"
               style={{ borderColor: CHROME_BORDER }}>
               <p className="font-mono uppercase tracking-[0.12em] mb-1.5" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
-                Retrieved chunks · unstructured text
+                Retrieved chunks · top-k by cosine similarity
               </p>
               <div className="space-y-1.5">
-                {RAG_FRAGMENTS.map((c, i) => (
-                  <div key={i} className="rounded px-2 py-1.5 border"
-                    style={{ borderColor: `hsl(${RED} / 0.2)`, background: `hsl(${RED} / 0.04)` }}>
-                    <span style={{ fontSize: 10.5, color: MUTED, fontStyle: "italic" }}>{c}</span>
-                  </div>
-                ))}
+                {RAG_FRAGMENTS.map((c, i) => {
+                  const tag = c.tag ? TAG_STYLE[c.tag] : null;
+                  return (
+                    <div key={i} className="rounded px-2 py-1.5 border relative"
+                      style={{
+                        width: `${c.w}%`,
+                        marginLeft: i % 2 === 0 ? 0 : `${(100 - c.w) / 2}%`,
+                        borderColor: `hsl(${RED} / 0.25)`,
+                        background: `hsl(${RED} / 0.04)`,
+                        opacity: c.tag === "stale" ? 0.55 : 0.95,
+                      }}>
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <span className="font-mono" style={{ fontSize: 8.5, color: SUBTLE, letterSpacing: "0.05em" }}>
+                          sim {c.sim}
+                        </span>
+                        <span className="font-mono" style={{ fontSize: 8.5, color: SUBTLE }}>·</span>
+                        <span className="font-mono" style={{ fontSize: 8.5, color: SUBTLE }}>{c.src}</span>
+                        {tag && (
+                          <span className="ml-auto rounded px-1 py-px font-mono uppercase tracking-[0.08em]"
+                            style={{ fontSize: 8, fontWeight: 800, color: `hsl(${tag.color})`, background: `hsl(${tag.color} / 0.10)`, border: `1px solid hsl(${tag.color} / 0.35)` }}>
+                            {tag.label}
+                          </span>
+                        )}
+                      </div>
+                      <span style={{
+                        fontSize: 10.5,
+                        color: MUTED,
+                        fontStyle: "italic",
+                        textDecoration: c.tag === "conflict" ? "line-through" : "none",
+                      }}>"{c.text}"</span>
+                    </div>
+                  );
+                })}
               </div>
+              <p className="mt-2 font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9, color: `hsl(${RED} / 0.85)`, fontWeight: 700 }}>
+                6 chunks. 2 duplicates. 1 stale. 1 conflict. 1 off-intent. Model must guess.
+              </p>
             </div>
             <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: SUBTLE }} /></div>
             <div className="rounded-lg border-2 px-3 py-2"
               style={{ borderColor: `hsl(${RED} / 0.5)`, background: `hsl(${RED} / 0.06)` }}>
               <p style={{ fontSize: 12, color: `hsl(${RED})`, fontWeight: 700 }}>Model improvises the rest.</p>
-              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Stale on republish · no enforcement · per-call rent · unverifiable provenance · drift compounds silently.</p>
+              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Stale on republish. No enforcement. Per-call rent. Unverifiable provenance. Drift compounds silently.</p>
             </div>
           </div>
 
@@ -1964,7 +2008,18 @@ function S07eAaceNotRag() {
             <div className="rounded-lg border-2 px-3 py-2"
               style={{ borderColor: `hsl(${GREEN} / 0.6)`, background: `hsl(${GREEN} / 0.08)` }}>
               <p style={{ fontSize: 12, color: `hsl(${GREEN})`, fontWeight: 700 }}>Governed output · five live audits before release.</p>
-              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Standards enforced · prohibitions blocked · skills reused · provenance signed · drift caught at the source.</p>
+              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Standards enforced. Prohibitions blocked. Skills reused. Provenance signed. Drift caught at the source.</p>
+              {/* Handoff to slide 7: this output writes back to the substrate */}
+              <div className="mt-2 pt-2 border-t flex items-center gap-1.5"
+                style={{ borderColor: `hsl(${GREEN} / 0.25)` }}>
+                <GitPullRequest size={11} style={{ color: `hsl(${GREEN})` }} />
+                <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 9.5, color: `hsl(${GREEN})`, fontWeight: 700 }}>
+                  writes back to substrate
+                </span>
+                <span style={{ fontSize: 10, color: MUTED }}>
+                  the same compiled object becomes a reusable org primitive on the next slide.
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1980,6 +2035,12 @@ function S07eAaceNotRag() {
             </span>
           </p>
         </div>
+      </div>
+      <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
+        style={{ fontSize: 10, color: SUBTLE }}>
+        <span>next</span>
+        <ArrowRight size={11} />
+        <span style={{ color: TEXT, fontWeight: 700 }}>03 Commit. Every moment writes back.</span>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
     </div>
