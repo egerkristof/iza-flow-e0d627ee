@@ -1425,7 +1425,7 @@ export function S07cFunnel() {
   //     notes on what each layer will hold, but no real content yet.
   // 2..6 = layers 1..5 populate one by one.
   const TOTAL_STEPS = LAYERS.length + 1; // 6
-  const [revealed, setRevealed] = useState(0);
+  const [revealed, setRevealed] = useState(TOTAL_STEPS);
   const idxOf = (id: LayerId) => LAYERS.findIndex(L => L.id === id);
   const isShown = (i: number) => i < revealed - 1;
   const isScaffold = revealed === 1;
@@ -2342,7 +2342,7 @@ export function S07eAaceNotRag() {
   // 2-beat reveal: the argument is contrastive. Beat 1 shows ONLY the RAG path
   // so the audience sits with the failure mode. Beat 2 reveals the AACE column
   // alongside, making the comparison the actual punchline.
-  const [revealed, setRevealed] = useState(1);
+  const [revealed, setRevealed] = useState(2);
   const showAace = revealed >= 2;
   const PRIMITIVES = [
     { k: "Standard",    icon: Compass,       color: PURPLE, ex: "EU-first launches this quarter",          why: "Governs scope. Versioned. Auditable." },
