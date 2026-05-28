@@ -1468,12 +1468,12 @@ function S07dOrgLoop() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="Every moment of work, connected" color={GREEN} />
+        <Tag label="Every moment of work is a commit · the network" color={GREEN} />
         <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          From the CEO to the last tech writer, everyone is an operator. Each <span style={{ color: `hsl(${GREEN})` }}>moment of work</span> updates every other moment of work.
+          From the CEO to the last tech writer, everyone is an operator. Each <span style={{ color: `hsl(${GREEN})` }}>moment of work</span> saves something back the rest of the org can reuse.
         </h2>
         <p style={{ fontSize: 17, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
-          Every person carries their own funnel. Same five layers, different content. Every prompt is a moment of work that lands in a shared substrate of AACE primitives. The substrate then re-enters every other funnel's next compile. The organisation evolves at the speed of moments of work.
+          Every person carries their own funnel. Same five layers, different content. Every moment of work commits a tiny update — a standard, a preference, a fact, a skill — into a shared substrate. The substrate then re-enters every other operator's next moment of work. The organisation evolves at the speed of work, not the speed of offsites.
         </p>
 
         <div className="grid grid-cols-12 gap-5">
