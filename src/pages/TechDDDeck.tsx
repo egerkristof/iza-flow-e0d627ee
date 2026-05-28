@@ -1209,24 +1209,25 @@ function S07cFunnel() {
   const [hovered, setHovered] = useState<LayerId | null>(null);
   const [mode, setMode] = useState<"topdown" | "bottomup">("topdown");
 
-  // ── Narrative driver: 3 beats, each rewrites `active` and reveals more UI ──
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  useEffect(() => {
-    if (step === 1) setActive({ intent: false, governance: false, standards: false, team: false, preference: false });
-    if (step === 2) setActive({ intent: false, governance: false, standards: false, team: false, preference: false });
-    if (step === 3) setActive({ intent: true,  governance: true,  standards: true,  team: true,  preference: true  });
-  }, [step]);
-  const STEPS = [
-    { n: 1, k: "The prompt",   sub: "One line. That is all the operator types." },
-    { n: 2, k: "The gap",      sub: "Without governance, every layer is missing. The operator improvises." },
-    { n: 3, k: "The compile",  sub: "The funnel compiles five layers. Click any to remove and watch the output drift." },
-  ] as const;
-  const curStep = STEPS.find(s => s.n === step)!;
+  // ── Progressive reveal: layers fade in one by one on the same canvas. ──
+  // 0 = only the prompt exists; 5 = full funnel + full interactivity.
+  const [revealed, setRevealed] = useState(0);
+  const idxOf = (id: LayerId) => LAYERS.findIndex(L => L.id === id);
+  const isShown = (i: number) => i < revealed;
+  const REVEAL_CAPTIONS = [
+    "Step 0 of 5. One line. That is everything the operator types. What is missing to produce a board-ready answer?",
+    "Step 1 of 5. Strategic intent enters first. The prompt now knows which thesis it lives inside.",
+    "Step 2 of 5. Governance and risk snap in. Legal, residency and citation rules become non-negotiable.",
+    "Step 3 of 5. Domain standards land. Structure, tone and approved benchmarks are no longer up for debate.",
+    "Step 4 of 5. Team context arrives. Prior decisions, artefacts and roles keep the output consistent with the org.",
+    "Step 5 of 5. Personal preference closes the funnel. Compile complete. Click any layer to remove it and watch the output drift.",
+  ];
+  const fullyRevealed = revealed === LAYERS.length;
 
   const toggle = (id: LayerId) => setActive(a => ({ ...a, [id]: !a[id] }));
 
-  const enforcedCount = LAYERS.filter(L => active[L.id]).length;
-  const fullyGoverned = enforcedCount === LAYERS.length;
+  const enforcedCount = LAYERS.filter((L, i) => isShown(i) && active[L.id]).length;
+  const fullyGoverned = fullyRevealed && enforcedCount === LAYERS.length;
 
   // Funnel geometry — side view, nested trapezoids.
   // Wide intake at top, narrow spout at bottom (the prompt).
@@ -1252,55 +1253,61 @@ function S07cFunnel() {
           Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span>. Automatically.
         </h2>
 
-        {/* ── Narrative stepper · 3 beats ── */}
+        {/* ── Progressive reveal control ── */}
         <div className="flex items-center gap-4 mb-4 rounded-xl border px-3 py-2"
           style={{ borderColor: CHROME_BORDER, background: "white" }}>
           <button
-            onClick={() => setStep(s => (s > 1 ? ((s - 1) as 1 | 2 | 3) : s))}
-            disabled={step === 1}
+            onClick={() => setRevealed(r => Math.max(0, r - 1))}
+            disabled={revealed === 0}
             className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
             style={{ fontSize: 10, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}
           >prev</button>
-          <div className="flex items-center gap-2">
-            {STEPS.map(s => {
-              const on = s.n === step;
-              const done = s.n < step;
+
+          {/* 5-dot progress: each dot = one revealed layer */}
+          <div className="flex items-center gap-1.5">
+            {LAYERS.map((L, i) => {
+              const on = i < revealed;
               return (
-                <button key={s.n} onClick={() => setStep(s.n)}
-                  className="flex items-center gap-1.5 rounded-full px-2.5 py-1 transition-colors"
+                <button key={L.id} onClick={() => setRevealed(i + 1)}
+                  title={`Reveal up to: ${L.label}`}
+                  className="rounded-full transition-all"
                   style={{
-                    background: on ? `hsl(${GREEN} / 0.12)` : done ? `hsl(${GREEN} / 0.05)` : CARD_ALT,
-                    border: `1px solid hsl(${on ? GREEN : done ? GREEN : SUBTLE} / ${on ? 0.6 : 0.3})`,
-                  }}>
-                  <span className="font-mono" style={{ fontSize: 10, fontWeight: 800, color: on ? `hsl(${GREEN})` : SUBTLE }}>
-                    0{s.n}
-                  </span>
-                  <span style={{ fontSize: 11.5, color: on ? TEXT : MUTED, fontWeight: on ? 700 : 500 }}>{s.k}</span>
-                </button>
+                    width: on ? 22 : 10, height: 10,
+                    background: on ? `hsl(${L.color})` : CHROME_BG,
+                    border: `1px solid hsl(${on ? L.color : SUBTLE} / ${on ? 0.9 : 0.4})`,
+                  }}
+                />
               );
             })}
-          </div>
-          <span style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3, flex: 1 }}>
-            <span className="font-mono uppercase tracking-[0.12em] mr-2" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>
-              Step {step} of 3
+            <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
+              {revealed} / {LAYERS.length} layers
             </span>
-            {curStep.sub}
+          </div>
+
+          <span style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.35, flex: 1 }}>
+            {REVEAL_CAPTIONS[revealed]}
           </span>
+
           <button
-            onClick={() => setStep(s => (s < 3 ? ((s + 1) as 1 | 2 | 3) : s))}
-            disabled={step === 3}
+            onClick={() => setRevealed(0)}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: 10, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
+          >reset</button>
+          <button
+            onClick={() => setRevealed(r => Math.min(LAYERS.length, r + 1))}
+            disabled={fullyRevealed}
             className="rounded-md border px-3 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
             style={{
               fontSize: 10, fontWeight: 800,
-              color: step === 3 ? TEXT : "white",
-              background: step === 3 ? CARD_ALT : `hsl(${GREEN})`,
-              borderColor: step === 3 ? CHROME_BORDER : `hsl(${GREEN})`,
+              color: fullyRevealed ? TEXT : "white",
+              background: fullyRevealed ? CARD_ALT : `hsl(${GREEN})`,
+              borderColor: fullyRevealed ? CHROME_BORDER : `hsl(${GREEN})`,
             }}
-          >next ▸</button>
+          >{fullyRevealed ? "compile complete" : "reveal next ▸"}</button>
         </div>
 
-        {/* Mode toggle · only on step 3 when interaction is live */}
-        {step === 3 && (
+        {/* Mode toggle · only after full reveal when interaction is live */}
+        {fullyRevealed && (
           <div className="flex items-center gap-3 mb-4">
             <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: SUBTLE }}>Build direction</span>
             <div className="inline-flex rounded-lg border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
@@ -1324,35 +1331,6 @@ function S07cFunnel() {
         )}
 
         <div className="grid grid-cols-12 gap-5 relative">
-          {/* Step-1 spotlight: dim the diagram, float the prompt alone */}
-          {step === 1 && (
-            <div className="absolute inset-0 z-20 rounded-2xl flex items-center justify-center"
-              style={{ background: "rgba(255,255,255,0.86)", backdropFilter: "blur(2px)" }}>
-              <div className="rounded-2xl border-2 px-10 py-9 text-center max-w-[820px]"
-                style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: "white", boxShadow: "0 24px 60px rgba(0,0,0,0.10)" }}>
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <MessageSquare size={16} style={{ color: `hsl(${GREEN})` }} />
-                  <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
-                    operator prompt · the moment of work
-                  </span>
-                </div>
-                <p style={{ fontSize: 38, color: TEXT, fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
-                  "Draft the Series-B narrative for tomorrow's board."
-                </p>
-                <p className="mt-5 mx-auto" style={{ fontSize: 14, color: MUTED, maxWidth: 620, lineHeight: 1.5 }}>
-                  This is everything the operator types. What is missing from this prompt for the AI to produce a board-ready answer?
-                </p>
-                <button
-                  onClick={() => setStep(2)}
-                  className="mt-6 rounded-full px-5 py-2 font-mono uppercase tracking-[0.12em]"
-                  style={{ fontSize: 11, fontWeight: 800, color: "white", background: `hsl(${GREEN})`, border: `1px solid hsl(${GREEN})` }}
-                >
-                  Show what's missing ▸
-                </button>
-              </div>
-            </div>
-          )}
-
           {/* LEFT — nested funnel stack */}
           <div className="col-span-7 rounded-2xl border relative"
             style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 720 }}>
@@ -1365,7 +1343,8 @@ function S07cFunnel() {
                 const yBot = yTop + LAYER_H;
                 const wTop = WIDTHS[i];
                 const wBot = WIDTHS[i + 1];
-                const on = active[L.id];
+                const shown = isShown(i);
+                const on = shown && active[L.id];
                 const isHover = hovered === L.id;
                 const c = L.color;
                 const pts = [
@@ -1376,44 +1355,45 @@ function S07cFunnel() {
                 ].map(p => p.join(",")).join(" ");
                 return (
                   <g key={L.id}
-                    onMouseEnter={() => setHovered(L.id)}
+                    onMouseEnter={() => shown && setHovered(L.id)}
                     onMouseLeave={() => setHovered(null)}
-                    onClick={() => toggle(L.id)}
-                    style={{ cursor: "pointer" }}
+                    onClick={() => shown && fullyRevealed && toggle(L.id)}
+                    style={{ cursor: shown && fullyRevealed ? "pointer" : "default", transition: "opacity 0.4s ease" }}
+                    opacity={shown ? 1 : 0.18}
                   >
                     <polygon
                       points={pts}
-                      fill={on ? `hsl(${c} / ${isHover ? 0.22 : 0.14})` : `hsl(${RED} / 0.06)`}
-                      stroke={on ? `hsl(${c} / ${isHover ? 0.95 : 0.7})` : `hsl(${RED} / 0.45)`}
+                      fill={!shown ? "transparent" : on ? `hsl(${c} / ${isHover ? 0.22 : 0.14})` : `hsl(${RED} / 0.06)`}
+                      stroke={!shown ? `hsl(${SUBTLE} / 0.55)` : on ? `hsl(${c} / ${isHover ? 0.95 : 0.7})` : `hsl(${RED} / 0.45)`}
                       strokeWidth={isHover ? 2.5 : 1.5}
-                      strokeDasharray={on ? "0" : "5 4"}
+                      strokeDasharray={!shown ? "3 5" : on ? "0" : "5 4"}
                     />
                     {/* Order badge */}
                     <circle cx={CX - wTop / 2 - 18} cy={yTop + LAYER_H / 2} r={14}
-                      fill="white" stroke={on ? `hsl(${c})` : `hsl(${RED} / 0.5)`} strokeWidth={1.5} />
+                      fill="white" stroke={!shown ? `hsl(${SUBTLE} / 0.5)` : on ? `hsl(${c})` : `hsl(${RED} / 0.5)`} strokeWidth={1.5} />
                     <text x={CX - wTop / 2 - 18} y={yTop + LAYER_H / 2 + 4}
                       textAnchor="middle" fontSize={12} fontWeight={700}
-                      fill={on ? `hsl(${c})` : `hsl(${RED})`}>
+                      fill={!shown ? SUBTLE : on ? `hsl(${c})` : `hsl(${RED})`}>
                       {orderIndex(i)}
                     </text>
                     {/* Label centered inside the trapezoid */}
                     <text x={CX} y={yTop + LAYER_H / 2 - 4}
                       textAnchor="middle" fontSize={16} fontWeight={800}
-                      fill={on ? TEXT : `hsl(${RED})`}>
-                      {L.label}
+                      fill={!shown ? SUBTLE : on ? TEXT : `hsl(${RED})`}>
+                      {shown ? L.label : "···"}
                     </text>
                     <text x={CX} y={yTop + LAYER_H / 2 + 16}
                       textAnchor="middle" fontSize={11}
-                      fill={on ? MUTED : `hsl(${RED} / 0.85)`}>
-                      {on ? L.sub : "ungoverned · context leaks"}
+                      fill={!shown ? SUBTLE : on ? MUTED : `hsl(${RED} / 0.85)`}>
+                      {!shown ? "not yet revealed" : on ? L.sub : "ungoverned · context leaks"}
                     </text>
                     {/* Right-side chip */}
                     <g transform={`translate(${CX + wTop / 2 + 14}, ${yTop + LAYER_H / 2 - 9})`}>
                       <rect width={92} height={18} rx={4}
-                        fill={on ? `hsl(${c} / 0.12)` : `hsl(${RED} / 0.08)`}
-                        stroke={on ? `hsl(${c} / 0.5)` : `hsl(${RED} / 0.4)`} strokeWidth={1} />
+                        fill={!shown ? CHROME_BG : on ? `hsl(${c} / 0.12)` : `hsl(${RED} / 0.08)`}
+                        stroke={!shown ? `hsl(${SUBTLE} / 0.4)` : on ? `hsl(${c} / 0.5)` : `hsl(${RED} / 0.4)`} strokeWidth={1} />
                       <text x={46} y={13} textAnchor="middle" fontSize={10} fontWeight={700}
-                        fill={on ? `hsl(${c})` : `hsl(${RED})`}>{L.chip}</text>
+                        fill={!shown ? SUBTLE : on ? `hsl(${c})` : `hsl(${RED})`}>{shown ? L.chip : "—"}</text>
                     </g>
                   </g>
                 );
@@ -1461,7 +1441,7 @@ function S07cFunnel() {
                 "Draft the Series-B narrative for tomorrow's board."
               </p>
               <p className="mt-2" style={{ fontSize: 11.5, color: MUTED }}>
-                One line from the operator. The funnel contributes the other {enforcedCount} of {LAYERS.length} layers, automatically.
+                One line from the operator. The funnel has compiled {enforcedCount} of {LAYERS.length} layers so far.
               </p>
             </div>
 
@@ -1501,13 +1481,33 @@ function S07cFunnel() {
                   const frag = (id: LayerId) => {
                     const f = FRAGMENTS.find(x => x.id === id)!;
                     const layer = LAYERS.find(L => L.id === id)!;
-                    const on = active[id];
+                    const i = idxOf(id);
+                    const shown = isShown(i);
+                    const on = shown && active[id];
+                    if (!shown) {
+                      return (
+                        <span
+                          title={`${layer.label} (not yet revealed)`}
+                          style={{
+                            fontWeight: 600,
+                            color: SUBTLE,
+                            background: CHROME_BG,
+                            border: `1px dashed hsl(${SUBTLE} / 0.5)`,
+                            padding: "0 6px",
+                            borderRadius: 3,
+                            fontStyle: "italic",
+                          }}
+                        >
+                          [{layer.label.toLowerCase()} pending]
+                        </span>
+                      );
+                    }
                     return (
                       <span
-                        onClick={() => toggle(id)}
+                        onClick={() => fullyRevealed && toggle(id)}
                         title={layer.label}
                         style={{
-                          cursor: "pointer",
+                          cursor: fullyRevealed ? "pointer" : "default",
                           fontWeight: 700,
                           color: on ? `hsl(${layer.color})` : `hsl(${RED})`,
                           background: on ? `hsl(${layer.color} / 0.10)` : `hsl(${RED} / 0.08)`,
@@ -1548,14 +1548,33 @@ function S07cFunnel() {
                     <div className="space-y-1.5">
                       {lines.map(l => {
                         const layer = LAYERS.find(L => L.id === l.id)!;
-                        const on = active[l.id];
+                        const i = idxOf(l.id);
+                        const shown = isShown(i);
+                        const on = shown && active[l.id];
+                        if (!shown) {
+                          return (
+                            <div key={l.id}
+                              className="rounded-md border border-dashed px-2.5 py-1.5 flex items-center gap-2"
+                              style={{ borderColor: `hsl(${SUBTLE} / 0.4)`, background: CHROME_BG, opacity: 0.7 }}
+                            >
+                              <span style={{ fontSize: 12, color: SUBTLE, fontWeight: 800 }}>·</span>
+                              <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: SUBTLE, fontWeight: 700 }}>
+                                {layer.label}
+                              </span>
+                              <span style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic" }}>
+                                not yet revealed
+                              </span>
+                            </div>
+                          );
+                        }
                         return (
                           <div key={l.id}
-                            onClick={() => toggle(l.id)}
+                            onClick={() => fullyRevealed && toggle(l.id)}
                             onMouseEnter={() => setHovered(l.id)}
                             onMouseLeave={() => setHovered(null)}
-                            className="rounded-md border px-2.5 py-1.5 cursor-pointer transition-all flex items-start gap-2"
+                            className="rounded-md border px-2.5 py-1.5 transition-all flex items-start gap-2"
                             style={{
+                              cursor: fullyRevealed ? "pointer" : "default",
                               borderColor: on ? `hsl(${layer.color} / 0.45)` : `hsl(${RED} / 0.45)`,
                               background: on ? `hsl(${layer.color} / 0.05)` : `hsl(${RED} / 0.05)`,
                             }}
@@ -1579,9 +1598,11 @@ function S07cFunnel() {
                 })()}
               </div>
               <div className="border-t px-4 py-2.5"
-                style={{ borderColor: CHROME_BORDER, background: fullyGoverned ? `hsl(${GREEN} / 0.06)` : `hsl(${RED} / 0.05)` }}>
+                style={{ borderColor: CHROME_BORDER, background: !fullyRevealed ? CHROME_BG : fullyGoverned ? `hsl(${GREEN} / 0.06)` : `hsl(${RED} / 0.05)` }}>
                 <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
-                  {fullyGoverned ? (
+                  {!fullyRevealed ? (
+                    <><b style={{ color: SUBTLE }}>Compile in progress.</b> {LAYERS.length - revealed} of {LAYERS.length} layers still to reveal. Each one closes a gap the operator would otherwise have to improvise.</>
+                  ) : fullyGoverned ? (
                     <><b style={{ color: `hsl(${GREEN})` }}>Fully governed compile.</b> The operator writes one line. Everything else is inherited.</>
                   ) : (
                     <><b style={{ color: `hsl(${RED})` }}>Ungoverned compile.</b> The operator must improvise the gap. Every time. Drift compounds silently.</>
