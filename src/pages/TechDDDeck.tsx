@@ -1457,12 +1457,12 @@ function S07cFunnel() {
                     <text x={CX} y={yTop + LAYER_H / 2 - 4}
                       textAnchor="middle" fontSize={16} fontWeight={800}
                       fill={!shown ? SUBTLE : on ? TEXT : `hsl(${RED})`}>
-                      {shown ? L.label : "···"}
+                      {shown || isScaffold ? L.label : "···"}
                     </text>
                     <text x={CX} y={yTop + LAYER_H / 2 + 16}
                       textAnchor="middle" fontSize={11}
                       fill={!shown ? SUBTLE : on ? MUTED : `hsl(${RED} / 0.85)`}>
-                      {!shown ? "not yet revealed" : on ? L.sub : "ungoverned · context leaks"}
+                      {!shown ? (isScaffold ? L.scaffold : "not yet revealed") : on ? L.sub : "ungoverned · context leaks"}
                     </text>
                     {/* Right-side chip */}
                     <g transform={`translate(${CX + wTop / 2 + 14}, ${yTop + LAYER_H / 2 - 9})`}>
@@ -1470,7 +1470,7 @@ function S07cFunnel() {
                         fill={!shown ? CHROME_BG : on ? `hsl(${c} / 0.12)` : `hsl(${RED} / 0.08)`}
                         stroke={!shown ? `hsl(${SUBTLE} / 0.4)` : on ? `hsl(${c} / 0.5)` : `hsl(${RED} / 0.4)`} strokeWidth={1} />
                       <text x={46} y={13} textAnchor="middle" fontSize={10} fontWeight={700}
-                        fill={!shown ? SUBTLE : on ? `hsl(${c})` : `hsl(${RED})`}>{shown ? L.chip : "—"}</text>
+                        fill={!shown ? SUBTLE : on ? `hsl(${c})` : `hsl(${RED})`}>{shown || isScaffold ? L.chip : "—"}</text>
                     </g>
                   </g>
                 );
