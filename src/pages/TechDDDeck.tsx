@@ -1441,7 +1441,7 @@ function S07cFunnel() {
                 "Draft the Series-B narrative for tomorrow's board."
               </p>
               <p className="mt-2" style={{ fontSize: 11.5, color: MUTED }}>
-                One line from the operator. The funnel contributes the other {enforcedCount} of {LAYERS.length} layers, automatically.
+                One line from the operator. The funnel has compiled {enforcedCount} of {LAYERS.length} layers so far.
               </p>
             </div>
 
@@ -1481,13 +1481,33 @@ function S07cFunnel() {
                   const frag = (id: LayerId) => {
                     const f = FRAGMENTS.find(x => x.id === id)!;
                     const layer = LAYERS.find(L => L.id === id)!;
-                    const on = active[id];
+                    const i = idxOf(id);
+                    const shown = isShown(i);
+                    const on = shown && active[id];
+                    if (!shown) {
+                      return (
+                        <span
+                          title={`${layer.label} (not yet revealed)`}
+                          style={{
+                            fontWeight: 600,
+                            color: SUBTLE,
+                            background: CHROME_BG,
+                            border: `1px dashed hsl(${SUBTLE} / 0.5)`,
+                            padding: "0 6px",
+                            borderRadius: 3,
+                            fontStyle: "italic",
+                          }}
+                        >
+                          [{layer.label.toLowerCase()} pending]
+                        </span>
+                      );
+                    }
                     return (
                       <span
-                        onClick={() => toggle(id)}
+                        onClick={() => fullyRevealed && toggle(id)}
                         title={layer.label}
                         style={{
-                          cursor: "pointer",
+                          cursor: fullyRevealed ? "pointer" : "default",
                           fontWeight: 700,
                           color: on ? `hsl(${layer.color})` : `hsl(${RED})`,
                           background: on ? `hsl(${layer.color} / 0.10)` : `hsl(${RED} / 0.08)`,
@@ -1528,14 +1548,33 @@ function S07cFunnel() {
                     <div className="space-y-1.5">
                       {lines.map(l => {
                         const layer = LAYERS.find(L => L.id === l.id)!;
-                        const on = active[l.id];
+                        const i = idxOf(l.id);
+                        const shown = isShown(i);
+                        const on = shown && active[l.id];
+                        if (!shown) {
+                          return (
+                            <div key={l.id}
+                              className="rounded-md border border-dashed px-2.5 py-1.5 flex items-center gap-2"
+                              style={{ borderColor: `hsl(${SUBTLE} / 0.4)`, background: CHROME_BG, opacity: 0.7 }}
+                            >
+                              <span style={{ fontSize: 12, color: SUBTLE, fontWeight: 800 }}>·</span>
+                              <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: SUBTLE, fontWeight: 700 }}>
+                                {layer.label}
+                              </span>
+                              <span style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic" }}>
+                                not yet revealed
+                              </span>
+                            </div>
+                          );
+                        }
                         return (
                           <div key={l.id}
-                            onClick={() => toggle(l.id)}
+                            onClick={() => fullyRevealed && toggle(l.id)}
                             onMouseEnter={() => setHovered(l.id)}
                             onMouseLeave={() => setHovered(null)}
-                            className="rounded-md border px-2.5 py-1.5 cursor-pointer transition-all flex items-start gap-2"
+                            className="rounded-md border px-2.5 py-1.5 transition-all flex items-start gap-2"
                             style={{
+                              cursor: fullyRevealed ? "pointer" : "default",
                               borderColor: on ? `hsl(${layer.color} / 0.45)` : `hsl(${RED} / 0.45)`,
                               background: on ? `hsl(${layer.color} / 0.05)` : `hsl(${RED} / 0.05)`,
                             }}
