@@ -213,9 +213,12 @@ function S02Horizons() {
       <PhaseChip phase="Phase 1 · Paradigm" color={ACCENT} />
       <div className="relative z-10">
         <Tag label="The Context We Operate In" />
-        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 64, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
-          The three horizons used to be sequential. <span style={{ color: `hsl(${ACCENT})` }}>They now run simultaneously, at the edge.</span>
+        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 64, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1750 }}>
+          Sequential planning cycles cannot hold this state. <span style={{ color: `hsl(${ACCENT})` }}>A runtime can.</span>
         </h2>
+        <p className="mt-3" style={{ fontSize: 22, color: MUTED, maxWidth: 1500 }}>
+          Run, improve, and transform now collapse into the same calendar week. Static SOPs and quarterly reviews were built for a staircase that no longer exists.
+        </p>
 
         <div className="grid grid-cols-2 gap-10 mt-12">
           {/* PAST */}
@@ -270,7 +273,7 @@ function S02Horizons() {
           </div>
         </div>
       </div>
-      <Footer text="Sequential planning cycles and static SOPs cannot hold this state. A runtime can. That is the cognitive infrastructure on the next slide." />
+      <Footer text="That runtime is the cognitive infrastructure on the next slide." />
       <SlideBar from={GREEN} to={PURPLE} />
     </div>
   );
