@@ -104,6 +104,50 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
+// Persistent arc stepper used across the four-slide architecture spine.
+// Each step is the verb that names the slide's job.
+const ARC_STEPS = [
+  { n: "01", label: "Compile" },
+  { n: "02", label: "Defend" },
+  { n: "03", label: "Commit" },
+  { n: "04", label: "Compound" },
+] as const;
+
+function ArcStepper({ current, next }: { current: 1 | 2 | 3 | 4; next?: string }) {
+  return (
+    <div className="flex items-center gap-2 mb-4">
+      <span className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700, marginRight: 6 }}>
+        The arc
+      </span>
+      {ARC_STEPS.map((s, i) => {
+        const isCurrent = i + 1 === current;
+        const isPast = i + 1 < current;
+        const color = isCurrent ? `hsl(${GREEN})` : isPast ? TEXT : SUBTLE;
+        const bg = isCurrent ? `hsl(${GREEN} / 0.10)` : "white";
+        const border = isCurrent ? `hsl(${GREEN} / 0.55)` : CHROME_BORDER;
+        return (
+          <div key={s.n} className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-full px-2.5 py-1 border"
+              style={{ background: bg, borderColor: border }}>
+              <span className="font-mono" style={{ fontSize: 10, fontWeight: 800, color }}>{s.n}</span>
+              <span className="font-semibold uppercase tracking-[0.12em]" style={{ fontSize: 10, color }}>{s.label}</span>
+              {isCurrent && <span className="rounded-full" style={{ width: 5, height: 5, background: `hsl(${GREEN})` }} />}
+            </div>
+            {i < ARC_STEPS.length - 1 && (
+              <span style={{ width: 12, height: 1, background: CHROME_BORDER }} />
+            )}
+          </div>
+        );
+      })}
+      {next && (
+        <span className="ml-3 font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: SUBTLE }}>
+          next: <span style={{ color: TEXT, fontWeight: 700 }}>{next}</span>
+        </span>
+      )}
+    </div>
+  );
+}
+
 const TOTAL = 20;
 
 // ═════════════════════════════════════════════════════════════════════════════
