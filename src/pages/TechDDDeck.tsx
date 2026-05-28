@@ -1491,16 +1491,23 @@ function S07dOrgLoop() {
     { k: "Skills" },
   ];
 
-  const TRACE = {
-    operatorIdx: 2, // Sales AE
-    prompt: "Drop the hedging in this proposal intro.",
-    primitive: "Preference",
-    update: "bullet-first, no hedging",
-    landsIn: "every other operator's next moment of work",
-    timing: "4 min from override to org-wide",
-  };
+  // One trace per operator. Pick a small, concrete moment of work that is
+  // obvious to a non-developer reader. Click an operator to switch.
+  const TRACES: {
+    prompt: string; primitive: "Fact" | "Standard" | "Preference" | "Prohibition" | "Procedure" | "Skill";
+    update: string; landsIn: string; timing: string;
+  }[] = [
+    { prompt: "Use 'EU-first' as our default launch framing.",            primitive: "Standard",    update: "Default launch order: EU → US → APAC", landsIn: "every operator's next launch memo",         timing: "3 min from approval to org-wide" },
+    { prompt: "Always lead with the customer outcome, not the feature.", primitive: "Preference",  update: "Voice rule: outcome first, feature second", landsIn: "every operator's next external write-up", timing: "2 min from approval to org-wide" },
+    { prompt: "Our new Q4 list price is €4,900 per seat.",                primitive: "Fact",        update: "Q4 list price = €4,900 / seat",        landsIn: "every proposal, deck, and quote across the org", timing: "4 min from approval to org-wide" },
+    { prompt: "Escalate any supplier delay over 5 days to Ops lead.",    primitive: "Procedure",   update: "Supplier delay > 5d → escalate to Ops lead", landsIn: "every operator's supplier workflow",  timing: "3 min from approval to org-wide" },
+    { prompt: "No customer PII in vendor-hosted models. Ever.",          primitive: "Prohibition", update: "Hard block: PII → external model",     landsIn: "every operator's next prompt, enforced at compile", timing: "1 min from approval to org-wide" },
+    { prompt: "Standardise our API error envelope on RFC 7807.",          primitive: "Standard",    update: "Error envelope: RFC 7807 (problem+json)", landsIn: "every operator touching the API",        timing: "5 min from approval to org-wide" },
+  ];
 
   const [mode, setMode] = useState<"trace" | "ambient">("trace");
+  const [traceIdx, setTraceIdx] = useState<number>(2); // start on Sales AE · Q4 price
+  const TRACE = { operatorIdx: traceIdx, ...TRACES[traceIdx] };
 
   // SVG canvas — left panel
   const VB = 1100;
