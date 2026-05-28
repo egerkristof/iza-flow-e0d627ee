@@ -1407,6 +1407,395 @@ function S07cFunnel() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 07d — ONE FUNNEL · EVERY OPERATOR · LEARNING UPWARD
+// ═════════════════════════════════════════════════════════════════════════════
+function S07dOrgLoop() {
+  // Org grid: 4 functions × 3 operators each.
+  const FUNCTIONS = [
+    { key: "sales",  label: "Sales",      color: GOLD,   icon: Compass },
+    { key: "ops",    label: "Operations", color: GREEN,  icon: Workflow },
+    { key: "legal",  label: "Legal & Risk", color: ACCENT, icon: ShieldCheck },
+    { key: "eng",    label: "Engineering", color: PURPLE, icon: GitBranch },
+  ] as const;
+
+  // Learning events: a real operator action propagating UP the funnel.
+  const EVENTS = [
+    {
+      operator: "M. Sales · East",
+      color: GOLD,
+      prompt: "Drop the hedging in this proposal intro.",
+      step1: "Operator overrides phrasing 3× across deals.",
+      step2: "LIZA proposes new Preference: bullet-first, no hedging.",
+      step3: "Sales lead approves. Now enforced for every proposal.",
+      becomes: "Preference",
+    },
+    {
+      operator: "K. Ops · DE",
+      color: GREEN,
+      prompt: "How do we handle the supplier escalation step?",
+      step1: "Operator improvises the same fix twice in one week.",
+      step2: "LIZA proposes new Procedure: 3-step supplier escalation.",
+      step3: "Ops lead signs off. Loaded into every future run.",
+      becomes: "Procedure",
+    },
+    {
+      operator: "A. Legal · EU",
+      color: ACCENT,
+      prompt: "Can we send this draft to the vendor model?",
+      step1: "Operator blocks a PII leak before send.",
+      step2: "LIZA proposes new Prohibition: no PII to vendor models.",
+      step3: "Legal lead locks it. Enforced org-wide, audited per call.",
+      becomes: "Prohibition",
+    },
+  ];
+
+  return (
+    <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={9} total={TOTAL} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
+
+      <div className="relative z-10">
+        <Tag label="Same funnel · every operator · learning upward" color={GREEN} />
+        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+          One funnel for the whole org. The operator at the bottom <span style={{ color: `hsl(${GREEN})` }}>builds the context at the top</span>.
+        </h2>
+        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 14 }}>
+          Every operator prompts through the same governed stack. Their overrides, exceptions, and improvisations are the raw material LIZA promotes into standards, procedures, preferences, and prohibitions, with a human lead in the loop. Organisational learning is a continuous, auditable upward flow, not an annual training cycle.
+        </p>
+
+        <div className="grid grid-cols-12 gap-5">
+          {/* LEFT — org grid funnel-into-one */}
+          <div className="col-span-7 rounded-2xl border relative"
+            style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 720 }}>
+            <svg viewBox="0 0 920 720" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
+              {/* Operator grid on the left, all flowing into the funnel column on the right */}
+              {FUNCTIONS.map((f, fi) => {
+                const rowY = 90 + fi * 130;
+                return (
+                  <g key={f.key}>
+                    {/* Function label */}
+                    <text x={28} y={rowY + 12} fontSize={11} fontWeight={700}
+                      fill={`hsl(${f.color})`} style={{ letterSpacing: "0.1em" }}>
+                      {f.label.toUpperCase()}
+                    </text>
+                    {/* 3 operator pills */}
+                    {[0, 1, 2].map(oi => {
+                      const x = 24 + oi * 110;
+                      const y = rowY + 24;
+                      return (
+                        <g key={oi}>
+                          <rect x={x} y={y} width={96} height={62} rx={8}
+                            fill="white" stroke={`hsl(${f.color} / 0.4)`} strokeWidth={1} />
+                          {/* avatar dot */}
+                          <circle cx={x + 14} cy={y + 14} r={6} fill={`hsl(${f.color} / 0.8)`} />
+                          <text x={x + 26} y={y + 17} fontSize={9.5} fontWeight={700} fill={TEXT}>Operator {oi + 1}</text>
+                          {/* prompt line */}
+                          <rect x={x + 8} y={y + 28} width={80} height={6} rx={2} fill={`hsl(${f.color} / 0.18)`} />
+                          <rect x={x + 8} y={y + 38} width={64} height={6} rx={2} fill={`hsl(${f.color} / 0.18)`} />
+                          <rect x={x + 8} y={y + 48} width={50} height={6} rx={2} fill={`hsl(${f.color} / 0.18)`} />
+                          {/* connector line into funnel intake */}
+                          <line
+                            x1={x + 96} y1={y + 31}
+                            x2={580} y2={360}
+                            stroke={`hsl(${f.color} / 0.18)`}
+                            strokeWidth={0.8}
+                            strokeDasharray="2 3"
+                          />
+                        </g>
+                      );
+                    })}
+                  </g>
+                );
+              })}
+
+              {/* The shared funnel column on the right */}
+              {(() => {
+                const cx = 740;
+                const widths = [280, 230, 180, 130, 90, 60];
+                const layerH = 70;
+                const top = 90;
+                const colors = [PURPLE, ACCENT, GOLD, GREEN, GREEN];
+                const labels = ["Strategic Intent", "Governance & Risk", "Domain Standards", "Team Context", "Personal Preference"];
+                return (
+                  <g>
+                    {labels.map((lab, i) => {
+                      const yTop = top + i * layerH;
+                      const yBot = yTop + layerH;
+                      const pts = [
+                        [cx - widths[i] / 2, yTop],
+                        [cx + widths[i] / 2, yTop],
+                        [cx + widths[i + 1] / 2, yBot],
+                        [cx - widths[i + 1] / 2, yBot],
+                      ].map(p => p.join(",")).join(" ");
+                      return (
+                        <g key={lab}>
+                          <polygon points={pts}
+                            fill={`hsl(${colors[i]} / 0.10)`}
+                            stroke={`hsl(${colors[i]} / 0.55)`} strokeWidth={1.2} />
+                          <text x={cx} y={yTop + layerH / 2 + 4}
+                            textAnchor="middle" fontSize={11} fontWeight={700}
+                            fill={`hsl(${colors[i]})`}>{lab}</text>
+                        </g>
+                      );
+                    })}
+                    {/* spout */}
+                    <rect x={cx - 90} y={top + 5 * layerH + 12} width={180} height={46} rx={8}
+                      fill="white" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth={1.5} />
+                    <text x={cx} y={top + 5 * layerH + 32} textAnchor="middle" fontSize={11} fontWeight={800} fill={TEXT}>
+                      Moment of work
+                    </text>
+                    <text x={cx} y={top + 5 * layerH + 48} textAnchor="middle" fontSize={9} fill={MUTED}>
+                      every prompt, every operator
+                    </text>
+
+                    {/* UPWARD learning arrow alongside the funnel */}
+                    <g>
+                      <defs>
+                        <marker id="upArrow" markerWidth="10" markerHeight="10" refX="5" refY="2" orient="auto">
+                          <path d="M0,8 L5,0 L10,8 Z" fill={`hsl(${GREEN})`} />
+                        </marker>
+                      </defs>
+                      <line
+                        x1={cx + 200} y1={top + 5 * layerH + 30}
+                        x2={cx + 200} y2={top + 30}
+                        stroke={`hsl(${GREEN})`}
+                        strokeWidth={2.5}
+                        strokeDasharray="6 4"
+                        markerEnd="url(#upArrow)"
+                      />
+                      <text x={cx + 210} y={top + 5 * layerH - 40}
+                        fontSize={10} fontWeight={700} fill={`hsl(${GREEN})`}
+                        style={{ letterSpacing: "0.12em" }}>
+                        LEARNING
+                      </text>
+                      <text x={cx + 210} y={top + 5 * layerH - 26}
+                        fontSize={10} fontWeight={700} fill={`hsl(${GREEN})`}
+                        style={{ letterSpacing: "0.12em" }}>
+                        UPWARD
+                      </text>
+                    </g>
+                  </g>
+                );
+              })()}
+            </svg>
+
+            <div className="absolute top-3 left-4 font-mono uppercase tracking-[0.14em]"
+              style={{ fontSize: 10, color: SUBTLE }}>12 operators · 4 functions · 1 governed stack</div>
+          </div>
+
+          {/* RIGHT — three concrete upward-learning events */}
+          <div className="col-span-5 flex flex-col gap-3" style={{ height: 720 }}>
+            <div className="rounded-xl border px-4 py-2.5"
+              style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
+              <p className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: SUBTLE }}>
+                Three real upward events · last 30 days
+              </p>
+            </div>
+            {EVENTS.map((e, i) => (
+              <div key={i} className="rounded-xl border bg-white p-3 flex-1 flex flex-col"
+                style={{ borderColor: CHROME_BORDER }}>
+                {/* Header: operator + their prompt */}
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="rounded-full" style={{ width: 8, height: 8, background: `hsl(${e.color})` }} />
+                  <span className="font-mono" style={{ fontSize: 11, color: TEXT, fontWeight: 700 }}>{e.operator}</span>
+                  <span className="ml-auto px-2 py-0.5 rounded border" style={{ fontSize: 9.5, fontWeight: 700, color: `hsl(${e.color})`, borderColor: `hsl(${e.color} / 0.45)`, background: `hsl(${e.color} / 0.06)` }}>
+                    becomes: {e.becomes}
+                  </span>
+                </div>
+                <div className="rounded border px-2 py-1.5 mb-2 flex items-center gap-1.5"
+                  style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+                  <MessageSquare size={11} style={{ color: SUBTLE }} />
+                  <span style={{ fontSize: 11, color: TEXT, fontStyle: "italic" }}>"{e.prompt}"</span>
+                </div>
+                {/* 3 steps stacked, with up arrows */}
+                {[
+                  { n: "01", label: "Signal", text: e.step1, c: SUBTLE },
+                  { n: "02", label: "Proposal", text: e.step2, c: GOLD },
+                  { n: "03", label: "Enforced", text: e.step3, c: GREEN },
+                ].map((s, si) => (
+                  <div key={si} className="flex items-start gap-2 py-1">
+                    <div className="rounded px-1.5 py-0.5 font-mono" style={{ fontSize: 9, fontWeight: 800, color: typeof s.c === "string" && s.c.includes("%") ? `hsl(${s.c})` : s.c, background: typeof s.c === "string" && s.c.includes("%") ? `hsl(${s.c} / 0.1)` : "transparent" }}>
+                      {s.n} · {s.label}
+                    </div>
+                    <p style={{ fontSize: 10.5, color: TEXT, lineHeight: 1.35, flex: 1 }}>{s.text}</p>
+                  </div>
+                ))}
+              </div>
+            ))}
+            <div className="rounded-xl border-2 px-4 py-2.5"
+              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
+                <b style={{ color: `hsl(${GREEN})` }}>The org learns by operating.</b> Every prompt is both a question and a vote. The funnel above gets thicker every week. Nothing leaves the audit container.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 07e — THIS IS AACE, NOT RAG
+// ═════════════════════════════════════════════════════════════════════════════
+function S07eAaceNotRag() {
+  const PRIMITIVES = [
+    { k: "Standard",    icon: Compass,       color: PURPLE, ex: "EU-first launches this quarter",          why: "Governs scope. Versioned. Auditable." },
+    { k: "Procedure",   icon: Workflow,      color: ACCENT, ex: "3-step memo flow: draft → cite → review", why: "Executable, not described." },
+    { k: "Preference",  icon: UserCheck,     color: GREEN,  ex: "Bullet-first. Drop hedging. DE English.", why: "Operator style learned and reused." },
+    { k: "Prohibition", icon: ShieldCheck,   color: RED,    ex: "No PII to vendor models. Ever.",          why: "Hard block, not a suggestion." },
+    { k: "Fact",        icon: Database,      color: GOLD,   ex: "Series-A deck v3.2 · last board update",  why: "Single source of truth. Pinned." },
+    { k: "Skill",       icon: Sparkles,      color: GREEN,  ex: "Series-B narrative skill v3",             why: "Reusable. Composable. Compounds." },
+  ];
+
+  const RAG_FRAGMENTS = [
+    "“…last quarter we shipped EU launches first because of…”",
+    "“…internal memo template circa 2023 mentions bullets…”",
+    "“…GDPR FAQ doc says vendors must be reviewed…”",
+    "“…board update draft v2 references investor pipeline…”",
+    "“…sales handbook page 47 about pricing memo style…”",
+  ];
+
+  return (
+    <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={10} total={TOTAL} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
+
+      <div className="relative z-10">
+        <Tag label="The architectural difference" color={GREEN} />
+        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 54, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+          This is <span style={{ color: `hsl(${RED})` }}>not RAG.</span> This is <span style={{ color: `hsl(${GREEN})` }}>AACE</span>.
+        </h2>
+        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 16 }}>
+          RAG retrieves text fragments and hopes the model reassembles intent. AACE compiles typed organisational primitives into a governed context object. The model never improvises what the org has already decided.
+        </p>
+
+        <div className="grid grid-cols-2 gap-6">
+          {/* LEFT — RAG path */}
+          <div className="rounded-2xl border-2 p-5 flex flex-col"
+            style={{ borderColor: `hsl(${RED} / 0.35)`, background: `hsl(${RED} / 0.03)`, height: 700 }}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${RED})`, fontWeight: 800 }}>
+                RAG path · what the market ships
+              </span>
+            </div>
+
+            {/* prompt */}
+            <div className="rounded-lg border bg-white px-3 py-2 mb-2 flex items-center gap-2"
+              style={{ borderColor: CHROME_BORDER }}>
+              <MessageSquare size={14} style={{ color: SUBTLE }} />
+              <span style={{ fontSize: 12, color: TEXT }}>"Draft the Series-B narrative for tomorrow's board."</span>
+            </div>
+            <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: SUBTLE }} /></div>
+            {/* vector search */}
+            <div className="rounded-lg border bg-white px-3 py-2 mb-2"
+              style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>Vector search</p>
+              <p style={{ fontSize: 11.5, color: MUTED, marginTop: 2 }}>Embeds the prompt. Returns top-k similar text chunks from a doc index.</p>
+            </div>
+            <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: SUBTLE }} /></div>
+            {/* chunks */}
+            <div className="rounded-lg border bg-white p-2 flex-1 overflow-hidden"
+              style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.12em] mb-1.5" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
+                Retrieved chunks · unstructured text
+              </p>
+              <div className="space-y-1.5">
+                {RAG_FRAGMENTS.map((c, i) => (
+                  <div key={i} className="rounded px-2 py-1.5 border"
+                    style={{ borderColor: `hsl(${RED} / 0.2)`, background: `hsl(${RED} / 0.04)` }}>
+                    <span style={{ fontSize: 10.5, color: MUTED, fontStyle: "italic" }}>{c}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: SUBTLE }} /></div>
+            <div className="rounded-lg border-2 px-3 py-2"
+              style={{ borderColor: `hsl(${RED} / 0.5)`, background: `hsl(${RED} / 0.06)` }}>
+              <p style={{ fontSize: 12, color: `hsl(${RED})`, fontWeight: 700 }}>Model improvises the rest.</p>
+              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Stale on republish · no enforcement · per-call rent · unverifiable provenance · drift compounds silently.</p>
+            </div>
+          </div>
+
+          {/* RIGHT — AACE path */}
+          <div className="rounded-2xl border-2 p-5 flex flex-col"
+            style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.04)`, height: 700 }}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
+                AACE path · what LIZA compiles
+              </span>
+            </div>
+
+            <div className="rounded-lg border bg-white px-3 py-2 mb-2 flex items-center gap-2"
+              style={{ borderColor: CHROME_BORDER }}>
+              <MessageSquare size={14} style={{ color: SUBTLE }} />
+              <span style={{ fontSize: 12, color: TEXT }}>"Draft the Series-B narrative for tomorrow's board."</span>
+            </div>
+            <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: `hsl(${GREEN})` }} /></div>
+
+            {/* Typed primitives compile */}
+            <div className="rounded-lg border bg-white p-2.5 flex-1"
+              style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.12em] mb-2" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
+                Typed AACE primitives · resolved from the knowledge graph
+              </p>
+              <div className="grid grid-cols-2 gap-1.5">
+                {PRIMITIVES.map(p => {
+                  const Icon = p.icon;
+                  return (
+                    <div key={p.k} className="rounded border px-2 py-1.5"
+                      style={{ borderColor: `hsl(${p.color} / 0.4)`, background: `hsl(${p.color} / 0.05)` }}>
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <Icon size={11} style={{ color: `hsl(${p.color})` }} />
+                        <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: `hsl(${p.color})`, fontWeight: 800 }}>{p.k}</span>
+                      </div>
+                      <p style={{ fontSize: 10.5, color: TEXT, lineHeight: 1.3 }}>{p.ex}</p>
+                      <p style={{ fontSize: 9.5, color: MUTED, lineHeight: 1.25, marginTop: 2 }}>{p.why}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: `hsl(${GREEN})` }} /></div>
+
+            {/* Compiled context object */}
+            <div className="rounded-lg border bg-white px-3 py-2 mb-2"
+              style={{ borderColor: `hsl(${GREEN} / 0.45)` }}>
+              <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>Compiled context object · typed, signed, audited</p>
+              <p style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>
+                Versioned. Diffable. Replayable. Every field traceable to the org primitive that produced it.
+              </p>
+            </div>
+            <div className="flex items-center justify-center py-0.5"><ArrowDown size={16} style={{ color: `hsl(${GREEN})` }} /></div>
+            <div className="rounded-lg border-2 px-3 py-2"
+              style={{ borderColor: `hsl(${GREEN} / 0.6)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <p style={{ fontSize: 12, color: `hsl(${GREEN})`, fontWeight: 700 }}>Governed output · five live audits before release.</p>
+              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Standards enforced · prohibitions blocked · skills reused · provenance signed · drift caught at the source.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Economic kicker */}
+        <div className="mt-4 rounded-xl border-2 px-5 py-3 flex items-center gap-4"
+          style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.06)` }}>
+          <Sparkles size={20} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 14, color: TEXT, fontWeight: 700, flex: 1 }}>
+            <span style={{ color: `hsl(${GREEN})` }}>Skills compound. Chunks rent.</span>{" "}
+            <span style={{ color: MUTED, fontWeight: 500 }}>
+              A Skill is a reusable, versioned org asset. A retrieved chunk is per-call rent that has to be paid again on every prompt, by every operator, forever.
+            </span>
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 09 — DECISION-CLASS CLASSIFIER (How tiering happens technically)
 // ═════════════════════════════════════════════════════════════════════════════
 function S08bClassifier() {
