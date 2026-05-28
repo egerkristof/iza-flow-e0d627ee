@@ -280,6 +280,83 @@ function S02Horizons() {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 02b — THE AI GOVERNANCE LOOP (Thesis spine)
+// Five surfaces every org must safeguard AND scale at the speed of AI.
+// Reclaims "governance" from model-governance vendors (Credo, Fiddler, Arthur).
+// ═════════════════════════════════════════════════════════════════════════════
+function S03GovernanceLoop() {
+  const surfaces = [
+    { k: "Standards", safeguard: "Your quality bar from drift and dilution",      scale: "Consistent execution at AI velocity",          icon: ShieldCheck },
+    { k: "Judgment",  safeguard: "Senior expertise from attrition and averaging",  scale: "Decisions that reflect your best people",      icon: Brain },
+    { k: "Memory",    safeguard: "Institutional knowledge from leaking into LLMs", scale: "Compounding context, owned not rented",        icon: Database },
+    { k: "Spend",     safeguard: "AI budget from unanchored token consumption",    scale: "Every token tied to a named outcome",          icon: Coins },
+    { k: "Exposure",  safeguard: "IP, audit trail, regulatory surface",            scale: "Provable lineage for every AI decision",       icon: Lock },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <PhaseChip phase="Phase 1 · Thesis" color={ACCENT} />
+      <div className="relative z-10">
+        <Tag label="The Thesis · AI Governance Loop" />
+        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1760 }}>
+          <span style={{ color: `hsl(${RED})` }}>Whatever you do not govern, AI invents.</span>{" "}
+          <span style={{ color: TEXT }}>Whatever you do not safeguard,</span>{" "}
+          <span style={{ color: `hsl(${RED})` }}>AI dissolves.</span>
+        </h2>
+        <p className="mt-3" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
+          Model governance watches the AI. <b style={{ color: TEXT }}>LIZA governs the moment of decision.</b> Five organizational surfaces, safeguarded from the speed of AI and compounded into your edge.
+        </p>
+
+        {/* Header row */}
+        <div className="grid mt-9" style={{ gridTemplateColumns: "260px 1fr 1fr", gap: 0 }}>
+          <div />
+          <div className="px-6 py-3" style={{ background: `hsl(${RED} / 0.06)`, borderTopLeftRadius: 12, borderTop: `1px solid hsl(${RED} / 0.3)`, borderLeft: `1px solid hsl(${RED} / 0.3)`, borderRight: `1px solid hsl(${RED} / 0.15)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 14, color: `hsl(${RED})` }}>Safeguard · without it, AI is dangerous</p>
+          </div>
+          <div className="px-6 py-3" style={{ background: `hsl(${GREEN} / 0.06)`, borderTopRightRadius: 12, borderTop: `1px solid hsl(${GREEN} / 0.35)`, borderRight: `1px solid hsl(${GREEN} / 0.35)`, borderLeft: `1px solid hsl(${GREEN} / 0.15)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Scale · without it, AI is meaningless</p>
+          </div>
+        </div>
+
+        {/* Rows */}
+        <div style={{ borderLeft: `1px solid ${CHROME_BORDER}`, borderRight: `1px solid ${CHROME_BORDER}`, borderBottom: `1px solid ${CHROME_BORDER}`, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, overflow: "hidden" }}>
+          {surfaces.map((s, i) => {
+            const Icon = s.icon;
+            const altBg = i % 2 === 0 ? "white" : CARD_ALT;
+            return (
+              <div key={s.k} className="grid items-stretch" style={{ gridTemplateColumns: "260px 1fr 1fr", background: altBg, borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
+                <div className="px-6 py-4 flex items-center gap-3" style={{ borderRight: `1px solid ${CHROME_BORDER}` }}>
+                  <div className="rounded-md flex items-center justify-center" style={{ width: 36, height: 36, background: `hsl(${ACCENT} / 0.10)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+                    <Icon size={20} color={`hsl(${ACCENT})`} />
+                  </div>
+                  <span className="font-bold" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.01em" }}>{s.k}</span>
+                </div>
+                <div className="px-6 py-4 flex items-center" style={{ borderRight: `1px solid ${CHROME_BORDER}`, background: `hsl(${RED} / 0.025)` }}>
+                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{s.safeguard}</span>
+                </div>
+                <div className="px-6 py-4 flex items-center" style={{ background: `hsl(${GREEN} / 0.035)` }}>
+                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{s.scale}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-7 flex items-center gap-3 px-5 py-3 rounded-xl" style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.2)`, maxWidth: 1600 }}>
+          <Workflow size={20} color={`hsl(${ACCENT})`} />
+          <span style={{ fontSize: 17, color: TEXT }}>
+            A <b>loop</b>, not an audit. Every decision feeds the standard. Every standard governs the next decision. AI-native means <b>governed</b>; ungoverned AI is just exposure at scale.
+          </span>
+        </div>
+      </div>
+      <Footer text="The rest of this deck is the loop, broken into its parts." />
+      <SlideBar from={RED} to={GREEN} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 03 — INFRASTRUCTURE SHIFT (Data → Cognitive)
 // ═════════════════════════════════════════════════════════════════════════════
 function S03Shift() {
