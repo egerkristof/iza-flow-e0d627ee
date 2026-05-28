@@ -15,7 +15,7 @@ import { ExportMenu } from "@/components/ExportMenu";
 import { cn } from "@/lib/utils";
 
 // ─── Scaled slide container ──────────────────────────────────────────────────
-function ScaledSlide({ children }: { children: React.ReactNode }) {
+export function ScaledSlide({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
   useEffect(() => {
@@ -41,24 +41,24 @@ function ScaledSlide({ children }: { children: React.ReactNode }) {
 }
 
 // ─── Tokens ──────────────────────────────────────────────────────────────────
-const BG = "hsl(0 0% 100%)";
-const TEXT = "hsl(222 20% 10%)";
-const MUTED = "hsl(215 15% 42%)";
-const SUBTLE = "hsl(215 10% 56%)";
-const CARD_ALT = "hsl(220 15% 97%)";
-const GRID_LINE = "hsl(215 15% 75%)";
-const CHROME_BG = "hsl(220 15% 97%)";
-const CHROME_BORDER = "hsl(220 12% 90%)";
-const ACCENT = "200 90% 42%";
-const GREEN = "155 72% 38%";
-const GOLD = "45 95% 42%";
-const RED = "0 72% 50%";
-const PURPLE = "265 60% 52%";
-const DARK_BG = "hsl(222 25% 8%)";
-const DARK_TEXT = "hsl(0 0% 95%)";
-const DARK_MUTED = "hsl(215 15% 60%)";
+export const BG = "hsl(0 0% 100%)";
+export const TEXT = "hsl(222 20% 10%)";
+export const MUTED = "hsl(215 15% 42%)";
+export const SUBTLE = "hsl(215 10% 56%)";
+export const CARD_ALT = "hsl(220 15% 97%)";
+export const GRID_LINE = "hsl(215 15% 75%)";
+export const CHROME_BG = "hsl(220 15% 97%)";
+export const CHROME_BORDER = "hsl(220 12% 90%)";
+export const ACCENT = "200 90% 42%";
+export const GREEN = "155 72% 38%";
+export const GOLD = "45 95% 42%";
+export const RED = "0 72% 50%";
+export const PURPLE = "265 60% 52%";
+export const DARK_BG = "hsl(222 25% 8%)";
+export const DARK_TEXT = "hsl(0 0% 95%)";
+export const DARK_MUTED = "hsl(215 15% 60%)";
 
-function SlideGrid() {
+export function SlideGrid() {
   return (
     <div className="absolute inset-0 opacity-[0.06]" style={{
       backgroundImage: `linear-gradient(${GRID_LINE} 1px, transparent 1px), linear-gradient(90deg, ${GRID_LINE} 1px, transparent 1px)`,
@@ -66,7 +66,7 @@ function SlideGrid() {
     }} />
   );
 }
-function DarkGrid() {
+export function DarkGrid() {
   return (
     <div className="absolute inset-0 opacity-[0.08]" style={{
       backgroundImage: `linear-gradient(hsl(215 15% 25%) 1px, transparent 1px), linear-gradient(90deg, hsl(215 15% 25%) 1px, transparent 1px)`,
@@ -74,13 +74,13 @@ function DarkGrid() {
     }} />
   );
 }
-function SlideBar({ from = ACCENT, to = GREEN }: { from?: string; to?: string }) {
+export function SlideBar({ from = ACCENT, to = GREEN }: { from?: string; to?: string }) {
   return <div className="absolute bottom-0 left-0 right-0 h-1.5" style={{ background: `linear-gradient(90deg, hsl(${from}), hsl(${to}))` }} />;
 }
-function Tag({ label, color = ACCENT }: { label: string; color?: string }) {
+export function Tag({ label, color = ACCENT }: { label: string; color?: string }) {
   return <p className="font-semibold tracking-[0.25em] uppercase mb-5" style={{ fontSize: 24, color: `hsl(${color})` }}>{label}</p>;
 }
-function PhaseChip({ phase, color = ACCENT }: { phase: string; color?: string }) {
+export function PhaseChip({ phase, color = ACCENT }: { phase: string; color?: string }) {
   return (
     <div className="absolute top-10 right-12 flex items-center gap-2 px-4 py-2 rounded-full"
       style={{ background: `hsl(${color} / 0.08)`, border: `1px solid hsl(${color} / 0.25)` }}>
@@ -91,10 +91,10 @@ function PhaseChip({ phase, color = ACCENT }: { phase: string; color?: string })
 // Slide index context — drives page numbers from SLIDES array position so
 // we cannot drift out of sync as slides get added, removed, or reordered.
 const SlideIndexContext = createContext<{ index: number; total: number } | null>(null);
-function SlideIndexProvider({ index, total, children }: { index: number; total: number; children: React.ReactNode }) {
+export function SlideIndexProvider({ index, total, children }: { index: number; total: number; children: React.ReactNode }) {
   return <SlideIndexContext.Provider value={{ index, total }}>{children}</SlideIndexContext.Provider>;
 }
-function PageNumber({ n, total, dark = false }: { n?: number; total?: number; dark?: boolean }) {
+export function PageNumber({ n, total, dark = false }: { n?: number; total?: number; dark?: boolean }) {
   const ctx = useContext(SlideIndexContext);
   const num = ctx ? ctx.index + 1 : (n ?? 1);
   const tot = ctx ? ctx.total : (total ?? 1);
@@ -104,7 +104,7 @@ function PageNumber({ n, total, dark = false }: { n?: number; total?: number; da
     </div>
   );
 }
-function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
+export function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   return (
     <div className="absolute left-28 right-28 bottom-7 flex items-center gap-3"
       style={{ color: dark ? DARK_MUTED : SUBTLE, fontSize: 15, letterSpacing: "0.02em" }}>
@@ -284,7 +284,7 @@ function S02Horizons() {
 // Five surfaces every org must safeguard AND scale at the speed of AI.
 // Reclaims "governance" from model-governance vendors (Credo, Fiddler, Arthur).
 // ═════════════════════════════════════════════════════════════════════════════
-function S03GovernanceLoop() {
+export function S03GovernanceLoop() {
   const surfaces = [
     { k: "Standards", safeguard: "Your quality bar from drift and dilution",      scale: "Consistent execution at AI velocity",          icon: ShieldCheck },
     { k: "Judgment",  safeguard: "Senior expertise from attrition and averaging",  scale: "Decisions that reflect your best people",      icon: Brain },
@@ -361,7 +361,7 @@ function S03GovernanceLoop() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 04 — PRODUCTION SYSTEM (Just-in-Time Knowledge Manufacturing)
 // ═════════════════════════════════════════════════════════════════════════════
-function S04ProductionSystem() {
+export function S04ProductionSystem() {
   const columns = [
     {
       kicker: "Pull, not push",
@@ -617,7 +617,7 @@ function S03Shift() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 03 — THE CONTEXT GAP (Iceberg)
 // ═════════════════════════════════════════════════════════════════════════════
-function S03Iceberg() {
+export function S03Iceberg() {
   return (
     <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
       <SlideGrid />
@@ -1033,7 +1033,7 @@ function S06Propagation() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 08 — THE PRICING INVERSION → VALUE-BASED METERING (merged)
 // ═════════════════════════════════════════════════════════════════════════════
-function S08PricingMetering() {
+export function S08PricingMetering() {
   const vendors = [
     { l: "OpenAI", s: "Tokens + minutes + tools" },
     { l: "Anthropic", s: "Tokens + tool calls" },
@@ -1138,7 +1138,7 @@ function S08PricingMetering() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 07b — WHAT MAKES US UNIQUE · THE MOMENT OF WORK
 // ═════════════════════════════════════════════════════════════════════════════
-function S07bUnique() {
+export function S07bUnique() {
   // Four semantic streams that must converge at the moment of work.
   // Position in % of the diagram canvas.
   const STREAMS = {
@@ -1393,7 +1393,7 @@ function S07bUnique() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 07c — NESTED FUNNELS · SIDE VIEW + LIVE PROMPT SCREEN
 // ═════════════════════════════════════════════════════════════════════════════
-function S07cFunnel() {
+export function S07cFunnel() {
   // Each layer is a nested funnel piece. Top of stack is widest "intake",
   // bottom of stack tapers to the operator's prompt: the moment of work.
   type LayerId = "intent" | "governance" | "standards" | "team" | "preference";
@@ -1904,7 +1904,7 @@ function S07cFunnel() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 07d — ONE FUNNEL · EVERY OPERATOR · LEARNING UPWARD
 // ═════════════════════════════════════════════════════════════════════════════
-function S07dOrgLoop() {
+export function S07dOrgLoop() {
   // 6 operator funnels orbiting a single shared knowledge base. Trace is the
   // default mode: one operator's override propagates through the knowledge base
   // and lands in every other operator's next moment of work.
@@ -2338,7 +2338,7 @@ function S07dOrgLoop() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 07e — THIS IS AACE, NOT RAG
 // ═════════════════════════════════════════════════════════════════════════════
-function S07eAaceNotRag() {
+export function S07eAaceNotRag() {
   // 2-beat reveal: the argument is contrastive. Beat 1 shows ONLY the RAG path
   // so the audience sits with the failure mode. Beat 2 reveals the AACE column
   // alongside, making the comparison the actual punchline.
@@ -2934,7 +2934,7 @@ function S09Augmentation() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 11 — AUGMENTATION MECHANICS (Supervision + Edge Intake)
 // ═════════════════════════════════════════════════════════════════════════════
-function S09bAugmentationMechanics() {
+export function S09bAugmentationMechanics() {
   const roles = [
     {
       role: "Junior (Day 1)", color: ACCENT, icon: GraduationCap,
@@ -3259,7 +3259,7 @@ function S12SocietalImpact() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 11 — UNIT ECONOMICS & SUSTAINABILITY (token-based model)
 // ═════════════════════════════════════════════════════════════════════════════
-function S10UnitEconomics() {
+export function S10UnitEconomics() {
   // Per-call trail: token envelope -> COGS (Cost Of Goods Sold) at public model prices ->
   // human work displaced at fully loaded hourly cost -> price as % of displaced cost -> margin.
   // Every term used on the slide is defined in the legend below.
@@ -3956,7 +3956,7 @@ function S10bACVBridge() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 07f — EVERY COMMIT COMPOUNDS · THE AI-NATIVE INSTRUMENT PANEL
 // ═════════════════════════════════════════════════════════════════════════════
-function S07fInstrument() {
+export function S07fInstrument() {
   // Unified instrument console. Top: substrate hero metric + live ticker.
   // Two equal halves: Learning-rate KPIs (left) and Human Control Rails (right).
   // Bottom: compact "vs yesterday" comparator strip. No kicker overflow.
@@ -4296,7 +4296,7 @@ function S07fInstrument() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 13 — THE LOOP, CLOSED (Closer · ties back to the 5 surfaces)
 // ═════════════════════════════════════════════════════════════════════════════
-function S13LoopClosed() {
+export function S13LoopClosed() {
   const surfaces = [
     { k: "Standards", proof: "Typed playbooks, versioned, enforced at compile time", icon: ShieldCheck },
     { k: "Judgment",  proof: "Senior reasoning encoded as procedures, not lost to chat history", icon: Brain },
