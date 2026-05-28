@@ -3766,12 +3766,15 @@ function S07fInstrument() {
   ];
 
   const VS_YESTERDAY = [
-    { old: "Quarterly revenue",  oldS: "3 months late",  now: "Knowledge base size",            nowS: "live, +312 this week",        color: GREEN },
-    { old: "Pipeline coverage",  oldS: "Friday snapshot", now: "Standards adoption",       nowS: "live, share of moments",      color: GREEN },
-    { old: "NPS survey",         oldS: "6 months old",   now: "Promotion velocity",        nowS: "median minutes, last 30 days", color: GOLD },
-    { old: "Project on-time %",  oldS: "last quarter",   now: "Drift rate",                nowS: "live, share of outputs",      color: GOLD },
-    { old: "Training hours/FTE", oldS: "annualised",     now: "Skill reuse ratio",         nowS: "live, per published skill",   color: GREEN },
-    { old: "Headcount cost",     oldS: "trailing 12 mo", now: "Cost per moment of work",   nowS: "live, per commit",            color: GREEN },
+    // Each row: a lagging board metric (still tracked, still matters) and the
+    // leading indicator that now predicts it weeks earlier. The relationship is
+    // causal: the leading metric moves first; the lagging metric follows.
+    { lag: "Quarterly revenue",   lagS: "reported 3 months late",  lead: "Knowledge base size",          leadS: "live, +312 this week",         link: "more primitives → more compounding output", color: GREEN },
+    { lag: "Pipeline coverage",   lagS: "Friday snapshot",         lead: "Standards adoption",           leadS: "live, share of moments",       link: "more moments on-standard → cleaner pipeline",  color: GREEN },
+    { lag: "NPS survey",          lagS: "6 months old",            lead: "Promotion velocity",           leadS: "median minutes, last 30d",     link: "faster learning loop → fewer repeat complaints", color: GOLD },
+    { lag: "Project on-time %",   lagS: "last quarter",            lead: "Drift rate",                   leadS: "live, share of outputs",       link: "lower drift → fewer late re-works",            color: GOLD },
+    { lag: "Training hours/FTE",  lagS: "annualised",              lead: "Skill reuse ratio",            leadS: "live, per published skill",    link: "skills reused → less retraining needed",       color: GREEN },
+    { lag: "Headcount cost",      lagS: "trailing 12 mo",          lead: "Cost per moment of work",      leadS: "live, per commit",             link: "marginal cost falls → operating leverage",     color: GREEN },
   ];
 
   // KPI index i maps to VS_YESTERDAY[i+1] (row 0 is the hero substrate metric).
@@ -3782,7 +3785,7 @@ function S07fInstrument() {
     "Beat 1 of 4. The hero metric. The size of the knowledge base. Yesterday's dashboard could not see this number.",
     "Beat 2 of 4. Learning-rate KPIs. Each one measures what the org is becoming, not what it did last quarter.",
     "Beat 3 of 4. Human control rails. Token spend, residency, audit, regulation, approval tiers, all in reach.",
-    "Beat 4 of 4. vs yesterday. Each new live metric replaces an old lagging one. Click a KPI to see the swap.",
+    "Beat 4 of 4. Leading indicators for your lagging metrics. The board metrics you already track stay. We add the live signal that moves first.",
   ];
   const fully = revealed === 4;
 
@@ -3925,7 +3928,7 @@ function S07fInstrument() {
                       <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.3, marginTop: 2 }}>{k.tip}</p>
                       {isActive && fully && (
                         <p className="font-mono uppercase tracking-[0.08em]" style={{ fontSize: 9, color: `hsl(${k.color})`, fontWeight: 800, marginTop: 3 }}>
-                          replaces · {VS_YESTERDAY[i + 1].old}
+                          leading indicator for · {VS_YESTERDAY[i + 1].lag}
                         </p>
                       )}
                     </div>
@@ -3993,7 +3996,7 @@ function S07fInstrument() {
           }}>
           <div className="flex items-center justify-between mb-2">
             <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: SUBTLE, fontWeight: 800 }}>
-              vs yesterday's dashboard
+              Leading indicators · for the lagging metrics you already track
             </span>
             <span style={{ fontSize: 10.5, color: MUTED, fontStyle: "italic" }}>
               <b style={{ color: `hsl(${GREEN})` }}>Every prompt is a compile. Every moment of work is a commit. Every commit compounds.</b>
@@ -4004,7 +4007,7 @@ function S07fInstrument() {
               const isMatch = activeVsRow === i || (activeKpi === -1 && i === 0);
               const isDim   = activeKpi !== null && !isMatch;
               return (
-                <div key={v.old} className="rounded-md border bg-white px-2 py-1.5 transition-all"
+                <div key={v.lag} className="rounded-md border bg-white px-2 py-1.5 transition-all"
                   style={{
                     borderColor: isMatch ? `hsl(${v.color} / 0.95)` : CHROME_BORDER,
                     borderWidth: isMatch ? 2 : 1,
@@ -4012,10 +4015,24 @@ function S07fInstrument() {
                     opacity: isDim ? 0.3 : 1,
                     boxShadow: isMatch ? `0 0 0 3px hsl(${v.color} / 0.15)` : "none",
                   }}>
-                  <p style={{ fontSize: 9, color: isMatch ? `hsl(${RED})` : SUBTLE, textDecoration: "line-through", fontWeight: isMatch ? 800 : 600 }}>{v.old}</p>
-                  <p style={{ fontSize: 8.5, color: SUBTLE, marginBottom: 3 }}>{v.oldS}</p>
-                  <p style={{ fontSize: 9.5, color: `hsl(${v.color})`, fontWeight: 800 }}>{v.now}</p>
-                  <p style={{ fontSize: 8.5, color: MUTED }}>{v.nowS}</p>
+                  {/* Leading indicator (new, live, moves first) */}
+                  <div className="flex items-center gap-1 mb-0.5">
+                    <span className="rounded-full" style={{ width: 5, height: 5, background: `hsl(${v.color})`, flexShrink: 0 }} />
+                    <p className="font-mono uppercase tracking-[0.06em]" style={{ fontSize: 7.5, color: `hsl(${v.color})`, fontWeight: 800 }}>leading · live</p>
+                  </div>
+                  <p style={{ fontSize: 9.5, color: `hsl(${v.color})`, fontWeight: 800, lineHeight: 1.15 }}>{v.lead}</p>
+                  <p style={{ fontSize: 8.5, color: MUTED, marginBottom: 4 }}>{v.leadS}</p>
+                  {/* Causal arrow */}
+                  <p className="font-mono" style={{ fontSize: 8, color: isMatch ? TEXT : SUBTLE, fontStyle: "italic", lineHeight: 1.2, marginBottom: 4 }}>
+                    ↓ {v.link}
+                  </p>
+                  {/* Lagging board metric (still tracked, still matters) */}
+                  <div className="flex items-center gap-1 mb-0.5 pt-1 border-t" style={{ borderColor: CHROME_BORDER }}>
+                    <span className="rounded-full border" style={{ width: 5, height: 5, borderColor: SUBTLE, flexShrink: 0 }} />
+                    <p className="font-mono uppercase tracking-[0.06em]" style={{ fontSize: 7.5, color: SUBTLE, fontWeight: 700 }}>lagging · board</p>
+                  </div>
+                  <p style={{ fontSize: 9.5, color: TEXT, fontWeight: 700, lineHeight: 1.15 }}>{v.lag}</p>
+                  <p style={{ fontSize: 8.5, color: MUTED }}>{v.lagS}</p>
                 </div>
               );
             })}
