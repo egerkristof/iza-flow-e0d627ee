@@ -1822,12 +1822,9 @@ function S07eAaceNotRag() {
       <div className="relative z-10">
         <ArcStepper current={2} next="the org learns laterally" />
         <Tag label="The defence. Why this is not RAG." color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 54, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+        <h2 className="font-bold leading-[1.02] mb-5" style={{ fontSize: 58, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           This is <span style={{ color: `hsl(${RED})` }}>not RAG.</span> This is <span style={{ color: `hsl(${GREEN})` }}>AACE</span>.
         </h2>
-        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 16 }}>
-          RAG retrieves text fragments and hopes the model reassembles intent. AACE compiles typed organisational primitives into a governed context object. The model never improvises what the org has already decided.
-        </p>
 
         <div className="grid grid-cols-2 gap-6">
           {/* LEFT — RAG path */}
