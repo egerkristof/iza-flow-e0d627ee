@@ -2719,6 +2719,8 @@ const SLIDES = [
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
   { id: "funnel-stack", title: "Nested Funnels · The Moment of Work", component: <S07cFunnel /> },
+  { id: "org-loop", title: "One Funnel · Every Operator · Learning Upward", component: <S07dOrgLoop /> },
+  { id: "aace-not-rag", title: "This Is AACE, Not RAG", component: <S07eAaceNotRag /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
   { id: "os-map", title: "OS Map", component: <S04OSMap /> },
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
