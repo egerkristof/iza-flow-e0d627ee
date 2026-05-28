@@ -32,10 +32,9 @@ export default function DiagnosticPage() {
   useEffect(() => {
     (async () => {
       try {
-        const { count } = await (supabase as any)
-          .from("diagnostic_results")
-          .select("id", { count: "exact", head: true });
-        if (count != null && count > 5) setSubmissionCount(count);
+        const { data } = await (supabase as any).rpc("get_diagnostic_submission_count");
+        const count = typeof data === "number" ? data : Number(data);
+        if (Number.isFinite(count) && count > 5) setSubmissionCount(count);
       } catch {}
     })();
   }, []);
@@ -45,15 +44,14 @@ export default function DiagnosticPage() {
     if (!resultId) return;
     (async () => {
       try {
-        const { data } = await (supabase as any)
-          .from("diagnostic_results")
-          .select("answers, scores, archetype, overall_score")
-          .eq("id", resultId)
-          .single();
-        if (!data) return;
-        const r = calculateResults(data.answers || {});
+        const { data } = await (supabase as any).rpc("get_diagnostic_result_public", {
+          result_id: resultId,
+        });
+        const row = Array.isArray(data) ? data[0] : data;
+        if (!row) return;
+        const r = calculateResults(row.answers || {});
         setResult(r);
-        setAnswers(data.answers || {});
+        setAnswers(row.answers || {});
         setDiagnosticRecordId(resultId);
         recordIdRef.current = resultId;
         setPhase("results");
