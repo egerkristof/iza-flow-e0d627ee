@@ -1255,17 +1255,17 @@ function S07cFunnel() {
         </h2>
 
         {/* ── Progressive reveal control ── */}
-        <div className="flex items-center gap-3 mb-3 rounded-xl border px-3 py-2"
+        <div className="flex items-center gap-4 mb-3 rounded-xl border px-4 py-2.5"
           style={{ borderColor: CHROME_BORDER, background: "white" }}>
           <button
             onClick={() => setRevealed(r => Math.max(0, r - 1))}
             disabled={revealed === 0}
-            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
-            style={{ fontSize: 10, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}
+            className="rounded-md border px-3 py-1.5 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            style={{ fontSize: 12, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}
           >prev</button>
 
           {/* 5-dot progress: each dot = one revealed layer */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             {LAYERS.map((L, i) => {
               const on = i < revealed;
               return (
@@ -1273,33 +1273,33 @@ function S07cFunnel() {
                   title={`Reveal up to: ${L.label}`}
                   className="rounded-full transition-all"
                   style={{
-                    width: on ? 22 : 10, height: 10,
+                    width: on ? 26 : 12, height: 12,
                     background: on ? `hsl(${L.color})` : CHROME_BG,
                     border: `1px solid hsl(${on ? L.color : SUBTLE} / ${on ? 0.9 : 0.4})`,
                   }}
                 />
               );
             })}
-            <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
+            <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 11, color: SUBTLE, fontWeight: 700 }}>
               {revealed} / {LAYERS.length} layers
             </span>
           </div>
 
-          <span style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.35, flex: 1 }}>
+          <span style={{ fontSize: 13, color: TEXT, lineHeight: 1.35, flex: 1 }}>
             {REVEAL_CAPTIONS[revealed]}
           </span>
 
           <button
             onClick={() => setRevealed(0)}
-            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em]"
-            style={{ fontSize: 10, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
+            className="rounded-md border px-3 py-1.5 font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: 12, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
           >reset</button>
           <button
             onClick={() => setRevealed(r => Math.min(LAYERS.length, r + 1))}
             disabled={fullyRevealed}
-            className="rounded-md border px-3 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            className="rounded-md border px-4 py-1.5 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
             style={{
-              fontSize: 10, fontWeight: 800,
+              fontSize: 12, fontWeight: 800,
               color: fullyRevealed ? TEXT : "white",
               background: fullyRevealed ? CARD_ALT : `hsl(${GREEN})`,
               borderColor: fullyRevealed ? CHROME_BORDER : `hsl(${GREEN})`,
@@ -1316,7 +1316,7 @@ function S07cFunnel() {
                 <button
                   key={o.k}
                   onClick={() => setMode(o.k)}
-                  className="px-2 py-1 font-mono uppercase tracking-[0.12em] transition-colors"
+                  className="px-3 py-1.5 font-mono uppercase tracking-[0.12em] transition-colors"
                   style={{
                     fontSize: 10, fontWeight: 800,
                     background: mode === o.k ? `hsl(${GREEN} / 0.12)` : "white",
