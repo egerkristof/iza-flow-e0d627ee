@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
   Database, Cpu, Layers, GitBranch, Workflow, ShieldCheck, Coins, TrendingDown,
