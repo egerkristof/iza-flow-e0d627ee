@@ -1908,7 +1908,7 @@ function S07eAaceNotRag() {
           This is <span style={{ color: `hsl(${RED})` }}>not RAG.</span> This is <span style={{ color: `hsl(${GREEN})` }}>AACE</span>.
         </h2>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-10 relative">
           {/* LEFT — RAG path */}
           <div className="rounded-2xl border-2 p-5 flex flex-col"
             style={{ borderColor: `hsl(${RED} / 0.35)`, background: `hsl(${RED} / 0.03)`, height: 700 }}>
