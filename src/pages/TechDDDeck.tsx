@@ -1598,9 +1598,11 @@ function S07cFunnel() {
                 })()}
               </div>
               <div className="border-t px-4 py-2.5"
-                style={{ borderColor: CHROME_BORDER, background: fullyGoverned ? `hsl(${GREEN} / 0.06)` : `hsl(${RED} / 0.05)` }}>
+                style={{ borderColor: CHROME_BORDER, background: !fullyRevealed ? CHROME_BG : fullyGoverned ? `hsl(${GREEN} / 0.06)` : `hsl(${RED} / 0.05)` }}>
                 <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
-                  {fullyGoverned ? (
+                  {!fullyRevealed ? (
+                    <><b style={{ color: SUBTLE }}>Compile in progress.</b> {LAYERS.length - revealed} of {LAYERS.length} layers still to reveal. Each one closes a gap the operator would otherwise have to improvise.</>
+                  ) : fullyGoverned ? (
                     <><b style={{ color: `hsl(${GREEN})` }}>Fully governed compile.</b> The operator writes one line. Everything else is inherited.</>
                   ) : (
                     <><b style={{ color: `hsl(${RED})` }}>Ungoverned compile.</b> The operator must improvise the gap. Every time. Drift compounds silently.</>
