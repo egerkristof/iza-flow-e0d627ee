@@ -801,7 +801,7 @@ function S04OSMap() {
                 <Brain size={22} style={{ color: `hsl(${GREEN})` }} />
                 <p className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA Decision Core</p>
                 <span className="px-2 py-0.5 rounded font-mono uppercase tracking-[0.15em]"
-                  style={{ fontSize: 10, background: `hsl(${GREEN} / 0.15)`, color: `hsl(${GREEN})` }}>AACE v3.3 runtime</span>
+                  style={{ fontSize: 10, background: `hsl(${GREEN} / 0.15)`, color: `hsl(${GREEN})` }}>AACE v3.1 runtime</span>
               </div>
               <p style={{ fontSize: 13, color: MUTED }}>State-locked · audit-traceable · model-agnostic</p>
             </div>
@@ -850,7 +850,7 @@ function S05Loop() {
       <PageNumber n={6} total={TOTAL} />
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
       <div className="relative z-10">
-        <Tag label="AACE v3.3 · The 4-Step Orchestration Loop" color={GREEN} />
+        <Tag label="AACE v3.1 · The 4-Step Orchestration Loop" color={GREEN} />
         <h2 className="font-bold leading-[1.05] mb-12" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em" }}>
           State-Locking is how we eliminate hallucinations in enterprise deployments.
         </h2>
