@@ -2319,7 +2319,6 @@ skill:        series-b-narrative@v3 (reused 47×)`}
                         key={i}
                         onClick={() => setActiveRoute(active ? null : i)}
                         onMouseEnter={() => setActiveRoute(i)}
-                        onMouseLeave={() => setActiveRoute(null)}
                         className="absolute rounded-full border-2 font-mono flex items-center justify-center"
                         style={{
                           top: `${b.midY}%`,
