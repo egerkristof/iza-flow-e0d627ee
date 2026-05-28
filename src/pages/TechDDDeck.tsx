@@ -3707,15 +3707,39 @@ function S07fInstrument() {
   ];
 
   const VS_YESTERDAY = [
-    // Each row: a lagging board metric (still tracked, still matters) and the
-    // leading indicator that now predicts it weeks earlier. The relationship is
-    // causal: the leading metric moves first; the lagging metric follows.
-    { lag: "Quarterly revenue",   lagS: "reported 3 months late",  lead: "Knowledge base size",          leadS: "live, +312 this week",         link: "more primitives → more compounding output", color: GREEN },
-    { lag: "Pipeline coverage",   lagS: "Friday snapshot",         lead: "Standards adoption",           leadS: "live, share of moments",       link: "more moments on-standard → cleaner pipeline",  color: GREEN },
-    { lag: "NPS survey",          lagS: "6 months old",            lead: "Promotion velocity",           leadS: "median minutes, last 30d",     link: "faster learning loop → fewer repeat complaints", color: GOLD },
-    { lag: "Project on-time %",   lagS: "last quarter",            lead: "Drift rate",                   leadS: "live, share of outputs",       link: "lower drift → fewer late re-works",            color: GOLD },
-    { lag: "Training hours/FTE",  lagS: "annualised",              lead: "Skill reuse ratio",            leadS: "live, per published skill",    link: "skills reused → less retraining needed",       color: GREEN },
-    { lag: "Headcount cost",      lagS: "trailing 12 mo",          lead: "Cost per moment of work",      leadS: "live, per commit",             link: "marginal cost falls → operating leverage",     color: GREEN },
+    // Each row pairs a lagging board metric (still tracked, still matters)
+    // with the leading indicator that predicts it. Read today, act today,
+    // see the lag move 1-2 quarters later. Numbers are illustrative.
+    {
+      lead: "Win-rate on standard sales plays", leadNow: "82% · 47 deals this week", color: GREEN,
+      mechanism: "If reps run the standard discovery + pricing play, win-rate holds at 80%+. Drop below 70% this week → revenue softens in Q+1. Act now: re-train the 3 reps off-standard before quarter-end.",
+      lag: "Quarterly revenue", lagS: "books in Q+1, reported 3 months late",
+    },
+    {
+      lead: "Time-to-quote", leadNow: "median 11 min · was 3 days", color: GREEN,
+      mechanism: "Quotes in minutes → 4× more proposals out the door this month → pipeline coverage lifts 6 weeks later. If median climbs back over 1 hour, expect coverage gap by next QBR.",
+      lag: "Pipeline coverage", lagS: "Friday snapshot, 6-week lag",
+    },
+    {
+      lead: "First-contact resolution %", leadNow: "78% · last 7 days", color: GOLD,
+      mechanism: "Tickets solved on first touch → no repeat complaints → NPS lifts next survey. Today's 78% (up from 54%) lands as +12 NPS points in the November wave.",
+      lag: "NPS survey", lagS: "next wave in 4 months",
+    },
+    {
+      lead: "Drift rate", leadNow: "3.1% of outputs off-standard", color: GOLD,
+      mechanism: "Every off-standard output becomes rework in the next sprint. 3% drift today = 3% schedule slip next quarter. Spike to 8% and on-time % drops below 85% in Q+1.",
+      lag: "Project on-time %", lagS: "reported end of quarter",
+    },
+    {
+      lead: "Skill reuse ratio", leadNow: "23× per published skill", color: GREEN,
+      mechanism: "One skill, written once, reused 23 times across the org = 22 retraining sessions you don't run next year. Training budget request drops accordingly in FY26 planning.",
+      lag: "Training hours / FTE", lagS: "annualised, FY26 plan",
+    },
+    {
+      lead: "Cost per moment of work", leadNow: "€0.41 / commit · was €38 manual", color: GREEN,
+      mechanism: "Same output volume at 1% of the unit cost → no incremental hires needed for next year's growth plan. Headcount line stays flat while revenue grows; opex/revenue improves trailing-12.",
+      lag: "Headcount cost", lagS: "trailing 12 months",
+    },
   ];
 
   // KPI index i maps to VS_YESTERDAY[i+1] (row 0 is the hero substrate metric).
