@@ -1549,7 +1549,7 @@ function S07dOrgLoop() {
               style={{ fontSize: 10, color: SUBTLE, maxWidth: 560 }}>
               {mode === "trace"
                 ? `Trace · ${OPERATORS[TRACE.operatorIdx].role} override, promoted to ${TRACE.primitive}, re-enters every other operator`
-                : "Ambient flow · every funnel emits into the knowledge base, substrate re-enters every funnel"}
+                : "Ambient flow · every funnel emits into the knowledge base, and it re-enters every funnel"}
             </div>
 
             <div className="absolute top-3 right-4 flex gap-1 rounded-full border p-0.5"
