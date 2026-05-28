@@ -1195,13 +1195,18 @@ function S07cFunnel() {
   type LayerId = "intent" | "governance" | "standards" | "team" | "preference";
   const LAYERS: {
     id: LayerId; label: string; sub: string; chip: string;
-    color: string; icon: typeof Compass; line: string;
+    color: string; icon: typeof Compass; line: string; scaffold: string;
   }[] = [
-    { id: "intent",     label: "Strategic Intent",     sub: "CEO mandates · OKRs · thesis",          chip: "C-suite",     color: PURPLE, icon: Compass,       line: "Operate within Q4 expansion thesis · prefer EU-first launches" },
-    { id: "governance", label: "Governance & Risk",    sub: "Legal · compliance · data residency",   chip: "Legal/Risk",  color: ACCENT, icon: ShieldCheck,   line: "No PII to vendor models · GDPR · cite source for every external claim" },
-    { id: "standards",  label: "Domain Standards",     sub: "Playbooks · SOPs · best practice",      chip: "Function lead", color: GOLD, icon: FileSignature, line: "Use the Investor Memo v3.1 structure · house tone · approved benchmarks" },
-    { id: "team",       label: "Team Context",         sub: "Prior decisions · artifacts · roles",   chip: "Team",        color: GREEN,  icon: Users,         line: "Reuse the Series-A deck framing · do not contradict last week's board update" },
-    { id: "preference", label: "Personal Preference",  sub: "Operator style · learned signals",      chip: "Operator",    color: GREEN,  icon: UserCheck,     line: "Bullet-first · drop hedging · German English · concise" },
+    { id: "intent",     label: "Strategic Intent",     sub: "CEO mandates · OKRs · thesis",          chip: "C-suite",     color: PURPLE, icon: Compass,       line: "Operate within Q4 expansion thesis · prefer EU-first launches",
+      scaffold: "Where the CEO's thesis enters. Sets which bets count and which do not." },
+    { id: "governance", label: "Governance & Risk",    sub: "Legal · compliance · data residency",   chip: "Legal/Risk",  color: ACCENT, icon: ShieldCheck,   line: "No PII to vendor models · GDPR · cite source for every external claim",
+      scaffold: "Where legal, risk and data rules become non-negotiable. Hard limits live here." },
+    { id: "standards",  label: "Domain Standards",     sub: "Playbooks · SOPs · best practice",      chip: "Function lead", color: GOLD, icon: FileSignature, line: "Use the Investor Memo v3.1 structure · house tone · approved benchmarks",
+      scaffold: "Where the function lead's playbooks land. House structure, tone and approved benchmarks." },
+    { id: "team",       label: "Team Context",         sub: "Prior decisions · artifacts · roles",   chip: "Team",        color: GREEN,  icon: Users,         line: "Reuse the Series-A deck framing · do not contradict last week's board update",
+      scaffold: "Where prior decisions, artefacts and roles flow in. Keeps the output consistent with the team." },
+    { id: "preference", label: "Personal Preference",  sub: "Operator style · learned signals",      chip: "Operator",    color: GREEN,  icon: UserCheck,     line: "Bullet-first · drop hedging · German English · concise",
+      scaffold: "Where the operator's own learned style closes the funnel. The final voice." },
   ];
 
   const [active, setActive] = useState<Record<LayerId, boolean>>({
@@ -1211,19 +1216,25 @@ function S07cFunnel() {
   const [mode, setMode] = useState<"topdown" | "bottomup">("topdown");
 
   // ── Progressive reveal: layers fade in one by one on the same canvas. ──
-  // 0 = only the prompt exists; 5 = full funnel + full interactivity.
+  // 0 = only the prompt exists.
+  // 1 = scaffold: split layout appears with empty layer slots + plain-English
+  //     notes on what each layer will hold, but no real content yet.
+  // 2..6 = layers 1..5 populate one by one.
+  const TOTAL_STEPS = LAYERS.length + 1; // 6
   const [revealed, setRevealed] = useState(0);
   const idxOf = (id: LayerId) => LAYERS.findIndex(L => L.id === id);
-  const isShown = (i: number) => i < revealed;
+  const isShown = (i: number) => i < revealed - 1;
+  const isScaffold = revealed === 1;
   const REVEAL_CAPTIONS = [
-    "Step 0 of 5. One line. That is everything the operator types. What is missing to produce a board-ready answer?",
-    "Step 1 of 5. Strategic intent enters first. The prompt now knows which thesis it lives inside.",
-    "Step 2 of 5. Governance and risk snap in. Legal, residency and citation rules become non-negotiable.",
-    "Step 3 of 5. Domain standards land. Structure, tone and approved benchmarks are no longer up for debate.",
-    "Step 4 of 5. Team context arrives. Prior decisions, artefacts and roles keep the output consistent with the org.",
-    "Step 5 of 5. Personal preference closes the funnel. Compile complete. Click any layer to remove it and watch the output drift.",
+    "Step 0 of 6. One line. That is everything the operator types. What is missing to produce a board-ready answer?",
+    "Step 1 of 6. Scaffold only. The funnel exists but is empty. Each slot below shows in plain English what will land there.",
+    "Step 2 of 6. Strategic intent enters first. The prompt now knows which thesis it lives inside.",
+    "Step 3 of 6. Governance and risk snap in. Legal, residency and citation rules become non-negotiable.",
+    "Step 4 of 6. Domain standards land. Structure, tone and approved benchmarks are no longer up for debate.",
+    "Step 5 of 6. Team context arrives. Prior decisions, artefacts and roles keep the output consistent with the org.",
+    "Step 6 of 6. Personal preference closes the funnel. Compile complete. Click any layer to remove it and watch the output drift.",
   ];
-  const fullyRevealed = revealed === LAYERS.length;
+  const fullyRevealed = revealed === TOTAL_STEPS;
 
   const toggle = (id: LayerId) => setActive(a => ({ ...a, [id]: !a[id] }));
 
@@ -1267,9 +1278,9 @@ function S07cFunnel() {
           {/* 5-dot progress: each dot = one revealed layer */}
           <div className="flex items-center gap-2">
             {LAYERS.map((L, i) => {
-              const on = i < revealed;
+              const on = i < revealed - 1;
               return (
-                <button key={L.id} onClick={() => setRevealed(i + 1)}
+                <button key={L.id} onClick={() => setRevealed(i + 2)}
                   title={`Reveal up to: ${L.label}`}
                   className="rounded-full transition-all"
                   style={{
@@ -1281,7 +1292,7 @@ function S07cFunnel() {
               );
             })}
             <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 11, color: SUBTLE, fontWeight: 700 }}>
-              {revealed} / {LAYERS.length} layers
+              {revealed === 0 ? "prompt only" : isScaffold ? "scaffold ready" : `${revealed - 1} / ${LAYERS.length} layers`}
             </span>
           </div>
 
@@ -1295,7 +1306,7 @@ function S07cFunnel() {
             style={{ fontSize: 12, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
           >reset</button>
           <button
-            onClick={() => setRevealed(r => Math.min(LAYERS.length, r + 1))}
+            onClick={() => setRevealed(r => Math.min(TOTAL_STEPS, r + 1))}
             disabled={fullyRevealed}
             className="rounded-md border px-4 py-1.5 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
             style={{
@@ -1304,7 +1315,7 @@ function S07cFunnel() {
               background: fullyRevealed ? CARD_ALT : `hsl(${GREEN})`,
               borderColor: fullyRevealed ? CHROME_BORDER : `hsl(${GREEN})`,
             }}
-          >{fullyRevealed ? "compile complete" : "reveal next ▸"}</button>
+          >{fullyRevealed ? "compile complete" : revealed === 0 ? "show scaffold ▸" : "reveal next ▸"}</button>
 
           {/* Inline mode toggle — only after full reveal, keeps layout height stable */}
           {fullyRevealed && (
@@ -1425,7 +1436,7 @@ function S07cFunnel() {
                     onMouseLeave={() => setHovered(null)}
                     onClick={() => shown && fullyRevealed && toggle(L.id)}
                     style={{ cursor: shown && fullyRevealed ? "pointer" : "default", transition: "opacity 0.4s ease" }}
-                    opacity={shown ? 1 : 0.18}
+                    opacity={shown ? 1 : isScaffold ? 0.55 : 0.18}
                   >
                     <polygon
                       points={pts}
@@ -1446,12 +1457,12 @@ function S07cFunnel() {
                     <text x={CX} y={yTop + LAYER_H / 2 - 4}
                       textAnchor="middle" fontSize={16} fontWeight={800}
                       fill={!shown ? SUBTLE : on ? TEXT : `hsl(${RED})`}>
-                      {shown ? L.label : "···"}
+                      {shown || isScaffold ? L.label : "···"}
                     </text>
                     <text x={CX} y={yTop + LAYER_H / 2 + 16}
                       textAnchor="middle" fontSize={11}
                       fill={!shown ? SUBTLE : on ? MUTED : `hsl(${RED} / 0.85)`}>
-                      {!shown ? "not yet revealed" : on ? L.sub : "ungoverned · context leaks"}
+                      {!shown ? (isScaffold ? L.scaffold : "not yet revealed") : on ? L.sub : "ungoverned · context leaks"}
                     </text>
                     {/* Right-side chip */}
                     <g transform={`translate(${CX + wTop / 2 + 14}, ${yTop + LAYER_H / 2 - 9})`}>
@@ -1459,7 +1470,7 @@ function S07cFunnel() {
                         fill={!shown ? CHROME_BG : on ? `hsl(${c} / 0.12)` : `hsl(${RED} / 0.08)`}
                         stroke={!shown ? `hsl(${SUBTLE} / 0.4)` : on ? `hsl(${c} / 0.5)` : `hsl(${RED} / 0.4)`} strokeWidth={1} />
                       <text x={46} y={13} textAnchor="middle" fontSize={10} fontWeight={700}
-                        fill={!shown ? SUBTLE : on ? `hsl(${c})` : `hsl(${RED})`}>{shown ? L.chip : "—"}</text>
+                        fill={!shown ? SUBTLE : on ? `hsl(${c})` : `hsl(${RED})`}>{shown || isScaffold ? L.chip : "—"}</text>
                     </g>
                   </g>
                 );
@@ -1607,14 +1618,14 @@ function S07cFunnel() {
                           return (
                             <div key={l.id}
                               className="rounded-md border border-dashed px-2.5 py-1.5 flex items-center gap-2"
-                              style={{ borderColor: `hsl(${SUBTLE} / 0.4)`, background: CHROME_BG, opacity: 0.7 }}
+                              style={{ borderColor: `hsl(${SUBTLE} / 0.4)`, background: CHROME_BG, opacity: isScaffold ? 0.95 : 0.7 }}
                             >
                               <span style={{ fontSize: 12, color: SUBTLE, fontWeight: 800 }}>·</span>
                               <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: SUBTLE, fontWeight: 700 }}>
                                 {layer.label}
                               </span>
                               <span style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic" }}>
-                                not yet revealed
+                                {isScaffold ? layer.scaffold : "not yet revealed"}
                               </span>
                             </div>
                           );
@@ -1653,7 +1664,11 @@ function S07cFunnel() {
                 style={{ borderColor: CHROME_BORDER, background: !fullyRevealed ? CHROME_BG : fullyGoverned ? `hsl(${GREEN} / 0.06)` : `hsl(${RED} / 0.05)` }}>
                 <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
                   {!fullyRevealed ? (
-                    <><b style={{ color: SUBTLE }}>Compile in progress.</b> {LAYERS.length - revealed} of {LAYERS.length} layers still to reveal. Each one closes a gap the operator would otherwise have to improvise.</>
+                    isScaffold ? (
+                      <><b style={{ color: SUBTLE }}>Scaffold ready.</b> The funnel is in place but empty. Press reveal next to start landing each layer of governed context, one at a time.</>
+                    ) : (
+                      <><b style={{ color: SUBTLE }}>Compile in progress.</b> {LAYERS.length - Math.max(0, revealed - 1)} of {LAYERS.length} layers still to reveal. Each one closes a gap the operator would otherwise have to improvise.</>
+                    )
                   ) : fullyGoverned ? (
                     <><b style={{ color: `hsl(${GREEN})` }}>Fully governed compile.</b> The operator writes one line. Everything else is inherited.</>
                   ) : (
