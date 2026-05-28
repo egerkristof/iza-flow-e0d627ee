@@ -2120,7 +2120,6 @@ function S07dOrgLoop() {
 // SLIDE 07e — THIS IS AACE, NOT RAG
 // ═════════════════════════════════════════════════════════════════════════════
 function S07eAaceNotRag() {
-  const [activeRoute, setActiveRoute] = useState<number | null>(null);
   const PRIMITIVES = [
     { k: "Standard",    icon: Compass,       color: PURPLE, ex: "EU-first launches this quarter",          why: "Governs scope. Versioned. Auditable." },
     { k: "Procedure",   icon: Workflow,      color: ACCENT, ex: "3-step memo flow: draft → cite → review", why: "Executable, not described." },
@@ -2131,17 +2130,28 @@ function S07eAaceNotRag() {
   ];
 
   // Variable-width, distressed retrieved fragments. Each chunk has its own
-  // similarity score, source label, and a visual treatment (duplicated,
-  // contradictory, stale) that mirrors how RAG actually behaves.
+  // similarity score, source label, a visual treatment (duplicated,
+  // contradictory, stale) that mirrors how RAG actually behaves, and an
+  // inline `promoteTo` annotation describing the typed AACE primitive the
+  // same source becomes on the right side. Read at the source: no floating
+  // bridge lines, the mapping lives on each chunk.
   const RAG_FRAGMENTS: {
-    text: string; sim: string; src: string; w: number; tag?: "dup" | "stale" | "conflict" | "irrelevant";
+    text: string; sim: string; src: string; w: number;
+    tag?: "dup" | "stale" | "conflict" | "irrelevant";
+    promoteTo: { k: string; verb: string; color: string };
   }[] = [
-    { text: "…last quarter we shipped EU launches first because of…", sim: "0.82", src: "wiki/eu-launch.md",     w: 92 },
-    { text: "…internal memo template circa 2023 mentions bullets…",   sim: "0.71", src: "templates/memo-2023",   w: 80, tag: "stale" },
-    { text: "…GDPR FAQ doc says vendors must be reviewed…",           sim: "0.68", src: "legal/gdpr-faq.pdf",    w: 86, tag: "irrelevant" },
-    { text: "…board update draft v2 references investor pipeline…",   sim: "0.66", src: "decks/board-q3-draft",  w: 74, tag: "dup" },
-    { text: "…board update draft v3 references investor pipeline…",   sim: "0.65", src: "decks/board-q3-final",  w: 76, tag: "dup" },
-    { text: "…sales handbook page 47 about pricing memo style…",      sim: "0.62", src: "handbook/p47",          w: 70, tag: "conflict" },
+    { text: "…last quarter we shipped EU launches first because of…", sim: "0.82", src: "wiki/eu-launch.md",     w: 92,
+      promoteTo: { k: "Standard",    verb: "typed + versioned", color: PURPLE } },
+    { text: "…internal memo template circa 2023 mentions bullets…",   sim: "0.71", src: "templates/memo-2023",   w: 80, tag: "stale",
+      promoteTo: { k: "Procedure",   verb: "made executable",   color: ACCENT } },
+    { text: "…GDPR FAQ doc says vendors must be reviewed…",           sim: "0.68", src: "legal/gdpr-faq.pdf",    w: 86, tag: "irrelevant",
+      promoteTo: { k: "Prohibition", verb: "enforced as block", color: RED } },
+    { text: "…board update draft v2 references investor pipeline…",   sim: "0.66", src: "decks/board-q3-draft",  w: 74, tag: "dup",
+      promoteTo: { k: "Fact",        verb: "deduped + pinned",  color: GOLD } },
+    { text: "…board update draft v3 references investor pipeline…",   sim: "0.65", src: "decks/board-q3-final",  w: 76, tag: "dup",
+      promoteTo: { k: "Fact",        verb: "deduped + pinned",  color: GOLD } },
+    { text: "…sales handbook page 47 about pricing memo style…",      sim: "0.62", src: "handbook/p47",          w: 70, tag: "conflict",
+      promoteTo: { k: "Preference",  verb: "resolved + owned",  color: GREEN } },
   ];
 
   const TAG_STYLE: Record<string, { label: string; color: string }> = {
