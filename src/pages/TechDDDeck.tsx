@@ -1343,7 +1343,8 @@ function S07cFunnel() {
                 const yBot = yTop + LAYER_H;
                 const wTop = WIDTHS[i];
                 const wBot = WIDTHS[i + 1];
-                const on = active[L.id];
+                const shown = isShown(i);
+                const on = shown && active[L.id];
                 const isHover = hovered === L.id;
                 const c = L.color;
                 const pts = [
@@ -1354,44 +1355,45 @@ function S07cFunnel() {
                 ].map(p => p.join(",")).join(" ");
                 return (
                   <g key={L.id}
-                    onMouseEnter={() => setHovered(L.id)}
+                    onMouseEnter={() => shown && setHovered(L.id)}
                     onMouseLeave={() => setHovered(null)}
-                    onClick={() => toggle(L.id)}
-                    style={{ cursor: "pointer" }}
+                    onClick={() => shown && fullyRevealed && toggle(L.id)}
+                    style={{ cursor: shown && fullyRevealed ? "pointer" : "default", transition: "opacity 0.4s ease" }}
+                    opacity={shown ? 1 : 0.18}
                   >
                     <polygon
                       points={pts}
-                      fill={on ? `hsl(${c} / ${isHover ? 0.22 : 0.14})` : `hsl(${RED} / 0.06)`}
-                      stroke={on ? `hsl(${c} / ${isHover ? 0.95 : 0.7})` : `hsl(${RED} / 0.45)`}
+                      fill={!shown ? "transparent" : on ? `hsl(${c} / ${isHover ? 0.22 : 0.14})` : `hsl(${RED} / 0.06)`}
+                      stroke={!shown ? `hsl(${SUBTLE} / 0.55)` : on ? `hsl(${c} / ${isHover ? 0.95 : 0.7})` : `hsl(${RED} / 0.45)`}
                       strokeWidth={isHover ? 2.5 : 1.5}
-                      strokeDasharray={on ? "0" : "5 4"}
+                      strokeDasharray={!shown ? "3 5" : on ? "0" : "5 4"}
                     />
                     {/* Order badge */}
                     <circle cx={CX - wTop / 2 - 18} cy={yTop + LAYER_H / 2} r={14}
-                      fill="white" stroke={on ? `hsl(${c})` : `hsl(${RED} / 0.5)`} strokeWidth={1.5} />
+                      fill="white" stroke={!shown ? `hsl(${SUBTLE} / 0.5)` : on ? `hsl(${c})` : `hsl(${RED} / 0.5)`} strokeWidth={1.5} />
                     <text x={CX - wTop / 2 - 18} y={yTop + LAYER_H / 2 + 4}
                       textAnchor="middle" fontSize={12} fontWeight={700}
-                      fill={on ? `hsl(${c})` : `hsl(${RED})`}>
+                      fill={!shown ? SUBTLE : on ? `hsl(${c})` : `hsl(${RED})`}>
                       {orderIndex(i)}
                     </text>
                     {/* Label centered inside the trapezoid */}
                     <text x={CX} y={yTop + LAYER_H / 2 - 4}
                       textAnchor="middle" fontSize={16} fontWeight={800}
-                      fill={on ? TEXT : `hsl(${RED})`}>
-                      {L.label}
+                      fill={!shown ? SUBTLE : on ? TEXT : `hsl(${RED})`}>
+                      {shown ? L.label : "···"}
                     </text>
                     <text x={CX} y={yTop + LAYER_H / 2 + 16}
                       textAnchor="middle" fontSize={11}
-                      fill={on ? MUTED : `hsl(${RED} / 0.85)`}>
-                      {on ? L.sub : "ungoverned · context leaks"}
+                      fill={!shown ? SUBTLE : on ? MUTED : `hsl(${RED} / 0.85)`}>
+                      {!shown ? "not yet revealed" : on ? L.sub : "ungoverned · context leaks"}
                     </text>
                     {/* Right-side chip */}
                     <g transform={`translate(${CX + wTop / 2 + 14}, ${yTop + LAYER_H / 2 - 9})`}>
                       <rect width={92} height={18} rx={4}
-                        fill={on ? `hsl(${c} / 0.12)` : `hsl(${RED} / 0.08)`}
-                        stroke={on ? `hsl(${c} / 0.5)` : `hsl(${RED} / 0.4)`} strokeWidth={1} />
+                        fill={!shown ? CHROME_BG : on ? `hsl(${c} / 0.12)` : `hsl(${RED} / 0.08)`}
+                        stroke={!shown ? `hsl(${SUBTLE} / 0.4)` : on ? `hsl(${c} / 0.5)` : `hsl(${RED} / 0.4)`} strokeWidth={1} />
                       <text x={46} y={13} textAnchor="middle" fontSize={10} fontWeight={700}
-                        fill={on ? `hsl(${c})` : `hsl(${RED})`}>{L.chip}</text>
+                        fill={!shown ? SUBTLE : on ? `hsl(${c})` : `hsl(${RED})`}>{shown ? L.chip : "—"}</text>
                     </g>
                   </g>
                 );
