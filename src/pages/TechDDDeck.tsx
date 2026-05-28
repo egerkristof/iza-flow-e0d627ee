@@ -1211,6 +1211,9 @@ function S07cFunnel() {
 
   const toggle = (id: LayerId) => setActive(a => ({ ...a, [id]: !a[id] }));
 
+  const enforcedCount = LAYERS.filter(L => active[L.id]).length;
+  const fullyGoverned = enforcedCount === LAYERS.length;
+
   // Funnel geometry — side view, nested trapezoids.
   // Wide intake at top, narrow spout at bottom (the prompt).
   // Each layer's bottom width = next layer's top width => they nest perfectly.
@@ -1231,12 +1234,9 @@ function S07cFunnel() {
       <div className="relative z-10">
         <ArcStepper current={1} next="vs RAG, the defence" />
         <Tag label="The atom. Every prompt is a compile." color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+        <h2 className="font-bold leading-[1.02] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span>. Automatically.
         </h2>
-        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 14 }}>
-          Each nested funnel is an enforcement layer. Snap any layer out and the prompt below it goes ungoverned. Build the stack from the C-suite down, or from the operator up. Both directions converge on the same moment of work.
-        </p>
 
         {/* Mode toggle */}
         <div className="flex items-center gap-3 mb-4">
