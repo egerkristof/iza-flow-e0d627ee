@@ -104,7 +104,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 18;
+const TOTAL = 20;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 01 — COVER
