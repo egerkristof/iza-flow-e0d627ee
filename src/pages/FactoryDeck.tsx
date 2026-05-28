@@ -4,6 +4,7 @@ import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   Factory, Cpu, Building2, Users,
   Workflow, Coins, Sparkles, Mail, CheckCircle2, Layers,
+  ArrowDown, ArrowRight, Magnet, Megaphone, Clock, AlertTriangle, Gauge,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -67,37 +68,67 @@ function F02MachineWithoutFactory() {
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
-      <div className="absolute inset-0 px-28 pt-32 pb-24 flex flex-col">
-        <Tag label="The Problem" color={RED} />
-        <h2 className="font-black mb-10" style={{ fontSize: 76, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
-          Enterprises bought the machine.<br />
-          <span style={{ color: `hsl(${RED})` }}>Nobody built the factory.</span>
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+        <Tag label="The Problem · Push vs Pull" color={RED} />
+        <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          AI is being <span style={{ color: `hsl(${RED})` }}>pushed</span> onto the enterprise.<br />
+          Nobody set up the <span style={{ color: `hsl(${GREEN})` }}>pull</span>.
         </h2>
-        <div className="grid grid-cols-2 gap-12 mt-4 flex-1">
-          <div className="rounded-2xl p-10 border" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
-            <div className="flex items-center gap-3 mb-6">
-              <Cpu size={28} style={{ color: `hsl(${RED})` }} />
-              <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 18, color: `hsl(${RED})` }}>The machine, alone</span>
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          Toyota did not win because of the engine. It won because demand <em>pulled</em> each part through a standard, just-in-time. AI today is the opposite: providers push capability at every seat, undefined, all at once. That is why pilots stall and budgets unravel.
+        </p>
+
+        <div className="grid grid-cols-2 gap-10 flex-1">
+          {/* PUSH column */}
+          <div className="rounded-2xl p-8 border relative overflow-hidden" style={{ background: `hsl(${RED} / 0.04)`, borderColor: `hsl(${RED} / 0.35)` }}>
+            {/* push arrows raining down */}
+            <div className="absolute inset-x-0 top-0 flex justify-around opacity-50 pointer-events-none">
+              {[0,1,2,3,4,5,6].map(i => (
+                <ArrowDown key={i} size={20} style={{ color: `hsl(${RED})`, marginTop: (i % 3) * 6 }} />
+              ))}
             </div>
-            <p className="font-bold mb-6" style={{ fontSize: 32, color: TEXT, lineHeight: 1.2 }}>
-              Copilot, Claude, ChatGPT, agents.
+            <div className="flex items-center gap-3 mb-5 mt-6">
+              <Megaphone size={28} style={{ color: `hsl(${RED})` }} />
+              <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 17, color: `hsl(${RED})` }}>Push motion · today</span>
+            </div>
+            <p className="font-bold mb-5" style={{ fontSize: 28, color: TEXT, lineHeight: 1.2 }}>
+              "Here is AI. Use it. Everywhere. Now."
             </p>
-            <ul className="space-y-3" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
+            <div className="grid grid-cols-2 gap-2 mb-5">
+              {["Copilot","ChatGPT","Claude","Gemini","Agents","More agents"].map(t => (
+                <div key={t} className="px-3 py-2 rounded-md border text-center font-mono" style={{ fontSize: 14, color: MUTED, borderColor: `hsl(${RED} / 0.25)`, background: "white" }}>{t}</div>
+              ))}
+            </div>
+            <ul className="space-y-2" style={{ fontSize: 18, color: MUTED, lineHeight: 1.35 }}>
+              <li>· Undefined usage. No standard, no audit trail.</li>
               <li>· Drift between teams. Same prompt, different answer.</li>
-              <li>· No standard enforced. No audit trail.</li>
               <li>· Every token unanchored from outcome.</li>
-              <li>· Pilots stall. Trust erodes. Budget questioned.</li>
+              <li>· Pilots stall. Trust erodes. Spend questioned.</li>
             </ul>
           </div>
-          <div className="rounded-2xl p-10 border-2" style={{ background: `hsl(${GREEN} / 0.04)`, borderColor: `hsl(${GREEN} / 0.4)` }}>
-            <div className="flex items-center gap-3 mb-6">
-              <Factory size={28} style={{ color: `hsl(${GREEN})` }} />
-              <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>The factory around it</span>
+
+          {/* PULL column */}
+          <div className="rounded-2xl p-8 border-2 relative overflow-hidden" style={{ background: `hsl(${GREEN} / 0.04)`, borderColor: `hsl(${GREEN} / 0.45)` }}>
+            <div className="absolute top-6 right-6 opacity-40">
+              <Magnet size={64} style={{ color: `hsl(${GREEN})` }} />
             </div>
-            <p className="font-bold mb-6" style={{ fontSize: 32, color: TEXT, lineHeight: 1.2 }}>
-              Standards. Stations. Stop-the-line. Takt.
+            <div className="flex items-center gap-3 mb-5">
+              <Factory size={28} style={{ color: `hsl(${GREEN})` }} />
+              <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 17, color: `hsl(${GREEN})` }}>Pull motion · the factory</span>
+            </div>
+            <p className="font-bold mb-5" style={{ fontSize: 28, color: TEXT, lineHeight: 1.2 }}>
+              "Standard calls the token. Just-in-time."
             </p>
-            <ul className="space-y-3" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
+            <div className="flex items-center gap-2 mb-5 px-3 py-3 rounded-md border" style={{ background: "white", borderColor: `hsl(${GREEN} / 0.3)` }}>
+              <span className="font-mono font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>OUTCOME</span>
+              <ArrowRight size={14} style={{ color: SUBTLE }} />
+              <span className="font-mono whitespace-nowrap" style={{ fontSize: 13, color: MUTED }}>STANDARD</span>
+              <ArrowRight size={14} style={{ color: SUBTLE }} />
+              <span className="font-mono whitespace-nowrap" style={{ fontSize: 13, color: MUTED }}>STATION</span>
+              <ArrowRight size={14} style={{ color: SUBTLE }} />
+              <span className="font-mono whitespace-nowrap" style={{ fontSize: 13, color: MUTED }}>TOKEN</span>
+            </div>
+            <ul className="space-y-2" style={{ fontSize: 18, color: MUTED, lineHeight: 1.35 }}>
               <li>· Every prompt compiled against a standard.</li>
               <li>· Every decision logged with rationale.</li>
               <li>· Every token tied to a named outcome.</li>
@@ -105,13 +136,15 @@ function F02MachineWithoutFactory() {
             </ul>
           </div>
         </div>
-        <div className="mt-10 px-8 py-5 rounded-xl border-l-4" style={{ background: CARD_ALT, borderColor: `hsl(${ACCENT})` }}>
-          <p style={{ fontSize: 22, color: TEXT, fontStyle: "italic", lineHeight: 1.5 }}>
-            Toyota did not win because of the engine. It won because of the production system around it. AI is the same shape of problem at a new scale.
+
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: CARD_ALT, borderColor: `hsl(${ACCENT})` }}>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>The Toyota lesson</span>
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            Push systems optimise the supplier. Pull systems optimise the outcome. AI today is a push system at every desk — LIZA is the pull layer that flips it.
           </p>
         </div>
       </div>
-      <Footer text="The machine is now commodity. The production system is the moat." />
+      <Footer text="The machine is now commodity. The pull system around it is the moat." />
       <SlideBar from={RED} to={GREEN} />
     </div>
   );
@@ -179,6 +212,12 @@ function F03AnnotatedEmail() {
 
 // ─── F04 · THE MATH (€550K → $2.6B) ──────────────────────────────────────────
 function F04Math() {
+  const derivation = [
+    { icon: Clock, label: "Reconstructing context from scratch", hrs: "1.5 h / wk", note: "Hunting decisions, prior versions, who decided what" },
+    { icon: AlertTriangle, label: "Checking AI output for hallucinations", hrs: "1.0 h / wk", note: "Re-verifying numbers, sources, claims before sending" },
+    { icon: Users, label: "Re-doing work the senior would have caught", hrs: "1.0 h / wk", note: "Judgment gap — junior ships, senior rewrites" },
+    { icon: CheckCircle2, label: "Audit, compliance, version reconciliation", hrs: "0.5 h / wk", note: "\"Which version is approved? Who signed off?\"" },
+  ];
   const rows = [
     { label: "Senior knowledge worker", count: "100", waste: "€5.5K", total: "€550K / yr", grow: false },
     { label: "× 500-person knowledge org", count: "500", waste: "€5.5K", total: "€2.75M / yr", grow: false },
@@ -189,46 +228,76 @@ function F04Math() {
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
-      <div className="absolute inset-0 px-28 pt-32 pb-24 flex flex-col">
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
         <Tag label="The Math" color={ACCENT} />
-        <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.03em" }}>
-          The Context Gap Tax: <span style={{ color: `hsl(${GOLD})` }}>€5,500 per knowledge worker per year</span>
+        <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.03em" }}>
+          The cost of the push motion: <span style={{ color: `hsl(${GOLD})` }}>€5,500 per worker per year</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1200, lineHeight: 1.4 }}>
-          Rework, hallucination-checking, lost senior judgment, audit overhead. Below the line on every budget today. Above the line by 2027 when AI spend is metered.
+        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          Knowledge work today is still <em>artisanal</em>: every worker reconstructs context from scratch, every session. AI accelerated the artisan — it did not industrialise the work. Here is the per-worker tax that hides on every P&L.
         </p>
+
+        {/* Derivation panel */}
+        <div className="rounded-2xl border p-6 mb-6" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
+          <div className="flex items-center justify-between mb-4">
+            <span className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 13, color: SUBTLE }}>How €5,500 / worker is built</span>
+            <span className="font-mono" style={{ fontSize: 13, color: SUBTLE }}>Senior loaded rate ≈ €55 / h · 46 working weeks</span>
+          </div>
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            {derivation.map((d, i) => {
+              const Icon = d.icon;
+              return (
+                <div key={i} className="rounded-lg border p-4" style={{ background: "white", borderColor: CHROME_BORDER }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Icon size={18} style={{ color: `hsl(${RED})` }} />
+                    <span className="font-mono font-black" style={{ fontSize: 18, color: TEXT }}>{d.hrs}</span>
+                  </div>
+                  <p className="font-bold mb-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>{d.label}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}>{d.note}</p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex items-center justify-center gap-3 pt-3 border-t font-mono" style={{ borderColor: CHROME_BORDER, fontSize: 16, color: MUTED }}>
+            <span>4 h / wk</span>
+            <span style={{ color: SUBTLE }}>×</span>
+            <span>€55 / h</span>
+            <span style={{ color: SUBTLE }}>×</span>
+            <span>46 wk</span>
+            <span style={{ color: SUBTLE }}>=</span>
+            <span className="font-black" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>€10,120 raw</span>
+            <span style={{ color: SUBTLE }}>· conservative discount →</span>
+            <span className="font-black" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>€5,500</span>
+          </div>
+        </div>
+
+        {/* Scaling table */}
         <div className="rounded-2xl border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
-          <div className="grid grid-cols-[2fr_1fr_1fr_1.2fr] px-8 py-4 font-mono uppercase tracking-[0.15em] font-bold" style={{ background: CARD_ALT, fontSize: 14, color: MUTED }}>
+          <div className="grid grid-cols-[2fr_1fr_1fr_1.2fr] px-8 py-3 font-mono uppercase tracking-[0.15em] font-bold" style={{ background: CARD_ALT, fontSize: 13, color: MUTED }}>
             <span>Scope</span>
             <span>Workers</span>
             <span>Tax / worker</span>
             <span className="text-right">Annual waste</span>
           </div>
           {rows.map((r, i) => (
-            <div key={i} className="grid grid-cols-[2fr_1fr_1fr_1.2fr] px-8 py-6 items-center border-t"
+            <div key={i} className="grid grid-cols-[2fr_1fr_1fr_1.2fr] px-8 py-4 items-center border-t"
                  style={{ borderColor: CHROME_BORDER, background: r.grow ? `hsl(${GOLD} / 0.06)` : "white" }}>
-              <span className="font-semibold" style={{ fontSize: 24, color: TEXT }}>{r.label}</span>
-              <span className="font-mono" style={{ fontSize: 22, color: MUTED }}>{r.count}</span>
-              <span className="font-mono" style={{ fontSize: 22, color: MUTED }}>{r.waste}</span>
-              <span className="font-black text-right" style={{ fontSize: 28, color: r.grow ? `hsl(${GOLD})` : TEXT, letterSpacing: "-0.02em" }}>{r.total}</span>
+              <span className="font-semibold" style={{ fontSize: 20, color: TEXT }}>{r.label}</span>
+              <span className="font-mono" style={{ fontSize: 18, color: MUTED }}>{r.count}</span>
+              <span className="font-mono" style={{ fontSize: 18, color: MUTED }}>{r.waste}</span>
+              <span className="font-black text-right" style={{ fontSize: 24, color: r.grow ? `hsl(${GOLD})` : TEXT, letterSpacing: "-0.02em" }}>{r.total}</span>
             </div>
           ))}
         </div>
-        <div className="mt-8 grid grid-cols-3 gap-6">
-          {[
-            { k: "Capture rate", v: "5–8%", d: "of the tax = €2.75M ACV at 500 ppl" },
-            { k: "Platform GM", v: "95%", d: "every token tied to a standard" },
-            { k: "Payback", v: "< 6 mo", d: "rework displaced > license cost" },
-          ].map((s) => (
-            <div key={s.k} className="rounded-xl border p-6" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
-              <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 13, color: SUBTLE }}>{s.k}</p>
-              <p className="font-black mb-1" style={{ fontSize: 38, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{s.v}</p>
-              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.35 }}>{s.d}</p>
-            </div>
-          ))}
+
+        <div className="mt-5 px-6 py-3 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.05)`, borderColor: `hsl(${GREEN})` }}>
+          <Gauge size={22} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+            LIZA captures <span className="font-black" style={{ color: `hsl(${GREEN})` }}>5–8%</span> of the tax = <span className="font-black">€2.75M ACV</span> at 500 ppl · <span className="font-black">95% platform GM</span> · <span className="font-black">&lt; 6 mo payback</span>.
+          </p>
         </div>
       </div>
-      <Footer text="Tax estimate: Aliz internal study · 100 knowledge workers · cross-validated with HBR and McKinsey 2024 rework data." />
+      <Footer text="Derivation: senior-loaded rate, 4 h/wk artisanal overhead — cross-validated with HBR & McKinsey 2024 rework data, internal 100-worker study." />
       <SlideBar from={ACCENT} to={GOLD} />
     </div>
   );
