@@ -2453,6 +2453,7 @@ const SLIDES = [
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
+  { id: "funnel-stack", title: "Nested Funnels · The Moment of Work", component: <S07cFunnel /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
   { id: "os-map", title: "OS Map", component: <S04OSMap /> },
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
