@@ -1323,7 +1323,36 @@ function S07cFunnel() {
           </div>
         )}
 
-        <div className="grid grid-cols-12 gap-5">
+        <div className="grid grid-cols-12 gap-5 relative">
+          {/* Step-1 spotlight: dim the diagram, float the prompt alone */}
+          {step === 1 && (
+            <div className="absolute inset-0 z-20 rounded-2xl flex items-center justify-center"
+              style={{ background: "rgba(255,255,255,0.86)", backdropFilter: "blur(2px)" }}>
+              <div className="rounded-2xl border-2 px-10 py-9 text-center max-w-[820px]"
+                style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: "white", boxShadow: "0 24px 60px rgba(0,0,0,0.10)" }}>
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <MessageSquare size={16} style={{ color: `hsl(${GREEN})` }} />
+                  <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
+                    operator prompt · the moment of work
+                  </span>
+                </div>
+                <p style={{ fontSize: 38, color: TEXT, fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+                  "Draft the Series-B narrative for tomorrow's board."
+                </p>
+                <p className="mt-5 mx-auto" style={{ fontSize: 14, color: MUTED, maxWidth: 620, lineHeight: 1.5 }}>
+                  This is everything the operator types. What is missing from this prompt for the AI to produce a board-ready answer?
+                </p>
+                <button
+                  onClick={() => setStep(2)}
+                  className="mt-6 rounded-full px-5 py-2 font-mono uppercase tracking-[0.12em]"
+                  style={{ fontSize: 11, fontWeight: 800, color: "white", background: `hsl(${GREEN})`, border: `1px solid hsl(${GREEN})` }}
+                >
+                  Show what's missing ▸
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* LEFT — nested funnel stack */}
           <div className="col-span-7 rounded-2xl border relative"
             style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 720 }}>
