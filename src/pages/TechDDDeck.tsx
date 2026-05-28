@@ -2120,7 +2120,6 @@ function S07dOrgLoop() {
 // SLIDE 07e — THIS IS AACE, NOT RAG
 // ═════════════════════════════════════════════════════════════════════════════
 function S07eAaceNotRag() {
-  const [activeRoute, setActiveRoute] = useState<number | null>(null);
   const PRIMITIVES = [
     { k: "Standard",    icon: Compass,       color: PURPLE, ex: "EU-first launches this quarter",          why: "Governs scope. Versioned. Auditable." },
     { k: "Procedure",   icon: Workflow,      color: ACCENT, ex: "3-step memo flow: draft → cite → review", why: "Executable, not described." },
@@ -2131,17 +2130,28 @@ function S07eAaceNotRag() {
   ];
 
   // Variable-width, distressed retrieved fragments. Each chunk has its own
-  // similarity score, source label, and a visual treatment (duplicated,
-  // contradictory, stale) that mirrors how RAG actually behaves.
+  // similarity score, source label, a visual treatment (duplicated,
+  // contradictory, stale) that mirrors how RAG actually behaves, and an
+  // inline `promoteTo` annotation describing the typed AACE primitive the
+  // same source becomes on the right side. Read at the source: no floating
+  // bridge lines, the mapping lives on each chunk.
   const RAG_FRAGMENTS: {
-    text: string; sim: string; src: string; w: number; tag?: "dup" | "stale" | "conflict" | "irrelevant";
+    text: string; sim: string; src: string; w: number;
+    tag?: "dup" | "stale" | "conflict" | "irrelevant";
+    promoteTo: { k: string; verb: string; color: string };
   }[] = [
-    { text: "…last quarter we shipped EU launches first because of…", sim: "0.82", src: "wiki/eu-launch.md",     w: 92 },
-    { text: "…internal memo template circa 2023 mentions bullets…",   sim: "0.71", src: "templates/memo-2023",   w: 80, tag: "stale" },
-    { text: "…GDPR FAQ doc says vendors must be reviewed…",           sim: "0.68", src: "legal/gdpr-faq.pdf",    w: 86, tag: "irrelevant" },
-    { text: "…board update draft v2 references investor pipeline…",   sim: "0.66", src: "decks/board-q3-draft",  w: 74, tag: "dup" },
-    { text: "…board update draft v3 references investor pipeline…",   sim: "0.65", src: "decks/board-q3-final",  w: 76, tag: "dup" },
-    { text: "…sales handbook page 47 about pricing memo style…",      sim: "0.62", src: "handbook/p47",          w: 70, tag: "conflict" },
+    { text: "…last quarter we shipped EU launches first because of…", sim: "0.82", src: "wiki/eu-launch.md",     w: 92,
+      promoteTo: { k: "Standard",    verb: "typed + versioned", color: PURPLE } },
+    { text: "…internal memo template circa 2023 mentions bullets…",   sim: "0.71", src: "templates/memo-2023",   w: 80, tag: "stale",
+      promoteTo: { k: "Procedure",   verb: "made executable",   color: ACCENT } },
+    { text: "…GDPR FAQ doc says vendors must be reviewed…",           sim: "0.68", src: "legal/gdpr-faq.pdf",    w: 86, tag: "irrelevant",
+      promoteTo: { k: "Prohibition", verb: "enforced as block", color: RED } },
+    { text: "…board update draft v2 references investor pipeline…",   sim: "0.66", src: "decks/board-q3-draft",  w: 74, tag: "dup",
+      promoteTo: { k: "Fact",        verb: "deduped + pinned",  color: GOLD } },
+    { text: "…board update draft v3 references investor pipeline…",   sim: "0.65", src: "decks/board-q3-final",  w: 76, tag: "dup",
+      promoteTo: { k: "Fact",        verb: "deduped + pinned",  color: GOLD } },
+    { text: "…sales handbook page 47 about pricing memo style…",      sim: "0.62", src: "handbook/p47",          w: 70, tag: "conflict",
+      promoteTo: { k: "Preference",  verb: "resolved + owned",  color: GREEN } },
   ];
 
   const TAG_STYLE: Record<string, { label: string; color: string }> = {
@@ -2225,6 +2235,26 @@ function S07eAaceNotRag() {
                         fontStyle: "italic",
                         textDecoration: c.tag === "conflict" ? "line-through" : "none",
                       }}>"{c.text}"</span>
+                      {/* Inline promotion annotation · read at the source.
+                          Tells the reader exactly which typed AACE primitive
+                          this fragment becomes on the right side. */}
+                      <div className="mt-1 flex items-center gap-1.5 flex-wrap">
+                        <span className="font-mono uppercase tracking-[0.08em]"
+                          style={{ fontSize: 8, color: SUBTLE, fontWeight: 700 }}>promotes to</span>
+                        <ArrowRight size={9} style={{ color: SUBTLE }} />
+                        <span className="font-mono uppercase tracking-[0.08em] rounded px-1.5 py-0.5"
+                          style={{
+                            fontSize: 8.5, fontWeight: 800,
+                            color: `hsl(${c.promoteTo.color})`,
+                            background: `hsl(${c.promoteTo.color} / 0.10)`,
+                            border: `1px solid hsl(${c.promoteTo.color} / 0.45)`,
+                          }}>
+                          {c.promoteTo.k}
+                        </span>
+                        <span style={{ fontSize: 8.5, color: MUTED, fontStyle: "italic" }}>
+                          {c.promoteTo.verb}
+                        </span>
+                      </div>
                     </div>
                   );
                 })}
@@ -2317,155 +2347,6 @@ skill:        series-b-narrative@v3 (reused 47×)`}
               </div>
             </div>
           </div>
-
-          {/* ══ Promotion bridge · numbered routes, no pill overlap, click to focus ══ */}
-          {(() => {
-            // ly = chunk row Y% inside RAG card. ry = primitive cell Y% inside AACE card.
-            // midY = evenly spaced position of the numbered badge in the gutter — guarantees
-            // no overlap regardless of source/target row collisions (e.g. both board chunks → Fact).
-            const ROUTES: {
-              ly: number; ry: number; midY: number;
-              src: string; dst: string; verb: string; why: string; color: string;
-            }[] = [
-              { ly: 38.5, ry: 35.0, midY: 18, src: "wiki/eu-launch.md",   dst: "Standard",    verb: "typed + versioned", why: "Becomes a governed scope rule the compiler can enforce on every prompt — not a fuzzy match.", color: PURPLE },
-              { ly: 45.0, ry: 35.0, midY: 31, src: "templates/memo-2023", dst: "Procedure",   verb: "made executable",   why: "A described template becomes a runnable 3-step procedure with checkpoints — not a stale paste-in.", color: ACCENT },
-              { ly: 51.5, ry: 45.0, midY: 44, src: "legal/gdpr-faq.pdf", dst: "Prohibition", verb: "enforced as block", why: "Policy text becomes a hard pre-flight gate. PII-to-vendor calls are blocked, not hopefully avoided.", color: RED },
-              { ly: 58.0, ry: 55.0, midY: 57, src: "decks/board-q3-draft", dst: "Fact",       verb: "deduped + pinned",  why: "Draft + final collapse into one pinned Fact with provenance — duplicates can't compete anymore.", color: GOLD },
-              { ly: 64.5, ry: 55.0, midY: 70, src: "decks/board-q3-final", dst: "Fact",       verb: "deduped + pinned",  why: "Same Fact, second source. The graph keeps the canonical version; the model can't pick the older one.", color: GOLD },
-              { ly: 71.0, ry: 45.0, midY: 83, src: "handbook/p47",        dst: "Preference",  verb: "resolved + owned",  why: "Conflicting style guidance is resolved into one owned Preference with an author — drift stops here.", color: GREEN },
-            ];
-            const isActive = (i: number) => activeRoute === i;
-            const isDim    = (i: number) => activeRoute !== null && activeRoute !== i;
-            return (
-              <>
-                {/* Curves — each one enters at chunk row, hits its numbered badge, exits at primitive row */}
-                <svg
-                  className="absolute inset-0 w-full h-full pointer-events-none"
-                  viewBox="0 0 100 100"
-                  preserveAspectRatio="none"
-                  style={{ zIndex: 5 }}
-                >
-                  <defs>
-                    {ROUTES.map((b, i) => (
-                      <linearGradient key={i} id={`bridge-${i}`} x1="0" x2="1" y1="0" y2="0">
-                        <stop offset="0%"   stopColor={`hsl(${RED} / 0.55)`} />
-                        <stop offset="50%"  stopColor={`hsl(${b.color} / 0.95)`} />
-                        <stop offset="100%" stopColor={`hsl(${b.color} / 0.95)`} />
-                      </linearGradient>
-                    ))}
-                  </defs>
-                  {ROUTES.map((b, i) => (
-                    <path
-                      key={i}
-                      d={`M 47 ${b.ly} C 49 ${b.ly}, 49.5 ${b.midY}, 50 ${b.midY} S 51 ${b.ry}, 53 ${b.ry}`}
-                      stroke={`url(#bridge-${i})`}
-                      strokeWidth={isActive(i) ? 1.1 : 0.4}
-                      opacity={isDim(i) ? 0.15 : 1}
-                      fill="none"
-                      vectorEffect="non-scaling-stroke"
-                      style={{ transition: "all 200ms ease" }}
-                    />
-                  ))}
-                </svg>
-
-                {/* Numbered route badges — evenly spaced, clickable */}
-                <div className="absolute inset-0" style={{ zIndex: 6, pointerEvents: "none" }}>
-                  {ROUTES.map((b, i) => {
-                    const active = isActive(i);
-                    const dim    = isDim(i);
-                    const size   = active ? 26 : 20;
-                    return (
-                      <button
-                        key={i}
-                        onClick={() => setActiveRoute(active ? null : i)}
-                        onMouseEnter={() => setActiveRoute(i)}
-                        className="absolute rounded-full border-2 font-mono flex items-center justify-center"
-                        style={{
-                          top: `${b.midY}%`,
-                          left: "50%",
-                          width: size,
-                          height: size,
-                          transform: "translate(-50%, -50%)",
-                          fontSize: active ? 12 : 10,
-                          fontWeight: 900,
-                          color: `hsl(${b.color})`,
-                          background: "white",
-                          borderColor: `hsl(${b.color} / ${active ? 1 : 0.6})`,
-                          opacity: dim ? 0.3 : 1,
-                          boxShadow: active
-                            ? `0 0 0 4px hsl(${b.color} / 0.18), 0 4px 12px rgba(0,0,0,0.12)`
-                            : "0 1px 3px rgba(0,0,0,0.08)",
-                          cursor: "pointer",
-                          transition: "all 180ms ease",
-                          zIndex: active ? 8 : 6,
-                          pointerEvents: "auto",
-                        }}
-                        aria-label={`Route ${i + 1}: ${b.src} promoted to ${b.dst}`}
-                      >
-                        {/* Larger invisible hit area so hover/click is forgiving */}
-                        <span
-                          aria-hidden
-                          style={{
-                            position: "absolute",
-                            inset: -14,
-                            borderRadius: "9999px",
-                          }}
-                        />
-                        <span style={{ position: "relative" }}>{i + 1}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Header banner over the gutter */}
-                <div
-                  className="absolute pointer-events-none rounded-md border font-mono uppercase tracking-[0.14em] whitespace-nowrap"
-                  style={{
-                    top: 6, left: "50%", transform: "translateX(-50%)",
-                    zIndex: 7, fontSize: 9.5, fontWeight: 800,
-                    color: TEXT, background: "white",
-                    borderColor: CHROME_BORDER, padding: "3px 9px",
-                  }}
-                >
-                  <span style={{ color: `hsl(${RED})` }}>6 chunks</span>
-                  <span style={{ color: SUBTLE, margin: "0 6px" }}>promote into</span>
-                  <span style={{ color: `hsl(${GREEN})` }}>5 typed primitives</span>
-                  <span style={{ color: SUBTLE, margin: "0 6px" }}>·</span>
-                  <span style={{ color: SUBTLE }}>hover or click a number</span>
-                </div>
-
-                {/* Active-route explanation card — appears beside the active badge */}
-                {activeRoute !== null && (() => {
-                  const b = ROUTES[activeRoute];
-                  return (
-                    <div
-                      className="absolute rounded-lg border-2 bg-white"
-                      style={{
-                        top: `${b.midY}%`,
-                        left: "50%",
-                        transform: "translate(-50%, calc(-50% + 36px))",
-                        zIndex: 9,
-                        borderColor: `hsl(${b.color} / 0.7)`,
-                        padding: "8px 10px",
-                        width: 280,
-                        boxShadow: "0 8px 24px rgba(0,0,0,0.14)",
-                      }}
-                    >
-                      <div className="flex items-center gap-1.5 mb-1">
-                        <span className="font-mono" style={{ fontSize: 9, color: `hsl(${RED})`, fontWeight: 800 }}>{b.src}</span>
-                        <ArrowRight size={10} style={{ color: SUBTLE }} />
-                        <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: `hsl(${b.color})`, fontWeight: 800 }}>{b.dst}</span>
-                      </div>
-                      <div className="font-mono uppercase tracking-[0.08em] mb-1" style={{ fontSize: 9, fontWeight: 800, color: `hsl(${b.color})` }}>
-                        {b.verb}
-                      </div>
-                      <p style={{ fontSize: 10.5, lineHeight: 1.35, color: TEXT }}>{b.why}</p>
-                    </div>
-                  );
-                })()}
-              </>
-            );
-          })()}
         </div>
 
         {/* Economic footnote · small, bottom-right */}
