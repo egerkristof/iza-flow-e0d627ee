@@ -2061,6 +2061,93 @@ skill:        series-b-narrative@v3 (reused 47×)`}
               </div>
             </div>
           </div>
+
+          {/* ══ Promotion bridge · 6 curves morph RAG chunks into AACE primitives ══ */}
+          {(() => {
+            // ly / ry are vertical positions inside each card (% of 700px height).
+            // Left = chunk row in RAG panel. Right = primitive cell in AACE panel.
+            const BRIDGES: { ly: number; ry: number; verb: string; color: string }[] = [
+              { ly: 38.5, ry: 35.0, verb: "typed + versioned",  color: PURPLE }, // wiki/eu-launch → Standard
+              { ly: 45.0, ry: 35.0, verb: "made executable",    color: ACCENT }, // memo-2023 → Procedure
+              { ly: 51.5, ry: 45.0, verb: "enforced as block",  color: RED },    // gdpr-faq → Prohibition
+              { ly: 58.0, ry: 55.0, verb: "deduped + pinned",   color: GOLD },   // board-draft → Fact
+              { ly: 64.5, ry: 55.0, verb: "deduped + pinned",   color: GOLD },   // board-final → Fact (merge)
+              { ly: 71.0, ry: 45.0, verb: "resolved + owned",   color: GREEN },  // handbook/p47 → Preference
+            ];
+            return (
+              <>
+                {/* Curves: SVG stretched horizontally, only abstract shape matters */}
+                <svg
+                  className="absolute inset-0 w-full h-full pointer-events-none"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  style={{ zIndex: 5 }}
+                >
+                  <defs>
+                    {BRIDGES.map((b, i) => (
+                      <linearGradient key={i} id={`bridge-${i}`} x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0%"   stopColor={`hsl(${RED} / 0.55)`} />
+                        <stop offset="50%"  stopColor={`hsl(${b.color} / 0.85)`} />
+                        <stop offset="100%" stopColor={`hsl(${b.color} / 0.85)`} />
+                      </linearGradient>
+                    ))}
+                  </defs>
+                  {BRIDGES.map((b, i) => (
+                    <path
+                      key={i}
+                      d={`M 47 ${b.ly} C 49.5 ${b.ly}, 50.5 ${b.ry}, 53 ${b.ry}`}
+                      stroke={`url(#bridge-${i})`}
+                      strokeWidth={0.35}
+                      fill="none"
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  ))}
+                </svg>
+
+                {/* Verb pills: HTML so type stays crisp and unscaled */}
+                <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 6 }}>
+                  {BRIDGES.map((b, i) => {
+                    const midY = (b.ly + b.ry) / 2;
+                    return (
+                      <div
+                        key={i}
+                        className="absolute font-mono uppercase tracking-[0.1em] rounded-full border whitespace-nowrap"
+                        style={{
+                          top: `${midY}%`,
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                          fontSize: 9,
+                          fontWeight: 800,
+                          color: `hsl(${b.color})`,
+                          background: "white",
+                          borderColor: `hsl(${b.color} / 0.55)`,
+                          padding: "2px 7px",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                        }}
+                      >
+                        {b.verb}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Header banner over the gutter explaining what the curves mean */}
+                <div
+                  className="absolute pointer-events-none rounded-md border font-mono uppercase tracking-[0.14em] whitespace-nowrap"
+                  style={{
+                    top: 6, left: "50%", transform: "translateX(-50%)",
+                    zIndex: 7, fontSize: 9.5, fontWeight: 800,
+                    color: TEXT, background: "white",
+                    borderColor: CHROME_BORDER, padding: "3px 9px",
+                  }}
+                >
+                  <span style={{ color: `hsl(${RED})` }}>chunks</span>
+                  <span style={{ color: SUBTLE, margin: "0 6px" }}>promote into</span>
+                  <span style={{ color: `hsl(${GREEN})` }}>typed primitives</span>
+                </div>
+              </>
+            );
+          })()}
         </div>
 
         {/* Economic footnote · small, bottom-right */}
