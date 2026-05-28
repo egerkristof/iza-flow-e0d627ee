@@ -1487,7 +1487,7 @@ function S07cFunnel() {
               style={{ fontSize: 10, color: SUBTLE }}>Widest intake · all change enters here</div>
             <div className="absolute bottom-3 left-4 font-mono uppercase tracking-[0.14em]"
               style={{ fontSize: 10, color: SUBTLE }}>Narrowest spout · the prompt</div>
-          </div>
+          </motion.div>
 
           {/* RIGHT — live prompt screen */}
           <div className="col-span-5 flex flex-col gap-3" style={{ height: 660 }}>
