@@ -2309,7 +2309,7 @@ skill:        series-b-narrative@v3 (reused 47×)`}
                 </svg>
 
                 {/* Numbered route badges — evenly spaced, clickable */}
-                <div className="absolute inset-0" style={{ zIndex: 6 }}>
+                <div className="absolute inset-0" style={{ zIndex: 6, pointerEvents: "none" }}>
                   {ROUTES.map((b, i) => {
                     const active = isActive(i);
                     const dim    = isDim(i);
@@ -2319,7 +2319,6 @@ skill:        series-b-narrative@v3 (reused 47×)`}
                         key={i}
                         onClick={() => setActiveRoute(active ? null : i)}
                         onMouseEnter={() => setActiveRoute(i)}
-                        onMouseLeave={() => setActiveRoute(null)}
                         className="absolute rounded-full border-2 font-mono flex items-center justify-center"
                         style={{
                           top: `${b.midY}%`,
@@ -2339,10 +2338,20 @@ skill:        series-b-narrative@v3 (reused 47×)`}
                           cursor: "pointer",
                           transition: "all 180ms ease",
                           zIndex: active ? 8 : 6,
+                          pointerEvents: "auto",
                         }}
                         aria-label={`Route ${i + 1}: ${b.src} promoted to ${b.dst}`}
                       >
-                        {i + 1}
+                        {/* Larger invisible hit area so hover/click is forgiving */}
+                        <span
+                          aria-hidden
+                          style={{
+                            position: "absolute",
+                            inset: -14,
+                            borderRadius: "9999px",
+                          }}
+                        />
+                        <span style={{ position: "relative" }}>{i + 1}</span>
                       </button>
                     );
                   })}
