@@ -1436,7 +1436,7 @@ function S07cFunnel() {
                     onMouseLeave={() => setHovered(null)}
                     onClick={() => shown && fullyRevealed && toggle(L.id)}
                     style={{ cursor: shown && fullyRevealed ? "pointer" : "default", transition: "opacity 0.4s ease" }}
-                    opacity={shown ? 1 : 0.18}
+                    opacity={shown ? 1 : isScaffold ? 0.55 : 0.18}
                   >
                     <polygon
                       points={pts}
