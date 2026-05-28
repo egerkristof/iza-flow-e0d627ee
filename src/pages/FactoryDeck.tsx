@@ -212,6 +212,12 @@ function F03AnnotatedEmail() {
 
 // ─── F04 · THE MATH (€550K → $2.6B) ──────────────────────────────────────────
 function F04Math() {
+  const derivation = [
+    { icon: Clock, label: "Reconstructing context from scratch", hrs: "1.5 h / wk", note: "Hunting decisions, prior versions, who decided what" },
+    { icon: AlertTriangle, label: "Checking AI output for hallucinations", hrs: "1.0 h / wk", note: "Re-verifying numbers, sources, claims before sending" },
+    { icon: Users, label: "Re-doing work the senior would have caught", hrs: "1.0 h / wk", note: "Judgment gap — junior ships, senior rewrites" },
+    { icon: CheckCircle2, label: "Audit, compliance, version reconciliation", hrs: "0.5 h / wk", note: "\"Which version is approved? Who signed off?\"" },
+  ];
   const rows = [
     { label: "Senior knowledge worker", count: "100", waste: "€5.5K", total: "€550K / yr", grow: false },
     { label: "× 500-person knowledge org", count: "500", waste: "€5.5K", total: "€2.75M / yr", grow: false },
@@ -222,46 +228,76 @@ function F04Math() {
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
-      <div className="absolute inset-0 px-28 pt-32 pb-24 flex flex-col">
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
         <Tag label="The Math" color={ACCENT} />
-        <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.03em" }}>
-          The Context Gap Tax: <span style={{ color: `hsl(${GOLD})` }}>€5,500 per knowledge worker per year</span>
+        <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.03em" }}>
+          The cost of the push motion: <span style={{ color: `hsl(${GOLD})` }}>€5,500 per worker per year</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1200, lineHeight: 1.4 }}>
-          Rework, hallucination-checking, lost senior judgment, audit overhead. Below the line on every budget today. Above the line by 2027 when AI spend is metered.
+        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          Knowledge work today is still <em>artisanal</em>: every worker reconstructs context from scratch, every session. AI accelerated the artisan — it did not industrialise the work. Here is the per-worker tax that hides on every P&L.
         </p>
+
+        {/* Derivation panel */}
+        <div className="rounded-2xl border p-6 mb-6" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
+          <div className="flex items-center justify-between mb-4">
+            <span className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 13, color: SUBTLE }}>How €5,500 / worker is built</span>
+            <span className="font-mono" style={{ fontSize: 13, color: SUBTLE }}>Senior loaded rate ≈ €55 / h · 46 working weeks</span>
+          </div>
+          <div className="grid grid-cols-4 gap-3 mb-4">
+            {derivation.map((d, i) => {
+              const Icon = d.icon;
+              return (
+                <div key={i} className="rounded-lg border p-4" style={{ background: "white", borderColor: CHROME_BORDER }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Icon size={18} style={{ color: `hsl(${RED})` }} />
+                    <span className="font-mono font-black" style={{ fontSize: 18, color: TEXT }}>{d.hrs}</span>
+                  </div>
+                  <p className="font-bold mb-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>{d.label}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}>{d.note}</p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex items-center justify-center gap-3 pt-3 border-t font-mono" style={{ borderColor: CHROME_BORDER, fontSize: 16, color: MUTED }}>
+            <span>4 h / wk</span>
+            <span style={{ color: SUBTLE }}>×</span>
+            <span>€55 / h</span>
+            <span style={{ color: SUBTLE }}>×</span>
+            <span>46 wk</span>
+            <span style={{ color: SUBTLE }}>=</span>
+            <span className="font-black" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>€10,120 raw</span>
+            <span style={{ color: SUBTLE }}>· conservative discount →</span>
+            <span className="font-black" style={{ fontSize: 22, color: `hsl(${GOLD})` }}>€5,500</span>
+          </div>
+        </div>
+
+        {/* Scaling table */}
         <div className="rounded-2xl border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
-          <div className="grid grid-cols-[2fr_1fr_1fr_1.2fr] px-8 py-4 font-mono uppercase tracking-[0.15em] font-bold" style={{ background: CARD_ALT, fontSize: 14, color: MUTED }}>
+          <div className="grid grid-cols-[2fr_1fr_1fr_1.2fr] px-8 py-3 font-mono uppercase tracking-[0.15em] font-bold" style={{ background: CARD_ALT, fontSize: 13, color: MUTED }}>
             <span>Scope</span>
             <span>Workers</span>
             <span>Tax / worker</span>
             <span className="text-right">Annual waste</span>
           </div>
           {rows.map((r, i) => (
-            <div key={i} className="grid grid-cols-[2fr_1fr_1fr_1.2fr] px-8 py-6 items-center border-t"
+            <div key={i} className="grid grid-cols-[2fr_1fr_1fr_1.2fr] px-8 py-4 items-center border-t"
                  style={{ borderColor: CHROME_BORDER, background: r.grow ? `hsl(${GOLD} / 0.06)` : "white" }}>
-              <span className="font-semibold" style={{ fontSize: 24, color: TEXT }}>{r.label}</span>
-              <span className="font-mono" style={{ fontSize: 22, color: MUTED }}>{r.count}</span>
-              <span className="font-mono" style={{ fontSize: 22, color: MUTED }}>{r.waste}</span>
-              <span className="font-black text-right" style={{ fontSize: 28, color: r.grow ? `hsl(${GOLD})` : TEXT, letterSpacing: "-0.02em" }}>{r.total}</span>
+              <span className="font-semibold" style={{ fontSize: 20, color: TEXT }}>{r.label}</span>
+              <span className="font-mono" style={{ fontSize: 18, color: MUTED }}>{r.count}</span>
+              <span className="font-mono" style={{ fontSize: 18, color: MUTED }}>{r.waste}</span>
+              <span className="font-black text-right" style={{ fontSize: 24, color: r.grow ? `hsl(${GOLD})` : TEXT, letterSpacing: "-0.02em" }}>{r.total}</span>
             </div>
           ))}
         </div>
-        <div className="mt-8 grid grid-cols-3 gap-6">
-          {[
-            { k: "Capture rate", v: "5–8%", d: "of the tax = €2.75M ACV at 500 ppl" },
-            { k: "Platform GM", v: "95%", d: "every token tied to a standard" },
-            { k: "Payback", v: "< 6 mo", d: "rework displaced > license cost" },
-          ].map((s) => (
-            <div key={s.k} className="rounded-xl border p-6" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
-              <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 13, color: SUBTLE }}>{s.k}</p>
-              <p className="font-black mb-1" style={{ fontSize: 38, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{s.v}</p>
-              <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.35 }}>{s.d}</p>
-            </div>
-          ))}
+
+        <div className="mt-5 px-6 py-3 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.05)`, borderColor: `hsl(${GREEN})` }}>
+          <Gauge size={22} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
+            LIZA captures <span className="font-black" style={{ color: `hsl(${GREEN})` }}>5–8%</span> of the tax = <span className="font-black">€2.75M ACV</span> at 500 ppl · <span className="font-black">95% platform GM</span> · <span className="font-black">&lt; 6 mo payback</span>.
+          </p>
         </div>
       </div>
-      <Footer text="Tax estimate: Aliz internal study · 100 knowledge workers · cross-validated with HBR and McKinsey 2024 rework data." />
+      <Footer text="Derivation: senior-loaded rate, 4 h/wk artisanal overhead — cross-validated with HBR & McKinsey 2024 rework data, internal 100-worker study." />
       <SlideBar from={ACCENT} to={GOLD} />
     </div>
   );
