@@ -1470,8 +1470,8 @@ function S07cFunnel() {
 // SLIDE 07d — ONE FUNNEL · EVERY OPERATOR · LEARNING UPWARD
 // ═════════════════════════════════════════════════════════════════════════════
 function S07dOrgLoop() {
-  // 6 operator funnels orbiting a single shared substrate. Trace is the
-  // default mode: one operator's override propagates through the substrate
+  // 6 operator funnels orbiting a single shared knowledge base. Trace is the
+  // default mode: one operator's override propagates through the knowledge base
   // and lands in every other operator's next moment of work.
   const OPERATORS = [
     { role: "CEO",           fn: "Leadership", color: PURPLE, chip: "Q4 raise narrative" },
@@ -1537,11 +1537,11 @@ function S07dOrgLoop() {
           The org learns <span style={{ color: `hsl(${GREEN})` }}>laterally</span>. In real time. At the speed of work.
         </h2>
         <p style={{ fontSize: 14, color: SUBTLE, marginBottom: 12 }}>
-          Click any operator on the network to trace their commit through the substrate.
+          Click any operator on the network to trace their commit through the knowledge base.
         </p>
 
         <div className="grid grid-cols-12 gap-5">
-          {/* LEFT — network of funnels around the shared substrate */}
+          {/* LEFT — network of funnels around the shared knowledge base */}
           <div className="col-span-9 rounded-2xl border relative"
             style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 760 }}>
 
@@ -1549,7 +1549,7 @@ function S07dOrgLoop() {
               style={{ fontSize: 10, color: SUBTLE, maxWidth: 560 }}>
               {mode === "trace"
                 ? `Trace · ${OPERATORS[TRACE.operatorIdx].role} override, promoted to ${TRACE.primitive}, re-enters every other operator`
-                : "Ambient flow · every funnel emits into the substrate, substrate re-enters every funnel"}
+                : "Ambient flow · every funnel emits into the knowledge base, substrate re-enters every funnel"}
             </div>
 
             <div className="absolute top-3 right-4 flex gap-1 rounded-full border p-0.5"
@@ -1637,7 +1637,7 @@ function S07dOrgLoop() {
               {/* Central labels — clear vertical block, no overlaps */}
               <text x={CX} y={CY - 32} textAnchor="middle" fontSize={11} fontWeight={800}
                 fill={`hsl(${GREEN})`} style={{ letterSpacing: "0.22em" }}>
-                SHARED SUBSTRATE
+                SHARED KNOWLEDGE BASE
               </text>
               <text x={CX} y={CY - 6} textAnchor="middle" fontSize={28} fontWeight={800}
                 fill={TEXT} style={{ letterSpacing: "-0.02em" }}>
@@ -1748,7 +1748,7 @@ function S07dOrgLoop() {
               {[
                 { n: "01", label: "Moment of work", text: "Override fires inside one operator's funnel.", c: SUBTLE, raw: true },
                 { n: "02", label: "Promotion",      text: `LIZA proposes a new ${TRACE.primitive}: ${TRACE.update}.`, c: GOLD },
-                { n: "03", label: "Substrate write", text: "Lead approves. Lands in shared substrate, versioned and audited.", c: GREEN },
+                { n: "03", label: "Knowledge base write", text: "Lead approves. Lands in shared knowledge base, versioned and audited.", c: GREEN },
                 { n: "04", label: "Lateral re-entry", text: `Re-injected into ${TRACE.landsIn}. ${TRACE.timing}.`, c: GREEN },
               ].map((s, si) => (
                 <div key={si} className="flex items-start gap-2 py-1.5">
@@ -1771,7 +1771,7 @@ function S07dOrgLoop() {
             <div className="rounded-xl border-2 px-3 py-3"
               style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: `hsl(${GREEN} / 0.08)` }}>
               <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.45 }}>
-                <b style={{ color: `hsl(${GREEN})` }}>Every commit compounds.</b> Marginal cost per moment of work trends down as the substrate grows. Vision and hiring shape the funnels. Moments of work evolve them.
+                <b style={{ color: `hsl(${GREEN})` }}>Every commit compounds.</b> Marginal cost per moment of work trends down as the knowledge base grows. Vision and hiring shape the funnels. Moments of work evolve them.
               </p>
             </div>
 
@@ -2002,12 +2002,12 @@ skill:        series-b-narrative@v3 (reused 47×)`}
               style={{ borderColor: `hsl(${GREEN} / 0.6)`, background: `hsl(${GREEN} / 0.08)` }}>
               <p style={{ fontSize: 12, color: `hsl(${GREEN})`, fontWeight: 700 }}>Governed output · five live audits before release.</p>
               <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Standards enforced. Prohibitions blocked. Skills reused. Provenance signed. Drift caught at the source.</p>
-              {/* Handoff to slide 7: this output writes back to the substrate */}
+              {/* Handoff to slide 7: this output writes back to the knowledge base */}
               <div className="mt-2 pt-2 border-t flex items-center gap-1.5"
                 style={{ borderColor: `hsl(${GREEN} / 0.25)` }}>
                 <GitPullRequest size={11} style={{ color: `hsl(${GREEN})` }} />
                 <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 9.5, color: `hsl(${GREEN})`, fontWeight: 700 }}>
-                  writes back to substrate
+                  writes back to knowledge base
                 </span>
                 <span style={{ fontSize: 10, color: MUTED }}>
                   the same compiled object becomes a reusable org primitive on the next slide.
@@ -3359,7 +3359,7 @@ function S07fInstrument() {
     { k: "Skill reuse ratio",       v: "7.3×",  unit: "per skill",            trend: "library compounding",    icon: Sparkles,       color: GREEN,
       tip: "Average times each promoted skill is reused across the org after publication." },
     { k: "Cost per moment of work", v: "€0.18", unit: "trending down",        trend: "down 38% vs 90 days ago", icon: TrendingDown,  color: GREEN,
-      tip: "Marginal token plus orchestration cost per moment. Falls as the substrate grows." },
+      tip: "Marginal token plus orchestration cost per moment. Falls as the knowledge base grows." },
   ];
 
   const RAILS = [
@@ -3371,7 +3371,7 @@ function S07fInstrument() {
   ];
 
   const VS_YESTERDAY = [
-    { old: "Quarterly revenue",  oldS: "3 months late",  now: "Substrate size",            nowS: "live, +312 this week",        color: GREEN },
+    { old: "Quarterly revenue",  oldS: "3 months late",  now: "Knowledge base size",            nowS: "live, +312 this week",        color: GREEN },
     { old: "Pipeline coverage",  oldS: "Friday snapshot", now: "Standards adoption",       nowS: "live, share of moments",      color: GREEN },
     { old: "NPS survey",         oldS: "6 months old",   now: "Promotion velocity",        nowS: "median minutes, last 30 days", color: GOLD },
     { old: "Project on-time %",  oldS: "last quarter",   now: "Drift rate",                nowS: "live, share of outputs",      color: GOLD },
@@ -3404,7 +3404,7 @@ function S07fInstrument() {
               <Database size={22} style={{ color: `hsl(${GREEN})` }} />
               <div>
                 <p className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>
-                  Substrate size · hero metric
+                  Knowledge base size · hero metric
                 </p>
                 <div className="flex items-baseline gap-2">
                   <span className="font-bold" style={{ fontSize: 44, color: TEXT, lineHeight: 1, letterSpacing: "-0.03em" }}>4,820</span>
