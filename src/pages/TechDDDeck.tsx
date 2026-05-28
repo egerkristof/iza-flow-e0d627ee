@@ -3766,12 +3766,15 @@ function S07fInstrument() {
   ];
 
   const VS_YESTERDAY = [
-    { old: "Quarterly revenue",  oldS: "3 months late",  now: "Knowledge base size",            nowS: "live, +312 this week",        color: GREEN },
-    { old: "Pipeline coverage",  oldS: "Friday snapshot", now: "Standards adoption",       nowS: "live, share of moments",      color: GREEN },
-    { old: "NPS survey",         oldS: "6 months old",   now: "Promotion velocity",        nowS: "median minutes, last 30 days", color: GOLD },
-    { old: "Project on-time %",  oldS: "last quarter",   now: "Drift rate",                nowS: "live, share of outputs",      color: GOLD },
-    { old: "Training hours/FTE", oldS: "annualised",     now: "Skill reuse ratio",         nowS: "live, per published skill",   color: GREEN },
-    { old: "Headcount cost",     oldS: "trailing 12 mo", now: "Cost per moment of work",   nowS: "live, per commit",            color: GREEN },
+    // Each row: a lagging board metric (still tracked, still matters) and the
+    // leading indicator that now predicts it weeks earlier. The relationship is
+    // causal: the leading metric moves first; the lagging metric follows.
+    { lag: "Quarterly revenue",   lagS: "reported 3 months late",  lead: "Knowledge base size",          leadS: "live, +312 this week",         link: "more primitives → more compounding output", color: GREEN },
+    { lag: "Pipeline coverage",   lagS: "Friday snapshot",         lead: "Standards adoption",           leadS: "live, share of moments",       link: "more moments on-standard → cleaner pipeline",  color: GREEN },
+    { lag: "NPS survey",          lagS: "6 months old",            lead: "Promotion velocity",           leadS: "median minutes, last 30d",     link: "faster learning loop → fewer repeat complaints", color: GOLD },
+    { lag: "Project on-time %",   lagS: "last quarter",            lead: "Drift rate",                   leadS: "live, share of outputs",       link: "lower drift → fewer late re-works",            color: GOLD },
+    { lag: "Training hours/FTE",  lagS: "annualised",              lead: "Skill reuse ratio",            leadS: "live, per published skill",    link: "skills reused → less retraining needed",       color: GREEN },
+    { lag: "Headcount cost",      lagS: "trailing 12 mo",          lead: "Cost per moment of work",      leadS: "live, per commit",             link: "marginal cost falls → operating leverage",     color: GREEN },
   ];
 
   // KPI index i maps to VS_YESTERDAY[i+1] (row 0 is the hero substrate metric).
@@ -3782,7 +3785,7 @@ function S07fInstrument() {
     "Beat 1 of 4. The hero metric. The size of the knowledge base. Yesterday's dashboard could not see this number.",
     "Beat 2 of 4. Learning-rate KPIs. Each one measures what the org is becoming, not what it did last quarter.",
     "Beat 3 of 4. Human control rails. Token spend, residency, audit, regulation, approval tiers, all in reach.",
-    "Beat 4 of 4. vs yesterday. Each new live metric replaces an old lagging one. Click a KPI to see the swap.",
+    "Beat 4 of 4. Leading indicators for your lagging metrics. The board metrics you already track stay. We add the live signal that moves first.",
   ];
   const fully = revealed === 4;
 
