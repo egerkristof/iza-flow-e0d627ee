@@ -2445,14 +2445,9 @@ skill:        series-b-narrative@v3 (reused 47×)`}
               </div>
             </div>
           </div>
+          )}
         </div>
 
-        {/* Economic footnote · small, bottom-right */}
-        <div className="mt-3 flex items-center gap-2"
-          style={{ fontSize: 11.5, color: MUTED }}>
-          <Sparkles size={12} style={{ color: `hsl(${GREEN})` }} />
-          <span><b style={{ color: `hsl(${GREEN})` }}>Skills compound. Chunks rent.</b> A Skill is a versioned org asset; a retrieved chunk is per-call rent, paid again on every prompt.</span>
-        </div>
       </div>
       <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
         style={{ fontSize: 10, color: SUBTLE }}>
