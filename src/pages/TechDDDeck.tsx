@@ -1981,16 +1981,11 @@ skill:        series-b-narrative@v3 (reused 47×)`}
           </div>
         </div>
 
-        {/* Economic kicker */}
-        <div className="mt-4 rounded-xl border-2 px-5 py-3 flex items-center gap-4"
-          style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.06)` }}>
-          <Sparkles size={20} style={{ color: `hsl(${GREEN})` }} />
-          <p style={{ fontSize: 14, color: TEXT, fontWeight: 700, flex: 1 }}>
-            <span style={{ color: `hsl(${GREEN})` }}>Skills compound. Chunks rent.</span>{" "}
-            <span style={{ color: MUTED, fontWeight: 500 }}>
-              A Skill is a reusable, versioned org asset. A retrieved chunk is per-call rent that has to be paid again on every prompt, by every operator, forever.
-            </span>
-          </p>
+        {/* Economic footnote · small, bottom-right */}
+        <div className="mt-3 flex items-center gap-2"
+          style={{ fontSize: 11.5, color: MUTED }}>
+          <Sparkles size={12} style={{ color: `hsl(${GREEN})` }} />
+          <span><b style={{ color: `hsl(${GREEN})` }}>Skills compound. Chunks rent.</b> A Skill is a versioned org asset; a retrieved chunk is per-call rent, paid again on every prompt.</span>
         </div>
       </div>
       <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
