@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { motion } from "framer-motion";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
-  Factory, Cpu, AlertTriangle, ArrowRight, Building2, Users,
+  Factory, Cpu, Building2, Users,
   Workflow, Coins, Sparkles, Mail, CheckCircle2, Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
