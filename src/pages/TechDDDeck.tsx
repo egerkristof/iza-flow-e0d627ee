@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
   Database, Cpu, Layers, GitBranch, Workflow, ShieldCheck, Coins, TrendingDown,
@@ -1327,9 +1328,77 @@ function S07cFunnel() {
           )}
         </div>
 
-        <div className="grid grid-cols-12 gap-5 relative">
+        {/* ── Hero prompt card (rendered in two positions: centered at step 0, right-column from step 1+) ── */}
+        {(() => {
+          const promptCard = (variant: "hero" | "panel") => (
+            <motion.div
+              layoutId="compile-prompt-card"
+              transition={{ type: "spring", stiffness: 220, damping: 28 }}
+              className="rounded-2xl border-2"
+              style={{
+                borderColor: `hsl(${GREEN} / 0.55)`,
+                background: "white",
+                boxShadow: "0 8px 28px rgba(0,0,0,0.06)",
+                padding: variant === "hero" ? "28px 32px" : "16px 20px",
+              }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-mono uppercase tracking-[0.14em]"
+                  style={{ fontSize: variant === "hero" ? 13 : 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
+                  Operator prompt · the moment of work
+                </span>
+                <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded border"
+                  style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.5)` }}>
+                  <Send size={10} /> resolve
+                </span>
+              </div>
+              <p style={{
+                fontSize: variant === "hero" ? 34 : 22,
+                color: TEXT, fontWeight: 700,
+                lineHeight: 1.2, letterSpacing: "-0.015em",
+              }}>
+                "Draft the Series-B narrative for tomorrow's board."
+              </p>
+              <p className="mt-2" style={{ fontSize: variant === "hero" ? 13 : 11.5, color: MUTED, lineHeight: 1.4 }}>
+                {variant === "hero"
+                  ? "One line from the operator. That is everything LIZA receives. What must be true around this line to produce a board-ready answer? Press reveal to find out."
+                  : `One line from the operator. The funnel has compiled ${enforcedCount} of ${LAYERS.length} layers so far.`}
+              </p>
+            </motion.div>
+          );
+
+          return (
+        <LayoutGroup id="compile-stage">
+        <AnimatePresence mode="wait" initial={false}>
+        {revealed === 0 ? (
+          // ── Stage 0 · Centered hero prompt only ──
+          <motion.div
+            key="centered"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="relative flex items-center justify-center"
+            style={{ height: 660 }}
+          >
+            <div style={{ width: 760 }}>
+              {promptCard("hero")}
+              <p className="mt-4 text-center font-mono uppercase tracking-[0.14em]"
+                style={{ fontSize: 10.5, color: SUBTLE }}>
+                ↓ press "reveal next" to compile the five layers of governed context around this prompt
+              </p>
+            </div>
+          </motion.div>
+        ) : (
+        <motion.div
+          key="split"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-12 gap-5 relative"
+        >
           {/* LEFT — nested funnel stack */}
-          <div className="col-span-7 rounded-2xl border relative"
+          <motion.div
+            initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35, delay: 0.1 }}
+            className="col-span-7 rounded-2xl border relative"
             style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 660 }}>
             <svg viewBox="0 0 920 720" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
               {/* Centerline */}
@@ -1418,32 +1487,18 @@ function S07cFunnel() {
               style={{ fontSize: 10, color: SUBTLE }}>Widest intake · all change enters here</div>
             <div className="absolute bottom-3 left-4 font-mono uppercase tracking-[0.14em]"
               style={{ fontSize: 10, color: SUBTLE }}>Narrowest spout · the prompt</div>
-          </div>
+          </motion.div>
 
           {/* RIGHT — live prompt screen */}
           <div className="col-span-5 flex flex-col gap-3" style={{ height: 660 }}>
-            {/* 1 · HERO PROMPT — the operator's actual line, big */}
-            <div className="rounded-2xl border-2 px-5 py-4"
-              style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: "white", boxShadow: "0 8px 28px rgba(0,0,0,0.06)" }}>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
-                  Operator prompt · the moment of work
-                </span>
-                <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded border"
-                  style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.5)` }}>
-                  <Send size={10} /> resolve
-                </span>
-              </div>
-              <p style={{ fontSize: 22, color: TEXT, fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
-                "Draft the Series-B narrative for tomorrow's board."
-              </p>
-              <p className="mt-2" style={{ fontSize: 11.5, color: MUTED }}>
-                One line from the operator. The funnel has compiled {enforcedCount} of {LAYERS.length} layers so far.
-              </p>
-            </div>
+            {/* 1 · HERO PROMPT — morphs from centered hero into right column */}
+            {promptCard("panel")}
 
             {/* 2 · OUTCOME PREVIEW — what actually changes when layers snap in/out */}
-            <div className="rounded-2xl border flex-1 overflow-hidden flex flex-col"
+            <motion.div
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.2 }}
+              className="rounded-2xl border flex-1 overflow-hidden flex flex-col"
               style={{ borderColor: CHROME_BORDER, background: "white" }}>
               <div className="flex items-center gap-2 px-4 py-2 border-b" style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
                 <div className="flex gap-1.5">
@@ -1606,9 +1661,14 @@ function S07cFunnel() {
                   )}
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
+        )}
+        </AnimatePresence>
+        </LayoutGroup>
+          );
+        })()}
       </div>
       {/* Next-slide handoff */}
       <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
