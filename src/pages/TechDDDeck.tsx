@@ -4186,6 +4186,7 @@ function S07fInstrument() {
 const RAW_SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
+  { id: "governance-loop", title: "The AI Governance Loop · Thesis", component: <S03GovernanceLoop /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
@@ -4204,6 +4205,7 @@ const RAW_SLIDES = [
   { id: "acv-bridge", title: "Top-down ACV ↔ Bottom-up Unit Economics", component: <S10bACVBridge /> },
   { id: "hyperscaler-risk", title: "Hyperscaler Risk & Return Paths", component: <S11HyperscalerRisk /> },
   { id: "societal-impact", title: "Knowledge Sovereignty · Societal Impact", component: <S12SocietalImpact /> },
+  { id: "loop-closed", title: "The Loop, Closed", component: <S13LoopClosed /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
