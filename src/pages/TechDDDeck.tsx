@@ -1673,7 +1673,9 @@ function S07dOrgLoop() {
                 const dx = CX - p.x, dy = CY - p.y;
                 const ang = Math.atan2(dy, dx) * 180 / Math.PI;
                 return (
-                  <g key={`f-${i}`} transform={`translate(${p.x} ${p.y}) rotate(${ang})`} opacity={dim ? 0.34 : 1}>
+                  <g key={`f-${i}`} transform={`translate(${p.x} ${p.y}) rotate(${ang})`} opacity={dim ? 0.34 : 1}
+                    onClick={() => { setMode("trace"); setTraceIdx(i); }}
+                    style={{ cursor: "pointer" }}>
                     {/* Pulsing ring (moment of work) */}
                     <circle cx={0} cy={0} r={62}
                       fill="none" stroke={`hsl(${op.color} / 0.4)`} strokeWidth={highlight ? 1.8 : 1.2}>
