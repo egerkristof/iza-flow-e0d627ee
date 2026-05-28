@@ -2153,6 +2153,11 @@ function S07dOrgLoop() {
 // SLIDE 07e — THIS IS AACE, NOT RAG
 // ═════════════════════════════════════════════════════════════════════════════
 function S07eAaceNotRag() {
+  // 2-beat reveal: the argument is contrastive. Beat 1 shows ONLY the RAG path
+  // so the audience sits with the failure mode. Beat 2 reveals the AACE column
+  // alongside, making the comparison the actual punchline.
+  const [revealed, setRevealed] = useState(1);
+  const showAace = revealed >= 2;
   const PRIMITIVES = [
     { k: "Standard",    icon: Compass,       color: PURPLE, ex: "EU-first launches this quarter",          why: "Governs scope. Versioned. Auditable." },
     { k: "Procedure",   icon: Workflow,      color: ACCENT, ex: "3-step memo flow: draft → cite → review", why: "Executable, not described." },
@@ -2202,10 +2207,55 @@ function S07eAaceNotRag() {
 
       <div className="relative z-10">
         <ArcStepper current={2} next="the org learns laterally" />
-        <Tag label="The defence. Why this is not RAG." color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-5" style={{ fontSize: 58, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          This is <span style={{ color: `hsl(${RED})` }}>not RAG.</span> This is <span style={{ color: `hsl(${GREEN})` }}>AACE</span>.
+        <Tag label="The defence · this is not RAG, this is AACE" color={GREEN} />
+        <h2 className="font-bold leading-[1.02] mb-2" style={{ fontSize: 58, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+          <span style={{ color: `hsl(${GREEN})` }}>Skills compound.</span> <span style={{ color: `hsl(${RED})` }}>Chunks rent.</span>
         </h2>
+        <p style={{ fontSize: 18, color: MUTED, maxWidth: 1640, marginBottom: 14 }}>
+          A typed Skill is a versioned org asset written once and reused. A retrieved chunk is per-call rent, paid again on every prompt — and the model has to guess which chunks to trust.
+        </p>
+
+        {/* 2-beat reveal control — same pattern as Compile / Instrument */}
+        <div className="flex items-center gap-3 mb-3 rounded-xl border px-3 py-2"
+          style={{ borderColor: CHROME_BORDER, background: "white" }}>
+          <button onClick={() => setRevealed(1)} disabled={revealed === 1}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            style={{ fontSize: 10, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}>prev</button>
+          <div className="flex items-center gap-2">
+            {[1, 2].map(n => {
+              const on = n <= revealed;
+              const c = n === 1 ? RED : GREEN;
+              return (
+                <button key={n} onClick={() => setRevealed(n)} title={`Beat ${n}`}
+                  className="rounded-full transition-all"
+                  style={{
+                    width: on ? 22 : 10, height: 10,
+                    background: on ? `hsl(${c})` : CHROME_BG,
+                    border: `1px solid hsl(${on ? c : SUBTLE} / ${on ? 0.9 : 0.4})`,
+                  }} />
+              );
+            })}
+            <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
+              {revealed} / 2 beats
+            </span>
+          </div>
+          <span style={{ fontSize: 12, color: TEXT, lineHeight: 1.35, flex: 1 }}>
+            {revealed === 1
+              ? "Beat 1 of 2. The RAG path. Sit with the failure mode: six chunks, two duplicates, one stale, one conflict — the model improvises the rest."
+              : "Beat 2 of 2. The AACE path. Same prompt, typed primitives compiled from the knowledge graph. Provenance signed. Drift caught at the source."}
+          </span>
+          <button onClick={() => setRevealed(1)}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: 10, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}>reset</button>
+          <button onClick={() => setRevealed(2)} disabled={showAace}
+            className={cn("rounded-md border px-3 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40", !showAace && "animate-pulse")}
+            style={{
+              fontSize: 10, fontWeight: 800,
+              color: showAace ? TEXT : "white",
+              background: showAace ? CARD_ALT : `hsl(${GREEN})`,
+              borderColor: showAace ? CHROME_BORDER : `hsl(${GREEN})`,
+            }}>{showAace ? "fully revealed" : "reveal AACE ▸"}</button>
+        </div>
 
         <div className="grid grid-cols-2 gap-10 relative">
           {/* LEFT — RAG path */}
@@ -2304,7 +2354,22 @@ function S07eAaceNotRag() {
             </div>
           </div>
 
-          {/* RIGHT — AACE path */}
+          {/* RIGHT — AACE path (hidden until beat 2) */}
+          {!showAace ? (
+            <button onClick={() => setRevealed(2)}
+              className="rounded-2xl border-2 border-dashed flex flex-col items-center justify-center text-center px-10 transition-all hover:scale-[1.01]"
+              style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.04)`, height: 700 }}>
+              <Sparkles size={36} style={{ color: `hsl(${GREEN})` }} />
+              <p className="mt-4 font-bold" style={{ fontSize: 26, color: TEXT }}>The AACE path</p>
+              <p className="mt-2" style={{ fontSize: 14, color: MUTED, maxWidth: 380 }}>
+                Same prompt. Typed primitives compiled from the knowledge graph instead of retrieved chunks.
+              </p>
+              <span className="mt-5 font-mono uppercase tracking-[0.14em] rounded-md px-3 py-1.5 animate-pulse"
+                style={{ fontSize: 11, fontWeight: 800, color: "white", background: `hsl(${GREEN})` }}>
+                reveal ▸
+              </span>
+            </button>
+          ) : (
           <div className="rounded-2xl border-2 p-5 flex flex-col"
             style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.04)`, height: 700 }}>
             <div className="flex items-center gap-2 mb-3">
