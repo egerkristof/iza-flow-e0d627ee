@@ -1185,9 +1185,9 @@ function S07cFunnel() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="The moment of work · Side view" color={GREEN} />
+        <Tag label="Every prompt is a compile · the moment of work" color={GREEN} />
         <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          Every prompt carries five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span> — for free.
+          Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span> — automatically.
         </h2>
         <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 14 }}>
           Each nested funnel is an enforcement layer. Snap a layer out and the prompt below it goes ungoverned. Build the stack from the C-suite down, or from the operator up — both directions converge on the same moment of work.
@@ -1468,12 +1468,12 @@ function S07dOrgLoop() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="Every moment of work, connected" color={GREEN} />
+        <Tag label="Every moment of work is a commit · the network" color={GREEN} />
         <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          From the CEO to the last tech writer, everyone is an operator. Each <span style={{ color: `hsl(${GREEN})` }}>moment of work</span> updates every other moment of work.
+          From the CEO to the last tech writer, everyone is an operator. Each <span style={{ color: `hsl(${GREEN})` }}>moment of work</span> saves something back the rest of the org can reuse.
         </h2>
         <p style={{ fontSize: 17, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
-          Every person carries their own funnel. Same five layers, different content. Every prompt is a moment of work that lands in a shared substrate of AACE primitives. The substrate then re-enters every other funnel's next compile. The organisation evolves at the speed of moments of work.
+          Every person carries their own funnel. Same five layers, different content. Every moment of work commits a tiny update — a standard, a preference, a fact, a skill — into a shared substrate. The substrate then re-enters every other operator's next moment of work. The organisation evolves at the speed of work, not the speed of offsites.
         </p>
 
         <div className="grid grid-cols-12 gap-5">
@@ -3217,14 +3217,195 @@ function S10bACVBridge() {
   );
 }
 
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 07f — EVERY COMMIT COMPOUNDS · THE AI-NATIVE INSTRUMENT PANEL
+// ═════════════════════════════════════════════════════════════════════════════
+function S07fInstrument() {
+  // Six learning-rate KPIs LIZA produces that did not exist a year ago, plus
+  // a governance row that wraps them (cost/ROI, data, audit, regulation, human
+  // approval). Left = yesterday's dashboard (greyed, lagging). Right = today.
+  const OLD_KPIS = [
+    { k: "Quarterly revenue",    v: "€12.4M",  s: "vs plan · 3 months ago" },
+    { k: "Pipeline coverage",    v: "2.1×",    s: "snapshot · last Friday" },
+    { k: "Headcount cost",       v: "€8.7M",   s: "trailing 12 months" },
+    { k: "NPS",                  v: "42",      s: "survey · 6 months ago" },
+    { k: "Project on-time %",    v: "61%",     s: "last quarter" },
+    { k: "Training hours / FTE", v: "14h",     s: "annualised" },
+  ];
+
+  const NEW_KPIS = [
+    { k: "Substrate size",            v: "4,820", unit: "primitives", trend: "+312 this week", icon: Database,    color: GREEN,
+      tip: "Standards, procedures, preferences, prohibitions, facts and skills the org has captured." },
+    { k: "Standards adoption",        v: "94%",   unit: "of moments",  trend: "+6pp vs last month", icon: ShieldCheck, color: GREEN,
+      tip: "Share of moments of work that resolved against a published org standard." },
+    { k: "Promotion velocity",        v: "4 min", unit: "override → standard", trend: "median, last 30 days", icon: GitPullRequest, color: GOLD,
+      tip: "Time from a single operator override to an approved, org-wide reusable update." },
+    { k: "Drift rate",                v: "0.7%",  unit: "of outputs",  trend: "−2.1pp QoQ", icon: AlertTriangle, color: GOLD,
+      tip: "Outputs that diverged from the standard at the moment they were produced." },
+    { k: "Skill reuse ratio",         v: "7.3×",  unit: "per skill",   trend: "library compounding", icon: Sparkles,    color: GREEN,
+      tip: "Average times each promoted skill is reused across the org after publication." },
+    { k: "Cost per moment of work",   v: "€0.18", unit: "trending ↓",  trend: "−38% vs 90 days ago", icon: TrendingDown, color: GREEN,
+      tip: "Marginal token + orchestration cost per moment of work. Falls as the substrate grows." },
+  ];
+
+  const GOVERNANCE = [
+    { k: "Token cost & ROI",     icon: Coins,       color: GOLD,   note: "Live spend, projection, ROI per playbook. Hard ceilings per decision class." },
+    { k: "Data governance",      icon: Lock,        color: ACCENT, note: "Residency, classification, vendor routing. PII never leaves the boundary." },
+    { k: "Replayable audit",     icon: Eye,         color: GREEN,  note: "Every moment of work signed, versioned, diffable, replayable end-to-end." },
+    { k: "EU AI Act · GDPR",     icon: ShieldCheck, color: ACCENT, note: "Risk class, transparency, human-oversight evidence ready for the regulator." },
+    { k: "Human control rails",  icon: UserCheck,   color: PURPLE, note: "Who approves what, where the kill-switch lives, override and rollback per primitive." },
+  ];
+
+  return (
+    <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={11} total={TOTAL} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
+
+      <div className="relative z-10">
+        <Tag label="Every commit compounds · the instrument panel" color={GREEN} />
+        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+          The whole organisation, running at the <span style={{ color: `hsl(${GREEN})` }}>speed of AI</span> — with every human control lever in reach.
+        </h2>
+        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1640, marginBottom: 14 }}>
+          Yesterday's dashboard measured outcomes, three months late. LIZA's instrument panel measures the <i>learning rate</i> of the organisation in real time, and surfaces the governance levers — cost, data, audit, regulation, human approval — on the same surface. Strategy and execution stop being two layers. They are the same loop, measured for the first time.
+        </p>
+
+        <div className="grid grid-cols-12 gap-5">
+          {/* LEFT — yesterday's dashboard (greyed, lagging) */}
+          <div className="col-span-4 rounded-2xl border p-4 flex flex-col"
+            style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 740, opacity: 0.78 }}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: SUBTLE, fontWeight: 800 }}>
+                Yesterday's dashboard
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border"
+                style={{ fontSize: 9.5, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}>
+                <AlertCircle size={10} /> lagging · static
+              </span>
+            </div>
+            <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.35, marginBottom: 10 }}>
+              Outcomes. Three months out of date. Tells you what already happened. Nothing about <i>how</i> the org is learning.
+            </p>
+            <div className="grid grid-cols-2 gap-2 flex-1">
+              {OLD_KPIS.map(k => (
+                <div key={k.k} className="rounded-lg border bg-white px-2.5 py-2"
+                  style={{ borderColor: CHROME_BORDER, filter: "grayscale(0.85)" }}>
+                  <p className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9, color: SUBTLE, fontWeight: 700 }}>{k.k}</p>
+                  <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.05, marginTop: 4 }}>{k.v}</p>
+                  <p style={{ fontSize: 9.5, color: SUBTLE, marginTop: 2 }}>{k.s}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 rounded-lg border px-3 py-2"
+              style={{ borderColor: `hsl(${RED} / 0.3)`, background: `hsl(${RED} / 0.04)` }}>
+              <p style={{ fontSize: 11, color: TEXT, lineHeight: 1.35 }}>
+                <b style={{ color: `hsl(${RED})` }}>Blind to the substrate.</b> None of these metrics can tell you whether the org got smarter this week.
+              </p>
+            </div>
+          </div>
+
+          {/* RIGHT — LIZA's instrument panel + governance row */}
+          <div className="col-span-8 flex flex-col gap-3" style={{ height: 740 }}>
+            <div className="rounded-2xl border-2 p-4 flex flex-col"
+              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.04)`, flex: 1 }}>
+              <div className="flex items-center justify-between mb-3">
+                <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
+                  LIZA instrument panel · learning rate, live
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border"
+                  style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.5)`, background: "white" }}>
+                  <Activity size={11} /> streaming · last 24h
+                </span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2.5 flex-1">
+                {NEW_KPIS.map(k => {
+                  const Icon = k.icon;
+                  return (
+                    <div key={k.k} className="rounded-xl border bg-white px-3 py-2.5 flex flex-col"
+                      style={{ borderColor: `hsl(${k.color} / 0.45)` }}>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Icon size={13} style={{ color: `hsl(${k.color})` }} />
+                        <p className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: `hsl(${k.color})`, fontWeight: 800 }}>{k.k}</p>
+                      </div>
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="font-bold" style={{ fontSize: 26, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>{k.v}</span>
+                        <span style={{ fontSize: 10, color: MUTED }}>{k.unit}</span>
+                      </div>
+                      <p style={{ fontSize: 10, color: `hsl(${k.color})`, fontWeight: 700, marginTop: 4 }}>{k.trend}</p>
+                      <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.3, marginTop: 4 }}>{k.tip}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-3 rounded-lg border px-3 py-2 flex items-start gap-2"
+                style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: "white" }}>
+                <Sparkles size={14} style={{ color: `hsl(${GREEN})`, marginTop: 2 }} />
+                <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.4 }}>
+                  <b style={{ color: `hsl(${GREEN})` }}>These six metrics did not exist a year ago</b> — because the substrate underneath them did not exist a year ago. This is the operating system that makes them measurable.
+                </p>
+              </div>
+            </div>
+
+            {/* Governance row */}
+            <div className="rounded-2xl border p-3"
+              style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: SUBTLE, fontWeight: 800 }}>
+                  Human control levers · on the same surface
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border"
+                  style={{ fontSize: 9.5, color: TEXT, borderColor: CHROME_BORDER, background: "white" }}>
+                  <ShieldCheck size={10} /> governed by default
+                </span>
+              </div>
+              <div className="grid grid-cols-5 gap-2">
+                {GOVERNANCE.map(g => {
+                  const Icon = g.icon;
+                  return (
+                    <div key={g.k} className="rounded-lg border bg-white px-2.5 py-2"
+                      style={{ borderColor: `hsl(${g.color} / 0.4)` }}>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Icon size={12} style={{ color: `hsl(${g.color})` }} />
+                        <p className="font-mono uppercase tracking-[0.08em]" style={{ fontSize: 9, color: `hsl(${g.color})`, fontWeight: 800 }}>{g.k}</p>
+                      </div>
+                      <p style={{ fontSize: 10, color: TEXT, lineHeight: 1.3 }}>{g.note}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Kicker */}
+        <div className="mt-3 rounded-xl border-2 px-5 py-3 flex items-center gap-4"
+          style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: `hsl(${GREEN} / 0.07)` }}>
+          <LineChart size={20} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 14, color: TEXT, fontWeight: 600, flex: 1, lineHeight: 1.4 }}>
+            <b style={{ color: `hsl(${GREEN})` }}>Every prompt is a compile. Every moment of work is a commit. Every commit compounds.</b>{" "}
+            <span style={{ color: MUTED, fontWeight: 500 }}>
+              Strategy and execution merge into one loop — measurable for the first time, with every human control lever in reach.
+            </span>
+          </p>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
 const SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
-  { id: "funnel-stack", title: "Nested Funnels · The Moment of Work", component: <S07cFunnel /> },
-  { id: "org-loop", title: "Every Moment of Work, Connected", component: <S07dOrgLoop /> },
-  { id: "aace-not-rag", title: "This Is AACE, Not RAG", component: <S07eAaceNotRag /> },
+  { id: "funnel-stack", title: "Every Prompt Is A Compile · The Atom", component: <S07cFunnel /> },
+  { id: "aace-not-rag", title: "This Is AACE, Not RAG · The Defence", component: <S07eAaceNotRag /> },
+  { id: "org-loop", title: "Every Moment Of Work Is A Commit · The Network", component: <S07dOrgLoop /> },
+  { id: "instrument-panel", title: "Every Commit Compounds · The AI-Native Instrument Panel", component: <S07fInstrument /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
   { id: "os-map", title: "OS Map", component: <S04OSMap /> },
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
