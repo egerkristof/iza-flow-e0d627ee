@@ -1394,8 +1394,54 @@ function S07cFunnel() {
                 </span>
               </div>
               <div className="px-4 py-3 flex-1 overflow-y-auto">
+                {/* Inline draft preview · colours each layer's contribution */}
+                <p className="font-mono uppercase tracking-[0.14em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
+                  Draft preview · each colour is one layer's contribution
+                </p>
+                {(() => {
+                  const FRAGMENTS: { id: LayerId; on: string; off: string }[] = [
+                    { id: "standards",  on: "Investor Memo v3.1 structure",        off: "free-form structure" },
+                    { id: "intent",     on: "anchored to the Q4 EU-first thesis",  off: "generic growth story" },
+                    { id: "governance", on: "every external claim cited, no PII",  off: "uncited claims, PII risk" },
+                    { id: "team",       on: "consistent with last board update",   off: "contradicts last board update" },
+                    { id: "preference", on: "bullet-first, no hedging",            off: "prose-heavy and hedged" },
+                  ];
+                  const frag = (id: LayerId) => {
+                    const f = FRAGMENTS.find(x => x.id === id)!;
+                    const layer = LAYERS.find(L => L.id === id)!;
+                    const on = active[id];
+                    return (
+                      <span
+                        onClick={() => toggle(id)}
+                        title={layer.label}
+                        style={{
+                          cursor: "pointer",
+                          fontWeight: 700,
+                          color: on ? `hsl(${layer.color})` : `hsl(${RED})`,
+                          background: on ? `hsl(${layer.color} / 0.10)` : `hsl(${RED} / 0.08)`,
+                          borderBottom: `1.5px solid hsl(${on ? layer.color : RED} / 0.55)`,
+                          textDecoration: on ? "none" : "line-through",
+                          padding: "0 4px",
+                          borderRadius: 3,
+                        }}
+                      >
+                        {on ? f.on : f.off}
+                      </span>
+                    );
+                  };
+                  return (
+                    <div className="rounded-lg border px-3 py-2.5 mb-3"
+                      style={{ borderColor: CHROME_BORDER, background: CHROME_BG, fontSize: 12.5, color: TEXT, lineHeight: 1.7 }}>
+                      <div><span style={{ color: SUBTLE, fontWeight: 600 }}>Title.</span> Series-B Narrative · {frag("standards")}.</div>
+                      <div><span style={{ color: SUBTLE, fontWeight: 600 }}>Opening.</span> Positioned as {frag("intent")}.</div>
+                      <div><span style={{ color: SUBTLE, fontWeight: 600 }}>Evidence.</span> Drafted with {frag("governance")}.</div>
+                      <div><span style={{ color: SUBTLE, fontWeight: 600 }}>Continuity.</span> Framing {frag("team")}.</div>
+                      <div><span style={{ color: SUBTLE, fontWeight: 600 }}>Voice.</span> Delivered {frag("preference")}.</div>
+                    </div>
+                  );
+                })()}
                 <p className="font-mono uppercase tracking-[0.14em] mb-2" style={{ fontSize: 10, color: SUBTLE }}>
-                  How the outcome changes · snap a layer out to compare
+                  Per-layer diff · snap a layer out to compare
                 </p>
                 {(() => {
                   // Each layer toggles a specific visible mutation in the draft output.
