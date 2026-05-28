@@ -104,6 +104,50 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
+// Persistent arc stepper used across the four-slide architecture spine.
+// Each step is the verb that names the slide's job.
+const ARC_STEPS = [
+  { n: "01", label: "Compile" },
+  { n: "02", label: "Defend" },
+  { n: "03", label: "Commit" },
+  { n: "04", label: "Compound" },
+] as const;
+
+function ArcStepper({ current, next }: { current: 1 | 2 | 3 | 4; next?: string }) {
+  return (
+    <div className="flex items-center gap-2 mb-4">
+      <span className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700, marginRight: 6 }}>
+        The arc
+      </span>
+      {ARC_STEPS.map((s, i) => {
+        const isCurrent = i + 1 === current;
+        const isPast = i + 1 < current;
+        const color = isCurrent ? `hsl(${GREEN})` : isPast ? TEXT : SUBTLE;
+        const bg = isCurrent ? `hsl(${GREEN} / 0.10)` : "white";
+        const border = isCurrent ? `hsl(${GREEN} / 0.55)` : CHROME_BORDER;
+        return (
+          <div key={s.n} className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-full px-2.5 py-1 border"
+              style={{ background: bg, borderColor: border }}>
+              <span className="font-mono" style={{ fontSize: 10, fontWeight: 800, color }}>{s.n}</span>
+              <span className="font-semibold uppercase tracking-[0.12em]" style={{ fontSize: 10, color }}>{s.label}</span>
+              {isCurrent && <span className="rounded-full" style={{ width: 5, height: 5, background: `hsl(${GREEN})` }} />}
+            </div>
+            {i < ARC_STEPS.length - 1 && (
+              <span style={{ width: 12, height: 1, background: CHROME_BORDER }} />
+            )}
+          </div>
+        );
+      })}
+      {next && (
+        <span className="ml-3 font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: SUBTLE }}>
+          next: <span style={{ color: TEXT, fontWeight: 700 }}>{next}</span>
+        </span>
+      )}
+    </div>
+  );
+}
+
 const TOTAL = 20;
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -1146,7 +1190,7 @@ function S07bUnique() {
 // ═════════════════════════════════════════════════════════════════════════════
 function S07cFunnel() {
   // Each layer is a nested funnel piece. Top of stack is widest "intake",
-  // bottom of stack tapers to the operator's prompt — the moment of work.
+  // bottom of stack tapers to the operator's prompt: the moment of work.
   type LayerId = "intent" | "governance" | "standards" | "team" | "preference";
   const LAYERS: {
     id: LayerId; label: string; sub: string; chip: string;
@@ -1185,12 +1229,13 @@ function S07cFunnel() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="Every prompt is a compile · the moment of work" color={GREEN} />
+        <ArcStepper current={1} next="vs RAG, the defence" />
+        <Tag label="The atom. Every prompt is a compile." color={GREEN} />
         <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span> — automatically.
+          Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span>. Automatically.
         </h2>
         <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 14 }}>
-          Each nested funnel is an enforcement layer. Snap a layer out and the prompt below it goes ungoverned. Build the stack from the C-suite down, or from the operator up — both directions converge on the same moment of work.
+          Each nested funnel is an enforcement layer. Snap any layer out and the prompt below it goes ungoverned. Build the stack from the C-suite down, or from the operator up. Both directions converge on the same moment of work.
         </p>
 
         {/* Mode toggle */}
@@ -1372,6 +1417,30 @@ function S07cFunnel() {
 
               {/* Prompt input */}
               <div className="border-t px-4 py-3" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+                {/* Consequence banner: surfaces what happens when layers are off */}
+                {LAYERS.some(L => !active[L.id]) ? (
+                  <div className="rounded-md border-2 px-2.5 py-1.5 mb-2 flex items-center gap-2"
+                    style={{ borderColor: `hsl(${RED} / 0.55)`, background: `hsl(${RED} / 0.06)` }}>
+                    <AlertTriangle size={13} style={{ color: `hsl(${RED})` }} />
+                    <span style={{ fontSize: 11, color: `hsl(${RED})`, fontWeight: 700 }}>
+                      Ungoverned compile.
+                    </span>
+                    <span style={{ fontSize: 11, color: TEXT }}>
+                      {LAYERS.filter(L => !active[L.id]).length} of {LAYERS.length} layers missing. The operator must improvise the gap, every time. Drift compounds silently.
+                    </span>
+                  </div>
+                ) : (
+                  <div className="rounded-md border px-2.5 py-1.5 mb-2 flex items-center gap-2"
+                    style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.06)` }}>
+                    <CheckCircle2 size={13} style={{ color: `hsl(${GREEN})` }} />
+                    <span style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 700 }}>
+                      Fully governed compile.
+                    </span>
+                    <span style={{ fontSize: 11, color: TEXT }}>
+                      All 5 layers enforced. The operator writes one line. Everything else is inherited.
+                    </span>
+                  </div>
+                )}
                 <p className="font-mono uppercase tracking-[0.14em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
                   Operator prompt · the moment of work
                 </p>
@@ -1386,7 +1455,7 @@ function S07cFunnel() {
                   </span>
                 </div>
                 <p className="mt-1.5" style={{ fontSize: 11, color: MUTED }}>
-                  The operator writes one line. The funnel above contributes the other {LAYERS.filter(L => active[L.id]).length} of {LAYERS.length} layers — automatically, comparably, and audited.
+                  The operator writes one line. The funnel above contributes the other {LAYERS.filter(L => active[L.id]).length} of {LAYERS.length} layers. Automatically. Comparably. Audited.
                 </p>
               </div>
             </div>
@@ -1395,11 +1464,18 @@ function S07cFunnel() {
             <div className="rounded-xl border-2 px-4 py-3"
               style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
               <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.4 }}>
-                <b style={{ color: `hsl(${GREEN})` }}>Same funnel, either direction.</b> Whether you start from the CEO or from the operator, every prompt at the spout inherits every layer above it. That is what makes LIZA infrastructure, not a use-case POC.
+                <b style={{ color: `hsl(${GREEN})` }}>Same funnel, either direction.</b> CEO down or operator up. Every prompt at the spout inherits every layer above it. That is what makes LIZA infrastructure, not a use-case POC.
               </p>
             </div>
           </div>
         </div>
+      </div>
+      {/* Next-slide handoff */}
+      <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
+        style={{ fontSize: 10, color: SUBTLE }}>
+        <span>next</span>
+        <ArrowRight size={11} />
+        <span style={{ color: TEXT, fontWeight: 700 }}>02 Defend. The compile beats RAG.</span>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
     </div>
@@ -1410,53 +1486,49 @@ function S07cFunnel() {
 // SLIDE 07d — ONE FUNNEL · EVERY OPERATOR · LEARNING UPWARD
 // ═════════════════════════════════════════════════════════════════════════════
 function S07dOrgLoop() {
-  // Every person is an operator. Each has their own funnel. Each funnel
-  // converges at a moment of work. Every moment of work writes into a shared
-  // substrate of AACE primitives, which then re-enters every other funnel's
-  // next compile. Color = function, NOT layer. Layers are identical across
-  // funnels; only their contents differ.
+  // 6 operator funnels orbiting a single shared substrate. Trace is the
+  // default mode: one operator's override propagates through the substrate
+  // and lands in every other operator's next moment of work.
   const OPERATORS = [
-    { role: "CEO",            fn: "Leadership", color: PURPLE, chip: "Q4 raise narrative" },
-    { role: "Strategy Lead",  fn: "Leadership", color: PURPLE, chip: "EU-first roadmap" },
-    { role: "Sales AE",       fn: "Revenue",    color: GOLD,   chip: "Proposal v3" },
-    { role: "Account Mgr",    fn: "Revenue",    color: GOLD,   chip: "QBR deck" },
-    { role: "Ops Manager",    fn: "Operations", color: GREEN,  chip: "Supplier escalation" },
-    { role: "Legal Counsel",  fn: "Risk",       color: ACCENT, chip: "DPA redline" },
-    { role: "Engineer",       fn: "Build",      color: ACCENT, chip: "API contract" },
-    { role: "Designer",       fn: "Craft",      color: RED,    chip: "Onboarding flow" },
+    { role: "CEO",           fn: "Leadership", color: PURPLE, chip: "Q4 raise narrative" },
+    { role: "Strategy Lead", fn: "Strategy",   color: PURPLE, chip: "EU-first roadmap" },
+    { role: "Sales AE",      fn: "Revenue",    color: GOLD,   chip: "Proposal v3" },
+    { role: "Ops Manager",   fn: "Operations", color: GREEN,  chip: "Supplier escalation" },
+    { role: "Legal Counsel", fn: "Risk",       color: ACCENT, chip: "DPA redline" },
+    { role: "Engineer",      fn: "Build",      color: ACCENT, chip: "API contract" },
   ] as const;
 
   const PRIMITIVES = [
-    { k: "Standards",    short: "STD" },
-    { k: "Procedures",   short: "PRC" },
-    { k: "Preferences",  short: "PRF" },
-    { k: "Prohibitions", short: "PRO" },
-    { k: "Facts",        short: "FCT" },
-    { k: "Skills",       short: "SKL" },
+    { k: "Standards" },
+    { k: "Procedures" },
+    { k: "Preferences" },
+    { k: "Prohibitions" },
+    { k: "Facts" },
+    { k: "Skills" },
   ];
 
-  // The traced contribution event used when "Trace one contribution" is on.
   const TRACE = {
     operatorIdx: 2, // Sales AE
     prompt: "Drop the hedging in this proposal intro.",
     primitive: "Preference",
-    update: "bullet-first · no hedging",
-    landsIn: "every other operator's next compile",
+    update: "bullet-first, no hedging",
+    landsIn: "every other operator's next moment of work",
     timing: "4 min from override to org-wide",
   };
 
-  const [mode, setMode] = useState<"ambient" | "trace">("ambient");
+  const [mode, setMode] = useState<"trace" | "ambient">("trace");
 
   // SVG canvas — left panel
   const VB = 1100;
+  const VBH = 820;
   const CX = VB / 2;
-  const CY = 430;
-  const RING_R = 150;          // substrate ring radius
-  const FUNNEL_R = 340;        // distance of funnels from centre
+  const CY = VBH / 2;
+  const RING_R = 130;          // substrate ring radius (clean, no inner chips)
+  const PRIM_R = RING_R + 28;  // orbiting primitives outside the ring
+  const FUNNEL_R = 330;        // distance of funnels from centre
   const N = OPERATORS.length;
 
   const opPos = OPERATORS.map((_, i) => {
-    // start at top, go clockwise
     const a = (-Math.PI / 2) + (i * 2 * Math.PI) / N;
     return { x: CX + Math.cos(a) * FUNNEL_R, y: CY + Math.sin(a) * FUNNEL_R, a };
   });
@@ -1468,29 +1540,30 @@ function S07dOrgLoop() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="Every moment of work is a commit · the network" color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          From the CEO to the last tech writer, everyone is an operator. Each <span style={{ color: `hsl(${GREEN})` }}>moment of work</span> saves something back the rest of the org can reuse.
+        <ArcStepper current={3} next="the instrument panel" />
+        <Tag label="The network. Every moment of work is a commit." color={GREEN} />
+        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+          The org learns <span style={{ color: `hsl(${GREEN})` }}>laterally</span>. In real time. At the speed of work.
         </h2>
         <p style={{ fontSize: 17, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
-          Every person carries their own funnel. Same five layers, different content. Every moment of work commits a tiny update — a standard, a preference, a fact, a skill — into a shared substrate. The substrate then re-enters every other operator's next moment of work. The organisation evolves at the speed of work, not the speed of offsites.
+          Every person carries the same five-layer funnel. Every moment of work commits a tiny update into a shared substrate. The substrate then re-enters every other operator's next moment of work. No offsite required.
         </p>
 
         <div className="grid grid-cols-12 gap-5">
-          {/* LEFT — network of funnels around a shared substrate */}
+          {/* LEFT — network of funnels around the shared substrate */}
           <div className="col-span-9 rounded-2xl border relative"
             style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 760 }}>
 
             <div className="absolute top-3 left-4 font-mono uppercase tracking-[0.14em]"
-              style={{ fontSize: 10, color: SUBTLE }}>
-              {mode === "ambient"
-                ? "Ambient flow · every funnel emits into the substrate · substrate re-enters every funnel"
-                : `Trace · ${OPERATORS[TRACE.operatorIdx].role}'s override → promoted to ${TRACE.primitive} → re-enters every other funnel`}
+              style={{ fontSize: 10, color: SUBTLE, maxWidth: 560 }}>
+              {mode === "trace"
+                ? `Trace · ${OPERATORS[TRACE.operatorIdx].role} override, promoted to ${TRACE.primitive}, re-enters every other operator`
+                : "Ambient flow · every funnel emits into the substrate, substrate re-enters every funnel"}
             </div>
 
             <div className="absolute top-3 right-4 flex gap-1 rounded-full border p-0.5"
               style={{ borderColor: CHROME_BORDER, background: "white" }}>
-              {(["ambient", "trace"] as const).map(m => (
+              {(["trace", "ambient"] as const).map(m => (
                 <button key={m}
                   onClick={() => setMode(m)}
                   className="px-3 py-1 rounded-full font-mono uppercase tracking-[0.1em]"
@@ -1500,16 +1573,16 @@ function S07dOrgLoop() {
                     background: mode === m ? `hsl(${GREEN} / 0.12)` : "transparent",
                     color: mode === m ? `hsl(${GREEN})` : MUTED,
                   }}>
-                  {m === "ambient" ? "Ambient flow" : "Trace one contribution"}
+                  {m === "trace" ? "Trace one commit" : "Ambient flow"}
                 </button>
               ))}
             </div>
 
-            <svg viewBox={`0 0 ${VB} 800`} className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
+            <svg viewBox={`0 0 ${VB} ${VBH}`} className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
               <defs>
                 <radialGradient id="subGrad" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%"  stopColor={`hsl(${GREEN} / 0.18)`} />
-                  <stop offset="60%" stopColor={`hsl(${GREEN} / 0.06)`} />
+                  <stop offset="0%"  stopColor={`hsl(${GREEN} / 0.22)`} />
+                  <stop offset="60%" stopColor={`hsl(${GREEN} / 0.07)`} />
                   <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
                 </radialGradient>
               </defs>
@@ -1518,46 +1591,42 @@ function S07dOrgLoop() {
               {opPos.map((p, i) => {
                 const op = OPERATORS[i];
                 const dim = mode === "trace" && i !== TRACE.operatorIdx;
-                // line from funnel spout (closer to centre) to ring edge
                 const dx = CX - p.x;
                 const dy = CY - p.y;
                 const d  = Math.hypot(dx, dy);
                 const ux = dx / d, uy = dy / d;
-                const fx = p.x + ux * 56;   // start near funnel spout
-                const fy = p.y + uy * 56;
-                const tx = CX - ux * RING_R;
-                const ty = CY - uy * RING_R;
+                const fx = p.x + ux * 70;
+                const fy = p.y + uy * 70;
+                const tx = CX - ux * (RING_R + 8);
+                const ty = CY - uy * (RING_R + 8);
                 return (
-                  <g key={`line-${i}`} opacity={dim ? 0.15 : 1}>
+                  <g key={`line-${i}`} opacity={dim ? 0.18 : 1}>
                     <line x1={fx} y1={fy} x2={tx} y2={ty}
-                      stroke={`hsl(${op.color} / 0.35)`} strokeWidth={1} strokeDasharray="3 4" />
-                    {/* Ambient particle: funnel → substrate (one per funnel) */}
+                      stroke={`hsl(${op.color} / 0.4)`} strokeWidth={1.2} strokeDasharray="3 4" />
                     {mode === "ambient" && (
-                      <circle r={3.5} fill={`hsl(${op.color})`}>
-                        <animate attributeName="cx" from={fx} to={tx} dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
-                        <animate attributeName="cy" from={fy} to={ty} dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
-                      </circle>
+                      <>
+                        <circle r={3.5} fill={`hsl(${op.color})`}>
+                          <animate attributeName="cx" from={fx} to={tx} dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+                          <animate attributeName="cy" from={fy} to={ty} dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+                          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+                        </circle>
+                        <circle r={2.5} fill={`hsl(${GREEN})`} opacity={0.8}>
+                          <animate attributeName="cx" from={tx} to={fx} dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
+                          <animate attributeName="cy" from={ty} to={fy} dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
+                          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
+                        </circle>
+                      </>
                     )}
-                    {/* Ambient particle: substrate → funnel (broadcast back) */}
-                    {mode === "ambient" && (
-                      <circle r={2.5} fill={`hsl(${GREEN})`} opacity={0.8}>
-                        <animate attributeName="cx" from={tx} to={fx} dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
-                        <animate attributeName="cy" from={ty} to={fy} dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
-                      </circle>
-                    )}
-                    {/* Trace mode: only the chosen operator emits, then ring re-emits to all */}
                     {mode === "trace" && i === TRACE.operatorIdx && (
-                      <circle r={5} fill={`hsl(${op.color})`}>
-                        <animate attributeName="cx" from={fx} to={tx} dur="1.8s" begin="0s;trace.end+3s" id="traceOut" repeatCount="1" />
-                        <animate attributeName="cy" from={fy} to={ty} dur="1.8s" begin="0s;trace.end+3s" repeatCount="1" />
-                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="1.8s" begin="0s;trace.end+3s" repeatCount="1" />
+                      <circle r={6} fill={`hsl(${op.color})`}>
+                        <animate attributeName="cx" from={fx} to={tx} dur="1.8s" begin="0s;loop.end+2.5s" id="traceOut" repeatCount="1" />
+                        <animate attributeName="cy" from={fy} to={ty} dur="1.8s" begin="0s;loop.end+2.5s" repeatCount="1" />
+                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="1.8s" begin="0s;loop.end+2.5s" repeatCount="1" />
                       </circle>
                     )}
                     {mode === "trace" && i !== TRACE.operatorIdx && (
-                      <circle r={4} fill={`hsl(${GREEN})`}>
-                        <animate attributeName="cx" from={tx} to={fx} dur="1.6s" begin={`traceOut.end+${0.1 + i * 0.12}s`} id={i === 0 ? "trace" : undefined} repeatCount="1" />
+                      <circle r={4.5} fill={`hsl(${GREEN})`}>
+                        <animate attributeName="cx" from={tx} to={fx} dur="1.6s" begin={`traceOut.end+${0.1 + i * 0.12}s`} id={i === 0 ? "loop" : undefined} repeatCount="1" />
                         <animate attributeName="cy" from={ty} to={fy} dur="1.6s" begin={`traceOut.end+${0.1 + i * 0.12}s`} repeatCount="1" />
                         <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="1.6s" begin={`traceOut.end+${0.1 + i * 0.12}s`} repeatCount="1" />
                       </circle>
@@ -1566,63 +1635,66 @@ function S07dOrgLoop() {
                 );
               })}
 
-              {/* Shared substrate ring (centre) */}
-              <circle cx={CX} cy={CY} r={RING_R + 30} fill="url(#subGrad)" />
+              {/* Shared substrate ring (centre) — clean, no text collisions */}
+              <circle cx={CX} cy={CY} r={RING_R + 50} fill="url(#subGrad)" />
               <circle cx={CX} cy={CY} r={RING_R} fill="white"
-                stroke={`hsl(${GREEN} / 0.55)`} strokeWidth={2} strokeDasharray="4 5">
+                stroke={`hsl(${GREEN} / 0.6)`} strokeWidth={2.2} strokeDasharray="5 5">
                 <animateTransform attributeName="transform" type="rotate"
                   from={`0 ${CX} ${CY}`} to={`360 ${CX} ${CY}`} dur="60s" repeatCount="indefinite" />
               </circle>
-              <circle cx={CX} cy={CY} r={RING_R - 18} fill="none"
-                stroke={`hsl(${GREEN} / 0.18)`} strokeWidth={1} />
 
-              {/* Substrate label + AACE primitive chips arranged around inner ring */}
-              <text x={CX} y={CY - 50} textAnchor="middle" fontSize={11} fontWeight={800}
-                fill={`hsl(${GREEN})`} style={{ letterSpacing: "0.18em" }}>
+              {/* Central labels — clear vertical block, no overlaps */}
+              <text x={CX} y={CY - 32} textAnchor="middle" fontSize={11} fontWeight={800}
+                fill={`hsl(${GREEN})`} style={{ letterSpacing: "0.22em" }}>
                 SHARED SUBSTRATE
               </text>
-              <text x={CX} y={CY - 30} textAnchor="middle" fontSize={13} fontWeight={800} fill={TEXT}>
-                AACE primitives
+              <text x={CX} y={CY - 6} textAnchor="middle" fontSize={28} fontWeight={800}
+                fill={TEXT} style={{ letterSpacing: "-0.02em" }}>
+                4,820
               </text>
-              <text x={CX} y={CY - 12} textAnchor="middle" fontSize={9.5} fill={MUTED}>
-                versioned · audited · re-injected
+              <text x={CX} y={CY + 12} textAnchor="middle" fontSize={9.5} fill={MUTED}>
+                primitives, versioned and audited
               </text>
+              <text x={CX} y={CY + 32} textAnchor="middle" fontSize={10} fontWeight={700}
+                fill={`hsl(${GREEN})`}>
+                +312 this week
+              </text>
+
+              {/* Primitive chips orbiting OUTSIDE the ring — no collision with centre text */}
               {PRIMITIVES.map((p, i) => {
                 const a = (-Math.PI / 2) + (i * 2 * Math.PI) / PRIMITIVES.length;
-                const r = RING_R - 60;
-                const x = CX + Math.cos(a) * r;
-                const y = CY + Math.sin(a) * r + 32;
+                const x = CX + Math.cos(a) * PRIM_R;
+                const y = CY + Math.sin(a) * PRIM_R;
                 return (
                   <g key={p.k}>
-                    <rect x={x - 36} y={y - 10} width={72} height={20} rx={10}
-                      fill={`hsl(${GREEN} / 0.08)`} stroke={`hsl(${GREEN} / 0.35)`} strokeWidth={0.8} />
-                    <text x={x} y={y + 4} textAnchor="middle" fontSize={9.5} fontWeight={700} fill={TEXT}>{p.k}</text>
+                    <rect x={x - 42} y={y - 11} width={84} height={22} rx={11}
+                      fill="white" stroke={`hsl(${GREEN} / 0.55)`} strokeWidth={1} />
+                    <text x={x} y={y + 4} textAnchor="middle" fontSize={10.5} fontWeight={700} fill={TEXT}>{p.k}</text>
                   </g>
                 );
               })}
 
-              {/* Each operator funnel */}
+              {/* Each operator funnel — larger, readable */}
               {opPos.map((p, i) => {
                 const op = OPERATORS[i];
                 const dim = mode === "trace" && i !== TRACE.operatorIdx;
                 const highlight = mode === "trace" && i === TRACE.operatorIdx;
-                // Mini-funnel rendered as 5 trapezoids, oriented so its spout points toward centre.
                 const dx = CX - p.x, dy = CY - p.y;
-                const ang = Math.atan2(dy, dx) * 180 / Math.PI; // funnel spout direction
+                const ang = Math.atan2(dy, dx) * 180 / Math.PI;
                 return (
-                  <g key={`f-${i}`} transform={`translate(${p.x} ${p.y}) rotate(${ang})`} opacity={dim ? 0.32 : 1}>
+                  <g key={`f-${i}`} transform={`translate(${p.x} ${p.y}) rotate(${ang})`} opacity={dim ? 0.34 : 1}>
                     {/* Pulsing ring (moment of work) */}
-                    <circle cx={0} cy={0} r={48}
-                      fill="none" stroke={`hsl(${op.color} / 0.35)`} strokeWidth={1.2}>
-                      <animate attributeName="r" values="44;58;44" dur="3.8s" begin={`${i * 0.45}s`} repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.55;0;0.55" dur="3.8s" begin={`${i * 0.45}s`} repeatCount="indefinite" />
+                    <circle cx={0} cy={0} r={62}
+                      fill="none" stroke={`hsl(${op.color} / 0.4)`} strokeWidth={highlight ? 1.8 : 1.2}>
+                      <animate attributeName="r" values="56;76;56" dur="3.8s" begin={`${i * 0.45}s`} repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.6;0;0.6" dur="3.8s" begin={`${i * 0.45}s`} repeatCount="indefinite" />
                     </circle>
-                    {/* Funnel body (5 layers, narrowing toward centre) — drawn in local coords. */}
+                    {/* Funnel body — bigger so the 5 layers are visible */}
                     <g transform="rotate(180)">
                       {[0, 1, 2, 3, 4].map(li => {
-                        const widths = [88, 76, 62, 48, 34, 22];
-                        const layerH = 12;
-                        const top0 = -34;
+                        const widths = [120, 104, 86, 68, 50, 32];
+                        const layerH = 16;
+                        const top0 = -48;
                         const yTop = top0 + li * layerH;
                         const yBot = yTop + layerH;
                         const pts = [
@@ -1633,24 +1705,26 @@ function S07dOrgLoop() {
                         ].map(pp => pp.join(",")).join(" ");
                         return (
                           <polygon key={li} points={pts}
-                            fill={`hsl(${op.color} / ${0.06 + li * 0.04})`}
-                            stroke={`hsl(${op.color} / 0.6)`} strokeWidth={0.7} />
+                            fill={`hsl(${op.color} / ${0.08 + li * 0.04})`}
+                            stroke={`hsl(${op.color} / 0.65)`} strokeWidth={0.9} />
                         );
                       })}
-                      {/* spout — the moment of work */}
-                      <rect x={-22} y={32} width={44} height={14} rx={3}
-                        fill="white" stroke={`hsl(${op.color})`} strokeWidth={1.2} />
-                      <text x={0} y={41.5} textAnchor="middle" fontSize={7}
-                        fontWeight={800} fill={`hsl(${op.color})`}>MOMENT</text>
+                      {/* Spout */}
+                      <rect x={-26} y={32} width={52} height={16} rx={3}
+                        fill="white" stroke={`hsl(${op.color})`} strokeWidth={1.3} />
+                      <text x={0} y={43} textAnchor="middle" fontSize={9}
+                        fontWeight={800} fill={`hsl(${op.color})`} style={{ letterSpacing: "0.08em" }}>
+                        COMMIT
+                      </text>
                     </g>
-                    {/* Role label outside the funnel (counter-rotated so it stays upright) */}
+                    {/* Role label */}
                     <g transform={`rotate(${-ang})`}>
-                      <rect x={-58} y={62} width={116} height={36} rx={6}
-                        fill="white" stroke={highlight ? `hsl(${op.color})` : `hsl(${op.color} / 0.35)`}
+                      <rect x={-72} y={78} width={144} height={42} rx={7}
+                        fill="white" stroke={highlight ? `hsl(${op.color})` : `hsl(${op.color} / 0.4)`}
                         strokeWidth={highlight ? 2 : 1} />
-                      <text x={0} y={75} textAnchor="middle" fontSize={11}
+                      <text x={0} y={94} textAnchor="middle" fontSize={13}
                         fontWeight={800} fill={TEXT}>{op.role}</text>
-                      <text x={0} y={89} textAnchor="middle" fontSize={8.5}
+                      <text x={0} y={110} textAnchor="middle" fontSize={9.5}
                         fill={`hsl(${op.color})`} style={{ letterSpacing: "0.06em" }}>
                         {op.fn.toUpperCase()} · {op.chip}
                       </text>
@@ -1661,91 +1735,60 @@ function S07dOrgLoop() {
             </svg>
           </div>
 
-          {/* RIGHT — what's happening · trace event · economic & strategist footers */}
+          {/* RIGHT — collapsed to 2 panels: traced event + compound footer */}
           <div className="col-span-3 flex flex-col gap-3" style={{ height: 760 }}>
-            <div className="rounded-xl border bg-white p-4"
-              style={{ borderColor: CHROME_BORDER }}>
-              <p className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: SUBTLE, marginBottom: 8 }}>
-                Read it this way
-              </p>
-              <ul className="space-y-2.5" style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.4 }}>
-                <li className="flex gap-2">
-                  <span style={{ color: `hsl(${GREEN})`, fontWeight: 800 }}>1.</span>
-                  <span>Every role is an operator. Same five-layer funnel, different content per person.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span style={{ color: `hsl(${GREEN})`, fontWeight: 800 }}>2.</span>
-                  <span>Each funnel converges at a <b>moment of work</b>. That is where AACE compiles context into action.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span style={{ color: `hsl(${GREEN})`, fontWeight: 800 }}>3.</span>
-                  <span>Every moment of work writes back into the shared substrate of AACE primitives.</span>
-                </li>
-                <li className="flex gap-2">
-                  <span style={{ color: `hsl(${GREEN})`, fontWeight: 800 }}>4.</span>
-                  <span>The substrate re-enters every other operator's next compile. The org learns laterally, in real time.</span>
-                </li>
-              </ul>
-            </div>
-
-            <div className="rounded-xl border bg-white p-4 flex-1"
-              style={{ borderColor: mode === "trace" ? `hsl(${GOLD} / 0.55)` : CHROME_BORDER }}>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="rounded-full" style={{ width: 8, height: 8, background: `hsl(${OPERATORS[TRACE.operatorIdx].color})` }} />
-                <span className="font-mono" style={{ fontSize: 10.5, fontWeight: 800, color: TEXT, letterSpacing: "0.08em" }}>
-                  {OPERATORS[TRACE.operatorIdx].role.toUpperCase()} · TRACED EVENT
+            <div className="rounded-xl border-2 bg-white p-4 flex-1"
+              style={{ borderColor: `hsl(${GOLD} / 0.55)` }}>
+              <div className="flex items-center gap-2 mb-2.5">
+                <span className="rounded-full" style={{ width: 9, height: 9, background: `hsl(${OPERATORS[TRACE.operatorIdx].color})` }} />
+                <span className="font-mono" style={{ fontSize: 11, fontWeight: 800, color: TEXT, letterSpacing: "0.1em" }}>
+                  {OPERATORS[TRACE.operatorIdx].role.toUpperCase()} · LIVE COMMIT
                 </span>
               </div>
-              <div className="rounded border px-2 py-1.5 mb-2.5 flex items-start gap-1.5"
+              <div className="rounded border px-2.5 py-2 mb-3 flex items-start gap-2"
                 style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-                <MessageSquare size={11} style={{ color: SUBTLE, marginTop: 2 }} />
-                <span style={{ fontSize: 11.5, color: TEXT, fontStyle: "italic", lineHeight: 1.3 }}>
+                <MessageSquare size={12} style={{ color: SUBTLE, marginTop: 2 }} />
+                <span style={{ fontSize: 12, color: TEXT, fontStyle: "italic", lineHeight: 1.35 }}>
                   "{TRACE.prompt}"
                 </span>
               </div>
               {[
-                { n: "01", label: "Moment of work", text: `Override fires inside one operator's funnel.`, c: SUBTLE },
+                { n: "01", label: "Moment of work", text: "Override fires inside one operator's funnel.", c: SUBTLE, raw: true },
                 { n: "02", label: "Promotion",      text: `LIZA proposes a new ${TRACE.primitive}: ${TRACE.update}.`, c: GOLD },
-                { n: "03", label: "Substrate write", text: `Lead approves. Lands in shared substrate, versioned and audited.`, c: GREEN },
+                { n: "03", label: "Substrate write", text: "Lead approves. Lands in shared substrate, versioned and audited.", c: GREEN },
                 { n: "04", label: "Lateral re-entry", text: `Re-injected into ${TRACE.landsIn}. ${TRACE.timing}.`, c: GREEN },
               ].map((s, si) => (
-                <div key={si} className="flex items-start gap-2 py-1">
+                <div key={si} className="flex items-start gap-2 py-1.5">
                   <div className="rounded px-1.5 py-0.5 font-mono shrink-0"
-                    style={{ fontSize: 9, fontWeight: 800, color: s.c.includes("%") ? `hsl(${s.c})` : s.c, background: s.c.includes("%") ? `hsl(${s.c} / 0.1)` : "transparent" }}>
+                    style={{
+                      fontSize: 9.5, fontWeight: 800,
+                      color: s.raw ? SUBTLE : `hsl(${s.c})`,
+                      background: s.raw ? CHROME_BG : `hsl(${s.c} / 0.12)`,
+                    }}>
                     {s.n}
                   </div>
                   <div>
-                    <div className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9, color: s.c.includes("%") ? `hsl(${s.c})` : s.c, fontWeight: 700 }}>{s.label}</div>
-                    <p style={{ fontSize: 11, color: TEXT, lineHeight: 1.35 }}>{s.text}</p>
+                    <div className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: s.raw ? SUBTLE : `hsl(${s.c})`, fontWeight: 700 }}>{s.label}</div>
+                    <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.4 }}>{s.text}</p>
                   </div>
                 </div>
               ))}
-              <button onClick={() => setMode("trace")}
-                className="mt-2 w-full rounded-md px-2 py-1.5 font-mono uppercase tracking-[0.12em]"
-                style={{
-                  fontSize: 10, fontWeight: 800,
-                  background: `hsl(${GREEN} / 0.10)`,
-                  color: `hsl(${GREEN})`,
-                  border: `1px solid hsl(${GREEN} / 0.4)`,
-                }}>
-                Play trace on diagram →
-              </button>
             </div>
 
-            <div className="rounded-xl border-2 px-3 py-2.5"
-              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
-              <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.4 }}>
-                <b style={{ color: `hsl(${GREEN})` }}>Every moment of work compounds.</b> Marginal cost per moment trends down as the substrate grows.
-              </p>
-            </div>
-            <div className="rounded-xl border-2 px-3 py-2.5"
-              style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.06)` }}>
-              <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.4 }}>
-                <b style={{ color: `hsl(${PURPLE})` }}>Vision and hiring shape the funnels.</b> Moments of work evolve them. The org learns at the speed of operation, not the speed of offsites.
+            <div className="rounded-xl border-2 px-3 py-3"
+              style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.45 }}>
+                <b style={{ color: `hsl(${GREEN})` }}>Every commit compounds.</b> Marginal cost per moment of work trends down as the substrate grows. Vision and hiring shape the funnels. Moments of work evolve them.
               </p>
             </div>
           </div>
         </div>
+      </div>
+      <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
+        style={{ fontSize: 10, color: SUBTLE }}>
+        <span>next</span>
+        <ArrowRight size={11} />
+        <span style={{ color: TEXT, fontWeight: 700 }}>04 Compound. The governed console.</span>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
     </div>
@@ -1765,13 +1808,26 @@ function S07eAaceNotRag() {
     { k: "Skill",       icon: Sparkles,      color: GREEN,  ex: "Series-B narrative skill v3",             why: "Reusable. Composable. Compounds." },
   ];
 
-  const RAG_FRAGMENTS = [
-    "“…last quarter we shipped EU launches first because of…”",
-    "“…internal memo template circa 2023 mentions bullets…”",
-    "“…GDPR FAQ doc says vendors must be reviewed…”",
-    "“…board update draft v2 references investor pipeline…”",
-    "“…sales handbook page 47 about pricing memo style…”",
+  // Variable-width, distressed retrieved fragments. Each chunk has its own
+  // similarity score, source label, and a visual treatment (duplicated,
+  // contradictory, stale) that mirrors how RAG actually behaves.
+  const RAG_FRAGMENTS: {
+    text: string; sim: string; src: string; w: number; tag?: "dup" | "stale" | "conflict" | "irrelevant";
+  }[] = [
+    { text: "…last quarter we shipped EU launches first because of…", sim: "0.82", src: "wiki/eu-launch.md",     w: 92 },
+    { text: "…internal memo template circa 2023 mentions bullets…",   sim: "0.71", src: "templates/memo-2023",   w: 80, tag: "stale" },
+    { text: "…GDPR FAQ doc says vendors must be reviewed…",           sim: "0.68", src: "legal/gdpr-faq.pdf",    w: 86, tag: "irrelevant" },
+    { text: "…board update draft v2 references investor pipeline…",   sim: "0.66", src: "decks/board-q3-draft",  w: 74, tag: "dup" },
+    { text: "…board update draft v3 references investor pipeline…",   sim: "0.65", src: "decks/board-q3-final",  w: 76, tag: "dup" },
+    { text: "…sales handbook page 47 about pricing memo style…",      sim: "0.62", src: "handbook/p47",          w: 70, tag: "conflict" },
   ];
+
+  const TAG_STYLE: Record<string, { label: string; color: string }> = {
+    dup:        { label: "duplicate",   color: RED },
+    stale:      { label: "stale 2023",  color: GOLD },
+    conflict:   { label: "conflicts",   color: RED },
+    irrelevant: { label: "off-intent",  color: SUBTLE },
+  };
 
   return (
     <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
@@ -1780,7 +1836,8 @@ function S07eAaceNotRag() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="The architectural difference" color={GREEN} />
+        <ArcStepper current={2} next="the org learns laterally" />
+        <Tag label="The defence. Why this is not RAG." color={GREEN} />
         <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 54, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           This is <span style={{ color: `hsl(${RED})` }}>not RAG.</span> This is <span style={{ color: `hsl(${GREEN})` }}>AACE</span>.
         </h2>
@@ -1816,22 +1873,52 @@ function S07eAaceNotRag() {
             <div className="rounded-lg border bg-white p-2 flex-1 overflow-hidden"
               style={{ borderColor: CHROME_BORDER }}>
               <p className="font-mono uppercase tracking-[0.12em] mb-1.5" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
-                Retrieved chunks · unstructured text
+                Retrieved chunks · top-k by cosine similarity
               </p>
               <div className="space-y-1.5">
-                {RAG_FRAGMENTS.map((c, i) => (
-                  <div key={i} className="rounded px-2 py-1.5 border"
-                    style={{ borderColor: `hsl(${RED} / 0.2)`, background: `hsl(${RED} / 0.04)` }}>
-                    <span style={{ fontSize: 10.5, color: MUTED, fontStyle: "italic" }}>{c}</span>
-                  </div>
-                ))}
+                {RAG_FRAGMENTS.map((c, i) => {
+                  const tag = c.tag ? TAG_STYLE[c.tag] : null;
+                  return (
+                    <div key={i} className="rounded px-2 py-1.5 border relative"
+                      style={{
+                        width: `${c.w}%`,
+                        marginLeft: i % 2 === 0 ? 0 : `${(100 - c.w) / 2}%`,
+                        borderColor: `hsl(${RED} / 0.25)`,
+                        background: `hsl(${RED} / 0.04)`,
+                        opacity: c.tag === "stale" ? 0.55 : 0.95,
+                      }}>
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <span className="font-mono" style={{ fontSize: 8.5, color: SUBTLE, letterSpacing: "0.05em" }}>
+                          sim {c.sim}
+                        </span>
+                        <span className="font-mono" style={{ fontSize: 8.5, color: SUBTLE }}>·</span>
+                        <span className="font-mono" style={{ fontSize: 8.5, color: SUBTLE }}>{c.src}</span>
+                        {tag && (
+                          <span className="ml-auto rounded px-1 py-px font-mono uppercase tracking-[0.08em]"
+                            style={{ fontSize: 8, fontWeight: 800, color: `hsl(${tag.color})`, background: `hsl(${tag.color} / 0.10)`, border: `1px solid hsl(${tag.color} / 0.35)` }}>
+                            {tag.label}
+                          </span>
+                        )}
+                      </div>
+                      <span style={{
+                        fontSize: 10.5,
+                        color: MUTED,
+                        fontStyle: "italic",
+                        textDecoration: c.tag === "conflict" ? "line-through" : "none",
+                      }}>"{c.text}"</span>
+                    </div>
+                  );
+                })}
               </div>
+              <p className="mt-2 font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9, color: `hsl(${RED} / 0.85)`, fontWeight: 700 }}>
+                6 chunks. 2 duplicates. 1 stale. 1 conflict. 1 off-intent. Model must guess.
+              </p>
             </div>
             <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: SUBTLE }} /></div>
             <div className="rounded-lg border-2 px-3 py-2"
               style={{ borderColor: `hsl(${RED} / 0.5)`, background: `hsl(${RED} / 0.06)` }}>
               <p style={{ fontSize: 12, color: `hsl(${RED})`, fontWeight: 700 }}>Model improvises the rest.</p>
-              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Stale on republish · no enforcement · per-call rent · unverifiable provenance · drift compounds silently.</p>
+              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Stale on republish. No enforcement. Per-call rent. Unverifiable provenance. Drift compounds silently.</p>
             </div>
           </div>
 
@@ -1888,7 +1975,18 @@ function S07eAaceNotRag() {
             <div className="rounded-lg border-2 px-3 py-2"
               style={{ borderColor: `hsl(${GREEN} / 0.6)`, background: `hsl(${GREEN} / 0.08)` }}>
               <p style={{ fontSize: 12, color: `hsl(${GREEN})`, fontWeight: 700 }}>Governed output · five live audits before release.</p>
-              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Standards enforced · prohibitions blocked · skills reused · provenance signed · drift caught at the source.</p>
+              <p style={{ fontSize: 10.5, color: MUTED, marginTop: 2 }}>Standards enforced. Prohibitions blocked. Skills reused. Provenance signed. Drift caught at the source.</p>
+              {/* Handoff to slide 7: this output writes back to the substrate */}
+              <div className="mt-2 pt-2 border-t flex items-center gap-1.5"
+                style={{ borderColor: `hsl(${GREEN} / 0.25)` }}>
+                <GitPullRequest size={11} style={{ color: `hsl(${GREEN})` }} />
+                <span className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 9.5, color: `hsl(${GREEN})`, fontWeight: 700 }}>
+                  writes back to substrate
+                </span>
+                <span style={{ fontSize: 10, color: MUTED }}>
+                  the same compiled object becomes a reusable org primitive on the next slide.
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -1904,6 +2002,12 @@ function S07eAaceNotRag() {
             </span>
           </p>
         </div>
+      </div>
+      <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
+        style={{ fontSize: 10, color: SUBTLE }}>
+        <span>next</span>
+        <ArrowRight size={11} />
+        <span style={{ color: TEXT, fontWeight: 700 }}>03 Commit. Every moment writes back.</span>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
     </div>
