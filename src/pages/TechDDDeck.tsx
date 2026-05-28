@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, createContext, useContext } from "react";
 import { motion, LayoutGroup, AnimatePresence } from "framer-motion";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
@@ -88,10 +88,19 @@ function PhaseChip({ phase, color = ACCENT }: { phase: string; color?: string })
     </div>
   );
 }
-function PageNumber({ n, total, dark = false }: { n: number; total: number; dark?: boolean }) {
+// Slide index context — drives page numbers from SLIDES array position so
+// we cannot drift out of sync as slides get added, removed, or reordered.
+const SlideIndexContext = createContext<{ index: number; total: number } | null>(null);
+function SlideIndexProvider({ index, total, children }: { index: number; total: number; children: React.ReactNode }) {
+  return <SlideIndexContext.Provider value={{ index, total }}>{children}</SlideIndexContext.Provider>;
+}
+function PageNumber({ n, total, dark = false }: { n?: number; total?: number; dark?: boolean }) {
+  const ctx = useContext(SlideIndexContext);
+  const num = ctx ? ctx.index + 1 : (n ?? 1);
+  const tot = ctx ? ctx.total : (total ?? 1);
   return (
     <div className="absolute top-10 left-12 font-mono" style={{ fontSize: 14, color: dark ? DARK_MUTED : SUBTLE, letterSpacing: "0.15em" }}>
-      {String(n).padStart(2, "0")} / {String(total).padStart(2, "0")}
+      {String(num).padStart(2, "0")} / {String(tot).padStart(2, "0")}
     </div>
   );
 }
