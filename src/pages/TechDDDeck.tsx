@@ -3791,8 +3791,8 @@ function S07fInstrument() {
           <button
             onClick={() => setRevealed(r => Math.max(1, r - 1))}
             disabled={revealed === 1}
-            className="rounded-md border px-3 py-1.5 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
-            style={{ fontSize: 12, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            style={{ fontSize: 10, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}
           >prev</button>
           <div className="flex items-center gap-2">
             {[1, 2, 3, 4].map(n => {
@@ -3802,31 +3802,31 @@ function S07fInstrument() {
                   title={`Beat ${n}`}
                   className="rounded-full transition-all"
                   style={{
-                    width: on ? 26 : 12, height: 12,
+                    width: on ? 22 : 10, height: 10,
                     background: on ? `hsl(${GREEN})` : CHROME_BG,
                     border: `1px solid hsl(${on ? GREEN : SUBTLE} / ${on ? 0.9 : 0.4})`,
                   }}
                 />
               );
             })}
-            <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 11, color: SUBTLE, fontWeight: 700 }}>
+            <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
               {revealed} / 4 beats
             </span>
           </div>
-          <span style={{ fontSize: 13, color: TEXT, lineHeight: 1.35, flex: 1 }}>
+          <span style={{ fontSize: 12, color: TEXT, lineHeight: 1.35, flex: 1 }}>
             {BEATS[revealed - 1]}
           </span>
           <button
             onClick={() => { setRevealed(1); setActiveKpi(null); }}
-            className="rounded-md border px-3 py-1.5 font-mono uppercase tracking-[0.12em]"
-            style={{ fontSize: 12, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: 10, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
           >reset</button>
           <button
             onClick={() => setRevealed(r => Math.min(4, r + 1))}
             disabled={fully}
-            className="rounded-md border px-4 py-1.5 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            className="rounded-md border px-3 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40 animate-pulse"
             style={{
-              fontSize: 12, fontWeight: 800,
+              fontSize: 10, fontWeight: 800,
               color: fully ? TEXT : "white",
               background: fully ? CARD_ALT : `hsl(${GREEN})`,
               borderColor: fully ? CHROME_BORDER : `hsl(${GREEN})`,
