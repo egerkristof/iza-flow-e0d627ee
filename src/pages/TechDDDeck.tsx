@@ -359,6 +359,115 @@ function S03GovernanceLoop() {
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 03 — INFRASTRUCTURE SHIFT (Data → Cognitive)
 // ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 04 — PRODUCTION SYSTEM (Just-in-Time Knowledge Manufacturing)
+// ═════════════════════════════════════════════════════════════════════════════
+function S04ProductionSystem() {
+  const columns = [
+    {
+      kicker: "Pull, not push",
+      title: "Just-in-time, not just-in-case",
+      body: "Work pulls the exact standard, judgment and context at the moment of decision. No generic copilot spray. No WIP knowledge sitting in wikis.",
+      vs: "Glean / Guru / Copilot push everything, hope something sticks.",
+      icon: GitPullRequest,
+      color: ACCENT,
+    },
+    {
+      kicker: "Jidoka, not inspection",
+      title: "Stop the line, not audit the wreck",
+      body: "Defects stop execution the moment they appear. The standard is enforced before the decision ships, not reviewed weeks later in a report.",
+      vs: "Credo / Fiddler / Arthur watch the model after it runs.",
+      icon: ShieldCheck,
+      color: GREEN,
+    },
+    {
+      kicker: "Takt, not annual review",
+      title: "Cadence matched to AI velocity",
+      body: "Standards, judgment and context update at the rate the business moves, not the rate the policy committee meets. Every decision feeds the next.",
+      vs: "Every legacy KM tool: annual refresh, static page.",
+      icon: Gauge,
+      color: GOLD,
+    },
+  ];
+
+  return (
+    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <PhaseChip phase="Phase 1 · Thesis" color={ACCENT} />
+      <div className="relative z-10">
+        <Tag label="The Production System · How the Loop scales" />
+        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 64, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1700 }}>
+          AI is the machine.{" "}
+          <span style={{ color: `hsl(${ACCENT})` }}>LIZA is the production system around it.</span>
+        </h2>
+        <p className="mt-4" style={{ fontSize: 22, color: MUTED, maxWidth: 1640 }}>
+          Toyota did not win because they had better machines. They won because they built a production system around them. Enterprises about to industrialize cognitive work will fail for the same reason early adopters failed: <b style={{ color: TEXT }}>machines without a system.</b>
+        </p>
+
+        <div className="grid mt-10" style={{ gridTemplateColumns: "1fr 1fr 1fr", gap: 24 }}>
+          {columns.map((c) => {
+            const Icon = c.icon;
+            return (
+              <div
+                key={c.kicker}
+                className="rounded-2xl p-7 flex flex-col"
+                style={{
+                  background: "white",
+                  border: `1px solid hsl(${c.color} / 0.28)`,
+                  boxShadow: `0 1px 0 hsl(${c.color} / 0.04), 0 12px 32px -20px hsl(${c.color} / 0.35)`,
+                  minHeight: 380,
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div
+                    className="rounded-lg flex items-center justify-center"
+                    style={{ width: 44, height: 44, background: `hsl(${c.color} / 0.10)`, border: `1px solid hsl(${c.color} / 0.25)` }}
+                  >
+                    <Icon size={22} color={`hsl(${c.color})`} />
+                  </div>
+                  <span className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 13, color: `hsl(${c.color})` }}>
+                    {c.kicker}
+                  </span>
+                </div>
+                <h3 className="font-bold mt-4" style={{ fontSize: 26, color: TEXT, letterSpacing: "-0.015em", lineHeight: 1.15 }}>
+                  {c.title}
+                </h3>
+                <p className="mt-3" style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>
+                  {c.body}
+                </p>
+                <div
+                  className="mt-auto pt-4 flex items-start gap-2"
+                  style={{ borderTop: `1px dashed ${CHROME_BORDER}` }}
+                >
+                  <span className="font-mono uppercase tracking-[0.14em] font-bold flex-shrink-0" style={{ fontSize: 11, color: MUTED, paddingTop: 2 }}>
+                    vs.
+                  </span>
+                  <span style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{c.vs}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div
+          className="mt-7 flex items-center gap-3 px-5 py-4 rounded-xl"
+          style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.28)`, maxWidth: 1700 }}
+        >
+          <Coins size={20} color={`hsl(${GOLD})`} />
+          <span style={{ fontSize: 17, color: TEXT }}>
+            <b>By 2027, AI shifts from flat seats to metered tokens.</b> Without a production system, every token is unaccountable spend. With one, every token ties to a named standard and a named outcome.
+          </span>
+        </div>
+      </div>
+      <Footer text="The Governance Loop is the quality mechanism. The Production System is how it scales." />
+      <SlideBar from={ACCENT} to={GOLD} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 03 — INFRASTRUCTURE SHIFT (Data → Cognitive)
+// ═════════════════════════════════════════════════════════════════════════════
 function S03Shift() {
   const past = [
     { icon: Database, label: "Database", sub: "Rows, tables, schema" },
@@ -4241,6 +4350,7 @@ const RAW_SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
   { id: "governance-loop", title: "The AI Governance Loop · Thesis", component: <S03GovernanceLoop /> },
+  { id: "production-system", title: "The Production System · How the Loop scales", component: <S04ProductionSystem /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
