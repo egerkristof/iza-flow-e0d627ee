@@ -1278,9 +1278,9 @@ function S07cFunnel() {
           {/* 5-dot progress: each dot = one revealed layer */}
           <div className="flex items-center gap-2">
             {LAYERS.map((L, i) => {
-              const on = i < revealed;
+              const on = i < revealed - 1;
               return (
-                <button key={L.id} onClick={() => setRevealed(i + 1)}
+                <button key={L.id} onClick={() => setRevealed(i + 2)}
                   title={`Reveal up to: ${L.label}`}
                   className="rounded-full transition-all"
                   style={{
@@ -1292,7 +1292,7 @@ function S07cFunnel() {
               );
             })}
             <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 11, color: SUBTLE, fontWeight: 700 }}>
-              {revealed} / {LAYERS.length} layers
+              {revealed === 0 ? "prompt only" : isScaffold ? "scaffold ready" : `${revealed - 1} / ${LAYERS.length} layers`}
             </span>
           </div>
 
@@ -1306,7 +1306,7 @@ function S07cFunnel() {
             style={{ fontSize: 12, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
           >reset</button>
           <button
-            onClick={() => setRevealed(r => Math.min(LAYERS.length, r + 1))}
+            onClick={() => setRevealed(r => Math.min(TOTAL_STEPS, r + 1))}
             disabled={fullyRevealed}
             className="rounded-md border px-4 py-1.5 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
             style={{
@@ -1315,7 +1315,7 @@ function S07cFunnel() {
               background: fullyRevealed ? CARD_ALT : `hsl(${GREEN})`,
               borderColor: fullyRevealed ? CHROME_BORDER : `hsl(${GREEN})`,
             }}
-          >{fullyRevealed ? "compile complete" : "reveal next ▸"}</button>
+          >{fullyRevealed ? "compile complete" : revealed === 0 ? "show scaffold ▸" : "reveal next ▸"}</button>
 
           {/* Inline mode toggle — only after full reveal, keeps layout height stable */}
           {fullyRevealed && (
