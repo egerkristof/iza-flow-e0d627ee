@@ -13,8 +13,8 @@ import {
   SlideIndexProvider,
   BG, TEXT, MUTED, SUBTLE, CARD_ALT, CHROME_BG, CHROME_BORDER,
   ACCENT, GREEN, GOLD, RED, PURPLE, DARK_BG, DARK_TEXT, DARK_MUTED,
-  S03GovernanceLoop, S04ProductionSystem, S07bUnique, S07cFunnel,
-  S07eAaceNotRag, S07dOrgLoop, S07fInstrument, S09bAugmentationMechanics,
+  S03GovernanceLoop, S07cFunnel,
+  S07eAaceNotRag, S07dOrgLoop,
   S10UnitEconomics, S13LoopClosed,
 } from "@/pages/TechDDDeck";
 
