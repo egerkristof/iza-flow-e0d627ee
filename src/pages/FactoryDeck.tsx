@@ -4,6 +4,7 @@ import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   Factory, Cpu, Building2, Users,
   Workflow, Coins, Sparkles, Mail, CheckCircle2, Layers,
+  ArrowDown, ArrowRight, Magnet, Megaphone, Clock, AlertTriangle, Gauge,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
