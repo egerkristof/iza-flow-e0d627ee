@@ -1249,12 +1249,12 @@ function S07cFunnel() {
       <div className="relative z-10">
         <ArcStepper current={1} next="vs RAG, the defence" />
         <Tag label="The atom. Every prompt is a compile." color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span>. Automatically.
         </h2>
 
         {/* ── Progressive reveal control ── */}
-        <div className="flex items-center gap-4 mb-4 rounded-xl border px-3 py-2"
+        <div className="flex items-center gap-3 mb-3 rounded-xl border px-3 py-2"
           style={{ borderColor: CHROME_BORDER, background: "white" }}>
           <button
             onClick={() => setRevealed(r => Math.max(0, r - 1))}
@@ -1304,36 +1304,33 @@ function S07cFunnel() {
               borderColor: fullyRevealed ? CHROME_BORDER : `hsl(${GREEN})`,
             }}
           >{fullyRevealed ? "compile complete" : "reveal next ▸"}</button>
-        </div>
 
-        {/* Mode toggle · only after full reveal when interaction is live */}
-        {fullyRevealed && (
-          <div className="flex items-center gap-3 mb-4">
-            <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: SUBTLE }}>Build direction</span>
-            <div className="inline-flex rounded-lg border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
+          {/* Inline mode toggle — only after full reveal, keeps layout height stable */}
+          {fullyRevealed && (
+            <div className="inline-flex rounded-md border overflow-hidden ml-1" style={{ borderColor: CHROME_BORDER }}>
               {([
-                { k: "topdown" as const,  l: "Top-down · guardrails first" },
-                { k: "bottomup" as const, l: "Bottom-up · operator first" },
+                { k: "topdown" as const,  l: "Top-down" },
+                { k: "bottomup" as const, l: "Bottom-up" },
               ]).map(o => (
                 <button
                   key={o.k}
                   onClick={() => setMode(o.k)}
-                  className="px-3 py-1.5 text-[12px] font-semibold transition-colors"
+                  className="px-2 py-1 font-mono uppercase tracking-[0.12em] transition-colors"
                   style={{
+                    fontSize: 10, fontWeight: 800,
                     background: mode === o.k ? `hsl(${GREEN} / 0.12)` : "white",
                     color: mode === o.k ? `hsl(${GREEN})` : TEXT,
                   }}
                 >{o.l}</button>
               ))}
             </div>
-            <span style={{ fontSize: 12, color: SUBTLE }}>· Click any funnel piece or diff row to snap it in or out</span>
-          </div>
-        )}
+          )}
+        </div>
 
         <div className="grid grid-cols-12 gap-5 relative">
           {/* LEFT — nested funnel stack */}
           <div className="col-span-7 rounded-2xl border relative"
-            style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 720 }}>
+            style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 660 }}>
             <svg viewBox="0 0 920 720" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
               {/* Centerline */}
               <line x1={CX} y1={50} x2={CX} y2={700} stroke={`hsl(${SUBTLE} / 0.18)`} strokeWidth={1} strokeDasharray="2 4" />
@@ -1424,7 +1421,7 @@ function S07cFunnel() {
           </div>
 
           {/* RIGHT — live prompt screen */}
-          <div className="col-span-5 flex flex-col gap-3" style={{ height: 720 }}>
+          <div className="col-span-5 flex flex-col gap-3" style={{ height: 660 }}>
             {/* 1 · HERO PROMPT — the operator's actual line, big */}
             <div className="rounded-2xl border-2 px-5 py-4"
               style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: "white", boxShadow: "0 8px 28px rgba(0,0,0,0.06)" }}>
