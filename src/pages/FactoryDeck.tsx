@@ -68,37 +68,67 @@ function F02MachineWithoutFactory() {
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
-      <div className="absolute inset-0 px-28 pt-32 pb-24 flex flex-col">
-        <Tag label="The Problem" color={RED} />
-        <h2 className="font-black mb-10" style={{ fontSize: 76, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
-          Enterprises bought the machine.<br />
-          <span style={{ color: `hsl(${RED})` }}>Nobody built the factory.</span>
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+        <Tag label="The Problem · Push vs Pull" color={RED} />
+        <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          AI is being <span style={{ color: `hsl(${RED})` }}>pushed</span> onto the enterprise.<br />
+          Nobody set up the <span style={{ color: `hsl(${GREEN})` }}>pull</span>.
         </h2>
-        <div className="grid grid-cols-2 gap-12 mt-4 flex-1">
-          <div className="rounded-2xl p-10 border" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
-            <div className="flex items-center gap-3 mb-6">
-              <Cpu size={28} style={{ color: `hsl(${RED})` }} />
-              <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 18, color: `hsl(${RED})` }}>The machine, alone</span>
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          Toyota did not win because of the engine. It won because demand <em>pulled</em> each part through a standard, just-in-time. AI today is the opposite: providers push capability at every seat, undefined, all at once. That is why pilots stall and budgets unravel.
+        </p>
+
+        <div className="grid grid-cols-2 gap-10 flex-1">
+          {/* PUSH column */}
+          <div className="rounded-2xl p-8 border relative overflow-hidden" style={{ background: `hsl(${RED} / 0.04)`, borderColor: `hsl(${RED} / 0.35)` }}>
+            {/* push arrows raining down */}
+            <div className="absolute inset-x-0 top-0 flex justify-around opacity-50 pointer-events-none">
+              {[0,1,2,3,4,5,6].map(i => (
+                <ArrowDown key={i} size={20} style={{ color: `hsl(${RED})`, marginTop: (i % 3) * 6 }} />
+              ))}
             </div>
-            <p className="font-bold mb-6" style={{ fontSize: 32, color: TEXT, lineHeight: 1.2 }}>
-              Copilot, Claude, ChatGPT, agents.
+            <div className="flex items-center gap-3 mb-5 mt-6">
+              <Megaphone size={28} style={{ color: `hsl(${RED})` }} />
+              <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 17, color: `hsl(${RED})` }}>Push motion · today</span>
+            </div>
+            <p className="font-bold mb-5" style={{ fontSize: 28, color: TEXT, lineHeight: 1.2 }}>
+              "Here is AI. Use it. Everywhere. Now."
             </p>
-            <ul className="space-y-3" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
+            <div className="grid grid-cols-2 gap-2 mb-5">
+              {["Copilot","ChatGPT","Claude","Gemini","Agents","More agents"].map(t => (
+                <div key={t} className="px-3 py-2 rounded-md border text-center font-mono" style={{ fontSize: 14, color: MUTED, borderColor: `hsl(${RED} / 0.25)`, background: "white" }}>{t}</div>
+              ))}
+            </div>
+            <ul className="space-y-2" style={{ fontSize: 18, color: MUTED, lineHeight: 1.35 }}>
+              <li>· Undefined usage. No standard, no audit trail.</li>
               <li>· Drift between teams. Same prompt, different answer.</li>
-              <li>· No standard enforced. No audit trail.</li>
               <li>· Every token unanchored from outcome.</li>
-              <li>· Pilots stall. Trust erodes. Budget questioned.</li>
+              <li>· Pilots stall. Trust erodes. Spend questioned.</li>
             </ul>
           </div>
-          <div className="rounded-2xl p-10 border-2" style={{ background: `hsl(${GREEN} / 0.04)`, borderColor: `hsl(${GREEN} / 0.4)` }}>
-            <div className="flex items-center gap-3 mb-6">
-              <Factory size={28} style={{ color: `hsl(${GREEN})` }} />
-              <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 18, color: `hsl(${GREEN})` }}>The factory around it</span>
+
+          {/* PULL column */}
+          <div className="rounded-2xl p-8 border-2 relative overflow-hidden" style={{ background: `hsl(${GREEN} / 0.04)`, borderColor: `hsl(${GREEN} / 0.45)` }}>
+            <div className="absolute top-6 right-6 opacity-40">
+              <Magnet size={64} style={{ color: `hsl(${GREEN})` }} />
             </div>
-            <p className="font-bold mb-6" style={{ fontSize: 32, color: TEXT, lineHeight: 1.2 }}>
-              Standards. Stations. Stop-the-line. Takt.
+            <div className="flex items-center gap-3 mb-5">
+              <Factory size={28} style={{ color: `hsl(${GREEN})` }} />
+              <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 17, color: `hsl(${GREEN})` }}>Pull motion · the factory</span>
+            </div>
+            <p className="font-bold mb-5" style={{ fontSize: 28, color: TEXT, lineHeight: 1.2 }}>
+              "Standard calls the token. Just-in-time."
             </p>
-            <ul className="space-y-3" style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
+            <div className="flex items-center gap-2 mb-5 px-3 py-3 rounded-md border" style={{ background: "white", borderColor: `hsl(${GREEN} / 0.3)` }}>
+              <span className="font-mono font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>OUTCOME</span>
+              <ArrowRight size={14} style={{ color: SUBTLE }} />
+              <span className="font-mono whitespace-nowrap" style={{ fontSize: 13, color: MUTED }}>STANDARD</span>
+              <ArrowRight size={14} style={{ color: SUBTLE }} />
+              <span className="font-mono whitespace-nowrap" style={{ fontSize: 13, color: MUTED }}>STATION</span>
+              <ArrowRight size={14} style={{ color: SUBTLE }} />
+              <span className="font-mono whitespace-nowrap" style={{ fontSize: 13, color: MUTED }}>TOKEN</span>
+            </div>
+            <ul className="space-y-2" style={{ fontSize: 18, color: MUTED, lineHeight: 1.35 }}>
               <li>· Every prompt compiled against a standard.</li>
               <li>· Every decision logged with rationale.</li>
               <li>· Every token tied to a named outcome.</li>
@@ -106,13 +136,15 @@ function F02MachineWithoutFactory() {
             </ul>
           </div>
         </div>
-        <div className="mt-10 px-8 py-5 rounded-xl border-l-4" style={{ background: CARD_ALT, borderColor: `hsl(${ACCENT})` }}>
-          <p style={{ fontSize: 22, color: TEXT, fontStyle: "italic", lineHeight: 1.5 }}>
-            Toyota did not win because of the engine. It won because of the production system around it. AI is the same shape of problem at a new scale.
+
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: CARD_ALT, borderColor: `hsl(${ACCENT})` }}>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>The Toyota lesson</span>
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            Push systems optimise the supplier. Pull systems optimise the outcome. AI today is a push system at every desk — LIZA is the pull layer that flips it.
           </p>
         </div>
       </div>
-      <Footer text="The machine is now commodity. The production system is the moat." />
+      <Footer text="The machine is now commodity. The pull system around it is the moat." />
       <SlideBar from={RED} to={GREEN} />
     </div>
   );
