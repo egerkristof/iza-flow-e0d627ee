@@ -2165,6 +2165,17 @@ export type Database = {
         Args: { p_content: string; p_title: string }
         Returns: string
       }
+      get_diagnostic_result_public: {
+        Args: { result_id: string }
+        Returns: {
+          answers: Json
+          archetype: string
+          id: string
+          overall_score: number
+          scores: Json
+        }[]
+      }
+      get_diagnostic_submission_count: { Args: never; Returns: number }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
