@@ -1663,6 +1663,7 @@ function S07dOrgLoop() {
 
   const [mode, setMode] = useState<"trace" | "ambient">("trace");
   const [traceIdx, setTraceIdx] = useState<number>(2); // start on Sales AE · Q4 price
+  const [hoverStep, setHoverStep] = useState<number | null>(null);
   const TRACE = { operatorIdx: traceIdx, ...TRACES[traceIdx] };
 
   // SVG canvas — left panel
@@ -1881,6 +1882,90 @@ function S07dOrgLoop() {
                   </g>
                 );
               })}
+
+              {/* ── Numbered route badges · 4 steps along the trace path ── */}
+              {mode === "trace" && (() => {
+                const sel = opPos[TRACE.operatorIdx];
+                const selOp = OPERATORS[TRACE.operatorIdx];
+                const dx = CX - sel.x, dy = CY - sel.y;
+                const d = Math.hypot(dx, dy);
+                const ux = dx / d, uy = dy / d;
+                const fx = sel.x + ux * 70;          // funnel exit
+                const fy = sel.y + uy * 70;
+                const tx = CX - ux * (RING_R + 8);   // ring edge
+                const ty = CY - uy * (RING_R + 8);
+                // Pick a representative peer (next operator clockwise) for step 04 anchor.
+                const peerIdx = (TRACE.operatorIdx + 1) % N;
+                const peer = opPos[peerIdx];
+                const pdx = peer.x - CX, pdy = peer.y - CY;
+                const pd = Math.hypot(pdx, pdy);
+                const pux = pdx / pd, puy = pdy / pd;
+                const px = CX + pux * (RING_R + 12);
+                const py = CY + puy * (RING_R + 12);
+                const peerFx = peer.x - pux * 70;
+                const peerFy = peer.y - puy * 70;
+
+                const BADGES = [
+                  { n: 1, x: (sel.x + fx) / 2, y: (sel.y + fy) / 2, color: selOp.color, label: "COMMIT",   tip: "Override fires inside the operator's funnel." },
+                  { n: 2, x: (fx + tx) / 2,     y: (fy + ty) / 2,    color: GOLD,         label: "PROMOTE",  tip: "LIZA proposes a typed primitive update." },
+                  { n: 3, x: CX,                y: CY - RING_R - 14, color: GREEN,        label: "WRITE",    tip: "Lead approves. Versioned, audited write to the shared base." },
+                  { n: 4, x: (px + peerFx) / 2, y: (py + peerFy) / 2, color: GREEN,       label: "RE-ENTER", tip: "Re-injected into every other operator's next compile." },
+                ];
+                return (
+                  <g>
+                    {BADGES.map(b => {
+                      const active = hoverStep === b.n;
+                      const r = active ? 18 : 14;
+                      return (
+                        <g key={b.n}
+                          onMouseEnter={() => setHoverStep(b.n)}
+                          onMouseLeave={() => setHoverStep(null)}
+                          style={{ cursor: "pointer" }}>
+                          {/* halo when active */}
+                          {active && (
+                            <circle cx={b.x} cy={b.y} r={r + 6}
+                              fill={`hsl(${b.color} / 0.18)`} stroke="none" />
+                          )}
+                          <circle cx={b.x} cy={b.y} r={r}
+                            fill="white"
+                            stroke={`hsl(${b.color})`}
+                            strokeWidth={active ? 2.5 : 1.8} />
+                          <text x={b.x} y={b.y + 4.5}
+                            textAnchor="middle"
+                            fontSize={active ? 14 : 12}
+                            fontWeight={900}
+                            fill={`hsl(${b.color})`}>
+                            {b.n}
+                          </text>
+                          {/* always-visible mini label below */}
+                          <text x={b.x} y={b.y + r + 11}
+                            textAnchor="middle"
+                            fontSize={9}
+                            fontWeight={800}
+                            fill={`hsl(${b.color})`}
+                            style={{ letterSpacing: "0.08em" }}>
+                            {b.label}
+                          </text>
+                          {/* tooltip card on hover */}
+                          {active && (
+                            <g transform={`translate(${b.x + 22}, ${b.y - 28})`}>
+                              <rect width={210} height={44} rx={6}
+                                fill="white" stroke={`hsl(${b.color} / 0.7)`} strokeWidth={1.5} />
+                              <text x={10} y={17} fontSize={10} fontWeight={800}
+                                fill={`hsl(${b.color})`} style={{ letterSpacing: "0.08em" }}>
+                                STEP 0{b.n} · {b.label}
+                              </text>
+                              <text x={10} y={33} fontSize={10} fill={TEXT}>
+                                {b.tip}
+                              </text>
+                            </g>
+                          )}
+                        </g>
+                      );
+                    })}
+                  </g>
+                );
+              })()}
             </svg>
           </div>
 
