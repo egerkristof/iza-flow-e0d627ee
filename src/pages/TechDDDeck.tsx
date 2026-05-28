@@ -1209,6 +1209,20 @@ function S07cFunnel() {
   const [hovered, setHovered] = useState<LayerId | null>(null);
   const [mode, setMode] = useState<"topdown" | "bottomup">("topdown");
 
+  // ── Narrative driver: 3 beats, each rewrites `active` and reveals more UI ──
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  useEffect(() => {
+    if (step === 1) setActive({ intent: false, governance: false, standards: false, team: false, preference: false });
+    if (step === 2) setActive({ intent: false, governance: false, standards: false, team: false, preference: false });
+    if (step === 3) setActive({ intent: true,  governance: true,  standards: true,  team: true,  preference: true  });
+  }, [step]);
+  const STEPS = [
+    { n: 1, k: "The prompt",   sub: "One line. That is all the operator types." },
+    { n: 2, k: "The gap",      sub: "Without governance, every layer is missing. The operator improvises." },
+    { n: 3, k: "The compile",  sub: "The funnel compiles five layers. Click any to remove and watch the output drift." },
+  ] as const;
+  const curStep = STEPS.find(s => s.n === step)!;
+
   const toggle = (id: LayerId) => setActive(a => ({ ...a, [id]: !a[id] }));
 
   const enforcedCount = LAYERS.filter(L => active[L.id]).length;
@@ -1238,27 +1252,76 @@ function S07cFunnel() {
           Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span>. Automatically.
         </h2>
 
-        {/* Mode toggle */}
-        <div className="flex items-center gap-3 mb-4">
-          <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: SUBTLE }}>Build direction</span>
-          <div className="inline-flex rounded-lg border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
-            {([
-              { k: "topdown" as const,  l: "Top-down · guardrails first" },
-              { k: "bottomup" as const, l: "Bottom-up · operator first" },
-            ]).map(o => (
-              <button
-                key={o.k}
-                onClick={() => setMode(o.k)}
-                className="px-3 py-1.5 text-[12px] font-semibold transition-colors"
-                style={{
-                  background: mode === o.k ? `hsl(${GREEN} / 0.12)` : "white",
-                  color: mode === o.k ? `hsl(${GREEN})` : TEXT,
-                }}
-              >{o.l}</button>
-            ))}
+        {/* ── Narrative stepper · 3 beats ── */}
+        <div className="flex items-center gap-4 mb-4 rounded-xl border px-3 py-2"
+          style={{ borderColor: CHROME_BORDER, background: "white" }}>
+          <button
+            onClick={() => setStep(s => (s > 1 ? ((s - 1) as 1 | 2 | 3) : s))}
+            disabled={step === 1}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            style={{ fontSize: 10, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}
+          >prev</button>
+          <div className="flex items-center gap-2">
+            {STEPS.map(s => {
+              const on = s.n === step;
+              const done = s.n < step;
+              return (
+                <button key={s.n} onClick={() => setStep(s.n)}
+                  className="flex items-center gap-1.5 rounded-full px-2.5 py-1 transition-colors"
+                  style={{
+                    background: on ? `hsl(${GREEN} / 0.12)` : done ? `hsl(${GREEN} / 0.05)` : CARD_ALT,
+                    border: `1px solid hsl(${on ? GREEN : done ? GREEN : SUBTLE} / ${on ? 0.6 : 0.3})`,
+                  }}>
+                  <span className="font-mono" style={{ fontSize: 10, fontWeight: 800, color: on ? `hsl(${GREEN})` : SUBTLE }}>
+                    0{s.n}
+                  </span>
+                  <span style={{ fontSize: 11.5, color: on ? TEXT : MUTED, fontWeight: on ? 700 : 500 }}>{s.k}</span>
+                </button>
+              );
+            })}
           </div>
-          <span style={{ fontSize: 12, color: SUBTLE }}>· Click any funnel piece to snap it in or out</span>
+          <span style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3, flex: 1 }}>
+            <span className="font-mono uppercase tracking-[0.12em] mr-2" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>
+              Step {step} of 3
+            </span>
+            {curStep.sub}
+          </span>
+          <button
+            onClick={() => setStep(s => (s < 3 ? ((s + 1) as 1 | 2 | 3) : s))}
+            disabled={step === 3}
+            className="rounded-md border px-3 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            style={{
+              fontSize: 10, fontWeight: 800,
+              color: step === 3 ? TEXT : "white",
+              background: step === 3 ? CARD_ALT : `hsl(${GREEN})`,
+              borderColor: step === 3 ? CHROME_BORDER : `hsl(${GREEN})`,
+            }}
+          >next ▸</button>
         </div>
+
+        {/* Mode toggle · only on step 3 when interaction is live */}
+        {step === 3 && (
+          <div className="flex items-center gap-3 mb-4">
+            <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: SUBTLE }}>Build direction</span>
+            <div className="inline-flex rounded-lg border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
+              {([
+                { k: "topdown" as const,  l: "Top-down · guardrails first" },
+                { k: "bottomup" as const, l: "Bottom-up · operator first" },
+              ]).map(o => (
+                <button
+                  key={o.k}
+                  onClick={() => setMode(o.k)}
+                  className="px-3 py-1.5 text-[12px] font-semibold transition-colors"
+                  style={{
+                    background: mode === o.k ? `hsl(${GREEN} / 0.12)` : "white",
+                    color: mode === o.k ? `hsl(${GREEN})` : TEXT,
+                  }}
+                >{o.l}</button>
+              ))}
+            </div>
+            <span style={{ fontSize: 12, color: SUBTLE }}>· Click any funnel piece or diff row to snap it in or out</span>
+          </div>
+        )}
 
         <div className="grid grid-cols-12 gap-5">
           {/* LEFT — nested funnel stack */}
