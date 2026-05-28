@@ -1774,6 +1774,33 @@ function S07dOrgLoop() {
                 <b style={{ color: `hsl(${GREEN})` }}>Every commit compounds.</b> Marginal cost per moment of work trends down as the substrate grows. Vision and hiring shape the funnels. Moments of work evolve them.
               </p>
             </div>
+
+            {/* Operator picker — explicit clickable list, mirrors the funnel network */}
+            <div className="rounded-xl border bg-white px-3 py-2.5"
+              style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.14em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
+                Try another operator
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {OPERATORS.map((op, i) => {
+                  const sel = i === traceIdx;
+                  return (
+                    <button key={op.role}
+                      onClick={() => { setMode("trace"); setTraceIdx(i); }}
+                      className="rounded-full border px-2 py-1 transition-all"
+                      style={{
+                        fontSize: 10.5,
+                        fontWeight: sel ? 800 : 600,
+                        color: sel ? "white" : TEXT,
+                        background: sel ? `hsl(${op.color})` : "white",
+                        borderColor: sel ? `hsl(${op.color})` : `hsl(${op.color} / 0.35)`,
+                      }}>
+                      {op.role}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
