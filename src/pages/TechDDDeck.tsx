@@ -1353,119 +1353,103 @@ function S07cFunnel() {
 
           {/* RIGHT — live prompt screen */}
           <div className="col-span-5 flex flex-col gap-3" style={{ height: 720 }}>
-            {/* Device frame */}
-            <div className="rounded-2xl border overflow-hidden flex-1 flex flex-col"
-              style={{ borderColor: CHROME_BORDER, background: "white", boxShadow: "0 8px 28px rgba(0,0,0,0.06)" }}>
-              {/* Title bar */}
+            {/* 1 · HERO PROMPT — the operator's actual line, big */}
+            <div className="rounded-2xl border-2 px-5 py-4"
+              style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: "white", boxShadow: "0 8px 28px rgba(0,0,0,0.06)" }}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
+                  Operator prompt · the moment of work
+                </span>
+                <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded border"
+                  style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.5)` }}>
+                  <Send size={10} /> resolve
+                </span>
+              </div>
+              <p style={{ fontSize: 22, color: TEXT, fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
+                "Draft the Series-B narrative for tomorrow's board."
+              </p>
+              <p className="mt-2" style={{ fontSize: 11.5, color: MUTED }}>
+                One line from the operator. The funnel contributes the other {enforcedCount} of {LAYERS.length} layers, automatically.
+              </p>
+            </div>
+
+            {/* 2 · OUTCOME PREVIEW — what actually changes when layers snap in/out */}
+            <div className="rounded-2xl border flex-1 overflow-hidden flex flex-col"
+              style={{ borderColor: CHROME_BORDER, background: "white" }}>
               <div className="flex items-center gap-2 px-4 py-2 border-b" style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
                 <div className="flex gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ff5f57" }} />
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ffbd2e" }} />
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28c840" }} />
                 </div>
-                <span className="font-mono" style={{ fontSize: 11, color: SUBTLE, marginLeft: 8 }}>liza · moment of work</span>
+                <span className="font-mono" style={{ fontSize: 11, color: SUBTLE, marginLeft: 8 }}>liza · resolved output</span>
                 <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-full border"
-                  style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.08)` }}>
-                  <ShieldCheck size={10} /> Audit container
+                  style={{
+                    fontSize: 10,
+                    color: fullyGoverned ? `hsl(${GREEN})` : `hsl(${RED})`,
+                    borderColor: fullyGoverned ? `hsl(${GREEN} / 0.4)` : `hsl(${RED} / 0.5)`,
+                    background: fullyGoverned ? `hsl(${GREEN} / 0.08)` : `hsl(${RED} / 0.06)`,
+                  }}>
+                  {fullyGoverned ? <><ShieldCheck size={10} /> Governed</> : <><AlertTriangle size={10} /> Ungoverned · {LAYERS.length - enforcedCount} missing</>}
                 </span>
               </div>
-
-              {/* Compiled system context */}
-              <div className="px-4 pt-3 pb-2 overflow-y-auto" style={{ flex: 1 }}>
+              <div className="px-4 py-3 flex-1 overflow-y-auto">
                 <p className="font-mono uppercase tracking-[0.14em] mb-2" style={{ fontSize: 10, color: SUBTLE }}>
-                  Compiled context · injected before the model sees the prompt
+                  How the outcome changes · snap a layer out to compare
                 </p>
-                <div className="space-y-1.5">
-                  {LAYERS.map((L, i) => {
-                    const on = active[L.id];
-                    const c = L.color;
-                    const isHover = hovered === L.id;
-                    const Icon = L.icon;
-                    return (
-                      <div key={L.id}
-                        className="rounded-md border px-2.5 py-1.5 transition-all"
-                        onMouseEnter={() => setHovered(L.id)}
-                        onMouseLeave={() => setHovered(null)}
-                        style={{
-                          borderColor: on ? `hsl(${c} / ${isHover ? 0.9 : 0.4})` : `hsl(${RED} / 0.45)`,
-                          background: on ? (isHover ? `hsl(${c} / 0.10)` : `hsl(${c} / 0.04)`) : `hsl(${RED} / 0.05)`,
-                        }}
-                      >
-                        <div className="flex items-center gap-1.5 mb-0.5">
-                          <Icon size={11} style={{ color: on ? `hsl(${c})` : `hsl(${RED})` }} />
-                          <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: on ? `hsl(${c})` : `hsl(${RED})`, fontWeight: 700 }}>
-                            {String(orderIndex(i)).padStart(2, "0")} · {L.label}
-                          </span>
-                          <span className="ml-auto" style={{ fontSize: 9, color: SUBTLE }}>
-                            {on ? "enforced" : "missing"}
-                          </span>
-                        </div>
-                        {on ? (
-                          <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.35 }}>
-                            <span style={{ color: SUBTLE }}>›</span> {L.line}
-                          </p>
-                        ) : (
-                          <p style={{ fontSize: 11.5, color: `hsl(${RED})`, lineHeight: 1.35 }}>
-                            ⚠ no rule applied — operator improvises, drift compounds
-                          </p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+                {(() => {
+                  // Each layer toggles a specific visible mutation in the draft output.
+                  const lines = [
+                    { id: "intent" as LayerId,    on: "Anchored to the Q4 expansion thesis. EU-first framing.",                 off: "Generic growth story. No anchor to current thesis." },
+                    { id: "governance" as LayerId, on: "All external claims cited. No PII to vendor model. GDPR safe.",         off: "Uncited claims. Risk of PII leak. Legal must re-review." },
+                    { id: "standards" as LayerId,  on: "Investor Memo v3.1 structure. House tone. Approved benchmarks.",       off: "Free-form structure. Off-tone. Mixed benchmark sources." },
+                    { id: "team" as LayerId,       on: "Reuses Series-A framing. Consistent with last week's board update.",   off: "Contradicts last board update. Reviewers will catch the drift." },
+                    { id: "preference" as LayerId, on: "Bullet-first. No hedging. Concise, German-English voice.",              off: "Prose-heavy. Hedged. Operator must rewrite by hand." },
+                  ];
+                  return (
+                    <div className="space-y-1.5">
+                      {lines.map(l => {
+                        const layer = LAYERS.find(L => L.id === l.id)!;
+                        const on = active[l.id];
+                        return (
+                          <div key={l.id}
+                            onClick={() => toggle(l.id)}
+                            onMouseEnter={() => setHovered(l.id)}
+                            onMouseLeave={() => setHovered(null)}
+                            className="rounded-md border px-2.5 py-1.5 cursor-pointer transition-all flex items-start gap-2"
+                            style={{
+                              borderColor: on ? `hsl(${layer.color} / 0.45)` : `hsl(${RED} / 0.45)`,
+                              background: on ? `hsl(${layer.color} / 0.05)` : `hsl(${RED} / 0.05)`,
+                            }}
+                          >
+                            <span className="mt-0.5" style={{ fontSize: 12, color: on ? `hsl(${layer.color})` : `hsl(${RED})`, fontWeight: 800 }}>
+                              {on ? "✓" : "✗"}
+                            </span>
+                            <div className="flex-1">
+                              <span className="font-mono uppercase tracking-[0.1em] mr-1.5" style={{ fontSize: 9.5, color: on ? `hsl(${layer.color})` : `hsl(${RED})`, fontWeight: 800 }}>
+                                {layer.label}
+                              </span>
+                              <span style={{ fontSize: 12, color: on ? TEXT : `hsl(${RED})`, lineHeight: 1.35 }}>
+                                {on ? l.on : l.off}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
-
-              {/* Prompt input */}
-              <div className="border-t px-4 py-3" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-                {/* Consequence banner: surfaces what happens when layers are off */}
-                {LAYERS.some(L => !active[L.id]) ? (
-                  <div className="rounded-md border-2 px-2.5 py-1.5 mb-2 flex items-center gap-2"
-                    style={{ borderColor: `hsl(${RED} / 0.55)`, background: `hsl(${RED} / 0.06)` }}>
-                    <AlertTriangle size={13} style={{ color: `hsl(${RED})` }} />
-                    <span style={{ fontSize: 11, color: `hsl(${RED})`, fontWeight: 700 }}>
-                      Ungoverned compile.
-                    </span>
-                    <span style={{ fontSize: 11, color: TEXT }}>
-                      {LAYERS.filter(L => !active[L.id]).length} of {LAYERS.length} layers missing. The operator must improvise the gap, every time. Drift compounds silently.
-                    </span>
-                  </div>
-                ) : (
-                  <div className="rounded-md border px-2.5 py-1.5 mb-2 flex items-center gap-2"
-                    style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.06)` }}>
-                    <CheckCircle2 size={13} style={{ color: `hsl(${GREEN})` }} />
-                    <span style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 700 }}>
-                      Fully governed compile.
-                    </span>
-                    <span style={{ fontSize: 11, color: TEXT }}>
-                      All 5 layers enforced. The operator writes one line. Everything else is inherited.
-                    </span>
-                  </div>
-                )}
-                <p className="font-mono uppercase tracking-[0.14em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
-                  Operator prompt · the moment of work
-                </p>
-                <div className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2" style={{ borderColor: CHROME_BORDER }}>
-                  <MessageSquare size={14} style={{ color: SUBTLE }} />
-                  <span style={{ fontSize: 12.5, color: TEXT }}>
-                    Draft the Series-B narrative for tomorrow's board.
-                  </span>
-                  <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded border"
-                    style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.5)` }}>
-                    <Send size={10} /> resolve
-                  </span>
-                </div>
-                <p className="mt-1.5" style={{ fontSize: 11, color: MUTED }}>
-                  The operator writes one line. The funnel above contributes the other {LAYERS.filter(L => active[L.id]).length} of {LAYERS.length} layers. Automatically. Comparably. Audited.
+              <div className="border-t px-4 py-2.5"
+                style={{ borderColor: CHROME_BORDER, background: fullyGoverned ? `hsl(${GREEN} / 0.06)` : `hsl(${RED} / 0.05)` }}>
+                <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
+                  {fullyGoverned ? (
+                    <><b style={{ color: `hsl(${GREEN})` }}>Fully governed compile.</b> The operator writes one line. Everything else is inherited.</>
+                  ) : (
+                    <><b style={{ color: `hsl(${RED})` }}>Ungoverned compile.</b> The operator must improvise the gap. Every time. Drift compounds silently.</>
+                  )}
                 </p>
               </div>
-            </div>
-
-            {/* Conclusion strip */}
-            <div className="rounded-xl border-2 px-4 py-3"
-              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
-              <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.4 }}>
-                <b style={{ color: `hsl(${GREEN})` }}>Same funnel, either direction.</b> CEO down or operator up. Every prompt at the spout inherits every layer above it. That is what makes LIZA infrastructure, not a use-case POC.
-              </p>
             </div>
           </div>
         </div>
