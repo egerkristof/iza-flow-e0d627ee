@@ -1209,24 +1209,25 @@ function S07cFunnel() {
   const [hovered, setHovered] = useState<LayerId | null>(null);
   const [mode, setMode] = useState<"topdown" | "bottomup">("topdown");
 
-  // ── Narrative driver: 3 beats, each rewrites `active` and reveals more UI ──
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  useEffect(() => {
-    if (step === 1) setActive({ intent: false, governance: false, standards: false, team: false, preference: false });
-    if (step === 2) setActive({ intent: false, governance: false, standards: false, team: false, preference: false });
-    if (step === 3) setActive({ intent: true,  governance: true,  standards: true,  team: true,  preference: true  });
-  }, [step]);
-  const STEPS = [
-    { n: 1, k: "The prompt",   sub: "One line. That is all the operator types." },
-    { n: 2, k: "The gap",      sub: "Without governance, every layer is missing. The operator improvises." },
-    { n: 3, k: "The compile",  sub: "The funnel compiles five layers. Click any to remove and watch the output drift." },
-  ] as const;
-  const curStep = STEPS.find(s => s.n === step)!;
+  // ── Progressive reveal: layers fade in one by one on the same canvas. ──
+  // 0 = only the prompt exists; 5 = full funnel + full interactivity.
+  const [revealed, setRevealed] = useState(0);
+  const idxOf = (id: LayerId) => LAYERS.findIndex(L => L.id === id);
+  const isShown = (i: number) => i < revealed;
+  const REVEAL_CAPTIONS = [
+    "Step 0 of 5. One line. That is everything the operator types. What is missing to produce a board-ready answer?",
+    "Step 1 of 5. Strategic intent enters first. The prompt now knows which thesis it lives inside.",
+    "Step 2 of 5. Governance and risk snap in. Legal, residency and citation rules become non-negotiable.",
+    "Step 3 of 5. Domain standards land. Structure, tone and approved benchmarks are no longer up for debate.",
+    "Step 4 of 5. Team context arrives. Prior decisions, artefacts and roles keep the output consistent with the org.",
+    "Step 5 of 5. Personal preference closes the funnel. Compile complete. Click any layer to remove it and watch the output drift.",
+  ];
+  const fullyRevealed = revealed === LAYERS.length;
 
   const toggle = (id: LayerId) => setActive(a => ({ ...a, [id]: !a[id] }));
 
-  const enforcedCount = LAYERS.filter(L => active[L.id]).length;
-  const fullyGoverned = enforcedCount === LAYERS.length;
+  const enforcedCount = LAYERS.filter((L, i) => isShown(i) && active[L.id]).length;
+  const fullyGoverned = fullyRevealed && enforcedCount === LAYERS.length;
 
   // Funnel geometry — side view, nested trapezoids.
   // Wide intake at top, narrow spout at bottom (the prompt).
