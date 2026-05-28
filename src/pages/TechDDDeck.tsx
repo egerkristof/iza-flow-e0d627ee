@@ -174,10 +174,16 @@ function S01Cover() {
         <h1 className="font-bold leading-[1.02]" style={{ fontSize: 104, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
           Architecture, State &amp; Margin.
         </h1>
-        <p className="mt-10 mx-auto" style={{ fontSize: 30, color: DARK_MUTED, maxWidth: 1300, lineHeight: 1.35 }}>
-          A walk-through of the LIZA OS cognitive infrastructure: the semantic layer,
-          the AACE orchestration loop, the artifact graph, and the value-based metering model.
+        <p className="mt-10 mx-auto" style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1400, lineHeight: 1.35 }}>
+          AACE — the <span style={{ color: DARK_TEXT, fontWeight: 600 }}>Active Adaptive Context Engine</span> — compiles every prompt against typed org knowledge.
         </p>
+        <div className="mt-10 flex items-center justify-center gap-8" style={{ fontSize: 22, color: DARK_TEXT }}>
+          <span><b style={{ color: `hsl(${GREEN})` }}>$0.40</b> per decision</span>
+          <span style={{ color: "hsl(0 0% 100% / 0.25)" }}>·</span>
+          <span><b style={{ color: `hsl(${GREEN})` }}>95%</b> gross margin</span>
+          <span style={{ color: "hsl(0 0% 100% / 0.25)" }}>·</span>
+          <span><b style={{ color: `hsl(${GREEN})` }}>€23</b> manual cost displaced</span>
+        </div>
       </div>
       <div className="absolute bottom-16 flex items-center gap-8" style={{ color: DARK_MUTED, fontSize: 16, letterSpacing: "0.15em" }}>
         <span className="uppercase font-semibold">Phase 1 · Paradigm</span>
