@@ -1533,11 +1533,11 @@ function S07dOrgLoop() {
       <div className="relative z-10">
         <ArcStepper current={3} next="the instrument panel" />
         <Tag label="The network. Every moment of work is a commit." color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+        <h2 className="font-bold leading-[1.02] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           The org learns <span style={{ color: `hsl(${GREEN})` }}>laterally</span>. In real time. At the speed of work.
         </h2>
-        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
-          Every person carries the same five-layer funnel. Every moment of work commits a tiny update into a shared substrate. The substrate then re-enters every other operator's next moment of work. No offsite required.
+        <p style={{ fontSize: 14, color: SUBTLE, marginBottom: 12 }}>
+          Click any operator on the network to trace their commit through the substrate.
         </p>
 
         <div className="grid grid-cols-12 gap-5">
