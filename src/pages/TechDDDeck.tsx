@@ -1185,9 +1185,9 @@ function S07cFunnel() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="The moment of work · Side view" color={GREEN} />
+        <Tag label="Every prompt is a compile · the moment of work" color={GREEN} />
         <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          Every prompt carries five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span> — for free.
+          Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span> — automatically.
         </h2>
         <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 14 }}>
           Each nested funnel is an enforcement layer. Snap a layer out and the prompt below it goes ungoverned. Build the stack from the C-suite down, or from the operator up — both directions converge on the same moment of work.
