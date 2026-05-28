@@ -104,7 +104,7 @@ function Footer({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-const TOTAL = 17;
+const TOTAL = 18;
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SLIDE 01 — COVER
@@ -1133,6 +1133,271 @@ function S07bUnique() {
             <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.35 }}>
               <b style={{ color: `hsl(${GREEN})` }}>LIZA is the only node connected to all four streams</b> inside one audit container. Every competitor covers a slice. We collect the slices, semantically, and govern the convergence.
             </p>
+          </div>
+        </div>
+      </div>
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 07c — NESTED FUNNELS · SIDE VIEW + LIVE PROMPT SCREEN
+// ═════════════════════════════════════════════════════════════════════════════
+function S07cFunnel() {
+  // Each layer is a nested funnel piece. Top of stack is widest "intake",
+  // bottom of stack tapers to the operator's prompt — the moment of work.
+  type LayerId = "intent" | "governance" | "standards" | "team" | "preference";
+  const LAYERS: {
+    id: LayerId; label: string; sub: string; chip: string;
+    color: string; icon: typeof Compass; line: string;
+  }[] = [
+    { id: "intent",     label: "Strategic Intent",     sub: "CEO mandates · OKRs · thesis",          chip: "C-suite",     color: PURPLE, icon: Compass,       line: "Operate within Q4 expansion thesis · prefer EU-first launches" },
+    { id: "governance", label: "Governance & Risk",    sub: "Legal · compliance · data residency",   chip: "Legal/Risk",  color: ACCENT, icon: ShieldCheck,   line: "No PII to vendor models · GDPR · cite source for every external claim" },
+    { id: "standards",  label: "Domain Standards",     sub: "Playbooks · SOPs · best practice",      chip: "Function lead", color: GOLD, icon: FileSignature, line: "Use the Investor Memo v3.1 structure · house tone · approved benchmarks" },
+    { id: "team",       label: "Team Context",         sub: "Prior decisions · artifacts · roles",   chip: "Team",        color: GREEN,  icon: Users,         line: "Reuse the Series-A deck framing · do not contradict last week's board update" },
+    { id: "preference", label: "Personal Preference",  sub: "Operator style · learned signals",      chip: "Operator",    color: GREEN,  icon: UserCheck,     line: "Bullet-first · drop hedging · German English · concise" },
+  ];
+
+  const [active, setActive] = useState<Record<LayerId, boolean>>({
+    intent: true, governance: true, standards: true, team: true, preference: true,
+  });
+  const [hovered, setHovered] = useState<LayerId | null>(null);
+  const [mode, setMode] = useState<"topdown" | "bottomup">("topdown");
+
+  const toggle = (id: LayerId) => setActive(a => ({ ...a, [id]: !a[id] }));
+
+  // Funnel geometry — side view, nested trapezoids.
+  // Wide intake at top, narrow spout at bottom (the prompt).
+  // Each layer's bottom width = next layer's top width => they nest perfectly.
+  const WIDTHS = [820, 660, 520, 400, 300, 180]; // 6 anchors for 5 layers
+  const LAYER_H = 110;
+  const STACK_TOP = 80;
+  const CX = 460;
+
+  const orderIndex = (i: number) =>
+    mode === "topdown" ? i + 1 : LAYERS.length - i;
+
+  return (
+    <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber n={8} total={TOTAL} />
+      <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
+
+      <div className="relative z-10">
+        <Tag label="The moment of work · Side view" color={GREEN} />
+        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+          Every prompt carries five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span> — for free.
+        </h2>
+        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 14 }}>
+          Each nested funnel is an enforcement layer. Snap a layer out and the prompt below it goes ungoverned. Build the stack from the C-suite down, or from the operator up — both directions converge on the same moment of work.
+        </p>
+
+        {/* Mode toggle */}
+        <div className="flex items-center gap-3 mb-4">
+          <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: SUBTLE }}>Build direction</span>
+          <div className="inline-flex rounded-lg border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
+            {([
+              { k: "topdown" as const,  l: "Top-down · guardrails first" },
+              { k: "bottomup" as const, l: "Bottom-up · operator first" },
+            ]).map(o => (
+              <button
+                key={o.k}
+                onClick={() => setMode(o.k)}
+                className="px-3 py-1.5 text-[12px] font-semibold transition-colors"
+                style={{
+                  background: mode === o.k ? `hsl(${GREEN} / 0.12)` : "white",
+                  color: mode === o.k ? `hsl(${GREEN})` : TEXT,
+                }}
+              >{o.l}</button>
+            ))}
+          </div>
+          <span style={{ fontSize: 12, color: SUBTLE }}>· Click any funnel piece to snap it in or out</span>
+        </div>
+
+        <div className="grid grid-cols-12 gap-5">
+          {/* LEFT — nested funnel stack */}
+          <div className="col-span-7 rounded-2xl border relative"
+            style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 720 }}>
+            <svg viewBox="0 0 920 720" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
+              {/* Centerline */}
+              <line x1={CX} y1={50} x2={CX} y2={700} stroke={`hsl(${SUBTLE} / 0.18)`} strokeWidth={1} strokeDasharray="2 4" />
+
+              {LAYERS.map((L, i) => {
+                const yTop = STACK_TOP + i * LAYER_H;
+                const yBot = yTop + LAYER_H;
+                const wTop = WIDTHS[i];
+                const wBot = WIDTHS[i + 1];
+                const on = active[L.id];
+                const isHover = hovered === L.id;
+                const c = L.color;
+                const pts = [
+                  [CX - wTop / 2, yTop],
+                  [CX + wTop / 2, yTop],
+                  [CX + wBot / 2, yBot],
+                  [CX - wBot / 2, yBot],
+                ].map(p => p.join(",")).join(" ");
+                return (
+                  <g key={L.id}
+                    onMouseEnter={() => setHovered(L.id)}
+                    onMouseLeave={() => setHovered(null)}
+                    onClick={() => toggle(L.id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <polygon
+                      points={pts}
+                      fill={on ? `hsl(${c} / ${isHover ? 0.22 : 0.14})` : `hsl(${RED} / 0.06)`}
+                      stroke={on ? `hsl(${c} / ${isHover ? 0.95 : 0.7})` : `hsl(${RED} / 0.45)`}
+                      strokeWidth={isHover ? 2.5 : 1.5}
+                      strokeDasharray={on ? "0" : "5 4"}
+                    />
+                    {/* Order badge */}
+                    <circle cx={CX - wTop / 2 - 18} cy={yTop + LAYER_H / 2} r={14}
+                      fill="white" stroke={on ? `hsl(${c})` : `hsl(${RED} / 0.5)`} strokeWidth={1.5} />
+                    <text x={CX - wTop / 2 - 18} y={yTop + LAYER_H / 2 + 4}
+                      textAnchor="middle" fontSize={12} fontWeight={700}
+                      fill={on ? `hsl(${c})` : `hsl(${RED})`}>
+                      {orderIndex(i)}
+                    </text>
+                    {/* Label centered inside the trapezoid */}
+                    <text x={CX} y={yTop + LAYER_H / 2 - 4}
+                      textAnchor="middle" fontSize={16} fontWeight={800}
+                      fill={on ? TEXT : `hsl(${RED})`}>
+                      {L.label}
+                    </text>
+                    <text x={CX} y={yTop + LAYER_H / 2 + 16}
+                      textAnchor="middle" fontSize={11}
+                      fill={on ? MUTED : `hsl(${RED} / 0.85)`}>
+                      {on ? L.sub : "ungoverned · context leaks"}
+                    </text>
+                    {/* Right-side chip */}
+                    <g transform={`translate(${CX + wTop / 2 + 14}, ${yTop + LAYER_H / 2 - 9})`}>
+                      <rect width={92} height={18} rx={4}
+                        fill={on ? `hsl(${c} / 0.12)` : `hsl(${RED} / 0.08)`}
+                        stroke={on ? `hsl(${c} / 0.5)` : `hsl(${RED} / 0.4)`} strokeWidth={1} />
+                      <text x={46} y={13} textAnchor="middle" fontSize={10} fontWeight={700}
+                        fill={on ? `hsl(${c})` : `hsl(${RED})`}>{L.chip}</text>
+                    </g>
+                  </g>
+                );
+              })}
+
+              {/* Spout / moment of work */}
+              <g>
+                <rect x={CX - 110} y={640} width={220} height={54} rx={10}
+                  fill="white" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth={2} />
+                <text x={CX} y={663} textAnchor="middle" fontSize={13} fontWeight={800} fill={TEXT}>
+                  LIZA · The moment of work
+                </text>
+                <text x={CX} y={681} textAnchor="middle" fontSize={11} fill={MUTED}>
+                  Operator prompt resolves here
+                </text>
+                {/* Drip dots */}
+                {[0, 1, 2].map(d => (
+                  <circle key={d} cx={CX} cy={612 + d * 8} r={2.5} fill={`hsl(${GREEN} / ${0.4 + d * 0.2})`} />
+                ))}
+              </g>
+            </svg>
+
+            {/* Intake hint top-left */}
+            <div className="absolute top-3 left-4 font-mono uppercase tracking-[0.14em]"
+              style={{ fontSize: 10, color: SUBTLE }}>Widest intake · all change enters here</div>
+            <div className="absolute bottom-3 left-4 font-mono uppercase tracking-[0.14em]"
+              style={{ fontSize: 10, color: SUBTLE }}>Narrowest spout · the prompt</div>
+          </div>
+
+          {/* RIGHT — live prompt screen */}
+          <div className="col-span-5 flex flex-col gap-3" style={{ height: 720 }}>
+            {/* Device frame */}
+            <div className="rounded-2xl border overflow-hidden flex-1 flex flex-col"
+              style={{ borderColor: CHROME_BORDER, background: "white", boxShadow: "0 8px 28px rgba(0,0,0,0.06)" }}>
+              {/* Title bar */}
+              <div className="flex items-center gap-2 px-4 py-2 border-b" style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
+                <div className="flex gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ff5f57" }} />
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ffbd2e" }} />
+                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28c840" }} />
+                </div>
+                <span className="font-mono" style={{ fontSize: 11, color: SUBTLE, marginLeft: 8 }}>liza · moment of work</span>
+                <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-full border"
+                  style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.08)` }}>
+                  <ShieldCheck size={10} /> Audit container
+                </span>
+              </div>
+
+              {/* Compiled system context */}
+              <div className="px-4 pt-3 pb-2 overflow-y-auto" style={{ flex: 1 }}>
+                <p className="font-mono uppercase tracking-[0.14em] mb-2" style={{ fontSize: 10, color: SUBTLE }}>
+                  Compiled context · injected before the model sees the prompt
+                </p>
+                <div className="space-y-1.5">
+                  {LAYERS.map((L, i) => {
+                    const on = active[L.id];
+                    const c = L.color;
+                    const isHover = hovered === L.id;
+                    const Icon = L.icon;
+                    return (
+                      <div key={L.id}
+                        className="rounded-md border px-2.5 py-1.5 transition-all"
+                        onMouseEnter={() => setHovered(L.id)}
+                        onMouseLeave={() => setHovered(null)}
+                        style={{
+                          borderColor: on ? `hsl(${c} / ${isHover ? 0.9 : 0.4})` : `hsl(${RED} / 0.45)`,
+                          background: on ? (isHover ? `hsl(${c} / 0.10)` : `hsl(${c} / 0.04)`) : `hsl(${RED} / 0.05)`,
+                        }}
+                      >
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <Icon size={11} style={{ color: on ? `hsl(${c})` : `hsl(${RED})` }} />
+                          <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: on ? `hsl(${c})` : `hsl(${RED})`, fontWeight: 700 }}>
+                            {String(orderIndex(i)).padStart(2, "0")} · {L.label}
+                          </span>
+                          <span className="ml-auto" style={{ fontSize: 9, color: SUBTLE }}>
+                            {on ? "enforced" : "missing"}
+                          </span>
+                        </div>
+                        {on ? (
+                          <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.35 }}>
+                            <span style={{ color: SUBTLE }}>›</span> {L.line}
+                          </p>
+                        ) : (
+                          <p style={{ fontSize: 11.5, color: `hsl(${RED})`, lineHeight: 1.35 }}>
+                            ⚠ no rule applied — operator improvises, drift compounds
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Prompt input */}
+              <div className="border-t px-4 py-3" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+                <p className="font-mono uppercase tracking-[0.14em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
+                  Operator prompt · the moment of work
+                </p>
+                <div className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2" style={{ borderColor: CHROME_BORDER }}>
+                  <MessageSquare size={14} style={{ color: SUBTLE }} />
+                  <span style={{ fontSize: 12.5, color: TEXT }}>
+                    Draft the Series-B narrative for tomorrow's board.
+                  </span>
+                  <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded border"
+                    style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.5)` }}>
+                    <Send size={10} /> resolve
+                  </span>
+                </div>
+                <p className="mt-1.5" style={{ fontSize: 11, color: MUTED }}>
+                  The operator writes one line. The funnel above contributes the other {LAYERS.filter(L => active[L.id]).length} of {LAYERS.length} layers — automatically, comparably, and audited.
+                </p>
+              </div>
+            </div>
+
+            {/* Conclusion strip */}
+            <div className="rounded-xl border-2 px-4 py-3"
+              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.4 }}>
+                <b style={{ color: `hsl(${GREEN})` }}>Same funnel, either direction.</b> Whether you start from the CEO or from the operator, every prompt at the spout inherits every layer above it. That is what makes LIZA infrastructure, not a use-case POC.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -2453,6 +2718,7 @@ const SLIDES = [
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
+  { id: "funnel-stack", title: "Nested Funnels · The Moment of Work", component: <S07cFunnel /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
   { id: "os-map", title: "OS Map", component: <S04OSMap /> },
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
