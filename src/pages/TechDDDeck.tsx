@@ -3986,10 +3986,10 @@ function S07fInstrument() {
                     <p className="font-mono uppercase tracking-[0.06em]" style={{ fontSize: 7.5, color: `hsl(${v.color})`, fontWeight: 800 }}>leading · live</p>
                   </div>
                   <p style={{ fontSize: 9.5, color: `hsl(${v.color})`, fontWeight: 800, lineHeight: 1.15 }}>{v.lead}</p>
-                  <p style={{ fontSize: 8.5, color: MUTED, marginBottom: 4 }}>{v.leadS}</p>
-                  {/* Causal arrow */}
-                  <p className="font-mono" style={{ fontSize: 8, color: isMatch ? TEXT : SUBTLE, fontStyle: "italic", lineHeight: 1.2, marginBottom: 4 }}>
-                    ↓ {v.link}
+                  <p style={{ fontSize: 8.5, color: MUTED, marginBottom: 4 }}>{v.leadNow}</p>
+                  {/* Concrete causal mechanism with example numbers */}
+                  <p style={{ fontSize: 8, color: isMatch ? TEXT : SUBTLE, lineHeight: 1.3, marginBottom: 5, fontStyle: "italic" }}>
+                    ↓ {v.mechanism}
                   </p>
                   {/* Lagging board metric (still tracked, still matters) */}
                   <div className="flex items-center gap-1 mb-0.5 pt-1 border-t" style={{ borderColor: CHROME_BORDER }}>
