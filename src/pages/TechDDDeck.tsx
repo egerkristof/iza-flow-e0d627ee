@@ -1618,14 +1618,14 @@ function S07cFunnel() {
                           return (
                             <div key={l.id}
                               className="rounded-md border border-dashed px-2.5 py-1.5 flex items-center gap-2"
-                              style={{ borderColor: `hsl(${SUBTLE} / 0.4)`, background: CHROME_BG, opacity: 0.7 }}
+                              style={{ borderColor: `hsl(${SUBTLE} / 0.4)`, background: CHROME_BG, opacity: isScaffold ? 0.95 : 0.7 }}
                             >
                               <span style={{ fontSize: 12, color: SUBTLE, fontWeight: 800 }}>·</span>
                               <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: SUBTLE, fontWeight: 700 }}>
                                 {layer.label}
                               </span>
                               <span style={{ fontSize: 11, color: SUBTLE, fontStyle: "italic" }}>
-                                not yet revealed
+                                {isScaffold ? layer.scaffold : "not yet revealed"}
                               </span>
                             </div>
                           );
@@ -1664,7 +1664,11 @@ function S07cFunnel() {
                 style={{ borderColor: CHROME_BORDER, background: !fullyRevealed ? CHROME_BG : fullyGoverned ? `hsl(${GREEN} / 0.06)` : `hsl(${RED} / 0.05)` }}>
                 <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
                   {!fullyRevealed ? (
-                    <><b style={{ color: SUBTLE }}>Compile in progress.</b> {LAYERS.length - revealed} of {LAYERS.length} layers still to reveal. Each one closes a gap the operator would otherwise have to improvise.</>
+                    isScaffold ? (
+                      <><b style={{ color: SUBTLE }}>Scaffold ready.</b> The funnel is in place but empty. Press reveal next to start landing each layer of governed context, one at a time.</>
+                    ) : (
+                      <><b style={{ color: SUBTLE }}>Compile in progress.</b> {LAYERS.length - Math.max(0, revealed - 1)} of {LAYERS.length} layers still to reveal. Each one closes a gap the operator would otherwise have to improvise.</>
+                    )
                   ) : fullyGoverned ? (
                     <><b style={{ color: `hsl(${GREEN})` }}>Fully governed compile.</b> The operator writes one line. Everything else is inherited.</>
                   ) : (
