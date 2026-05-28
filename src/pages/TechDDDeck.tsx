@@ -3218,6 +3218,9 @@ function S10bACVBridge() {
 }
 
 const SLIDES = [
+// ═════════════════════════════════════════════════════════════════════════════
+// (placeholder anchor — S07fInstrument is defined above SLIDES below)
+// ═════════════════════════════════════════════════════════════════════════════
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
