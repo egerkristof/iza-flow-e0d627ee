@@ -1253,55 +1253,61 @@ function S07cFunnel() {
           Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span>. Automatically.
         </h2>
 
-        {/* ── Narrative stepper · 3 beats ── */}
+        {/* ── Progressive reveal control ── */}
         <div className="flex items-center gap-4 mb-4 rounded-xl border px-3 py-2"
           style={{ borderColor: CHROME_BORDER, background: "white" }}>
           <button
-            onClick={() => setStep(s => (s > 1 ? ((s - 1) as 1 | 2 | 3) : s))}
-            disabled={step === 1}
+            onClick={() => setRevealed(r => Math.max(0, r - 1))}
+            disabled={revealed === 0}
             className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
             style={{ fontSize: 10, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}
           >prev</button>
-          <div className="flex items-center gap-2">
-            {STEPS.map(s => {
-              const on = s.n === step;
-              const done = s.n < step;
+
+          {/* 5-dot progress: each dot = one revealed layer */}
+          <div className="flex items-center gap-1.5">
+            {LAYERS.map((L, i) => {
+              const on = i < revealed;
               return (
-                <button key={s.n} onClick={() => setStep(s.n)}
-                  className="flex items-center gap-1.5 rounded-full px-2.5 py-1 transition-colors"
+                <button key={L.id} onClick={() => setRevealed(i + 1)}
+                  title={`Reveal up to: ${L.label}`}
+                  className="rounded-full transition-all"
                   style={{
-                    background: on ? `hsl(${GREEN} / 0.12)` : done ? `hsl(${GREEN} / 0.05)` : CARD_ALT,
-                    border: `1px solid hsl(${on ? GREEN : done ? GREEN : SUBTLE} / ${on ? 0.6 : 0.3})`,
-                  }}>
-                  <span className="font-mono" style={{ fontSize: 10, fontWeight: 800, color: on ? `hsl(${GREEN})` : SUBTLE }}>
-                    0{s.n}
-                  </span>
-                  <span style={{ fontSize: 11.5, color: on ? TEXT : MUTED, fontWeight: on ? 700 : 500 }}>{s.k}</span>
-                </button>
+                    width: on ? 22 : 10, height: 10,
+                    background: on ? `hsl(${L.color})` : CHROME_BG,
+                    border: `1px solid hsl(${on ? L.color : SUBTLE} / ${on ? 0.9 : 0.4})`,
+                  }}
+                />
               );
             })}
-          </div>
-          <span style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.3, flex: 1 }}>
-            <span className="font-mono uppercase tracking-[0.12em] mr-2" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>
-              Step {step} of 3
+            <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
+              {revealed} / {LAYERS.length} layers
             </span>
-            {curStep.sub}
+          </div>
+
+          <span style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.35, flex: 1 }}>
+            {REVEAL_CAPTIONS[revealed]}
           </span>
+
           <button
-            onClick={() => setStep(s => (s < 3 ? ((s + 1) as 1 | 2 | 3) : s))}
-            disabled={step === 3}
+            onClick={() => setRevealed(0)}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: 10, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
+          >reset</button>
+          <button
+            onClick={() => setRevealed(r => Math.min(LAYERS.length, r + 1))}
+            disabled={fullyRevealed}
             className="rounded-md border px-3 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
             style={{
               fontSize: 10, fontWeight: 800,
-              color: step === 3 ? TEXT : "white",
-              background: step === 3 ? CARD_ALT : `hsl(${GREEN})`,
-              borderColor: step === 3 ? CHROME_BORDER : `hsl(${GREEN})`,
+              color: fullyRevealed ? TEXT : "white",
+              background: fullyRevealed ? CARD_ALT : `hsl(${GREEN})`,
+              borderColor: fullyRevealed ? CHROME_BORDER : `hsl(${GREEN})`,
             }}
-          >next ▸</button>
+          >{fullyRevealed ? "compile complete" : "reveal next ▸"}</button>
         </div>
 
-        {/* Mode toggle · only on step 3 when interaction is live */}
-        {step === 3 && (
+        {/* Mode toggle · only after full reveal when interaction is live */}
+        {fullyRevealed && (
           <div className="flex items-center gap-3 mb-4">
             <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: SUBTLE }}>Build direction</span>
             <div className="inline-flex rounded-lg border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
@@ -1325,35 +1331,6 @@ function S07cFunnel() {
         )}
 
         <div className="grid grid-cols-12 gap-5 relative">
-          {/* Step-1 spotlight: dim the diagram, float the prompt alone */}
-          {step === 1 && (
-            <div className="absolute inset-0 z-20 rounded-2xl flex items-center justify-center"
-              style={{ background: "rgba(255,255,255,0.86)", backdropFilter: "blur(2px)" }}>
-              <div className="rounded-2xl border-2 px-10 py-9 text-center max-w-[820px]"
-                style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: "white", boxShadow: "0 24px 60px rgba(0,0,0,0.10)" }}>
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <MessageSquare size={16} style={{ color: `hsl(${GREEN})` }} />
-                  <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
-                    operator prompt · the moment of work
-                  </span>
-                </div>
-                <p style={{ fontSize: 38, color: TEXT, fontWeight: 800, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
-                  "Draft the Series-B narrative for tomorrow's board."
-                </p>
-                <p className="mt-5 mx-auto" style={{ fontSize: 14, color: MUTED, maxWidth: 620, lineHeight: 1.5 }}>
-                  This is everything the operator types. What is missing from this prompt for the AI to produce a board-ready answer?
-                </p>
-                <button
-                  onClick={() => setStep(2)}
-                  className="mt-6 rounded-full px-5 py-2 font-mono uppercase tracking-[0.12em]"
-                  style={{ fontSize: 11, fontWeight: 800, color: "white", background: `hsl(${GREEN})`, border: `1px solid hsl(${GREEN})` }}
-                >
-                  Show what's missing ▸
-                </button>
-              </div>
-            </div>
-          )}
-
           {/* LEFT — nested funnel stack */}
           <div className="col-span-7 rounded-2xl border relative"
             style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 720 }}>
