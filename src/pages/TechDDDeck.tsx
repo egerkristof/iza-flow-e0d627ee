@@ -1663,6 +1663,7 @@ function S07dOrgLoop() {
 
   const [mode, setMode] = useState<"trace" | "ambient">("trace");
   const [traceIdx, setTraceIdx] = useState<number>(2); // start on Sales AE · Q4 price
+  const [hoverStep, setHoverStep] = useState<number | null>(null);
   const TRACE = { operatorIdx: traceIdx, ...TRACES[traceIdx] };
 
   // SVG canvas — left panel
@@ -1881,6 +1882,90 @@ function S07dOrgLoop() {
                   </g>
                 );
               })}
+
+              {/* ── Numbered route badges · 4 steps along the trace path ── */}
+              {mode === "trace" && (() => {
+                const sel = opPos[TRACE.operatorIdx];
+                const selOp = OPERATORS[TRACE.operatorIdx];
+                const dx = CX - sel.x, dy = CY - sel.y;
+                const d = Math.hypot(dx, dy);
+                const ux = dx / d, uy = dy / d;
+                const fx = sel.x + ux * 70;          // funnel exit
+                const fy = sel.y + uy * 70;
+                const tx = CX - ux * (RING_R + 8);   // ring edge
+                const ty = CY - uy * (RING_R + 8);
+                // Pick a representative peer (next operator clockwise) for step 04 anchor.
+                const peerIdx = (TRACE.operatorIdx + 1) % N;
+                const peer = opPos[peerIdx];
+                const pdx = peer.x - CX, pdy = peer.y - CY;
+                const pd = Math.hypot(pdx, pdy);
+                const pux = pdx / pd, puy = pdy / pd;
+                const px = CX + pux * (RING_R + 12);
+                const py = CY + puy * (RING_R + 12);
+                const peerFx = peer.x - pux * 70;
+                const peerFy = peer.y - puy * 70;
+
+                const BADGES = [
+                  { n: 1, x: (sel.x + fx) / 2, y: (sel.y + fy) / 2, color: selOp.color, label: "COMMIT",   tip: "Override fires inside the operator's funnel." },
+                  { n: 2, x: (fx + tx) / 2,     y: (fy + ty) / 2,    color: GOLD,         label: "PROMOTE",  tip: "LIZA proposes a typed primitive update." },
+                  { n: 3, x: CX,                y: CY - RING_R - 14, color: GREEN,        label: "WRITE",    tip: "Lead approves. Versioned, audited write to the shared base." },
+                  { n: 4, x: (px + peerFx) / 2, y: (py + peerFy) / 2, color: GREEN,       label: "RE-ENTER", tip: "Re-injected into every other operator's next compile." },
+                ];
+                return (
+                  <g>
+                    {BADGES.map(b => {
+                      const active = hoverStep === b.n;
+                      const r = active ? 18 : 14;
+                      return (
+                        <g key={b.n}
+                          onMouseEnter={() => setHoverStep(b.n)}
+                          onMouseLeave={() => setHoverStep(null)}
+                          style={{ cursor: "pointer" }}>
+                          {/* halo when active */}
+                          {active && (
+                            <circle cx={b.x} cy={b.y} r={r + 6}
+                              fill={`hsl(${b.color} / 0.18)`} stroke="none" />
+                          )}
+                          <circle cx={b.x} cy={b.y} r={r}
+                            fill="white"
+                            stroke={`hsl(${b.color})`}
+                            strokeWidth={active ? 2.5 : 1.8} />
+                          <text x={b.x} y={b.y + 4.5}
+                            textAnchor="middle"
+                            fontSize={active ? 14 : 12}
+                            fontWeight={900}
+                            fill={`hsl(${b.color})`}>
+                            {b.n}
+                          </text>
+                          {/* always-visible mini label below */}
+                          <text x={b.x} y={b.y + r + 11}
+                            textAnchor="middle"
+                            fontSize={9}
+                            fontWeight={800}
+                            fill={`hsl(${b.color})`}
+                            style={{ letterSpacing: "0.08em" }}>
+                            {b.label}
+                          </text>
+                          {/* tooltip card on hover */}
+                          {active && (
+                            <g transform={`translate(${b.x + 22}, ${b.y - 28})`}>
+                              <rect width={210} height={44} rx={6}
+                                fill="white" stroke={`hsl(${b.color} / 0.7)`} strokeWidth={1.5} />
+                              <text x={10} y={17} fontSize={10} fontWeight={800}
+                                fill={`hsl(${b.color})`} style={{ letterSpacing: "0.08em" }}>
+                                STEP 0{b.n} · {b.label}
+                              </text>
+                              <text x={10} y={33} fontSize={10} fill={TEXT}>
+                                {b.tip}
+                              </text>
+                            </g>
+                          )}
+                        </g>
+                      );
+                    })}
+                  </g>
+                );
+              })()}
             </svg>
           </div>
 
@@ -3646,6 +3731,10 @@ function S07fInstrument() {
   // Unified instrument console. Top: substrate hero metric + live ticker.
   // Two equal halves: Learning-rate KPIs (left) and Human Control Rails (right).
   // Bottom: compact "vs yesterday" comparator strip. No kicker overflow.
+  // 4-beat progressive reveal mirrors the Compile slide. Click any KPI to
+  // highlight the lagging metric it replaces in the vs-yesterday strip.
+  const [revealed, setRevealed] = useState(1);
+  const [activeKpi, setActiveKpi] = useState<number | null>(null);
   const KPIS = [
     { k: "Standards adoption",      v: "94%",   unit: "of moments",          trend: "+6pp vs last month",     icon: ShieldCheck,    color: GREEN,
       tip: "Share of moments of work that resolved against a published org standard." },
@@ -3676,6 +3765,18 @@ function S07fInstrument() {
     { old: "Headcount cost",     oldS: "trailing 12 mo", now: "Cost per moment of work",   nowS: "live, per commit",            color: GREEN },
   ];
 
+  // KPI index i maps to VS_YESTERDAY[i+1] (row 0 is the hero substrate metric).
+  const linkedVsRow = (kpiIdx: number | null) => kpiIdx === null ? null : kpiIdx + 1;
+  const activeVsRow = linkedVsRow(activeKpi);
+
+  const BEATS = [
+    "Beat 1 of 4. The hero metric. The size of the knowledge base. Yesterday's dashboard could not see this number.",
+    "Beat 2 of 4. Learning-rate KPIs. Each one measures what the org is becoming, not what it did last quarter.",
+    "Beat 3 of 4. Human control rails. Token spend, residency, audit, regulation, approval tiers, all in reach.",
+    "Beat 4 of 4. vs yesterday. Each new live metric replaces an old lagging one. Click a KPI to see the swap.",
+  ];
+  const fully = revealed === 4;
+
   return (
     <div className="w-full h-full relative px-20 pt-16 pb-14" style={{ background: BG }}>
       <SlideGrid />
@@ -3685,16 +3786,71 @@ function S07fInstrument() {
       <div className="relative z-10">
         <ArcStepper current={4} />
         <Tag label="Every commit compounds · the instrument panel" color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-2" style={{ fontSize: 48, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+        <h2 className="font-bold leading-[1.02] mb-2" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           The whole organisation, running at the <span style={{ color: `hsl(${GREEN})` }}>speed of AI</span>, with every human control lever in reach.
         </h2>
-        <p style={{ fontSize: 15, color: MUTED, maxWidth: 1640, marginBottom: 12 }}>
-          One console. Learning-rate metrics on the left. Human control rails on the right. Strategy and execution stop being two layers. They are the same loop, measured for the first time.
+        <p style={{ fontSize: 14, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
+          Strategy and execution stop being two layers. They are the same loop, measured for the first time.
         </p>
 
+        {/* ── 4-beat reveal control ── */}
+        <div className="flex items-center gap-3 mb-3 rounded-xl border px-3 py-2"
+          style={{ borderColor: CHROME_BORDER, background: "white" }}>
+          <button
+            onClick={() => setRevealed(r => Math.max(1, r - 1))}
+            disabled={revealed === 1}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            style={{ fontSize: 10, color: TEXT, borderColor: CHROME_BORDER, background: CARD_ALT }}
+          >prev</button>
+          <div className="flex items-center gap-1.5">
+            {[1, 2, 3, 4].map(n => {
+              const on = n <= revealed;
+              return (
+                <button key={n} onClick={() => setRevealed(n)}
+                  title={`Beat ${n}`}
+                  className="rounded-full transition-all"
+                  style={{
+                    width: on ? 22 : 10, height: 10,
+                    background: on ? `hsl(${GREEN})` : CHROME_BG,
+                    border: `1px solid hsl(${on ? GREEN : SUBTLE} / ${on ? 0.9 : 0.4})`,
+                  }}
+                />
+              );
+            })}
+            <span className="font-mono uppercase tracking-[0.12em] ml-2" style={{ fontSize: 10, color: SUBTLE, fontWeight: 700 }}>
+              {revealed} / 4 beats
+            </span>
+          </div>
+          <span style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.35, flex: 1 }}>
+            {BEATS[revealed - 1]}
+          </span>
+          <button
+            onClick={() => { setRevealed(1); setActiveKpi(null); }}
+            className="rounded-md border px-2 py-1 font-mono uppercase tracking-[0.12em]"
+            style={{ fontSize: 10, color: SUBTLE, borderColor: CHROME_BORDER, background: "white" }}
+          >reset</button>
+          <button
+            onClick={() => setRevealed(r => Math.min(4, r + 1))}
+            disabled={fully}
+            className="rounded-md border px-3 py-1 font-mono uppercase tracking-[0.12em] disabled:opacity-40"
+            style={{
+              fontSize: 10, fontWeight: 800,
+              color: fully ? TEXT : "white",
+              background: fully ? CARD_ALT : `hsl(${GREEN})`,
+              borderColor: fully ? CHROME_BORDER : `hsl(${GREEN})`,
+            }}
+          >{fully ? "console complete" : "reveal next ▸"}</button>
+        </div>
+
         {/* Substrate hero strip */}
-        <div className="rounded-2xl border-2 mb-3 flex items-stretch"
-          style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: `linear-gradient(90deg, hsl(${GREEN} / 0.08), hsl(${GREEN} / 0.02))` }}>
+        <div className="rounded-2xl border-2 mb-3 flex items-stretch transition-all"
+          onClick={() => fully && setActiveKpi(activeKpi === -1 ? null : -1)}
+          style={{
+            borderColor: `hsl(${GREEN} / ${activeKpi === -1 ? 0.95 : 0.55})`,
+            background: `linear-gradient(90deg, hsl(${GREEN} / 0.08), hsl(${GREEN} / 0.02))`,
+            cursor: fully ? "pointer" : "default",
+            boxShadow: activeKpi === -1 ? `0 0 0 4px hsl(${GREEN} / 0.15)` : "none",
+          }}>
           <div className="flex items-center gap-5 px-6 py-4 flex-1">
             <div className="rounded-xl border-2 px-4 py-2 flex items-center gap-3"
               style={{ borderColor: `hsl(${GREEN} / 0.6)`, background: "white" }}>
@@ -3721,10 +3877,15 @@ function S07fInstrument() {
         </div>
 
         {/* Two equal halves */}
-        <div className="grid grid-cols-2 gap-4 mb-3">
+        <div className="grid grid-cols-2 gap-4 mb-3" style={{ minHeight: 340 }}>
           {/* LEFT — Learning-rate KPIs */}
-          <div className="rounded-2xl border p-4"
-            style={{ borderColor: `hsl(${GREEN} / 0.35)`, background: `hsl(${GREEN} / 0.03)` }}>
+          <div className="rounded-2xl border p-4 transition-opacity"
+            style={{
+              borderColor: `hsl(${GREEN} / 0.35)`,
+              background: `hsl(${GREEN} / 0.03)`,
+              opacity: revealed >= 2 ? 1 : 0.12,
+              pointerEvents: revealed >= 2 ? "auto" : "none",
+            }}>
             <div className="flex items-center justify-between mb-3">
               <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
                 Learning rate · what the org is becoming
@@ -3734,15 +3895,30 @@ function S07fInstrument() {
               </span>
             </div>
             <div className="grid grid-cols-1 gap-2">
-              {KPIS.map(k => {
+              {KPIS.map((k, i) => {
                 const Icon = k.icon;
+                const isActive = activeKpi === i;
+                const isDim    = activeKpi !== null && activeKpi !== i && activeKpi !== -1;
                 return (
-                  <div key={k.k} className="rounded-lg border bg-white px-3 py-2 flex items-center gap-3"
-                    style={{ borderColor: `hsl(${k.color} / 0.4)` }}>
+                  <div key={k.k}
+                    onClick={() => fully && setActiveKpi(isActive ? null : i)}
+                    className="rounded-lg border bg-white px-3 py-2 flex items-center gap-3 transition-all"
+                    style={{
+                      borderColor: `hsl(${k.color} / ${isActive ? 0.95 : 0.4})`,
+                      borderWidth: isActive ? 2 : 1,
+                      opacity: isDim ? 0.35 : 1,
+                      cursor: fully ? "pointer" : "default",
+                      boxShadow: isActive ? `0 0 0 3px hsl(${k.color} / 0.15)` : "none",
+                    }}>
                     <Icon size={16} style={{ color: `hsl(${k.color})`, flexShrink: 0 }} />
                     <div className="flex-1 min-w-0">
                       <p className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: `hsl(${k.color})`, fontWeight: 800 }}>{k.k}</p>
                       <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.3, marginTop: 2 }}>{k.tip}</p>
+                      {isActive && fully && (
+                        <p className="font-mono uppercase tracking-[0.08em]" style={{ fontSize: 9, color: `hsl(${k.color})`, fontWeight: 800, marginTop: 3 }}>
+                          replaces · {VS_YESTERDAY[i + 1].old}
+                        </p>
+                      )}
                     </div>
                     <div className="text-right flex-shrink-0" style={{ minWidth: 110 }}>
                       <div className="flex items-baseline gap-1 justify-end">
@@ -3755,11 +3931,21 @@ function S07fInstrument() {
                 );
               })}
             </div>
+            {fully && (
+              <p className="font-mono uppercase tracking-[0.1em] mt-2" style={{ fontSize: 9, color: SUBTLE, fontWeight: 700, textAlign: "right" }}>
+                click any KPI to see the lagging metric it replaces ▾
+              </p>
+            )}
           </div>
 
           {/* RIGHT — Human Control Rails */}
-          <div className="rounded-2xl border p-4"
-            style={{ borderColor: `hsl(${PURPLE} / 0.35)`, background: `hsl(${PURPLE} / 0.03)` }}>
+          <div className="rounded-2xl border p-4 transition-opacity"
+            style={{
+              borderColor: `hsl(${PURPLE} / 0.35)`,
+              background: `hsl(${PURPLE} / 0.03)`,
+              opacity: revealed >= 3 ? 1 : 0.12,
+              pointerEvents: revealed >= 3 ? "auto" : "none",
+            }}>
             <div className="flex items-center justify-between mb-3">
               <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${PURPLE})`, fontWeight: 800 }}>
                 Human control rails · the levers in reach
@@ -3790,8 +3976,12 @@ function S07fInstrument() {
         </div>
 
         {/* vs yesterday comparator */}
-        <div className="rounded-xl border px-4 py-2.5"
-          style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+        <div className="rounded-xl border px-4 py-2.5 transition-opacity"
+          style={{
+            borderColor: CHROME_BORDER, background: CARD_ALT,
+            opacity: revealed >= 4 ? 1 : 0.12,
+            pointerEvents: revealed >= 4 ? "auto" : "none",
+          }}>
           <div className="flex items-center justify-between mb-2">
             <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: SUBTLE, fontWeight: 800 }}>
               vs yesterday's dashboard
@@ -3801,15 +3991,25 @@ function S07fInstrument() {
             </span>
           </div>
           <div className="grid grid-cols-6 gap-2">
-            {VS_YESTERDAY.map(v => (
-              <div key={v.old} className="rounded-md border bg-white px-2 py-1.5"
-                style={{ borderColor: CHROME_BORDER }}>
-                <p style={{ fontSize: 9, color: SUBTLE, textDecoration: "line-through", fontWeight: 600 }}>{v.old}</p>
-                <p style={{ fontSize: 8.5, color: SUBTLE, marginBottom: 3 }}>{v.oldS}</p>
-                <p style={{ fontSize: 9.5, color: `hsl(${v.color})`, fontWeight: 800 }}>{v.now}</p>
-                <p style={{ fontSize: 8.5, color: MUTED }}>{v.nowS}</p>
-              </div>
-            ))}
+            {VS_YESTERDAY.map((v, i) => {
+              const isMatch = activeVsRow === i || (activeKpi === -1 && i === 0);
+              const isDim   = activeKpi !== null && !isMatch;
+              return (
+                <div key={v.old} className="rounded-md border bg-white px-2 py-1.5 transition-all"
+                  style={{
+                    borderColor: isMatch ? `hsl(${v.color} / 0.95)` : CHROME_BORDER,
+                    borderWidth: isMatch ? 2 : 1,
+                    background: isMatch ? `hsl(${v.color} / 0.08)` : "white",
+                    opacity: isDim ? 0.3 : 1,
+                    boxShadow: isMatch ? `0 0 0 3px hsl(${v.color} / 0.15)` : "none",
+                  }}>
+                  <p style={{ fontSize: 9, color: isMatch ? `hsl(${RED})` : SUBTLE, textDecoration: "line-through", fontWeight: isMatch ? 800 : 600 }}>{v.old}</p>
+                  <p style={{ fontSize: 8.5, color: SUBTLE, marginBottom: 3 }}>{v.oldS}</p>
+                  <p style={{ fontSize: 9.5, color: `hsl(${v.color})`, fontWeight: 800 }}>{v.now}</p>
+                  <p style={{ fontSize: 8.5, color: MUTED }}>{v.nowS}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
