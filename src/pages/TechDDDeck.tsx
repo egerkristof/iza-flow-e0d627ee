@@ -172,10 +172,10 @@ function S01Cover() {
           LIZA OS · Tech Due Diligence · Confidential
         </p>
         <h1 className="font-bold leading-[1.02]" style={{ fontSize: 104, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
-          Architecture, State &amp; Margin.
+          The AI Governance Loop.
         </h1>
         <p className="mt-10 mx-auto" style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1400, lineHeight: 1.35 }}>
-          AACE — the <span style={{ color: DARK_TEXT, fontWeight: 600 }}>Active Adaptive Context Engine</span> — compiles every prompt against typed org knowledge.
+          <span style={{ color: DARK_TEXT, fontWeight: 600 }}>Safeguard what is most valuable. Scale what is best about you.</span> Continuously, at the speed of AI. AACE compiles every prompt against typed org knowledge.
         </p>
         <div className="mt-10 flex items-center justify-center gap-8" style={{ fontSize: 22, color: DARK_TEXT }}>
           <span><b style={{ color: `hsl(${GREEN})` }}>$0.40</b> per decision</span>
@@ -275,6 +275,83 @@ function S02Horizons() {
       </div>
       <Footer text="That runtime is the cognitive infrastructure on the next slide." />
       <SlideBar from={GREEN} to={PURPLE} />
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 02b — THE AI GOVERNANCE LOOP (Thesis spine)
+// Five surfaces every org must safeguard AND scale at the speed of AI.
+// Reclaims "governance" from model-governance vendors (Credo, Fiddler, Arthur).
+// ═════════════════════════════════════════════════════════════════════════════
+function S03GovernanceLoop() {
+  const surfaces = [
+    { k: "Standards", safeguard: "Your quality bar from drift and dilution",      scale: "Consistent execution at AI velocity",          icon: ShieldCheck },
+    { k: "Judgment",  safeguard: "Senior expertise from attrition and averaging",  scale: "Decisions that reflect your best people",      icon: Brain },
+    { k: "Memory",    safeguard: "Institutional knowledge from leaking into LLMs", scale: "Compounding context, owned not rented",        icon: Database },
+    { k: "Spend",     safeguard: "AI budget from unanchored token consumption",    scale: "Every token tied to a named outcome",          icon: Coins },
+    { k: "Exposure",  safeguard: "IP, audit trail, regulatory surface",            scale: "Provable lineage for every AI decision",       icon: Lock },
+  ];
+  return (
+    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <PhaseChip phase="Phase 1 · Thesis" color={ACCENT} />
+      <div className="relative z-10">
+        <Tag label="The Thesis · AI Governance Loop" />
+        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1760 }}>
+          <span style={{ color: `hsl(${RED})` }}>Whatever you do not govern, AI invents.</span>{" "}
+          <span style={{ color: TEXT }}>Whatever you do not safeguard,</span>{" "}
+          <span style={{ color: `hsl(${RED})` }}>AI dissolves.</span>
+        </h2>
+        <p className="mt-3" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
+          Model governance watches the AI. <b style={{ color: TEXT }}>LIZA governs the moment of decision.</b> Five organizational surfaces, safeguarded from the speed of AI and compounded into your edge.
+        </p>
+
+        {/* Header row */}
+        <div className="grid mt-9" style={{ gridTemplateColumns: "260px 1fr 1fr", gap: 0 }}>
+          <div />
+          <div className="px-6 py-3" style={{ background: `hsl(${RED} / 0.06)`, borderTopLeftRadius: 12, borderTop: `1px solid hsl(${RED} / 0.3)`, borderLeft: `1px solid hsl(${RED} / 0.3)`, borderRight: `1px solid hsl(${RED} / 0.15)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 14, color: `hsl(${RED})` }}>Safeguard · without it, AI is dangerous</p>
+          </div>
+          <div className="px-6 py-3" style={{ background: `hsl(${GREEN} / 0.06)`, borderTopRightRadius: 12, borderTop: `1px solid hsl(${GREEN} / 0.35)`, borderRight: `1px solid hsl(${GREEN} / 0.35)`, borderLeft: `1px solid hsl(${GREEN} / 0.15)` }}>
+            <p className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Scale · without it, AI is meaningless</p>
+          </div>
+        </div>
+
+        {/* Rows */}
+        <div style={{ borderLeft: `1px solid ${CHROME_BORDER}`, borderRight: `1px solid ${CHROME_BORDER}`, borderBottom: `1px solid ${CHROME_BORDER}`, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, overflow: "hidden" }}>
+          {surfaces.map((s, i) => {
+            const Icon = s.icon;
+            const altBg = i % 2 === 0 ? "white" : CARD_ALT;
+            return (
+              <div key={s.k} className="grid items-stretch" style={{ gridTemplateColumns: "260px 1fr 1fr", background: altBg, borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
+                <div className="px-6 py-4 flex items-center gap-3" style={{ borderRight: `1px solid ${CHROME_BORDER}` }}>
+                  <div className="rounded-md flex items-center justify-center" style={{ width: 36, height: 36, background: `hsl(${ACCENT} / 0.10)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+                    <Icon size={20} color={`hsl(${ACCENT})`} />
+                  </div>
+                  <span className="font-bold" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.01em" }}>{s.k}</span>
+                </div>
+                <div className="px-6 py-4 flex items-center" style={{ borderRight: `1px solid ${CHROME_BORDER}`, background: `hsl(${RED} / 0.025)` }}>
+                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{s.safeguard}</span>
+                </div>
+                <div className="px-6 py-4 flex items-center" style={{ background: `hsl(${GREEN} / 0.035)` }}>
+                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{s.scale}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-7 flex items-center gap-3 px-5 py-3 rounded-xl" style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.2)`, maxWidth: 1600 }}>
+          <Workflow size={20} color={`hsl(${ACCENT})`} />
+          <span style={{ fontSize: 17, color: TEXT }}>
+            A <b>loop</b>, not an audit. Every decision feeds the standard. Every standard governs the next decision. AI-native means <b>governed</b>; ungoverned AI is just exposure at scale.
+          </span>
+        </div>
+      </div>
+      <Footer text="The rest of this deck is the loop, broken into its parts." />
+      <SlideBar from={RED} to={GREEN} />
     </div>
   );
 }
@@ -4106,9 +4183,64 @@ function S07fInstrument() {
 // land BEFORE the four-beat architecture arc so the "why us" frame is set before
 // the deep-dive. S09Augmentation removed — superseded by S09bAugmentationMechanics,
 // which now sits earlier as part of the architecture cluster.
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 13 — THE LOOP, CLOSED (Closer · ties back to the 5 surfaces)
+// ═════════════════════════════════════════════════════════════════════════════
+function S13LoopClosed() {
+  const surfaces = [
+    { k: "Standards", proof: "Typed playbooks, versioned, enforced at compile time", icon: ShieldCheck },
+    { k: "Judgment",  proof: "Senior reasoning encoded as procedures, not lost to chat history", icon: Brain },
+    { k: "Memory",    proof: "Owned context graph. Zero vendor lock. Portable in your VPC", icon: Database },
+    { k: "Spend",     proof: "$0.40 / decision · every token bound to a named standard", icon: Coins },
+    { k: "Exposure",  proof: "Full lineage per decision. EU AI Act and audit ready by default", icon: Lock },
+  ];
+  return (
+    <div className="w-full h-full relative flex flex-col items-center justify-center" style={{ background: DARK_BG }}>
+      <DarkGrid />
+      <PageNumber dark />
+      <div className="relative z-10 px-32 w-full">
+        <p className="font-semibold tracking-[0.3em] uppercase text-center mb-6" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>
+          The Loop, Closed
+        </p>
+        <h2 className="font-bold text-center leading-[1.05]" style={{ fontSize: 72, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
+          Five surfaces. <span style={{ color: `hsl(${GREEN})` }}>One loop.</span> <span style={{ color: `hsl(${ACCENT})` }}>Yours.</span>
+        </h2>
+        <p className="text-center mt-6 mx-auto" style={{ fontSize: 22, color: DARK_MUTED, maxWidth: 1400, lineHeight: 1.4 }}>
+          What the thesis named, the architecture delivers. The same five surfaces, now provable in production.
+        </p>
+
+        <div className="grid grid-cols-5 gap-5 mt-14">
+          {surfaces.map((s) => {
+            const Icon = s.icon;
+            return (
+              <div key={s.k} className="rounded-2xl p-6 flex flex-col gap-4"
+                style={{ background: "hsl(0 0% 100% / 0.04)", border: "1px solid hsl(0 0% 100% / 0.12)" }}>
+                <div className="rounded-lg flex items-center justify-center" style={{ width: 44, height: 44, background: `hsl(${GREEN} / 0.15)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                  <Icon size={22} color={`hsl(${GREEN})`} />
+                </div>
+                <p className="font-bold" style={{ fontSize: 22, color: DARK_TEXT, letterSpacing: "-0.01em" }}>{s.k}</p>
+                <p style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.45 }}>{s.proof}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-14 flex items-center justify-center gap-10" style={{ fontSize: 20, color: DARK_MUTED }}>
+          <span>Model governance watches the AI.</span>
+          <span style={{ color: "hsl(0 0% 100% / 0.25)" }}>·</span>
+          <span style={{ color: DARK_TEXT, fontWeight: 700 }}>LIZA governs the moment of decision.</span>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
+  { id: "governance-loop", title: "The AI Governance Loop · Thesis", component: <S03GovernanceLoop /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
@@ -4127,6 +4259,7 @@ const RAW_SLIDES = [
   { id: "acv-bridge", title: "Top-down ACV ↔ Bottom-up Unit Economics", component: <S10bACVBridge /> },
   { id: "hyperscaler-risk", title: "Hyperscaler Risk & Return Paths", component: <S11HyperscalerRisk /> },
   { id: "societal-impact", title: "Knowledge Sovereignty · Societal Impact", component: <S12SocietalImpact /> },
+  { id: "loop-closed", title: "The Loop, Closed", component: <S13LoopClosed /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
