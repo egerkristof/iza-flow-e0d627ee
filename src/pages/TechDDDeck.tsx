@@ -1661,9 +1661,14 @@ function S07cFunnel() {
                   )}
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
+        )}
+        </AnimatePresence>
+        </LayoutGroup>
+          );
+        })()}
       </div>
       {/* Next-slide handoff */}
       <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
