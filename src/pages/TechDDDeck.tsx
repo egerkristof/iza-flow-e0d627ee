@@ -1978,6 +1978,7 @@ function S07dOrgLoop() {
 // SLIDE 07e — THIS IS AACE, NOT RAG
 // ═════════════════════════════════════════════════════════════════════════════
 function S07eAaceNotRag() {
+  const [activeRoute, setActiveRoute] = React.useState<number | null>(null);
   const PRIMITIVES = [
     { k: "Standard",    icon: Compass,       color: PURPLE, ex: "EU-first launches this quarter",          why: "Governs scope. Versioned. Auditable." },
     { k: "Procedure",   icon: Workflow,      color: ACCENT, ex: "3-step memo flow: draft → cite → review", why: "Executable, not described." },
