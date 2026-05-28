@@ -1410,44 +1410,56 @@ function S07cFunnel() {
 // SLIDE 07d — ONE FUNNEL · EVERY OPERATOR · LEARNING UPWARD
 // ═════════════════════════════════════════════════════════════════════════════
 function S07dOrgLoop() {
-  // Org grid: 4 functions × 3 operators each.
-  const FUNCTIONS = [
-    { key: "sales",  label: "Sales",      color: GOLD,   icon: Compass },
-    { key: "ops",    label: "Operations", color: GREEN,  icon: Workflow },
-    { key: "legal",  label: "Legal & Risk", color: ACCENT, icon: ShieldCheck },
-    { key: "eng",    label: "Engineering", color: PURPLE, icon: GitBranch },
+  // Every person is an operator. Each has their own funnel. Each funnel
+  // converges at a moment of work. Every moment of work writes into a shared
+  // substrate of AACE primitives, which then re-enters every other funnel's
+  // next compile. Color = function, NOT layer. Layers are identical across
+  // funnels; only their contents differ.
+  const OPERATORS = [
+    { role: "CEO",            fn: "Leadership", color: PURPLE, chip: "Q4 raise narrative" },
+    { role: "Strategy Lead",  fn: "Leadership", color: PURPLE, chip: "EU-first roadmap" },
+    { role: "Sales AE",       fn: "Revenue",    color: GOLD,   chip: "Proposal v3" },
+    { role: "Account Mgr",    fn: "Revenue",    color: GOLD,   chip: "QBR deck" },
+    { role: "Ops Manager",    fn: "Operations", color: GREEN,  chip: "Supplier escalation" },
+    { role: "Legal Counsel",  fn: "Risk",       color: ACCENT, chip: "DPA redline" },
+    { role: "Engineer",       fn: "Build",      color: ACCENT, chip: "API contract" },
+    { role: "Designer",       fn: "Craft",      color: RED,    chip: "Onboarding flow" },
   ] as const;
 
-  // Learning events: a real operator action propagating UP the funnel.
-  const EVENTS = [
-    {
-      operator: "M. Sales · East",
-      color: GOLD,
-      prompt: "Drop the hedging in this proposal intro.",
-      step1: "Operator overrides phrasing 3× across deals.",
-      step2: "LIZA proposes new Preference: bullet-first, no hedging.",
-      step3: "Sales lead approves. Now enforced for every proposal.",
-      becomes: "Preference",
-    },
-    {
-      operator: "K. Ops · DE",
-      color: GREEN,
-      prompt: "How do we handle the supplier escalation step?",
-      step1: "Operator improvises the same fix twice in one week.",
-      step2: "LIZA proposes new Procedure: 3-step supplier escalation.",
-      step3: "Ops lead signs off. Loaded into every future run.",
-      becomes: "Procedure",
-    },
-    {
-      operator: "A. Legal · EU",
-      color: ACCENT,
-      prompt: "Can we send this draft to the vendor model?",
-      step1: "Operator blocks a PII leak before send.",
-      step2: "LIZA proposes new Prohibition: no PII to vendor models.",
-      step3: "Legal lead locks it. Enforced org-wide, audited per call.",
-      becomes: "Prohibition",
-    },
+  const PRIMITIVES = [
+    { k: "Standards",    short: "STD" },
+    { k: "Procedures",   short: "PRC" },
+    { k: "Preferences",  short: "PRF" },
+    { k: "Prohibitions", short: "PRO" },
+    { k: "Facts",        short: "FCT" },
+    { k: "Skills",       short: "SKL" },
   ];
+
+  // The traced contribution event used when "Trace one contribution" is on.
+  const TRACE = {
+    operatorIdx: 2, // Sales AE
+    prompt: "Drop the hedging in this proposal intro.",
+    primitive: "Preference",
+    update: "bullet-first · no hedging",
+    landsIn: "every other operator's next compile",
+    timing: "4 min from override to org-wide",
+  };
+
+  const [mode, setMode] = useState<"ambient" | "trace">("ambient");
+
+  // SVG canvas — left panel
+  const VB = 1100;
+  const CX = VB / 2;
+  const CY = 430;
+  const RING_R = 150;          // substrate ring radius
+  const FUNNEL_R = 340;        // distance of funnels from centre
+  const N = OPERATORS.length;
+
+  const opPos = OPERATORS.map((_, i) => {
+    // start at top, go clockwise
+    const a = (-Math.PI / 2) + (i * 2 * Math.PI) / N;
+    return { x: CX + Math.cos(a) * FUNNEL_R, y: CY + Math.sin(a) * FUNNEL_R, a };
+  });
 
   return (
     <div className="w-full h-full relative px-20 pt-20 pb-16" style={{ background: BG }}>
@@ -1456,177 +1468,280 @@ function S07dOrgLoop() {
       <PhaseChip phase="Phase 2 · Architecture" color={GREEN} />
 
       <div className="relative z-10">
-        <Tag label="Same funnel · every operator · learning upward" color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          One funnel for the whole org. The operator at the bottom <span style={{ color: `hsl(${GREEN})` }}>builds the context at the top</span>.
+        <Tag label="Every moment of work, connected" color={GREEN} />
+        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 50, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+          From the CEO to the last tech writer, everyone is an operator. Each <span style={{ color: `hsl(${GREEN})` }}>moment of work</span> updates every other moment of work.
         </h2>
-        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 14 }}>
-          Every operator prompts through the same governed stack. Their overrides, exceptions, and improvisations are the raw material LIZA promotes into standards, procedures, preferences, and prohibitions, with a human lead in the loop. Organisational learning is a continuous, auditable upward flow, not an annual training cycle.
+        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
+          Every person carries their own funnel. Same five layers, different content. Every prompt is a moment of work that lands in a shared substrate of AACE primitives. The substrate then re-enters every other funnel's next compile. The organisation evolves at the speed of moments of work.
         </p>
 
         <div className="grid grid-cols-12 gap-5">
-          {/* LEFT — org grid funnel-into-one */}
-          <div className="col-span-7 rounded-2xl border relative"
-            style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 720 }}>
-            <svg viewBox="0 0 920 720" className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
-              {/* Operator grid on the left, all flowing into the funnel column on the right */}
-              {FUNCTIONS.map((f, fi) => {
-                const rowY = 90 + fi * 130;
+          {/* LEFT — network of funnels around a shared substrate */}
+          <div className="col-span-9 rounded-2xl border relative"
+            style={{ borderColor: CHROME_BORDER, background: CARD_ALT, height: 760 }}>
+
+            <div className="absolute top-3 left-4 font-mono uppercase tracking-[0.14em]"
+              style={{ fontSize: 10, color: SUBTLE }}>
+              {mode === "ambient"
+                ? "Ambient flow · every funnel emits into the substrate · substrate re-enters every funnel"
+                : `Trace · ${OPERATORS[TRACE.operatorIdx].role}'s override → promoted to ${TRACE.primitive} → re-enters every other funnel`}
+            </div>
+
+            <div className="absolute top-3 right-4 flex gap-1 rounded-full border p-0.5"
+              style={{ borderColor: CHROME_BORDER, background: "white" }}>
+              {(["ambient", "trace"] as const).map(m => (
+                <button key={m}
+                  onClick={() => setMode(m)}
+                  className="px-3 py-1 rounded-full font-mono uppercase tracking-[0.1em]"
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    background: mode === m ? `hsl(${GREEN} / 0.12)` : "transparent",
+                    color: mode === m ? `hsl(${GREEN})` : MUTED,
+                  }}>
+                  {m === "ambient" ? "Ambient flow" : "Trace one contribution"}
+                </button>
+              ))}
+            </div>
+
+            <svg viewBox={`0 0 ${VB} 800`} className="absolute inset-0 w-full h-full" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <radialGradient id="subGrad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%"  stopColor={`hsl(${GREEN} / 0.18)`} />
+                  <stop offset="60%" stopColor={`hsl(${GREEN} / 0.06)`} />
+                  <stop offset="100%" stopColor={`hsl(${GREEN} / 0)`} />
+                </radialGradient>
+              </defs>
+
+              {/* Connectors: funnel ↔ substrate */}
+              {opPos.map((p, i) => {
+                const op = OPERATORS[i];
+                const dim = mode === "trace" && i !== TRACE.operatorIdx;
+                // line from funnel spout (closer to centre) to ring edge
+                const dx = CX - p.x;
+                const dy = CY - p.y;
+                const d  = Math.hypot(dx, dy);
+                const ux = dx / d, uy = dy / d;
+                const fx = p.x + ux * 56;   // start near funnel spout
+                const fy = p.y + uy * 56;
+                const tx = CX - ux * RING_R;
+                const ty = CY - uy * RING_R;
                 return (
-                  <g key={f.key}>
-                    {/* Function label */}
-                    <text x={28} y={rowY + 12} fontSize={11} fontWeight={700}
-                      fill={`hsl(${f.color})`} style={{ letterSpacing: "0.1em" }}>
-                      {f.label.toUpperCase()}
-                    </text>
-                    {/* 3 operator pills */}
-                    {[0, 1, 2].map(oi => {
-                      const x = 24 + oi * 110;
-                      const y = rowY + 24;
-                      return (
-                        <g key={oi}>
-                          <rect x={x} y={y} width={96} height={62} rx={8}
-                            fill="white" stroke={`hsl(${f.color} / 0.4)`} strokeWidth={1} />
-                          {/* avatar dot */}
-                          <circle cx={x + 14} cy={y + 14} r={6} fill={`hsl(${f.color} / 0.8)`} />
-                          <text x={x + 26} y={y + 17} fontSize={9.5} fontWeight={700} fill={TEXT}>Operator {oi + 1}</text>
-                          {/* prompt line */}
-                          <rect x={x + 8} y={y + 28} width={80} height={6} rx={2} fill={`hsl(${f.color} / 0.18)`} />
-                          <rect x={x + 8} y={y + 38} width={64} height={6} rx={2} fill={`hsl(${f.color} / 0.18)`} />
-                          <rect x={x + 8} y={y + 48} width={50} height={6} rx={2} fill={`hsl(${f.color} / 0.18)`} />
-                          {/* connector line into funnel intake */}
-                          <line
-                            x1={x + 96} y1={y + 31}
-                            x2={580} y2={360}
-                            stroke={`hsl(${f.color} / 0.18)`}
-                            strokeWidth={0.8}
-                            strokeDasharray="2 3"
-                          />
-                        </g>
-                      );
-                    })}
+                  <g key={`line-${i}`} opacity={dim ? 0.15 : 1}>
+                    <line x1={fx} y1={fy} x2={tx} y2={ty}
+                      stroke={`hsl(${op.color} / 0.35)`} strokeWidth={1} strokeDasharray="3 4" />
+                    {/* Ambient particle: funnel → substrate (one per funnel) */}
+                    {mode === "ambient" && (
+                      <circle r={3.5} fill={`hsl(${op.color})`}>
+                        <animate attributeName="cx" from={fx} to={tx} dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+                        <animate attributeName="cy" from={fy} to={ty} dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="3.2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+                      </circle>
+                    )}
+                    {/* Ambient particle: substrate → funnel (broadcast back) */}
+                    {mode === "ambient" && (
+                      <circle r={2.5} fill={`hsl(${GREEN})`} opacity={0.8}>
+                        <animate attributeName="cx" from={tx} to={fx} dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
+                        <animate attributeName="cy" from={ty} to={fy} dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="3.6s" begin={`${i * 0.4 + 1.6}s`} repeatCount="indefinite" />
+                      </circle>
+                    )}
+                    {/* Trace mode: only the chosen operator emits, then ring re-emits to all */}
+                    {mode === "trace" && i === TRACE.operatorIdx && (
+                      <circle r={5} fill={`hsl(${op.color})`}>
+                        <animate attributeName="cx" from={fx} to={tx} dur="1.8s" begin="0s;trace.end+3s" id="traceOut" repeatCount="1" />
+                        <animate attributeName="cy" from={fy} to={ty} dur="1.8s" begin="0s;trace.end+3s" repeatCount="1" />
+                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="1.8s" begin="0s;trace.end+3s" repeatCount="1" />
+                      </circle>
+                    )}
+                    {mode === "trace" && i !== TRACE.operatorIdx && (
+                      <circle r={4} fill={`hsl(${GREEN})`}>
+                        <animate attributeName="cx" from={tx} to={fx} dur="1.6s" begin={`traceOut.end+${0.1 + i * 0.12}s`} id={i === 0 ? "trace" : undefined} repeatCount="1" />
+                        <animate attributeName="cy" from={ty} to={fy} dur="1.6s" begin={`traceOut.end+${0.1 + i * 0.12}s`} repeatCount="1" />
+                        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.85;1" dur="1.6s" begin={`traceOut.end+${0.1 + i * 0.12}s`} repeatCount="1" />
+                      </circle>
+                    )}
                   </g>
                 );
               })}
 
-              {/* The shared funnel column on the right */}
-              {(() => {
-                const cx = 740;
-                const widths = [280, 230, 180, 130, 90, 60];
-                const layerH = 70;
-                const top = 90;
-                const colors = [PURPLE, ACCENT, GOLD, GREEN, GREEN];
-                const labels = ["Strategic Intent", "Governance & Risk", "Domain Standards", "Team Context", "Personal Preference"];
-                return (
-                  <g>
-                    {labels.map((lab, i) => {
-                      const yTop = top + i * layerH;
-                      const yBot = yTop + layerH;
-                      const pts = [
-                        [cx - widths[i] / 2, yTop],
-                        [cx + widths[i] / 2, yTop],
-                        [cx + widths[i + 1] / 2, yBot],
-                        [cx - widths[i + 1] / 2, yBot],
-                      ].map(p => p.join(",")).join(" ");
-                      return (
-                        <g key={lab}>
-                          <polygon points={pts}
-                            fill={`hsl(${colors[i]} / 0.10)`}
-                            stroke={`hsl(${colors[i]} / 0.55)`} strokeWidth={1.2} />
-                          <text x={cx} y={yTop + layerH / 2 + 4}
-                            textAnchor="middle" fontSize={11} fontWeight={700}
-                            fill={`hsl(${colors[i]})`}>{lab}</text>
-                        </g>
-                      );
-                    })}
-                    {/* spout */}
-                    <rect x={cx - 90} y={top + 5 * layerH + 12} width={180} height={46} rx={8}
-                      fill="white" stroke={`hsl(${GREEN} / 0.7)`} strokeWidth={1.5} />
-                    <text x={cx} y={top + 5 * layerH + 32} textAnchor="middle" fontSize={11} fontWeight={800} fill={TEXT}>
-                      Moment of work
-                    </text>
-                    <text x={cx} y={top + 5 * layerH + 48} textAnchor="middle" fontSize={9} fill={MUTED}>
-                      every prompt, every operator
-                    </text>
+              {/* Shared substrate ring (centre) */}
+              <circle cx={CX} cy={CY} r={RING_R + 30} fill="url(#subGrad)" />
+              <circle cx={CX} cy={CY} r={RING_R} fill="white"
+                stroke={`hsl(${GREEN} / 0.55)`} strokeWidth={2} strokeDasharray="4 5">
+                <animateTransform attributeName="transform" type="rotate"
+                  from={`0 ${CX} ${CY}`} to={`360 ${CX} ${CY}`} dur="60s" repeatCount="indefinite" />
+              </circle>
+              <circle cx={CX} cy={CY} r={RING_R - 18} fill="none"
+                stroke={`hsl(${GREEN} / 0.18)`} strokeWidth={1} />
 
-                    {/* UPWARD learning arrow alongside the funnel */}
-                    <g>
-                      <defs>
-                        <marker id="upArrow" markerWidth="10" markerHeight="10" refX="5" refY="2" orient="auto">
-                          <path d="M0,8 L5,0 L10,8 Z" fill={`hsl(${GREEN})`} />
-                        </marker>
-                      </defs>
-                      <line
-                        x1={cx + 200} y1={top + 5 * layerH + 30}
-                        x2={cx + 200} y2={top + 30}
-                        stroke={`hsl(${GREEN})`}
-                        strokeWidth={2.5}
-                        strokeDasharray="6 4"
-                        markerEnd="url(#upArrow)"
-                      />
-                      <text x={cx + 210} y={top + 5 * layerH - 40}
-                        fontSize={10} fontWeight={700} fill={`hsl(${GREEN})`}
-                        style={{ letterSpacing: "0.12em" }}>
-                        LEARNING
-                      </text>
-                      <text x={cx + 210} y={top + 5 * layerH - 26}
-                        fontSize={10} fontWeight={700} fill={`hsl(${GREEN})`}
-                        style={{ letterSpacing: "0.12em" }}>
-                        UPWARD
+              {/* Substrate label + AACE primitive chips arranged around inner ring */}
+              <text x={CX} y={CY - 50} textAnchor="middle" fontSize={11} fontWeight={800}
+                fill={`hsl(${GREEN})`} style={{ letterSpacing: "0.18em" }}>
+                SHARED SUBSTRATE
+              </text>
+              <text x={CX} y={CY - 30} textAnchor="middle" fontSize={13} fontWeight={800} fill={TEXT}>
+                AACE primitives
+              </text>
+              <text x={CX} y={CY - 12} textAnchor="middle" fontSize={9.5} fill={MUTED}>
+                versioned · audited · re-injected
+              </text>
+              {PRIMITIVES.map((p, i) => {
+                const a = (-Math.PI / 2) + (i * 2 * Math.PI) / PRIMITIVES.length;
+                const r = RING_R - 60;
+                const x = CX + Math.cos(a) * r;
+                const y = CY + Math.sin(a) * r + 32;
+                return (
+                  <g key={p.k}>
+                    <rect x={x - 36} y={y - 10} width={72} height={20} rx={10}
+                      fill={`hsl(${GREEN} / 0.08)`} stroke={`hsl(${GREEN} / 0.35)`} strokeWidth={0.8} />
+                    <text x={x} y={y + 4} textAnchor="middle" fontSize={9.5} fontWeight={700} fill={TEXT}>{p.k}</text>
+                  </g>
+                );
+              })}
+
+              {/* Each operator funnel */}
+              {opPos.map((p, i) => {
+                const op = OPERATORS[i];
+                const dim = mode === "trace" && i !== TRACE.operatorIdx;
+                const highlight = mode === "trace" && i === TRACE.operatorIdx;
+                // Mini-funnel rendered as 5 trapezoids, oriented so its spout points toward centre.
+                const dx = CX - p.x, dy = CY - p.y;
+                const ang = Math.atan2(dy, dx) * 180 / Math.PI; // funnel spout direction
+                return (
+                  <g key={`f-${i}`} transform={`translate(${p.x} ${p.y}) rotate(${ang})`} opacity={dim ? 0.32 : 1}>
+                    {/* Pulsing ring (moment of work) */}
+                    <circle cx={0} cy={0} r={48}
+                      fill="none" stroke={`hsl(${op.color} / 0.35)`} strokeWidth={1.2}>
+                      <animate attributeName="r" values="44;58;44" dur="3.8s" begin={`${i * 0.45}s`} repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.55;0;0.55" dur="3.8s" begin={`${i * 0.45}s`} repeatCount="indefinite" />
+                    </circle>
+                    {/* Funnel body (5 layers, narrowing toward centre) — drawn in local coords. */}
+                    <g transform="rotate(180)">
+                      {[0, 1, 2, 3, 4].map(li => {
+                        const widths = [88, 76, 62, 48, 34, 22];
+                        const layerH = 12;
+                        const top0 = -34;
+                        const yTop = top0 + li * layerH;
+                        const yBot = yTop + layerH;
+                        const pts = [
+                          [-widths[li] / 2, yTop],
+                          [widths[li] / 2, yTop],
+                          [widths[li + 1] / 2, yBot],
+                          [-widths[li + 1] / 2, yBot],
+                        ].map(pp => pp.join(",")).join(" ");
+                        return (
+                          <polygon key={li} points={pts}
+                            fill={`hsl(${op.color} / ${0.06 + li * 0.04})`}
+                            stroke={`hsl(${op.color} / 0.6)`} strokeWidth={0.7} />
+                        );
+                      })}
+                      {/* spout — the moment of work */}
+                      <rect x={-22} y={32} width={44} height={14} rx={3}
+                        fill="white" stroke={`hsl(${op.color})`} strokeWidth={1.2} />
+                      <text x={0} y={41.5} textAnchor="middle" fontSize={7}
+                        fontWeight={800} fill={`hsl(${op.color})`}>MOMENT</text>
+                    </g>
+                    {/* Role label outside the funnel (counter-rotated so it stays upright) */}
+                    <g transform={`rotate(${-ang})`}>
+                      <rect x={-58} y={62} width={116} height={36} rx={6}
+                        fill="white" stroke={highlight ? `hsl(${op.color})` : `hsl(${op.color} / 0.35)`}
+                        strokeWidth={highlight ? 2 : 1} />
+                      <text x={0} y={75} textAnchor="middle" fontSize={11}
+                        fontWeight={800} fill={TEXT}>{op.role}</text>
+                      <text x={0} y={89} textAnchor="middle" fontSize={8.5}
+                        fill={`hsl(${op.color})`} style={{ letterSpacing: "0.06em" }}>
+                        {op.fn.toUpperCase()} · {op.chip}
                       </text>
                     </g>
                   </g>
                 );
-              })()}
+              })}
             </svg>
-
-            <div className="absolute top-3 left-4 font-mono uppercase tracking-[0.14em]"
-              style={{ fontSize: 10, color: SUBTLE }}>12 operators · 4 functions · 1 governed stack</div>
           </div>
 
-          {/* RIGHT — three concrete upward-learning events */}
-          <div className="col-span-5 flex flex-col gap-3" style={{ height: 720 }}>
-            <div className="rounded-xl border px-4 py-2.5"
-              style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
-              <p className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: SUBTLE }}>
-                Three real upward events · last 30 days
+          {/* RIGHT — what's happening · trace event · economic & strategist footers */}
+          <div className="col-span-3 flex flex-col gap-3" style={{ height: 760 }}>
+            <div className="rounded-xl border bg-white p-4"
+              style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: SUBTLE, marginBottom: 8 }}>
+                Read it this way
+              </p>
+              <ul className="space-y-2.5" style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.4 }}>
+                <li className="flex gap-2">
+                  <span style={{ color: `hsl(${GREEN})`, fontWeight: 800 }}>1.</span>
+                  <span>Every role is an operator. Same five-layer funnel, different content per person.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span style={{ color: `hsl(${GREEN})`, fontWeight: 800 }}>2.</span>
+                  <span>Each funnel converges at a <b>moment of work</b>. That is where AACE compiles context into action.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span style={{ color: `hsl(${GREEN})`, fontWeight: 800 }}>3.</span>
+                  <span>Every moment of work writes back into the shared substrate of AACE primitives.</span>
+                </li>
+                <li className="flex gap-2">
+                  <span style={{ color: `hsl(${GREEN})`, fontWeight: 800 }}>4.</span>
+                  <span>The substrate re-enters every other operator's next compile. The org learns laterally, in real time.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="rounded-xl border bg-white p-4 flex-1"
+              style={{ borderColor: mode === "trace" ? `hsl(${GOLD} / 0.55)` : CHROME_BORDER }}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="rounded-full" style={{ width: 8, height: 8, background: `hsl(${OPERATORS[TRACE.operatorIdx].color})` }} />
+                <span className="font-mono" style={{ fontSize: 10.5, fontWeight: 800, color: TEXT, letterSpacing: "0.08em" }}>
+                  {OPERATORS[TRACE.operatorIdx].role.toUpperCase()} · TRACED EVENT
+                </span>
+              </div>
+              <div className="rounded border px-2 py-1.5 mb-2.5 flex items-start gap-1.5"
+                style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+                <MessageSquare size={11} style={{ color: SUBTLE, marginTop: 2 }} />
+                <span style={{ fontSize: 11.5, color: TEXT, fontStyle: "italic", lineHeight: 1.3 }}>
+                  "{TRACE.prompt}"
+                </span>
+              </div>
+              {[
+                { n: "01", label: "Moment of work", text: `Override fires inside one operator's funnel.`, c: SUBTLE },
+                { n: "02", label: "Promotion",      text: `LIZA proposes a new ${TRACE.primitive}: ${TRACE.update}.`, c: GOLD },
+                { n: "03", label: "Substrate write", text: `Lead approves. Lands in shared substrate, versioned and audited.`, c: GREEN },
+                { n: "04", label: "Lateral re-entry", text: `Re-injected into ${TRACE.landsIn}. ${TRACE.timing}.`, c: GREEN },
+              ].map((s, si) => (
+                <div key={si} className="flex items-start gap-2 py-1">
+                  <div className="rounded px-1.5 py-0.5 font-mono shrink-0"
+                    style={{ fontSize: 9, fontWeight: 800, color: s.c.includes("%") ? `hsl(${s.c})` : s.c, background: s.c.includes("%") ? `hsl(${s.c} / 0.1)` : "transparent" }}>
+                    {s.n}
+                  </div>
+                  <div>
+                    <div className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9, color: s.c.includes("%") ? `hsl(${s.c})` : s.c, fontWeight: 700 }}>{s.label}</div>
+                    <p style={{ fontSize: 11, color: TEXT, lineHeight: 1.35 }}>{s.text}</p>
+                  </div>
+                </div>
+              ))}
+              <button onClick={() => setMode("trace")}
+                className="mt-2 w-full rounded-md px-2 py-1.5 font-mono uppercase tracking-[0.12em]"
+                style={{
+                  fontSize: 10, fontWeight: 800,
+                  background: `hsl(${GREEN} / 0.10)`,
+                  color: `hsl(${GREEN})`,
+                  border: `1px solid hsl(${GREEN} / 0.4)`,
+                }}>
+                Play trace on diagram →
+              </button>
+            </div>
+
+            <div className="rounded-xl border-2 px-3 py-2.5"
+              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
+              <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.4 }}>
+                <b style={{ color: `hsl(${GREEN})` }}>Every moment of work compounds.</b> Marginal cost per moment trends down as the substrate grows.
               </p>
             </div>
-            {EVENTS.map((e, i) => (
-              <div key={i} className="rounded-xl border bg-white p-3 flex-1 flex flex-col"
-                style={{ borderColor: CHROME_BORDER }}>
-                {/* Header: operator + their prompt */}
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="rounded-full" style={{ width: 8, height: 8, background: `hsl(${e.color})` }} />
-                  <span className="font-mono" style={{ fontSize: 11, color: TEXT, fontWeight: 700 }}>{e.operator}</span>
-                  <span className="ml-auto px-2 py-0.5 rounded border" style={{ fontSize: 9.5, fontWeight: 700, color: `hsl(${e.color})`, borderColor: `hsl(${e.color} / 0.45)`, background: `hsl(${e.color} / 0.06)` }}>
-                    becomes: {e.becomes}
-                  </span>
-                </div>
-                <div className="rounded border px-2 py-1.5 mb-2 flex items-center gap-1.5"
-                  style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-                  <MessageSquare size={11} style={{ color: SUBTLE }} />
-                  <span style={{ fontSize: 11, color: TEXT, fontStyle: "italic" }}>"{e.prompt}"</span>
-                </div>
-                {/* 3 steps stacked, with up arrows */}
-                {[
-                  { n: "01", label: "Signal", text: e.step1, c: SUBTLE },
-                  { n: "02", label: "Proposal", text: e.step2, c: GOLD },
-                  { n: "03", label: "Enforced", text: e.step3, c: GREEN },
-                ].map((s, si) => (
-                  <div key={si} className="flex items-start gap-2 py-1">
-                    <div className="rounded px-1.5 py-0.5 font-mono" style={{ fontSize: 9, fontWeight: 800, color: typeof s.c === "string" && s.c.includes("%") ? `hsl(${s.c})` : s.c, background: typeof s.c === "string" && s.c.includes("%") ? `hsl(${s.c} / 0.1)` : "transparent" }}>
-                      {s.n} · {s.label}
-                    </div>
-                    <p style={{ fontSize: 10.5, color: TEXT, lineHeight: 1.35, flex: 1 }}>{s.text}</p>
-                  </div>
-                ))}
-              </div>
-            ))}
-            <div className="rounded-xl border-2 px-4 py-2.5"
-              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
-              <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
-                <b style={{ color: `hsl(${GREEN})` }}>The org learns by operating.</b> Every prompt is both a question and a vote. The funnel above gets thicker every week. Nothing leaves the audit container.
+            <div className="rounded-xl border-2 px-3 py-2.5"
+              style={{ borderColor: `hsl(${PURPLE} / 0.4)`, background: `hsl(${PURPLE} / 0.06)` }}>
+              <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.4 }}>
+                <b style={{ color: `hsl(${PURPLE})` }}>Vision and hiring shape the funnels.</b> Moments of work evolve them. The org learns at the speed of operation, not the speed of offsites.
               </p>
             </div>
           </div>
@@ -3108,7 +3223,7 @@ const SLIDES = [
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
   { id: "funnel-stack", title: "Nested Funnels · The Moment of Work", component: <S07cFunnel /> },
-  { id: "org-loop", title: "One Funnel · Every Operator · Learning Upward", component: <S07dOrgLoop /> },
+  { id: "org-loop", title: "Every Moment of Work, Connected", component: <S07dOrgLoop /> },
   { id: "aace-not-rag", title: "This Is AACE, Not RAG", component: <S07eAaceNotRag /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
   { id: "os-map", title: "OS Map", component: <S04OSMap /> },
