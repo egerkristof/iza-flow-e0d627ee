@@ -1417,6 +1417,30 @@ function S07cFunnel() {
 
               {/* Prompt input */}
               <div className="border-t px-4 py-3" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+                {/* Consequence banner: surfaces what happens when layers are off */}
+                {LAYERS.some(L => !active[L.id]) ? (
+                  <div className="rounded-md border-2 px-2.5 py-1.5 mb-2 flex items-center gap-2"
+                    style={{ borderColor: `hsl(${RED} / 0.55)`, background: `hsl(${RED} / 0.06)` }}>
+                    <AlertTriangle size={13} style={{ color: `hsl(${RED})` }} />
+                    <span style={{ fontSize: 11, color: `hsl(${RED})`, fontWeight: 700 }}>
+                      Ungoverned compile.
+                    </span>
+                    <span style={{ fontSize: 11, color: TEXT }}>
+                      {LAYERS.filter(L => !active[L.id]).length} of {LAYERS.length} layers missing. The operator must improvise the gap, every time. Drift compounds silently.
+                    </span>
+                  </div>
+                ) : (
+                  <div className="rounded-md border px-2.5 py-1.5 mb-2 flex items-center gap-2"
+                    style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.06)` }}>
+                    <CheckCircle2 size={13} style={{ color: `hsl(${GREEN})` }} />
+                    <span style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 700 }}>
+                      Fully governed compile.
+                    </span>
+                    <span style={{ fontSize: 11, color: TEXT }}>
+                      All 5 layers enforced. The operator writes one line. Everything else is inherited.
+                    </span>
+                  </div>
+                )}
                 <p className="font-mono uppercase tracking-[0.14em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
                   Operator prompt · the moment of work
                 </p>
@@ -1431,7 +1455,7 @@ function S07cFunnel() {
                   </span>
                 </div>
                 <p className="mt-1.5" style={{ fontSize: 11, color: MUTED }}>
-                  The operator writes one line. The funnel above contributes the other {LAYERS.filter(L => active[L.id]).length} of {LAYERS.length} layers — automatically, comparably, and audited.
+                  The operator writes one line. The funnel above contributes the other {LAYERS.filter(L => active[L.id]).length} of {LAYERS.length} layers. Automatically. Comparably. Audited.
                 </p>
               </div>
             </div>
@@ -1440,11 +1464,18 @@ function S07cFunnel() {
             <div className="rounded-xl border-2 px-4 py-3"
               style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
               <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.4 }}>
-                <b style={{ color: `hsl(${GREEN})` }}>Same funnel, either direction.</b> Whether you start from the CEO or from the operator, every prompt at the spout inherits every layer above it. That is what makes LIZA infrastructure, not a use-case POC.
+                <b style={{ color: `hsl(${GREEN})` }}>Same funnel, either direction.</b> CEO down or operator up. Every prompt at the spout inherits every layer above it. That is what makes LIZA infrastructure, not a use-case POC.
               </p>
             </div>
           </div>
         </div>
+      </div>
+      {/* Next-slide handoff */}
+      <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
+        style={{ fontSize: 10, color: SUBTLE }}>
+        <span>next</span>
+        <ArrowRight size={11} />
+        <span style={{ color: TEXT, fontWeight: 700 }}>02 Defend. The compile beats RAG.</span>
       </div>
       <SlideBar from={GREEN} to={GOLD} />
     </div>
