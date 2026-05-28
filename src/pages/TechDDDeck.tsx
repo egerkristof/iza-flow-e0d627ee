@@ -2235,6 +2235,26 @@ function S07eAaceNotRag() {
                         fontStyle: "italic",
                         textDecoration: c.tag === "conflict" ? "line-through" : "none",
                       }}>"{c.text}"</span>
+                      {/* Inline promotion annotation · read at the source.
+                          Tells the reader exactly which typed AACE primitive
+                          this fragment becomes on the right side. */}
+                      <div className="mt-1 flex items-center gap-1.5 flex-wrap">
+                        <span className="font-mono uppercase tracking-[0.08em]"
+                          style={{ fontSize: 8, color: SUBTLE, fontWeight: 700 }}>promotes to</span>
+                        <ArrowRight size={9} style={{ color: SUBTLE }} />
+                        <span className="font-mono uppercase tracking-[0.08em] rounded px-1.5 py-0.5"
+                          style={{
+                            fontSize: 8.5, fontWeight: 800,
+                            color: `hsl(${c.promoteTo.color})`,
+                            background: `hsl(${c.promoteTo.color} / 0.10)`,
+                            border: `1px solid hsl(${c.promoteTo.color} / 0.45)`,
+                          }}>
+                          {c.promoteTo.k}
+                        </span>
+                        <span style={{ fontSize: 8.5, color: MUTED, fontStyle: "italic" }}>
+                          {c.promoteTo.verb}
+                        </span>
+                      </div>
                     </div>
                   );
                 })}
