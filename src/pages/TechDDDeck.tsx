@@ -172,10 +172,10 @@ function S01Cover() {
           LIZA OS · Tech Due Diligence · Confidential
         </p>
         <h1 className="font-bold leading-[1.02]" style={{ fontSize: 104, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
-          Architecture, State &amp; Margin.
+          The AI Governance Loop.
         </h1>
         <p className="mt-10 mx-auto" style={{ fontSize: 28, color: DARK_MUTED, maxWidth: 1400, lineHeight: 1.35 }}>
-          AACE — the <span style={{ color: DARK_TEXT, fontWeight: 600 }}>Active Adaptive Context Engine</span> — compiles every prompt against typed org knowledge.
+          <span style={{ color: DARK_TEXT, fontWeight: 600 }}>Safeguard what is most valuable. Scale what is best about you.</span> Continuously, at the speed of AI. AACE compiles every prompt against typed org knowledge.
         </p>
         <div className="mt-10 flex items-center justify-center gap-8" style={{ fontSize: 22, color: DARK_TEXT }}>
           <span><b style={{ color: `hsl(${GREEN})` }}>$0.40</b> per decision</span>
