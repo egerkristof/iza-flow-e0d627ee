@@ -4183,6 +4183,60 @@ function S07fInstrument() {
 // land BEFORE the four-beat architecture arc so the "why us" frame is set before
 // the deep-dive. S09Augmentation removed — superseded by S09bAugmentationMechanics,
 // which now sits earlier as part of the architecture cluster.
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SLIDE 13 — THE LOOP, CLOSED (Closer · ties back to the 5 surfaces)
+// ═════════════════════════════════════════════════════════════════════════════
+function S13LoopClosed() {
+  const surfaces = [
+    { k: "Standards", proof: "Typed playbooks, versioned, enforced at compile time", icon: ShieldCheck },
+    { k: "Judgment",  proof: "Senior reasoning encoded as procedures, not lost to chat history", icon: Brain },
+    { k: "Memory",    proof: "Owned context graph. Zero vendor lock. Portable in your VPC", icon: Database },
+    { k: "Spend",     proof: "$0.40 / decision · every token bound to a named standard", icon: Coins },
+    { k: "Exposure",  proof: "Full lineage per decision. EU AI Act and audit ready by default", icon: Lock },
+  ];
+  return (
+    <div className="w-full h-full relative flex flex-col items-center justify-center" style={{ background: DARK_BG }}>
+      <DarkGrid />
+      <PageNumber dark />
+      <div className="relative z-10 px-32 w-full">
+        <p className="font-semibold tracking-[0.3em] uppercase text-center mb-6" style={{ fontSize: 18, color: `hsl(${GOLD})` }}>
+          The Loop, Closed
+        </p>
+        <h2 className="font-bold text-center leading-[1.05]" style={{ fontSize: 72, color: DARK_TEXT, letterSpacing: "-0.03em" }}>
+          Five surfaces. <span style={{ color: `hsl(${GREEN})` }}>One loop.</span> <span style={{ color: `hsl(${ACCENT})` }}>Yours.</span>
+        </h2>
+        <p className="text-center mt-6 mx-auto" style={{ fontSize: 22, color: DARK_MUTED, maxWidth: 1400, lineHeight: 1.4 }}>
+          What the thesis named, the architecture delivers. The same five surfaces, now provable in production.
+        </p>
+
+        <div className="grid grid-cols-5 gap-5 mt-14">
+          {surfaces.map((s) => {
+            const Icon = s.icon;
+            return (
+              <div key={s.k} className="rounded-2xl p-6 flex flex-col gap-4"
+                style={{ background: "hsl(0 0% 100% / 0.04)", border: "1px solid hsl(0 0% 100% / 0.12)" }}>
+                <div className="rounded-lg flex items-center justify-center" style={{ width: 44, height: 44, background: `hsl(${GREEN} / 0.15)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                  <Icon size={22} color={`hsl(${GREEN})`} />
+                </div>
+                <p className="font-bold" style={{ fontSize: 22, color: DARK_TEXT, letterSpacing: "-0.01em" }}>{s.k}</p>
+                <p style={{ fontSize: 15, color: DARK_MUTED, lineHeight: 1.45 }}>{s.proof}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-14 flex items-center justify-center gap-10" style={{ fontSize: 20, color: DARK_MUTED }}>
+          <span>Model governance watches the AI.</span>
+          <span style={{ color: "hsl(0 0% 100% / 0.25)" }}>·</span>
+          <span style={{ color: DARK_TEXT, fontWeight: 700 }}>LIZA governs the moment of decision.</span>
+        </div>
+      </div>
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
