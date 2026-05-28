@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import BridgeDeck from "@/pages/BridgeDeck";
 import TechDDDeck from "@/pages/TechDDDeck";
 import ImpactDeck from "@/pages/ImpactDeck";
+import FactoryDeck from "@/pages/FactoryDeck";
 import InsuranceDeck from "@/pages/InsuranceDeck";
 import InsuranceUnderwritingDeck from "@/pages/InsuranceUnderwritingDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
@@ -216,8 +217,17 @@ export const presentationRoutes: PresentationRoute[] = [
     title: "Tech Due Diligence Deck",
     path: "/tech-dd",
     sourcePath: "src/pages/TechDDDeck.tsx",
-    description: "9-slide tech due diligence deck for investor TDD teams. Three-phase arc: (1) Paradigm — Three Horizons collapse (permanent edge state), infrastructure shift from data to cognitive, Context Gap iceberg. (2) Architecture — LIZA OS map (Leadership / Systems of Record / Decision Core / AI Surfaces / LLM Fabric), AACE v3.3 four-step loop with State-Locking, artifact propagation graph and Unified Rationale Log. (3) Commercial + Synthesis — Pricing Inversion (industry converging on usage-based) with the labour-market analogy and 1×/5×/25× value-based metering, then the Augmentation Engine separating human contribution (creativity, self-awareness, ethics) from system contribution (encoded senior judgment, governed execution).",
+    description: "Technical deep-dive deck for investor TDD teams. Three-phase arc: (1) Paradigm. (2) Architecture (LIZA OS map, AACE v3.1 four-step loop with State-Locking, artifact propagation, Unified Rationale Log). (3) Commercial + Synthesis (Pricing Inversion, value-based metering, Augmentation Engine). Reused source-of-truth for /factory deck slides.",
     component: TechDDDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "factory",
+    title: "Factory Deck (Production-System Spine)",
+    path: "/factory",
+    sourcePath: "src/pages/FactoryDeck.tsx",
+    description: "18-slide seed-round investor deck built on the production-system spine. \"AI is the machine. LIZA is the production system.\" Leads with the math ($0.40 per governed decision, 95% platform GM, €23 displaced labour cost). Toyota referenced once on slide 02; the rest of the deck demonstrates the factory floor without naming it. Absorbs the strongest material from /tech-dd and /impact and adds: 30-day install with metered Day 31 + post-Seed self-serve PLG resolution, AEC hero vertical (Nemetschek-scale partner) with the pattern-repeats grid, team slide grounded in 15+ years of data and AI architecture in production, and the €2M Seed ask with milestone-to-Series-A logic. AACE locked to v3.1.",
+    component: FactoryDeck,
     showInAdmin: true,
   },
   {
