@@ -1945,12 +1945,21 @@ function S07eAaceNotRag() {
             <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: `hsl(${GREEN})` }} /></div>
 
             {/* Compiled context object */}
-            <div className="rounded-lg border bg-white px-3 py-2 mb-2"
+            <div className="rounded-lg border bg-white px-3 py-2.5 mb-2"
               style={{ borderColor: `hsl(${GREEN} / 0.45)` }}>
-              <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>Compiled context object · typed, signed, audited</p>
-              <p style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>
-                Versioned. Diffable. Replayable. Every field traceable to the org primitive that produced it.
-              </p>
+              <div className="flex items-center gap-2 mb-1.5">
+                <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>Compiled context object</p>
+                <span className="ml-auto font-mono" style={{ fontSize: 9.5, color: SUBTLE }}>ctx@v3.1 · signed · 6 primitives</span>
+              </div>
+              <pre className="rounded px-2 py-1.5 overflow-hidden"
+                style={{ fontSize: 10, lineHeight: 1.4, color: TEXT, background: CARD_ALT, border: `1px solid hsl(${GREEN} / 0.2)`, fontFamily: "ui-monospace, SFMono-Regular, monospace" }}>
+{`scope:        EU-first launches · Q4 thesis
+procedure:    draft → cite → review (3-step memo)
+voice:        bullet-first · no hedging
+prohibit:     no PII to vendor models
+facts:        Series-A deck v3.2 · last board update
+skill:        series-b-narrative@v3 (reused 47×)`}
+              </pre>
             </div>
             <div className="flex items-center justify-center py-0.5"><ArrowDown size={16} style={{ color: `hsl(${GREEN})` }} /></div>
             <div className="rounded-lg border-2 px-3 py-2"
