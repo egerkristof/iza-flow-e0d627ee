@@ -4033,30 +4033,36 @@ function S07fInstrument() {
   );
 }
 
-const SLIDES = [
+// Resequence: thesis & narrative first (unique-moment, os-map, loop, propagation)
+// land BEFORE the four-beat architecture arc so the "why us" frame is set before
+// the deep-dive. S09Augmentation removed — superseded by S09bAugmentationMechanics,
+// which now sits earlier as part of the architecture cluster.
+const RAW_SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
   { id: "iceberg", title: "Context Gap", component: <S03Iceberg /> },
-  { id: "funnel-stack", title: "Every Prompt Is A Compile · The Atom", component: <S07cFunnel /> },
-  { id: "aace-not-rag", title: "This Is AACE, Not RAG · The Defence", component: <S07eAaceNotRag /> },
-  { id: "org-loop", title: "Every Moment Of Work Is A Commit · The Network", component: <S07dOrgLoop /> },
-  { id: "instrument-panel", title: "Every Commit Compounds · The AI-Native Instrument Panel", component: <S07fInstrument /> },
   { id: "unique-moment", title: "What Makes Us Unique · Moment of Work", component: <S07bUnique /> },
   { id: "os-map", title: "OS Map", component: <S04OSMap /> },
   { id: "loop", title: "AACE Loop", component: <S05Loop /> },
   { id: "propagation", title: "Artifact Graph", component: <S06Propagation /> },
-  
+  { id: "funnel-stack", title: "Every Prompt Is A Compile · The Atom", component: <S07cFunnel /> },
+  { id: "aace-not-rag", title: "This Is AACE, Not RAG · The Defence", component: <S07eAaceNotRag /> },
+  { id: "org-loop", title: "Every Moment Of Work Is A Commit · The Network", component: <S07dOrgLoop /> },
+  { id: "instrument-panel", title: "Every Commit Compounds · The AI-Native Instrument Panel", component: <S07fInstrument /> },
+  { id: "augmentation-mechanics", title: "Augmentation Mechanics", component: <S09bAugmentationMechanics /> },
   { id: "metering", title: "Pricing Inversion + Metering", component: <S08PricingMetering /> },
   { id: "classifier", title: "Decision-Class Classifier", component: <S08bClassifier /> },
   { id: "unit-economics", title: "Unit Economics & Sustainability", component: <S10UnitEconomics /> },
   { id: "scissors", title: "The Scissors · Cost Dynamics", component: <S10aScissors /> },
   { id: "acv-bridge", title: "Top-down ACV ↔ Bottom-up Unit Economics", component: <S10bACVBridge /> },
-  { id: "augmentation", title: "Augmentation Engine", component: <S09Augmentation /> },
-  { id: "augmentation-mechanics", title: "Augmentation Mechanics", component: <S09bAugmentationMechanics /> },
   { id: "hyperscaler-risk", title: "Hyperscaler Risk & Return Paths", component: <S11HyperscalerRisk /> },
   { id: "societal-impact", title: "Knowledge Sovereignty · Societal Impact", component: <S12SocietalImpact /> },
 ];
+const SLIDES = RAW_SLIDES.map((s, i) => ({
+  ...s,
+  component: <SlideIndexProvider index={i} total={RAW_SLIDES.length}>{s.component}</SlideIndexProvider>,
+}));
 
 // ─── Deck shell ──────────────────────────────────────────────────────────────
 export default function TechDDDeck() {
