@@ -3797,10 +3797,10 @@ function S07fInstrument() {
         <ArcStepper current={4} />
         <Tag label="Every commit compounds · the instrument panel" color={GREEN} />
         <h2 className="font-bold leading-[1.02] mb-2" style={{ fontSize: 46, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
-          The whole organisation, running at the <span style={{ color: `hsl(${GREEN})` }}>speed of AI</span>, with every human control lever in reach.
+          Strategy and execution stop being two layers. <span style={{ color: `hsl(${GREEN})` }}>They are the same loop, measured for the first time.</span>
         </h2>
-        <p style={{ fontSize: 14, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
-          Strategy and execution stop being two layers. They are the same loop, measured for the first time.
+        <p style={{ fontSize: 16, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
+          The whole organisation, running at the speed of AI, with every human control lever in reach.
         </p>
 
         {/* ── 4-beat reveal control ── */}
