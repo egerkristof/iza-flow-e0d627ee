@@ -1211,6 +1211,9 @@ function S07cFunnel() {
 
   const toggle = (id: LayerId) => setActive(a => ({ ...a, [id]: !a[id] }));
 
+  const enforcedCount = LAYERS.filter(L => active[L.id]).length;
+  const fullyGoverned = enforcedCount === LAYERS.length;
+
   // Funnel geometry — side view, nested trapezoids.
   // Wide intake at top, narrow spout at bottom (the prompt).
   // Each layer's bottom width = next layer's top width => they nest perfectly.
@@ -1231,12 +1234,9 @@ function S07cFunnel() {
       <div className="relative z-10">
         <ArcStepper current={1} next="vs RAG, the defence" />
         <Tag label="The atom. Every prompt is a compile." color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+        <h2 className="font-bold leading-[1.02] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           Every prompt assembles five layers of <span style={{ color: `hsl(${GREEN})` }}>governed context</span>. Automatically.
         </h2>
-        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 14 }}>
-          Each nested funnel is an enforcement layer. Snap any layer out and the prompt below it goes ungoverned. Build the stack from the C-suite down, or from the operator up. Both directions converge on the same moment of work.
-        </p>
 
         {/* Mode toggle */}
         <div className="flex items-center gap-3 mb-4">
@@ -1353,119 +1353,103 @@ function S07cFunnel() {
 
           {/* RIGHT — live prompt screen */}
           <div className="col-span-5 flex flex-col gap-3" style={{ height: 720 }}>
-            {/* Device frame */}
-            <div className="rounded-2xl border overflow-hidden flex-1 flex flex-col"
-              style={{ borderColor: CHROME_BORDER, background: "white", boxShadow: "0 8px 28px rgba(0,0,0,0.06)" }}>
-              {/* Title bar */}
+            {/* 1 · HERO PROMPT — the operator's actual line, big */}
+            <div className="rounded-2xl border-2 px-5 py-4"
+              style={{ borderColor: `hsl(${GREEN} / 0.55)`, background: "white", boxShadow: "0 8px 28px rgba(0,0,0,0.06)" }}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 800 }}>
+                  Operator prompt · the moment of work
+                </span>
+                <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded border"
+                  style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.5)` }}>
+                  <Send size={10} /> resolve
+                </span>
+              </div>
+              <p style={{ fontSize: 22, color: TEXT, fontWeight: 700, lineHeight: 1.2, letterSpacing: "-0.01em" }}>
+                "Draft the Series-B narrative for tomorrow's board."
+              </p>
+              <p className="mt-2" style={{ fontSize: 11.5, color: MUTED }}>
+                One line from the operator. The funnel contributes the other {enforcedCount} of {LAYERS.length} layers, automatically.
+              </p>
+            </div>
+
+            {/* 2 · OUTCOME PREVIEW — what actually changes when layers snap in/out */}
+            <div className="rounded-2xl border flex-1 overflow-hidden flex flex-col"
+              style={{ borderColor: CHROME_BORDER, background: "white" }}>
               <div className="flex items-center gap-2 px-4 py-2 border-b" style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
                 <div className="flex gap-1.5">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ff5f57" }} />
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#ffbd2e" }} />
                   <span className="w-2.5 h-2.5 rounded-full" style={{ background: "#28c840" }} />
                 </div>
-                <span className="font-mono" style={{ fontSize: 11, color: SUBTLE, marginLeft: 8 }}>liza · moment of work</span>
+                <span className="font-mono" style={{ fontSize: 11, color: SUBTLE, marginLeft: 8 }}>liza · resolved output</span>
                 <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-full border"
-                  style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.08)` }}>
-                  <ShieldCheck size={10} /> Audit container
+                  style={{
+                    fontSize: 10,
+                    color: fullyGoverned ? `hsl(${GREEN})` : `hsl(${RED})`,
+                    borderColor: fullyGoverned ? `hsl(${GREEN} / 0.4)` : `hsl(${RED} / 0.5)`,
+                    background: fullyGoverned ? `hsl(${GREEN} / 0.08)` : `hsl(${RED} / 0.06)`,
+                  }}>
+                  {fullyGoverned ? <><ShieldCheck size={10} /> Governed</> : <><AlertTriangle size={10} /> Ungoverned · {LAYERS.length - enforcedCount} missing</>}
                 </span>
               </div>
-
-              {/* Compiled system context */}
-              <div className="px-4 pt-3 pb-2 overflow-y-auto" style={{ flex: 1 }}>
+              <div className="px-4 py-3 flex-1 overflow-y-auto">
                 <p className="font-mono uppercase tracking-[0.14em] mb-2" style={{ fontSize: 10, color: SUBTLE }}>
-                  Compiled context · injected before the model sees the prompt
+                  How the outcome changes · snap a layer out to compare
                 </p>
-                <div className="space-y-1.5">
-                  {LAYERS.map((L, i) => {
-                    const on = active[L.id];
-                    const c = L.color;
-                    const isHover = hovered === L.id;
-                    const Icon = L.icon;
-                    return (
-                      <div key={L.id}
-                        className="rounded-md border px-2.5 py-1.5 transition-all"
-                        onMouseEnter={() => setHovered(L.id)}
-                        onMouseLeave={() => setHovered(null)}
-                        style={{
-                          borderColor: on ? `hsl(${c} / ${isHover ? 0.9 : 0.4})` : `hsl(${RED} / 0.45)`,
-                          background: on ? (isHover ? `hsl(${c} / 0.10)` : `hsl(${c} / 0.04)`) : `hsl(${RED} / 0.05)`,
-                        }}
-                      >
-                        <div className="flex items-center gap-1.5 mb-0.5">
-                          <Icon size={11} style={{ color: on ? `hsl(${c})` : `hsl(${RED})` }} />
-                          <span className="font-mono uppercase tracking-[0.1em]" style={{ fontSize: 9.5, color: on ? `hsl(${c})` : `hsl(${RED})`, fontWeight: 700 }}>
-                            {String(orderIndex(i)).padStart(2, "0")} · {L.label}
-                          </span>
-                          <span className="ml-auto" style={{ fontSize: 9, color: SUBTLE }}>
-                            {on ? "enforced" : "missing"}
-                          </span>
-                        </div>
-                        {on ? (
-                          <p style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.35 }}>
-                            <span style={{ color: SUBTLE }}>›</span> {L.line}
-                          </p>
-                        ) : (
-                          <p style={{ fontSize: 11.5, color: `hsl(${RED})`, lineHeight: 1.35 }}>
-                            ⚠ no rule applied — operator improvises, drift compounds
-                          </p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+                {(() => {
+                  // Each layer toggles a specific visible mutation in the draft output.
+                  const lines = [
+                    { id: "intent" as LayerId,    on: "Anchored to the Q4 expansion thesis. EU-first framing.",                 off: "Generic growth story. No anchor to current thesis." },
+                    { id: "governance" as LayerId, on: "All external claims cited. No PII to vendor model. GDPR safe.",         off: "Uncited claims. Risk of PII leak. Legal must re-review." },
+                    { id: "standards" as LayerId,  on: "Investor Memo v3.1 structure. House tone. Approved benchmarks.",       off: "Free-form structure. Off-tone. Mixed benchmark sources." },
+                    { id: "team" as LayerId,       on: "Reuses Series-A framing. Consistent with last week's board update.",   off: "Contradicts last board update. Reviewers will catch the drift." },
+                    { id: "preference" as LayerId, on: "Bullet-first. No hedging. Concise, German-English voice.",              off: "Prose-heavy. Hedged. Operator must rewrite by hand." },
+                  ];
+                  return (
+                    <div className="space-y-1.5">
+                      {lines.map(l => {
+                        const layer = LAYERS.find(L => L.id === l.id)!;
+                        const on = active[l.id];
+                        return (
+                          <div key={l.id}
+                            onClick={() => toggle(l.id)}
+                            onMouseEnter={() => setHovered(l.id)}
+                            onMouseLeave={() => setHovered(null)}
+                            className="rounded-md border px-2.5 py-1.5 cursor-pointer transition-all flex items-start gap-2"
+                            style={{
+                              borderColor: on ? `hsl(${layer.color} / 0.45)` : `hsl(${RED} / 0.45)`,
+                              background: on ? `hsl(${layer.color} / 0.05)` : `hsl(${RED} / 0.05)`,
+                            }}
+                          >
+                            <span className="mt-0.5" style={{ fontSize: 12, color: on ? `hsl(${layer.color})` : `hsl(${RED})`, fontWeight: 800 }}>
+                              {on ? "✓" : "✗"}
+                            </span>
+                            <div className="flex-1">
+                              <span className="font-mono uppercase tracking-[0.1em] mr-1.5" style={{ fontSize: 9.5, color: on ? `hsl(${layer.color})` : `hsl(${RED})`, fontWeight: 800 }}>
+                                {layer.label}
+                              </span>
+                              <span style={{ fontSize: 12, color: on ? TEXT : `hsl(${RED})`, lineHeight: 1.35 }}>
+                                {on ? l.on : l.off}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
-
-              {/* Prompt input */}
-              <div className="border-t px-4 py-3" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-                {/* Consequence banner: surfaces what happens when layers are off */}
-                {LAYERS.some(L => !active[L.id]) ? (
-                  <div className="rounded-md border-2 px-2.5 py-1.5 mb-2 flex items-center gap-2"
-                    style={{ borderColor: `hsl(${RED} / 0.55)`, background: `hsl(${RED} / 0.06)` }}>
-                    <AlertTriangle size={13} style={{ color: `hsl(${RED})` }} />
-                    <span style={{ fontSize: 11, color: `hsl(${RED})`, fontWeight: 700 }}>
-                      Ungoverned compile.
-                    </span>
-                    <span style={{ fontSize: 11, color: TEXT }}>
-                      {LAYERS.filter(L => !active[L.id]).length} of {LAYERS.length} layers missing. The operator must improvise the gap, every time. Drift compounds silently.
-                    </span>
-                  </div>
-                ) : (
-                  <div className="rounded-md border px-2.5 py-1.5 mb-2 flex items-center gap-2"
-                    style={{ borderColor: `hsl(${GREEN} / 0.45)`, background: `hsl(${GREEN} / 0.06)` }}>
-                    <CheckCircle2 size={13} style={{ color: `hsl(${GREEN})` }} />
-                    <span style={{ fontSize: 11, color: `hsl(${GREEN})`, fontWeight: 700 }}>
-                      Fully governed compile.
-                    </span>
-                    <span style={{ fontSize: 11, color: TEXT }}>
-                      All 5 layers enforced. The operator writes one line. Everything else is inherited.
-                    </span>
-                  </div>
-                )}
-                <p className="font-mono uppercase tracking-[0.14em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
-                  Operator prompt · the moment of work
-                </p>
-                <div className="flex items-center gap-2 rounded-lg border bg-white px-3 py-2" style={{ borderColor: CHROME_BORDER }}>
-                  <MessageSquare size={14} style={{ color: SUBTLE }} />
-                  <span style={{ fontSize: 12.5, color: TEXT }}>
-                    Draft the Series-B narrative for tomorrow's board.
-                  </span>
-                  <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded border"
-                    style={{ fontSize: 10, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.5)` }}>
-                    <Send size={10} /> resolve
-                  </span>
-                </div>
-                <p className="mt-1.5" style={{ fontSize: 11, color: MUTED }}>
-                  The operator writes one line. The funnel above contributes the other {LAYERS.filter(L => active[L.id]).length} of {LAYERS.length} layers. Automatically. Comparably. Audited.
+              <div className="border-t px-4 py-2.5"
+                style={{ borderColor: CHROME_BORDER, background: fullyGoverned ? `hsl(${GREEN} / 0.06)` : `hsl(${RED} / 0.05)` }}>
+                <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
+                  {fullyGoverned ? (
+                    <><b style={{ color: `hsl(${GREEN})` }}>Fully governed compile.</b> The operator writes one line. Everything else is inherited.</>
+                  ) : (
+                    <><b style={{ color: `hsl(${RED})` }}>Ungoverned compile.</b> The operator must improvise the gap. Every time. Drift compounds silently.</>
+                  )}
                 </p>
               </div>
-            </div>
-
-            {/* Conclusion strip */}
-            <div className="rounded-xl border-2 px-4 py-3"
-              style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.08)` }}>
-              <p style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.4 }}>
-                <b style={{ color: `hsl(${GREEN})` }}>Same funnel, either direction.</b> CEO down or operator up. Every prompt at the spout inherits every layer above it. That is what makes LIZA infrastructure, not a use-case POC.
-              </p>
             </div>
           </div>
         </div>
@@ -1507,16 +1491,23 @@ function S07dOrgLoop() {
     { k: "Skills" },
   ];
 
-  const TRACE = {
-    operatorIdx: 2, // Sales AE
-    prompt: "Drop the hedging in this proposal intro.",
-    primitive: "Preference",
-    update: "bullet-first, no hedging",
-    landsIn: "every other operator's next moment of work",
-    timing: "4 min from override to org-wide",
-  };
+  // One trace per operator. Pick a small, concrete moment of work that is
+  // obvious to a non-developer reader. Click an operator to switch.
+  const TRACES: {
+    prompt: string; primitive: "Fact" | "Standard" | "Preference" | "Prohibition" | "Procedure" | "Skill";
+    update: string; landsIn: string; timing: string;
+  }[] = [
+    { prompt: "Use 'EU-first' as our default launch framing.",            primitive: "Standard",    update: "Default launch order: EU → US → APAC", landsIn: "every operator's next launch memo",         timing: "3 min from approval to org-wide" },
+    { prompt: "Always lead with the customer outcome, not the feature.", primitive: "Preference",  update: "Voice rule: outcome first, feature second", landsIn: "every operator's next external write-up", timing: "2 min from approval to org-wide" },
+    { prompt: "Our new Q4 list price is €4,900 per seat.",                primitive: "Fact",        update: "Q4 list price = €4,900 / seat",        landsIn: "every proposal, deck, and quote across the org", timing: "4 min from approval to org-wide" },
+    { prompt: "Escalate any supplier delay over 5 days to Ops lead.",    primitive: "Procedure",   update: "Supplier delay > 5d → escalate to Ops lead", landsIn: "every operator's supplier workflow",  timing: "3 min from approval to org-wide" },
+    { prompt: "No customer PII in vendor-hosted models. Ever.",          primitive: "Prohibition", update: "Hard block: PII → external model",     landsIn: "every operator's next prompt, enforced at compile", timing: "1 min from approval to org-wide" },
+    { prompt: "Standardise our API error envelope on RFC 7807.",          primitive: "Standard",    update: "Error envelope: RFC 7807 (problem+json)", landsIn: "every operator touching the API",        timing: "5 min from approval to org-wide" },
+  ];
 
   const [mode, setMode] = useState<"trace" | "ambient">("trace");
+  const [traceIdx, setTraceIdx] = useState<number>(2); // start on Sales AE · Q4 price
+  const TRACE = { operatorIdx: traceIdx, ...TRACES[traceIdx] };
 
   // SVG canvas — left panel
   const VB = 1100;
@@ -1542,11 +1533,11 @@ function S07dOrgLoop() {
       <div className="relative z-10">
         <ArcStepper current={3} next="the instrument panel" />
         <Tag label="The network. Every moment of work is a commit." color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+        <h2 className="font-bold leading-[1.02] mb-4" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           The org learns <span style={{ color: `hsl(${GREEN})` }}>laterally</span>. In real time. At the speed of work.
         </h2>
-        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1640, marginBottom: 10 }}>
-          Every person carries the same five-layer funnel. Every moment of work commits a tiny update into a shared substrate. The substrate then re-enters every other operator's next moment of work. No offsite required.
+        <p style={{ fontSize: 14, color: SUBTLE, marginBottom: 12 }}>
+          Click any operator on the network to trace their commit through the substrate.
         </p>
 
         <div className="grid grid-cols-12 gap-5">
@@ -1682,7 +1673,9 @@ function S07dOrgLoop() {
                 const dx = CX - p.x, dy = CY - p.y;
                 const ang = Math.atan2(dy, dx) * 180 / Math.PI;
                 return (
-                  <g key={`f-${i}`} transform={`translate(${p.x} ${p.y}) rotate(${ang})`} opacity={dim ? 0.34 : 1}>
+                  <g key={`f-${i}`} transform={`translate(${p.x} ${p.y}) rotate(${ang})`} opacity={dim ? 0.34 : 1}
+                    onClick={() => { setMode("trace"); setTraceIdx(i); }}
+                    style={{ cursor: "pointer" }}>
                     {/* Pulsing ring (moment of work) */}
                     <circle cx={0} cy={0} r={62}
                       fill="none" stroke={`hsl(${op.color} / 0.4)`} strokeWidth={highlight ? 1.8 : 1.2}>
@@ -1781,6 +1774,33 @@ function S07dOrgLoop() {
                 <b style={{ color: `hsl(${GREEN})` }}>Every commit compounds.</b> Marginal cost per moment of work trends down as the substrate grows. Vision and hiring shape the funnels. Moments of work evolve them.
               </p>
             </div>
+
+            {/* Operator picker — explicit clickable list, mirrors the funnel network */}
+            <div className="rounded-xl border bg-white px-3 py-2.5"
+              style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.14em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
+                Try another operator
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {OPERATORS.map((op, i) => {
+                  const sel = i === traceIdx;
+                  return (
+                    <button key={op.role}
+                      onClick={() => { setMode("trace"); setTraceIdx(i); }}
+                      className="rounded-full border px-2 py-1 transition-all"
+                      style={{
+                        fontSize: 10.5,
+                        fontWeight: sel ? 800 : 600,
+                        color: sel ? "white" : TEXT,
+                        background: sel ? `hsl(${op.color})` : "white",
+                        borderColor: sel ? `hsl(${op.color})` : `hsl(${op.color} / 0.35)`,
+                      }}>
+                      {op.role}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1838,12 +1858,9 @@ function S07eAaceNotRag() {
       <div className="relative z-10">
         <ArcStepper current={2} next="the org learns laterally" />
         <Tag label="The defence. Why this is not RAG." color={GREEN} />
-        <h2 className="font-bold leading-[1.02] mb-3" style={{ fontSize: 54, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
+        <h2 className="font-bold leading-[1.02] mb-5" style={{ fontSize: 58, color: TEXT, letterSpacing: "-0.028em", maxWidth: 1760 }}>
           This is <span style={{ color: `hsl(${RED})` }}>not RAG.</span> This is <span style={{ color: `hsl(${GREEN})` }}>AACE</span>.
         </h2>
-        <p style={{ fontSize: 17, color: MUTED, maxWidth: 1500, marginBottom: 16 }}>
-          RAG retrieves text fragments and hopes the model reassembles intent. AACE compiles typed organisational primitives into a governed context object. The model never improvises what the org has already decided.
-        </p>
 
         <div className="grid grid-cols-2 gap-6">
           {/* LEFT — RAG path */}
@@ -1964,12 +1981,21 @@ function S07eAaceNotRag() {
             <div className="flex items-center justify-center py-1"><ArrowDown size={16} style={{ color: `hsl(${GREEN})` }} /></div>
 
             {/* Compiled context object */}
-            <div className="rounded-lg border bg-white px-3 py-2 mb-2"
+            <div className="rounded-lg border bg-white px-3 py-2.5 mb-2"
               style={{ borderColor: `hsl(${GREEN} / 0.45)` }}>
-              <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>Compiled context object · typed, signed, audited</p>
-              <p style={{ fontSize: 11, color: MUTED, marginTop: 2 }}>
-                Versioned. Diffable. Replayable. Every field traceable to the org primitive that produced it.
-              </p>
+              <div className="flex items-center gap-2 mb-1.5">
+                <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: `hsl(${GREEN})`, fontWeight: 800 }}>Compiled context object</p>
+                <span className="ml-auto font-mono" style={{ fontSize: 9.5, color: SUBTLE }}>ctx@v3.1 · signed · 6 primitives</span>
+              </div>
+              <pre className="rounded px-2 py-1.5 overflow-hidden"
+                style={{ fontSize: 10, lineHeight: 1.4, color: TEXT, background: CARD_ALT, border: `1px solid hsl(${GREEN} / 0.2)`, fontFamily: "ui-monospace, SFMono-Regular, monospace" }}>
+{`scope:        EU-first launches · Q4 thesis
+procedure:    draft → cite → review (3-step memo)
+voice:        bullet-first · no hedging
+prohibit:     no PII to vendor models
+facts:        Series-A deck v3.2 · last board update
+skill:        series-b-narrative@v3 (reused 47×)`}
+              </pre>
             </div>
             <div className="flex items-center justify-center py-0.5"><ArrowDown size={16} style={{ color: `hsl(${GREEN})` }} /></div>
             <div className="rounded-lg border-2 px-3 py-2"
@@ -1991,16 +2017,11 @@ function S07eAaceNotRag() {
           </div>
         </div>
 
-        {/* Economic kicker */}
-        <div className="mt-4 rounded-xl border-2 px-5 py-3 flex items-center gap-4"
-          style={{ borderColor: `hsl(${GREEN} / 0.5)`, background: `hsl(${GREEN} / 0.06)` }}>
-          <Sparkles size={20} style={{ color: `hsl(${GREEN})` }} />
-          <p style={{ fontSize: 14, color: TEXT, fontWeight: 700, flex: 1 }}>
-            <span style={{ color: `hsl(${GREEN})` }}>Skills compound. Chunks rent.</span>{" "}
-            <span style={{ color: MUTED, fontWeight: 500 }}>
-              A Skill is a reusable, versioned org asset. A retrieved chunk is per-call rent that has to be paid again on every prompt, by every operator, forever.
-            </span>
-          </p>
+        {/* Economic footnote · small, bottom-right */}
+        <div className="mt-3 flex items-center gap-2"
+          style={{ fontSize: 11.5, color: MUTED }}>
+          <Sparkles size={12} style={{ color: `hsl(${GREEN})` }} />
+          <span><b style={{ color: `hsl(${GREEN})` }}>Skills compound. Chunks rent.</b> A Skill is a versioned org asset; a retrieved chunk is per-call rent, paid again on every prompt.</span>
         </div>
       </div>
       <div className="absolute right-12 bottom-6 flex items-center gap-2 font-mono uppercase tracking-[0.14em]"
