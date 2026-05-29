@@ -321,7 +321,7 @@ function S06WeekendObjection({ n, t }: { n: number; t: number }) {
 // ─── 07 · LAB OBJECTION ─────────────────────────────────────────────────────
 function S07LabObjection({ n, t }: { n: number; t: number }) {
   const reasons = [
-    { h: "Business model", v: "Labs sell token volume. LIZA governs decisions that sit on top of any token supplier." },
+    { h: "Business model", v: "LLM providers sell token volume. LIZA governs decisions that sit on top of any token supplier." },
     { h: "Neutrality", v: "Enterprises will run several models. The control layer cannot be owned by one of the vendors being controlled." },
     { h: "Sovereignty", v: "Company standards, decision rules and receipts are operational IP. Buyers need to own that record." },
     { h: "Accountability", v: "The model can generate. It cannot become the customer's auditable operating system." },
@@ -330,11 +330,26 @@ function S07LabObjection({ n, t }: { n: number; t: number }) {
     <Slide section="Objection 02" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Foundation labs are suppliers. <span style={{ color: `hsl(${GREEN})` }}>Not the control layer.</span>
+          LLM providers are suppliers. <span style={{ color: `hsl(${GREEN})` }}>Not the control layer.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
           They can add features. They cannot own the customer's governance position.
         </p>
+        {/* Lane diagram: LLM providers lane vs control lane */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div className="rounded-xl px-6 py-4 flex items-center justify-between" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>LLM provider lane</p>
+            <div className="flex items-center gap-2 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: MUTED }}>
+              <span className="px-3 py-1 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>Claude</span>
+              <span className="px-3 py-1 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>GPT</span>
+              <span className="px-3 py-1 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>Gemini</span>
+            </div>
+          </div>
+          <div className="rounded-xl px-6 py-4 flex items-center justify-between" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Governance lane</p>
+            <span className="px-3 py-1 rounded-full font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, background: BG, border: `1px solid hsl(${GREEN} / 0.4)` }}>LIZA OS · model-agnostic</span>
+          </div>
+        </div>
         <div className="grid grid-cols-2 gap-5 mb-9">
           {reasons.map((r) => (
             <div key={r.h} className="rounded-2xl p-7" style={{ background: CARD_ALT, borderLeft: `5px solid hsl(${GREEN})` }}>
@@ -344,7 +359,7 @@ function S07LabObjection({ n, t }: { n: number; t: number }) {
           ))}
         </div>
         <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
-          Claude can be inside the workflow. It cannot credibly certify the workflow for every other model, department and regulator.
+          Any LLM can sit inside the workflow. None can credibly certify the workflow for every other model, department and regulator.
         </p>
       </div>
     </Slide>
