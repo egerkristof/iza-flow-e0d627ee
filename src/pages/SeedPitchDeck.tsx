@@ -129,32 +129,44 @@ function S02Problem({ n, t }: { n: number; t: number }) {
 // ─── 03 · SOLUTION ───────────────────────────────────────────────────────────
 function S03Solution({ n, t }: { n: number; t: number }) {
   const items = [
-    { k: "LOCK",    v: "Every prompt locks to a playbook." },
-    { k: "COMPILE", v: "Typed standards compile into context, per call." },
-    { k: "SIGN",    v: "Every output ships with a signed receipt." },
+    {
+      k: "LOCK",
+      v: "Every prompt locks to a playbook.",
+      d: "Playbook = a versioned, named company method. \"How we price an enterprise quote.\" \"How we draft a clinical summary.\" Not a prompt template — an executable standard.",
+    },
+    {
+      k: "COMPILE",
+      v: "Typed standards compile into context, per call.",
+      d: "Typed standards = your company policies, best-practice procedures, decision rules, approved data. Compiled fresh into the model for every call, not retrieved blindly.",
+    },
+    {
+      k: "SIGN",
+      v: "Every output ships with a signed receipt.",
+      d: "Receipt = a cryptographically signed, hash-chained record of which playbook, standards, data and model produced the output. Replayable. Auditable. The unit of trust.",
+    },
   ];
   return (
     <Slide section="Solution" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-10" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-8" style={{ fontSize: 68, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           We run a{" "}
           <span style={{ color: `hsl(${GREEN})` }}>system around the model.</span>
         </h2>
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-3 gap-7 mb-6">
           {items.map((i) => (
-            <div key={i.k} className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)` }}>
-              <div className="font-mono font-black uppercase tracking-[0.2em] mb-4" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>
+            <div key={i.k} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)` }}>
+              <div className="font-mono font-black uppercase tracking-[0.2em] mb-3" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>
                 {i.k}
               </div>
-              <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.25 }}>{i.v}</p>
+              <p className="font-bold mb-4" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>{i.v}</p>
+              <div className="mt-auto pt-3" style={{ borderTop: `1px solid hsl(${GREEN} / 0.25)` }}>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{i.d}</p>
+              </div>
             </div>
           ))}
         </div>
-        <p className="mt-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1400, lineHeight: 1.4 }}>
-          A playbook is a versioned, typed standard. A named policy, procedure, or decision rule. Not a prompt template.
-        </p>
-        <div className="mt-8 rounded-xl px-8 py-6" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-          <p className="font-bold" style={{ fontSize: 26, color: TEXT, lineHeight: 1.35 }}>
+        <div className="rounded-xl px-8 py-6" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
             Every signed receipt feeds back into the graph. Standards improve with every call. <span style={{ color: `hsl(${GREEN})` }}>The factory learns.</span>
           </p>
         </div>
