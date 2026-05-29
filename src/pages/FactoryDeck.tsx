@@ -7,6 +7,7 @@ import {
   ArrowDown, ArrowRight, Magnet, Megaphone, Clock, AlertTriangle, Gauge,
   Hammer, Wrench, Flame, FileText, GitBranch, Zap, ShieldCheck,
   Lightbulb, UserCog, Package, Cog, Wind, Skull, Ban,
+  Hash, FileCheck2, Lock, Fingerprint, ScrollText, Scale, Database, Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -1018,6 +1019,139 @@ function FHowWeBreak() {
   );
 }
 
+// ─── F_AUDITRECEIPTS · Auditable compliance capabilities, in detail ─────────
+function FAuditReceipts() {
+  const capabilities = [
+    { icon: Fingerprint, name: "Signed call records",
+      detail: "Every model call writes an immutable record: who triggered it, which standard fired, which graph nodes were compiled in, the prompt hash, the model+version, the response, the cost. SHA-256 chained, append-only." },
+    { icon: Hash, name: "Standards as content-addressed code",
+      detail: "Each policy, playbook, and rule has a versioned ID and a content hash. Diff, rollback, blame, pull request. The exact rule that fired on Tuesday at 14:03 is reproducible byte-for-byte." },
+    { icon: FileCheck2, name: "Regression evidence on every change",
+      detail: "Standards ship with test cases. A diff triggers replay across every dependent use case. The deploy record stores the eval delta — pass, fail, drift — before the change is allowed to ship." },
+    { icon: Eye, name: "Provenance graph per output",
+      detail: "Click any AI answer. See the standards stack, the source nodes, the operator who approved them, the timestamp they were last verified. No black box. No 'the model said so.'" },
+    { icon: Lock, name: "Role-scoped context boundaries",
+      detail: "The compiler enforces who can read what at assembly time, not at the UI. PII, MNPI, GxP-controlled, customer-confidential — each tagged, each filtered before the token leaves the perimeter." },
+    { icon: ScrollText, name: "One-click evidence pack",
+      detail: "Auditor asks for the last 90 days of decisions on Standard #4471. Export a signed bundle: every call, every input, every output, every approver, hash-verified. Hours, not weeks." },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag label="Audit-Grade Receipts · The Compliance Substrate" color={PURPLE} />
+        <h2 className="font-black mb-3" style={{ fontSize: 52, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          Every AI decision is a <span style={{ color: `hsl(${PURPLE})` }}>signed, reproducible, regulator-ready record.</span>
+        </h2>
+        <p className="mb-5" style={{ fontSize: 17, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          Most stacks log a prompt and a response. We log the entire causal chain: the operator, the outcome, the standards stack at version, the compiled context nodes, the model build, the output, the cost, the approver. Chained hashes. Append-only. Built into the runtime — not bolted on by Confluence.
+        </p>
+
+        {/* Sample receipt mock */}
+        <div className="mb-5 rounded-xl border p-4 font-mono" style={{ background: `hsl(${PURPLE} / 0.04)`, borderColor: `hsl(${PURPLE} / 0.35)`, fontSize: 12, color: TEXT, lineHeight: 1.55 }}>
+          <div className="flex items-center gap-2 mb-2" style={{ color: `hsl(${PURPLE})` }}>
+            <Database size={14} /> <span className="font-bold tracking-[0.12em] uppercase" style={{ fontSize: 10 }}>Receipt · liza://call/2a9f…b71c</span>
+          </div>
+          <div style={{ color: MUTED }}>
+            <span style={{ color: `hsl(${ACCENT})` }}>operator</span>: a.morales@client &nbsp;·&nbsp;
+            <span style={{ color: `hsl(${ACCENT})` }}>outcome</span>: pricing.quote.enterprise &nbsp;·&nbsp;
+            <span style={{ color: `hsl(${ACCENT})` }}>standards</span>: [STD-4471@v17, STD-1208@v04, STD-0099@v31] &nbsp;·&nbsp;
+            <span style={{ color: `hsl(${ACCENT})` }}>context_nodes</span>: 14 &nbsp;·&nbsp;
+            <span style={{ color: `hsl(${ACCENT})` }}>model</span>: claude-sonnet-4.5@2026-04-12 &nbsp;·&nbsp;
+            <span style={{ color: `hsl(${ACCENT})` }}>prompt_hash</span>: 7f2c…91ae &nbsp;·&nbsp;
+            <span style={{ color: `hsl(${ACCENT})` }}>parent_hash</span>: 4d18…02ff &nbsp;·&nbsp;
+            <span style={{ color: `hsl(${GREEN})` }}>signed</span>: ed25519:b0c4…
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-3 flex-1">
+          {capabilities.map((c) => {
+            const Icon = c.icon;
+            return (
+              <div key={c.name} className="rounded-xl border p-4 flex flex-col" style={{ background: `hsl(${PURPLE} / 0.04)`, borderColor: `hsl(${PURPLE} / 0.3)` }}>
+                <Icon size={20} style={{ color: `hsl(${PURPLE})` }} />
+                <p className="font-bold mt-2 mb-2" style={{ fontSize: 16, color: TEXT, lineHeight: 1.2 }}>{c.name}</p>
+                <p style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.4 }}>{c.detail}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <Footer text="Append-only chained receipts · content-addressed standards · regression evidence · provenance graph · role-scoped compile · one-click evidence pack." />
+      <SlideBar from={PURPLE} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── F_COMPLIANCEMAP · Maps to every regulator ───────────────────────────────
+function FComplianceMap() {
+  const frameworks = [
+    { name: "EU AI Act", scope: "High-risk AI systems · Art. 12, 13, 14",
+      reqs: ["Automatic logging of operation", "Traceability of outputs", "Human oversight at decision point", "Technical documentation on demand"],
+      maps: "Signed receipts + provenance graph + standards@version + evidence pack." },
+    { name: "SOC 2 Type II", scope: "CC7 · CC8 · Change management",
+      reqs: ["Change traceability", "Authorized approvals", "Logging & monitoring", "Access boundaries"],
+      maps: "Standards-as-code PRs + role-scoped context + immutable call log + replay-on-deploy." },
+    { name: "GDPR / DSGVO", scope: "Art. 22, 30, 32",
+      reqs: ["No purely automated decisions without trace", "Records of processing", "Data minimisation"],
+      maps: "Receipt = record of processing. Compiler only assembles in-scope nodes. Operator-in-loop is structural." },
+    { name: "HIPAA / GxP / MiFID II", scope: "PHI · Computer-system validation · Investment advice trail",
+      reqs: ["Audit trail per access", "Validated state of system", "Reproducible advice"],
+      maps: "Per-call receipts with hash-chained inputs. Standard versions pinned. Reproducible by replay." },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag label="Maps to Every Regulator · One Substrate, Many Frameworks" color={GOLD} />
+        <h2 className="font-black mb-3" style={{ fontSize: 52, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          The receipts are the compliance work. <span style={{ color: `hsl(${GOLD})` }}>The framework is the formatter.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 17, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          Most teams treat each regulation as a separate project — a new policy doc, a new audit binder, a new tool. We treat them as queries against the same substrate. Build the receipts once. Generate the binder per framework. The same call log answers the EU AI Act, SOC 2, GDPR, HIPAA, and GxP auditor — formatted to their template.
+        </p>
+        <div className="grid grid-cols-2 gap-4 flex-1">
+          {frameworks.map((f) => (
+            <div key={f.name} className="rounded-xl border p-5 flex flex-col" style={{ background: `hsl(${GOLD} / 0.04)`, borderColor: `hsl(${GOLD} / 0.35)` }}>
+              <div className="flex items-center justify-between mb-1">
+                <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em" }}>{f.name}</p>
+                <Scale size={18} style={{ color: `hsl(${GOLD})` }} />
+              </div>
+              <p className="font-mono uppercase tracking-[0.1em] mb-3" style={{ fontSize: 10, color: `hsl(${GOLD})` }}>{f.scope}</p>
+              <div className="flex gap-4 flex-1">
+                <div className="flex-1">
+                  <p className="font-bold mb-1" style={{ fontSize: 11, color: MUTED, textTransform: "uppercase", letterSpacing: "0.1em" }}>Requires</p>
+                  <ul className="space-y-1">
+                    {f.reqs.map((r) => (
+                      <li key={r} className="flex gap-1.5" style={{ fontSize: 12.5, color: TEXT, lineHeight: 1.35 }}>
+                        <CheckCircle2 size={12} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 3 }} />
+                        <span>{r}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <p className="mt-3 pt-3 border-t" style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.4, borderColor: `hsl(${GOLD} / 0.25)` }}>
+                <span className="font-bold" style={{ color: `hsl(${ACCENT})` }}>LIZA delivers: </span>{f.maps}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-5 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
+          <ShieldCheck size={22} style={{ color: `hsl(${ACCENT})` }} />
+          <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.45 }}>
+            <span className="font-black">Buy seats, get a chat. Buy LIZA, get the audit trail.</span> The same substrate that makes AI accurate is the substrate that makes it defensible.
+          </p>
+        </div>
+      </div>
+      <Footer text="EU AI Act · SOC 2 · GDPR · HIPAA · GxP · MiFID II — one receipt log, every binder." />
+      <SlideBar from={GOLD} to={PURPLE} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
@@ -1032,6 +1166,8 @@ const RAW_SLIDES = [
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
   { id: "pillar-governance", title: "Pillar 3 · Governance Loop · Stop the Line",       component: <S03GovernanceLoop /> },
+  { id: "audit-receipts",    title: "Audit-Grade Receipts · The Compliance Substrate", component: <FAuditReceipts /> },
+  { id: "compliance-map",    title: "Maps to Every Regulator · EU AI Act, SOC2, HIPAA, GxP", component: <FComplianceMap /> },
   { id: "pillar-compile",    title: "Pillar 4 · Every Prompt Is a Compile",             component: <S07cFunnel /> },
   // ACT III — Proof
   { id: "artisanal-tax",     title: "The Artisanal Tax · €550K → $2.6B",                component: <FArtisanalTax /> },
