@@ -75,11 +75,11 @@ function S01Cover({ n, t }: { n: number; t: number }) {
 // ─── 02 · INVESTOR LENS ─────────────────────────────────────────────────────
 function S02InvestorLens({ n, t }: { n: number; t: number }) {
   const belowWater = [
-    { k: "Approved method", v: "Which playbook shaped the answer" },
-    { k: "Approval", v: "Who signed it off" },
-    { k: "Model", v: "Which model ran the call" },
-    { k: "Safety", v: "Why it was safe to ship" },
-    { k: "Cost", v: "What the decision cost to make" },
+    { k: "Approved method", v: "Underwriting policy v4.2 shaped the answer, not the model's training data" },
+    { k: "Approval", v: "Risk officer J. Klein signed off at 14:03 on the flagged section" },
+    { k: "Model", v: "GPT-5 ran the draft, Claude reviewed it, both versions kept" },
+    { k: "Safety", v: "Client PII redacted before the call, allowed jurisdictions checked" },
+    { k: "Cost", v: "€0.38 of model spend produced a €2,400 work unit" },
   ];
   return (
     <Slide section="Investor lens" n={n} total={t}>
@@ -88,18 +88,26 @@ function S02InvestorLens({ n, t }: { n: number; t: number }) {
           Every AI pitch shows the prompt. <span style={{ color: `hsl(${GREEN})` }}>We sell what sits underneath.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-8" style={{ fontSize: 14, color: MUTED }}>
-          The visible part is the same everywhere. The value lives below the waterline.
+          Same prompt. Same answer. The proof beneath is what an enterprise actually pays for.
         </p>
 
         {/* Above the waterline — what every AI pitch shows */}
-        <div className="rounded-2xl px-7 py-5 mb-2 flex items-center justify-between" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>What every investor sees</p>
-          <div className="flex items-center gap-3 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 13, color: MUTED }}>
-            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>User</span>
-            <span>→</span>
-            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>AI system</span>
-            <span>→</span>
-            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>Answer</span>
+        <div className="rounded-2xl px-7 py-5 mb-2" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>What every investor has seen 100 times this year</p>
+          <div className="flex items-stretch gap-3 font-mono" style={{ fontSize: 14 }}>
+            <div className="flex-1 px-4 py-3 rounded-lg" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED }}>
+              <span className="uppercase tracking-[0.2em] block mb-1" style={{ fontSize: 10, color: SUBTLE }}>Prompt</span>
+              "Draft a Q4 underwriting risk memo for client Acme."
+            </div>
+            <div className="flex items-center" style={{ color: SUBTLE }}>→</div>
+            <div className="px-4 py-3 rounded-lg flex items-center" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED, fontSize: 13 }}>
+              ChatGPT · Claude · Copilot
+            </div>
+            <div className="flex items-center" style={{ color: SUBTLE }}>→</div>
+            <div className="flex-1 px-4 py-3 rounded-lg" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED }}>
+              <span className="uppercase tracking-[0.2em] block mb-1" style={{ fontSize: 10, color: SUBTLE }}>Answer</span>
+              "Here is the memo. 3 risks identified."
+            </div>
           </div>
         </div>
 
@@ -111,7 +119,7 @@ function S02InvestorLens({ n, t }: { n: number; t: number }) {
 
         {/* Below the waterline — what LIZA sells */}
         <div className="rounded-2xl px-7 py-6" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-          <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What actually matters · what LIZA sells</p>
+          <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What the CRO, the auditor and the CFO will ask the next morning · this is what LIZA sells</p>
           <div className="grid grid-cols-5 gap-4">
             {belowWater.map((b) => (
               <div key={b.k} className="rounded-xl p-4" style={{ background: BG, border: `1px solid hsl(${GREEN} / 0.3)` }}>
