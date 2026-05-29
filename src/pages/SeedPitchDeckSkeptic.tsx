@@ -514,6 +514,8 @@ function S10Close({ n, t }: { n: number; t: number }) {
 // ─── Slide registry ──────────────────────────────────────────────────────────
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
   { id: "cover",        title: "Cover",                       render: (n, t) => <S01Cover n={n} t={t} /> },
+  { id: "what",         title: "What LIZA is",                render: (n, t) => <S02What n={n} t={t} /> },
+  { id: "how",          title: "How it runs",                 render: (n, t) => <S03HowItRuns n={n} t={t} /> },
   { id: "objections",   title: "The two objections",          render: (n, t) => <S02Objections n={n} t={t} /> },
   { id: "weekend",      title: "Weekend vs Enterprise",       render: (n, t) => <S03WeekendVsAsset n={n} t={t} /> },
   { id: "moat",         title: "Four assets that compound",   render: (n, t) => <S04Moat n={n} t={t} /> },
