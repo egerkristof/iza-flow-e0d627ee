@@ -1520,6 +1520,7 @@ const RAW_SLIDES = [
   { id: "how-we-break",      title: "The Stack · How LIZA Breaks the Wall",              component: <FHowWeBreak /> },
 
   { id: "open-the-hood",     title: "Open the Hood · Trabant vs Ferrari",                component: <FOpenTheHood /> },
+  { id: "shape-contrast",    title: "The Shape · Pipe vs System",                        component: <FShapeContrast /> },
   { id: "engine-bay",        title: "The Engine Bay · AACE v3.1 Exposed",                component: <FEngineBay /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
