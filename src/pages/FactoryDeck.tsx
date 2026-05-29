@@ -1142,6 +1142,7 @@ function FWhyHard() {
         </div>
       </div>
       <Footer text="No incumbent ships a typed standards engine with audit-grade context assembly. The wall is structural." />
+      <SpineIndicator current={6} />
       <SlideBar from={RED} to={ACCENT} />
     </div>
   );
@@ -1214,6 +1215,7 @@ function FHowWeBreak() {
         </div>
       </div>
       <Footer text="Knowledge graph + context compiler + standards-as-code + eval harness + governance loop + outcome router. The missing substrate for Era IV." />
+      <SpineIndicator current={6} />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
