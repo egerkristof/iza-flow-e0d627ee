@@ -432,11 +432,10 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
 
 // ─── 09 · PROOF ─────────────────────────────────────────────────────────────
 function S09Proof({ n, t }: { n: number; t: number }) {
-  const stats = [
-    { v: "1", l: "CTO-sponsored production deployment" },
-    { v: "127", l: "standards encoded inside one AEC customer" },
-    { v: "3,400", l: "signed governed decisions per month" },
-    { v: "62%", l: "drop in time-to-spec" },
+  const proof = [
+    { k: "Live", h: "First production deployment", v: "A regulated AEC customer is running governed decisions through LIZA today. CTO-sponsored. Details under NDA." },
+    { k: "Encoded", h: "Standards captured", v: "The customer's approved playbooks, procedures and decision rules are encoded as typed standards inside LIZA." },
+    { k: "Compounding", h: "Receipts accumulating", v: "Every signed decision feeds the standards layer. The corpus and the receipt graph grow with use." },
   ];
   return (
     <Slide section="Proof" n={n} total={t}>
@@ -445,19 +444,23 @@ function S09Proof({ n, t }: { n: number; t: number }) {
           The wedge is live. <span style={{ color: `hsl(${GREEN})` }}>Not theoretical.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          One regulated AEC deployment. Anonymized details available under NDA.
+          One regulated vertical in production. Anonymized customer reference available on request.
         </p>
-        <div className="grid grid-cols-2 gap-6 mb-9">
-          {stats.map((s) => (
-            <div key={s.l} className="rounded-2xl p-8 flex items-baseline gap-7" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <div className="font-black" style={{ fontSize: 82, lineHeight: 0.9, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", minWidth: 210 }}>{s.v}</div>
-              <p className="font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.35 }}>{s.l}</p>
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          {proof.map((p) => (
+            <div key={p.k} className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>{p.k}</p>
+              <p className="font-black mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.025em" }}>{p.h}</p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.42 }}>{p.v}</p>
             </div>
           ))}
         </div>
-        <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
+        <div className="rounded-xl px-7 py-5 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded" style={{ fontSize: 11, color: `hsl(${GOLD})`, background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>Pattern</span>
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4, fontWeight: 700 }}>
           The first vertical proves the pattern: encode standards, govern decisions, price the work unit, expand into adjacent regulated functions.
         </p>
+        </div>
       </div>
     </Slide>
   );
@@ -472,13 +475,13 @@ function S10Moat({ n, t }: { n: number; t: number }) {
     { k: "04", h: "Trust pattern", v: "A neutral control layer that lets buyers keep model optionality and governance ownership." },
   ];
   return (
-    <Slide section="Moat" n={n} total={t}>
+    <Slide section="Our moat" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          The moat is not code. <span style={{ color: `hsl(${GREEN})` }}>It is accumulated governance.</span>
+          Our moat is not the code. <span style={{ color: `hsl(${GREEN})` }}>It is what compounds inside LIZA.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
-          A clone can copy screens. It cannot copy the controlled corpus and decision history.
+          Four assets that LIZA accumulates with every customer and every signed decision. A clone can copy screens. It cannot copy these.
         </p>
         <div className="grid grid-cols-2 gap-5">
           {assets.map((a) => (
@@ -507,11 +510,11 @@ function S11Ask({ n, t }: { n: number; t: number }) {
     <Slide section="Seed round" n={n} total={t} dark>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <p className="font-mono uppercase tracking-[0.3em] mb-7" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>
-          €2M seed | turn one working factory into a repeatable company
+          We are raising €2M · seed
         </p>
         <h2 className="font-black mb-10" style={{ fontSize: 112, lineHeight: 0.95, color: "hsl(0 0% 98%)", letterSpacing: "-0.05em" }}>
-          Fund the control layer<br/>
-          before it becomes obvious.
+          €2M to fund the control layer<br/>
+          <span style={{ color: `hsl(${GREEN})` }}>before it becomes obvious.</span>
         </h2>
         <div className="grid grid-cols-3 gap-7 mb-9">
           {uses.map((u) => (
