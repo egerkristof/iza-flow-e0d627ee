@@ -234,20 +234,40 @@ function S05Validation({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Market Validation" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           The cost is already showing up.
         </h2>
-        <div className="grid grid-cols-2 gap-10 mb-10">
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1400 }}>
+          The €550K is just the rework tax. The full bill stacks four ways.
+        </p>
+        <div className="grid grid-cols-2 gap-8 mb-6">
           <div className="rounded-2xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${RED})` }}>
-              The hidden tax
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${RED})` }}>
+              Layer 1 · Rework tax (quantified today)
             </p>
-            <div className="font-black" style={{ fontSize: 96, lineHeight: 0.95, color: `hsl(${RED})`, letterSpacing: "-0.04em" }}>€550K</div>
-            <p className="font-bold mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25 }}>per year, per 100 knowledge workers.</p>
-            <p className="mt-3 font-mono" style={{ fontSize: 14, color: MUTED, lineHeight: 1.5 }}>
+            <div className="font-black" style={{ fontSize: 84, lineHeight: 0.95, color: `hsl(${RED})`, letterSpacing: "-0.04em" }}>€550K</div>
+            <p className="font-bold mt-2" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>per year, per 100 knowledge workers.</p>
+            <p className="mt-2 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
               4 h/week × €55/h × 46 wks × 100 = €1.01M raw, discounted 46% to €550K.<br/>
-              Cross-validated against HBR and McKinsey 2024 rework data.
+              HBR &amp; McKinsey 2024 rework data.
             </p>
+            <div className="mt-5 pt-4 grid grid-cols-3 gap-3" style={{ borderTop: `1px solid hsl(${RED} / 0.25)` }}>
+              <div>
+                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 2</p>
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Lost knowledge</p>
+                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Method dies with the tab.</p>
+              </div>
+              <div>
+                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 3</p>
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Sovereignty leak</p>
+                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Crown-jewel IP pasted into public LLMs.</p>
+              </div>
+              <div>
+                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 4</p>
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Token bill</p>
+                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Metered AI scales linearly with usage.</p>
+              </div>
+            </div>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
