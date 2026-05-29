@@ -275,20 +275,28 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
                 <marker id="arrDown" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L5,10 L10,0 z" fill={`hsl(${GREEN})`}/></marker>
               </defs>
               <rect x="445" y="115" width="120" height="44" rx="6" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="1"/>
-              <text x="505" y="133" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>THE GAP</text>
+              <text x="505" y="133" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>NEW SPEND</text>
               <text x="505" y="150" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.5" fill={TEXT}>LIZA captures</text>
               {/* labels */}
-              <text x="60" y="75" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>GOVERNED WORK ↑</text>
-              <text x="60" y="250" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${RED})`}>MODEL COST ↓</text>
+              <text x="60" y="75" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>ENTERPRISE AI SPEND ↑</text>
+              <text x="60" y="250" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${RED})`}>MODEL COST PER TOKEN ↓</text>
               <text x="50" y="285" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2023</text>
               <text x="570" y="285" textAnchor="end" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2027</text>
             </svg>
           </div>
-          <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-            <p className="font-black mb-5" style={{ fontSize: 38, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.03em" }}>LIZA captures the gap.</p>
-            <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.42 }}>
-              Cheaper tokens push enterprises to put more context, policy and decisions through AI. Someone has to manage that growing context layer. That spend is the new line item — and it does not flow to the model vendor.
-            </p>
+          <div className="flex flex-col gap-4">
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Three forces hitting at once</p>
+            {[
+              { k: "01 · Spend", h: "AI line item keeps growing", v: "More teams, more agents, more workflows. The bill goes up even as tokens go down." },
+              { k: "02 · Audit", h: "Compliance is catching up", v: "EU AI Act, internal audit, regulators. Every output must be explainable, replayable, owned." },
+              { k: "03 · Trust", h: "The CRO will not sign", v: "No buyer ships AI into regulated work without proof of method, approver, model and evidence." },
+            ].map((d) => (
+              <div key={d.k} className="rounded-xl p-5" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+                <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>{d.k}</p>
+                <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{d.h}</p>
+                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>{d.v}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
