@@ -60,6 +60,13 @@ function S01Cover({ n, t }: { n: number; t: number }) {
         <p className="mt-12" style={{ fontSize: 31, lineHeight: 1.35, color: "hsl(0 0% 76%)", maxWidth: 1280 }}>
           LIZA OS sits between Claude, GPT, Gemini and regulated enterprise workflows. It turns AI outputs into governed decisions with standards, evidence and receipts.
         </p>
+        <div className="mt-14 flex items-center gap-3 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 13, color: "hsl(0 0% 70%)" }}>
+          <span className="px-4 py-2 rounded-full" style={{ background: "hsl(0 0% 100% / 0.06)", border: "1px solid hsl(0 0% 100% / 0.18)" }}>Prompt</span>
+          <span style={{ color: "hsl(0 0% 45%)" }}>→</span>
+          <span className="px-4 py-2 rounded-full" style={{ background: `hsl(${GREEN} / 0.12)`, border: `1px solid hsl(${GREEN} / 0.45)`, color: `hsl(${GREEN})` }}>LIZA OS · control layer</span>
+          <span style={{ color: "hsl(0 0% 45%)" }}>→</span>
+          <span className="px-4 py-2 rounded-full" style={{ background: "hsl(0 0% 100% / 0.06)", border: "1px solid hsl(0 0% 100% / 0.18)" }}>Governed decision</span>
+        </div>
       </div>
     </Slide>
   );
