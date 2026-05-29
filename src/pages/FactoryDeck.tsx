@@ -936,7 +936,7 @@ function FWhyHard() {
         <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${RED} / 0.06)`, borderColor: `hsl(${RED})` }}>
           <Skull size={22} style={{ color: `hsl(${RED})` }} />
           <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-            <span className="font-black">This is why every org keeps buying more Copilot.</span> The shortcut is to push more seats and call it strategy. Era IV requires building the missing layer underneath.
+            <span className="font-black">Toyota was the bridge. Era IV is the destination.</span> The shortcut is to push more seats and call it strategy. The next slide is the substrate that breaks every wall above.
           </p>
         </div>
       </div>
@@ -974,11 +974,20 @@ function FHowWeBreak() {
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag label="The Stack · How LIZA Breaks the Wall" color={GREEN} />
-        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
           Six layers. <span style={{ color: `hsl(${GREEN})` }}>Each one removes a reason nobody has done this.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
-          The wall is the absence of a substrate. We built the substrate. A typed knowledge graph holds the meaning. A context compiler assembles it on demand. Standards live as versioned code. The harness regression-tests every change. The loop logs every call. The router ties every token to an outcome. This is what makes the Pillars on the next four slides real, not slogans.
+
+        {/* Objection-kill banner */}
+        <div className="mb-5 px-6 py-3 rounded-xl border flex items-start gap-3" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT} / 0.35)` }}>
+          <Zap size={18} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 3 }} />
+          <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-bold" style={{ color: `hsl(${ACCENT})` }}>"Isn't this just a chat with better RAG?"</span> The surface is a chat. So is a Tesla dashboard. This slide is the line underneath. Six layers. Not retrieval. Not vibes.
+          </p>
+        </div>
+
+        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          The wall is the absence of a substrate. We built the substrate. A typed knowledge graph holds the meaning. A context compiler assembles it on demand. Standards live as versioned code. The harness regression-tests every change. The loop logs every call. The router ties every token to an outcome.
         </p>
         <div className="grid grid-cols-3 gap-4 flex-1">
           {layers.map((l) => {
@@ -999,7 +1008,7 @@ function FHowWeBreak() {
         <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
           <Zap size={22} style={{ color: `hsl(${GREEN})` }} />
           <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-            <span className="font-black">This is the line.</span> The next four slides walk it station by station. Pull, Stations, Governance, Compile. Not metaphors. What this stack does on every call.
+            <span className="font-black">This is the substrate.</span> The next four slides run the line station by station: Pull, Stations, Governance, Compile. Not metaphors. What the stack does on every call.
           </p>
         </div>
       </div>
