@@ -1128,7 +1128,6 @@ function FOpenTheHood() {
 
 // ─── F_SHAPE · Architecture-shape contrast · pipe vs system ─────────────────
 function FShapeContrast() {
-function FShapeContrast() {
   // Visual-first: a pipe on the left, a closed loop on the right.
   // Minimal labels. The shapes do the talking.
   const ragSteps = ["Prompt", "Embed", "Search", "Stuff", "Model", "Text"];
