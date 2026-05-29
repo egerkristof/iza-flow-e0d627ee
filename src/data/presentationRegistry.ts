@@ -3,6 +3,7 @@ import BridgeDeck from "@/pages/BridgeDeck";
 import TechDDDeck from "@/pages/TechDDDeck";
 import ImpactDeck from "@/pages/ImpactDeck";
 import FactoryDeck from "@/pages/FactoryDeck";
+import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import InsuranceDeck from "@/pages/InsuranceDeck";
 import InsuranceUnderwritingDeck from "@/pages/InsuranceUnderwritingDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
@@ -228,6 +229,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/FactoryDeck.tsx",
     description: "18-slide seed-round investor deck built on the production-system spine. \"AI is the machine. LIZA is the production system.\" Leads with the math ($0.40 per governed decision, 95% platform GM, €23 displaced labour cost). Toyota referenced once on slide 02; the rest of the deck demonstrates the factory floor without naming it. Absorbs the strongest material from /tech-dd and /impact and adds: 30-day install with metered Day 31 + post-Seed self-serve PLG resolution, AEC hero vertical (Nemetschek-scale partner) with the pattern-repeats grid, team slide grounded in 15+ years of data and AI architecture in production, and the €2M Seed ask with milestone-to-Series-A logic. AACE locked to v3.1.",
     component: FactoryDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "seed-pitch",
+    title: "Seed Pitch (Airbnb-style)",
+    path: "/seed",
+    sourcePath: "src/pages/SeedPitchDeck.tsx",
+    description: "14-slide lean seed deck modelled on the early Airbnb deck. One idea per slide, huge typography, no prerequisites. Built for an investor opening the file cold without the founder in the room. Compresses the Factory Deck narrative into Cover, Problem, Solution, Why Now, Validation, Market, Product, Business Model, Adoption, Competition, Edge, Team, Ask, Close.",
+    component: SeedPitchDeck,
     showInAdmin: true,
   },
   {
