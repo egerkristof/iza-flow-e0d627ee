@@ -946,6 +946,102 @@ function F17Ask() {
 // DECK COMPOSITION
 // ═════════════════════════════════════════════════════════════════════════════
 
+// ─── F_CHAIN · The Red Thread · Single canvas, 6 reveals auto-staggered ──────
+function FChain() {
+  const beats = [
+    { n: 1, color: RED,    icon: Skull,    title: "Every session dies",          body: "ChatGPT closes. The method evaporates. Nothing compounds." },
+    { n: 2, color: GOLD,   icon: Hammer,   title: "You patch with workshop fixes", body: "Prompt libraries. Shared docs. Slack channels. Stays in Era I." },
+    { n: 3, color: RED,    icon: Megaphone, title: "Vendors push more seats",     body: "Copilot to five thousand desks. Called transformation. Lands you in Era II." },
+    { n: 4, color: SUBTLE, icon: AlertTriangle, title: "Both moves are unconscious", body: "Buyer reflex and vendor reflex. Neither side names the trap they are in." },
+    { n: 5, color: ACCENT, icon: ArrowRight, title: "Era IV is the only exit",   body: "Skip the Ford rollout. Toyota was the bridge mechanic, not the destination." },
+    { n: 6, color: GREEN,  icon: Sparkles, title: "Here is the substrate that ships it", body: "Typed standards. Compiled context. Versioned intent. Governed loop." },
+  ];
+  return (
+    <div className="w-full h-full relative overflow-hidden" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <style>{`
+        @keyframes chain-pop { 0% { opacity: 0; transform: translateY(14px) scale(0.96); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes chain-line { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+        .chain-card { opacity: 0; animation: chain-pop 0.55s cubic-bezier(0.16,1,0.3,1) forwards; }
+        .chain-connector { stroke-dasharray: 200; stroke-dashoffset: 200; animation: chain-line 0.45s ease-out forwards; }
+      `}</style>
+      <div className="absolute inset-0 px-24 pt-24 pb-32 flex flex-col">
+        <Tag label="The Red Thread · One Sentence, Six Beats" color={GREEN} />
+        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          The whole deck in one chain. <span style={{ color: `hsl(${GREEN})` }}>Everything else is a zoom-in.</span>
+        </h2>
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          The disposable session is the disease. The workshop patch and the vendor seat are the two unconscious reflexes. Era IV is the exit. The next eight slides build it out. Keep this chain in your head.
+        </p>
+
+        {/* The 6-beat chain: 2 rows of 3, with SVG connectors drawn between */}
+        <div className="relative flex-1">
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1700 540" preserveAspectRatio="none">
+            {/* row 1: 1 → 2 → 3 */}
+            <line x1="540"  y1="125" x2="600"  y2="125" className="chain-connector" stroke={`hsl(${SUBTLE})`} strokeWidth="2.5" style={{ animationDelay: "0.55s" }} />
+            <line x1="1100" y1="125" x2="1160" y2="125" className="chain-connector" stroke={`hsl(${SUBTLE})`} strokeWidth="2.5" style={{ animationDelay: "1.10s" }} />
+            {/* row 1 → row 2 (3 → 4) */}
+            <path d="M 1490 220 Q 1620 270, 1490 320" className="chain-connector" stroke={`hsl(${SUBTLE})`} strokeWidth="2.5" fill="none" style={{ animationDelay: "1.65s" }} />
+            {/* row 2: 4 → 5 → 6 (reversed visual flow) */}
+            <line x1="1160" y1="415" x2="1100" y2="415" className="chain-connector" stroke={`hsl(${SUBTLE})`} strokeWidth="2.5" style={{ animationDelay: "2.20s" }} />
+            <line x1="600"  y1="415" x2="540"  y2="415" className="chain-connector" stroke={`hsl(${ACCENT})`} strokeWidth="2.5" style={{ animationDelay: "2.75s" }} />
+          </svg>
+
+          <div className="grid grid-cols-3 gap-6">
+            {beats.slice(0, 3).map((b, i) => {
+              const Icon = b.icon;
+              return (
+                <div key={b.n} className="chain-card rounded-2xl border-2 p-5 bg-white"
+                     style={{ borderColor: `hsl(${b.color} / 0.5)`, animationDelay: `${i * 0.55}s` }}>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center font-mono font-black"
+                         style={{ background: `hsl(${b.color} / 0.12)`, color: `hsl(${b.color})`, fontSize: 16 }}>
+                      {b.n}
+                    </div>
+                    <Icon size={20} style={{ color: `hsl(${b.color})` }} />
+                  </div>
+                  <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{b.title}</p>
+                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{b.body}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="grid grid-cols-3 gap-6 mt-10">
+            {/* row 2 reversed so the chain flows ←: beat 6 right? Actually flow 3→4→5→6: keep left→right with 4,5,6 */}
+            {beats.slice(3, 6).map((b, i) => {
+              const Icon = b.icon;
+              const idx = i + 3;
+              const isFinale = b.n === 6;
+              return (
+                <div key={b.n} className="chain-card rounded-2xl border-2 p-5"
+                     style={{
+                       borderColor: `hsl(${b.color} / 0.5)`,
+                       background: isFinale ? `hsl(${GREEN} / 0.08)` : "white",
+                       animationDelay: `${1.65 + i * 0.55}s`,
+                     }}>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center font-mono font-black"
+                         style={{ background: `hsl(${b.color} / 0.12)`, color: `hsl(${b.color})`, fontSize: 16 }}>
+                      {b.n}
+                    </div>
+                    <Icon size={20} style={{ color: `hsl(${b.color})` }} />
+                  </div>
+                  <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{b.title}</p>
+                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{b.body}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <Footer text="Six beats. One thread. Every other slide in this deck is a zoom-in on one beat." />
+      <SlideBar from={RED} to={GREEN} />
+    </div>
+  );
+}
+
 // ─── F_WHYHARD · Why nobody has built Era IV for knowledge work ──────────────
 function FWhyHard() {
   const walls = [
