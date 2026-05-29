@@ -209,9 +209,11 @@ function FThreeStages() {
         </p>
 
         <div className="grid grid-cols-[1fr_40px_1fr_40px_1fr] gap-0 items-stretch flex-1">
-          {stages.map((s, i) => (
-            <>
-              <div key={s.n} className="rounded-2xl border-2 p-7 flex flex-col relative overflow-hidden"
+          {stages.map((s, i) => {
+            const Icon = s.icon;
+            return (
+            <React.Fragment key={s.n}>
+              <div className="rounded-2xl border-2 p-7 flex flex-col relative overflow-hidden"
                    style={{
                      background: i === 1 ? `hsl(${s.color} / 0.04)` : `hsl(${s.color} / 0.06)`,
                      borderColor: `hsl(${s.color} / ${i === 1 ? 0.25 : 0.5})`,
@@ -225,7 +227,7 @@ function FThreeStages() {
                 )}
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-mono font-black" style={{ fontSize: 28, color: `hsl(${s.color})` }}>{s.n}</span>
-                  <s.icon size={28} style={{ color: `hsl(${s.color})` }} />
+                  <Icon size={28} style={{ color: `hsl(${s.color})` }} />
                 </div>
                 <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 12, color: MUTED }}>{s.era}</p>
                 <p className="font-bold mb-2" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{s.title}</p>
@@ -236,19 +238,13 @@ function FThreeStages() {
                 </div>
               </div>
               {i < stages.length - 1 && (
-                <div key={`arrow-${i}`} className="flex items-center justify-center">
-                  {i === 0 ? (
-                    /* arc from 01 over 02 to 03 implied: show big jump arrow */
-                    <div className="flex flex-col items-center gap-1">
-                      <ArrowRight size={32} style={{ color: SUBTLE }} />
-                    </div>
-                  ) : (
-                    <ArrowRight size={32} style={{ color: SUBTLE }} />
-                  )}
+                <div className="flex items-center justify-center">
+                  <ArrowRight size={32} style={{ color: SUBTLE }} />
                 </div>
               )}
-            </>
-          ))}
+            </React.Fragment>
+            );
+          })}
         </div>
 
         <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
