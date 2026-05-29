@@ -249,21 +249,21 @@ function FThreeStages() {
         </div>
 
         {/* Four era cards */}
-        <div className="grid grid-cols-4 gap-4 mb-5">
+        <div className="grid grid-cols-4 gap-3 mb-4">
           {eras.map((e) => {
             const Icon = e.icon;
             return (
-              <div key={e.n} className="rounded-2xl border-2 p-5 flex flex-col"
+              <div key={e.n} className="rounded-2xl border-2 p-4 flex flex-col"
                    style={{ background: `hsl(${e.color} / 0.05)`, borderColor: `hsl(${e.color} / 0.45)` }}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono font-black tracking-tight" style={{ fontSize: 22, color: `hsl(${e.color})` }}>ERA {e.n}</span>
-                  <Icon size={22} style={{ color: `hsl(${e.color})` }} />
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-mono font-black tracking-tight" style={{ fontSize: 20, color: `hsl(${e.color})` }}>ERA {e.n}</span>
+                  <Icon size={20} style={{ color: `hsl(${e.color})` }} />
                 </div>
                 <p className="font-mono uppercase tracking-[0.15em] mb-1" style={{ fontSize: 11, color: MUTED }}>{e.era}</p>
-                <p className="font-bold mb-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>{e.name}</p>
-                <p className="mb-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}><span className="font-semibold" style={{ color: SUBTLE }}>Mfg:</span> {e.mfg}</p>
-                <p className="flex-1" style={{ fontSize: 14, color: TEXT, lineHeight: 1.35 }}><span className="font-semibold" style={{ color: `hsl(${e.color})` }}>Knowledge work:</span> {e.kw}</p>
-                <div className="mt-3 pt-3 border-t text-center" style={{ borderColor: `hsl(${e.color} / 0.2)` }}>
+                <p className="font-bold mb-2" style={{ fontSize: 19, color: TEXT, lineHeight: 1.15 }}>{e.name}</p>
+                <p className="mb-1.5" style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}><span className="font-semibold" style={{ color: SUBTLE }}>Mfg:</span> {e.mfg}</p>
+                <p className="flex-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.3 }}><span className="font-semibold" style={{ color: `hsl(${e.color})` }}>Knowledge work:</span> {e.kw}</p>
+                <div className="mt-2 pt-2 border-t text-center" style={{ borderColor: `hsl(${e.color} / 0.2)` }}>
                   <span className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 10, color: `hsl(${e.color})` }}>{e.tag}</span>
                 </div>
               </div>
@@ -276,9 +276,9 @@ function FThreeStages() {
           {rows.map((r, i) => (
             <div key={r.label} className="grid grid-cols-[180px_1fr_1fr_1fr_1fr] items-center"
                  style={{ background: i % 2 === 0 ? "white" : CARD_ALT, borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
-              <span className="px-5 py-3 font-mono uppercase tracking-[0.14em] font-bold" style={{ fontSize: 12, color: MUTED }}>{r.label}</span>
+              <span className="px-5 py-2 font-mono uppercase tracking-[0.14em] font-bold" style={{ fontSize: 12, color: MUTED }}>{r.label}</span>
               {r.vals.map((v, j) => (
-                <span key={j} className="px-4 py-3" style={{ fontSize: 15, color: j === 3 ? TEXT : MUTED, fontWeight: j === 3 ? 700 : 500 }}>{v}</span>
+                <span key={j} className="px-4 py-2" style={{ fontSize: 14, color: j === 3 ? TEXT : MUTED, fontWeight: j === 3 ? 700 : 500 }}>{v}</span>
               ))}
             </div>
           ))}
