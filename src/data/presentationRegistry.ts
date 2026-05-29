@@ -232,6 +232,15 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
+    id: "seed-pitch",
+    title: "Seed Pitch (Airbnb-style)",
+    path: "/seed",
+    sourcePath: "src/pages/SeedPitchDeck.tsx",
+    description: "14-slide lean seed deck modelled on the early Airbnb deck. One idea per slide, huge typography, no prerequisites. Built for an investor opening the file cold without the founder in the room. Compresses the Factory Deck narrative into Cover, Problem, Solution, Why Now, Validation, Market, Product, Business Model, Adoption, Competition, Edge, Team, Ask, Close.",
+    component: SeedPitchDeck,
+    showInAdmin: true,
+  },
+  {
     id: "impact",
     title: "Impact Thesis Deck",
     path: "/impact",
