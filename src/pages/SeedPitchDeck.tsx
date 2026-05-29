@@ -88,39 +88,48 @@ function S01Cover({ n, t }: { n: number; t: number }) {
 // ─── 02 · PROBLEM ────────────────────────────────────────────────────────────
 function S02Problem({ n, t }: { n: number; t: number }) {
   const lines = [
-    { l: "Every prompt is hand-crafted by one person.", d: "No shared method. Two operators ask the same question, get two different answers." },
-    { l: "Every output ships without a receipt.", d: "Output = the email, quote, report, code, decision the AI produced. Receipt = a signed, replayable record of which standards, data, and model produced it. Today there is none." },
-    { l: "Every workflow dies when the tab closes.", d: "Dies = the prompt, the reasoning, the corrections vanish. Nobody can rerun it, audit it, or improve it. Monday starts from zero." },
+    { l: "Every prompt is hand-crafted.",       r: "Same question, two operators, two answers." },
+    { l: "Every output ships unsigned.",        r: "No record of which standard, data or model produced it." },
+    { l: "Every workflow dies at tab close.",   r: "Method, reasoning, fix — gone. Monday restarts from zero." },
   ];
+  const defects = ["wrong honorific", "stale timeline", "fabricated 30% savings", "missing attachment", "wrong SLA", "no audit trail"];
   return (
     <Slide section="Problem" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-10" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           Companies run AI like a{" "}
           <span style={{ color: `hsl(${RED})` }}>workshop of artisans.</span>
         </h2>
-        <div className="flex flex-col gap-4 mb-8">
-          {lines.map((row) => (
-            <div key={row.l} className="grid grid-cols-[40px_1fr] gap-6 items-baseline">
-              <span className="font-mono font-black" style={{ fontSize: 22, color: `hsl(${RED})` }}>×</span>
-              <div>
-                <p className="font-bold" style={{ fontSize: 28, color: TEXT, lineHeight: 1.2 }}>{row.l}</p>
-                <p className="mt-1" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{row.d}</p>
+        <div className="rounded-2xl overflow-hidden mb-10" style={{ border: `1px solid ${CHROME_BORDER}` }}>
+          {lines.map((row, i) => (
+            <div
+              key={row.l}
+              className="grid grid-cols-[1fr_1fr] items-center px-8 py-6"
+              style={{
+                background: i % 2 === 0 ? "transparent" : CARD_ALT,
+                borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}`,
+              }}
+            >
+              <div className="flex items-baseline gap-5">
+                <span className="font-mono font-black" style={{ fontSize: 22, color: `hsl(${RED})` }}>×</span>
+                <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{row.l}</p>
               </div>
+              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.3 }}>{row.r}</p>
             </div>
           ))}
         </div>
-        <div className="rounded-xl p-6" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
-          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${RED})` }}>
-            One real failure, one real day
-          </p>
-          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
-            A senior consultant asked AI to draft a client update. Six defects shipped in one email: wrong honorific, stale timeline, fabricated 30% savings figure, missing attachment, wrong SLA, no audit trail. Nothing stopped the line, because there was no line.
-          </p>
+        <div className="flex items-center gap-6">
+          <div className="font-mono uppercase tracking-[0.22em] whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${RED})` }}>
+            1 email · 6 defects shipped
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {defects.map((d) => (
+              <span key={d} className="font-mono px-3 py-1 rounded-md" style={{ fontSize: 14, color: TEXT, background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>
+                {d}
+              </span>
+            ))}
+          </div>
         </div>
-        <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 14, color: MUTED }}>
-          Brilliance does not compound. It does not transfer. It does not survive Monday.
-        </p>
       </div>
     </Slide>
   );
