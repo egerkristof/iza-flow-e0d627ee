@@ -175,86 +175,88 @@ function FDisposable() {
 
 // ─── F_THREESTAGES · Coachbuilder → Ford → Toyota (the aha) ──────────────────
 function FThreeStages() {
-  const stages = [
+  // Four Eras of production · ported to knowledge work
+  const eras = [
     {
-      n: "01", era: "1900s · Workshop", title: "Artisan coachbuilder",
-      sub: "Where most knowledge work sits today.",
-      desc: "One craftsman per car. Brilliant, slow, irreplaceable. No two outputs identical. Method lives in the hands.",
-      tag: "WHERE YOU ARE", color: GOLD, icon: Hammer,
+      n: "I", era: "1800s", name: "Artisanal", icon: Hammer, color: GOLD,
+      mfg: "One craftsman per object. Brilliant, slow, unrepeatable.",
+      kw: "One expert per answer. Hand-built prompts. Disposable expertise.",
+      tag: "WHERE YOU ARE",
     },
     {
-      n: "02", era: "1910s · Ford line", title: "Push-driven mass production",
-      sub: "Where the LLM market wants to push you.",
-      desc: "Tools shoved down from above. Workers crushed into uniform throughput. Cheap, fast, brittle, dehumanising. AI's current default.",
-      tag: "THE TRAP", color: RED, icon: Megaphone,
+      n: "II", era: "1910s", name: "Fordism", icon: Megaphone, color: RED,
+      mfg: "Assembly line. Identical Model T. Worker crushed into throughput.",
+      kw: "LLM seats pushed to every desk. Identical generic output. Worker as prompt-typist.",
+      tag: "THE TRAP",
     },
     {
-      n: "03", era: "1950s · Toyota system", title: "Pull-driven, craft-respecting",
-      sub: "Where LIZA takes you. Directly.",
-      desc: "Demand pulls work through standards. Workers design their own line, stop the line, improve the line. Quality is built in, not bolted on. Craft scales.",
-      tag: "THE LEAP", color: GREEN, icon: Factory,
+      n: "III", era: "1950s", name: "Toyotaism", icon: Factory, color: ACCENT,
+      mfg: "Pull, kanban, kaizen. Workers redesign the line. Quality built in.",
+      kw: "Standards pull tokens. Workers improve their own stations. Craft scales.",
+      tag: "THE BRIDGE",
     },
+    {
+      n: "IV", era: "Today", name: "AI-Driven · Industry 4.0", icon: Cpu, color: GREEN,
+      mfg: "Software-defined assembly. Predictive. Per-unit customization at line speed.",
+      kw: "Every prompt assembled from standards, per outcome, predictively governed. LIZA.",
+      tag: "WHERE LIZA INSTALLS YOU",
+    },
+  ];
+  const rows = [
+    { label: "Product variety", vals: ["Unique",        "Identical",        "Limited options",  "Mass customised"] },
+    { label: "Driver",          vals: ["Human skill",   "Assembly line",    "Waste elimination","Autonomous standards"] },
+    { label: "Inventory style", vals: ["Made to order", "Mass stockpile",   "Just-in-time",     "Predictive & instant"] },
   ];
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
-      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
-        <Tag label="Three Stages of Knowledge Work" color={ACCENT} />
-        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em" }}>
-          You do not need to suffer through Ford <span style={{ color: `hsl(${GREEN})` }}>to reach Toyota.</span>
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag label="Four Eras of Production · Knowledge Work Today" color={ACCENT} />
+        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          Manufacturing already walked this ladder. <span style={{ color: `hsl(${GREEN})` }}>Knowledge work skips to Era IV.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
-          Manufacturing took 50 years to walk this ladder. Knowledge work does not have to repeat the mistake. LIZA installs the third stage on top of the first. We skip the middle.
+        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          Industry took 150 years to go from the artisan's bench to software-defined, predictive production. Most knowledge work is still on the bench. LIZA installs Era IV directly on top of Era I. Toyotaism is the bridge, not a destination.
         </p>
 
-        <div className="grid grid-cols-[1fr_40px_1fr_40px_1fr] gap-0 items-stretch flex-1">
-          {stages.map((s, i) => {
-            const Icon = s.icon;
+        {/* Four era cards */}
+        <div className="grid grid-cols-4 gap-4 mb-5">
+          {eras.map((e) => {
+            const Icon = e.icon;
             return (
-            <React.Fragment key={s.n}>
-              <div className="rounded-2xl border-2 p-7 flex flex-col relative overflow-hidden"
-                   style={{
-                     background: i === 1 ? `hsl(${s.color} / 0.04)` : `hsl(${s.color} / 0.06)`,
-                     borderColor: `hsl(${s.color} / ${i === 1 ? 0.25 : 0.5})`,
-                     opacity: i === 1 ? 0.7 : 1,
-                   }}>
-                {i === 1 && (
-                  <div className="absolute top-3 right-3 px-2 py-1 rounded-md font-mono font-black tracking-wider"
-                       style={{ fontSize: 11, background: `hsl(${RED} / 0.15)`, color: `hsl(${RED})`, transform: "rotate(8deg)" }}>
-                    SKIP
-                  </div>
-                )}
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono font-black" style={{ fontSize: 28, color: `hsl(${s.color})` }}>{s.n}</span>
-                  <Icon size={28} style={{ color: `hsl(${s.color})` }} />
+              <div key={e.n} className="rounded-2xl border-2 p-5 flex flex-col"
+                   style={{ background: `hsl(${e.color} / 0.05)`, borderColor: `hsl(${e.color} / 0.45)` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-mono font-black tracking-tight" style={{ fontSize: 22, color: `hsl(${e.color})` }}>ERA {e.n}</span>
+                  <Icon size={22} style={{ color: `hsl(${e.color})` }} />
                 </div>
-                <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 12, color: MUTED }}>{s.era}</p>
-                <p className="font-bold mb-2" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{s.title}</p>
-                <p className="italic mb-3" style={{ fontSize: 15, color: `hsl(${s.color})`, lineHeight: 1.3 }}>{s.sub}</p>
-                <p className="flex-1" style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{s.desc}</p>
-                <div className="mt-4 pt-4 border-t flex items-center justify-center" style={{ borderColor: `hsl(${s.color} / 0.2)` }}>
-                  <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 12, color: `hsl(${s.color})` }}>{s.tag}</span>
+                <p className="font-mono uppercase tracking-[0.15em] mb-1" style={{ fontSize: 11, color: MUTED }}>{e.era}</p>
+                <p className="font-bold mb-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>{e.name}</p>
+                <p className="mb-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}><span className="font-semibold" style={{ color: SUBTLE }}>Mfg:</span> {e.mfg}</p>
+                <p className="flex-1" style={{ fontSize: 14, color: TEXT, lineHeight: 1.35 }}><span className="font-semibold" style={{ color: `hsl(${e.color})` }}>Knowledge work:</span> {e.kw}</p>
+                <div className="mt-3 pt-3 border-t text-center" style={{ borderColor: `hsl(${e.color} / 0.2)` }}>
+                  <span className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 10, color: `hsl(${e.color})` }}>{e.tag}</span>
                 </div>
               </div>
-              {i < stages.length - 1 && (
-                <div className="flex items-center justify-center">
-                  <ArrowRight size={32} style={{ color: SUBTLE }} />
-                </div>
-              )}
-            </React.Fragment>
             );
           })}
         </div>
 
-        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
-          <Zap size={22} style={{ color: `hsl(${GREEN})` }} />
-          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
-            <span className="font-black">The leap is structural.</span> Workshop → production system, in one move. Your artisans become the people who design the line, not the people the line replaces.
-          </p>
+        {/* Compact comparison row */}
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
+          {rows.map((r, i) => (
+            <div key={r.label} className="grid grid-cols-[180px_1fr_1fr_1fr_1fr] items-center"
+                 style={{ background: i % 2 === 0 ? "white" : CARD_ALT, borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
+              <span className="px-5 py-3 font-mono uppercase tracking-[0.14em] font-bold" style={{ fontSize: 12, color: MUTED }}>{r.label}</span>
+              {r.vals.map((v, j) => (
+                <span key={j} className="px-4 py-3" style={{ fontSize: 15, color: j === 3 ? TEXT : MUTED, fontWeight: j === 3 ? 700 : 500 }}>{v}</span>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
-      <Footer text="Toyota was famously craft-respecting. Andon cord. Kaizen. Workers redesign their own stations. This is what we install." />
+      <Footer text="Source frame: industrial production eras (Artisanal · Fordism · Toyotaism · Industry 4.0). Ported to knowledge work." />
       <SlideBar from={GOLD} to={GREEN} />
     </div>
   );
