@@ -215,8 +215,19 @@ function FDisposable() {
             );
           })}
         </div>
+
+        {/* Bridge line — the causal link to Era I */}
+        <div className="mt-5 px-7 py-3 rounded-xl border-l-4 flex items-center gap-4"
+             style={{ background: `hsl(${GOLD} / 0.07)`, borderColor: `hsl(${GOLD})`, animation: "chain-pop 0.6s 0.6s cubic-bezier(0.16,1,0.3,1) both" }}>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>The link</span>
+          <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-black">This is why you are still in Era I.</span> No artefact survives the session, so every fix is hand-crafted, every craft is private, every method is disposable. The next slide names the four eras.
+          </p>
+        </div>
+        <style>{`@keyframes chain-pop { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }`}</style>
       </div>
       <Footer text="The artifact ships. The method dies with the session. This is the workshop tax." />
+      <SpineIndicator current={1} />
       <SlideBar from={RED} to={GOLD} />
     </div>
   );
