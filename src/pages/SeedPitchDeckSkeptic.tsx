@@ -234,6 +234,26 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
 
 // ─── 05 · WHY NOW ───────────────────────────────────────────────────────────
 function S05WhyNow({ n, t }: { n: number; t: number }) {
+  const forces = [
+    {
+      k: "01",
+      tag: "Spend",
+      h: "The AI line item keeps growing",
+      v: "More teams, more agents, more workflows hit production every quarter. The bill goes up even as token prices go down. Finance now needs a denominator: cost per useful, accountable outcome.",
+    },
+    {
+      k: "02",
+      tag: "Audit",
+      h: "Compliance is catching up fast",
+      v: "EU AI Act, internal audit, sector regulators. Every AI-touched output must be explainable, replayable and owned. Screenshots of a chat transcript no longer count as evidence.",
+    },
+    {
+      k: "03",
+      tag: "Trust",
+      h: "The CRO will not sign without proof",
+      v: "No risk, legal or quality leader ships AI into regulated work without proof of method, approver, model and data. Without that proof, pilots stay pilots and never reach production scale.",
+    },
+  ];
   return (
     <Slide section="Why now" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
@@ -241,69 +261,25 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
           AI spend is rising. <span style={{ color: `hsl(${GREEN})` }}>So is the bill for not governing it.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          The CFO question for 2026: we are spending more on AI every quarter. Where is the control.
+          Three forces are hitting the enterprise at the same time. Each one alone forces the buy. Together they make it urgent.
         </p>
-        <div className="grid grid-cols-[1.25fr_1fr] gap-7 items-stretch">
-          {/* The scissors chart */}
-          <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 12, color: SUBTLE }}>The CFO chart</p>
-            <p className="font-bold mb-3" style={{ fontSize: 20, color: TEXT, lineHeight: 1.3, letterSpacing: "-0.015em" }}>
-              Tokens get cheaper. Enterprise AI spend keeps climbing.
-            </p>
-            <svg viewBox="0 0 600 320" className="w-full" style={{ height: 290 }}>
-              <defs>
-                <linearGradient id="gapFill" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor={`hsl(${GREEN})`} stopOpacity="0.28" />
-                  <stop offset="100%" stopColor={`hsl(${GREEN})`} stopOpacity="0.06" />
-                </linearGradient>
-                <marker id="arrUp" viewBox="0 0 10 10" refX="5" refY="0" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,10 L5,0 L10,10 z" fill={`hsl(${GREEN})`}/></marker>
-                <marker id="arrDown" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L5,10 L10,0 z" fill={`hsl(${GREEN})`}/></marker>
-              </defs>
-              {/* plot area: x 70..560, y 60..260 */}
-              {/* axes */}
-              <line x1="70" y1="40" x2="70" y2="260" stroke={CHROME_BORDER} strokeWidth="1"/>
-              <line x1="70" y1="260" x2="560" y2="260" stroke={CHROME_BORDER} strokeWidth="1"/>
-              {/* gap area between rising enterprise spend (top curve) and falling model cost (bottom curve) */}
-              <path d="M 70 200 C 220 170, 380 100, 560 60 L 560 220 C 380 210, 220 230, 70 235 Z" fill="url(#gapFill)" />
-              {/* enterprise AI spend — rising */}
-              <path d="M 70 200 C 220 170, 380 100, 560 60" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="3"/>
-              {/* model cost per token — falling */}
-              <path d="M 70 235 C 220 230, 380 210, 560 220" fill="none" stroke={`hsl(${RED})`} strokeWidth="3" strokeDasharray="6 4"/>
-              {/* gap arrow on the right — two clean segments around the callout */}
-              <line x1="475" y1="78" x2="475" y2="118" stroke={`hsl(${GREEN})`} strokeWidth="1.8" markerStart="url(#arrDown)"/>
-              <line x1="475" y1="172" x2="475" y2="216" stroke={`hsl(${GREEN})`} strokeWidth="1.8" markerEnd="url(#arrUp)"/>
-              {/* callout */}
-              <rect x="408" y="120" width="134" height="50" rx="8" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="1.25"/>
-              <text x="475" y="140" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>NEW SPEND</text>
-              <text x="475" y="158" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="1.5" fill={TEXT} fontWeight="700">LIZA captures</text>
-              {/* line labels — placed above/below the curves with clear background, no overlap */}
-              <g>
-                <rect x="78" y="20" width="232" height="22" rx="4" fill={BG} />
-                <text x="84" y="35" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="2" fill={`hsl(${GREEN})`} fontWeight="700">ENTERPRISE AI SPEND ↑</text>
-              </g>
-              <g>
-                <rect x="78" y="270" width="248" height="22" rx="4" fill={BG} />
-                <text x="84" y="285" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="2" fill={`hsl(${RED})`} fontWeight="700">MODEL COST PER TOKEN ↓</text>
-              </g>
-              {/* x-axis years */}
-              <text x="70" y="310" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2023</text>
-              <text x="560" y="310" textAnchor="end" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2027</text>
-            </svg>
-          </div>
-          <div className="flex flex-col gap-4">
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Three forces hitting at once</p>
-            {[
-              { k: "01 · Spend", h: "AI line item keeps growing", v: "More teams, more agents, more workflows. The bill goes up even as tokens go down." },
-              { k: "02 · Audit", h: "Compliance is catching up", v: "EU AI Act, internal audit, regulators. Every output must be explainable, replayable, owned." },
-              { k: "03 · Trust", h: "The CRO will not sign", v: "No buyer ships AI into regulated work without proof of method, approver, model and evidence." },
-            ].map((d) => (
-              <div key={d.k} className="rounded-xl p-5" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-                <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>{d.k}</p>
-                <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{d.h}</p>
-                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>{d.v}</p>
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          {forces.map((f) => (
+            <div key={f.k} className="rounded-2xl p-8 flex flex-col" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.32)` }}>
+              <div className="flex items-center justify-between mb-6">
+                <span className="font-mono font-black" style={{ fontSize: 44, color: `hsl(${GREEN})`, letterSpacing: "-0.03em", lineHeight: 1 }}>{f.k}</span>
+                <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded-full" style={{ fontSize: 12, color: `hsl(${GREEN})`, background: BG, border: `1px solid hsl(${GREEN} / 0.4)` }}>{f.tag}</span>
               </div>
-            ))}
-          </div>
+              <p className="font-black mb-4" style={{ fontSize: 28, color: TEXT, lineHeight: 1.12, letterSpacing: "-0.025em" }}>{f.h}</p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{f.v}</p>
+            </div>
+          ))}
+        </div>
+        <div className="rounded-xl px-7 py-5 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded" style={{ fontSize: 11, color: `hsl(${GOLD})`, background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>Net effect</span>
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
+            Spend, audit and trust converge on the same missing piece: a control layer that turns raw AI output into governed, defensible work. The window to own that layer is now.
+          </p>
         </div>
       </div>
     </Slide>
