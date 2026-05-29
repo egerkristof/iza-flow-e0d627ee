@@ -8,6 +8,7 @@ import {
   Hammer, Wrench, Flame, FileText, GitBranch, Zap, ShieldCheck,
   Lightbulb, UserCog, Package, Cog, Wind, Skull, Ban,
   Hash, FileCheck2, Lock, Fingerprint, ScrollText, Scale, Database, Eye,
+  Boxes, Network, GitCompare, GitMerge, Filter, Radar, Crosshair, Binary,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
