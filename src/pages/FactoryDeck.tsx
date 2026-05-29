@@ -1033,6 +1033,8 @@ const RAW_SLIDES = [
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
   { id: "pillar-governance", title: "Pillar 3 · Governance Loop · Stop the Line",       component: <S03GovernanceLoop /> },
+  { id: "audit-receipts",    title: "Audit-Grade Receipts · The Compliance Substrate", component: <FAuditReceipts /> },
+  { id: "compliance-map",    title: "Maps to Every Regulator · EU AI Act, SOC2, HIPAA, GxP", component: <FComplianceMap /> },
   { id: "pillar-compile",    title: "Pillar 4 · Every Prompt Is a Compile",             component: <S07cFunnel /> },
   // ACT III — Proof
   { id: "artisanal-tax",     title: "The Artisanal Tax · €550K → $2.6B",                component: <FArtisanalTax /> },
