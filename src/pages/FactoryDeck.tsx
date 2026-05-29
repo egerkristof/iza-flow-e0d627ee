@@ -1739,6 +1739,13 @@ const RAW_SLIDES = [
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
   // ACT I — One cinematic canvas replaces six static frames. Depth on demand.
   { id: "story-film",       title: "The Red Thread · One Film · Six Beats",            component: <FStoryFilm /> },
+  // Original six slides preserved below the film for reference and iteration.
+  { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
+  { id: "chain",            title: "The Red Thread · Six Beats",                        component: <FChain /> },
+  { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
+  { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
+  { id: "why-hard",         title: "The Wall · Why Era IV Is Not Already Built",        component: <FWhyHard /> },
+  { id: "how-we-break",     title: "The Stack · How LIZA Breaks the Wall",              component: <FHowWeBreak /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
