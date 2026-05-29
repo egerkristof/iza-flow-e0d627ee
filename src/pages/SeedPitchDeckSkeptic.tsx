@@ -250,36 +250,44 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
             <p className="font-bold mb-3" style={{ fontSize: 20, color: TEXT, lineHeight: 1.3, letterSpacing: "-0.015em" }}>
               Tokens get cheaper. Enterprise AI spend keeps climbing.
             </p>
-            <svg viewBox="0 0 600 300" className="w-full" style={{ height: 270 }}>
+            <svg viewBox="0 0 600 320" className="w-full" style={{ height: 290 }}>
               <defs>
                 <linearGradient id="gapFill" x1="0" x2="0" y1="0" y2="1">
                   <stop offset="0%" stopColor={`hsl(${GREEN})`} stopOpacity="0.28" />
                   <stop offset="100%" stopColor={`hsl(${GREEN})`} stopOpacity="0.06" />
                 </linearGradient>
+                <marker id="arrUp" viewBox="0 0 10 10" refX="5" refY="0" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,10 L5,0 L10,10 z" fill={`hsl(${GREEN})`}/></marker>
+                <marker id="arrDown" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L5,10 L10,0 z" fill={`hsl(${GREEN})`}/></marker>
               </defs>
+              {/* plot area: x 70..560, y 60..260 */}
               {/* axes */}
-              <line x1="50" y1="20" x2="50" y2="260" stroke={CHROME_BORDER} strokeWidth="1"/>
-              <line x1="50" y1="260" x2="580" y2="260" stroke={CHROME_BORDER} strokeWidth="1"/>
-              {/* gap area between rising governed work (top) and falling model cost (bottom) */}
-              <path d="M 50 80 C 200 60, 380 40, 580 25 L 580 235 C 380 200, 200 240, 50 230 Z" fill="url(#gapFill)" />
-              {/* governed work — rising */}
-              <path d="M 50 80 C 200 60, 380 40, 580 25" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="3"/>
-              {/* model cost — falling */}
-              <path d="M 50 230 C 200 240, 380 200, 580 235" fill="none" stroke={`hsl(${RED})`} strokeWidth="3" strokeDasharray="6 4"/>
-              {/* gap arrows */}
-              <line x1="430" y1="50" x2="430" y2="215" stroke={`hsl(${GREEN})`} strokeWidth="1.5" markerEnd="url(#arrUp)" markerStart="url(#arrDown)"/>
-              <defs>
-                <marker id="arrUp" viewBox="0 0 10 10" refX="5" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,10 L5,0 L10,10 z" fill={`hsl(${GREEN})`}/></marker>
-                <marker id="arrDown" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L5,10 L10,0 z" fill={`hsl(${GREEN})`}/></marker>
-              </defs>
-              <rect x="445" y="115" width="120" height="44" rx="6" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="1"/>
-              <text x="505" y="133" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>NEW SPEND</text>
-              <text x="505" y="150" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.5" fill={TEXT}>LIZA captures</text>
-              {/* labels */}
-              <text x="60" y="75" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>ENTERPRISE AI SPEND ↑</text>
-              <text x="60" y="250" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${RED})`}>MODEL COST PER TOKEN ↓</text>
-              <text x="50" y="285" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2023</text>
-              <text x="570" y="285" textAnchor="end" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2027</text>
+              <line x1="70" y1="40" x2="70" y2="260" stroke={CHROME_BORDER} strokeWidth="1"/>
+              <line x1="70" y1="260" x2="560" y2="260" stroke={CHROME_BORDER} strokeWidth="1"/>
+              {/* gap area between rising enterprise spend (top curve) and falling model cost (bottom curve) */}
+              <path d="M 70 200 C 220 170, 380 100, 560 60 L 560 220 C 380 210, 220 230, 70 235 Z" fill="url(#gapFill)" />
+              {/* enterprise AI spend — rising */}
+              <path d="M 70 200 C 220 170, 380 100, 560 60" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="3"/>
+              {/* model cost per token — falling */}
+              <path d="M 70 235 C 220 230, 380 210, 560 220" fill="none" stroke={`hsl(${RED})`} strokeWidth="3" strokeDasharray="6 4"/>
+              {/* gap arrow on the right — two clean segments around the callout */}
+              <line x1="475" y1="78" x2="475" y2="118" stroke={`hsl(${GREEN})`} strokeWidth="1.8" markerStart="url(#arrDown)"/>
+              <line x1="475" y1="172" x2="475" y2="216" stroke={`hsl(${GREEN})`} strokeWidth="1.8" markerEnd="url(#arrUp)"/>
+              {/* callout */}
+              <rect x="408" y="120" width="134" height="50" rx="8" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="1.25"/>
+              <text x="475" y="140" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>NEW SPEND</text>
+              <text x="475" y="158" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="1.5" fill={TEXT} fontWeight="700">LIZA captures</text>
+              {/* line labels — placed above/below the curves with clear background, no overlap */}
+              <g>
+                <rect x="78" y="20" width="232" height="22" rx="4" fill={BG} />
+                <text x="84" y="35" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="2" fill={`hsl(${GREEN})`} fontWeight="700">ENTERPRISE AI SPEND ↑</text>
+              </g>
+              <g>
+                <rect x="78" y="270" width="248" height="22" rx="4" fill={BG} />
+                <text x="84" y="285" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="2" fill={`hsl(${RED})`} fontWeight="700">MODEL COST PER TOKEN ↓</text>
+              </g>
+              {/* x-axis years */}
+              <text x="70" y="310" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2023</text>
+              <text x="560" y="310" textAnchor="end" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2027</text>
             </svg>
           </div>
           <div className="flex flex-col gap-4">
