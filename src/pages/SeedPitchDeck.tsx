@@ -256,68 +256,62 @@ function S04WhyNow({ n, t }: { n: number; t: number }) {
 
 // ─── 05 · MARKET VALIDATION ─────────────────────────────────────────────────
 function S05Validation({ n, t }: { n: number; t: number }) {
+  const layers = [
+    { n: "01", h: "Rework tax",       v: "€550K",   sub: "per 100 KW / yr", note: "4h × €55 × 46wk × 100, discounted 46%", w: 100 },
+    { n: "02", h: "Lost knowledge",   v: "method",   sub: "dies at tab close", note: "Nothing transfers. No compounding.", w: 70 },
+    { n: "03", h: "Sovereignty leak", v: "IP",       sub: "in public LLMs",    note: "Crown-jewel data pasted into ChatGPT.", w: 55 },
+    { n: "04", h: "Token bill",       v: "metered",  sub: "from 2025 on",      note: "Every call becomes a P&L line.", w: 80 },
+  ];
   return (
     <Slide section="Market Validation" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-3" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-2" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           The cost is already showing up.
         </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1400 }}>
-          The €550K is just the rework tax. The full bill stacks four ways.
+        <p className="mb-7 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: MUTED }}>
+          Four layers stack. €550K is only the first.
         </p>
-        <div className="grid grid-cols-2 gap-8 mb-6">
-          <div className="rounded-2xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${RED})` }}>
-              Layer 1 · Rework tax (quantified today)
-            </p>
-            <div className="font-black" style={{ fontSize: 84, lineHeight: 0.95, color: `hsl(${RED})`, letterSpacing: "-0.04em" }}>€550K</div>
-            <p className="font-bold mt-2" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>per year, per 100 knowledge workers.</p>
-            <p className="mt-2 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
-              4 h/week × €55/h × 46 wks × 100 = €1.01M raw, discounted 46% to €550K.<br/>
-              HBR &amp; McKinsey 2024 rework data.
-            </p>
-            <div className="mt-5 pt-4 grid grid-cols-3 gap-3" style={{ borderTop: `1px solid hsl(${RED} / 0.25)` }}>
-              <div>
-                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 2</p>
-                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Lost knowledge</p>
-                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Method dies with the tab.</p>
+        <div className="grid grid-cols-[1.35fr_1fr] gap-10">
+          <div className="flex flex-col gap-3">
+            {layers.map((row) => (
+              <div key={row.n} className="rounded-xl px-5 py-4 relative overflow-hidden" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.2)` }}>
+                <div className="absolute inset-y-0 left-0" style={{ width: `${row.w}%`, background: `hsl(${RED} / 0.07)`, borderRight: `1px solid hsl(${RED} / 0.18)` }} />
+                <div className="relative grid grid-cols-[44px_1fr_180px] items-center gap-5">
+                  <span className="font-mono font-black" style={{ fontSize: 16, color: `hsl(${RED})` }}>{row.n}</span>
+                  <div>
+                    <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{row.h}</p>
+                    <p className="mt-0.5" style={{ fontSize: 14, color: MUTED, lineHeight: 1.3 }}>{row.note}</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-black" style={{ fontSize: 32, lineHeight: 1.0, color: `hsl(${RED})`, letterSpacing: "-0.025em" }}>{row.v}</div>
+                    <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: MUTED }}>{row.sub}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 3</p>
-                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Sovereignty leak</p>
-                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Crown-jewel IP pasted into public LLMs.</p>
-              </div>
-              <div>
-                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 4</p>
-                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Token bill</p>
-                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Metered AI scales linearly with usage.</p>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <div className="rounded-2xl p-7 flex flex-col" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
-              First production deployment · AEC (anonymized)
+              First production deployment · AEC
             </p>
-            <div className="grid grid-cols-3 gap-4 mt-4">
-              <div>
-                <div className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.035em" }}>127</div>
-                <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>standards encoded</p>
-              </div>
-              <div>
-                <div className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.035em" }}>3.4K</div>
-                <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>governed decisions / month</p>
-              </div>
-              <div>
-                <div className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.035em" }}>62%</div>
-                <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>time-to-spec drop</p>
-              </div>
+            <div className="flex flex-col gap-5 flex-1 justify-center">
+              {[
+                { v: "127",  l: "standards encoded" },
+                { v: "3.4K", l: "governed decisions / month" },
+                { v: "62%",  l: "time-to-spec drop" },
+              ].map((m) => (
+                <div key={m.l} className="flex items-baseline gap-5">
+                  <div className="font-black text-right" style={{ width: 130, fontSize: 56, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.035em" }}>{m.v}</div>
+                  <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.3 }}>{m.l}</p>
+                </div>
+              ))}
             </div>
-            <p className="mt-6 font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35 }}>
+            <p className="mt-4 pt-4 font-bold" style={{ fontSize: 16, color: TEXT, lineHeight: 1.35, borderTop: `1px solid hsl(${GREEN} / 0.25)` }}>
               CTO-sponsored. Pattern repeats into pharma, banking, space.
             </p>
           </div>
         </div>
-        <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: SUBTLE }}>
+        <p className="mt-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>
           6 regulated verticals scoped · pharma · banking · AEC · space · advisory · public sector
         </p>
       </div>
