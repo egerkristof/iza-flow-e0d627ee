@@ -308,11 +308,24 @@ function FSkipMiddle() {
           ))}
         </div>
 
-        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
-          <ShieldCheck size={22} style={{ color: `hsl(${GREEN})` }} />
-          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
-            Push/pull is one pillar of this. Standards-as-stations, governance loop, every-prompt-a-compile are the others. The next four slides walk them station by station.
-          </p>
+        {/* Beyond Toyota · Era IV moves we go past */}
+        <div className="mt-6 grid grid-cols-3 gap-4">
+          {[
+            { k: "Beyond Just-in-Time", v: "Predictive context. The standard assembles the prompt before the worker asks.", icon: Clock },
+            { k: "Beyond Kaizen",       v: "Autonomous standards refinement. The system improves its own stations from every execution.", icon: GitBranch },
+            { k: "Beyond Flex-Batches", v: "Per-prompt customisation. Every execution bespoke, at zero marginal cost.", icon: Sparkles },
+          ].map((b) => {
+            const Icon = b.icon;
+            return (
+              <div key={b.k} className="rounded-xl border-l-4 px-5 py-4 flex gap-3" style={{ background: `hsl(${GREEN} / 0.05)`, borderColor: `hsl(${GREEN})` }}>
+                <Icon size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 2 }} />
+                <div>
+                  <p className="font-bold mb-1" style={{ fontSize: 15, color: TEXT }}>{b.k}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{b.v}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
       <Footer text="The Toyota Production System is the most-studied operations design in industrial history. We ported it to knowledge work." />
