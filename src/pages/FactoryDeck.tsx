@@ -861,23 +861,28 @@ function F17Ask() {
 // DECK COMPOSITION
 // ═════════════════════════════════════════════════════════════════════════════
 const RAW_SLIDES = [
-  { id: "cover", title: "Cover · AI is the machine. LIZA is the production system.", component: <F01Cover /> },
-  { id: "machine-without-factory", title: "The Machine Without a Factory", component: <F02MachineWithoutFactory /> },
-  { id: "annotated-email", title: "The Moment of Failure · Annotated", component: <F03AnnotatedEmail /> },
-  { id: "math", title: "The Math · €550K → $2.6B", component: <F04Math /> },
-  { id: "governance-loop", title: "The Governance Loop · Stop the Line", component: <S03GovernanceLoop /> },
-  { id: "prompt-is-compile", title: "Every Prompt Is a Compile · The Atom", component: <S07cFunnel /> },
-  { id: "aace-not-rag", title: "This Is AACE, Not RAG · The Defence", component: <S07eAaceNotRag /> },
-  { id: "org-loop", title: "Every Commit Compounds · The Network", component: <S07dOrgLoop /> },
-  { id: "install", title: "30-Day Install · Metered from Day 31", component: <F13Install /> },
-  { id: "vertical", title: "Hero Vertical · AEC · Pattern Repeats", component: <F14Vertical /> },
-  { id: "unit-economics", title: "Unit Economics · 95% Platform GM", component: <S10UnitEconomics /> },
-  { id: "team", title: "Team · Data & AI Architecture in Production", component: <F16Team /> },
-  { id: "ask", title: "The Ask · €2M Seed", component: <F17Ask /> },
-  { id: "closer", title: "The Loop, Closed", component: <S13LoopClosed /> },
-];
-const _RAW_SLIDES_OLD_REMOVED = [
-  // placeholder anchor — superseded below
+  // ACT I — Arrowhead: workshop → production system (skip Ford)
+  { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
+  { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
+  { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
+  { id: "three-stages",     title: "Three Stages of Knowledge Work · The aha",          component: <FThreeStages /> },
+  { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
+  // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
+  { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
+  { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
+  { id: "pillar-governance", title: "Pillar 3 · Governance Loop · Stop the Line",       component: <S03GovernanceLoop /> },
+  { id: "pillar-compile",    title: "Pillar 4 · Every Prompt Is a Compile",             component: <S07cFunnel /> },
+  // ACT III — Proof
+  { id: "artisanal-tax",     title: "The Artisanal Tax · €550K → $2.6B",                component: <FArtisanalTax /> },
+  { id: "aace-not-rag",      title: "This Is AACE, Not RAG · The Defence",              component: <S07eAaceNotRag /> },
+  { id: "org-loop",          title: "Every Commit Compounds · The Network",             component: <S07dOrgLoop /> },
+  // ACT IV — Path & ask
+  { id: "install",           title: "30-Day Install · Metered from Day 31",             component: <F13Install /> },
+  { id: "vertical",          title: "Hero Vertical · AEC · Pattern Repeats",            component: <F14Vertical /> },
+  { id: "unit-economics",    title: "Unit Economics · 95% Platform GM",                 component: <S10UnitEconomics /> },
+  { id: "team",              title: "Team · Data & AI Architecture in Production",      component: <F16Team /> },
+  { id: "ask",               title: "The Ask · €2M Seed",                               component: <F17Ask /> },
+  { id: "closer",            title: "The Loop, Closed",                                 component: <S13LoopClosed /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
