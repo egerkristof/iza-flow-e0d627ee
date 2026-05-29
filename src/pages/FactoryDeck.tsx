@@ -7,6 +7,7 @@ import {
   ArrowDown, ArrowRight, Magnet, Megaphone, Clock, AlertTriangle, Gauge,
   Hammer, Wrench, Flame, FileText, GitBranch, Zap, ShieldCheck,
   Lightbulb, UserCog, Package, Cog, Wind, Skull, Ban,
+  Hash, FileCheck2, Lock, Fingerprint, ScrollText, Scale, Database, Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
