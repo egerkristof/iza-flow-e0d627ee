@@ -2054,13 +2054,15 @@ const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
-  // ACT I — One cinematic canvas replaces six static frames. Depth on demand.
-  { id: "story-film",       title: "The Red Thread · One Film · Six Beats",            component: <FStoryFilm /> },
-  // Original six slides preserved below the film for reference and iteration.
+  // ACT I · THESIS — one sentence the whole deck defends. Four-era anchor lives here.
+  { id: "thesis",           title: "Thesis · Skip Ford. Build the Toyota substrate.",  component: <FThesis /> },
+  // ACT I · DIAGNOSIS — the trap, named in order. Each slide proves one move.
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
   { id: "chain",            title: "The Red Thread · Six Beats",                        component: <FChain /> },
   { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
   { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
+  // ACT I · PROOF — the cost of staying in the trap. Locks the diagnosis.
+  { id: "artisanal-tax",     title: "The Artisanal Tax · €550K → $2.6B",                component: <FArtisanalTax /> },
   { id: "why-hard",         title: "The Wall · Why Era IV Is Not Already Built",        component: <FWhyHard /> },
   { id: "how-we-break",     title: "The Stack · How LIZA Breaks the Wall",              component: <FHowWeBreak /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
@@ -2068,8 +2070,7 @@ const RAW_SLIDES = [
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
   { id: "pillar-governance", title: "Pillar 3 · Governance Loop · Stop the Line",       component: <S03GovernanceLoop /> },
   { id: "pillar-compile",    title: "Pillar 4 · Every Prompt Is a Compile",             component: <S07cFunnel /> },
-  // ACT III — Proof
-  { id: "artisanal-tax",     title: "The Artisanal Tax · €550K → $2.6B",                component: <FArtisanalTax /> },
+  // ACT III — Defence
   { id: "aace-not-rag",      title: "This Is AACE, Not RAG · The Defence",              component: <S07eAaceNotRag /> },
   { id: "org-loop",          title: "Every Commit Compounds · The Network",             component: <S07dOrgLoop /> },
   // ACT IV — Path & ask
