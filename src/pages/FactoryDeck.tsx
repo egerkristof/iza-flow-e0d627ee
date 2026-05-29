@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
@@ -1332,16 +1332,12 @@ const FILM_BEATS = [
 /* Center-stage scene per beat. SVG vector storytelling, cross-faded. */
 function FilmStage({ beat }: { beat: number }) {
   return (
-    <div className="relative w-full h-full">
-      {FILM_BEATS.map((_, i) => (
-        <div
-          key={i}
-          className="absolute inset-0 flex items-center justify-center transition-opacity duration-700"
-          style={{ opacity: i === beat ? 1 : 0, pointerEvents: i === beat ? "auto" : "none" }}
-        >
-          {renderScene(i)}
-        </div>
-      ))}
+    // Remount the active scene on every beat change so its internal phase
+    // timer restarts from zero. Fade-in handled by `animate-fade-in`.
+    <div key={beat} className="relative w-full h-full">
+      <div className="absolute inset-0 flex items-center justify-center animate-fade-in">
+        {renderScene(beat)}
+      </div>
     </div>
   );
 }
@@ -1358,226 +1354,547 @@ function renderScene(i: number) {
   }
 }
 
-/* Reusable artisan figure: head, body, workbench, optional thought bubble. */
-function Artisan({ x, color, bubble, evaporate = false, delay = 0 }: { x: number; color: string; bubble?: string; evaporate?: boolean; delay?: number }) {
+/* ───────────────────── shared scene engine ───────────────────── */
+
+// ms since this scene mounted, ticked via rAF
+function useBeatTime() {
+  const [t, setT] = useState(0);
+  useEffect(() => {
+    const start = performance.now();
+    let raf = 0;
+    const tick = () => { setT(performance.now() - start); raf = requestAnimationFrame(tick); };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  return t;
+}
+// Linear 0→1 inside [a,b], clamped.
+const k = (t: number, a: number, b: number) => Math.max(0, Math.min(1, (t - a) / Math.max(1, b - a)));
+// Cubic-out easing.
+const eo = (x: number) => 1 - Math.pow(1 - x, 3);
+// Show-after helper for binary reveals.
+const onAfter = (t: number, ms: number) => (t >= ms ? 1 : 0);
+
+/* Reusable artisan figure: head, body, workbench. */
+function Artisan({ x, y = 360, color, scale = 1, slump = 0 }: { x: number; y?: number; color: string; scale?: number; slump?: number }) {
   return (
-    <g transform={`translate(${x}, 360)`}>
+    <g transform={`translate(${x}, ${y}) scale(${scale})`}>
       {/* bench */}
       <rect x={-70} y={80} width={140} height={10} rx={2} fill={`hsl(${SUBTLE})`} opacity={0.5} />
       <rect x={-60} y={90} width={6} height={48} fill={`hsl(${SUBTLE})`} opacity={0.4} />
       <rect x={54} y={90} width={6} height={48} fill={`hsl(${SUBTLE})`} opacity={0.4} />
       {/* body */}
-      <circle cx={0} cy={20} r={26} fill={`hsl(${color} / 0.85)`} />
-      <path d={`M -42 78 Q 0 36 42 78 L 42 80 L -42 80 Z`} fill={`hsl(${color} / 0.85)`} />
-      {/* head */}
-      <circle cx={0} cy={-14} r={22} fill="white" stroke={`hsl(${color})`} strokeWidth={3} />
-      {/* thought bubble */}
-      {bubble && (
-        <g style={{
-          animation: evaporate
-            ? `bubble-evap 1.4s ${delay}s cubic-bezier(0.4,0,0.6,1) forwards`
-            : `bubble-in 0.7s ${delay}s cubic-bezier(0.16,1,0.3,1) both`,
-          transformOrigin: "0px -90px",
-        }}>
-          <ellipse cx={0} cy={-90} rx={92} ry={32} fill="white" stroke={`hsl(${color})`} strokeWidth={2.5} />
-          <circle cx={-22} cy={-58} r={6} fill="white" stroke={`hsl(${color})`} strokeWidth={2} />
-          <circle cx={-30} cy={-44} r={3.5} fill="white" stroke={`hsl(${color})`} strokeWidth={1.5} />
-          <text x={0} y={-86} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={14} fontWeight={700} fill={`hsl(${color})`}>
-            {bubble}
-          </text>
+      <g transform={`translate(0 ${slump})`}>
+        <circle cx={0} cy={20} r={26} fill={`hsl(${color} / 0.85)`} />
+        <path d={`M -42 78 Q 0 36 42 78 L 42 80 L -42 80 Z`} fill={`hsl(${color} / 0.85)`} />
+        {/* head */}
+        <circle cx={0} cy={-14} r={22} fill="white" stroke={`hsl(${color})`} strokeWidth={3} />
+      </g>
+    </g>
+  );
+}
+
+// Floating thought bubble used by several scenes.
+function ThoughtBubble({ x, y, color, label, opacity = 1, scale = 1 }: { x: number; y: number; color: string; label: string; opacity?: number; scale?: number }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${scale})`} opacity={opacity}>
+      <ellipse cx={0} cy={0} rx={92} ry={30} fill="white" stroke={`hsl(${color})`} strokeWidth={2.5} />
+      <circle cx={-22} cy={32} r={6} fill="white" stroke={`hsl(${color})`} strokeWidth={2} />
+      <circle cx={-30} cy={46} r={3.5} fill="white" stroke={`hsl(${color})`} strokeWidth={1.5} />
+      <text x={0} y={5} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={14} fontWeight={700} fill={`hsl(${color})`}>
+        {label}
+      </text>
+    </g>
+  );
+}
+
+// Small icon shown on bench for each artisan's "tool of the trade".
+function BenchTool({ x, y, color, kind }: { x: number; y: number; color: string; kind: "prompt" | "folder" | "macro" }) {
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      {kind === "prompt" && (
+        <g>
+          <rect x={-18} y={-14} width={36} height={28} rx={3} fill="white" stroke={`hsl(${color})`} strokeWidth={2} />
+          <line x1={-12} y1={-6} x2={12} y2={-6} stroke={`hsl(${color})`} strokeWidth={1.5} />
+          <line x1={-12} y1={0} x2={8} y2={0} stroke={`hsl(${color})`} strokeWidth={1.5} />
+          <line x1={-12} y1={6} x2={10} y2={6} stroke={`hsl(${color})`} strokeWidth={1.5} />
+        </g>
+      )}
+      {kind === "folder" && (
+        <g>
+          <path d="M -20 -10 L -8 -10 L -4 -4 L 20 -4 L 20 14 L -20 14 Z" fill="white" stroke={`hsl(${color})`} strokeWidth={2} />
+        </g>
+      )}
+      {kind === "macro" && (
+        <g>
+          {[0, 60, 120, 180, 240, 300].map(a => (
+            <rect key={a} x={-3} y={-18} width={6} height={8} fill={`hsl(${color})`} transform={`rotate(${a})`} />
+          ))}
+          <circle cx={0} cy={0} r={9} fill="white" stroke={`hsl(${color})`} strokeWidth={2.5} />
+          <circle cx={0} cy={0} r={3} fill={`hsl(${color})`} />
         </g>
       )}
     </g>
   );
 }
 
+/* Typewriter — types `text` linearly between [from,to]. */
+function Typed({ x, y, color, text, from, to, t, size = 22, weight = 900, anchor = "middle", letterSpacing = "-0.01em", cursor = true }: { x: number; y: number; color: string; text: string; from: number; to: number; t: number; size?: number; weight?: number; anchor?: "start" | "middle" | "end"; letterSpacing?: string; cursor?: boolean }) {
+  const p = k(t, from, to);
+  const n = Math.round(p * text.length);
+  const shown = text.slice(0, n);
+  return (
+    <text x={x} y={y} textAnchor={anchor} fontFamily="ui-sans-serif, system-ui" fontSize={size} fontWeight={weight} fill={`hsl(${color})`} letterSpacing={letterSpacing}>
+      {shown}{cursor && t >= from && t < to + 600 ? <tspan opacity={0.55}>▌</tspan> : null}
+    </text>
+  );
+}
+
+/* Number counter — eases between two values across [from,to]. */
+function Counter({ x, y, color, from, to, msFrom, msTo, t, size = 64, format = (n: number) => Math.round(n).toLocaleString() }: { x: number; y: number; color: string; from: number; to: number; msFrom: number; msTo: number; t: number; size?: number; format?: (n: number) => string }) {
+  const p = eo(k(t, msFrom, msTo));
+  const n = from + (to - from) * p;
+  return (
+    <text x={x} y={y} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={size} fontWeight={900} fill={`hsl(${color})`} letterSpacing="-0.04em">
+      {format(n)}
+    </text>
+  );
+}
+
+/* ───────────────────── BEAT 1 — Workshop ─────────────────────
+   Phases:
+     0.0–1.2s  benches fade in, empty
+     1.2–2.8s  artisans appear, left → right
+     2.8–4.2s  each gets a unique tool on bench
+     4.2–5.6s  thought bubbles pop with private method names
+     5.6–7.0s  "ship" packets fly off the right side of each bench
+     7.0–9.0s  artisan A shoots an arrow to artisan B — hits a wall, bounces back, red X
+*/
 function SceneWorkshop() {
+  const t = useBeatTime();
+  const positions = [
+    { x: 220, color: GOLD, tool: "prompt" as const, label: "my prompt" },
+    { x: 550, color: GOLD, tool: "folder" as const, label: "my folder" },
+    { x: 880, color: GOLD, tool: "macro"  as const, label: "my macro"  },
+  ];
+  // ship packets motion
+  const ship = (start: number) => {
+    const p = eo(k(t, start, start + 1200));
+    return { dx: 60 + p * 160, op: t < start ? 0 : (t > start + 1300 ? 0 : 1) };
+  };
+  // share-arrow A → B and bounce back
+  const shareOut = eo(k(t, 7000, 7900));        // 0 at bench A → 1 at the wall
+  const shareBack = eo(k(t, 7900, 8700));       // bounce back
+  const wallX = (positions[0].x + positions[1].x) / 2; // wall between A and B
+  const arrowX = shareOut * (wallX - positions[0].x) - shareBack * (wallX - positions[0].x);
   return (
     <svg viewBox="0 0 1100 540" className="w-full h-full">
-      <style>{`
-        @keyframes bubble-in { 0% { opacity: 0; transform: translateY(8px) scale(0.85); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-      `}</style>
-      <text x={550} y={64} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={20} fontWeight={700} fill={`hsl(${MUTED})`} letterSpacing="0.18em">
+      <text x={550} y={56} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={18} fontWeight={700} fill={`hsl(${MUTED})`} letterSpacing="0.18em" opacity={k(t, 200, 900)}>
         THREE OF YOUR PEOPLE. THREE PRIVATE METHODS.
       </text>
-      <Artisan x={220} color={GOLD} bubble="my prompt" delay={0.05} />
-      <Artisan x={550} color={GOLD} bubble="my folder" delay={0.35} />
-      <Artisan x={880} color={GOLD} bubble="my macro" delay={0.65} />
-      <text x={550} y={500} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={500} fill={`hsl(${SUBTLE})`}>
-        The output ships. The method does not.
+      {/* benches + artisans */}
+      {positions.map((a, i) => {
+        const appear = k(t, 1200 + i * 500, 1800 + i * 500);
+        const toolIn = k(t, 2800 + i * 300, 3400 + i * 300);
+        const bubbleIn = k(t, 4200 + i * 350, 4800 + i * 350);
+        return (
+          <g key={i}>
+            <g opacity={appear}>
+              <Artisan x={a.x} color={a.color} />
+            </g>
+            <g opacity={toolIn} transform={`translate(0 ${(1 - toolIn) * 8})`}>
+              <BenchTool x={a.x - 40} y={420} color={a.color} kind={a.tool} />
+            </g>
+            <g opacity={bubbleIn} transform={`translate(0 ${(1 - bubbleIn) * 10})`}>
+              <ThoughtBubble x={a.x} y={270} color={a.color} label={a.label} />
+            </g>
+            {/* ship packet — small green tick that flies off the bench right */}
+            {(() => { const s = ship(5800 + i * 350); return (
+              <g opacity={s.op} transform={`translate(${a.x + s.dx} 432)`}>
+                <rect x={-10} y={-10} width={20} height={20} rx={4} fill={`hsl(${GREEN} / 0.18)`} stroke={`hsl(${GREEN})`} strokeWidth={1.5} />
+                <path d="M -5 0 L -1 4 L 5 -4" stroke={`hsl(${GREEN})`} strokeWidth={2.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </g>
+            ); })()}
+          </g>
+        );
+      })}
+      {/* sharing attempt — arrow + invisible wall + bounce */}
+      {t >= 6900 && (
+        <g>
+          {/* wall between A and B */}
+          <line x1={wallX} y1={300} x2={wallX} y2={440} stroke={`hsl(${RED})`} strokeWidth={2} strokeDasharray="4 4" opacity={k(t, 7000, 7400)} />
+          <text x={wallX} y={290} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={11} fontWeight={700} fill={`hsl(${RED})`} letterSpacing="0.18em" opacity={k(t, 7100, 7600)}>
+            NO TRANSFER
+          </text>
+          {/* arrow from A toward B, then bounces back */}
+          <g transform={`translate(${positions[0].x + 60 + arrowX} 360)`}>
+            <path d="M 0 0 L 30 0" stroke={`hsl(${GOLD})`} strokeWidth={4} strokeLinecap="round" />
+            <path d="M 22 -6 L 32 0 L 22 6" stroke={`hsl(${GOLD})`} strokeWidth={4} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+          {/* red X at the wall on impact */}
+          {t >= 7850 && (
+            <g transform={`translate(${wallX} 360)`} opacity={k(t, 7850, 8100)}>
+              <line x1={-10} y1={-10} x2={10} y2={10} stroke={`hsl(${RED})`} strokeWidth={3.5} strokeLinecap="round" />
+              <line x1={10} y1={-10} x2={-10} y2={10} stroke={`hsl(${RED})`} strokeWidth={3.5} strokeLinecap="round" />
+            </g>
+          )}
+        </g>
+      )}
+      <text x={550} y={510} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={600} fill={`hsl(${SUBTLE})`} opacity={k(t, 5500, 6300)}>
+        The output ships. The method stays in their hands.
       </text>
     </svg>
   );
 }
 
+/* ───────────────────── BEAT 2 — Sessions die ─────────────────────
+   Phases:
+     0.0–0.8s   carry-over: three artisans still at benches
+     0.8–4.0s   sessions stream out as bubbles, counter 0 → 12,847
+     4.0–5.0s   a clock face appears + ticks "MONDAY"
+     5.0–7.0s   all bubbles evaporate upward, counter resets to 0
+     7.0–9.0s   closing line types in
+*/
 function SceneEvaporate() {
-  return (
-    <svg viewBox="0 0 1100 540" className="w-full h-full">
-      <style>{`
-        @keyframes bubble-evap { 0% { opacity: 1; transform: translateY(0) scale(1); } 60% { opacity: 0.4; transform: translateY(-30px) scale(1.1); } 100% { opacity: 0; transform: translateY(-80px) scale(1.3); } }
-        @keyframes counter-flip-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-      `}</style>
-      <Artisan x={220} color={RED} bubble="my prompt" evaporate delay={0.1} />
-      <Artisan x={550} color={RED} bubble="my folder" evaporate delay={0.35} />
-      <Artisan x={880} color={RED} bubble="my macro" evaporate delay={0.6} />
-      <g style={{ animation: "counter-flip-in 0.6s 1.4s both" }}>
-        <text x={550} y={130} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={64} fontWeight={900} fill={`hsl(${RED})`} letterSpacing="-0.04em">
-          12,847 <tspan fill={`hsl(${SUBTLE})`}>→</tspan> 0
-        </text>
-        <text x={550} y={160} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={18} fontWeight={600} fill={`hsl(${MUTED})`} letterSpacing="0.15em">
-          SESSIONS OPENED · SURVIVING MONDAY
-        </text>
-      </g>
-    </svg>
-  );
-}
-
-function ScenePatchUp() {
-  return (
-    <svg viewBox="0 0 1100 540" className="w-full h-full">
-      <style>{`
-        @keyframes arrow-up { 0% { stroke-dashoffset: 600; opacity: 0; } 30% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
-        @keyframes wobble { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
-        @keyframes ceiling-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.9; } }
-      `}</style>
-      {/* ceiling line · "Era I ceiling" */}
-      <line x1={120} y1={120} x2={980} y2={120} stroke={`hsl(${GOLD})`} strokeWidth={2} strokeDasharray="6 6" style={{ animation: "ceiling-pulse 2.4s ease-in-out infinite" }} />
-      <text x={550} y={104} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={14} fontWeight={700} fill={`hsl(${GOLD})`} letterSpacing="0.2em">
-        ERA I CEILING · WORKSHOP
-      </text>
-      {/* wobbly up-arrow from artisans toward ceiling */}
-      <g style={{ animation: "wobble 2.4s ease-in-out infinite" }}>
-        <path
-          d="M 550 440 C 540 360, 560 280, 550 180"
-          stroke={`hsl(${GOLD})`}
-          strokeWidth={5}
-          fill="none"
-          strokeLinecap="round"
-          strokeDasharray="600"
-          style={{ animation: "arrow-up 1.6s cubic-bezier(0.6,0,0.3,1) forwards" }}
-        />
-        <path d="M 538 192 L 550 168 L 562 192" stroke={`hsl(${GOLD})`} strokeWidth={5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
-      <Artisan x={550} color={GOLD} />
-      {/* tag */}
-      <g>
-        <rect x={690} y={290} width={250} height={68} rx={10} fill="white" stroke={`hsl(${GOLD})`} strokeWidth={2} />
-        <text x={815} y={318} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={12} fontWeight={700} fill={`hsl(${GOLD})`} letterSpacing="0.18em">YOUR REFLEX</text>
-        <text x={815} y={342} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={700} fill={`hsl(${TEXT})`}>Half-baked workshop fixes</text>
-      </g>
-    </svg>
-  );
-}
-
-function ScenePushDown() {
-  const tags = ["$30/seat", "Copilot", "RAG", "Agents", "$30/seat", "Copilot"];
-  return (
-    <svg viewBox="0 0 1100 540" className="w-full h-full">
-      <style>{`
-        @keyframes rain-down { 0% { transform: translateY(-40px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(360px); opacity: 0; } }
-      `}</style>
-      {/* vendor cloud */}
-      <g>
-        <ellipse cx={550} cy={80} rx={260} ry={36} fill={`hsl(${RED} / 0.12)`} stroke={`hsl(${RED})`} strokeWidth={2} />
-        <text x={550} y={86} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={16} fontWeight={800} fill={`hsl(${RED})`} letterSpacing="0.2em">VENDOR PUSH</text>
-      </g>
-      {/* raining tags */}
-      {tags.map((t, i) => (
-        <g key={i} style={{ animation: `rain-down 2.2s ${i * 0.25}s cubic-bezier(0.4,0,0.6,1) infinite` }}>
-          <rect x={170 + i * 130} y={110} width={104} height={32} rx={6} fill="white" stroke={`hsl(${RED})`} strokeWidth={1.5} />
-          <text x={170 + i * 130 + 52} y={131} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={13} fontWeight={700} fill={`hsl(${RED})`}>{t}</text>
-        </g>
-      ))}
-      {/* desks */}
-      <Artisan x={220} color={SUBTLE} />
-      <Artisan x={550} color={SUBTLE} />
-      <Artisan x={880} color={SUBTLE} />
-      <text x={550} y={500} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={600} fill={`hsl(${MUTED})`}>
-        Identical generic output. Worker as prompt-typist.
-      </text>
-    </svg>
-  );
-}
-
-function SceneCollision() {
-  return (
-    <svg viewBox="0 0 1100 540" className="w-full h-full">
-      <style>{`
-        @keyframes arrow-collide-up   { 0% { transform: translateY(120px); opacity: 0; } 60% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
-        @keyframes arrow-collide-down { 0% { transform: translateY(-120px); opacity: 0; } 60% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
-        @keyframes crumple { 0% { opacity: 0; transform: scale(0.85); } 100% { opacity: 1; transform: scale(1); } }
-        @keyframes flash { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-      `}</style>
-      {/* up arrow (your reflex) */}
-      <g style={{ animation: "arrow-collide-up 1s cubic-bezier(0.6,0,0.3,1) forwards", transformOrigin: "550px 270px" }}>
-        <path d="M 550 450 L 550 290" stroke={`hsl(${GOLD})`} strokeWidth={6} strokeLinecap="round" />
-        <path d="M 535 305 L 550 280 L 565 305" stroke={`hsl(${GOLD})`} strokeWidth={6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
-      {/* down arrow (vendor push) */}
-      <g style={{ animation: "arrow-collide-down 1s cubic-bezier(0.6,0,0.3,1) forwards", transformOrigin: "550px 270px" }}>
-        <path d="M 550 90 L 550 250" stroke={`hsl(${RED})`} strokeWidth={6} strokeLinecap="round" />
-        <path d="M 535 235 L 550 260 L 565 235" stroke={`hsl(${RED})`} strokeWidth={6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
-      {/* flash at collision */}
-      <circle cx={550} cy={270} r={42} fill={`hsl(${SUBTLE} / 0.4)`} style={{ animation: "flash 0.6s 1.0s ease-in-out" }} />
-      {/* assembly-line silhouette */}
-      <g style={{ animation: "crumple 0.7s 1.3s cubic-bezier(0.16,1,0.3,1) both", transformOrigin: "550px 380px" }}>
-        <rect x={200} y={360} width={700} height={50} rx={6} fill={`hsl(${SUBTLE} / 0.18)`} stroke={`hsl(${SUBTLE})`} strokeWidth={2} />
-        {[260, 360, 460, 560, 660, 760, 860].map(cx => (
-          <circle key={cx} cx={cx} cy={385} r={14} fill="white" stroke={`hsl(${SUBTLE})`} strokeWidth={2} />
-        ))}
-        <text x={550} y={342} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={16} fontWeight={800} fill={`hsl(${SUBTLE})`} letterSpacing="0.2em">
-          ERA II · FORD ROLLOUT, REPACKAGED
-        </text>
-        <text x={550} y={450} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={18} fontWeight={700} fill={`hsl(${TEXT})`}>
-          You did not choose this. Both sides pushed you here.
-        </text>
-      </g>
-    </svg>
-  );
-}
-
-function SceneEraIV() {
-  const layers = [
-    { n: "L06", t: "Outcome Router" },
-    { n: "L05", t: "Governance Loop" },
-    { n: "L04", t: "Evaluation Harness" },
-    { n: "L03", t: "Standards as Code" },
-    { n: "L02", t: "Context Compiler" },
-    { n: "L01", t: "Typed Knowledge Graph" },
-  ];
-  const [typed, setTyped] = useState("");
-  const full = "Manufacture the context right in the first place.";
-  useEffect(() => {
-    setTyped("");
-    let i = 0;
-    const timer = window.setInterval(() => {
-      i += 1;
-      setTyped(full.slice(0, i));
-      if (i >= full.length) window.clearInterval(timer);
-    }, 36);
-    return () => window.clearInterval(timer);
+  const t = useBeatTime();
+  const benches = [220, 550, 880];
+  // Bubbles emitted between 800ms and 4000ms — pre-compute a sample.
+  const bubbles = useMemo(() => {
+    const out: { x: number; born: number; drift: number; size: number }[] = [];
+    for (let i = 0; i < 48; i++) {
+      const bench = benches[i % 3];
+      out.push({
+        x: bench + (Math.sin(i * 1.7) * 50),
+        born: 800 + i * 70,
+        drift: (Math.sin(i * 2.3) * 60),
+        size: 6 + (i % 3) * 2,
+      });
+    }
+    return out;
   }, []);
+  const evap = k(t, 5000, 7000); // global evaporation strength
   return (
     <svg viewBox="0 0 1100 540" className="w-full h-full">
-      <style>{`
-        @keyframes layer-stack { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-      `}</style>
-      {layers.map((l, i) => (
-        <g key={l.n} style={{ animation: `layer-stack 0.55s ${i * 0.12}s cubic-bezier(0.16,1,0.3,1) both`, transformOrigin: `550px ${130 + i * 52}px` }}>
-          <rect x={260} y={130 + i * 52} width={580} height={42} rx={8}
-            fill={`hsl(${GREEN} / 0.08)`} stroke={`hsl(${GREEN})`} strokeWidth={1.5} />
-          <text x={282} y={158 + i * 52} fontFamily="ui-monospace, monospace" fontSize={14} fontWeight={800} fill={`hsl(${GREEN})`}>{l.n}</text>
-          <text x={344} y={158 + i * 52} fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={700} fill={`hsl(${TEXT})`}>{l.t}</text>
+      {/* benches dim out as Monday arrives */}
+      <g opacity={1 - evap * 0.4}>
+        {benches.map((x, i) => (
+          <Artisan key={i} x={x} color={evap > 0.5 ? SUBTLE : RED} slump={evap * 6} />
+        ))}
+      </g>
+      {/* streaming session bubbles */}
+      {bubbles.map((b, i) => {
+        const alive = k(t, b.born, b.born + 1400);
+        const lifted = eo(alive);
+        const baseY = 380;
+        const y = baseY - lifted * 200;
+        const op = t >= b.born ? (1 - alive) * (1 - evap) : 0;
+        return (
+          <circle key={i} cx={b.x + lifted * b.drift} cy={y - evap * 220}
+            r={b.size * (1 + evap * 0.6)} fill={`hsl(${RED} / 0.18)`} stroke={`hsl(${RED})`} strokeWidth={1} opacity={Math.max(0, op)} />
+        );
+      })}
+      {/* big counter */}
+      <g opacity={k(t, 600, 1100)}>
+        <text x={550} y={140} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={18} fontWeight={700} fill={`hsl(${MUTED})`} letterSpacing="0.18em">
+          SESSIONS OPENED TODAY
+        </text>
+        <Counter x={550} y={210} color={evap > 0.5 ? SUBTLE : RED}
+          from={0} to={12847} msFrom={1000} msTo={4000} t={t} size={92} />
+      </g>
+      {/* Monday clock */}
+      {t >= 3800 && (
+        <g transform="translate(550 320)" opacity={k(t, 3800, 4500)}>
+          <circle r={36} fill="white" stroke={`hsl(${RED})`} strokeWidth={2.5} />
+          {/* spinning hand */}
+          <line x1={0} y1={0} x2={0} y2={-26}
+            stroke={`hsl(${RED})`} strokeWidth={3} strokeLinecap="round"
+            transform={`rotate(${k(t, 3800, 5000) * 720})`} />
+          <text x={0} y={56} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={12} fontWeight={800} fill={`hsl(${RED})`} letterSpacing="0.22em">
+            MONDAY 09:00
+          </text>
+        </g>
+      )}
+      {/* after-counter goes back to zero */}
+      {t >= 5000 && (
+        <g>
+          <Counter x={550} y={210} color={SUBTLE}
+            from={12847} to={0} msFrom={5000} msTo={6800} t={t} size={92} />
+        </g>
+      )}
+      {/* closing line */}
+      <Typed x={550} y={500} color={MUTED} text="No standard. No memory. Nothing compounds."
+        from={7000} to={8800} t={t} size={20} weight={700} />
+    </svg>
+  );
+}
+
+/* ───────────────────── BEAT 3 — You patch (bottom-up) ─────────────────────
+   Phases:
+     0.0–1.2s  three artisans appear
+     1.2–3.0s  each lifts a "patch card" above their bench, slightly different label
+     3.0–4.5s  patches rise toward the ERA I ceiling
+     4.5–5.6s  patches hit the ceiling, cracks animate, slight bounce
+     5.6–7.0s  patches fall back down, fade
+     7.0–9.0s  closing line types in
+*/
+function ScenePatchUp() {
+  const t = useBeatTime();
+  const patches = [
+    { x: 220, label: "PROMPT LIBRARY" },
+    { x: 550, label: "AI CHAMPIONS" },
+    { x: 880, label: "#ai-tips" },
+  ];
+  const ceilingY = 150;
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      {/* ERA I ceiling */}
+      <line x1={100} y1={ceilingY} x2={1000} y2={ceilingY} stroke={`hsl(${GOLD})`} strokeWidth={2} strokeDasharray="6 6" opacity={0.6} />
+      <text x={550} y={ceilingY - 14} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={13} fontWeight={800} fill={`hsl(${GOLD})`} letterSpacing="0.22em">
+        ERA I CEILING · THE WORKSHOP
+      </text>
+      {/* artisans */}
+      {patches.map((p, i) => (
+        <g key={i} opacity={k(t, 200 + i * 250, 900 + i * 250)}>
+          <Artisan x={p.x} color={GOLD} />
         </g>
       ))}
-      <text x={550} y={510} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={22} fontWeight={900} fill={`hsl(${GREEN})`} letterSpacing="-0.01em">
-        {typed}<tspan opacity={0.6}>▌</tspan>
+      {/* patch cards — rise, hit, fall */}
+      {patches.map((p, i) => {
+        const delay = i * 280;
+        const rise = eo(k(t, 1200 + delay, 4200 + delay));    // 0 → 1 lifted toward ceiling
+        const startY = 320;
+        const targetY = ceilingY + 50;
+        const y = startY - rise * (startY - targetY);
+        const hit = k(t, 4400 + delay, 4800 + delay);          // bounce flash
+        const fall = eo(k(t, 5600 + delay, 7000 + delay));     // fall back
+        const fellY = y + fall * 220;
+        const op = 1 - fall * 0.95;
+        return (
+          <g key={i} opacity={op}>
+            {/* arrow stem */}
+            <line x1={p.x} y1={360} x2={p.x} y2={fellY + 22} stroke={`hsl(${GOLD})`} strokeWidth={2} opacity={0.4} />
+            {/* card */}
+            <g transform={`translate(${p.x} ${fellY})`}>
+              <rect x={-90} y={-22} width={180} height={44} rx={8} fill="white" stroke={`hsl(${GOLD})`} strokeWidth={2} />
+              <text x={0} y={5} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={13} fontWeight={800} fill={`hsl(${GOLD})`} letterSpacing="0.14em">
+                {p.label}
+              </text>
+            </g>
+            {/* impact crack on ceiling */}
+            {hit > 0 && (
+              <g transform={`translate(${p.x} ${ceilingY})`} opacity={hit}>
+                <path d="M -20 0 L -8 -10 L 0 0 L 8 -8 L 20 0" stroke={`hsl(${RED})`} strokeWidth={2.5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </g>
+            )}
+          </g>
+        );
+      })}
+      <Typed x={550} y={510} color={MUTED}
+        text="Half-conscious patches. Brilliant. Brittle. Still Era I."
+        from={7000} to={8800} t={t} size={20} weight={700} />
+    </svg>
+  );
+}
+
+/* ───────────────────── BEAT 4 — They push (top-down) ─────────────────────
+   Phases:
+     0.0–1.2s  vendor cloud forms at top
+     1.2–4.5s  tags rain down repeatedly onto desks
+     4.5–6.0s  artisans turn gray, slump, become uniform "prompt-typists"
+     6.0–7.2s  cost ticker appears: $18M/yr, 50,000 seats
+     7.2–9.0s  closing line types in
+*/
+function ScenePushDown() {
+  const t = useBeatTime();
+  const tags = ["COPILOT", "$30/SEAT", "RAG RETROFIT", "AGENT v3", "$30/SEAT", "ENTERPRISE GPT"];
+  const benches = [220, 550, 880];
+  // Compute multiple rain waves.
+  const rain = (i: number) => {
+    const start = 1200 + i * 220;
+    const cycle = 2200;
+    const local = ((t - start) % cycle + cycle) % cycle;
+    const p = local / cycle;
+    return { y: -40 + p * 420, op: t < start ? 0 : (p < 0.85 ? 1 : (1 - (p - 0.85) / 0.15)) };
+  };
+  const grayed = k(t, 4500, 6000);
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      {/* vendor cloud */}
+      <g opacity={k(t, 0, 1200)}>
+        <ellipse cx={550} cy={80} rx={300} ry={38} fill={`hsl(${RED} / 0.10)`} stroke={`hsl(${RED})`} strokeWidth={2} />
+        <text x={550} y={86} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={15} fontWeight={900} fill={`hsl(${RED})`} letterSpacing="0.22em">
+          VENDOR PUSH · TOP-DOWN
+        </text>
+      </g>
+      {/* rain — only render while rain phase is active */}
+      {t < 5200 && tags.map((tag, i) => {
+        const r = rain(i);
+        return (
+          <g key={i} transform={`translate(${150 + i * 145} ${110 + r.y})`} opacity={r.op}>
+            <rect x={-58} y={-14} width={116} height={28} rx={5} fill="white" stroke={`hsl(${RED})`} strokeWidth={1.5} />
+            <text x={0} y={5} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={11} fontWeight={800} fill={`hsl(${RED})`} letterSpacing="0.1em">
+              {tag}
+            </text>
+          </g>
+        );
+      })}
+      {/* artisans turning gray */}
+      {benches.map((x, i) => (
+        <Artisan key={i} x={x} color={grayed > 0.5 ? SUBTLE : RED} slump={grayed * 8} />
+      ))}
+      {/* cost ticker */}
+      {t >= 6000 && (
+        <g opacity={k(t, 6000, 6700)} transform="translate(550 480)">
+          <rect x={-260} y={-30} width={520} height={56} rx={10} fill="white" stroke={`hsl(${RED})`} strokeWidth={2} />
+          <text x={0} y={4} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={18} fontWeight={900} fill={`hsl(${RED})`} letterSpacing="-0.01em">
+            $18M / YR · 50,000 SEATS · SAME GENERIC OUTPUT
+          </text>
+        </g>
+      )}
+      <Typed x={550} y={520} color={MUTED}
+        text="Worker becomes prompt-typist. The method belongs to the vendor."
+        from={7200} to={9000} t={t} size={16} weight={700} />
+    </svg>
+  );
+}
+
+/* ───────────────────── BEAT 5 — Collision (Era II) ─────────────────────
+   Phases:
+     0.0–1.5s  gold arrow climbs from below (your bottom-up patches)
+     1.0–2.5s  red arrow descends from above (vendor push)
+     2.5–3.0s  flash at the centerline
+     3.0–4.5s  arrows crumple into a Ford assembly-line silhouette
+     4.5–6.5s  caption types
+     6.5–9.0s  subtext fades in: "you did not choose this"
+*/
+function SceneCollision() {
+  const t = useBeatTime();
+  const up = eo(k(t, 0, 1500));
+  const down = eo(k(t, 1000, 2500));
+  const flash = k(t, 2500, 3000);
+  const crumple = eo(k(t, 3000, 4500));
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      {/* gold arrow up */}
+      <g opacity={1 - crumple} transform={`translate(550 ${450 - up * 160})`}>
+        <path d="M 0 0 L 0 -160" stroke={`hsl(${GOLD})`} strokeWidth={6} strokeLinecap="round" />
+        <path d="M -14 -146 L 0 -170 L 14 -146" stroke={`hsl(${GOLD})`} strokeWidth={6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <text x={0} y={20} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={12} fontWeight={800} fill={`hsl(${GOLD})`} letterSpacing="0.2em">
+          YOUR PATCHES
+        </text>
+      </g>
+      {/* red arrow down */}
+      <g opacity={1 - crumple} transform={`translate(550 ${90 + down * 160})`}>
+        <path d="M 0 0 L 0 160" stroke={`hsl(${RED})`} strokeWidth={6} strokeLinecap="round" />
+        <path d="M -14 146 L 0 170 L 14 146" stroke={`hsl(${RED})`} strokeWidth={6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <text x={0} y={-12} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={12} fontWeight={800} fill={`hsl(${RED})`} letterSpacing="0.2em">
+          VENDOR PUSH
+        </text>
+      </g>
+      {/* flash */}
+      <circle cx={550} cy={270} r={40 + flash * 50} fill={`hsl(${SUBTLE} / ${0.5 * flash})`} opacity={flash} />
+      {/* assembly line emerges */}
+      <g opacity={crumple} transform={`translate(0 ${(1 - crumple) * 30})`}>
+        <rect x={150} y={330} width={800} height={56} rx={8}
+          fill={`hsl(${SUBTLE} / 0.18)`} stroke={`hsl(${SUBTLE})`} strokeWidth={2} />
+        {[230, 330, 430, 530, 630, 730, 830].map(cx => (
+          <g key={cx}>
+            <circle cx={cx} cy={358} r={16} fill="white" stroke={`hsl(${SUBTLE})`} strokeWidth={2} />
+            <circle cx={cx} cy={358} r={4} fill={`hsl(${SUBTLE})`} />
+          </g>
+        ))}
+        <text x={550} y={314} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={14} fontWeight={900} fill={`hsl(${SUBTLE})`} letterSpacing="0.24em">
+          ERA II · FORD 1913, REPACKAGED
+        </text>
+      </g>
+      {/* main caption */}
+      <Typed x={550} y={440} color={TEXT}
+        text="Both arrows met. The workshop became an assembly line."
+        from={4500} to={6500} t={t} size={20} weight={800} />
+      {/* subtext */}
+      <text x={550} y={486} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={15} fontWeight={600} fill={`hsl(${MUTED})`} opacity={k(t, 6500, 7500)}>
+        You did not choose this. Buyer reflex and vendor reflex pushed you here together.
       </text>
     </svg>
   );
 }
 
+/* ───────────────────── BEAT 6 — Era IV ─────────────────────
+   Phases:
+     0.0–1.2s  the Ford line dissolves
+     1.2–4.5s  six substrate layers (L01 → L06) stack in sequence
+     4.5–6.0s  the three artisans return ABOVE the stack, connected by glowing feeders
+     6.0–9.0s  caption types: "Manufacture the context right in the first place."
+*/
+function SceneEraIV() {
+  const t = useBeatTime();
+  const layers = [
+    { n: "L01", t: "Typed Knowledge Graph" },
+    { n: "L02", t: "Context Compiler" },
+    { n: "L03", t: "Standards as Code" },
+    { n: "L04", t: "Evaluation Harness" },
+    { n: "L05", t: "Governance Loop" },
+    { n: "L06", t: "Outcome Router" },
+  ];
+  const dissolve = k(t, 0, 1200);
+  const stackTopY = 380;
+  const layerH = 32;
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      {/* Ford remnant dissolving */}
+      <g opacity={1 - dissolve}>
+        <rect x={150} y={330} width={800} height={56} rx={8}
+          fill={`hsl(${SUBTLE} / 0.18)`} stroke={`hsl(${SUBTLE})`} strokeWidth={2} />
+      </g>
+      {/* substrate stack, growing upward from the floor */}
+      {layers.map((l, i) => {
+        const start = 1200 + i * 360;
+        const appear = eo(k(t, start, start + 500));
+        const y = stackTopY - i * layerH;
+        return (
+          <g key={l.n} opacity={appear} transform={`translate(0 ${(1 - appear) * 10})`}>
+            <rect x={260} y={y - layerH + 4} width={580} height={layerH - 2} rx={6}
+              fill={`hsl(${GREEN} / 0.08)`} stroke={`hsl(${GREEN})`} strokeWidth={1.5} />
+            <text x={282} y={y - 9} fontFamily="ui-monospace, monospace" fontSize={12} fontWeight={900} fill={`hsl(${GREEN})`} letterSpacing="0.12em">
+              {l.n}
+            </text>
+            <text x={336} y={y - 9} fontFamily="ui-sans-serif, system-ui" fontSize={14} fontWeight={700} fill={`hsl(${TEXT})`}>
+              {l.t}
+            </text>
+          </g>
+        );
+      })}
+      {/* artisans return above the stack — keep their craft, now compounding */}
+      {[330, 550, 770].map((x, i) => {
+        const op = k(t, 4500 + i * 180, 5300 + i * 180);
+        const feederTop = 150;
+        const feederBottom = stackTopY - layers.length * layerH;
+        return (
+          <g key={i} opacity={op}>
+            {/* feeder line into substrate */}
+            <line x1={x} y1={feederTop + 20} x2={x} y2={feederBottom + 8}
+              stroke={`hsl(${GREEN})`} strokeWidth={2} strokeDasharray="3 4" opacity={0.7} />
+            {/* mini artisan badge */}
+            <g transform={`translate(${x} ${feederTop})`}>
+              <circle r={18} fill="white" stroke={`hsl(${GREEN})`} strokeWidth={2.5} />
+              <circle r={6} fill={`hsl(${GOLD})`} />
+            </g>
+            <text x={x} y={feederTop - 26} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={10} fontWeight={800} fill={`hsl(${GREEN})`} letterSpacing="0.16em">
+              {["ARTISAN A", "ARTISAN B", "ARTISAN C"][i]}
+            </text>
+          </g>
+        );
+      })}
+      <text x={550} y={104} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={12} fontWeight={800} fill={`hsl(${GREEN})`} letterSpacing="0.22em" opacity={k(t, 5800, 6400)}>
+        CRAFT KEPT · METHOD COMPOUNDS
+      </text>
+      {/* closing line, typed */}
+      <Typed x={550} y={520} color={GREEN}
+        text="Manufacture the context right in the first place."
+        from={6000} to={8400} t={t} size={22} weight={900} />
+    </svg>
+  );
+}
 function FStoryFilm() {
   const [beat, setBeat] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -1594,7 +1911,7 @@ function FStoryFilm() {
   useEffect(() => {
     if (!playing) return;
     if (beat >= FILM_BEATS.length - 1) { setPlaying(false); return; }
-    const t = window.setTimeout(() => setBeat(b => Math.min(b + 1, FILM_BEATS.length - 1)), 5200);
+    const t = window.setTimeout(() => setBeat(b => Math.min(b + 1, FILM_BEATS.length - 1)), 9000);
     return () => window.clearTimeout(t);
   }, [playing, beat]);
 
