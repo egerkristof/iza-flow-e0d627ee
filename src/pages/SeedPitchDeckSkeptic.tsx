@@ -368,11 +368,6 @@ function S07LabObjection({ n, t }: { n: number; t: number }) {
 
 // ─── 08 · BUSINESS MODEL ────────────────────────────────────────────────────
 function S08BusinessModel({ n, t }: { n: number; t: number }) {
-  const economics = [
-    { v: "€0.40", l: "average governed decision price" },
-    { v: "€0.04", l: "model plus infra cost at current mix" },
-    { v: "90%+", l: "steady-state gross margin target" },
-  ];
   return (
     <Slide section="Business model" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
@@ -380,23 +375,55 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
           We do not sell tokens. <span style={{ color: `hsl(${GREEN})` }}>We sell governed decisions.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
-          The cheaper tokens become, the more decisions customers run through the control layer.
+          Tokens get cheaper. Enterprise AI spend grows. We capture the layer in between.
         </p>
-        <div className="grid grid-cols-3 gap-6 mb-8">
-          {economics.map((e) => (
-            <div key={e.v} className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <p className="font-black mb-4" style={{ fontSize: 62, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.04em" }}>{e.v}</p>
-              <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.3 }}>{e.l}</p>
+        <div className="grid grid-cols-[1.2fr_1fr] gap-7 items-stretch">
+          {/* Visualization: stacked bars, model cost shrinking, governance spend growing */}
+          <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: SUBTLE }}>Enterprise AI spend per task · share by layer</p>
+            <svg viewBox="0 0 540 280" className="w-full" style={{ height: 300 }}>
+              {(["Today", "2025", "2027"] as const).map((year, i) => {
+                const x = 70 + i * 160;
+                const totals = [160, 200, 250];        // bar grows
+                const tokenShare = [0.55, 0.32, 0.15]; // token share shrinks
+                const total = totals[i];
+                const tokenH = total * tokenShare[i];
+                const govH = total - tokenH;
+                const baseY = 240;
+                return (
+                  <g key={year}>
+                    {/* token portion */}
+                    <rect x={x} y={baseY - tokenH} width="80" height={tokenH} fill={`hsl(${RED} / 0.55)`} />
+                    {/* governance portion */}
+                    <rect x={x} y={baseY - tokenH - govH} width="80" height={govH} fill={`hsl(${GREEN})`} />
+                    <text x={x + 40} y={258} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="1.5" fill={SUBTLE}>{year}</text>
+                    <text x={x + 40} y={baseY - tokenH - govH - 8} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1" fill={TEXT}>{total}</text>
+                  </g>
+                );
+              })}
+              {/* legend */}
+              <g>
+                <rect x="70" y="20" width="12" height="12" fill={`hsl(${GREEN})`} />
+                <text x="90" y="30" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.5" fill={TEXT}>GOVERNANCE LAYER · LIZA</text>
+                <rect x="320" y="20" width="12" height="12" fill={`hsl(${RED} / 0.55)`} />
+                <text x="340" y="30" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.5" fill={MUTED}>TOKENS · PASS-THROUGH</text>
+              </g>
+            </svg>
+          </div>
+          <div className="flex flex-col gap-5">
+            <div className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+              <p className="font-black mb-3" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>Priced per governed decision.</p>
+              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.42 }}>
+                Customers pay for accountable work units: proposals checked, specs drafted, risk memos reviewed, clinical summaries governed.
+              </p>
             </div>
-          ))}
-        </div>
-        <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>
-            The value anchor is manual labor displaced, not token cost marked up.
-          </p>
-          <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.42 }}>
-            Customers pay for accountable work units: proposals checked, specs drafted, risk memos reviewed, clinical summaries governed. The model cost becomes a pass-through input inside a higher-margin control layer.
-          </p>
+            <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <p className="font-black mb-3" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>The anchor is manual labor displaced.</p>
+              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.42 }}>
+                Not token cost marked up. Model cost is a pass-through input inside a higher-margin control layer.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </Slide>
