@@ -1168,6 +1168,7 @@ const RAW_SLIDES = [
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
+  { id: "chain",            title: "The Red Thread · Six Beats",                        component: <FChain /> },
   { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
   { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
   // ACT I.5 — The wall and the substrate that breaks it
