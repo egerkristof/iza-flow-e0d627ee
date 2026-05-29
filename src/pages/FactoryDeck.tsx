@@ -319,20 +319,20 @@ function FSkipMiddle() {
   );
 }
 
-// ─── F02 · MACHINE WITHOUT A FACTORY (Toyota named once) ─────────────────────
-function F02MachineWithoutFactory() {
+// ─── F_PILLAR1 · Push vs Pull (demoted from arrowhead to pillar) ─────────────
+function FPillarPull() {
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
       <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
-        <Tag label="The Problem · Push vs Pull" color={RED} />
+        <Tag label="Pillar 1 · Pull, Not Push" color={GREEN} />
         <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
-          AI is being <span style={{ color: `hsl(${RED})` }}>pushed</span> onto the enterprise.<br />
-          Nobody set up the <span style={{ color: `hsl(${GREEN})` }}>pull</span>.
+          Outcomes <span style={{ color: `hsl(${GREEN})` }}>pull</span> the work.<br />
+          Vendors no longer <span style={{ color: `hsl(${RED})` }}>push</span> the seat.
         </h2>
         <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
-          Toyota did not win because of the engine. It won because demand <em>pulled</em> each part through a standard, just-in-time. AI today is the opposite: providers push capability at every seat, undefined, all at once. That is why pilots stall and budgets unravel.
+          The mechanic that makes Toyota work. Demand pulls each part through a standard, just-in-time. We do the same with tokens: every prompt is called by a named outcome through a named standard, not pushed by a vendor licence.
         </p>
 
         <div className="grid grid-cols-2 gap-10 flex-1">
@@ -395,13 +395,13 @@ function F02MachineWithoutFactory() {
         </div>
 
         <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: CARD_ALT, borderColor: `hsl(${ACCENT})` }}>
-          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>The Toyota lesson</span>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>Pillar 1 of 4</span>
           <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
-            Push systems optimise the supplier. Pull systems optimise the outcome. AI today is a push system at every desk — LIZA is the pull layer that flips it.
+            Pull motion is the supply-chain mechanic. The next pillar wires it into stations on the floor.
           </p>
         </div>
       </div>
-      <Footer text="The machine is now commodity. The pull system around it is the moat." />
+      <Footer text="Pillar 1: outcomes pull tokens through standards. The seat licence stops being the unit of value." />
       <SlideBar from={RED} to={GREEN} />
     </div>
   );
