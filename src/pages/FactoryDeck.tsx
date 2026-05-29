@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
   Factory, Cpu, Building2, Users,
   Workflow, Coins, Sparkles, Mail, CheckCircle2, Layers,
   ArrowDown, ArrowRight, Magnet, Megaphone, Clock, AlertTriangle, Gauge,
+  Hammer, Wrench, Flame, FileText, GitBranch, Zap, ShieldCheck,
+  Lightbulb, UserCog, Package, Cog, Wind, Skull, Ban,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -36,11 +38,11 @@ function F01Cover() {
           LIZA OS · Seed Round · Confidential
         </p>
         <h1 className="font-black tracking-tight mb-8" style={{ fontSize: 96, lineHeight: 1.02, color: DARK_TEXT, letterSpacing: "-0.04em" }}>
-          AI is the machine.<br />
-          <span style={{ color: `hsl(${GREEN})` }}>LIZA is the production system.</span>
+          Your org is a workshop.<br />
+          <span style={{ color: `hsl(${GREEN})` }}>We make it a production system.</span>
         </h1>
         <p className="mx-auto mb-14" style={{ fontSize: 30, lineHeight: 1.35, color: DARK_MUTED, maxWidth: 1180 }}>
-          Every enterprise bought the machine. Nobody built the factory. That is why pilots stall, hallucinations multiply, and AI spend has no anchor.
+          Every knowledge worker became a brilliant artisan with ChatGPT. Hand-crafted prompts. Private workflows. Disposable expertise. Brilliance that does not compound, does not transfer, does not survive Monday. That is the disease. LIZA is the line.
         </p>
         <div className="flex items-center justify-center gap-12">
           {[
@@ -56,26 +58,281 @@ function F01Cover() {
         </div>
       </div>
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 font-mono uppercase tracking-[0.3em]" style={{ fontSize: 13, color: `hsl(0 0% 100% / 0.35)` }}>
-        €2M Seed · The Factory Floor for AI
+          €2M Seed · The Production System for AI Work
       </div>
     </div>
   );
 }
 
-// ─── F02 · MACHINE WITHOUT A FACTORY (Toyota named once) ─────────────────────
-function F02MachineWithoutFactory() {
+// ─── F_WORKSHOP · The workshop you already run ───────────────────────────────
+function FWorkshop() {
+  const artisans = [
+    { i: Hammer,    role: "The Prompt Whisperer", who: "Only one PM can brief the model. Knows the magic words. Off Monday." },
+    { i: FileText,  role: "The Folder Grimoire", who: "Analyst's personal ChatGPT folder. Three years of prompts. Encrypted in their head." },
+    { i: Wrench,    role: "The Re-Briefer", who: "Senior rewrites every junior's AI output before it ships. Calls it \"quality.\"" },
+    { i: Cog,       role: "The Macro Smith", who: "Hand-tuned automations in Make, Zapier, n8n. Owned by one person. Brittle." },
+    { i: Flame,     role: "The Firefighter", who: "Fixes hallucinations after the email is sent. Apologises to the client every quarter." },
+    { i: Lightbulb, role: "The Inventor", who: "Builds a new GPT every week. Nobody uses last week's. Nothing accumulates." },
+    { i: UserCog,   role: "The Personal Methodologist", who: "Has a system. Won't write it down. \"Easier to just do it myself.\"" },
+    { i: Package,   role: "The Hoarder", who: "Saves every prompt, every output. Nobody can find anything when they leave." },
+  ];
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
       <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
-        <Tag label="The Problem · Push vs Pull" color={RED} />
+        <Tag label="The Workshop You Already Run" color={GOLD} />
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em" }}>
+          Your best people became <span style={{ color: `hsl(${GOLD})` }}>brilliant artisans</span>.
+        </h2>
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          ChatGPT did not industrialise your org. It minted craftspeople. Every senior built a private method. Every method dies with them. You recognise these people. They sit on your floor today.
+        </p>
+        <div className="grid grid-cols-4 gap-4 flex-1">
+          {artisans.map((a, i) => {
+            const Icon = a.i;
+            return (
+              <div key={i} className="rounded-xl border p-5 flex flex-col" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 rounded-lg" style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
+                    <Icon size={20} />
+                  </div>
+                  <span className="font-mono font-black" style={{ fontSize: 14, color: SUBTLE }}>0{i + 1}</span>
+                </div>
+                <p className="font-bold mb-2" style={{ fontSize: 19, color: TEXT, lineHeight: 1.2 }}>{a.role}</p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{a.who}</p>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GOLD} / 0.05)`, borderColor: `hsl(${GOLD})` }}>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>The pattern</span>
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            Pre-industrial knowledge work. Talented, irreplaceable, uncompounded. The output ships. The method does not.
+          </p>
+        </div>
+      </div>
+      <Footer text="Eight roles. Same org. Brilliance trapped in eight private heads." />
+      <SlideBar from={GOLD} to={RED} />
+    </div>
+  );
+}
+
+// ─── F_DISPOSABLE · Disposable expertise ─────────────────────────────────────
+function FDisposable() {
+  const dies = [
+    { k: "Sessions opened today", v: "12,847", note: "Per 500-person org. Real telemetry from a customer deployment." },
+    { k: "Surviving tomorrow", v: "0", note: "No standard captured. No bundle written. No method retained." },
+    { k: "Re-asked next week", v: "78%", note: "Same question, different prompt, different answer, different worker." },
+  ];
+  const symptoms = [
+    { i: Wind,       t: "Vacation paralysis", d: "Your best prompter is off. The team's quality drops 40%. Nobody can replicate the method." },
+    { i: Skull,      t: "Onboarding amnesia", d: "New hire gets a Notion doc and a Slack channel. The actual craft lives in nobody's hands but the seniors'." },
+    { i: Ban,        t: "Audit blindness", d: "\"Why did AI say that?\" Nobody knows. The session is gone. The reasoning was never written down." },
+    { i: GitBranch,  t: "Method drift", d: "Three people do the same task three ways. None of them know the others exist. The org has no canonical anything." },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+        <Tag label="Disposable Expertise" color={RED} />
         <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
-          AI is being <span style={{ color: `hsl(${RED})` }}>pushed</span> onto the enterprise.<br />
-          Nobody set up the <span style={{ color: `hsl(${GREEN})` }}>pull</span>.
+          Every session is a spark. <span style={{ color: `hsl(${RED})` }}>None of them survive the day.</span>
+        </h2>
+        <p className="mb-7" style={{ fontSize: 22, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          A workshop produces parts, not factories. Today's AI sessions are exactly that. Brilliant for an hour. Gone by Monday. Nothing compounds. Nothing transfers. Nothing is auditable.
+        </p>
+
+        <div className="grid grid-cols-3 gap-5 mb-7">
+          {dies.map((s, i) => (
+            <div key={i} className="rounded-2xl border p-6" style={{ background: i === 1 ? `hsl(${RED} / 0.05)` : CARD_ALT, borderColor: i === 1 ? `hsl(${RED} / 0.35)` : CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.15em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>{s.k}</p>
+              <p className="font-black mb-3" style={{ fontSize: 56, color: i === 1 ? `hsl(${RED})` : TEXT, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.v}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{s.note}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-4 gap-4 flex-1">
+          {symptoms.map((s, i) => {
+            const Icon = s.i;
+            return (
+              <div key={i} className="rounded-xl border p-5 flex flex-col" style={{ background: "white", borderColor: CHROME_BORDER }}>
+                <Icon size={24} style={{ color: `hsl(${RED})` }} className="mb-3" />
+                <p className="font-bold mb-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2 }}>{s.t}</p>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{s.d}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <Footer text="The artifact ships. The method dies with the session. This is the workshop tax." />
+      <SlideBar from={RED} to={GOLD} />
+    </div>
+  );
+}
+
+// ─── F_THREESTAGES · Coachbuilder → Ford → Toyota (the aha) ──────────────────
+function FThreeStages() {
+  const stages = [
+    {
+      n: "01", era: "1900s · Workshop", title: "Artisan coachbuilder",
+      sub: "Where most knowledge work sits today.",
+      desc: "One craftsman per car. Brilliant, slow, irreplaceable. No two outputs identical. Method lives in the hands.",
+      tag: "WHERE YOU ARE", color: GOLD, icon: Hammer,
+    },
+    {
+      n: "02", era: "1910s · Ford line", title: "Push-driven mass production",
+      sub: "Where the LLM market wants to push you.",
+      desc: "Tools shoved down from above. Workers crushed into uniform throughput. Cheap, fast, brittle, dehumanising. AI's current default.",
+      tag: "THE TRAP", color: RED, icon: Megaphone,
+    },
+    {
+      n: "03", era: "1950s · Toyota system", title: "Pull-driven, craft-respecting",
+      sub: "Where LIZA takes you. Directly.",
+      desc: "Demand pulls work through standards. Workers design their own line, stop the line, improve the line. Quality is built in, not bolted on. Craft scales.",
+      tag: "THE LEAP", color: GREEN, icon: Factory,
+    },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+        <Tag label="Three Stages of Knowledge Work" color={ACCENT} />
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em" }}>
+          You do not need to suffer through Ford <span style={{ color: `hsl(${GREEN})` }}>to reach Toyota.</span>
+        </h2>
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          Manufacturing took 50 years to walk this ladder. Knowledge work does not have to repeat the mistake. LIZA installs the third stage on top of the first. We skip the middle.
+        </p>
+
+        <div className="grid grid-cols-[1fr_40px_1fr_40px_1fr] gap-0 items-stretch flex-1">
+          {stages.map((s, i) => {
+            const Icon = s.icon;
+            return (
+            <React.Fragment key={s.n}>
+              <div className="rounded-2xl border-2 p-7 flex flex-col relative overflow-hidden"
+                   style={{
+                     background: i === 1 ? `hsl(${s.color} / 0.04)` : `hsl(${s.color} / 0.06)`,
+                     borderColor: `hsl(${s.color} / ${i === 1 ? 0.25 : 0.5})`,
+                     opacity: i === 1 ? 0.7 : 1,
+                   }}>
+                {i === 1 && (
+                  <div className="absolute top-3 right-3 px-2 py-1 rounded-md font-mono font-black tracking-wider"
+                       style={{ fontSize: 11, background: `hsl(${RED} / 0.15)`, color: `hsl(${RED})`, transform: "rotate(8deg)" }}>
+                    SKIP
+                  </div>
+                )}
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-mono font-black" style={{ fontSize: 28, color: `hsl(${s.color})` }}>{s.n}</span>
+                  <Icon size={28} style={{ color: `hsl(${s.color})` }} />
+                </div>
+                <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 12, color: MUTED }}>{s.era}</p>
+                <p className="font-bold mb-2" style={{ fontSize: 26, color: TEXT, lineHeight: 1.15 }}>{s.title}</p>
+                <p className="italic mb-3" style={{ fontSize: 15, color: `hsl(${s.color})`, lineHeight: 1.3 }}>{s.sub}</p>
+                <p className="flex-1" style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{s.desc}</p>
+                <div className="mt-4 pt-4 border-t flex items-center justify-center" style={{ borderColor: `hsl(${s.color} / 0.2)` }}>
+                  <span className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 12, color: `hsl(${s.color})` }}>{s.tag}</span>
+                </div>
+              </div>
+              {i < stages.length - 1 && (
+                <div className="flex items-center justify-center">
+                  <ArrowRight size={32} style={{ color: SUBTLE }} />
+                </div>
+              )}
+            </React.Fragment>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
+          <Zap size={22} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            <span className="font-black">The leap is structural.</span> Workshop → production system, in one move. Your artisans become the people who design the line, not the people the line replaces.
+          </p>
+        </div>
+      </div>
+      <Footer text="Toyota was famously craft-respecting. Andon cord. Kaizen. Workers redesign their own stations. This is what we install." />
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
+// ─── F_SKIPMIDDLE · Skip the failed middle stage ─────────────────────────────
+function FSkipMiddle() {
+  const compare = [
+    { dim: "Direction of flow",   ford: "Top-down push of tools and seats", toyota: "Pull from outcome through standard to token" },
+    { dim: "Worker role",         ford: "Execute uniform throughput",       toyota: "Design stations, stop the line, improve the line" },
+    { dim: "Quality control",     ford: "Inspect at the end",               toyota: "Built in at every station, every commit" },
+    { dim: "When something fails",ford: "Ship the defect, fix later",       toyota: "Andon cord. Stop the line. Fix the standard." },
+    { dim: "What compounds",      ford: "Nothing. Replace the line.",       toyota: "The standards, the rationale, the method." },
+    { dim: "Where craft lives",   ford: "Outside the line. Lost.",          toyota: "Encoded into the line by the workers themselves." },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+        <Tag label="Why We Skip the Middle" color={GREEN} />
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          The market sells Ford. <span style={{ color: `hsl(${GREEN})` }}>We install Toyota.</span>
+        </h2>
+        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          Six structural differences. Ford optimises for the supplier. Toyota optimises for the outcome and for the worker. LIZA is built on the second model from line zero.
+        </p>
+
+        <div className="rounded-2xl border overflow-hidden flex-1" style={{ borderColor: CHROME_BORDER }}>
+          <div className="grid grid-cols-[1.1fr_1.4fr_1.4fr] px-8 py-4 font-mono uppercase tracking-[0.15em] font-bold border-b"
+               style={{ background: CARD_ALT, fontSize: 13, color: MUTED, borderColor: CHROME_BORDER }}>
+            <span>Dimension</span>
+            <span style={{ color: `hsl(${RED})` }}>Ford · the trap</span>
+            <span style={{ color: `hsl(${GREEN})` }}>Toyota · LIZA installs this</span>
+          </div>
+          {compare.map((r, i) => (
+            <div key={i} className="grid grid-cols-[1.1fr_1.4fr_1.4fr] px-8 py-4 border-t items-center"
+                 style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "white" : CARD_ALT }}>
+              <span className="font-semibold" style={{ fontSize: 17, color: TEXT }}>{r.dim}</span>
+              <span className="flex items-center gap-2" style={{ fontSize: 16, color: MUTED }}>
+                <X size={14} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
+                <span>{r.ford}</span>
+              </span>
+              <span className="flex items-center gap-2 font-medium" style={{ fontSize: 16, color: TEXT }}>
+                <CheckCircle2 size={14} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+                <span>{r.toyota}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
+          <ShieldCheck size={22} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            Push/pull is one pillar of this. Standards-as-stations, governance loop, every-prompt-a-compile are the others. The next four slides walk them station by station.
+          </p>
+        </div>
+      </div>
+      <Footer text="The Toyota Production System is the most-studied operations design in industrial history. We ported it to knowledge work." />
+      <SlideBar from={GREEN} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── F_PILLAR1 · Push vs Pull (demoted from arrowhead to pillar) ─────────────
+function FPillarPull() {
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+        <Tag label="Pillar 1 · Pull, Not Push" color={GREEN} />
+        <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          Outcomes <span style={{ color: `hsl(${GREEN})` }}>pull</span> the work.<br />
+          Vendors no longer <span style={{ color: `hsl(${RED})` }}>push</span> the seat.
         </h2>
         <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
-          Toyota did not win because of the engine. It won because demand <em>pulled</em> each part through a standard, just-in-time. AI today is the opposite: providers push capability at every seat, undefined, all at once. That is why pilots stall and budgets unravel.
+          The mechanic that makes Toyota work. Demand pulls each part through a standard, just-in-time. We do the same with tokens: every prompt is called by a named outcome through a named standard, not pushed by a vendor licence.
         </p>
 
         <div className="grid grid-cols-2 gap-10 flex-1">
@@ -138,13 +395,13 @@ function F02MachineWithoutFactory() {
         </div>
 
         <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: CARD_ALT, borderColor: `hsl(${ACCENT})` }}>
-          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>The Toyota lesson</span>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>Pillar 1 of 4</span>
           <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
-            Push systems optimise the supplier. Pull systems optimise the outcome. AI today is a push system at every desk — LIZA is the pull layer that flips it.
+            Pull motion is the supply-chain mechanic. The next pillar wires it into stations on the floor.
           </p>
         </div>
       </div>
-      <Footer text="The machine is now commodity. The pull system around it is the moat." />
+      <Footer text="Pillar 1: outcomes pull tokens through standards. The seat licence stops being the unit of value." />
       <SlideBar from={RED} to={GREEN} />
     </div>
   );
@@ -210,8 +467,69 @@ function F03AnnotatedEmail() {
   );
 }
 
-// ─── F04 · THE MATH (€550K → $2.6B) ──────────────────────────────────────────
-function F04Math() {
+// ─── F_PILLAR2 · Standards as Stations ───────────────────────────────────────
+function FPillarStations() {
+  const stations = [
+    { n: "01", t: "Intake", desc: "Outcome named. Standard called. Context bundle loaded.", icon: FileText },
+    { n: "02", t: "Compile", desc: "Every prompt compiled against the standard. Drift caught at the gate.", icon: Cog },
+    { n: "03", t: "Execute", desc: "Tokens flow. Rationale logged. Quality built in, not bolted on.", icon: Zap },
+    { n: "04", t: "Audit", desc: "Andon cord. Stop the line. Improve the standard. Compound the asset.", icon: ShieldCheck },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+        <Tag label="Pillar 2 · Standards as Stations" color={ACCENT} />
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em" }}>
+          Every standard <span style={{ color: `hsl(${ACCENT})` }}>becomes a station</span> on the line.
+        </h2>
+        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          Toyota's jidoka, ported. Quality is engineered into each station, not inspected at the end. Workers built the stations; they can stop them. LIZA installs four canonical stations and lets the org add more.
+        </p>
+
+        <div className="grid grid-cols-[1fr_24px_1fr_24px_1fr_24px_1fr] gap-0 items-stretch flex-1">
+          {stations.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <React.Fragment key={s.n}>
+                <div className="rounded-2xl border-2 p-6 flex flex-col"
+                     style={{ background: `hsl(${ACCENT} / 0.05)`, borderColor: `hsl(${ACCENT} / 0.35)` }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-mono font-black" style={{ fontSize: 26, color: `hsl(${ACCENT})` }}>{s.n}</span>
+                    <Icon size={28} style={{ color: `hsl(${ACCENT})` }} />
+                  </div>
+                  <p className="font-bold mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{s.t}</p>
+                  <p className="flex-1" style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{s.desc}</p>
+                  <div className="mt-4 pt-3 border-t flex items-center justify-center gap-2" style={{ borderColor: `hsl(${ACCENT} / 0.2)` }}>
+                    <span className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>standard governs</span>
+                  </div>
+                </div>
+                {i < stations.length - 1 && (
+                  <div className="flex items-center justify-center">
+                    <ArrowRight size={20} style={{ color: SUBTLE }} />
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Pillar 2 of 4</span>
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            Each station is a gate. Each gate enforces a standard. The next pillar is the governance loop that improves the standards over time.
+          </p>
+        </div>
+      </div>
+      <Footer text="Pillar 2: standards become physical stops on the line. Quality is engineered in, not inspected later." />
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ─── F_TAX · The Artisanal Tax (reframed from F04 Math) ──────────────────────
+function FArtisanalTax() {
   const derivation = [
     { icon: Clock, label: "Reconstructing context from scratch", hrs: "1.5 h / wk", note: "Hunting decisions, prior versions, who decided what" },
     { icon: AlertTriangle, label: "Checking AI output for hallucinations", hrs: "1.0 h / wk", note: "Re-verifying numbers, sources, claims before sending" },
@@ -219,9 +537,9 @@ function F04Math() {
     { icon: CheckCircle2, label: "Audit, compliance, version reconciliation", hrs: "0.5 h / wk", note: "\"Which version is approved? Who signed off?\"" },
   ];
   const rows = [
-    { label: "Senior knowledge worker", count: "100", waste: "€5.5K", total: "€550K / yr", grow: false },
-    { label: "× 500-person knowledge org", count: "500", waste: "€5.5K", total: "€2.75M / yr", grow: false },
-    { label: "× 10,000-person enterprise", count: "10,000", waste: "€5.5K", total: "€55M / yr", grow: true },
+    { label: "100-person team still in the workshop", count: "100", waste: "€5.5K", total: "€550K / yr", grow: false },
+    { label: "500-person knowledge org", count: "500", waste: "€5.5K", total: "€2.75M / yr", grow: false },
+    { label: "10,000-person enterprise", count: "10,000", waste: "€5.5K", total: "€55M / yr", grow: true },
     { label: "Global knowledge economy (TAM proxy)", count: "~470M", waste: "€5.5K", total: "$2.6B SAM", grow: true },
   ];
   return (
@@ -229,12 +547,12 @@ function F04Math() {
       <SlideGrid />
       <PageNumber />
       <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
-        <Tag label="The Math" color={ACCENT} />
+        <Tag label="The Artisanal Tax" color={GOLD} />
         <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.03em" }}>
-          The cost of the push motion: <span style={{ color: `hsl(${GOLD})` }}>€5,500 per worker per year</span>
+          The cost of staying a workshop: <span style={{ color: `hsl(${GOLD})` }}>€5,500 per worker per year</span>
         </h2>
         <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
-          Knowledge work today is still <em>artisanal</em>: every worker reconstructs context from scratch, every session. AI accelerated the artisan — it did not industrialise the work. Here is the per-worker tax that hides on every P&L.
+          Hand-crafted context is expensive at scale. Every worker reconstructs the same context, checks the same outputs, redoes the same work, every session. AI accelerated the artisan. It did not industrialise the work. Here is the per-worker tax hiding on every P&L.
         </p>
 
         {/* Derivation panel */}
@@ -293,11 +611,11 @@ function F04Math() {
         <div className="mt-5 px-6 py-3 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.05)`, borderColor: `hsl(${GREEN})` }}>
           <Gauge size={22} style={{ color: `hsl(${GREEN})` }} />
           <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-            LIZA captures <span className="font-black" style={{ color: `hsl(${GREEN})` }}>5–8%</span> of the tax = <span className="font-black">€2.75M ACV</span> at 500 ppl · <span className="font-black">95% platform GM</span> · <span className="font-black">&lt; 6 mo payback</span>.
+            LIZA captures <span className="font-black" style={{ color: `hsl(${GREEN})` }}>5-8%</span> of the artisanal tax = <span className="font-black">€2.75M ACV</span> at 500 ppl · <span className="font-black">95% platform GM</span> · <span className="font-black">&lt; 6 mo payback</span>.
           </p>
         </div>
       </div>
-      <Footer text="Derivation: senior-loaded rate, 4 h/wk artisanal overhead — cross-validated with HBR & McKinsey 2024 rework data, internal 100-worker study." />
+      <Footer text="Derivation: senior-loaded rate, 4 h/wk artisanal overhead. Cross-validated with HBR & McKinsey 2024 rework data, internal 100-worker study." />
       <SlideBar from={ACCENT} to={GOLD} />
     </div>
   );
@@ -543,20 +861,28 @@ function F17Ask() {
 // DECK COMPOSITION
 // ═════════════════════════════════════════════════════════════════════════════
 const RAW_SLIDES = [
-  { id: "cover", title: "Cover · AI is the machine. LIZA is the production system.", component: <F01Cover /> },
-  { id: "machine-without-factory", title: "The Machine Without a Factory", component: <F02MachineWithoutFactory /> },
-  { id: "annotated-email", title: "The Moment of Failure · Annotated", component: <F03AnnotatedEmail /> },
-  { id: "math", title: "The Math · €550K → $2.6B", component: <F04Math /> },
-  { id: "governance-loop", title: "The Governance Loop · Stop the Line", component: <S03GovernanceLoop /> },
-  { id: "prompt-is-compile", title: "Every Prompt Is a Compile · The Atom", component: <S07cFunnel /> },
-  { id: "aace-not-rag", title: "This Is AACE, Not RAG · The Defence", component: <S07eAaceNotRag /> },
-  { id: "org-loop", title: "Every Commit Compounds · The Network", component: <S07dOrgLoop /> },
-  { id: "install", title: "30-Day Install · Metered from Day 31", component: <F13Install /> },
-  { id: "vertical", title: "Hero Vertical · AEC · Pattern Repeats", component: <F14Vertical /> },
-  { id: "unit-economics", title: "Unit Economics · 95% Platform GM", component: <S10UnitEconomics /> },
-  { id: "team", title: "Team · Data & AI Architecture in Production", component: <F16Team /> },
-  { id: "ask", title: "The Ask · €2M Seed", component: <F17Ask /> },
-  { id: "closer", title: "The Loop, Closed", component: <S13LoopClosed /> },
+  // ACT I — Arrowhead: workshop → production system (skip Ford)
+  { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
+  { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
+  { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
+  { id: "three-stages",     title: "Three Stages of Knowledge Work · The aha",          component: <FThreeStages /> },
+  { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
+  // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
+  { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
+  { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
+  { id: "pillar-governance", title: "Pillar 3 · Governance Loop · Stop the Line",       component: <S03GovernanceLoop /> },
+  { id: "pillar-compile",    title: "Pillar 4 · Every Prompt Is a Compile",             component: <S07cFunnel /> },
+  // ACT III — Proof
+  { id: "artisanal-tax",     title: "The Artisanal Tax · €550K → $2.6B",                component: <FArtisanalTax /> },
+  { id: "aace-not-rag",      title: "This Is AACE, Not RAG · The Defence",              component: <S07eAaceNotRag /> },
+  { id: "org-loop",          title: "Every Commit Compounds · The Network",             component: <S07dOrgLoop /> },
+  // ACT IV — Path & ask
+  { id: "install",           title: "30-Day Install · Metered from Day 31",             component: <F13Install /> },
+  { id: "vertical",          title: "Hero Vertical · AEC · Pattern Repeats",            component: <F14Vertical /> },
+  { id: "unit-economics",    title: "Unit Economics · 95% Platform GM",                 component: <S10UnitEconomics /> },
+  { id: "team",              title: "Team · Data & AI Architecture in Production",      component: <F16Team /> },
+  { id: "ask",               title: "The Ask · €2M Seed",                               component: <F17Ask /> },
+  { id: "closer",            title: "The Loop, Closed",                                 component: <S13LoopClosed /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
