@@ -240,16 +240,19 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
     <Slide section="Why now" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-4" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Tokens get cheaper. <span style={{ color: `hsl(${GREEN})` }}>The work to govern explodes.</span>
+          AI spend is rising. <span style={{ color: `hsl(${GREEN})` }}>So is the bill for not governing it.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          A widening gap opens between falling model cost and rising context to manage. LIZA captures it.
+          The CFO question for 2026: we are spending more on AI every quarter. Where is the control.
         </p>
-        <div className="grid grid-cols-[1.3fr_0.9fr] gap-8 items-stretch">
+        <div className="grid grid-cols-[1.25fr_1fr] gap-7 items-stretch">
           {/* The scissors chart */}
           <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>Per task · indexed to 2023</p>
-            <svg viewBox="0 0 600 300" className="w-full" style={{ height: 320 }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 12, color: SUBTLE }}>The CFO chart</p>
+            <p className="font-bold mb-3" style={{ fontSize: 20, color: TEXT, lineHeight: 1.3, letterSpacing: "-0.015em" }}>
+              Tokens get cheaper. Enterprise AI spend keeps climbing.
+            </p>
+            <svg viewBox="0 0 600 300" className="w-full" style={{ height: 270 }}>
               <defs>
                 <linearGradient id="gapFill" x1="0" x2="0" y1="0" y2="1">
                   <stop offset="0%" stopColor={`hsl(${GREEN})`} stopOpacity="0.28" />
