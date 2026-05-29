@@ -1221,17 +1221,524 @@ function FHowWeBreak() {
   );
 }
 
+// ═════════════════════════════════════════════════════════════════════════════
+// F_STORYFILM · One cinematic canvas replacing slides 3–8.
+// Spine left · Stage center · Drawer right. Six beats. ←/→ step beats first,
+// only spill to deck nav at boundaries. Space toggles autoplay. D toggles drawer.
+// ═════════════════════════════════════════════════════════════════════════════
+
+const FILM_BEATS = [
+  {
+    n: 1,
+    color: GOLD,
+    label: "Workshop",
+    title: "Your workshop today",
+    line: "Three artisans. Three private methods. Brilliance that does not transfer.",
+    drawerTitle: "Eight artisan archetypes already on your floor",
+    drawer: [
+      { t: "The Prompt Whisperer", d: "Only one PM can brief the model. Off Monday." },
+      { t: "The Folder Grimoire", d: "Three years of prompts encrypted in one head." },
+      { t: "The Re-Briefer", d: "Senior rewrites every junior's AI output. Calls it quality." },
+      { t: "The Macro Smith", d: "Hand-tuned Zapier flows owned by one person. Brittle." },
+      { t: "The Firefighter", d: "Fixes hallucinations after the email is sent." },
+      { t: "The Inventor", d: "Builds a new GPT every week. Nothing accumulates." },
+      { t: "The Personal Methodologist", d: "Has a system. Will not write it down." },
+      { t: "The Hoarder", d: "Saves every prompt. Nobody can find anything when they leave." },
+    ],
+  },
+  {
+    n: 2,
+    color: RED,
+    label: "Sessions die",
+    title: "Every session evaporates",
+    line: "12,847 sessions opened today. Zero survive Monday. Nothing compounds.",
+    drawerTitle: "What the workshop tax actually costs you",
+    drawer: [
+      { t: "Vacation paralysis", d: "Best prompter is off. Team quality drops 40%. Nobody replicates the method." },
+      { t: "Onboarding amnesia", d: "New hire gets a Notion doc. The craft lives in seniors' hands, not the doc." },
+      { t: "Audit blindness", d: "\"Why did AI say that?\" Session is gone. Reasoning was never written down." },
+      { t: "Method drift", d: "Three people, same task, three ways. None know the others exist." },
+      { t: "Sessions opened today", d: "12,847 per 500-person org. Real telemetry from a customer deployment." },
+      { t: "Surviving tomorrow", d: "Zero. No standard captured. No bundle written. No method retained." },
+      { t: "Re-asked next week", d: "78%. Same question, different prompt, different answer, different worker." },
+    ],
+  },
+  {
+    n: 3,
+    color: GOLD,
+    label: "You patch",
+    title: "You patch from below",
+    line: "Prompt libraries. Shared docs. AI champions. All half-conscious. All stays in Era I.",
+    drawerTitle: "Bottom-up reflexes that look like progress",
+    drawer: [
+      { t: "Prompt libraries", d: "Notion page of \"good prompts.\" Nobody updates it. Nobody finds the one they need." },
+      { t: "AI champions program", d: "Volunteer evangelists. No mandate, no budget, no leverage on the line." },
+      { t: "Internal GPT bots", d: "Each team builds one. None talk to each other. None survive a re-org." },
+      { t: "Slack #ai-tips channel", d: "Tips scroll past. No taxonomy. No version. No regression." },
+      { t: "Lunch-and-learns", d: "Tribal knowledge transfer at human bandwidth. Cannot scale past 50 seats." },
+      { t: "Shadow workflows", d: "Macros, Zapier, Make. Owned by one person. Break when they leave." },
+    ],
+  },
+  {
+    n: 4,
+    color: RED,
+    label: "They push",
+    title: "They push from above",
+    line: "Copilot to 50,000 desks. RAG retrofits. Agent frameworks. Called transformation.",
+    drawerTitle: "Top-down push that looks like strategy",
+    drawer: [
+      { t: "Microsoft Copilot", d: "$30/seat/month × 50,000 desks. $18M/yr for identical generic output." },
+      { t: "Enterprise ChatGPT", d: "Same prompt, different answer. No standard. No audit trail." },
+      { t: "RAG retrofits", d: "Bolt vector search onto SharePoint. Top-k pulls in stale and contradictory chunks." },
+      { t: "Agent frameworks", d: "Quarterly new abstraction. Last quarter's POC is already legacy." },
+      { t: "Per-seat pricing", d: "CFO sees licences per head, not cost per decision. Cannot measure ROI." },
+      { t: "\"AI strategy\" decks", d: "Vendor-shaped slideware. Procurement signs. Frontline never notices." },
+    ],
+  },
+  {
+    n: 5,
+    color: SUBTLE,
+    label: "The trap",
+    title: "Both arrows collide. Era II.",
+    line: "You did not choose this. Buyer reflex and vendor reflex pushed you into the Ford rollout together.",
+    drawerTitle: "Ford 1913, in different clothes",
+    drawer: [
+      { t: "Direction of flow", d: "Ford: top-down push of tools and seats. Toyota: pull from outcome through standard." },
+      { t: "Worker role", d: "Ford: execute uniform throughput. Toyota: design and stop the stations." },
+      { t: "Quality control", d: "Ford: inspect at the end. Toyota: built in at every station." },
+      { t: "When something fails", d: "Ford: ship the defect, fix later. Toyota: andon cord. Stop the line. Fix." },
+      { t: "What compounds", d: "Ford: nothing. Replace the line. Toyota: standards, rationale, method." },
+      { t: "Where craft lives", d: "Ford: outside the line. Lost. Toyota: encoded by the workers themselves." },
+    ],
+  },
+  {
+    n: 6,
+    color: GREEN,
+    label: "Era IV",
+    title: "Manufacture the context right in the first place",
+    line: "Skip Era II entirely. Era IV substrate, installed on top of Era I, using Toyota mechanics.",
+    drawerTitle: "Six layers that break every wall above",
+    drawer: [
+      { t: "L01 · Typed Knowledge Graph", d: "Concept, rule, role, asset, outcome as typed nodes with provenance and version. Not a doc store." },
+      { t: "L02 · Context Compiler", d: "Outcomes do not search. They compile context from primary sources. No top-k. No averaging." },
+      { t: "L03 · Standards as Code", d: "Every policy and decision rule is a versioned artefact. Diffs, rollbacks, pull requests." },
+      { t: "L04 · Evaluation Harness", d: "Every standard ships with regression cases. A rule change replays across every use case." },
+      { t: "L05 · Governance Loop", d: "Every token call logged with the standard that fired it. Audit is generated, not assembled." },
+      { t: "L06 · Outcome Router", d: "Spend ties to outcomes, not seats. CFO sees cost per decision." },
+    ],
+  },
+] as const;
+
+/* Center-stage scene per beat. SVG vector storytelling, cross-faded. */
+function FilmStage({ beat }: { beat: number }) {
+  return (
+    <div className="relative w-full h-full">
+      {FILM_BEATS.map((_, i) => (
+        <div
+          key={i}
+          className="absolute inset-0 flex items-center justify-center transition-opacity duration-700"
+          style={{ opacity: i === beat ? 1 : 0, pointerEvents: i === beat ? "auto" : "none" }}
+        >
+          {renderScene(i)}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function renderScene(i: number) {
+  switch (i) {
+    case 0: return <SceneWorkshop />;
+    case 1: return <SceneEvaporate />;
+    case 2: return <ScenePatchUp />;
+    case 3: return <ScenePushDown />;
+    case 4: return <SceneCollision />;
+    case 5: return <SceneEraIV />;
+    default: return null;
+  }
+}
+
+/* Reusable artisan figure: head, body, workbench, optional thought bubble. */
+function Artisan({ x, color, bubble, evaporate = false, delay = 0 }: { x: number; color: string; bubble?: string; evaporate?: boolean; delay?: number }) {
+  return (
+    <g transform={`translate(${x}, 360)`}>
+      {/* bench */}
+      <rect x={-70} y={80} width={140} height={10} rx={2} fill={`hsl(${SUBTLE})`} opacity={0.5} />
+      <rect x={-60} y={90} width={6} height={48} fill={`hsl(${SUBTLE})`} opacity={0.4} />
+      <rect x={54} y={90} width={6} height={48} fill={`hsl(${SUBTLE})`} opacity={0.4} />
+      {/* body */}
+      <circle cx={0} cy={20} r={26} fill={`hsl(${color} / 0.85)`} />
+      <path d={`M -42 78 Q 0 36 42 78 L 42 80 L -42 80 Z`} fill={`hsl(${color} / 0.85)`} />
+      {/* head */}
+      <circle cx={0} cy={-14} r={22} fill="white" stroke={`hsl(${color})`} strokeWidth={3} />
+      {/* thought bubble */}
+      {bubble && (
+        <g style={{
+          animation: evaporate
+            ? `bubble-evap 1.4s ${delay}s cubic-bezier(0.4,0,0.6,1) forwards`
+            : `bubble-in 0.7s ${delay}s cubic-bezier(0.16,1,0.3,1) both`,
+          transformOrigin: "0px -90px",
+        }}>
+          <ellipse cx={0} cy={-90} rx={92} ry={32} fill="white" stroke={`hsl(${color})`} strokeWidth={2.5} />
+          <circle cx={-22} cy={-58} r={6} fill="white" stroke={`hsl(${color})`} strokeWidth={2} />
+          <circle cx={-30} cy={-44} r={3.5} fill="white" stroke={`hsl(${color})`} strokeWidth={1.5} />
+          <text x={0} y={-86} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={14} fontWeight={700} fill={`hsl(${color})`}>
+            {bubble}
+          </text>
+        </g>
+      )}
+    </g>
+  );
+}
+
+function SceneWorkshop() {
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      <style>{`
+        @keyframes bubble-in { 0% { opacity: 0; transform: translateY(8px) scale(0.85); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+      `}</style>
+      <text x={550} y={64} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={20} fontWeight={700} fill={`hsl(${MUTED})`} letterSpacing="0.18em">
+        THREE OF YOUR PEOPLE. THREE PRIVATE METHODS.
+      </text>
+      <Artisan x={220} color={GOLD} bubble="my prompt" delay={0.05} />
+      <Artisan x={550} color={GOLD} bubble="my folder" delay={0.35} />
+      <Artisan x={880} color={GOLD} bubble="my macro" delay={0.65} />
+      <text x={550} y={500} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={500} fill={`hsl(${SUBTLE})`}>
+        The output ships. The method does not.
+      </text>
+    </svg>
+  );
+}
+
+function SceneEvaporate() {
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      <style>{`
+        @keyframes bubble-evap { 0% { opacity: 1; transform: translateY(0) scale(1); } 60% { opacity: 0.4; transform: translateY(-30px) scale(1.1); } 100% { opacity: 0; transform: translateY(-80px) scale(1.3); } }
+        @keyframes counter-flip-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
+      <Artisan x={220} color={RED} bubble="my prompt" evaporate delay={0.1} />
+      <Artisan x={550} color={RED} bubble="my folder" evaporate delay={0.35} />
+      <Artisan x={880} color={RED} bubble="my macro" evaporate delay={0.6} />
+      <g style={{ animation: "counter-flip-in 0.6s 1.4s both" }}>
+        <text x={550} y={130} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={64} fontWeight={900} fill={`hsl(${RED})`} letterSpacing="-0.04em">
+          12,847 <tspan fill={`hsl(${SUBTLE})`}>→</tspan> 0
+        </text>
+        <text x={550} y={160} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={18} fontWeight={600} fill={`hsl(${MUTED})`} letterSpacing="0.15em">
+          SESSIONS OPENED · SURVIVING MONDAY
+        </text>
+      </g>
+    </svg>
+  );
+}
+
+function ScenePatchUp() {
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      <style>{`
+        @keyframes arrow-up { 0% { stroke-dashoffset: 600; opacity: 0; } 30% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+        @keyframes wobble { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        @keyframes ceiling-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.9; } }
+      `}</style>
+      {/* ceiling line · "Era I ceiling" */}
+      <line x1={120} y1={120} x2={980} y2={120} stroke={`hsl(${GOLD})`} strokeWidth={2} strokeDasharray="6 6" style={{ animation: "ceiling-pulse 2.4s ease-in-out infinite" }} />
+      <text x={550} y={104} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={14} fontWeight={700} fill={`hsl(${GOLD})`} letterSpacing="0.2em">
+        ERA I CEILING · WORKSHOP
+      </text>
+      {/* wobbly up-arrow from artisans toward ceiling */}
+      <g style={{ animation: "wobble 2.4s ease-in-out infinite" }}>
+        <path
+          d="M 550 440 C 540 360, 560 280, 550 180"
+          stroke={`hsl(${GOLD})`}
+          strokeWidth={5}
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray="600"
+          style={{ animation: "arrow-up 1.6s cubic-bezier(0.6,0,0.3,1) forwards" }}
+        />
+        <path d="M 538 192 L 550 168 L 562 192" stroke={`hsl(${GOLD})`} strokeWidth={5} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <Artisan x={550} color={GOLD} />
+      {/* tag */}
+      <g>
+        <rect x={690} y={290} width={250} height={68} rx={10} fill="white" stroke={`hsl(${GOLD})`} strokeWidth={2} />
+        <text x={815} y={318} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={12} fontWeight={700} fill={`hsl(${GOLD})`} letterSpacing="0.18em">YOUR REFLEX</text>
+        <text x={815} y={342} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={700} fill={`hsl(${TEXT})`}>Half-baked workshop fixes</text>
+      </g>
+    </svg>
+  );
+}
+
+function ScenePushDown() {
+  const tags = ["$30/seat", "Copilot", "RAG", "Agents", "$30/seat", "Copilot"];
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      <style>{`
+        @keyframes rain-down { 0% { transform: translateY(-40px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(360px); opacity: 0; } }
+      `}</style>
+      {/* vendor cloud */}
+      <g>
+        <ellipse cx={550} cy={80} rx={260} ry={36} fill={`hsl(${RED} / 0.12)`} stroke={`hsl(${RED})`} strokeWidth={2} />
+        <text x={550} y={86} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={16} fontWeight={800} fill={`hsl(${RED})`} letterSpacing="0.2em">VENDOR PUSH</text>
+      </g>
+      {/* raining tags */}
+      {tags.map((t, i) => (
+        <g key={i} style={{ animation: `rain-down 2.2s ${i * 0.25}s cubic-bezier(0.4,0,0.6,1) infinite` }}>
+          <rect x={170 + i * 130} y={110} width={104} height={32} rx={6} fill="white" stroke={`hsl(${RED})`} strokeWidth={1.5} />
+          <text x={170 + i * 130 + 52} y={131} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={13} fontWeight={700} fill={`hsl(${RED})`}>{t}</text>
+        </g>
+      ))}
+      {/* desks */}
+      <Artisan x={220} color={SUBTLE} />
+      <Artisan x={550} color={SUBTLE} />
+      <Artisan x={880} color={SUBTLE} />
+      <text x={550} y={500} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={600} fill={`hsl(${MUTED})`}>
+        Identical generic output. Worker as prompt-typist.
+      </text>
+    </svg>
+  );
+}
+
+function SceneCollision() {
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      <style>{`
+        @keyframes arrow-collide-up   { 0% { transform: translateY(120px); opacity: 0; } 60% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes arrow-collide-down { 0% { transform: translateY(-120px); opacity: 0; } 60% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes crumple { 0% { opacity: 0; transform: scale(0.85); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes flash { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+      `}</style>
+      {/* up arrow (your reflex) */}
+      <g style={{ animation: "arrow-collide-up 1s cubic-bezier(0.6,0,0.3,1) forwards", transformOrigin: "550px 270px" }}>
+        <path d="M 550 450 L 550 290" stroke={`hsl(${GOLD})`} strokeWidth={6} strokeLinecap="round" />
+        <path d="M 535 305 L 550 280 L 565 305" stroke={`hsl(${GOLD})`} strokeWidth={6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      {/* down arrow (vendor push) */}
+      <g style={{ animation: "arrow-collide-down 1s cubic-bezier(0.6,0,0.3,1) forwards", transformOrigin: "550px 270px" }}>
+        <path d="M 550 90 L 550 250" stroke={`hsl(${RED})`} strokeWidth={6} strokeLinecap="round" />
+        <path d="M 535 235 L 550 260 L 565 235" stroke={`hsl(${RED})`} strokeWidth={6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      {/* flash at collision */}
+      <circle cx={550} cy={270} r={42} fill={`hsl(${SUBTLE} / 0.4)`} style={{ animation: "flash 0.6s 1.0s ease-in-out" }} />
+      {/* assembly-line silhouette */}
+      <g style={{ animation: "crumple 0.7s 1.3s cubic-bezier(0.16,1,0.3,1) both", transformOrigin: "550px 380px" }}>
+        <rect x={200} y={360} width={700} height={50} rx={6} fill={`hsl(${SUBTLE} / 0.18)`} stroke={`hsl(${SUBTLE})`} strokeWidth={2} />
+        {[260, 360, 460, 560, 660, 760, 860].map(cx => (
+          <circle key={cx} cx={cx} cy={385} r={14} fill="white" stroke={`hsl(${SUBTLE})`} strokeWidth={2} />
+        ))}
+        <text x={550} y={342} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize={16} fontWeight={800} fill={`hsl(${SUBTLE})`} letterSpacing="0.2em">
+          ERA II · FORD ROLLOUT, REPACKAGED
+        </text>
+        <text x={550} y={450} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={18} fontWeight={700} fill={`hsl(${TEXT})`}>
+          You did not choose this. Both sides pushed you here.
+        </text>
+      </g>
+    </svg>
+  );
+}
+
+function SceneEraIV() {
+  const layers = [
+    { n: "L06", t: "Outcome Router" },
+    { n: "L05", t: "Governance Loop" },
+    { n: "L04", t: "Evaluation Harness" },
+    { n: "L03", t: "Standards as Code" },
+    { n: "L02", t: "Context Compiler" },
+    { n: "L01", t: "Typed Knowledge Graph" },
+  ];
+  const [typed, setTyped] = useState("");
+  const full = "Manufacture the context right in the first place.";
+  useEffect(() => {
+    setTyped("");
+    let i = 0;
+    const timer = window.setInterval(() => {
+      i += 1;
+      setTyped(full.slice(0, i));
+      if (i >= full.length) window.clearInterval(timer);
+    }, 36);
+    return () => window.clearInterval(timer);
+  }, []);
+  return (
+    <svg viewBox="0 0 1100 540" className="w-full h-full">
+      <style>{`
+        @keyframes layer-stack { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+      `}</style>
+      {layers.map((l, i) => (
+        <g key={l.n} style={{ animation: `layer-stack 0.55s ${i * 0.12}s cubic-bezier(0.16,1,0.3,1) both`, transformOrigin: `550px ${130 + i * 52}px` }}>
+          <rect x={260} y={130 + i * 52} width={580} height={42} rx={8}
+            fill={`hsl(${GREEN} / 0.08)`} stroke={`hsl(${GREEN})`} strokeWidth={1.5} />
+          <text x={282} y={158 + i * 52} fontFamily="ui-monospace, monospace" fontSize={14} fontWeight={800} fill={`hsl(${GREEN})`}>{l.n}</text>
+          <text x={344} y={158 + i * 52} fontFamily="ui-sans-serif, system-ui" fontSize={16} fontWeight={700} fill={`hsl(${TEXT})`}>{l.t}</text>
+        </g>
+      ))}
+      <text x={550} y={510} textAnchor="middle" fontFamily="ui-sans-serif, system-ui" fontSize={22} fontWeight={900} fill={`hsl(${GREEN})`} letterSpacing="-0.01em">
+        {typed}<tspan opacity={0.6}>▌</tspan>
+      </text>
+    </svg>
+  );
+}
+
+function FStoryFilm() {
+  const [beat, setBeat] = useState(0);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  // Reset on mount so re-entering the slide always restarts the film.
+  useEffect(() => {
+    setBeat(0);
+    setDrawerOpen(false);
+    setPlaying(false);
+  }, []);
+
+  // Autoplay
+  useEffect(() => {
+    if (!playing) return;
+    if (beat >= FILM_BEATS.length - 1) { setPlaying(false); return; }
+    const t = window.setTimeout(() => setBeat(b => Math.min(b + 1, FILM_BEATS.length - 1)), 5200);
+    return () => window.clearTimeout(t);
+  }, [playing, beat]);
+
+  // Intercept arrow keys at capture phase. Only spill to deck at boundaries.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        if (beat < FILM_BEATS.length - 1) {
+          e.preventDefault(); e.stopPropagation();
+          setBeat(b => b + 1);
+        }
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        if (beat > 0) {
+          e.preventDefault(); e.stopPropagation();
+          setBeat(b => b - 1);
+        }
+      } else if (e.key.toLowerCase() === "d") {
+        e.preventDefault(); e.stopPropagation();
+        setDrawerOpen(o => !o);
+      } else if (e.key.toLowerCase() === "p") {
+        e.preventDefault(); e.stopPropagation();
+        setPlaying(p => !p);
+      }
+    };
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [beat]);
+
+  const b = FILM_BEATS[beat];
+
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+
+      {/* Title strip top */}
+      <div className="absolute top-0 left-0 right-0 px-20 pt-16 pb-4 flex items-end justify-between" style={{ zIndex: 4 }}>
+        <div>
+          <Tag label="The Red Thread · One Film" color={GREEN} />
+          <h2 className="font-black mt-2" style={{ fontSize: 44, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+            <span style={{ color: `hsl(${b.color})` }}>Beat {b.n} of 6.</span> {b.title}.
+          </h2>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setPlaying(p => !p)}
+            className="px-4 py-2 rounded-lg border font-mono uppercase tracking-[0.18em] font-bold transition-colors"
+            style={{ fontSize: 11, color: playing ? `hsl(${GREEN})` : MUTED, borderColor: playing ? `hsl(${GREEN})` : CHROME_BORDER, background: playing ? `hsl(${GREEN} / 0.06)` : "white" }}
+          >
+            {playing ? "Pause" : "Autoplay"}
+          </button>
+          <button
+            onClick={() => setDrawerOpen(o => !o)}
+            className="px-4 py-2 rounded-lg border font-mono uppercase tracking-[0.18em] font-bold transition-colors"
+            style={{ fontSize: 11, color: drawerOpen ? `hsl(${ACCENT})` : MUTED, borderColor: drawerOpen ? `hsl(${ACCENT})` : CHROME_BORDER, background: drawerOpen ? `hsl(${ACCENT} / 0.06)` : "white" }}
+          >
+            {drawerOpen ? "Hide depth" : "Show depth"}
+          </button>
+        </div>
+      </div>
+
+      {/* Three-column layout: spine · stage · drawer */}
+      <div className="absolute inset-0 grid" style={{ gridTemplateColumns: drawerOpen ? "260px 1fr 520px" : "260px 1fr 0px", paddingTop: 200, paddingBottom: 120, transition: "grid-template-columns 0.45s cubic-bezier(0.16,1,0.3,1)" }}>
+        {/* SPINE — left */}
+        <div className="pl-20 pr-6 flex flex-col gap-2 justify-center">
+          <p className="font-mono uppercase tracking-[0.22em] font-bold mb-4" style={{ fontSize: 10, color: SUBTLE }}>Red thread</p>
+          {FILM_BEATS.map((fb, i) => {
+            const active = i === beat;
+            const past = i < beat;
+            return (
+              <button
+                key={i}
+                onClick={() => setBeat(i)}
+                className="text-left flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all"
+                style={{
+                  background: active ? `hsl(${fb.color} / 0.08)` : "transparent",
+                  borderLeft: `3px solid ${active ? `hsl(${fb.color})` : past ? `hsl(${fb.color} / 0.35)` : `hsl(215 15% 88%)`}`,
+                }}
+              >
+                <span className="font-mono font-black mt-0.5" style={{ fontSize: 14, color: active ? `hsl(${fb.color})` : past ? `hsl(${fb.color} / 0.55)` : SUBTLE, width: 16 }}>
+                  {fb.n}
+                </span>
+                <span className="font-bold" style={{ fontSize: 14, color: active ? TEXT : past ? MUTED : SUBTLE, lineHeight: 1.25 }}>
+                  {fb.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* STAGE — center */}
+        <div className="relative px-8 flex flex-col">
+          <div className="flex-1 relative">
+            <FilmStage beat={beat} />
+          </div>
+          <div className="mt-4 px-6 py-3 rounded-xl border-l-4 mx-2" style={{ background: `hsl(${b.color} / 0.05)`, borderColor: `hsl(${b.color})` }}>
+            <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>{b.line}</p>
+          </div>
+        </div>
+
+        {/* DRAWER — right (the 80%, on demand) */}
+        <div className="overflow-hidden pr-20 pl-2">
+          <div className="h-full rounded-2xl border flex flex-col" style={{ background: "white", borderColor: CHROME_BORDER, opacity: drawerOpen ? 1 : 0, transition: "opacity 0.35s ease 0.15s" }}>
+            <div className="px-5 py-4 border-b" style={{ borderColor: CHROME_BORDER }}>
+              <p className="font-mono uppercase tracking-[0.18em] font-bold mb-1" style={{ fontSize: 10, color: `hsl(${b.color})` }}>Depth · Beat {b.n}</p>
+              <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.2 }}>{b.drawerTitle}</p>
+            </div>
+            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-3">
+              {b.drawer.map((item, i) => (
+                <div key={i} className="pb-3 border-b last:border-b-0" style={{ borderColor: CHROME_BORDER }}>
+                  <p className="font-bold mb-1" style={{ fontSize: 14, color: TEXT, lineHeight: 1.25 }}>{item.t}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{item.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom controls hint */}
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-6" style={{ zIndex: 4 }}>
+        <span className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 11, color: SUBTLE }}>
+          ← / →  step beat
+        </span>
+        <span className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 11, color: SUBTLE }}>
+          P  autoplay
+        </span>
+        <span className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 11, color: SUBTLE }}>
+          D  depth drawer
+        </span>
+      </div>
+
+      <Footer text="One canvas. Six beats. The full deck in one cinematic chain — depth available on demand, never forced." />
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
-  { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
-  { id: "chain",            title: "The Red Thread · Six Beats",                        component: <FChain /> },
-  { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
-  { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
-  // ACT I.5 — The wall and the substrate that breaks it
-  { id: "why-hard",          title: "The Wall · Why Era IV Is Not Already Built",        component: <FWhyHard /> },
-  { id: "how-we-break",      title: "The Stack · How LIZA Breaks the Wall",              component: <FHowWeBreak /> },
+  // ACT I — One cinematic canvas replaces six static frames. Depth on demand.
+  { id: "story-film",       title: "The Red Thread · One Film · Six Beats",            component: <FStoryFilm /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
