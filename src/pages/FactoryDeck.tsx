@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import {
   ChevronLeft, ChevronRight, Maximize2, X, Grid3x3,
@@ -1911,7 +1911,7 @@ function FStoryFilm() {
   useEffect(() => {
     if (!playing) return;
     if (beat >= FILM_BEATS.length - 1) { setPlaying(false); return; }
-    const t = window.setTimeout(() => setBeat(b => Math.min(b + 1, FILM_BEATS.length - 1)), 5200);
+    const t = window.setTimeout(() => setBeat(b => Math.min(b + 1, FILM_BEATS.length - 1)), 9000);
     return () => window.clearTimeout(t);
   }, [playing, beat]);
 
