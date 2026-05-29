@@ -374,6 +374,49 @@ function FSkipMiddle() {
           Most buyers think rolling out Copilot to five thousand desks is transformation. It is the Ford rollout. Toyota is the mechanic we steal. Era IV is the destination. Three columns, six rows, one trajectory.
         </p>
 
+        {/* Flip-card equivalence: Copilot seats = Ford 1913. Hover to flip. */}
+        <div className="mb-5 flex justify-center" style={{ perspective: 1400 }}>
+          <div className="group relative" style={{ width: 760, height: 92, transformStyle: "preserve-3d" }}>
+            <div className="absolute inset-0 rounded-xl border-2 flex items-center gap-4 px-6 transition-transform duration-700"
+                 style={{
+                   background: "white",
+                   borderColor: `hsl(${RED} / 0.5)`,
+                   backfaceVisibility: "hidden",
+                   transformStyle: "preserve-3d",
+                   transform: "rotateY(0deg)",
+                 }}>
+              <Megaphone size={26} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
+              <div className="flex-1">
+                <p className="font-mono uppercase tracking-[0.18em] font-bold mb-0.5" style={{ fontSize: 11, color: `hsl(${RED})` }}>Today · the trap they call transformation</p>
+                <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+                  Microsoft Copilot · $30 / seat / month · 50,000 desks
+                </p>
+              </div>
+              <span className="font-mono uppercase tracking-[0.15em] px-3 py-1.5 rounded-md" style={{ background: CARD_ALT, fontSize: 10, color: MUTED }}>hover to flip</span>
+            </div>
+            <div className="absolute inset-0 rounded-xl border-2 flex items-center gap-4 px-6 transition-transform duration-700"
+                 style={{
+                   background: `hsl(${RED} / 0.06)`,
+                   borderColor: `hsl(${RED})`,
+                   backfaceVisibility: "hidden",
+                   transform: "rotateY(180deg)",
+                 }}>
+              <Factory size={26} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
+              <div className="flex-1">
+                <p className="font-mono uppercase tracking-[0.18em] font-bold mb-0.5" style={{ fontSize: 11, color: `hsl(${RED})` }}>1913 · the same move, last century</p>
+                <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+                  Ford Highland Park · one motion · one worker · one wage
+                </p>
+              </div>
+              <span className="font-mono uppercase tracking-[0.15em] px-3 py-1.5 rounded-md" style={{ background: `hsl(${RED} / 0.12)`, fontSize: 10, color: `hsl(${RED})` }}>same trap</span>
+            </div>
+            <style>{`
+              .group:hover > div:first-child { transform: rotateY(-180deg); }
+              .group:hover > div:nth-child(2) { transform: rotateY(0deg); }
+            `}</style>
+          </div>
+        </div>
+
         {/* Three column headers */}
         <div className="grid grid-cols-[1fr_1.3fr_1.3fr_1.3fr] gap-0 rounded-t-2xl border border-b-0 overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
           <div className="px-5 py-3 font-mono uppercase tracking-[0.15em] font-bold" style={{ background: CARD_ALT, fontSize: 12, color: MUTED }}>Dimension</div>
