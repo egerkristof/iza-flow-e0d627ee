@@ -203,19 +203,27 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
         </div>
 
         {/* Feedback loop visualization: arrow from SIGN back to LOCK */}
-        <svg viewBox="0 0 1000 90" className="w-full" style={{ height: 80, marginTop: -4 }} preserveAspectRatio="none">
-          <defs>
-            <marker id="loopArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${GREEN})`} />
-            </marker>
-          </defs>
-          <path d="M 920 5 C 920 75, 80 75, 80 5" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="2" strokeDasharray="6 5" markerEnd="url(#loopArrow)" />
-          <text x="500" y="68" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" letterSpacing="3" fill={`hsl(${GREEN})`}>
-            RECEIPT  →  SHARPENS THE STANDARD  →  NEXT DECISION IS BETTER GOVERNED
-          </text>
-        </svg>
+        <div className="relative mt-6 mb-4" style={{ height: 140 }}>
+          <svg viewBox="0 0 1000 140" className="w-full h-full" preserveAspectRatio="none">
+            <defs>
+              <marker id="loopArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${GREEN})`} />
+              </marker>
+            </defs>
+            {/* curved arrow from the SIGN card (right) back up to the LOCK card (left) */}
+            <path d="M 920 5 C 940 130, 60 130, 80 5" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="2.5" strokeDasharray="7 6" markerEnd="url(#loopArrow)" />
+          </svg>
+          <div className="absolute left-1/2 -translate-x-1/2 px-6 py-3 rounded-full flex items-center gap-3"
+               style={{ top: 60, background: BG, border: `1.5px solid hsl(${GREEN})` }}>
+            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Every receipt</span>
+            <span style={{ color: SUBTLE }}>→</span>
+            <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>sharpens the standard</span>
+            <span style={{ color: SUBTLE }}>→</span>
+            <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>next decision is better governed</span>
+          </div>
+        </div>
 
-        <div className="rounded-xl px-7 py-4 mt-2 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded" style={{ fontSize: 11, color: `hsl(${GOLD})`, background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>Example</span>
           <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>
             <span style={{ color: TEXT, fontWeight: 700 }}>Risk memo.</span> Locked to the firm's underwriting playbook. Compiled with this quarter's policy. Signed with the model used, approver, evidence and cost — replayable next audit.
