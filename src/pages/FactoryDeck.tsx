@@ -213,12 +213,40 @@ function FThreeStages() {
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag label="Four Eras of Production · Knowledge Work Today" color={ACCENT} />
-        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
-          Manufacturing already walked this ladder. <span style={{ color: `hsl(${GREEN})` }}>Knowledge work skips to Era IV.</span>
+        <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          You are in <span style={{ color: `hsl(${GOLD})` }}>Era I</span>. The market is pushing you into <span style={{ color: `hsl(${RED})` }}>Era II</span>. <span style={{ color: `hsl(${GREEN})` }}>Neither side knows it.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
-          Industry took 150 years to go from the artisan's bench to software-defined, predictive production. Most knowledge work is still on the bench. LIZA installs Era IV directly on top of Era I. Toyotaism is the bridge, not a destination.
+        <p className="mb-5" style={{ fontSize: 19, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          Industry took 150 years to walk this ladder. Knowledge work is still on the bench. Your half-baked improvements stay in Era I. Vendors selling seats land you in Era II. LIZA is the conscious third path: install Era IV directly on top of Era I. Toyota was the bridge, not the destination.
         </p>
+
+        {/* Two unconscious motions + conscious third path */}
+        <div className="grid grid-cols-3 gap-3 mb-5">
+          {[
+            { tag: "YOUR MOTION (UNCONSCIOUS)", color: GOLD, icon: Hammer,
+              line: "Half-baked workshop fixes.",
+              body: "Better prompts. Shared docs. Prompt libraries. Stays in Era I." },
+            { tag: "THEIR MOTION (UNCONSCIOUS)", color: RED, icon: Megaphone,
+              line: "Vendors push more seats.",
+              body: "Copilot to 5,000 desks. Called transformation. Lands you in Era II." },
+            { tag: "THE CONSCIOUS THIRD PATH", color: GREEN, icon: Cpu,
+              line: "LIZA installs Era IV.",
+              body: "Skip Era II entirely. Toyota mechanics, Era IV substrate, on top of Era I." },
+          ].map((m) => {
+            const Icon = m.icon;
+            return (
+              <div key={m.tag} className="rounded-xl border-l-4 px-4 py-3 flex gap-3 items-start"
+                   style={{ background: `hsl(${m.color} / 0.05)`, borderColor: `hsl(${m.color})` }}>
+                <Icon size={20} style={{ color: `hsl(${m.color})`, flexShrink: 0, marginTop: 2 }} />
+                <div>
+                  <p className="font-mono uppercase tracking-[0.15em] font-bold mb-1" style={{ fontSize: 10, color: `hsl(${m.color})` }}>{m.tag}</p>
+                  <p className="font-bold mb-0.5" style={{ fontSize: 15, color: TEXT, lineHeight: 1.2 }}>{m.line}</p>
+                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>{m.body}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
         {/* Four era cards */}
         <div className="grid grid-cols-4 gap-4 mb-5">
