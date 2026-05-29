@@ -181,25 +181,25 @@ function FThreeStages() {
       n: "I", era: "1800s", name: "Artisanal", icon: Hammer, color: GOLD,
       mfg: "One craftsman per object. Brilliant, slow, unrepeatable.",
       kw: "One expert per answer. Hand-built prompts. Disposable expertise.",
-      tag: "WHERE YOU ARE",
+      tag: "WHERE YOU ARE (UNCONSCIOUSLY)",
     },
     {
       n: "II", era: "1910s", name: "Fordism", icon: Megaphone, color: RED,
       mfg: "Assembly line. Identical Model T. Worker crushed into throughput.",
       kw: "LLM seats pushed to every desk. Identical generic output. Worker as prompt-typist.",
-      tag: "THE TRAP",
+      tag: "WHERE THEY PUSH YOU (UNCONSCIOUSLY)",
     },
     {
       n: "III", era: "1950s", name: "Toyotaism", icon: Factory, color: ACCENT,
       mfg: "Pull, kanban, kaizen. Workers redesign the line. Quality built in.",
       kw: "Standards pull tokens. Workers improve their own stations. Craft scales.",
-      tag: "THE BRIDGE",
+      tag: "THE BRIDGE (MECHANICS WE STEAL)",
     },
     {
       n: "IV", era: "Today", name: "AI-Driven · Industry 4.0", icon: Cpu, color: GREEN,
       mfg: "Software-defined assembly. Predictive. Per-unit customization at line speed.",
       kw: "Every prompt assembled from standards, per outcome, predictively governed. LIZA.",
-      tag: "WHERE LIZA INSTALLS YOU",
+      tag: "WHERE LIZA INSTALLS YOU (CONSCIOUSLY)",
     },
   ];
   const rows = [
