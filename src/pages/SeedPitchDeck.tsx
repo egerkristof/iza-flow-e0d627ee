@@ -88,9 +88,9 @@ function S01Cover({ n, t }: { n: number; t: number }) {
 // ─── 02 · PROBLEM ────────────────────────────────────────────────────────────
 function S02Problem({ n, t }: { n: number; t: number }) {
   const lines = [
-    "Every prompt is hand-crafted by one person.",
-    "Every output ships without a receipt.",
-    "Every workflow dies when the tab closes.",
+    { l: "Every prompt is hand-crafted by one person.", d: "No shared method. Two operators ask the same question, get two different answers." },
+    { l: "Every output ships without a receipt.", d: "Output = the email, quote, report, code, decision the AI produced. Receipt = a signed, replayable record of which standards, data, and model produced it. Today there is none." },
+    { l: "Every workflow dies when the tab closes.", d: "Dies = the prompt, the reasoning, the corrections vanish. Nobody can rerun it, audit it, or improve it. Monday starts from zero." },
   ];
   return (
     <Slide section="Problem" n={n} total={t}>
@@ -99,23 +99,26 @@ function S02Problem({ n, t }: { n: number; t: number }) {
           Companies run AI like a{" "}
           <span style={{ color: `hsl(${RED})` }}>workshop of artisans.</span>
         </h2>
-        <div className="flex flex-col gap-5 mb-10">
-          {lines.map((l) => (
-            <div key={l} className="flex items-baseline gap-6">
+        <div className="flex flex-col gap-4 mb-8">
+          {lines.map((row) => (
+            <div key={row.l} className="grid grid-cols-[40px_1fr] gap-6 items-baseline">
               <span className="font-mono font-black" style={{ fontSize: 22, color: `hsl(${RED})` }}>×</span>
-              <p style={{ fontSize: 32, color: TEXT, lineHeight: 1.25 }}>{l}</p>
+              <div>
+                <p className="font-bold" style={{ fontSize: 28, color: TEXT, lineHeight: 1.2 }}>{row.l}</p>
+                <p className="mt-1" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{row.d}</p>
+              </div>
             </div>
           ))}
         </div>
-        <div className="rounded-xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
+        <div className="rounded-xl p-6" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
           <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${RED})` }}>
             One real failure, one real day
           </p>
-          <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
+          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
             A senior consultant asked AI to draft a client update. Six defects shipped in one email: wrong honorific, stale timeline, fabricated 30% savings figure, missing attachment, wrong SLA, no audit trail. Nothing stopped the line, because there was no line.
           </p>
         </div>
-        <p className="mt-8 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 15, color: MUTED }}>
+        <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 14, color: MUTED }}>
           Brilliance does not compound. It does not transfer. It does not survive Monday.
         </p>
       </div>
@@ -126,32 +129,44 @@ function S02Problem({ n, t }: { n: number; t: number }) {
 // ─── 03 · SOLUTION ───────────────────────────────────────────────────────────
 function S03Solution({ n, t }: { n: number; t: number }) {
   const items = [
-    { k: "LOCK",    v: "Every prompt locks to a playbook." },
-    { k: "COMPILE", v: "Typed standards compile into context, per call." },
-    { k: "SIGN",    v: "Every output ships with a signed receipt." },
+    {
+      k: "LOCK",
+      v: "Every prompt locks to a playbook.",
+      d: "Playbook = a versioned, named company method. \"How we price an enterprise quote.\" \"How we draft a clinical summary.\" Not a prompt template — an executable standard.",
+    },
+    {
+      k: "COMPILE",
+      v: "Typed standards compile into context, per call.",
+      d: "Typed standards = your company policies, best-practice procedures, decision rules, approved data. Compiled fresh into the model for every call, not retrieved blindly.",
+    },
+    {
+      k: "SIGN",
+      v: "Every output ships with a signed receipt.",
+      d: "Receipt = a cryptographically signed, hash-chained record of which playbook, standards, data and model produced the output. Replayable. Auditable. The unit of trust.",
+    },
   ];
   return (
     <Slide section="Solution" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-10" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-8" style={{ fontSize: 68, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           We run a{" "}
           <span style={{ color: `hsl(${GREEN})` }}>system around the model.</span>
         </h2>
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-3 gap-7 mb-6">
           {items.map((i) => (
-            <div key={i.k} className="rounded-2xl border-2 p-8" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)` }}>
-              <div className="font-mono font-black uppercase tracking-[0.2em] mb-4" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>
+            <div key={i.k} className="rounded-2xl border-2 p-7 flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)` }}>
+              <div className="font-mono font-black uppercase tracking-[0.2em] mb-3" style={{ fontSize: 15, color: `hsl(${GREEN})` }}>
                 {i.k}
               </div>
-              <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.25 }}>{i.v}</p>
+              <p className="font-bold mb-4" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>{i.v}</p>
+              <div className="mt-auto pt-3" style={{ borderTop: `1px solid hsl(${GREEN} / 0.25)` }}>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{i.d}</p>
+              </div>
             </div>
           ))}
         </div>
-        <p className="mt-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1400, lineHeight: 1.4 }}>
-          A playbook is a versioned, typed standard. A named policy, procedure, or decision rule. Not a prompt template.
-        </p>
-        <div className="mt-8 rounded-xl px-8 py-6" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-          <p className="font-bold" style={{ fontSize: 26, color: TEXT, lineHeight: 1.35 }}>
+        <div className="rounded-xl px-8 py-6" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
             Every signed receipt feeds back into the graph. Standards improve with every call. <span style={{ color: `hsl(${GREEN})` }}>The factory learns.</span>
           </p>
         </div>
@@ -168,6 +183,9 @@ function S04WhyNow({ n, t }: { n: number; t: number }) {
         <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           Three shifts. <span style={{ color: `hsl(${ACCENT})` }}>One collision.</span>
         </h2>
+        <p className="font-mono uppercase tracking-[0.22em] mb-8" style={{ fontSize: 14, color: MUTED }}>
+          Shifts 1 &amp; 3 push AI into every workflow. Shift 2 demands governance. Companies are still artisanal.
+        </p>
         <div className="grid grid-cols-3 gap-7">
           <div className="rounded-2xl p-7" style={{ background: CARD_ALT, borderLeft: `6px solid hsl(${ACCENT})` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>
@@ -185,7 +203,7 @@ function S04WhyNow({ n, t }: { n: number; t: number }) {
               Shift 2
             </p>
             <p className="font-black mb-3" style={{ fontSize: 34, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
-              Audit is now law.
+              Compliance is now law.
             </p>
             <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>
               EU AI Act, SOC 2, GxP, MiFID II. Every AI decision must be explainable, signed, replayable.
@@ -216,20 +234,40 @@ function S05Validation({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Market Validation" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           The cost is already showing up.
         </h2>
-        <div className="grid grid-cols-2 gap-10 mb-10">
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1400 }}>
+          The €550K is just the rework tax. The full bill stacks four ways.
+        </p>
+        <div className="grid grid-cols-2 gap-8 mb-6">
           <div className="rounded-2xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${RED})` }}>
-              The hidden tax
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${RED})` }}>
+              Layer 1 · Rework tax (quantified today)
             </p>
-            <div className="font-black" style={{ fontSize: 96, lineHeight: 0.95, color: `hsl(${RED})`, letterSpacing: "-0.04em" }}>€550K</div>
-            <p className="font-bold mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25 }}>per year, per 100 knowledge workers.</p>
-            <p className="mt-3 font-mono" style={{ fontSize: 14, color: MUTED, lineHeight: 1.5 }}>
+            <div className="font-black" style={{ fontSize: 84, lineHeight: 0.95, color: `hsl(${RED})`, letterSpacing: "-0.04em" }}>€550K</div>
+            <p className="font-bold mt-2" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>per year, per 100 knowledge workers.</p>
+            <p className="mt-2 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
               4 h/week × €55/h × 46 wks × 100 = €1.01M raw, discounted 46% to €550K.<br/>
-              Cross-validated against HBR and McKinsey 2024 rework data.
+              HBR &amp; McKinsey 2024 rework data.
             </p>
+            <div className="mt-5 pt-4 grid grid-cols-3 gap-3" style={{ borderTop: `1px solid hsl(${RED} / 0.25)` }}>
+              <div>
+                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 2</p>
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Lost knowledge</p>
+                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Method dies with the tab.</p>
+              </div>
+              <div>
+                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 3</p>
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Sovereignty leak</p>
+                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Crown-jewel IP pasted into public LLMs.</p>
+              </div>
+              <div>
+                <p className="font-mono uppercase tracking-[0.18em] mb-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>Layer 4</p>
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>Token bill</p>
+                <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>Metered AI scales linearly with usage.</p>
+              </div>
+            </div>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
@@ -265,9 +303,9 @@ function S05Validation({ n, t }: { n: number; t: number }) {
 // ─── 06 · PRODUCT ────────────────────────────────────────────────────────────
 function S07Product({ n, t }: { n: number; t: number }) {
   const steps = [
-    { k: "1", h: "Operator asks", v: "A prompt arrives. It looks like ChatGPT." },
-    { k: "2", h: "System locks", v: "LIZA matches it to a playbook and compiles typed standards into context." },
-    { k: "3", h: "Receipt issued", v: "Output ships with a signed, hash-chained, replayable record." },
+    { k: "1", h: "Operator asks", v: "A prompt arrives. The surface looks like ChatGPT — that is the point. Zero behavioural change for the user." },
+    { k: "2", h: "System locks to a playbook", v: "LIZA matches the intent to a versioned company playbook (\"price an enterprise quote\"), then compiles the typed standards — policies, procedures, decision rules, approved data — fresh into the model for that call." },
+    { k: "3", h: "Signed receipt issued", v: "Output ships with a hash-chained, cryptographically signed record of which playbook, standards, data and model produced it. Replayable by any auditor in one click." },
   ];
   return (
     <Slide section="Product" n={n} total={t}>
@@ -310,27 +348,48 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Business Model" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          Metered per <span style={{ color: `hsl(${GREEN})` }}>governed decision.</span>
+        <h2 className="font-black mb-3" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+          Three layers. <span style={{ color: `hsl(${GREEN})` }}>One meter.</span>
         </h2>
-        <div className="grid grid-cols-3 gap-10 mb-8">
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1400 }}>
+          A platform fee carries the learning layer. Metered decisions monetise usage. Enterprise tier prices the deep audit surface.
+        </p>
+        <div className="grid grid-cols-3 gap-7 mb-7">
+          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Platform fee</p>
+            <div className="font-black" style={{ fontSize: 56, lineHeight: 0.95, color: TEXT, letterSpacing: "-0.035em" }}>per seat</div>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Funds the learning layer: playbooks, the standards graph, the receipt store. The factory itself.
+            </p>
+          </div>
+          <div className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Metered usage</p>
+            <div className="font-black" style={{ fontSize: 72, lineHeight: 0.9, color: `hsl(${GREEN})`, letterSpacing: "-0.04em" }}>€0.40<span style={{ fontSize: 22, color: MUTED, marginLeft: 8 }}>est. avg</span></div>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Per governed decision. Indicative blend across verticals — final pricing tuned per workload. Displaces €23 of manual labour.
+            </p>
+          </div>
+          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Enterprise tier</p>
+            <div className="font-black" style={{ fontSize: 56, lineHeight: 0.95, color: TEXT, letterSpacing: "-0.035em" }}>annual</div>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Advanced audit: regulator-grade replay, SSO, residency, custom standards engines, advisory access.
+            </p>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-10 mb-5">
           {[
-            { v: "€0.40", l: "platform price per governed decision" },
-            { v: "€23",   l: "manual labour cost it displaces" },
-            { v: "95%",   l: "platform gross margin at steady state" },
+            { v: "95%", l: "platform gross margin at steady state" },
+            { v: "<6mo", l: "payback at typical enterprise volume" },
+            { v: "2×",  l: "billable unit and audit artefact at once" },
           ].map((s) => (
             <div key={s.l}>
-              <div className="font-black" style={{ fontSize: 112, lineHeight: 0.9, color: TEXT, letterSpacing: "-0.045em" }}>
+              <div className="font-black" style={{ fontSize: 64, lineHeight: 0.9, color: TEXT, letterSpacing: "-0.04em" }}>
                 {s.v}
               </div>
-              <p className="mt-3" style={{ fontSize: 19, color: MUTED, lineHeight: 1.35 }}>{s.l}</p>
+              <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.35 }}>{s.l}</p>
             </div>
           ))}
-        </div>
-        <div className="rounded-xl px-8 py-6 mb-5" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-          <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
-            Customers move spend from headcount (CapEx of expertise) to metered tokens tied to a standard. Every receipt is a billable unit and an audit artefact at the same time. Payback under 6 months at typical enterprise volume.
-          </p>
         </div>
         <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: SUBTLE }}>
           $4.2B standards-engine wedge inside a $48B AI governance market
@@ -448,12 +507,12 @@ function S12Team({ n, t }: { n: number; t: number }) {
         </h2>
         <div className="grid grid-cols-3 gap-8">
           <div>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Founder</p>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Founders</p>
             <p className="font-black mb-3" style={{ fontSize: 36, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
               15+ years
             </p>
             <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              Shipping data and AI architecture into production at enterprise scale. Operator, not consultant. The methodology is the muscle memory.
+              Shipping data and AI architecture into production at enterprise scale. Operators, not consultants. The methodology is the muscle memory.
             </p>
           </div>
           <div>
