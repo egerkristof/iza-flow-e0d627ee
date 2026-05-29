@@ -2063,7 +2063,7 @@ function FThesis() {
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
-      <Tag color={GREEN}>The thesis · everything that follows defends this</Tag>
+      <Tag color={GREEN} label="The thesis · everything that follows defends this" />
       <PageNumber />
 
       <div className="absolute inset-0 flex flex-col items-center justify-center px-32" style={{ paddingTop: 180, paddingBottom: 280 }}>
