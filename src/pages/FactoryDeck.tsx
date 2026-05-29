@@ -345,6 +345,7 @@ function FThreeStages() {
         </div>
       </div>
       <Footer text="Source frame: industrial production eras (Artisanal · Fordism · Toyotaism · Industry 4.0). Ported to knowledge work." />
+      <SpineIndicator current={4} />
       <SlideBar from={GOLD} to={GREEN} />
     </div>
   );
