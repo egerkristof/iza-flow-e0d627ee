@@ -507,12 +507,12 @@ function S12Team({ n, t }: { n: number; t: number }) {
         </h2>
         <div className="grid grid-cols-3 gap-8">
           <div>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Founder</p>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Founders</p>
             <p className="font-black mb-3" style={{ fontSize: 36, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
               15+ years
             </p>
             <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
-              Shipping data and AI architecture into production at enterprise scale. Operator, not consultant. The methodology is the muscle memory.
+              Shipping data and AI architecture into production at enterprise scale. Operators, not consultants. The methodology is the muscle memory.
             </p>
           </div>
           <div>
