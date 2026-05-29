@@ -876,6 +876,9 @@ const RAW_SLIDES = [
   { id: "ask", title: "The Ask · €2M Seed", component: <F17Ask /> },
   { id: "closer", title: "The Loop, Closed", component: <S13LoopClosed /> },
 ];
+const _RAW_SLIDES_OLD_REMOVED = [
+  // placeholder anchor — superseded below
+];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
   component: <SlideIndexProvider index={i} total={RAW_SLIDES.length}>{s.component}</SlideIndexProvider>,
