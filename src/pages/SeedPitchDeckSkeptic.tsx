@@ -220,43 +220,56 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
 
 // ─── 05 · WHY NOW ───────────────────────────────────────────────────────────
 function S05WhyNow({ n, t }: { n: number; t: number }) {
-  const moves = [
-    { label: "Token price", value: "Down", color: RED },
-    { label: "AI usage", value: "Up", color: GOLD },
-    { label: "Governance need", value: "Explodes", color: GREEN },
-  ];
   return (
     <Slide section="Why now" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-4" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Tokens get cheaper. <span style={{ color: `hsl(${GREEN})` }}>AI work gets bigger.</span>
+          Tokens get cheaper. <span style={{ color: `hsl(${GREEN})` }}>The work to govern explodes.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          The spend moves from raw model calls to the control layer around them.
+          A widening gap opens between falling model cost and rising context to manage. LIZA captures it.
         </p>
-        <div className="grid grid-cols-3 gap-6 mb-9">
-          {moves.map((m) => (
-            <div key={m.label} className="rounded-2xl p-8 text-center" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 13, color: SUBTLE }}>{m.label}</p>
-              <p className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: `hsl(${m.color})`, letterSpacing: "-0.04em" }}>{m.value}</p>
-            </div>
-          ))}
-        </div>
-        <div className="grid grid-cols-[1.1fr_0.9fr] gap-6 items-stretch">
-          <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-            <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>LIZA captures the layer in between.</p>
-            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
-              Foundation models commoditise intelligence. Enterprises still need policy, audit, routing, receipts and improvement loops around every important output.
-            </p>
-          </div>
+        <div className="grid grid-cols-[1.3fr_0.9fr] gap-8 items-stretch">
+          {/* The scissors chart */}
           <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <div className="h-36 relative mt-2">
-              <div className="absolute left-2 right-2 bottom-8 h-px" style={{ background: CHROME_BORDER }} />
-              <div className="absolute left-2 bottom-10 w-[42%] h-2 rounded-full" style={{ background: `hsl(${RED} / 0.45)`, transform: "rotate(-17deg)", transformOrigin: "left center" }} />
-              <div className="absolute left-2 bottom-8 w-[78%] h-2 rounded-full" style={{ background: `hsl(${GREEN} / 0.9)`, transform: "rotate(-20deg)", transformOrigin: "left center" }} />
-              <p className="absolute left-0 bottom-0 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>Model cost</p>
-              <p className="absolute right-0 top-0 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Governed work</p>
-            </div>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>Per task · indexed to 2023</p>
+            <svg viewBox="0 0 600 300" className="w-full" style={{ height: 320 }}>
+              <defs>
+                <linearGradient id="gapFill" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stopColor={`hsl(${GREEN})`} stopOpacity="0.28" />
+                  <stop offset="100%" stopColor={`hsl(${GREEN})`} stopOpacity="0.06" />
+                </linearGradient>
+              </defs>
+              {/* axes */}
+              <line x1="50" y1="20" x2="50" y2="260" stroke={CHROME_BORDER} strokeWidth="1"/>
+              <line x1="50" y1="260" x2="580" y2="260" stroke={CHROME_BORDER} strokeWidth="1"/>
+              {/* gap area between rising governed work (top) and falling model cost (bottom) */}
+              <path d="M 50 80 C 200 60, 380 40, 580 25 L 580 235 C 380 200, 200 240, 50 230 Z" fill="url(#gapFill)" />
+              {/* governed work — rising */}
+              <path d="M 50 80 C 200 60, 380 40, 580 25" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="3"/>
+              {/* model cost — falling */}
+              <path d="M 50 230 C 200 240, 380 200, 580 235" fill="none" stroke={`hsl(${RED})`} strokeWidth="3" strokeDasharray="6 4"/>
+              {/* gap arrows */}
+              <line x1="430" y1="50" x2="430" y2="215" stroke={`hsl(${GREEN})`} strokeWidth="1.5" markerEnd="url(#arrUp)" markerStart="url(#arrDown)"/>
+              <defs>
+                <marker id="arrUp" viewBox="0 0 10 10" refX="5" refY="0" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,10 L5,0 L10,10 z" fill={`hsl(${GREEN})`}/></marker>
+                <marker id="arrDown" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L5,10 L10,0 z" fill={`hsl(${GREEN})`}/></marker>
+              </defs>
+              <rect x="445" y="115" width="120" height="44" rx="6" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="1"/>
+              <text x="505" y="133" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>THE GAP</text>
+              <text x="505" y="150" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.5" fill={TEXT}>LIZA captures</text>
+              {/* labels */}
+              <text x="60" y="75" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>GOVERNED WORK ↑</text>
+              <text x="60" y="250" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${RED})`}>MODEL COST ↓</text>
+              <text x="50" y="285" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2023</text>
+              <text x="570" y="285" textAnchor="end" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2027</text>
+            </svg>
+          </div>
+          <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <p className="font-black mb-5" style={{ fontSize: 38, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.03em" }}>LIZA captures the gap.</p>
+            <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.42 }}>
+              Cheaper tokens push enterprises to put more context, policy and decisions through AI. Someone has to manage that growing context layer. That spend is the new line item — and it does not flow to the model vendor.
+            </p>
           </div>
         </div>
       </div>
