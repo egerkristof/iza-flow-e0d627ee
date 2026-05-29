@@ -303,9 +303,9 @@ function S05Validation({ n, t }: { n: number; t: number }) {
 // ─── 06 · PRODUCT ────────────────────────────────────────────────────────────
 function S07Product({ n, t }: { n: number; t: number }) {
   const steps = [
-    { k: "1", h: "Operator asks", v: "A prompt arrives. It looks like ChatGPT." },
-    { k: "2", h: "System locks", v: "LIZA matches it to a playbook and compiles typed standards into context." },
-    { k: "3", h: "Receipt issued", v: "Output ships with a signed, hash-chained, replayable record." },
+    { k: "1", h: "Operator asks", v: "A prompt arrives. The surface looks like ChatGPT — that is the point. Zero behavioural change for the user." },
+    { k: "2", h: "System locks to a playbook", v: "LIZA matches the intent to a versioned company playbook (\"price an enterprise quote\"), then compiles the typed standards — policies, procedures, decision rules, approved data — fresh into the model for that call." },
+    { k: "3", h: "Signed receipt issued", v: "Output ships with a hash-chained, cryptographically signed record of which playbook, standards, data and model produced it. Replayable by any auditor in one click." },
   ];
   return (
     <Slide section="Product" n={n} total={t}>
