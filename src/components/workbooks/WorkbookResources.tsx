@@ -62,8 +62,23 @@ const TYPE_COLOR: Record<string, string> = {
 const IMAGE_TYPES = ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp", "image/svg+xml"];
 
 function getPublicUrl(filePath: string) {
-  const { data } = supabase.storage.from("workbook-resources").getPublicUrl(filePath);
-  return data.publicUrl;
+  // Backwards-compat shim; prefer useSignedUrl below.
+  return filePath;
+}
+
+function useSignedUrl(filePath: string | null | undefined) {
+  return useQuery({
+    queryKey: ["workbook-resource-signed-url", filePath],
+    enabled: !!filePath,
+    staleTime: 50 * 60 * 1000, // refresh before 1h expiry
+    queryFn: async () => {
+      const { data, error } = await supabase.storage
+        .from("workbook-resources")
+        .createSignedUrl(filePath!, 3600);
+      if (error) throw error;
+      return data?.signedUrl ?? null;
+    },
+  });
 }
 
 function isImageFile(fileType: string | null) {
@@ -80,7 +95,8 @@ function formatFileSize(bytes: number) {
 function ResourceCard({ resource, workbookId, onDelete, onViewHistory }: { resource: WorkbookResource; workbookId: string; onDelete: (id: string) => void; onViewHistory?: (r: WorkbookResource) => void }) {
   const navigate = useNavigate();
   const isImage = isImageFile(resource.file_type);
-  const publicUrl = resource.file_path ? getPublicUrl(resource.file_path) : null;
+  const { data: signedUrl } = useSignedUrl(resource.file_path);
+  const publicUrl = signedUrl ?? null;
 
   return (
     <div className="group flex items-start gap-3 rounded-lg border border-border/50 bg-card p-4 hover:border-primary/20 transition-colors">
