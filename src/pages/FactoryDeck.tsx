@@ -454,6 +454,7 @@ function FSkipMiddle() {
         </div>
       </div>
       <Footer text="Toyota was the most-studied operations design of the 20th century. We borrowed the mechanics. We did not borrow the ceiling." />
+      <SpineIndicator current={5} />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
