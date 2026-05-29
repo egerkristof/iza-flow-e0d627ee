@@ -875,6 +875,119 @@ function F17Ask() {
 // ═════════════════════════════════════════════════════════════════════════════
 // DECK COMPOSITION
 // ═════════════════════════════════════════════════════════════════════════════
+
+// ─── F_WHYHARD · Why nobody has built Era IV for knowledge work ──────────────
+function FWhyHard() {
+  const walls = [
+    { k: "Meaning is unstructured",     v: "Knowledge lives in docs, threads, heads. No schema. Nothing to assemble against.",         icon: FileText },
+    { k: "Standards drift hourly",      v: "Policy, pricing, playbook all change. A frozen RAG index is wrong by Tuesday.",            icon: Wind },
+    { k: "Retrieval pollutes context",  v: "Top-k chunks pull in stale, contradictory, off-brand text. The model averages the mess.",  icon: Skull },
+    { k: "No version control of intent",v: "Who said what, when, under which rule? No git for meaning. No diff. No rollback.",         icon: GitBranch },
+    { k: "Evaluation is theatre",       v: "Vibes-based QA. No regression suite. A 'better' prompt silently breaks 40 use cases.",      icon: AlertTriangle },
+    { k: "Governance is a PDF",         v: "Audit lives in Confluence, not in the call path. Compliance cannot prove what fired.",      icon: Ban },
+    { k: "Org incentives push Ford",    v: "Vendors sell seats. Buyers count licences. Nobody is paid to build the line.",              icon: Megaphone },
+    { k: "Talent is artisanal",         v: "The people who could build this are busy answering tickets, one hand-crafted prompt at a time.", icon: Hammer },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag label="The Wall · Why Era IV Is Not Already Built" color={RED} />
+        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          If this were easy, <span style={{ color: `hsl(${RED})` }}>Microsoft would have shipped it.</span>
+        </h2>
+        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          Toyota took fifty years and a culture rebuild. For knowledge work the wall is steeper. Meaning is unstructured. Standards drift. Retrieval pollutes context. The org is paid to buy seats, not build lines. Eight structural reasons nobody has done this yet.
+        </p>
+        <div className="grid grid-cols-4 gap-4 flex-1">
+          {walls.map((w) => {
+            const Icon = w.icon;
+            return (
+              <div key={w.k} className="rounded-xl border p-5 flex flex-col" style={{ background: `hsl(${RED} / 0.04)`, borderColor: `hsl(${RED} / 0.3)` }}>
+                <Icon size={22} style={{ color: `hsl(${RED})` }} />
+                <p className="font-bold mt-3 mb-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2 }}>{w.k}</p>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{w.v}</p>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${RED} / 0.06)`, borderColor: `hsl(${RED})` }}>
+          <Skull size={22} style={{ color: `hsl(${RED})` }} />
+          <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
+            <span className="font-black">This is why every org keeps buying more Copilot.</span> The shortcut is to push more seats and call it strategy. Era IV requires building the missing layer underneath.
+          </p>
+        </div>
+      </div>
+      <Footer text="No incumbent ships a typed standards engine with audit-grade context assembly. The wall is structural." />
+      <SlideBar from={RED} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── F_HOWWEBREAK · The stack that breaks the wall ───────────────────────────
+function FHowWeBreak() {
+  const layers = [
+    { n: "01", name: "Typed Knowledge Graph", icon: GitBranch, color: ACCENT,
+      breaks: "Meaning unstructured · Standards drift",
+      what: "Every concept, rule, role, asset and outcome is a typed node with provenance, owner, version and effective date. Not a doc store. A schema for the business." },
+    { n: "02", name: "Context Compiler", icon: Cog, color: GREEN,
+      breaks: "Retrieval pollutes context",
+      what: "Outcomes do not search. They compile. The outcome declares which standards it needs, the compiler assembles the exact context from primary sources. No top-k. No averaging." },
+    { n: "03", name: "Standards as Code", icon: FileText, color: PURPLE,
+      breaks: "No version control of intent",
+      what: "Every policy, playbook and decision rule is a versioned artefact. Diffs, rollbacks, pull requests. The Andon cord is a commit, not a meeting." },
+    { n: "04", name: "Evaluation Harness", icon: ShieldCheck, color: GOLD,
+      breaks: "Evaluation is theatre",
+      what: "Every standard ships with regression cases. A change to one rule replays against every use case that touches it. Quality measured on every commit." },
+    { n: "05", name: "Governance Loop", icon: Workflow, color: ACCENT,
+      breaks: "Governance is a PDF",
+      what: "Every token call is logged with the standard that fired it. Audit is generated, not assembled. Compliance reads the same loop the operator runs." },
+    { n: "06", name: "Outcome Router", icon: Coins, color: GREEN,
+      breaks: "Org incentives push Ford",
+      what: "Spend ties to outcomes, not seats. Every token is called by a named outcome through a named standard. The CFO sees cost per decision, not licences per head." },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag label="The Stack · How LIZA Breaks the Wall" color={GREEN} />
+        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          Six layers. <span style={{ color: `hsl(${GREEN})` }}>Each one removes a reason nobody has done this.</span>
+        </h2>
+        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          The wall is the absence of a substrate. We built the substrate. A typed knowledge graph holds the meaning. A context compiler assembles it on demand. Standards live as versioned code. The harness regression-tests every change. The loop logs every call. The router ties every token to an outcome. This is what makes the Pillars on the next four slides real, not slogans.
+        </p>
+        <div className="grid grid-cols-3 gap-4 flex-1">
+          {layers.map((l) => {
+            const Icon = l.icon;
+            return (
+              <div key={l.n} className="rounded-2xl border-2 p-5 flex flex-col" style={{ background: `hsl(${l.color} / 0.05)`, borderColor: `hsl(${l.color} / 0.45)` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-mono font-black" style={{ fontSize: 20, color: `hsl(${l.color})` }}>L{l.n}</span>
+                  <Icon size={22} style={{ color: `hsl(${l.color})` }} />
+                </div>
+                <p className="font-bold mb-2" style={{ fontSize: 20, color: TEXT, lineHeight: 1.15 }}>{l.name}</p>
+                <p className="font-mono uppercase tracking-[0.13em] mb-3" style={{ fontSize: 10, color: `hsl(${RED})` }}>Breaks: {l.breaks}</p>
+                <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{l.what}</p>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
+          <Zap size={22} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
+            <span className="font-black">This is the line.</span> The next four slides walk it station by station. Pull, Stations, Governance, Compile. Not metaphors. What this stack does on every call.
+          </p>
+        </div>
+      </div>
+      <Footer text="Knowledge graph + context compiler + standards-as-code + eval harness + governance loop + outcome router. The missing substrate for Era IV." />
+      <SlideBar from={GREEN} to={ACCENT} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
@@ -882,6 +995,9 @@ const RAW_SLIDES = [
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
   { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
   { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
+  // ACT I.5 — The wall and the substrate that breaks it
+  { id: "why-hard",          title: "The Wall · Why Era IV Is Not Already Built",        component: <FWhyHard /> },
+  { id: "how-we-break",      title: "The Stack · How LIZA Breaks the Wall",              component: <FHowWeBreak /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
