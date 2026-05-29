@@ -75,25 +75,22 @@ function S01Cover({ n, t }: { n: number; t: number }) {
 // ─── 02 · INVESTOR LENS ─────────────────────────────────────────────────────
 function S02InvestorLens({ n, t }: { n: number; t: number }) {
   const belowWater = [
-    { k: "Approved method", v: "Underwriting policy v4.2 shaped the answer, not the model's training data" },
-    { k: "Approval", v: "Risk officer J. Klein signed off at 14:03 on the flagged section" },
-    { k: "Model", v: "GPT-5 ran the draft, Claude reviewed it, both versions kept" },
-    { k: "Safety", v: "Client PII redacted before the call, allowed jurisdictions checked" },
-    { k: "Cost", v: "€0.38 of model spend produced a €2,400 work unit" },
+    { k: "Approved method", v: "The company's versioned playbook shaped the answer, not the model's training data. CIOs can finally point to the standard that was applied." },
+    { k: "Approval", v: "A named risk officer signed off the flagged section, with timestamp and scope. The CDO has a single source of who approved what." },
+    { k: "Model", v: "Multiple models can run, get compared and swapped without losing the audit trail. The CTO keeps optionality across vendors." },
+    { k: "Safety", v: "PII redaction, jurisdictional rules and data scope enforced before the call. The CISO gets a controlled perimeter, not a policy PDF." },
+    { k: "Cost", v: "Model spend tied to the work unit produced. The CFO finally sees AI as a line item with a denominator, not a runaway invoice." },
   ];
   return (
     <Slide section="Investor lens" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-4" style={{ fontSize: 60, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Every AI pitch shows the prompt. <span style={{ color: `hsl(${GREEN})` }}>We sell what sits underneath.</span>
+          Every AI pitch sells one chat session. <span style={{ color: `hsl(${GREEN})` }}>We sell the foundation that makes thousands of them scale.</span>
         </h2>
-        <p className="font-mono uppercase tracking-[0.22em] mb-8" style={{ fontSize: 14, color: MUTED }}>
-          Same prompt. Same answer. The proof beneath is what an enterprise actually pays for.
-        </p>
 
         {/* Above the waterline — what every AI pitch shows */}
-        <div className="rounded-2xl px-7 py-5 mb-2" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>What every investor has seen 100 times this year</p>
+        <div className="mt-8 rounded-2xl px-7 py-5 mb-2" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>What every investor has seen 100 times · a wrapper around one big LLM, one prompt at a time</p>
           <div className="flex items-stretch gap-3 font-mono" style={{ fontSize: 14 }}>
             <div className="flex-1 px-4 py-3 rounded-lg" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED }}>
               <span className="uppercase tracking-[0.2em] block mb-1" style={{ fontSize: 10, color: SUBTLE }}>Prompt</span>
@@ -119,7 +116,7 @@ function S02InvestorLens({ n, t }: { n: number; t: number }) {
 
         {/* Below the waterline — what LIZA sells */}
         <div className="rounded-2xl px-7 py-6" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-          <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What the CRO, the auditor and the CFO will ask the next morning · this is what LIZA sells</p>
+          <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What the CFO, CIO, CDO, CTO and CISO need before they let one chat session become ten thousand · this is what LIZA sells</p>
           <div className="grid grid-cols-5 gap-4">
             {belowWater.map((b) => (
               <div key={b.k} className="rounded-xl p-4" style={{ background: BG, border: `1px solid hsl(${GREEN} / 0.3)` }}>
@@ -131,7 +128,7 @@ function S02InvestorLens({ n, t }: { n: number; t: number }) {
         </div>
 
         <p className="mt-7 font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-          LIZA is the layer that proves which method shaped the answer, who approved it, which model ran it, why it was safe and what it cost. Priced per governed decision.
+          Every other AI company is selling the prompt. LIZA is selling the foundation that lets a company run AI at scale: approved methods, named approvals, model optionality, enforced safety and a cost per work unit.
         </p>
       </div>
     </Slide>
