@@ -1353,6 +1353,9 @@ const RAW_SLIDES = [
   // ACT I.5 — The wall and the substrate that breaks it
   { id: "why-hard",          title: "The Wall · Why Era IV Is Not Already Built",        component: <FWhyHard /> },
   { id: "how-we-break",      title: "The Stack · How LIZA Breaks the Wall",              component: <FHowWeBreak /> },
+
+  { id: "open-the-hood",     title: "Open the Hood · Trabant vs Ferrari",                component: <FOpenTheHood /> },
+  { id: "engine-bay",        title: "The Engine Bay · AACE v3.1 Exposed",                component: <FEngineBay /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
