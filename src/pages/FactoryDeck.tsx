@@ -64,55 +64,6 @@ function F01Cover() {
   );
 }
 
-// ─── SPINE INDICATOR · Persistent red-thread across slides 3-8 ───────────────
-const SPINE_BEATS = [
-  "Sessions die",
-  "You patch",
-  "They push seats",
-  "Both unconscious",
-  "Era IV exit",
-  "Substrate ships",
-];
-function SpineIndicator({ current }: { current: number }) {
-  return (
-    <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5"
-         style={{ bottom: 72, zIndex: 5 }}>
-      <span className="font-mono uppercase tracking-[0.22em] font-bold mr-2" style={{ fontSize: 10, color: SUBTLE }}>
-        Red thread
-      </span>
-      {SPINE_BEATS.map((label, i) => {
-        const beat = i + 1;
-        const isCurrent = beat === current;
-        const isPast = beat < current;
-        return (
-          <div key={label} className="flex items-center gap-2">
-            <div className="flex flex-col items-center gap-1">
-              <div className="rounded-full transition-all"
-                   style={{
-                     width: isCurrent ? 11 : 7,
-                     height: isCurrent ? 11 : 7,
-                     background: isCurrent ? `hsl(${GREEN})` : isPast ? `hsl(${GREEN} / 0.45)` : `hsl(215 15% 75%)`,
-                     boxShadow: isCurrent ? `0 0 0 4px hsl(${GREEN} / 0.18)` : "none",
-                   }} />
-              <span className="font-mono uppercase tracking-[0.1em]" style={{
-                fontSize: 9,
-                color: isCurrent ? `hsl(${GREEN})` : SUBTLE,
-                fontWeight: isCurrent ? 700 : 500,
-                whiteSpace: "nowrap",
-              }}>
-                {beat}. {label}
-              </span>
-            </div>
-            {i < SPINE_BEATS.length - 1 && (
-              <div className="h-px" style={{ width: 18, background: beat < current ? `hsl(${GREEN} / 0.45)` : `hsl(215 15% 80%)` }} />
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 // ─── F_WORKSHOP · The workshop you already run ───────────────────────────────
 function FWorkshop() {
   const artisans = [
@@ -215,19 +166,8 @@ function FDisposable() {
             );
           })}
         </div>
-
-        {/* Bridge line — the causal link to Era I */}
-        <div className="mt-5 px-7 py-3 rounded-xl border-l-4 flex items-center gap-4"
-             style={{ background: `hsl(${GOLD} / 0.07)`, borderColor: `hsl(${GOLD})`, animation: "chain-pop 0.6s 0.6s cubic-bezier(0.16,1,0.3,1) both" }}>
-          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>The link</span>
-          <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-            <span className="font-black">This is why you are still in Era I.</span> No artefact survives the session, so every fix is hand-crafted, every craft is private, every method is disposable. The next slide names the four eras.
-          </p>
-        </div>
-        <style>{`@keyframes chain-pop { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }`}</style>
       </div>
       <Footer text="The artifact ships. The method dies with the session. This is the workshop tax." />
-      <SpineIndicator current={1} />
       <SlideBar from={RED} to={GOLD} />
     </div>
   );
@@ -345,7 +285,6 @@ function FThreeStages() {
         </div>
       </div>
       <Footer text="Source frame: industrial production eras (Artisanal · Fordism · Toyotaism · Industry 4.0). Ported to knowledge work." />
-      <SpineIndicator current={4} />
       <SlideBar from={GOLD} to={GREEN} />
     </div>
   );
@@ -373,49 +312,6 @@ function FSkipMiddle() {
         <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
           Most buyers think rolling out Copilot to five thousand desks is transformation. It is the Ford rollout. Toyota is the mechanic we steal. Era IV is the destination. Three columns, six rows, one trajectory.
         </p>
-
-        {/* Flip-card equivalence: Copilot seats = Ford 1913. Hover to flip. */}
-        <div className="mb-5 flex justify-center" style={{ perspective: 1400 }}>
-          <div className="group relative" style={{ width: 760, height: 92, transformStyle: "preserve-3d" }}>
-            <div className="absolute inset-0 rounded-xl border-2 flex items-center gap-4 px-6 transition-transform duration-700"
-                 style={{
-                   background: "white",
-                   borderColor: `hsl(${RED} / 0.5)`,
-                   backfaceVisibility: "hidden",
-                   transformStyle: "preserve-3d",
-                   transform: "rotateY(0deg)",
-                 }}>
-              <Megaphone size={26} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
-              <div className="flex-1">
-                <p className="font-mono uppercase tracking-[0.18em] font-bold mb-0.5" style={{ fontSize: 11, color: `hsl(${RED})` }}>Today · the trap they call transformation</p>
-                <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
-                  Microsoft Copilot · $30 / seat / month · 50,000 desks
-                </p>
-              </div>
-              <span className="font-mono uppercase tracking-[0.15em] px-3 py-1.5 rounded-md" style={{ background: CARD_ALT, fontSize: 10, color: MUTED }}>hover to flip</span>
-            </div>
-            <div className="absolute inset-0 rounded-xl border-2 flex items-center gap-4 px-6 transition-transform duration-700"
-                 style={{
-                   background: `hsl(${RED} / 0.06)`,
-                   borderColor: `hsl(${RED})`,
-                   backfaceVisibility: "hidden",
-                   transform: "rotateY(180deg)",
-                 }}>
-              <Factory size={26} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
-              <div className="flex-1">
-                <p className="font-mono uppercase tracking-[0.18em] font-bold mb-0.5" style={{ fontSize: 11, color: `hsl(${RED})` }}>1913 · the same move, last century</p>
-                <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
-                  Ford Highland Park · one motion · one worker · one wage
-                </p>
-              </div>
-              <span className="font-mono uppercase tracking-[0.15em] px-3 py-1.5 rounded-md" style={{ background: `hsl(${RED} / 0.12)`, fontSize: 10, color: `hsl(${RED})` }}>same trap</span>
-            </div>
-            <style>{`
-              .group:hover > div:first-child { transform: rotateY(-180deg); }
-              .group:hover > div:nth-child(2) { transform: rotateY(0deg); }
-            `}</style>
-          </div>
-        </div>
 
         {/* Three column headers */}
         <div className="grid grid-cols-[1fr_1.3fr_1.3fr_1.3fr] gap-0 rounded-t-2xl border border-b-0 overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
@@ -454,7 +350,6 @@ function FSkipMiddle() {
         </div>
       </div>
       <Footer text="Toyota was the most-studied operations design of the 20th century. We borrowed the mechanics. We did not borrow the ceiling." />
-      <SpineIndicator current={5} />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -1002,102 +897,6 @@ function F17Ask() {
 // DECK COMPOSITION
 // ═════════════════════════════════════════════════════════════════════════════
 
-// ─── F_CHAIN · The Red Thread · Single canvas, 6 reveals auto-staggered ──────
-function FChain() {
-  const beats = [
-    { n: 1, color: RED,    icon: Skull,    title: "Every session dies",          body: "ChatGPT closes. The method evaporates. Nothing compounds." },
-    { n: 2, color: GOLD,   icon: Hammer,   title: "You patch with workshop fixes", body: "Prompt libraries. Shared docs. Slack channels. Stays in Era I." },
-    { n: 3, color: RED,    icon: Megaphone, title: "Vendors push more seats",     body: "Copilot to five thousand desks. Called transformation. Lands you in Era II." },
-    { n: 4, color: SUBTLE, icon: AlertTriangle, title: "Both moves are unconscious", body: "Buyer reflex and vendor reflex. Neither side names the trap they are in." },
-    { n: 5, color: ACCENT, icon: ArrowRight, title: "Era IV is the only exit",   body: "Skip the Ford rollout. Toyota was the bridge mechanic, not the destination." },
-    { n: 6, color: GREEN,  icon: Sparkles, title: "Here is the substrate that ships it", body: "Typed standards. Compiled context. Versioned intent. Governed loop." },
-  ];
-  return (
-    <div className="w-full h-full relative overflow-hidden" style={{ background: BG }}>
-      <SlideGrid />
-      <PageNumber />
-      <style>{`
-        @keyframes chain-pop { 0% { opacity: 0; transform: translateY(14px) scale(0.96); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes chain-line { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
-        .chain-card { opacity: 0; animation: chain-pop 0.55s cubic-bezier(0.16,1,0.3,1) forwards; }
-        .chain-connector { stroke-dasharray: 200; stroke-dashoffset: 200; animation: chain-line 0.45s ease-out forwards; }
-      `}</style>
-      <div className="absolute inset-0 px-24 pt-24 pb-32 flex flex-col">
-        <Tag label="The Red Thread · One Sentence, Six Beats" color={GREEN} />
-        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
-          The whole deck in one chain. <span style={{ color: `hsl(${GREEN})` }}>Everything else is a zoom-in.</span>
-        </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
-          The disposable session is the disease. The workshop patch and the vendor seat are the two unconscious reflexes. Era IV is the exit. The next eight slides build it out. Keep this chain in your head.
-        </p>
-
-        {/* The 6-beat chain: 2 rows of 3, with SVG connectors drawn between */}
-        <div className="relative flex-1">
-          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1700 540" preserveAspectRatio="none">
-            {/* row 1: 1 → 2 → 3 */}
-            <line x1="540"  y1="125" x2="600"  y2="125" className="chain-connector" stroke={`hsl(${SUBTLE})`} strokeWidth="2.5" style={{ animationDelay: "0.55s" }} />
-            <line x1="1100" y1="125" x2="1160" y2="125" className="chain-connector" stroke={`hsl(${SUBTLE})`} strokeWidth="2.5" style={{ animationDelay: "1.10s" }} />
-            {/* row 1 → row 2 (3 → 4) */}
-            <path d="M 1490 220 Q 1620 270, 1490 320" className="chain-connector" stroke={`hsl(${SUBTLE})`} strokeWidth="2.5" fill="none" style={{ animationDelay: "1.65s" }} />
-            {/* row 2: 4 → 5 → 6 (reversed visual flow) */}
-            <line x1="1160" y1="415" x2="1100" y2="415" className="chain-connector" stroke={`hsl(${SUBTLE})`} strokeWidth="2.5" style={{ animationDelay: "2.20s" }} />
-            <line x1="600"  y1="415" x2="540"  y2="415" className="chain-connector" stroke={`hsl(${ACCENT})`} strokeWidth="2.5" style={{ animationDelay: "2.75s" }} />
-          </svg>
-
-          <div className="grid grid-cols-3 gap-6">
-            {beats.slice(0, 3).map((b, i) => {
-              const Icon = b.icon;
-              return (
-                <div key={b.n} className="chain-card rounded-2xl border-2 p-5 bg-white"
-                     style={{ borderColor: `hsl(${b.color} / 0.5)`, animationDelay: `${i * 0.55}s` }}>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center font-mono font-black"
-                         style={{ background: `hsl(${b.color} / 0.12)`, color: `hsl(${b.color})`, fontSize: 16 }}>
-                      {b.n}
-                    </div>
-                    <Icon size={20} style={{ color: `hsl(${b.color})` }} />
-                  </div>
-                  <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{b.title}</p>
-                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{b.body}</p>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="grid grid-cols-3 gap-6 mt-10">
-            {/* row 2 reversed so the chain flows ←: beat 6 right? Actually flow 3→4→5→6: keep left→right with 4,5,6 */}
-            {beats.slice(3, 6).map((b, i) => {
-              const Icon = b.icon;
-              const idx = i + 3;
-              const isFinale = b.n === 6;
-              return (
-                <div key={b.n} className="chain-card rounded-2xl border-2 p-5"
-                     style={{
-                       borderColor: `hsl(${b.color} / 0.5)`,
-                       background: isFinale ? `hsl(${GREEN} / 0.08)` : "white",
-                       animationDelay: `${1.65 + i * 0.55}s`,
-                     }}>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center font-mono font-black"
-                         style={{ background: `hsl(${b.color} / 0.12)`, color: `hsl(${b.color})`, fontSize: 16 }}>
-                      {b.n}
-                    </div>
-                    <Icon size={20} style={{ color: `hsl(${b.color})` }} />
-                  </div>
-                  <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{b.title}</p>
-                  <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{b.body}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-      <Footer text="Six beats. One thread. Every other slide in this deck is a zoom-in on one beat." />
-      <SlideBar from={RED} to={GREEN} />
-    </div>
-  );
-}
-
 // ─── F_WHYHARD · Why nobody has built Era IV for knowledge work ──────────────
 function FWhyHard() {
   const walls = [
@@ -1142,7 +941,6 @@ function FWhyHard() {
         </div>
       </div>
       <Footer text="No incumbent ships a typed standards engine with audit-grade context assembly. The wall is structural." />
-      <SpineIndicator current={6} />
       <SlideBar from={RED} to={ACCENT} />
     </div>
   );
@@ -1215,7 +1013,6 @@ function FHowWeBreak() {
         </div>
       </div>
       <Footer text="Knowledge graph + context compiler + standards-as-code + eval harness + governance loop + outcome router. The missing substrate for Era IV." />
-      <SpineIndicator current={6} />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -1226,7 +1023,6 @@ const RAW_SLIDES = [
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
-  { id: "chain",            title: "The Red Thread · Six Beats",                        component: <FChain /> },
   { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
   { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
   // ACT I.5 — The wall and the substrate that breaks it
