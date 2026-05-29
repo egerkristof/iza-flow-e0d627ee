@@ -242,6 +242,15 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
+    id: "seed-skeptic",
+    title: "Seed Pitch · Skeptic Edition",
+    path: "/seed-skeptic",
+    sourcePath: "src/pages/SeedPitchDeckSkeptic.tsx",
+    description: "10-slide defensive seed deck built for the sharpest objection in the room: 'anyone builds this in a weekend' and 'Anthropic ships this next quarter'. Names both objections on slide 02 and spends the rest of the deck dismantling them: weekend-demo vs enterprise-grade table, four non-code assets that compound (vertical standards corpus, receipt &amp; lineage graph, drift loop, regulator-tested install), four structural reasons foundation labs do not build organizational governance (business model, incentive, trust, surface area), the two-lane diagram (lab lane vs governance lane), buyer veto quotes from regulated CTOs, production proof (127 standards, 3.4K governed decisions/month, 62% time-to-spec, 0 audit failures), €2M ask broken into corpus / self-serve / partner channel, and a close that draws the line: if you believe Claude will own organizational governance, do not invest.",
+    component: SeedPitchDeckSkeptic,
+    showInAdmin: true,
+  },
+  {
     id: "impact",
     title: "Impact Thesis Deck",
     path: "/impact",
