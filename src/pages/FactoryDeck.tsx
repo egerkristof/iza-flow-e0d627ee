@@ -882,6 +882,9 @@ const RAW_SLIDES = [
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
   { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
   { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
+  // ACT I.5 — The wall and the substrate that breaks it
+  { id: "why-hard",          title: "The Wall · Why Era IV Is Not Already Built",        component: <FWhyHard /> },
+  { id: "how-we-break",      title: "The Stack · How LIZA Breaks the Wall",              component: <FHowWeBreak /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
