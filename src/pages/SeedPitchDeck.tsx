@@ -118,13 +118,21 @@ function S02Problem({ n, t }: { n: number; t: number }) {
             </div>
           ))}
         </div>
-        <div className="flex items-center gap-6">
-          <div className="font-mono uppercase tracking-[0.22em] whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${RED})` }}>
-            1 email · 6 defects shipped
+        <div className="rounded-xl p-6" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
+          <div className="flex items-baseline justify-between mb-3 gap-6">
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>
+              One real failure, one real day
+            </p>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: MUTED }}>
+              1 email · 6 defects shipped
+            </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+            A senior consultant asked AI to draft a client update. Six defects shipped in one email. Nothing stopped the line, because there was no line.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
             {defects.map((d) => (
-              <span key={d} className="font-mono px-3 py-1 rounded-md" style={{ fontSize: 14, color: TEXT, background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>
+              <span key={d} className="font-mono px-3 py-1 rounded-md" style={{ fontSize: 13, color: TEXT, background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>
                 {d}
               </span>
             ))}
