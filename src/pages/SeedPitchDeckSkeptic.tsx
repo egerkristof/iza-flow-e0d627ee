@@ -400,55 +400,63 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
     <Slide section="Business model" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          We do not sell tokens. <span style={{ color: `hsl(${GREEN})` }}>We sell governed decisions.</span>
+          Tokens get cheap. <span style={{ color: `hsl(${GREEN})` }}>Context gets expensive.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
-          Tokens get cheaper. Enterprise AI spend grows. We capture the layer in between.
+          The cost of a token keeps falling. The cost of getting the right context into that token is what now decides whether the work is usable.
         </p>
         <div className="grid grid-cols-[1.2fr_1fr] gap-7 items-stretch">
-          {/* Visualization: stacked bars, model cost shrinking, governance spend growing */}
+          {/* Visualization: token cost line falling, context cost line rising, LIZA captures the gap */}
           <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: SUBTLE }}>Enterprise AI spend per task · share by layer</p>
-            <svg viewBox="0 0 540 280" className="w-full" style={{ height: 300 }}>
-              {(["Today", "2025", "2027"] as const).map((year, i) => {
-                const x = 70 + i * 160;
-                const totals = [160, 200, 250];        // bar grows
-                const tokenShare = [0.55, 0.32, 0.15]; // token share shrinks
-                const total = totals[i];
-                const tokenH = total * tokenShare[i];
-                const govH = total - tokenH;
-                const baseY = 240;
+            <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: SUBTLE }}>Cost per usable AI decision · indexed</p>
+            <svg viewBox="0 0 540 300" className="w-full" style={{ height: 300 }}>
+              {/* axes */}
+              <line x1="60" y1="240" x2="510" y2="240" stroke={CHROME_BORDER} strokeWidth="1" />
+              <line x1="60" y1="40" x2="60" y2="240" stroke={CHROME_BORDER} strokeWidth="1" />
+              {/* x labels */}
+              {(["2023", "2025", "2027"] as const).map((year, i) => {
+                const x = 110 + i * 180;
                 return (
-                  <g key={year}>
-                    {/* token portion */}
-                    <rect x={x} y={baseY - tokenH} width="80" height={tokenH} fill={`hsl(${RED} / 0.55)`} />
-                    {/* governance portion */}
-                    <rect x={x} y={baseY - tokenH - govH} width="80" height={govH} fill={`hsl(${GREEN})`} />
-                    <text x={x + 40} y={258} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="1.5" fill={SUBTLE}>{year}</text>
-                    <text x={x + 40} y={baseY - tokenH - govH - 8} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1" fill={TEXT}>{total}</text>
-                  </g>
+                  <text key={year} x={x} y={260} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="1.5" fill={SUBTLE}>{year}</text>
                 );
               })}
+              {/* token cost: falling */}
+              <path d="M 110 90 Q 200 160 290 200 T 470 225" fill="none" stroke={`hsl(${RED} / 0.7)`} strokeWidth="2.5" strokeDasharray="6 4" />
+              {/* context cost: rising */}
+              <path d="M 110 215 Q 200 180 290 130 T 470 60" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="3" />
+              {/* gap shading between the two lines on the right */}
+              <path d="M 290 130 T 470 60 L 470 225 T 290 200 Z" fill={`hsl(${GREEN} / 0.08)`} stroke="none" />
+              {/* end-point dots */}
+              <circle cx="470" cy="225" r="4" fill={`hsl(${RED} / 0.8)`} />
+              <circle cx="470" cy="60" r="5" fill={`hsl(${GREEN})`} />
+              {/* line labels */}
+              <text x="478" y="228" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.2" fill={MUTED}>TOKEN COST</text>
+              <text x="478" y="63" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.2" fill={`hsl(${GREEN})`}>CONTEXT COST</text>
+              {/* LIZA capture band callout */}
+              <g transform="translate(330, 110)">
+                <rect x="0" y="0" width="118" height="26" rx="13" fill={BG} stroke={`hsl(${GREEN} / 0.5)`} />
+                <text x="59" y="17" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="10.5" letterSpacing="1.5" fill={`hsl(${GREEN})`}>LIZA CAPTURES THIS</text>
+              </g>
               {/* legend */}
               <g>
-                <rect x="70" y="20" width="12" height="12" fill={`hsl(${GREEN})`} />
-                <text x="90" y="30" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.5" fill={TEXT}>GOVERNANCE LAYER · LIZA</text>
-                <rect x="320" y="20" width="12" height="12" fill={`hsl(${RED} / 0.55)`} />
-                <text x="340" y="30" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.5" fill={MUTED}>TOKENS · PASS-THROUGH</text>
+                <line x1="70" y1="22" x2="92" y2="22" stroke={`hsl(${RED} / 0.7)`} strokeWidth="2.5" strokeDasharray="6 4" />
+                <text x="100" y="26" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.2" fill={MUTED}>TOKENS · COMMODITY</text>
+                <line x1="290" y1="22" x2="312" y2="22" stroke={`hsl(${GREEN})`} strokeWidth="3" />
+                <text x="320" y="26" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.2" fill={TEXT}>CONTEXT · RELEVANT, SAFE, EFFICIENT</text>
               </g>
             </svg>
           </div>
           <div className="flex flex-col gap-5">
             <div className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-              <p className="font-black mb-3" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>Priced per governed decision.</p>
+              <p className="font-black mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>LIZA shapes the context.</p>
               <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.42 }}>
-                Customers pay for accountable work units: proposals checked, specs drafted, risk memos reviewed, clinical summaries governed.
+                Relevant, safe and token-efficient. Every prompt arrives with the right standards, the right data scope and the right guardrails attached.
               </p>
             </div>
             <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <p className="font-black mb-3" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>The anchor is manual labor displaced.</p>
+              <p className="font-black mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>We charge token plus value.</p>
               <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.42 }}>
-                Not token cost marked up. Model cost is a pass-through input inside a higher-margin control layer.
+                Tokens pass through at cost. Our margin is the usable, accountable decision the business actually gets out of them.
               </p>
             </div>
           </div>
