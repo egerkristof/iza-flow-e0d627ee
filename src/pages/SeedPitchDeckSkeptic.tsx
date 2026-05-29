@@ -173,9 +173,10 @@ function S03Problem({ n, t }: { n: number; t: number }) {
 // ─── 04 · SOLUTION UNIT ─────────────────────────────────────────────────────
 function S04ProductUnit({ n, t }: { n: number; t: number }) {
   const steps = [
-    { k: "LOCK", h: "Bind the task to a playbook", v: "Intent is matched to the company's versioned way of doing the work." },
-    { k: "COMPILE", h: "Load the right standards", v: "Policies, procedures, decision rules and approved data are compiled fresh for that single call." },
-    { k: "SIGN", h: "Issue a replayable receipt", v: "Every output carries the evidence needed to audit, approve and improve the decision." },
+    { k: "BIND", h: "Bind the prompt to a playbook", v: "The user's intent is matched to the company's versioned way of doing the work before any model runs." },
+    { k: "EXECUTE", h: "Run the prompt with the right standards", v: "Policies, procedures, decision rules and approved data are compiled fresh into the call. The model executes against the standard, not against its training data." },
+    { k: "SIGN", h: "Finalise an auditable output", v: "Every output ships with the evidence behind it: playbook version, data, model, approver and cost. Replayable on demand." },
+    { k: "LEARN", h: "Feed what's new back into the standard", v: "Anything new learned in the session updates the playbook. The next prompt starts from a sharper standard." },
   ];
   return (
     <Slide section="Solution" n={n} total={t}>
@@ -184,22 +185,22 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
           LIZA turns each AI task into <span style={{ color: `hsl(${GREEN})` }}>a governed decision.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          One unit. Three controls. Model agnostic by design.
+          One unit. Four steps. A closed loop, model agnostic by design.
         </p>
-        <div className="relative grid grid-cols-3 gap-6 mb-2">
+        <div className="relative grid grid-cols-4 gap-4 mb-2">
           {steps.map((s, i) => (
-            <div key={s.k} className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.045)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-              <div className="flex items-center gap-4 mb-5">
-                <span className="font-mono font-black flex items-center justify-center rounded-full" style={{ width: 34, height: 34, fontSize: 15, color: BG, background: `hsl(${GREEN})` }}>{i + 1}</span>
-                <span className="font-mono font-black uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>{s.k}</span>
+            <div key={s.k} className="rounded-2xl p-6" style={{ background: `hsl(${GREEN} / 0.045)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-mono font-black flex items-center justify-center rounded-full" style={{ width: 30, height: 30, fontSize: 13, color: BG, background: `hsl(${GREEN})` }}>{i + 1}</span>
+                <span className="font-mono font-black uppercase tracking-[0.22em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>{s.k}</span>
               </div>
-              <p className="font-black mb-4" style={{ fontSize: 32, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.025em" }}>{s.h}</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.42 }}>{s.v}</p>
+              <p className="font-black mb-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{s.h}</p>
+              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.42 }}>{s.v}</p>
             </div>
           ))}
         </div>
 
-        {/* Feedback loop visualization: arrow from SIGN back to LOCK */}
+        {/* Feedback loop visualization: arrow from LEARN back to BIND */}
         <div className="relative mt-6 mb-4" style={{ height: 140 }}>
           <svg viewBox="0 0 1000 140" className="w-full h-full" preserveAspectRatio="none">
             <defs>
@@ -207,23 +208,23 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
                 <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${GREEN})`} />
               </marker>
             </defs>
-            {/* curved arrow from the SIGN card (right) back up to the LOCK card (left) */}
+            {/* curved arrow from the LEARN card (right) back up to the BIND card (left) */}
             <path d="M 920 5 C 940 130, 60 130, 80 5" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="2.5" strokeDasharray="7 6" markerEnd="url(#loopArrow)" />
           </svg>
           <div className="absolute left-1/2 -translate-x-1/2 px-6 py-3 rounded-full flex items-center gap-3"
                style={{ top: 60, background: BG, border: `1.5px solid hsl(${GREEN})` }}>
-            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Every receipt</span>
+            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Every session</span>
             <span style={{ color: SUBTLE }}>→</span>
             <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>sharpens the standard</span>
             <span style={{ color: SUBTLE }}>→</span>
-            <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>next decision is better governed</span>
+            <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>next prompt starts smarter</span>
           </div>
         </div>
 
         <div className="rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded" style={{ fontSize: 11, color: `hsl(${GOLD})`, background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>Example</span>
           <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>
-            <span style={{ color: TEXT, fontWeight: 700 }}>Risk memo.</span> Locked to the firm's underwriting playbook. Compiled with this quarter's policy. Signed with the model used, approver, evidence and cost — replayable next audit.
+            <span style={{ color: TEXT, fontWeight: 700 }}>Risk memo.</span> Prompt bound to the firm's underwriting playbook. Executed with this quarter's policy. Signed with model, approver, evidence and cost. What the analyst learned about the new client segment is fed back into the playbook for the next memo.
           </p>
         </div>
       </div>
