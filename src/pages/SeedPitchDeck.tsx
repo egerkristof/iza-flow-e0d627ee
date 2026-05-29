@@ -46,6 +46,11 @@ function Slide({ section, n, total, children, dark = false }: {
 
 // ─── 01 · COVER ──────────────────────────────────────────────────────────────
 function S01Cover({ n, t }: { n: number; t: number }) {
+  const stats = [
+    { v: "€0.40", l: "per governed decision" },
+    { v: "95%",   l: "platform gross margin" },
+    { v: "€23",   l: "displaced labour cost / decision" },
+  ];
   return (
     <Slide section="LIZA OS" n={n} total={t} dark>
       <div className="absolute inset-0 flex flex-col items-center justify-center px-32 text-center">
@@ -58,6 +63,20 @@ function S01Cover({ n, t }: { n: number; t: number }) {
         <p className="mt-12" style={{ fontSize: 36, lineHeight: 1.3, color: "hsl(0 0% 75%)", maxWidth: 1200 }}>
           Run AI like a factory, not a workshop.
         </p>
+        <p className="mt-8" style={{ fontSize: 22, lineHeight: 1.45, color: "hsl(0 0% 60%)", maxWidth: 1100 }}>
+          Every knowledge worker became a brilliant artisan with ChatGPT. The method dies with the session. That is the disease. LIZA is the line.
+        </p>
+        <div className="mt-16 flex items-center gap-14">
+          {stats.map((s, i) => (
+            <React.Fragment key={s.l}>
+              {i > 0 && <div className="w-px h-12" style={{ background: "hsl(0 0% 100% / 0.15)" }} />}
+              <div className="text-center">
+                <div className="font-black" style={{ fontSize: 54, lineHeight: 0.95, color: "hsl(0 0% 98%)", letterSpacing: "-0.03em" }}>{s.v}</div>
+                <p className="mt-2 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: "hsl(0 0% 55%)" }}>{s.l}</p>
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
       </div>
       <div className="absolute bottom-14 right-20 font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: "hsl(0 0% 55%)" }}>
         Seed Round · €2M
@@ -76,19 +95,27 @@ function S02Problem({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Problem" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-16" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           Companies run AI like a{" "}
           <span style={{ color: `hsl(${RED})` }}>workshop of artisans.</span>
         </h2>
-        <div className="flex flex-col gap-7">
+        <div className="flex flex-col gap-5 mb-10">
           {lines.map((l) => (
             <div key={l} className="flex items-baseline gap-6">
-              <span className="font-mono" style={{ fontSize: 22, color: `hsl(${RED})` }}>—</span>
-              <p style={{ fontSize: 36, color: TEXT, lineHeight: 1.25 }}>{l}</p>
+              <span className="font-mono font-black" style={{ fontSize: 22, color: `hsl(${RED})` }}>×</span>
+              <p style={{ fontSize: 32, color: TEXT, lineHeight: 1.25 }}>{l}</p>
             </div>
           ))}
         </div>
-        <p className="mt-16 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 16, color: MUTED }}>
+        <div className="rounded-xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${RED})` }}>
+            One real failure, one real day
+          </p>
+          <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
+            A senior consultant asked AI to draft a client update. Six defects shipped in one email: wrong honorific, stale timeline, fabricated 30% savings figure, missing attachment, wrong SLA, no audit trail. Nothing stopped the line, because there was no line.
+          </p>
+        </div>
+        <p className="mt-8 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 15, color: MUTED }}>
           Brilliance does not compound. It does not transfer. It does not survive Monday.
         </p>
       </div>
@@ -99,14 +126,14 @@ function S02Problem({ n, t }: { n: number; t: number }) {
 // ─── 03 · SOLUTION ───────────────────────────────────────────────────────────
 function S03Solution({ n, t }: { n: number; t: number }) {
   const items = [
-    { k: "LOCK",   v: "Every prompt locks to a playbook." },
-    { k: "COMPILE", v: "Every call compiles against typed standards." },
-    { k: "SIGN",   v: "Every output ships with a signed receipt." },
+    { k: "LOCK",    v: "Every prompt locks to a playbook." },
+    { k: "COMPILE", v: "Typed standards compile into context, per call." },
+    { k: "SIGN",    v: "Every output ships with a signed receipt." },
   ];
   return (
     <Slide section="Solution" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-16" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-10" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           We run a{" "}
           <span style={{ color: `hsl(${GREEN})` }}>system around the model.</span>
         </h2>
@@ -116,13 +143,18 @@ function S03Solution({ n, t }: { n: number; t: number }) {
               <div className="font-mono font-black uppercase tracking-[0.2em] mb-4" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>
                 {i.k}
               </div>
-              <p className="font-bold" style={{ fontSize: 26, color: TEXT, lineHeight: 1.25 }}>{i.v}</p>
+              <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.25 }}>{i.v}</p>
             </div>
           ))}
         </div>
-        <p className="mt-14" style={{ fontSize: 26, color: MUTED, maxWidth: 1300, lineHeight: 1.35 }}>
-          The chat surface looks the same. Underneath, every decision is governed, typed, and replayable. Knowledge compounds inside the company instead of dying with the session.
+        <p className="mt-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1400, lineHeight: 1.4 }}>
+          A playbook is a versioned, typed standard. A named policy, procedure, or decision rule. Not a prompt template.
         </p>
+        <div className="mt-8 rounded-xl px-8 py-6" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <p className="font-bold" style={{ fontSize: 26, color: TEXT, lineHeight: 1.35 }}>
+            Every signed receipt feeds back into the graph. Standards improve with every call. <span style={{ color: `hsl(${GREEN})` }}>The factory learns.</span>
+          </p>
+        </div>
       </div>
     </Slide>
   );
@@ -133,35 +165,46 @@ function S04WhyNow({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Why Now" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-16" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          Two shifts. <span style={{ color: `hsl(${ACCENT})` }}>One collision.</span>
+        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+          Three shifts. <span style={{ color: `hsl(${ACCENT})` }}>One collision.</span>
         </h2>
-        <div className="grid grid-cols-2 gap-10">
-          <div className="rounded-2xl p-10" style={{ background: CARD_ALT, borderLeft: `6px solid hsl(${ACCENT})` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 15, color: `hsl(${ACCENT})` }}>
+        <div className="grid grid-cols-3 gap-7">
+          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, borderLeft: `6px solid hsl(${ACCENT})` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>
               Shift 1
             </p>
-            <p className="font-black mb-3" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+            <p className="font-black mb-3" style={{ fontSize: 34, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
               AI is in every workflow.
             </p>
-            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.35 }}>
+            <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>
               ChatGPT, Copilot, Gemini are inside every team. Adoption is solved. Governance is not.
             </p>
           </div>
-          <div className="rounded-2xl p-10" style={{ background: CARD_ALT, borderLeft: `6px solid hsl(${GOLD})` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 15, color: `hsl(${GOLD})` }}>
+          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, borderLeft: `6px solid hsl(${GOLD})` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
               Shift 2
             </p>
-            <p className="font-black mb-3" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+            <p className="font-black mb-3" style={{ fontSize: 34, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
               Audit is now law.
             </p>
-            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.35 }}>
+            <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>
               EU AI Act, SOC 2, GxP, MiFID II. Every AI decision must be explainable, signed, replayable.
             </p>
           </div>
+          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, borderLeft: `6px solid hsl(${GREEN})` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
+              Shift 3
+            </p>
+            <p className="font-black mb-3" style={{ fontSize: 34, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+              AI pricing is going metered.
+            </p>
+            <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>
+              Copilot pay-as-you-go GA 2025. Anthropic usage tiers. Bedrock per-token. Every AI call becomes a P&L line.
+            </p>
+          </div>
         </div>
-        <p className="mt-14 font-bold" style={{ fontSize: 28, color: TEXT, maxWidth: 1300, lineHeight: 1.3 }}>
-          The market has a chat surface and an audit deadline. Nothing bridges the two.
+        <p className="mt-12 font-bold" style={{ fontSize: 26, color: TEXT, maxWidth: 1400, lineHeight: 1.35 }}>
+          Chat surface. Audit deadline. Metered bill. Nothing on the market bridges the three. We are the layer that makes those tokens defensible.
         </p>
       </div>
     </Slide>
@@ -173,66 +216,53 @@ function S05Validation({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Market Validation" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-16" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           The cost is already showing up.
         </h2>
-        <div className="grid grid-cols-3 gap-10">
-          {[
-            { v: "€550K", l: "average yearly rework cost per mid-size org", sub: "from undefined AI context — measured across pilots" },
-            { v: "73%",   l: "of AI outputs reworked before they ship",       sub: "operators escalate to senior staff to clean up" },
-            { v: "6",     l: "regulated verticals validated to date",         sub: "pharma, banking, AEC, space, advisory, gov" },
-          ].map((s) => (
-            <div key={s.l}>
-              <div className="font-black" style={{ fontSize: 110, lineHeight: 0.95, color: `hsl(${ACCENT})`, letterSpacing: "-0.04em" }}>
-                {s.v}
+        <div className="grid grid-cols-2 gap-10 mb-10">
+          <div className="rounded-2xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${RED})` }}>
+              The hidden tax
+            </p>
+            <div className="font-black" style={{ fontSize: 96, lineHeight: 0.95, color: `hsl(${RED})`, letterSpacing: "-0.04em" }}>€550K</div>
+            <p className="font-bold mt-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25 }}>per year, per 100 knowledge workers.</p>
+            <p className="mt-3 font-mono" style={{ fontSize: 14, color: MUTED, lineHeight: 1.5 }}>
+              4 h/week × €55/h × 46 wks × 100 = €1.01M raw, discounted 46% to €550K.<br/>
+              Cross-validated against HBR and McKinsey 2024 rework data.
+            </p>
+          </div>
+          <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
+              First production deployment · AEC (anonymized)
+            </p>
+            <div className="grid grid-cols-3 gap-4 mt-4">
+              <div>
+                <div className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.035em" }}>127</div>
+                <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>standards encoded</p>
               </div>
-              <p className="font-bold mt-4" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25 }}>{s.l}</p>
-              <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.35 }}>{s.sub}</p>
+              <div>
+                <div className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.035em" }}>3.4K</div>
+                <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>governed decisions / month</p>
+              </div>
+              <div>
+                <div className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.035em" }}>62%</div>
+                <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>time-to-spec drop</p>
+              </div>
             </div>
-          ))}
+            <p className="mt-6 font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35 }}>
+              CTO-sponsored. Pattern repeats into pharma, banking, space.
+            </p>
+          </div>
         </div>
+        <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: SUBTLE }}>
+          6 regulated verticals scoped · pharma · banking · AEC · space · advisory · public sector
+        </p>
       </div>
     </Slide>
   );
 }
 
-// ─── 06 · MARKET SIZE ────────────────────────────────────────────────────────
-function S06Market({ n, t }: { n: number; t: number }) {
-  const tiers = [
-    { v: "$280B",  l: "AI software market",        s: "Total Available Market",     c: SUBTLE, w: 100 },
-    { v: "$48B",   l: "AI governance & ops",       s: "Serviceable Available Market", c: ACCENT, w: 65 },
-    { v: "$4.2B",  l: "Standards-engine wedge",    s: "Initial Market Share",       c: GREEN,  w: 28 },
-  ];
-  return (
-    <Slide section="Market Size" n={n} total={t}>
-      <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-16" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          The window opens here.
-        </h2>
-        <div className="flex flex-col gap-8">
-          {tiers.map((tier) => (
-            <div key={tier.l} className="flex items-center gap-10">
-              <div className="flex-shrink-0" style={{ width: 320 }}>
-                <div className="font-black" style={{ fontSize: 88, lineHeight: 0.95, color: `hsl(${tier.c})`, letterSpacing: "-0.04em" }}>
-                  {tier.v}
-                </div>
-              </div>
-              <div className="flex-1">
-                <p className="font-bold mb-2" style={{ fontSize: 28, color: TEXT, lineHeight: 1.15 }}>{tier.l}</p>
-                <p className="font-mono uppercase tracking-[0.18em] mb-3" style={{ fontSize: 14, color: SUBTLE }}>{tier.s}</p>
-                <div className="rounded-full" style={{ height: 14, background: CARD_ALT }}>
-                  <div className="h-full rounded-full" style={{ width: `${tier.w}%`, background: `hsl(${tier.c})` }} />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </Slide>
-  );
-}
-
-// ─── 07 · PRODUCT ────────────────────────────────────────────────────────────
+// ─── 06 · PRODUCT ────────────────────────────────────────────────────────────
 function S07Product({ n, t }: { n: number; t: number }) {
   const steps = [
     { k: "1", h: "Operator asks", v: "A prompt arrives. It looks like ChatGPT." },
@@ -242,53 +272,32 @@ function S07Product({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Product" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-14" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          Three steps. <span style={{ color: `hsl(${GREEN})` }}>Same chat box.</span>
+        <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: SUBTLE }}>Product</p>
+        <h2 className="font-black mb-10" style={{ fontSize: 64, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1500 }}>
+          The interface looks ordinary. <span style={{ color: `hsl(${GREEN})` }}>The control plane underneath is the product.</span>
         </h2>
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-3 gap-7 mb-8">
           {steps.map((s) => (
-            <div key={s.k} className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <div className="font-black mb-4" style={{ fontSize: 88, lineHeight: 0.9, color: `hsl(${GREEN})`, letterSpacing: "-0.04em" }}>
+            <div key={s.k} className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="font-black mb-3" style={{ fontSize: 72, lineHeight: 0.9, color: `hsl(${GREEN})`, letterSpacing: "-0.04em" }}>
                 {s.k}
               </div>
-              <p className="font-black mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{s.h}</p>
-              <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.35 }}>{s.v}</p>
+              <p className="font-black mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{s.h}</p>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{s.v}</p>
             </div>
           ))}
         </div>
-        <p className="mt-12 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 15, color: MUTED }}>
-          The interface looks ordinary. The control plane underneath is the product.
-        </p>
-      </div>
-    </Slide>
-  );
-}
-
-// ─── 08 · BUSINESS MODEL ─────────────────────────────────────────────────────
-function S08BusinessModel({ n, t }: { n: number; t: number }) {
-  return (
-    <Slide section="Business Model" n={n} total={t}>
-      <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-14" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          Metered per <span style={{ color: `hsl(${GREEN})` }}>governed decision.</span>
-        </h2>
-        <div className="grid grid-cols-3 gap-10 mb-10">
-          {[
-            { v: "€0.40", l: "platform price per governed decision" },
-            { v: "€23",   l: "manual labour cost it displaces" },
-            { v: "95%",   l: "platform gross margin at steady state" },
-          ].map((s) => (
-            <div key={s.l}>
-              <div className="font-black" style={{ fontSize: 132, lineHeight: 0.9, color: TEXT, letterSpacing: "-0.045em" }}>
-                {s.v}
-              </div>
-              <p className="mt-4" style={{ fontSize: 20, color: MUTED, lineHeight: 1.3 }}>{s.l}</p>
-            </div>
-          ))}
-        </div>
-        <div className="rounded-xl px-8 py-6" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-          <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
-            Customers move spend from headcount (CapEx of expertise) to metered tokens tied to a standard. Every receipt is a billable unit and an audit artefact at the same time.
+        <div className="rounded-xl p-6" style={{ background: "hsl(222 25% 8%)", border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
+            One real signed receipt
+          </p>
+          <p className="font-mono" style={{ fontSize: 16, color: "hsl(0 0% 88%)", lineHeight: 1.55, wordBreak: "break-all" }}>
+            liza://call/7f2c91ae · operator: a.morales@client · outcome: pricing.quote.enterprise<br/>
+            standards: [STD-4471@v17, STD-1208@v04] · model: gpt-4o · prompt_hash: 9b…c2<br/>
+            parent_hash: 41…d8 · signed: ed25519:b0c4…ffa1 · ts: 2026-05-14T09:42Z
+          </p>
+          <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>
+            Not a log line. A hash-chained, replayable record. The auditor reads the same receipt the operator ran.
           </p>
         </div>
       </div>
@@ -296,96 +305,84 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
   );
 }
 
-// ─── 09 · TRACTION / ADOPTION ───────────────────────────────────────────────
-function S09Adoption({ n, t }: { n: number; t: number }) {
-  const channels = [
-    { h: "Hero vertical",  v: "AEC", sub: "Nemetschek-scale partner in pipeline. Pattern repeats into pharma, banking, space." },
-    { h: "Geography",      v: "DACH", sub: "Regulated, audit-first market. 4-step founder-led outreach to Heads of AI." },
-    { h: "Install motion", v: "30 days", sub: "Co-build sprint, metered from Day 31. Self-serve PLG behind the wedge." },
-    { h: "Network",        v: "Architects", sub: "Trained delivery partners deploy standards. Margin on top of platform." },
-  ];
+// ─── 07 · BUSINESS MODEL ─────────────────────────────────────────────────────
+function S08BusinessModel({ n, t }: { n: number; t: number }) {
   return (
-    <Slide section="Adoption" n={n} total={t}>
+    <Slide section="Business Model" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-14" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          One wedge. <span style={{ color: `hsl(${ACCENT})` }}>Four channels.</span>
+        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+          Metered per <span style={{ color: `hsl(${GREEN})` }}>governed decision.</span>
         </h2>
-        <div className="grid grid-cols-2 gap-8">
-          {channels.map((c) => (
-            <div key={c.h} className="flex items-baseline gap-8">
-              <div className="font-mono uppercase tracking-[0.22em] flex-shrink-0" style={{ fontSize: 14, color: SUBTLE, width: 180 }}>
-                {c.h}
+        <div className="grid grid-cols-3 gap-10 mb-8">
+          {[
+            { v: "€0.40", l: "platform price per governed decision" },
+            { v: "€23",   l: "manual labour cost it displaces" },
+            { v: "95%",   l: "platform gross margin at steady state" },
+          ].map((s) => (
+            <div key={s.l}>
+              <div className="font-black" style={{ fontSize: 112, lineHeight: 0.9, color: TEXT, letterSpacing: "-0.045em" }}>
+                {s.v}
               </div>
-              <div className="flex-1">
-                <p className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>{c.v}</p>
-                <p className="mt-2" style={{ fontSize: 19, color: MUTED, lineHeight: 1.35 }}>{c.sub}</p>
-              </div>
+              <p className="mt-3" style={{ fontSize: 19, color: MUTED, lineHeight: 1.35 }}>{s.l}</p>
             </div>
           ))}
         </div>
-      </div>
-    </Slide>
-  );
-}
-
-// ─── 10 · COMPETITION ────────────────────────────────────────────────────────
-function S10Competition({ n, t }: { n: number; t: number }) {
-  const rivals = [
-    { who: "ChatGPT, Copilot, Gemini", what: "Chat surface. No standards. No signed receipt. No memory across sessions." },
-    { who: "RAG copilots (Glean, Guru)", what: "Search-and-stuff. Retrieval is not governance. No replayable audit chain." },
-    { who: "Workflow tools (n8n, Zapier)", what: "Brittle macros built by one person. No typed knowledge. No compounding." },
-    { who: "Internal builds",             what: "Two engineers, one Notion page, breaks at Q2. The buyer has tried this." },
-  ];
-  return (
-    <Slide section="Competition" n={n} total={t}>
-      <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          What the market sells today.
-        </h2>
-        <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}` }}>
-          {rivals.map((r, i) => (
-            <div
-              key={r.who}
-              className="grid grid-cols-[1fr_2fr] gap-10 px-8 py-6"
-              style={{
-                background: i % 2 === 0 ? "transparent" : CARD_ALT,
-                borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}`,
-              }}
-            >
-              <p className="font-black" style={{ fontSize: 26, color: TEXT, lineHeight: 1.2, letterSpacing: "-0.015em" }}>{r.who}</p>
-              <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.35 }}>{r.what}</p>
-            </div>
-          ))}
+        <div className="rounded-xl px-8 py-6 mb-5" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
+            Customers move spend from headcount (CapEx of expertise) to metered tokens tied to a standard. Every receipt is a billable unit and an audit artefact at the same time. Payback under 6 months at typical enterprise volume.
+          </p>
         </div>
-        <p className="mt-10 font-bold" style={{ fontSize: 26, color: TEXT }}>
-          None of them ship a <span style={{ color: `hsl(${GREEN})` }}>signed, replayable standard</span> behind every output.
+        <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: SUBTLE }}>
+          $4.2B standards-engine wedge inside a $48B AI governance market
         </p>
       </div>
     </Slide>
   );
 }
 
-// ─── 11 · COMPETITIVE ADVANTAGES ────────────────────────────────────────────
-function S11Edge({ n, t }: { n: number; t: number }) {
-  const edges = [
-    { h: "Standards engine",    v: "Typed knowledge compiled into every call. Not retrieved, assembled." },
-    { h: "Signed receipts",     v: "Hash-chained, replayable proof per decision. Audit substrate, not log line." },
-    { h: "Closed loop",         v: "Every receipt feeds the graph. Standards improve with use, not decay." },
-    { h: "Sovereignty",         v: "Customer owns the bundles. Portable schema. Zero vendor lock-in." },
-    { h: "Architect network",   v: "Trained delivery partners. Scales without scaling the founder." },
-    { h: "Regulated-first",     v: "Built for EU AI Act, SOC 2, GxP, MiFID II from day one." },
+// ─── 08 · TRACTION / ADOPTION ───────────────────────────────────────────────
+function S09Adoption({ n, t }: { n: number; t: number }) {
+  const rows = [
+    {
+      h: "Wedge",
+      v: "€15K · 30 days",
+      sub: "AgOps Design Sprint. Standing line in 30 days. Metered from Day 31. First production deployment: 127 standards, 3,400+ decisions/month, 62% time-to-spec drop.",
+    },
+    {
+      h: "Geography",
+      v: "DACH first",
+      sub: "Regulated, audit-first market. 4-step founder-led outreach to Heads of AI. Pattern then repeats into UK and Benelux.",
+    },
+    {
+      h: "Scale lever",
+      v: "PLG self-serve",
+      sub: "30-day sprint becomes a guided wizard. Funded by this round. Removes the founder from the install path.",
+    },
+    {
+      h: "Network",
+      v: "Architects",
+      sub: "Trained delivery partners deploy standards inside regulated customers. Margin on top of platform. Scales without scaling the team.",
+    },
   ];
   return (
-    <Slide section="Competitive Advantage" n={n} total={t}>
+    <Slide section="Adoption" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          Six things they can't ship in a quarter.
+        <h2 className="font-black mb-10" style={{ fontSize: 64, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1500 }}>
+          <span style={{ color: `hsl(${ACCENT})` }}>€15K sprint.</span> 30 days to a running line. Metered from Day 31.
         </h2>
-        <div className="grid grid-cols-3 gap-7">
-          {edges.map((e) => (
-            <div key={e.h} className="rounded-xl p-6" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <p className="font-black mb-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.015em" }}>{e.h}</p>
-              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{e.v}</p>
+        <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}` }}>
+          {rows.map((c, i) => (
+            <div
+              key={c.h}
+              className="grid grid-cols-[180px_280px_1fr] gap-8 px-7 py-5 items-baseline"
+              style={{
+                background: i % 2 === 0 ? "transparent" : CARD_ALT,
+                borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}`,
+              }}
+            >
+              <div className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: SUBTLE }}>{c.h}</div>
+              <div className="font-black" style={{ fontSize: 32, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>{c.v}</div>
+              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{c.sub}</p>
             </div>
           ))}
         </div>
@@ -394,31 +391,87 @@ function S11Edge({ n, t }: { n: number; t: number }) {
   );
 }
 
-// ─── 12 · TEAM ───────────────────────────────────────────────────────────────
+// ─── 09 · COMPETITION + EDGE (merged) ───────────────────────────────────────
+function S10Competition({ n, t }: { n: number; t: number }) {
+  const rivals = [
+    { who: "ChatGPT, Copilot, Gemini",   what: "Chat surface. No standards. No signed receipt. No memory across sessions." },
+    { who: "RAG copilots (Glean, Guru)", what: "Search-and-stuff. Retrieval is not governance. No replayable audit chain." },
+    { who: "Workflow tools (n8n, Zapier)", what: "Brittle macros built by one person. No typed knowledge. No compounding." },
+    { who: "Internal builds",            what: "Two engineers, one Notion page, breaks at Q2. The buyer has tried this." },
+  ];
+  const edges = [
+    { h: "Standards engine", v: "Context compiled, not retrieved." },
+    { h: "Signed receipts",  v: "Hash-chained, replayable, audit-native." },
+    { h: "Closed loop",      v: "Every receipt improves the standards." },
+  ];
+  return (
+    <Slide section="Competition + Edge" n={n} total={t}>
+      <div className="absolute inset-0 px-32 flex flex-col justify-center">
+        <h2 className="font-black mb-8" style={{ fontSize: 64, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em" }}>
+          Same surface. <span style={{ color: `hsl(${GREEN})` }}>Different category of software.</span>
+        </h2>
+        <div className="rounded-2xl overflow-hidden mb-7" style={{ border: `1px solid ${CHROME_BORDER}` }}>
+          {rivals.map((r, i) => (
+            <div
+              key={r.who}
+              className="grid grid-cols-[1fr_2fr] gap-8 px-7 py-4"
+              style={{
+                background: i % 2 === 0 ? "transparent" : CARD_ALT,
+                borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}`,
+              }}
+            >
+              <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2, letterSpacing: "-0.015em" }}>{r.who}</p>
+              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>{r.what}</p>
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-3 gap-6">
+          {edges.map((e) => (
+            <div key={e.h} className="rounded-xl p-5" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>{e.h}</p>
+              <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.3 }}>{e.v}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Slide>
+  );
+}
+
+// ─── 10 · TEAM ───────────────────────────────────────────────────────────────
 function S12Team({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Team" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 88, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           Practitioners, not theorists.
         </h2>
-        <div className="grid grid-cols-2 gap-12">
+        <div className="grid grid-cols-3 gap-8">
           <div>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 14, color: SUBTLE }}>Founder</p>
-            <p className="font-black mb-4" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Founder</p>
+            <p className="font-black mb-3" style={{ fontSize: 36, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
               15+ years
             </p>
-            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
-              shipping data and AI architecture into production at enterprise scale. Operator, not consultant. The methodology is the muscle memory.
+            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              Shipping data and AI architecture into production at enterprise scale. Operator, not consultant. The methodology is the muscle memory.
             </p>
           </div>
           <div>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 14, color: SUBTLE }}>Delivery network</p>
-            <p className="font-black mb-4" style={{ fontSize: 44, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Delivery network</p>
+            <p className="font-black mb-3" style={{ fontSize: 36, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
               Architect partners
             </p>
-            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
+            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
               Trained delivery firms install LIZA inside regulated customers. The platform scales without scaling the team.
+            </p>
+          </div>
+          <div className="rounded-2xl p-6" style={{ background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>Advisory bench</p>
+            <p className="font-black mb-3" style={{ fontSize: 36, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
+              Regulated CTOs
+            </p>
+            <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>
+              Active advisors from AEC software incumbents, pharma compliance, and tier-one consulting. The buyers of the next 18 months sit on our advisory bench.
             </p>
           </div>
         </div>
@@ -427,12 +480,12 @@ function S12Team({ n, t }: { n: number; t: number }) {
   );
 }
 
-// ─── 13 · THE ASK ────────────────────────────────────────────────────────────
+// ─── 11 · THE ASK ────────────────────────────────────────────────────────────
 function S13Ask({ n, t }: { n: number; t: number }) {
   const uses = [
-    { v: "40%", l: "Product & platform engineering" },
-    { v: "35%", l: "DACH GTM and Architect network" },
-    { v: "25%", l: "Regulated-vertical certifications" },
+    { v: "60%", l: "Self-serve install productisation" },
+    { v: "25%", l: "AEC depth + 2 adjacent verticals" },
+    { v: "15%", l: "Metered billing, telemetry, standards engine" },
   ];
   return (
     <Slide section="The Ask" n={n} total={t} dark>
@@ -440,42 +493,47 @@ function S13Ask({ n, t }: { n: number; t: number }) {
         <p className="font-mono uppercase tracking-[0.3em] mb-8" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>
           Seed Round
         </p>
-        <h2 className="font-black mb-14" style={{ fontSize: 156, lineHeight: 0.9, color: "hsl(0 0% 98%)", letterSpacing: "-0.05em" }}>
+        <h2 className="font-black mb-12" style={{ fontSize: 156, lineHeight: 0.9, color: "hsl(0 0% 98%)", letterSpacing: "-0.05em" }}>
           €2M
         </h2>
-        <div className="grid grid-cols-3 gap-10 mb-12">
+        <div className="grid grid-cols-3 gap-10 mb-10">
           {uses.map((u) => (
             <div key={u.l}>
               <div className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: "hsl(0 0% 98%)", letterSpacing: "-0.035em" }}>
                 {u.v}
               </div>
-              <p className="mt-3" style={{ fontSize: 20, color: "hsl(0 0% 70%)", lineHeight: 1.3 }}>{u.l}</p>
+              <p className="mt-3" style={{ fontSize: 19, color: "hsl(0 0% 70%)", lineHeight: 1.35 }}>{u.l}</p>
             </div>
           ))}
         </div>
-        <div className="rounded-xl px-8 py-5" style={{ background: "hsl(0 0% 100% / 0.05)", border: "1px solid hsl(0 0% 100% / 0.15)" }}>
-          <p className="font-mono uppercase tracking-[0.2em] mb-2" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Milestone to Series A</p>
-          <p style={{ fontSize: 24, color: "hsl(0 0% 92%)", lineHeight: 1.35 }}>
-            10 anchor customers across 3 regulated verticals. €2M ARR. Architect network live in DACH and UK.
+        <div className="rounded-xl px-8 py-5 mb-6" style={{ background: "hsl(0 0% 100% / 0.05)", border: "1px solid hsl(0 0% 100% / 0.15)" }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Milestone to Series A</p>
+          <p style={{ fontSize: 22, color: "hsl(0 0% 92%)", lineHeight: 1.4 }}>
+            €3M ARR by month 18. 50% self-serve. AEC pattern proven. Two adjacent regulated verticals validated through partners.
           </p>
         </div>
+        <p className="font-black" style={{ fontSize: 32, color: "hsl(0 0% 98%)", letterSpacing: "-0.02em" }}>
+          Models commoditise. <span style={{ color: `hsl(${GREEN})` }}>Factories compound.</span>
+        </p>
       </div>
     </Slide>
   );
 }
 
-// ─── 14 · CLOSING ────────────────────────────────────────────────────────────
+// ─── 12 · CLOSING ────────────────────────────────────────────────────────────
 function S14Close({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="LIZA OS" n={n} total={t} dark>
       <div className="absolute inset-0 flex flex-col items-center justify-center px-32 text-center">
-        <h2 className="font-black" style={{ fontSize: 104, lineHeight: 1.0, color: "hsl(0 0% 98%)", letterSpacing: "-0.04em" }}>
-          The chat surface is a commodity.
-          <br />
-          <span style={{ color: `hsl(${GREEN})` }}>The system around it is the company.</span>
+        <h2 className="font-black" style={{ fontSize: 92, lineHeight: 1.05, color: "hsl(0 0% 98%)", letterSpacing: "-0.04em", maxWidth: 1500 }}>
+          Every receipt that ships<br/>
+          <span style={{ color: `hsl(${GREEN})` }}>makes the factory smarter.</span>
         </h2>
-        <p className="mt-14 font-mono uppercase tracking-[0.3em]" style={{ fontSize: 16, color: "hsl(0 0% 65%)" }}>
-          Thank you · let's build the production system
+        <p className="mt-10" style={{ fontSize: 28, color: "hsl(0 0% 75%)", maxWidth: 1300, lineHeight: 1.35 }}>
+          The question is whether yours is running.
+        </p>
+        <p className="mt-14 font-mono uppercase tracking-[0.3em]" style={{ fontSize: 14, color: "hsl(0 0% 60%)" }}>
+          Book a 30-Day Sprint · founder@lizaos.ai
         </p>
       </div>
     </Slide>
@@ -489,12 +547,10 @@ const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) =>
   { id: "solution",    title: "Solution",               render: (n, t) => <S03Solution n={n} t={t} /> },
   { id: "why-now",     title: "Why Now",                render: (n, t) => <S04WhyNow n={n} t={t} /> },
   { id: "validation",  title: "Market Validation",      render: (n, t) => <S05Validation n={n} t={t} /> },
-  { id: "market",      title: "Market Size",            render: (n, t) => <S06Market n={n} t={t} /> },
   { id: "product",     title: "Product",                render: (n, t) => <S07Product n={n} t={t} /> },
   { id: "model",       title: "Business Model",         render: (n, t) => <S08BusinessModel n={n} t={t} /> },
   { id: "adoption",    title: "Adoption",               render: (n, t) => <S09Adoption n={n} t={t} /> },
-  { id: "competition", title: "Competition",            render: (n, t) => <S10Competition n={n} t={t} /> },
-  { id: "edge",        title: "Competitive Advantage",  render: (n, t) => <S11Edge n={n} t={t} /> },
+  { id: "competition", title: "Competition + Edge",     render: (n, t) => <S10Competition n={n} t={t} /> },
   { id: "team",        title: "Team",                   render: (n, t) => <S12Team n={n} t={t} /> },
   { id: "ask",         title: "The Ask · €2M Seed",     render: (n, t) => <S13Ask n={n} t={t} /> },
   { id: "close",       title: "Closing",                render: (n, t) => <S14Close n={n} t={t} /> },
