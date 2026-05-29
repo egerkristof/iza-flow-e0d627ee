@@ -74,30 +74,56 @@ function S01Cover({ n, t }: { n: number; t: number }) {
 
 // ─── 02 · INVESTOR LENS ─────────────────────────────────────────────────────
 function S02InvestorLens({ n, t }: { n: number; t: number }) {
-  const rows = [
-    { k: "What you see first", v: "A user asks an AI system to do work." },
-    { k: "What actually matters", v: "The company can prove which standard shaped the answer, who approved it, which model ran it and why it was safe to ship." },
-    { k: "What LIZA sells", v: "That proof layer, packaged as software and priced per governed decision." },
+  const belowWater = [
+    { k: "Approved method", v: "Which playbook shaped the answer" },
+    { k: "Approval", v: "Who signed it off" },
+    { k: "Model", v: "Which model ran the call" },
+    { k: "Safety", v: "Why it was safe to ship" },
+    { k: "Cost", v: "What the decision cost to make" },
   ];
   return (
     <Slide section="Investor lens" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-4" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Do not evaluate us as <span style={{ color: `hsl(${RED})` }}>another chatbot.</span>
+        <h2 className="font-black mb-4" style={{ fontSize: 60, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          Every AI pitch shows the prompt. <span style={{ color: `hsl(${GREEN})` }}>We sell what sits underneath.</span>
         </h2>
-        <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          The product is not the text box. The product is production control.
+        <p className="font-mono uppercase tracking-[0.22em] mb-8" style={{ fontSize: 14, color: MUTED }}>
+          The visible part is the same everywhere. The value lives below the waterline.
         </p>
-        <div className="grid grid-cols-3 gap-6">
-          {rows.map((r, i) => (
-            <div key={r.k} className="rounded-2xl p-8" style={{ background: i === 2 ? `hsl(${GREEN} / 0.05)` : CARD_ALT, border: i === 2 ? `1px solid hsl(${GREEN} / 0.35)` : `1px solid ${CHROME_BORDER}` }}>
-              <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 13, color: i === 2 ? `hsl(${GREEN})` : SUBTLE }}>{r.k}</p>
-              <p className="font-bold" style={{ fontSize: 27, color: TEXT, lineHeight: 1.28, letterSpacing: "-0.02em" }}>{r.v}</p>
-            </div>
-          ))}
+
+        {/* Above the waterline — what every AI pitch shows */}
+        <div className="rounded-2xl px-7 py-5 mb-2 flex items-center justify-between" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>What every investor sees</p>
+          <div className="flex items-center gap-3 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 13, color: MUTED }}>
+            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>User</span>
+            <span>→</span>
+            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>AI system</span>
+            <span>→</span>
+            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>Answer</span>
+          </div>
         </div>
-        <p className="mt-10 font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35, maxWidth: 1360 }}>
-          Weekend projects make AI look useful. LIZA makes AI accountable enough for regulated work.
+
+        {/* The waterline */}
+        <div className="relative h-5 my-1">
+          <div className="absolute inset-x-0 top-1/2 h-px" style={{ background: `hsl(${GREEN} / 0.45)` }} />
+          <span className="absolute right-0 -top-1 font-mono uppercase tracking-[0.22em] px-2" style={{ fontSize: 11, color: `hsl(${GREEN})`, background: BG }}>waterline</span>
+        </div>
+
+        {/* Below the waterline — what LIZA sells */}
+        <div className="rounded-2xl px-7 py-6" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What actually matters · what LIZA sells</p>
+          <div className="grid grid-cols-5 gap-4">
+            {belowWater.map((b) => (
+              <div key={b.k} className="rounded-xl p-4" style={{ background: BG, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+                <p className="font-black mb-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{b.k}</p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{b.v}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <p className="mt-7 font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
+          LIZA is the layer that proves which method shaped the answer, who approved it, which model ran it, why it was safe and what it cost. Priced per governed decision.
         </p>
       </div>
     </Slide>
