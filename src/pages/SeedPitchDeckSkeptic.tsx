@@ -349,10 +349,10 @@ function S06WeekendObjection({ n, t }: { n: number; t: number }) {
 // ─── 07 · LAB OBJECTION ─────────────────────────────────────────────────────
 function S07LabObjection({ n, t }: { n: number; t: number }) {
   const reasons = [
-    { h: "Business model", v: "LLM providers sell token volume. LIZA governs decisions that sit on top of any token supplier." },
-    { h: "Neutrality", v: "Enterprises will run several models. The control layer cannot be owned by one of the vendors being controlled." },
-    { h: "Sovereignty", v: "Company standards, decision rules and receipts are operational IP. Buyers need to own that record." },
-    { h: "Accountability", v: "The model can generate. It cannot become the customer's auditable operating system." },
+    { h: "Business model", v: "LLM providers sell token volume; their incentive is more generation, not less. LIZA monetises governed decisions, so the more work is certified, the more value the buyer gets." },
+    { h: "Neutrality", v: "Enterprises will run several models and switch them often. LIZA is the model-agnostic layer that scores, routes and certifies output across every vendor — something no single LLM provider can credibly do for its competitors." },
+    { h: "Sovereignty", v: "Company standards, decision rules and receipts are operational IP and must not flow into a vendor's training set. LIZA keeps that corpus inside the customer's perimeter, owned and portable." },
+    { h: "Accountability", v: "A model can generate an answer; it cannot sign for it. LIZA produces the auditable receipt — policy version, approver, data lineage, cost — that turns AI output into a defensible decision." },
   ];
   return (
     <Slide section="Objection 02" n={n} total={t}>
