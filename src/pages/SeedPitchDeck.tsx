@@ -46,40 +46,15 @@ function Slide({ section, n, total, children, dark = false }: {
 
 // ─── 01 · COVER ──────────────────────────────────────────────────────────────
 function S01Cover({ n, t }: { n: number; t: number }) {
-  const stats = [
-    { v: "€0.40", l: "per governed decision" },
-    { v: "95%",   l: "platform gross margin" },
-    { v: "€23",   l: "displaced labour cost / decision" },
-  ];
   return (
     <Slide section="LIZA OS" n={n} total={t} dark>
       <div className="absolute inset-0 flex flex-col items-center justify-center px-32 text-center">
-        <p className="font-mono uppercase tracking-[0.4em] mb-12" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>
-          The Production System for AI Work
-        </p>
         <h1 className="font-black" style={{ fontSize: 132, lineHeight: 0.98, color: "hsl(0 0% 98%)", letterSpacing: "-0.045em" }}>
           LIZA OS
         </h1>
         <p className="mt-12" style={{ fontSize: 36, lineHeight: 1.3, color: "hsl(0 0% 75%)", maxWidth: 1200 }}>
           Run AI like a factory, not a workshop.
         </p>
-        <p className="mt-8" style={{ fontSize: 22, lineHeight: 1.45, color: "hsl(0 0% 60%)", maxWidth: 1100 }}>
-          Every knowledge worker became a brilliant artisan with ChatGPT. The method dies with the session. That is the disease. LIZA is the line.
-        </p>
-        <div className="mt-16 flex items-center gap-14">
-          {stats.map((s, i) => (
-            <React.Fragment key={s.l}>
-              {i > 0 && <div className="w-px h-12" style={{ background: "hsl(0 0% 100% / 0.15)" }} />}
-              <div className="text-center">
-                <div className="font-black" style={{ fontSize: 54, lineHeight: 0.95, color: "hsl(0 0% 98%)", letterSpacing: "-0.03em" }}>{s.v}</div>
-                <p className="mt-2 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: "hsl(0 0% 55%)" }}>{s.l}</p>
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-      <div className="absolute bottom-14 right-20 font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: "hsl(0 0% 55%)" }}>
-        Seed Round · €2M
       </div>
     </Slide>
   );
