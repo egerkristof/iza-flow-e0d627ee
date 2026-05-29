@@ -64,6 +64,55 @@ function F01Cover() {
   );
 }
 
+// ─── SPINE INDICATOR · Persistent red-thread across slides 3-8 ───────────────
+const SPINE_BEATS = [
+  "Sessions die",
+  "You patch",
+  "They push seats",
+  "Both unconscious",
+  "Era IV exit",
+  "Substrate ships",
+];
+function SpineIndicator({ current }: { current: number }) {
+  return (
+    <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2.5"
+         style={{ bottom: 72, zIndex: 5 }}>
+      <span className="font-mono uppercase tracking-[0.22em] font-bold mr-2" style={{ fontSize: 10, color: SUBTLE }}>
+        Red thread
+      </span>
+      {SPINE_BEATS.map((label, i) => {
+        const beat = i + 1;
+        const isCurrent = beat === current;
+        const isPast = beat < current;
+        return (
+          <div key={label} className="flex items-center gap-2">
+            <div className="flex flex-col items-center gap-1">
+              <div className="rounded-full transition-all"
+                   style={{
+                     width: isCurrent ? 11 : 7,
+                     height: isCurrent ? 11 : 7,
+                     background: isCurrent ? `hsl(${GREEN})` : isPast ? `hsl(${GREEN} / 0.45)` : `hsl(215 15% 75%)`,
+                     boxShadow: isCurrent ? `0 0 0 4px hsl(${GREEN} / 0.18)` : "none",
+                   }} />
+              <span className="font-mono uppercase tracking-[0.1em]" style={{
+                fontSize: 9,
+                color: isCurrent ? `hsl(${GREEN})` : SUBTLE,
+                fontWeight: isCurrent ? 700 : 500,
+                whiteSpace: "nowrap",
+              }}>
+                {beat}. {label}
+              </span>
+            </div>
+            {i < SPINE_BEATS.length - 1 && (
+              <div className="h-px" style={{ width: 18, background: beat < current ? `hsl(${GREEN} / 0.45)` : `hsl(215 15% 80%)` }} />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─── F_WORKSHOP · The workshop you already run ───────────────────────────────
 function FWorkshop() {
   const artisans = [
