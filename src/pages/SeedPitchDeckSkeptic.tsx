@@ -75,11 +75,11 @@ function S01Cover({ n, t }: { n: number; t: number }) {
 // ─── 02 · INVESTOR LENS ─────────────────────────────────────────────────────
 function S02InvestorLens({ n, t }: { n: number; t: number }) {
   const belowWater = [
-    { k: "Approved method", v: "Which playbook shaped the answer" },
-    { k: "Approval", v: "Who signed it off" },
-    { k: "Model", v: "Which model ran the call" },
-    { k: "Safety", v: "Why it was safe to ship" },
-    { k: "Cost", v: "What the decision cost to make" },
+    { k: "Approved method", v: "Underwriting policy v4.2 shaped the answer, not the model's training data" },
+    { k: "Approval", v: "Risk officer J. Klein signed off at 14:03 on the flagged section" },
+    { k: "Model", v: "GPT-5 ran the draft, Claude reviewed it, both versions kept" },
+    { k: "Safety", v: "Client PII redacted before the call, allowed jurisdictions checked" },
+    { k: "Cost", v: "€0.38 of model spend produced a €2,400 work unit" },
   ];
   return (
     <Slide section="Investor lens" n={n} total={t}>
@@ -88,18 +88,26 @@ function S02InvestorLens({ n, t }: { n: number; t: number }) {
           Every AI pitch shows the prompt. <span style={{ color: `hsl(${GREEN})` }}>We sell what sits underneath.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-8" style={{ fontSize: 14, color: MUTED }}>
-          The visible part is the same everywhere. The value lives below the waterline.
+          Same prompt. Same answer. The proof beneath is what an enterprise actually pays for.
         </p>
 
         {/* Above the waterline — what every AI pitch shows */}
-        <div className="rounded-2xl px-7 py-5 mb-2 flex items-center justify-between" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>What every investor sees</p>
-          <div className="flex items-center gap-3 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 13, color: MUTED }}>
-            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>User</span>
-            <span>→</span>
-            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>AI system</span>
-            <span>→</span>
-            <span className="px-4 py-2 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>Answer</span>
+        <div className="rounded-2xl px-7 py-5 mb-2" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>What every investor has seen 100 times this year</p>
+          <div className="flex items-stretch gap-3 font-mono" style={{ fontSize: 14 }}>
+            <div className="flex-1 px-4 py-3 rounded-lg" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED }}>
+              <span className="uppercase tracking-[0.2em] block mb-1" style={{ fontSize: 10, color: SUBTLE }}>Prompt</span>
+              "Draft a Q4 underwriting risk memo for client Acme."
+            </div>
+            <div className="flex items-center" style={{ color: SUBTLE }}>→</div>
+            <div className="px-4 py-3 rounded-lg flex items-center" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED, fontSize: 13 }}>
+              ChatGPT · Claude · Copilot
+            </div>
+            <div className="flex items-center" style={{ color: SUBTLE }}>→</div>
+            <div className="flex-1 px-4 py-3 rounded-lg" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED }}>
+              <span className="uppercase tracking-[0.2em] block mb-1" style={{ fontSize: 10, color: SUBTLE }}>Answer</span>
+              "Here is the memo. 3 risks identified."
+            </div>
           </div>
         </div>
 
@@ -111,7 +119,7 @@ function S02InvestorLens({ n, t }: { n: number; t: number }) {
 
         {/* Below the waterline — what LIZA sells */}
         <div className="rounded-2xl px-7 py-6" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-          <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What actually matters · what LIZA sells</p>
+          <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What the CRO, the auditor and the CFO will ask the next morning · this is what LIZA sells</p>
           <div className="grid grid-cols-5 gap-4">
             {belowWater.map((b) => (
               <div key={b.k} className="rounded-xl p-4" style={{ background: BG, border: `1px solid hsl(${GREEN} / 0.3)` }}>
@@ -195,19 +203,27 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
         </div>
 
         {/* Feedback loop visualization: arrow from SIGN back to LOCK */}
-        <svg viewBox="0 0 1000 90" className="w-full" style={{ height: 80, marginTop: -4 }} preserveAspectRatio="none">
-          <defs>
-            <marker id="loopArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${GREEN})`} />
-            </marker>
-          </defs>
-          <path d="M 920 5 C 920 75, 80 75, 80 5" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="2" strokeDasharray="6 5" markerEnd="url(#loopArrow)" />
-          <text x="500" y="68" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="13" letterSpacing="3" fill={`hsl(${GREEN})`}>
-            RECEIPT  →  SHARPENS THE STANDARD  →  NEXT DECISION IS BETTER GOVERNED
-          </text>
-        </svg>
+        <div className="relative mt-6 mb-4" style={{ height: 140 }}>
+          <svg viewBox="0 0 1000 140" className="w-full h-full" preserveAspectRatio="none">
+            <defs>
+              <marker id="loopArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${GREEN})`} />
+              </marker>
+            </defs>
+            {/* curved arrow from the SIGN card (right) back up to the LOCK card (left) */}
+            <path d="M 920 5 C 940 130, 60 130, 80 5" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="2.5" strokeDasharray="7 6" markerEnd="url(#loopArrow)" />
+          </svg>
+          <div className="absolute left-1/2 -translate-x-1/2 px-6 py-3 rounded-full flex items-center gap-3"
+               style={{ top: 60, background: BG, border: `1.5px solid hsl(${GREEN})` }}>
+            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Every receipt</span>
+            <span style={{ color: SUBTLE }}>→</span>
+            <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>sharpens the standard</span>
+            <span style={{ color: SUBTLE }}>→</span>
+            <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>next decision is better governed</span>
+          </div>
+        </div>
 
-        <div className="rounded-xl px-7 py-4 mt-2 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded" style={{ fontSize: 11, color: `hsl(${GOLD})`, background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>Example</span>
           <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>
             <span style={{ color: TEXT, fontWeight: 700 }}>Risk memo.</span> Locked to the firm's underwriting playbook. Compiled with this quarter's policy. Signed with the model used, approver, evidence and cost — replayable next audit.
@@ -224,16 +240,19 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
     <Slide section="Why now" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-4" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Tokens get cheaper. <span style={{ color: `hsl(${GREEN})` }}>The work to govern explodes.</span>
+          AI spend is rising. <span style={{ color: `hsl(${GREEN})` }}>So is the bill for not governing it.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          A widening gap opens between falling model cost and rising context to manage. LIZA captures it.
+          The CFO question for 2026: we are spending more on AI every quarter. Where is the control.
         </p>
-        <div className="grid grid-cols-[1.3fr_0.9fr] gap-8 items-stretch">
+        <div className="grid grid-cols-[1.25fr_1fr] gap-7 items-stretch">
           {/* The scissors chart */}
           <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>Per task · indexed to 2023</p>
-            <svg viewBox="0 0 600 300" className="w-full" style={{ height: 320 }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 12, color: SUBTLE }}>The CFO chart</p>
+            <p className="font-bold mb-3" style={{ fontSize: 20, color: TEXT, lineHeight: 1.3, letterSpacing: "-0.015em" }}>
+              Tokens get cheaper. Enterprise AI spend keeps climbing.
+            </p>
+            <svg viewBox="0 0 600 300" className="w-full" style={{ height: 270 }}>
               <defs>
                 <linearGradient id="gapFill" x1="0" x2="0" y1="0" y2="1">
                   <stop offset="0%" stopColor={`hsl(${GREEN})`} stopOpacity="0.28" />
@@ -256,20 +275,28 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
                 <marker id="arrDown" viewBox="0 0 10 10" refX="5" refY="10" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L5,10 L10,0 z" fill={`hsl(${GREEN})`}/></marker>
               </defs>
               <rect x="445" y="115" width="120" height="44" rx="6" fill={BG} stroke={`hsl(${GREEN})`} strokeWidth="1"/>
-              <text x="505" y="133" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>THE GAP</text>
+              <text x="505" y="133" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>NEW SPEND</text>
               <text x="505" y="150" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.5" fill={TEXT}>LIZA captures</text>
               {/* labels */}
-              <text x="60" y="75" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>GOVERNED WORK ↑</text>
-              <text x="60" y="250" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${RED})`}>MODEL COST ↓</text>
+              <text x="60" y="75" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${GREEN})`}>ENTERPRISE AI SPEND ↑</text>
+              <text x="60" y="250" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="2" fill={`hsl(${RED})`}>MODEL COST PER TOKEN ↓</text>
               <text x="50" y="285" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2023</text>
               <text x="570" y="285" textAnchor="end" fontFamily="ui-monospace, monospace" fontSize="10" fill={SUBTLE}>2027</text>
             </svg>
           </div>
-          <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-            <p className="font-black mb-5" style={{ fontSize: 38, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.03em" }}>LIZA captures the gap.</p>
-            <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.42 }}>
-              Cheaper tokens push enterprises to put more context, policy and decisions through AI. Someone has to manage that growing context layer. That spend is the new line item — and it does not flow to the model vendor.
-            </p>
+          <div className="flex flex-col gap-4">
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Three forces hitting at once</p>
+            {[
+              { k: "01 · Spend", h: "AI line item keeps growing", v: "More teams, more agents, more workflows. The bill goes up even as tokens go down." },
+              { k: "02 · Audit", h: "Compliance is catching up", v: "EU AI Act, internal audit, regulators. Every output must be explainable, replayable, owned." },
+              { k: "03 · Trust", h: "The CRO will not sign", v: "No buyer ships AI into regulated work without proof of method, approver, model and evidence." },
+            ].map((d) => (
+              <div key={d.k} className="rounded-xl p-5" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+                <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>{d.k}</p>
+                <p className="font-black mb-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{d.h}</p>
+                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>{d.v}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -280,25 +307,26 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
 // ─── 06 · WEEKEND OBJECTION ─────────────────────────────────────────────────
 function S06WeekendObjection({ n, t }: { n: number; t: number }) {
   const rows = [
-    { left: "Chat UI plus model API", right: "Workflow control across roles, approvals and tools" },
-    { left: "PDFs in a vector store", right: "Typed standards, ownership, expiry, versioning and change control" },
-    { left: "A clever system prompt", right: "Playbook compilation on every governed decision" },
-    { left: "Helpful answer", right: "Signed receipt that survives audit and handover" },
-    { left: "Manual maintenance", right: "Closed loop where receipts sharpen the standard" },
+    { left: "Makes one analyst faster", right: "Makes the whole function execute the same way" },
+    { left: "One person's clever prompt", right: "The company's approved method, versioned and owned" },
+    { left: "PDFs dropped in a vector store", right: "Typed standards with ownership, expiry, change control" },
+    { left: "A helpful answer this time", right: "A signed receipt that survives audit and handover" },
+    { left: "Maintained by the user", right: "Closed loop where every receipt sharpens the standard" },
   ];
   return (
     <Slide section="Objection 01" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          A weekend project automates text. <span style={{ color: `hsl(${RED})` }}>It does not certify work.</span>
+          Most AI tools improve <span style={{ color: `hsl(${RED})` }}>individual artisanal work.</span><br/>
+          We certify <span style={{ color: `hsl(${GREEN})` }}>organisation-wide AI execution.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
-          The visible demo is easy. The production burden is the company.
+          A weekend project helps one person. A control layer holds an entire function to one standard.
         </p>
         <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}` }}>
           <div className="grid grid-cols-2" style={{ background: CARD_ALT }}>
-            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Weekend demo</div>
-            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, borderLeft: `1px solid ${CHROME_BORDER}` }}>Production system</div>
+            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Artisanal AI · individual work</div>
+            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, borderLeft: `1px solid ${CHROME_BORDER}` }}>Certified AI · organisation execution</div>
           </div>
           {rows.map((r, i) => (
             <div key={r.left} className="grid grid-cols-2" style={{ borderTop: `1px solid ${CHROME_BORDER}`, background: i % 2 === 1 ? CARD_ALT : "transparent" }}>
