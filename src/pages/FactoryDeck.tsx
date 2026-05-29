@@ -1128,150 +1128,167 @@ function FOpenTheHood() {
 
 // ─── F_SHAPE · Architecture-shape contrast · pipe vs system ─────────────────
 function FShapeContrast() {
-  // Visual-first: a pipe on the left, a closed loop on the right.
-  // Minimal labels. The shapes do the talking.
-  const ragSteps = ["Prompt", "Embed", "Search", "Stuff", "Model", "Text"];
-  const lizaPlanes = [
-    { key: "INTENT",  icon: Crosshair,   gist: "Lock to a playbook" },
-    { key: "COMPILE", icon: Layers,      gist: "Assemble typed context" },
-    { key: "GOVERN",  icon: ShieldCheck, gist: "Policy + mandate gates" },
-    { key: "EXECUTE", icon: Cpu,         gist: "Pinned model, typed output" },
-    { key: "AUDIT",   icon: Fingerprint, gist: "Signed receipt, replayable" },
+  // Visual-first shapes with the detail tucked into each node.
+  const ragSteps = [
+    { name: "User prompt",       note: "free text, no intent type" },
+    { name: "Embed",             note: "one vector, model-dependent" },
+    { name: "Top-K vector search", note: "cosine over chunked docs" },
+    { name: "Stuff into context", note: "string concatenation" },
+    { name: "LLM call",          note: "model picks an answer" },
+    { name: "Text output",       note: "no provenance, no replay" },
   ];
-  const contrasts = [
-    { left: "Open loop",  right: "Closed loop" },
-    { left: "Free text",  right: "Typed in & out" },
-    { left: "No receipt", right: "Signed receipt" },
+  const lizaPlanes = [
+    { key: "INTENT",  icon: Crosshair,   parts: "Classifier · Playbook Registry · Session Lock",
+      gist: "Every prompt is matched to a process. Session locks to that process until done." },
+    { key: "COMPILE", icon: Layers,      parts: "Typed Graph · 5-Layer Stack · JIT XML Kernel · Snapshot",
+      gist: "Context is assembled, not retrieved. Filtered by security, scope, priority, version." },
+    { key: "GOVERN",  icon: ShieldCheck, parts: "Policy Engine · Mandate Gates · Impact Simulator",
+      gist: "Every call passes a typed policy. Blocking mandates refuse before a token is spent." },
+    { key: "EXECUTE", icon: Cpu,         parts: "Model Gateway · Prompt-by-Hash · Structured Output · Validator",
+      gist: "Model pinned by version. Prompt fetched by hash. Output schema-validated, never free text." },
+    { key: "AUDIT",   icon: Fingerprint, parts: "Signed Receipt · Append-Only Log · Provenance Graph · Replay",
+      gist: "Every decision signed and chained. Replay reconstructs the exact answer two years later." },
+  ];
+  const compareRows = [
+    { prop: "State",           rag: "Stateless",         liza: "Locked playbook, durable workflow" },
+    { prop: "Types",           rag: "Free text in & out", liza: "Typed in, typed out, typed across" },
+    { prop: "Governance",      rag: "None",              liza: "Policy + mandate gates per call" },
+    { prop: "Audit",           rag: "Log line, maybe",   liza: "Signed receipt, hash-chained" },
+    { prop: "Reproducibility", rag: "Not possible",      liza: "Byte-reproducible on snapshot" },
+    { prop: "Loop",            rag: "Open, one-shot",    liza: "Closed, feedback into the graph" },
   ];
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
-      <div className="absolute inset-0 px-24 pt-20 pb-16 flex flex-col">
+      <div className="absolute inset-0 px-20 pt-20 pb-16 flex flex-col">
         <Tag label="The Shape · Pipe vs System" color={ACCENT} />
-        <h2 className="font-black mb-10" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em" }}>
+        <h2 className="font-black mb-6" style={{ fontSize: 54, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em" }}>
           They feed a model.{" "}
           <span style={{ color: `hsl(${ACCENT})` }}>We run a system around it.</span>
         </h2>
 
-        {/* Two shapes, side by side. Equal weight. Minimal text. */}
-        <div className="grid grid-cols-2 gap-10 flex-1 min-h-0">
-          {/* LEFT · RAG pipe — a single straight line */}
+        {/* Two shapes side by side — detail lives inside each node */}
+        <div className="grid grid-cols-2 gap-8 flex-1 min-h-0">
+          {/* LEFT · RAG pipe */}
           <div className="flex flex-col">
-            <div className="flex items-baseline justify-between mb-5">
-              <span className="font-mono font-black uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${RED})` }}>
+            <div className="flex items-baseline justify-between mb-3">
+              <span className="font-mono font-black uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>
                 RAG · the pipe
               </span>
-              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 12, color: SUBTLE }}>
-                1 plane · open
+              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: SUBTLE }}>
+                1 plane · open loop
               </span>
             </div>
-            <div className="flex-1 flex items-center justify-center">
-              <div className="flex flex-col items-center" style={{ gap: 6 }}>
-                {ragSteps.map((s, i) => (
-                  <React.Fragment key={s}>
-                    <div
-                      className="rounded-full border flex items-center justify-center font-bold"
-                      style={{
-                        width: 220, height: 46,
-                        background: `hsl(${RED} / 0.05)`,
-                        borderColor: `hsl(${RED} / 0.45)`,
-                        color: TEXT, fontSize: 18,
-                      }}
-                    >
-                      {s}
+            <div className="flex-1 flex flex-col" style={{ gap: 4 }}>
+              {ragSteps.map((s, i) => (
+                <React.Fragment key={s.name}>
+                  <div
+                    className="rounded-lg border flex items-center gap-3 px-4"
+                    style={{
+                      background: `hsl(${RED} / 0.04)`,
+                      borderColor: `hsl(${RED} / 0.4)`,
+                      minHeight: 50,
+                    }}
+                  >
+                    <span className="font-mono font-black" style={{ fontSize: 12, color: `hsl(${RED})`, width: 22 }}>
+                      0{i + 1}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.15 }}>{s.name}</div>
+                      <div style={{ fontSize: 12, color: MUTED, lineHeight: 1.2 }}>{s.note}</div>
                     </div>
-                    {i < ragSteps.length - 1 && (
-                      <div style={{ width: 2, height: 18, background: `hsl(${RED} / 0.5)` }} />
-                    )}
-                  </React.Fragment>
-                ))}
-                <div className="mt-2 flex flex-col items-center">
-                  <ArrowDown size={22} style={{ color: `hsl(${RED})` }} />
-                  <span className="font-mono uppercase tracking-[0.18em] mt-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>
-                    drops on the floor
-                  </span>
-                </div>
-              </div>
+                  </div>
+                  {i < ragSteps.length - 1 && (
+                    <div className="flex justify-center"><ArrowDown size={12} style={{ color: `hsl(${RED} / 0.55)` }} /></div>
+                  )}
+                </React.Fragment>
+              ))}
             </div>
+            <p className="mt-3 font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: `hsl(${RED})` }}>
+              Stateless · untyped · ungoverned · unsigned · unrepeatable
+            </p>
           </div>
 
-          {/* RIGHT · LIZA loop — five planes that feed back */}
+          {/* RIGHT · LIZA loop */}
           <div className="flex flex-col">
-            <div className="flex items-baseline justify-between mb-5">
-              <span className="font-mono font-black uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>
+            <div className="flex items-baseline justify-between mb-3">
+              <span className="font-mono font-black uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
                 LIZA · the loop
               </span>
-              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 12, color: SUBTLE }}>
-                5 planes · closed
+              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: SUBTLE }}>
+                5 planes · closed loop
               </span>
             </div>
-            <div className="flex-1 flex items-center justify-center">
-              <div className="relative flex items-center" style={{ gap: 18 }}>
-                {/* Stack of planes */}
-                <div className="flex flex-col" style={{ gap: 8 }}>
-                  {lizaPlanes.map((p) => {
-                    const Icon = p.icon;
-                    return (
-                      <div
-                        key={p.key}
-                        className="rounded-lg border-2 flex items-center gap-3 px-4"
-                        style={{
-                          width: 360, height: 56,
-                          background: `hsl(${GREEN} / 0.06)`,
-                          borderColor: `hsl(${GREEN} / 0.5)`,
-                        }}
-                      >
-                        <Icon size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
-                        <div className="flex-1 min-w-0">
-                          <div className="font-mono font-black tracking-[0.16em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
+            <div className="flex-1 flex" style={{ gap: 10 }}>
+              <div className="flex-1 flex flex-col" style={{ gap: 6 }}>
+                {lizaPlanes.map((p) => {
+                  const Icon = p.icon;
+                  return (
+                    <div
+                      key={p.key}
+                      className="rounded-lg border-2 flex items-start gap-3 px-4 py-2 flex-1"
+                      style={{
+                        background: `hsl(${GREEN} / 0.05)`,
+                        borderColor: `hsl(${GREEN} / 0.5)`,
+                      }}
+                    >
+                      <Icon size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 4 }} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline gap-2 mb-0.5">
+                          <span className="font-mono font-black tracking-[0.18em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
                             {p.key}
-                          </div>
-                          <div style={{ fontSize: 13, color: MUTED, lineHeight: 1.1 }}>{p.gist}</div>
+                          </span>
+                          <span className="font-mono" style={{ fontSize: 10.5, color: SUBTLE }}>{p.parts}</span>
                         </div>
+                        <p style={{ fontSize: 12.5, color: MUTED, lineHeight: 1.25 }}>{p.gist}</p>
                       </div>
-                    );
-                  })}
-                </div>
-                {/* Feedback arrow back to top */}
-                <svg width="70" height="340" viewBox="0 0 70 340" style={{ overflow: "visible" }}>
-                  <defs>
-                    <marker id="arrowEnd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                      <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${ACCENT})`} />
-                    </marker>
-                  </defs>
-                  <path
-                    d="M 0,310 C 60,310 60,30 0,30"
-                    fill="none"
-                    stroke={`hsl(${ACCENT})`}
-                    strokeWidth="2.5"
-                    strokeDasharray="6 5"
-                    markerEnd="url(#arrowEnd)"
-                  />
-                  <text x="55" y="172" fontSize="11" fontFamily="ui-monospace, monospace" fill={`hsl(${ACCENT})`} textAnchor="middle" transform="rotate(90 55 172)" letterSpacing="2">
-                    RECEIPTS FEED THE GRAPH
-                  </text>
-                </svg>
+                    </div>
+                  );
+                })}
               </div>
+              {/* Feedback arrow back to top */}
+              <svg width="46" preserveAspectRatio="none" viewBox="0 0 46 400" style={{ overflow: "visible", height: "100%" }}>
+                <defs>
+                  <marker id="arrowEnd2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${ACCENT})`} />
+                  </marker>
+                </defs>
+                <path
+                  d="M 0,380 C 40,380 40,20 0,20"
+                  fill="none"
+                  stroke={`hsl(${ACCENT})`}
+                  strokeWidth="2.5"
+                  strokeDasharray="6 5"
+                  markerEnd="url(#arrowEnd2)"
+                />
+                <text x="38" y="200" fontSize="11" fontFamily="ui-monospace, monospace" fill={`hsl(${ACCENT})`} textAnchor="middle" transform="rotate(90 38 200)" letterSpacing="2">
+                  RECEIPTS FEED THE GRAPH
+                </text>
+              </svg>
             </div>
+            <p className="mt-3 font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+              Stateful · typed · governed · signed · replayable
+            </p>
           </div>
         </div>
 
-        {/* Three contrast pairs — the only takeaways */}
-        <div className="mt-8 grid grid-cols-3 gap-5">
-          {contrasts.map((c) => (
+        {/* Compact 6-row comparison */}
+        <div className="mt-5 rounded-xl border overflow-hidden" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
+          <div className="grid" style={{ gridTemplateColumns: "150px 1fr 1fr", background: `hsl(${ACCENT} / 0.05)` }}>
+            <div className="px-4 py-2 font-mono uppercase tracking-[0.16em]" style={{ fontSize: 11, color: SUBTLE }}>Property</div>
+            <div className="px-4 py-2 font-mono font-black uppercase tracking-[0.16em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>RAG pipe</div>
+            <div className="px-4 py-2 font-mono font-black uppercase tracking-[0.16em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>LIZA system</div>
+          </div>
+          {compareRows.map((r, i) => (
             <div
-              key={c.right}
-              className="rounded-xl border flex items-center"
-              style={{ background: CARD_ALT, borderColor: CHROME_BORDER, height: 72 }}
+              key={r.prop}
+              className="grid border-t"
+              style={{ gridTemplateColumns: "150px 1fr 1fr", borderColor: CHROME_BORDER, background: i % 2 === 1 ? `hsl(${ACCENT} / 0.02)` : "transparent" }}
             >
-              <div className="flex-1 px-5 text-center" style={{ fontSize: 18, color: `hsl(${RED})`, fontWeight: 700, textDecoration: "line-through", textDecorationColor: `hsl(${RED} / 0.6)` }}>
-                {c.left}
-              </div>
-              <ArrowRight size={20} style={{ color: SUBTLE, flexShrink: 0 }} />
-              <div className="flex-1 px-5 text-center font-black" style={{ fontSize: 20, color: `hsl(${GREEN})` }}>
-                {c.right}
-              </div>
+              <div className="px-4 py-2 font-mono uppercase tracking-[0.14em]" style={{ fontSize: 11, color: TEXT }}>{r.prop}</div>
+              <div className="px-4 py-2" style={{ fontSize: 13, color: MUTED, lineHeight: 1.2 }}>{r.rag}</div>
+              <div className="px-4 py-2 font-bold" style={{ fontSize: 13, color: TEXT, lineHeight: 1.2 }}>{r.liza}</div>
             </div>
           ))}
         </div>
