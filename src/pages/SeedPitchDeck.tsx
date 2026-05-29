@@ -372,55 +372,111 @@ function S07Product({ n, t }: { n: number; t: number }) {
 
 // ─── 07 · BUSINESS MODEL ─────────────────────────────────────────────────────
 function S08BusinessModel({ n, t }: { n: number; t: number }) {
+  // The scissors — indexed to 2023 = 100. Same data shape as TechDD slide 12.
+  const years = ["2023", "2024", "2025", "2026E", "2027E"];
+  const vendor    = [100, 45, 20, 9,  5];
+  const ungoverned= [100, 160, 240, 340, 440];
+  const governed  = [100,  95,  88, 82, 78];
+  const W = 520, H = 280, padL = 32, padR = 14, padT = 18, padB = 28;
+  const yMax = 460;
+  const xAt = (i: number) => padL + (i * (W - padL - padR)) / (years.length - 1);
+  const yAt = (v: number) => padT + (1 - v / yMax) * (H - padT - padB);
+  const path = (arr: number[]) => arr.map((v, i) => `${i === 0 ? "M" : "L"} ${xAt(i)} ${yAt(v)}`).join(" ");
   return (
     <Slide section="Business Model" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-3" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          Three layers. <span style={{ color: `hsl(${GREEN})` }}>One meter.</span>
+        <h2 className="font-black mb-2" style={{ fontSize: 56, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          Tokens get cheaper. AI bills go up. <span style={{ color: `hsl(${GOLD})` }}>We capture the layer in between.</span>
         </h2>
-        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1400 }}>
-          A platform fee carries the learning layer. Metered decisions monetise usage. Enterprise tier prices the deep audit surface.
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
+          Vendors keep cutting per-token prices. Enterprise AI spend per worker keeps climbing because teams paste larger docs and chain longer agentic loops without a gate. We price to the human work removed and govern the context compile. The gap between the rising bill and the floor is our wedge.
         </p>
-        <div className="grid grid-cols-3 gap-7 mb-7">
-          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Platform fee</p>
-            <div className="font-black" style={{ fontSize: 56, lineHeight: 0.95, color: TEXT, letterSpacing: "-0.035em" }}>per seat</div>
-            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Funds the learning layer: playbooks, the standards graph, the receipt store. The factory itself.
-            </p>
-          </div>
-          <div className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Metered usage</p>
-            <div className="font-black" style={{ fontSize: 72, lineHeight: 0.9, color: `hsl(${GREEN})`, letterSpacing: "-0.04em" }}>€0.40<span style={{ fontSize: 22, color: MUTED, marginLeft: 8 }}>est. avg</span></div>
-            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Per governed decision. Indicative blend across verticals — final pricing tuned per workload. Displaces €23 of manual labour.
-            </p>
-          </div>
-          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Enterprise tier</p>
-            <div className="font-black" style={{ fontSize: 56, lineHeight: 0.95, color: TEXT, letterSpacing: "-0.035em" }}>annual</div>
-            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Advanced audit: regulator-grade replay, SSO, residency, custom standards engines, advisory access.
-            </p>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-10 mb-5">
-          {[
-            { v: "95%", l: "platform gross margin at steady state" },
-            { v: "<6mo", l: "payback at typical enterprise volume" },
-            { v: "2×",  l: "billable unit and audit artefact at once" },
-          ].map((s) => (
-            <div key={s.l}>
-              <div className="font-black" style={{ fontSize: 64, lineHeight: 0.9, color: TEXT, letterSpacing: "-0.04em" }}>
-                {s.v}
-              </div>
-              <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.35 }}>{s.l}</p>
+        <div className="grid grid-cols-[1.15fr_1fr] gap-7 items-start">
+          {/* THE SCISSORS — inline chart */}
+          <div className="rounded-2xl p-5" style={{ background: `hsl(${GOLD} / 0.05)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>
+            <div className="flex items-baseline justify-between mb-2">
+              <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>The scissors · indexed 2023 = 100</p>
+              <p className="font-mono" style={{ fontSize: 11, color: SUBTLE }}>2023 → 2027E</p>
             </div>
-          ))}
+            <div className="rounded-xl bg-white p-3" style={{ border: `1px solid ${CHROME_BORDER}` }}>
+              <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto">
+                {[0, 100, 200, 300, 400].map((g) => (
+                  <g key={g}>
+                    <line x1={padL} x2={W - padR} y1={yAt(g)} y2={yAt(g)} stroke={CHROME_BORDER} strokeWidth={1} strokeDasharray={g === 100 ? "" : "2 3"} />
+                    <text x={padL - 6} y={yAt(g) + 3} textAnchor="end" fontSize={10} fill={SUBTLE} fontFamily="monospace">{g}</text>
+                  </g>
+                ))}
+                {years.map((y, i) => (
+                  <text key={y} x={xAt(i)} y={H - 8} textAnchor="middle" fontSize={11} fill={MUTED} fontFamily="monospace">{y}</text>
+                ))}
+                {/* Divergence band: between vendor and ungoverned */}
+                <path
+                  d={`${path(ungoverned)} L ${xAt(years.length - 1)} ${yAt(vendor[vendor.length - 1])} ${[...vendor].reverse().map((v, i) => `L ${xAt(years.length - 1 - i)} ${yAt(v)}`).join(" ")} Z`}
+                  fill={`hsl(${RED} / 0.07)`} stroke="none"
+                />
+                <path d={path(ungoverned)} fill="none" stroke={`hsl(${RED})`} strokeWidth={2.4} />
+                <path d={path(vendor)}     fill="none" stroke={`hsl(${ACCENT})`} strokeWidth={2.4} />
+                <path d={path(governed)}   fill="none" stroke={`hsl(${GREEN})`} strokeWidth={3} />
+                {/* End labels */}
+                <g>
+                  <circle cx={xAt(4)} cy={yAt(440)} r={4} fill={`hsl(${RED})`} />
+                  <text x={xAt(4) - 8} y={yAt(440) - 6} textAnchor="end" fontSize={11} fontWeight={700} fill={`hsl(${RED})`}>Ungoverned bill · 440</text>
+                </g>
+                <g>
+                  <circle cx={xAt(4)} cy={yAt(78)} r={4} fill={`hsl(${GREEN})`} />
+                  <text x={xAt(4) - 8} y={yAt(78) - 6} textAnchor="end" fontSize={11} fontWeight={700} fill={`hsl(${GREEN})`}>LIZA-governed · 78</text>
+                </g>
+                <g>
+                  <circle cx={xAt(4)} cy={yAt(5)} r={4} fill={`hsl(${ACCENT})`} />
+                  <text x={xAt(4) - 8} y={yAt(5) + 14} textAnchor="end" fontSize={11} fontWeight={700} fill={`hsl(${ACCENT})`}>Vendor $/Mtok · 5</text>
+                </g>
+              </svg>
+            </div>
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              <div className="rounded-md px-2.5 py-1.5" style={{ background: `hsl(${ACCENT} / 0.08)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+                <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: `hsl(${ACCENT})` }}>Vendor token</p>
+                <p className="font-black" style={{ fontSize: 15, color: TEXT }}>20× cheaper</p>
+              </div>
+              <div className="rounded-md px-2.5 py-1.5" style={{ background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>
+                <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: `hsl(${RED})` }}>Ungoverned bill</p>
+                <p className="font-black" style={{ fontSize: 15, color: TEXT }}>4.4× more</p>
+              </div>
+              <div className="rounded-md px-2.5 py-1.5" style={{ background: `hsl(${GREEN} / 0.1)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+                <p className="font-mono uppercase tracking-[0.12em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>LIZA-governed</p>
+                <p className="font-black" style={{ fontSize: 15, color: TEXT }}>22% lower</p>
+              </div>
+            </div>
+          </div>
+          {/* THREE PRICING LAYERS */}
+          <div className="flex flex-col gap-3">
+            <p className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 12, color: SUBTLE }}>How we monetise the wedge</p>
+            <div className="rounded-xl px-5 py-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="flex items-baseline justify-between mb-1">
+                <p className="font-black" style={{ fontSize: 20, color: TEXT, letterSpacing: "-0.015em" }}>Platform fee</p>
+                <p className="font-mono" style={{ fontSize: 13, color: MUTED }}>per seat</p>
+              </div>
+              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Funds the learning layer. Playbooks, standards graph, receipt store. The factory itself.</p>
+            </div>
+            <div className="rounded-xl px-5 py-4 relative" style={{ background: `hsl(${GREEN} / 0.06)`, border: `2px solid hsl(${GREEN} / 0.4)` }}>
+              <div className="flex items-baseline justify-between mb-1">
+                <p className="font-black" style={{ fontSize: 20, color: TEXT, letterSpacing: "-0.015em" }}>Metered usage</p>
+                <p className="font-mono font-black" style={{ fontSize: 22, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>€0.40 <span style={{ fontSize: 11, color: MUTED, fontWeight: 400 }}>est. avg</span></p>
+              </div>
+              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Per governed decision. Displaces €23 of manual labour. Margin holds as inference gets cheaper.</p>
+            </div>
+            <div className="rounded-xl px-5 py-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <div className="flex items-baseline justify-between mb-1">
+                <p className="font-black" style={{ fontSize: 20, color: TEXT, letterSpacing: "-0.015em" }}>Enterprise tier</p>
+                <p className="font-mono" style={{ fontSize: 13, color: MUTED }}>annual</p>
+              </div>
+              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>Regulator-grade replay, SSO, residency, custom standards engines, advisory access.</p>
+            </div>
+            <div className="rounded-xl px-5 py-3 flex items-baseline justify-between" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px dashed hsl(${GOLD} / 0.45)` }}>
+              <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>Steady state</p>
+              <p className="font-bold" style={{ fontSize: 14, color: TEXT }}>95% gross margin · &lt;6mo payback · $4.2B wedge</p>
+            </div>
+          </div>
         </div>
-        <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: SUBTLE }}>
-          $4.2B standards-engine wedge inside a $48B AI governance market
-        </p>
       </div>
     </Slide>
   );
