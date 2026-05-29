@@ -467,8 +467,69 @@ function F03AnnotatedEmail() {
   );
 }
 
-// ─── F04 · THE MATH (€550K → $2.6B) ──────────────────────────────────────────
-function F04Math() {
+// ─── F_PILLAR2 · Standards as Stations ───────────────────────────────────────
+function FPillarStations() {
+  const stations = [
+    { n: "01", t: "Intake", desc: "Outcome named. Standard called. Context bundle loaded.", icon: FileText },
+    { n: "02", t: "Compile", desc: "Every prompt compiled against the standard. Drift caught at the gate.", icon: Cog },
+    { n: "03", t: "Execute", desc: "Tokens flow. Rationale logged. Quality built in, not bolted on.", icon: Zap },
+    { n: "04", t: "Audit", desc: "Andon cord. Stop the line. Improve the standard. Compound the asset.", icon: ShieldCheck },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+        <Tag label="Pillar 2 · Standards as Stations" color={ACCENT} />
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em" }}>
+          Every standard <span style={{ color: `hsl(${ACCENT})` }}>becomes a station</span> on the line.
+        </h2>
+        <p className="mb-10" style={{ fontSize: 22, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
+          Toyota's jidoka, ported. Quality is engineered into each station, not inspected at the end. Workers built the stations; they can stop them. LIZA installs four canonical stations and lets the org add more.
+        </p>
+
+        <div className="grid grid-cols-[1fr_24px_1fr_24px_1fr_24px_1fr] gap-0 items-stretch flex-1">
+          {stations.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <React.Fragment key={s.n}>
+                <div className="rounded-2xl border-2 p-6 flex flex-col"
+                     style={{ background: `hsl(${ACCENT} / 0.05)`, borderColor: `hsl(${ACCENT} / 0.35)` }}>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-mono font-black" style={{ fontSize: 26, color: `hsl(${ACCENT})` }}>{s.n}</span>
+                    <Icon size={28} style={{ color: `hsl(${ACCENT})` }} />
+                  </div>
+                  <p className="font-bold mb-3" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>{s.t}</p>
+                  <p className="flex-1" style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{s.desc}</p>
+                  <div className="mt-4 pt-3 border-t flex items-center justify-center gap-2" style={{ borderColor: `hsl(${ACCENT} / 0.2)` }}>
+                    <span className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 11, color: SUBTLE }}>standard governs</span>
+                  </div>
+                </div>
+                {i < stations.length - 1 && (
+                  <div className="flex items-center justify-center">
+                    <ArrowRight size={20} style={{ color: SUBTLE }} />
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Pillar 2 of 4</span>
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.45 }}>
+            Each station is a gate. Each gate enforces a standard. The next pillar is the governance loop that improves the standards over time.
+          </p>
+        </div>
+      </div>
+      <Footer text="Pillar 2: standards become physical stops on the line. Quality is engineered in, not inspected later." />
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ─── F_TAX · The Artisanal Tax (reframed from F04 Math) ──────────────────────
+function FArtisanalTax() {
   const derivation = [
     { icon: Clock, label: "Reconstructing context from scratch", hrs: "1.5 h / wk", note: "Hunting decisions, prior versions, who decided what" },
     { icon: AlertTriangle, label: "Checking AI output for hallucinations", hrs: "1.0 h / wk", note: "Re-verifying numbers, sources, claims before sending" },
@@ -476,9 +537,9 @@ function F04Math() {
     { icon: CheckCircle2, label: "Audit, compliance, version reconciliation", hrs: "0.5 h / wk", note: "\"Which version is approved? Who signed off?\"" },
   ];
   const rows = [
-    { label: "Senior knowledge worker", count: "100", waste: "€5.5K", total: "€550K / yr", grow: false },
-    { label: "× 500-person knowledge org", count: "500", waste: "€5.5K", total: "€2.75M / yr", grow: false },
-    { label: "× 10,000-person enterprise", count: "10,000", waste: "€5.5K", total: "€55M / yr", grow: true },
+    { label: "100-person team still in the workshop", count: "100", waste: "€5.5K", total: "€550K / yr", grow: false },
+    { label: "500-person knowledge org", count: "500", waste: "€5.5K", total: "€2.75M / yr", grow: false },
+    { label: "10,000-person enterprise", count: "10,000", waste: "€5.5K", total: "€55M / yr", grow: true },
     { label: "Global knowledge economy (TAM proxy)", count: "~470M", waste: "€5.5K", total: "$2.6B SAM", grow: true },
   ];
   return (
@@ -486,12 +547,12 @@ function F04Math() {
       <SlideGrid />
       <PageNumber />
       <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
-        <Tag label="The Math" color={ACCENT} />
+        <Tag label="The Artisanal Tax" color={GOLD} />
         <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.03em" }}>
-          The cost of the push motion: <span style={{ color: `hsl(${GOLD})` }}>€5,500 per worker per year</span>
+          The cost of staying a workshop: <span style={{ color: `hsl(${GOLD})` }}>€5,500 per worker per year</span>
         </h2>
         <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
-          Knowledge work today is still <em>artisanal</em>: every worker reconstructs context from scratch, every session. AI accelerated the artisan — it did not industrialise the work. Here is the per-worker tax that hides on every P&L.
+          Hand-crafted context is expensive at scale. Every worker reconstructs the same context, checks the same outputs, redoes the same work, every session. AI accelerated the artisan. It did not industrialise the work. Here is the per-worker tax hiding on every P&L.
         </p>
 
         {/* Derivation panel */}
@@ -550,11 +611,11 @@ function F04Math() {
         <div className="mt-5 px-6 py-3 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.05)`, borderColor: `hsl(${GREEN})` }}>
           <Gauge size={22} style={{ color: `hsl(${GREEN})` }} />
           <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>
-            LIZA captures <span className="font-black" style={{ color: `hsl(${GREEN})` }}>5–8%</span> of the tax = <span className="font-black">€2.75M ACV</span> at 500 ppl · <span className="font-black">95% platform GM</span> · <span className="font-black">&lt; 6 mo payback</span>.
+            LIZA captures <span className="font-black" style={{ color: `hsl(${GREEN})` }}>5-8%</span> of the artisanal tax = <span className="font-black">€2.75M ACV</span> at 500 ppl · <span className="font-black">95% platform GM</span> · <span className="font-black">&lt; 6 mo payback</span>.
           </p>
         </div>
       </div>
-      <Footer text="Derivation: senior-loaded rate, 4 h/wk artisanal overhead — cross-validated with HBR & McKinsey 2024 rework data, internal 100-worker study." />
+      <Footer text="Derivation: senior-loaded rate, 4 h/wk artisanal overhead. Cross-validated with HBR & McKinsey 2024 rework data, internal 100-worker study." />
       <SlideBar from={ACCENT} to={GOLD} />
     </div>
   );
