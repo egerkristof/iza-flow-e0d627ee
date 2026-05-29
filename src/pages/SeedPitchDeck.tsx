@@ -88,9 +88,9 @@ function S01Cover({ n, t }: { n: number; t: number }) {
 // ─── 02 · PROBLEM ────────────────────────────────────────────────────────────
 function S02Problem({ n, t }: { n: number; t: number }) {
   const lines = [
-    "Every prompt is hand-crafted by one person.",
-    "Every output ships without a receipt.",
-    "Every workflow dies when the tab closes.",
+    { l: "Every prompt is hand-crafted by one person.", d: "No shared method. Two operators ask the same question, get two different answers." },
+    { l: "Every output ships without a receipt.", d: "Output = the email, quote, report, code, decision the AI produced. Receipt = a signed, replayable record of which standards, data, and model produced it. Today there is none." },
+    { l: "Every workflow dies when the tab closes.", d: "Dies = the prompt, the reasoning, the corrections vanish. Nobody can rerun it, audit it, or improve it. Monday starts from zero." },
   ];
   return (
     <Slide section="Problem" n={n} total={t}>
@@ -99,23 +99,26 @@ function S02Problem({ n, t }: { n: number; t: number }) {
           Companies run AI like a{" "}
           <span style={{ color: `hsl(${RED})` }}>workshop of artisans.</span>
         </h2>
-        <div className="flex flex-col gap-5 mb-10">
-          {lines.map((l) => (
-            <div key={l} className="flex items-baseline gap-6">
+        <div className="flex flex-col gap-4 mb-8">
+          {lines.map((row) => (
+            <div key={row.l} className="grid grid-cols-[40px_1fr] gap-6 items-baseline">
               <span className="font-mono font-black" style={{ fontSize: 22, color: `hsl(${RED})` }}>×</span>
-              <p style={{ fontSize: 32, color: TEXT, lineHeight: 1.25 }}>{l}</p>
+              <div>
+                <p className="font-bold" style={{ fontSize: 28, color: TEXT, lineHeight: 1.2 }}>{row.l}</p>
+                <p className="mt-1" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>{row.d}</p>
+              </div>
             </div>
           ))}
         </div>
-        <div className="rounded-xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
+        <div className="rounded-xl p-6" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.25)` }}>
           <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${RED})` }}>
             One real failure, one real day
           </p>
-          <p style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
+          <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
             A senior consultant asked AI to draft a client update. Six defects shipped in one email: wrong honorific, stale timeline, fabricated 30% savings figure, missing attachment, wrong SLA, no audit trail. Nothing stopped the line, because there was no line.
           </p>
         </div>
-        <p className="mt-8 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 15, color: MUTED }}>
+        <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 14, color: MUTED }}>
           Brilliance does not compound. It does not transfer. It does not survive Monday.
         </p>
       </div>
