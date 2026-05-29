@@ -183,6 +183,9 @@ function S04WhyNow({ n, t }: { n: number; t: number }) {
         <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
           Three shifts. <span style={{ color: `hsl(${ACCENT})` }}>One collision.</span>
         </h2>
+        <p className="font-mono uppercase tracking-[0.22em] mb-8" style={{ fontSize: 14, color: MUTED }}>
+          Shifts 1 &amp; 3 push AI into every workflow. Shift 2 demands governance. Companies are still artisanal.
+        </p>
         <div className="grid grid-cols-3 gap-7">
           <div className="rounded-2xl p-7" style={{ background: CARD_ALT, borderLeft: `6px solid hsl(${ACCENT})` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>
@@ -200,7 +203,7 @@ function S04WhyNow({ n, t }: { n: number; t: number }) {
               Shift 2
             </p>
             <p className="font-black mb-3" style={{ fontSize: 34, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
-              Audit is now law.
+              Compliance is now law.
             </p>
             <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>
               EU AI Act, SOC 2, GxP, MiFID II. Every AI decision must be explainable, signed, replayable.
