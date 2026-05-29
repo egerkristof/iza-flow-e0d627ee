@@ -51,24 +51,110 @@ function S01Cover({ n, t }: { n: number; t: number }) {
     <Slide section="LIZA OS" n={n} total={t} dark>
       <div className="absolute inset-0 flex flex-col items-center justify-center px-32 text-center">
         <p className="font-mono uppercase tracking-[0.3em] mb-10" style={{ fontSize: 16, color: `hsl(${GOLD})` }}>
-          For the investor who already knows the easy objections
+          You have seen a hundred AI weekend projects this year.
         </p>
-        <h1 className="font-black" style={{ fontSize: 116, lineHeight: 0.98, color: "hsl(0 0% 98%)", letterSpacing: "-0.045em" }}>
-          Why this isn't a<br/>weekend project,<br/>and why Anthropic<br/>won't build it.
+        <h1 className="font-black" style={{ fontSize: 120, lineHeight: 0.96, color: "hsl(0 0% 98%)", letterSpacing: "-0.045em" }}>
+          LIZA OS<br/>
+          <span style={{ color: `hsl(${GREEN})` }}>is not one of them.</span>
         </h1>
+        <p className="mt-12" style={{ fontSize: 32, lineHeight: 1.35, color: "hsl(0 0% 75%)", maxWidth: 1300 }}>
+          The governance layer that lets regulated enterprises run AI in production. Sits between Claude / GPT / Gemini and the work itself. Replayable in front of an auditor.
+        </p>
       </div>
     </Slide>
   );
 }
 
-// ─── 02 · THE TWO OBJECTIONS ────────────────────────────────────────────────
+// ─── 02 · WHAT LIZA IS ──────────────────────────────────────────────────────
+function S02What({ n, t }: { n: number; t: number }) {
+  const facts = [
+    { k: "Who buys",   v: "Regulated enterprises: AEC, pharma, banking, space &amp; defense." },
+    { k: "What it is", v: "A governance layer between the LLM and the work. Model-agnostic." },
+    { k: "What it does", v: "Locks every AI task to a versioned company playbook, compiles the typed standards on every call, signs the output with a replayable receipt." },
+    { k: "Why now",     v: "AI is in every workflow. Auditors arrive next. Tokens go metered in 2025. Nothing on the market bridges the three." },
+  ];
+  return (
+    <Slide section="What LIZA is" n={n} total={t}>
+      <div className="absolute inset-0 px-32 flex flex-col justify-center">
+        <h2 className="font-black mb-3" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          In one screen, <span style={{ color: `hsl(${GREEN})` }}>before the pitch starts.</span>
+        </h2>
+        <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
+          If this paragraph is unfamiliar territory, keep reading. If it is, skip to slide 04.
+        </p>
+        <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}` }}>
+          {facts.map((f, i) => (
+            <div
+              key={f.k}
+              className="grid grid-cols-[260px_1fr] px-8 py-6"
+              style={{
+                background: i % 2 === 1 ? CARD_ALT : "transparent",
+                borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}`,
+              }}
+            >
+              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>{f.k}</p>
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.4, letterSpacing: "-0.01em" }} dangerouslySetInnerHTML={{ __html: f.v }} />
+            </div>
+          ))}
+        </div>
+        <p className="mt-8 font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
+          One production deployment today. CTO-sponsored. Pattern repeats across regulated verticals.
+        </p>
+      </div>
+    </Slide>
+  );
+}
+
+// ─── 03 · HOW IT RUNS IN ONE TASK ───────────────────────────────────────────
+function S03HowItRuns({ n, t }: { n: number; t: number }) {
+  const steps = [
+    { k: "LOCK",    h: "Prompt locks to a playbook.",     v: "An operator asks. LIZA matches the intent to a versioned company method (\"price an enterprise quote\", \"draft a clinical summary\")." },
+    { k: "COMPILE", h: "Standards compile into context.", v: "Typed policies, procedures, decision rules and approved data are compiled fresh into the model for that single call." },
+    { k: "SIGN",    h: "Output ships with a receipt.",   v: "A signed, hash-chained record of playbook, standards, data, model and signature. Replayable in one click by any auditor." },
+  ];
+  return (
+    <Slide section="How it runs" n={n} total={t}>
+      <div className="absolute inset-0 px-32 flex flex-col justify-center">
+        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          One AI task, <span style={{ color: `hsl(${GREEN})` }}>three things the LLM cannot do alone.</span>
+        </h2>
+        <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
+          This is the unit. Everything else in the deck refers back to it.
+        </p>
+        <div className="grid grid-cols-3 gap-6 mb-7">
+          {steps.map((s, i) => (
+            <div key={s.k} className="rounded-2xl p-7 flex flex-col" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-mono font-black flex items-center justify-center rounded-full" style={{ width: 28, height: 28, fontSize: 14, color: BG, background: `hsl(${GREEN})` }}>{i + 1}</span>
+                <span className="font-mono font-black uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>{s.k}</span>
+              </div>
+              <p className="font-black mb-4" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{s.h}</p>
+              <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.45 }}>{s.v}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-4 rounded-xl px-7 py-5" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <span className="font-mono font-black" style={{ fontSize: 20, color: `hsl(${GREEN})` }}>↺</span>
+          <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
+            Receipts feed back. Standards sharpen with every call. <span style={{ color: `hsl(${GREEN})` }}>The factory learns.</span>
+          </p>
+        </div>
+      </div>
+    </Slide>
+  );
+}
+
+// ─── 04 · THE TWO OBJECTIONS ────────────────────────────────────────────────
 function S02Objections({ n, t }: { n: number; t: number }) {
   return (
-    <Slide section="The two objections" n={n} total={t}>
+    <Slide section="What you will object to" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Sharp investors raise <span style={{ color: `hsl(${RED})` }}>two objections</span> before slide three.
+        <h2 className="font-black mb-4" style={{ fontSize: 60, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          You are tired of <span style={{ color: `hsl(${RED})` }}>two pitches</span>. This one is neither.
         </h2>
+        <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
+          Name them up front. Spend the rest of the deck dismantling them.
+        </p>
         <div className="grid grid-cols-2 gap-8">
           <div className="rounded-2xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.3)` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${RED})` }}>Objection 01</p>
@@ -79,7 +165,7 @@ function S02Objections({ n, t }: { n: number; t: number }) {
               Prompts, RAG, a vector store, a system prompt. Looks like commodity plumbing.
             </p>
             <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 12, color: SUBTLE }}>
-              Answered on slide 03 &amp; 04
+              Answered on slide 05 &amp; 06
             </p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.3)` }}>
@@ -91,11 +177,11 @@ function S02Objections({ n, t }: { n: number; t: number }) {
               Claude, OpenAI, Gemini will do organizational readiness as a feature. Game over.
             </p>
             <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 12, color: SUBTLE }}>
-              Answered on slide 05, 06 &amp; 07
+              Answered on slide 07, 08 &amp; 09
             </p>
           </div>
         </div>
-        <p className="mt-12 font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.4, maxWidth: 1400 }}>
+        <p className="mt-10 font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.4, maxWidth: 1400 }}>
           The rest of this deck is the answer. If we are wrong on either point, do not invest.
         </p>
       </div>
