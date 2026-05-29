@@ -5,6 +5,8 @@ import {
   Factory, Cpu, Building2, Users,
   Workflow, Coins, Sparkles, Mail, CheckCircle2, Layers,
   ArrowDown, ArrowRight, Magnet, Megaphone, Clock, AlertTriangle, Gauge,
+  Hammer, Wrench, Flame, FileText, GitBranch, Zap, ShieldCheck,
+  Lightbulb, UserCog, Package, Cog, Wind, Skull, Ban,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
