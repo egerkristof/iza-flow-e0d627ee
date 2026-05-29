@@ -8,6 +8,7 @@ import {
   Hammer, Wrench, Flame, FileText, GitBranch, Zap, ShieldCheck,
   Lightbulb, UserCog, Package, Cog, Wind, Skull, Ban,
   Hash, FileCheck2, Lock, Fingerprint, ScrollText, Scale, Database, Eye,
+  Boxes, Network, GitCompare, GitMerge, Filter, Radar, Crosshair, Binary,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
@@ -1019,6 +1020,196 @@ function FHowWeBreak() {
   );
 }
 
+// ─── F_HOOD · Trabant vs Ferrari · Open the hood ────────────────────────────
+function FOpenTheHood() {
+  const trabantParts = [
+    { name: "Single LLM call", what: "One prompt in, one answer out. No memory of which process is in flight." },
+    { name: "Top-k vector RAG", what: "Cosine-similar chunks pasted in. Averages, hallucinates, pollutes." },
+    { name: "Static system prompt", what: "A 400-line .txt file. Same context for every user, every task, every risk level." },
+    { name: "Free-text notes", what: "Confluence pages. Notion docs. No types, no actions, no overrides." },
+    { name: "Re-uploaded duplicates", what: "Every import piles on. No dedupe. The methodology deck enters six times." },
+    { name: "Edit and pray", what: "Change the prompt. No diff. No regression. No idea what just broke downstream." },
+  ];
+  const ferrariParts = [
+    { name: "Intent-Lock State Machine", what: "Classifier reads the prompt, locks the session to a Playbook, refuses to drift until STOP/RESET." },
+    { name: "JIT XML Context Compiler", what: "Hundreds of items filtered by scope, security, priority. Assembled into a typed XML kernel on every call." },
+    { name: "5-Category Typed Ontology", what: "Directive · Knowledge · Procedure · Playbook · Preference. Plus Action Logic: APPEND / OVERRIDE / BLOCK." },
+    { name: "5-Layer Context Stack", what: "Org → Domain → Workbook → Chat → User. Inheritance with override arbitration, visualised live." },
+    { name: "Content-Hash Dedup + Jaccard Match", what: "SHA-256 trigger on write. Near-duplicates surfaced. Merge / Replace / Keep — never silent collisions." },
+    { name: "Two-Pass Structural Extraction", what: "Structure analyst maps the document skeleton. Advisor persona biases category precision on extraction." },
+    { name: "Semantic Bundle Matcher", what: "New imports scored against the existing graph on four dimensions. Auto-merge above 0.9. User-confirm 0.7-0.9." },
+    { name: "Gutter Diff + Sync Manifest", what: "Edit a canonical doc → line-by-line diff → typed SyncOperation list → cherry-pick before commit. Logged forever." },
+    { name: "Mandate Enforcement Gates", what: "Advisory · Required-ACK · Blocking. Status transitions and chats are gated by acknowledged compliance." },
+    { name: "Protocol Execution Engine", what: "Playbooks compile to ordered steps with gates. Every run scored on drift and compliance, persisted, queryable." },
+    { name: "Impact Simulator (Pre-Commit)", what: "Before any edit ships: how many workbooks affected, how many actively locked, soft-push vs broadcast." },
+    { name: "Knowledge Graph Auditor", what: "Background agent: recategorize · split · merge · enrich · promote_mandate · archive. The graph audits itself." },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-20 pt-20 pb-16 flex flex-col">
+        <Tag label="Open the Hood · Trabant vs Ferrari" color={ACCENT} />
+        <h2 className="font-black mb-2" style={{ fontSize: 50, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          From a chat window, both look the same.{" "}
+          <span style={{ color: `hsl(${ACCENT})` }}>Lift the hood. They are not the same machine.</span>
+        </h2>
+        <p className="mb-5" style={{ fontSize: 16, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          You do not need to be a mechanic to know which car is engineered. The Trabant is a cardboard box on four wheels with a two-stroke engine. The Ferrari is an artisanal masterwork. Same road. Different machine. The market is selling Trabants with leather seats. This is what is actually under our hood.
+        </p>
+
+        <div className="grid grid-cols-2 gap-5 flex-1">
+          {/* TRABANT */}
+          <div className="rounded-2xl border-2 p-5 flex flex-col" style={{ background: `hsl(${RED} / 0.04)`, borderColor: `hsl(${RED} / 0.4)` }}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Skull size={20} style={{ color: `hsl(${RED})` }} />
+                <span className="font-mono font-black uppercase tracking-[0.18em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Trabant · chat + RAG</span>
+              </div>
+              <span className="font-mono" style={{ fontSize: 11, color: SUBTLE }}>2-stroke · cardboard body</span>
+            </div>
+            <p className="font-bold mb-3" style={{ fontSize: 19, color: TEXT, lineHeight: 1.2 }}>
+              Six moving parts. None of them know each other.
+            </p>
+            <div className="grid grid-cols-1 gap-2 flex-1">
+              {trabantParts.map((p) => (
+                <div key={p.name} className="rounded-lg border p-2.5" style={{ background: `hsl(${RED} / 0.03)`, borderColor: `hsl(${RED} / 0.25)` }}>
+                  <p className="font-bold" style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.2 }}>{p.name}</p>
+                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>{p.what}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* FERRARI */}
+          <div className="rounded-2xl border-2 p-5 flex flex-col" style={{ background: `hsl(${GREEN} / 0.05)`, borderColor: `hsl(${GREEN} / 0.5)` }}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Cog size={20} style={{ color: `hsl(${GREEN})` }} />
+                <span className="font-mono font-black uppercase tracking-[0.18em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>LIZA · AACE v3.1 engine</span>
+              </div>
+              <span className="font-mono" style={{ fontSize: 11, color: SUBTLE }}>12 engineered subsystems · one runtime</span>
+            </div>
+            <p className="font-bold mb-3" style={{ fontSize: 19, color: TEXT, lineHeight: 1.2 }}>
+              Adaptive Agentic Context Engine. <span style={{ color: `hsl(${GREEN})` }}>Twelve subsystems. One synchronised loop.</span>
+            </p>
+            <div className="grid grid-cols-2 gap-1.5 flex-1">
+              {[
+                "Intent-Lock State Machine",
+                "JIT XML Context Compiler",
+                "5-Category Typed Ontology",
+                "5-Layer Context Stack",
+                "SHA-256 Dedup + Jaccard Match",
+                "Two-Pass Structural Extraction",
+                "Semantic Bundle Matcher",
+                "Gutter Diff + Sync Manifest",
+                "Mandate Enforcement Gates",
+                "Protocol Execution Engine",
+                "Pre-Commit Impact Simulator",
+                "Knowledge Graph Auditor",
+              ].map((n, i) => (
+                <div key={n} className="rounded-md border px-2.5 py-1.5 flex items-center gap-2" style={{ background: `hsl(${GREEN} / 0.04)`, borderColor: `hsl(${GREEN} / 0.3)` }}>
+                  <span className="font-mono font-black" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>{String(i + 1).padStart(2, "0")}</span>
+                  <span className="font-bold" style={{ fontSize: 12, color: TEXT, lineHeight: 1.15 }}>{n}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10.5, color: `hsl(${GREEN})` }}>
+              → Next slide: each subsystem, exposed.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Footer text="Same surface. Different machine. The hood is open for the next 90 seconds." />
+      <SlideBar from={RED} to={GREEN} />
+    </div>
+  );
+}
+
+// ─── F_ENGINE · The 12 engineered subsystems, exposed ───────────────────────
+function FEngineBay() {
+  const parts = [
+    { i: Crosshair,  name: "Intent-Lock State Machine",
+      breaks: "Stateless chat drifts mid-task",
+      what: "Pre-flight classifier matches the prompt against the Playbook Registry. On match, session enters Locked State (locked_playbook_id). The agent follows the playbook strictly until STOP / RESET." },
+    { i: Layers,     name: "JIT XML Context Compiler",
+      breaks: "Static system prompt for all",
+      what: "Hundreds of items filtered by security clearance, domain match, priority. Assembled into a hierarchical XML kernel — <critical_directives>, <playbook_registry>, <knowledge_base>, <memory_index> — prepended just-in-time. Zero summarisation." },
+    { i: Boxes,      name: "5-Category Typed Ontology",
+      breaks: "Free-text knowledge soup",
+      what: "DIRECTIVE · KNOWLEDGE · PROCEDURE · PLAYBOOK · PREFERENCE. Each carries an Action Logic (APPEND / OVERRIDE / BLOCK) and an Operation Mode risk tier. The category controls the XML container and the LLM behavioural instruction." },
+    { i: Network,    name: "5-Layer Context Stack",
+      breaks: "Flat blob, no scope",
+      what: "Org → Domain → Workbook → Active Chat → User Preference. Resolved top-down with OVERRIDE / BLOCK arbitration. The Context Stack Viewer shows every item, origin, version, and shadow state inline." },
+    { i: Fingerprint, name: "Content-Hash Dedup",
+      breaks: "Same doc imported six times",
+      what: "Postgres trigger computes SHA-256(title || content) on every write. Composite (owner_id, content_hash) index makes exact dedup O(1). Jaccard runs a second pass for near-duplicates with merge / replace / keep resolution." },
+    { i: Radar,      name: "Two-Pass Structural Extraction",
+      breaks: "Chunk-and-embed shallow read",
+      what: "Pass 1: a Structure Analyst maps the document skeleton — TOC, phases, hierarchy, density per section. Pass 2: an Advisor Persona generated from metadata biases category precision. 7-rule decision tree, coverage gap analysis, completeness scoring." },
+    { i: GitCompare, name: "Semantic Bundle Matcher",
+      breaks: "Every import = orphan pile",
+      what: "match-bundles scores new bundles against the existing graph on four dimensions: title, description, item content, phase identity. Exact ≥0.9 auto-merges, likely 0.7–0.89 prompts, possible 0.5–0.69 surfaces. Cross-bundle consolidation runs first." },
+    { i: GitMerge,   name: "Gutter Diff + Sync Manifest",
+      breaks: "Edit + paste, no propagation",
+      what: "Canonical doc edits render a live line-by-line gutter diff against the baseline. sync-document-to-playbooks emits a typed SyncOperation manifest (create / update / delete with prev/next). User cherry-picks. document_sync_logs records every event." },
+    { i: ShieldCheck, name: "Mandate Enforcement Gates",
+      breaks: "Rules in the prompt, maybe followed",
+      what: "Directives elevate to mandates with three enforcement tiers. Advisory: soft inject. Required-ACK: pinned, workbook cannot complete without acknowledgment row. Blocking: agent refuses, status transitions blocked, violations escalate." },
+    { i: Workflow,   name: "Protocol Execution Engine",
+      breaks: "Chat 'suggests next steps'",
+      what: "Bundles compile to workbook_protocols. Procedures become ordered action steps; directives become gate steps with enforcement levels. Every execution writes step_executions rows with drift_score and compliance_score (0–1). Queryable for oversight." },
+    { i: Filter,     name: "Pre-Commit Impact Simulator",
+      breaks: "Silent breakage downstream",
+      what: "Before any item change ships: blast-radius preview — workbooks affected, sessions actively locked, distinct users impacted. Soft-Push (shields active locks) vs Broadcast (force, destructive-confirm). The Andon cord, with telemetry." },
+    { i: Binary,     name: "Knowledge Graph Auditor",
+      breaks: "Graph quality decays silently",
+      what: "Background agent runs an 8-pattern audit over the corpus: recategorize · enrich · split · merge (with merge_with_id) · promote_mandate · archive. Detects BANT-as-PLAYBOOK, orphan PROCEDUREs, missing step_order_hint. The graph cleans itself." },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-20 pt-20 pb-16 flex flex-col">
+        <Tag label="The Engine Bay · AACE v3.1, exposed" color={GREEN} />
+        <h2 className="font-black mb-2" style={{ fontSize: 48, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          Twelve engineered subsystems.{" "}
+          <span style={{ color: `hsl(${GREEN})` }}>Each one is a thing the market does not have.</span>
+        </h2>
+        <p className="mb-4" style={{ fontSize: 15.5, color: MUTED, maxWidth: 1400, lineHeight: 1.4 }}>
+          Adaptive Agentic Context Engine, version 3.1. Specification: 1,200 lines. Implementation: live in this app and the smartphone client. This is not a roadmap. This is the runtime today. Every panel below names a real component, what it breaks, and how it works.
+        </p>
+
+        <div className="grid grid-cols-4 gap-2.5 flex-1">
+          {parts.map((p, i) => {
+            const Icon = p.i;
+            return (
+              <div key={p.name} className="rounded-xl border-2 p-3 flex flex-col" style={{ background: `hsl(${GREEN} / 0.04)`, borderColor: `hsl(${GREEN} / 0.32)` }}>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-mono font-black" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>L{String(i + 1).padStart(2, "0")}</span>
+                  <Icon size={16} style={{ color: `hsl(${GREEN})` }} />
+                </div>
+                <p className="font-bold mb-1.5" style={{ fontSize: 13.5, color: TEXT, lineHeight: 1.18 }}>{p.name}</p>
+                <p className="font-mono uppercase tracking-[0.1em] mb-1.5" style={{ fontSize: 8.5, color: `hsl(${RED})` }}>Breaks: {p.breaks}</p>
+                <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.35 }}>{p.what}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-4 px-6 py-3 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
+          <Cog size={20} style={{ color: `hsl(${ACCENT})` }} />
+          <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-black">The Ferrari piece.</span> Twelve subsystems, one synchronised loop, all running on every call. The Trabant ships you a chat. We ship you a factory floor with its own nervous system.
+          </p>
+        </div>
+      </div>
+      <Footer text="AACE v3.1 · State-Locked & Full-Context · spec live, runtime shipping, app and mobile." />
+      <SlideBar from={GREEN} to={ACCENT} />
+    </div>
+  );
+}
+
 // ─── F_AUDITRECEIPTS · Auditable compliance capabilities, in detail ─────────
 function FAuditReceipts() {
   const capabilities = [
@@ -1162,6 +1353,9 @@ const RAW_SLIDES = [
   // ACT I.5 — The wall and the substrate that breaks it
   { id: "why-hard",          title: "The Wall · Why Era IV Is Not Already Built",        component: <FWhyHard /> },
   { id: "how-we-break",      title: "The Stack · How LIZA Breaks the Wall",              component: <FHowWeBreak /> },
+
+  { id: "open-the-hood",     title: "Open the Hood · Trabant vs Ferrari",                component: <FOpenTheHood /> },
+  { id: "engine-bay",        title: "The Engine Bay · AACE v3.1 Exposed",                component: <FEngineBay /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
