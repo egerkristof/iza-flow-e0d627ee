@@ -181,25 +181,25 @@ function FThreeStages() {
       n: "I", era: "1800s", name: "Artisanal", icon: Hammer, color: GOLD,
       mfg: "One craftsman per object. Brilliant, slow, unrepeatable.",
       kw: "One expert per answer. Hand-built prompts. Disposable expertise.",
-      tag: "WHERE YOU ARE",
+      tag: "WHERE YOU ARE (UNCONSCIOUSLY)",
     },
     {
       n: "II", era: "1910s", name: "Fordism", icon: Megaphone, color: RED,
       mfg: "Assembly line. Identical Model T. Worker crushed into throughput.",
       kw: "LLM seats pushed to every desk. Identical generic output. Worker as prompt-typist.",
-      tag: "THE TRAP",
+      tag: "WHERE THEY PUSH YOU (UNCONSCIOUSLY)",
     },
     {
       n: "III", era: "1950s", name: "Toyotaism", icon: Factory, color: ACCENT,
       mfg: "Pull, kanban, kaizen. Workers redesign the line. Quality built in.",
       kw: "Standards pull tokens. Workers improve their own stations. Craft scales.",
-      tag: "THE BRIDGE",
+      tag: "THE BRIDGE (MECHANICS WE STEAL)",
     },
     {
       n: "IV", era: "Today", name: "AI-Driven · Industry 4.0", icon: Cpu, color: GREEN,
       mfg: "Software-defined assembly. Predictive. Per-unit customization at line speed.",
       kw: "Every prompt assembled from standards, per outcome, predictively governed. LIZA.",
-      tag: "WHERE LIZA INSTALLS YOU",
+      tag: "WHERE LIZA INSTALLS YOU (CONSCIOUSLY)",
     },
   ];
   const rows = [
@@ -213,29 +213,57 @@ function FThreeStages() {
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag label="Four Eras of Production · Knowledge Work Today" color={ACCENT} />
-        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
-          Manufacturing already walked this ladder. <span style={{ color: `hsl(${GREEN})` }}>Knowledge work skips to Era IV.</span>
+        <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          You are in <span style={{ color: `hsl(${GOLD})` }}>Era I</span>. The market is pushing you into <span style={{ color: `hsl(${RED})` }}>Era II</span>. <span style={{ color: `hsl(${GREEN})` }}>Neither side knows it.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
-          Industry took 150 years to go from the artisan's bench to software-defined, predictive production. Most knowledge work is still on the bench. LIZA installs Era IV directly on top of Era I. Toyotaism is the bridge, not a destination.
+        <p className="mb-5" style={{ fontSize: 19, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          Industry took 150 years to walk this ladder. Knowledge work is still on the bench. Your half-baked improvements stay in Era I. Vendors selling seats land you in Era II. LIZA is the conscious third path: install Era IV directly on top of Era I. Toyota was the bridge, not the destination.
         </p>
 
+        {/* Two unconscious motions + conscious third path */}
+        <div className="grid grid-cols-3 gap-3 mb-5">
+          {[
+            { tag: "YOUR MOTION (UNCONSCIOUS)", color: GOLD, icon: Hammer,
+              line: "Half-baked workshop fixes.",
+              body: "Better prompts. Shared docs. Prompt libraries. Stays in Era I." },
+            { tag: "THEIR MOTION (UNCONSCIOUS)", color: RED, icon: Megaphone,
+              line: "Vendors push more seats.",
+              body: "Copilot to 5,000 desks. Called transformation. Lands you in Era II." },
+            { tag: "THE CONSCIOUS THIRD PATH", color: GREEN, icon: Cpu,
+              line: "LIZA installs Era IV.",
+              body: "Skip Era II entirely. Toyota mechanics, Era IV substrate, on top of Era I." },
+          ].map((m) => {
+            const Icon = m.icon;
+            return (
+              <div key={m.tag} className="rounded-xl border-l-4 px-4 py-3 flex gap-3 items-start"
+                   style={{ background: `hsl(${m.color} / 0.05)`, borderColor: `hsl(${m.color})` }}>
+                <Icon size={20} style={{ color: `hsl(${m.color})`, flexShrink: 0, marginTop: 2 }} />
+                <div>
+                  <p className="font-mono uppercase tracking-[0.15em] font-bold mb-1" style={{ fontSize: 10, color: `hsl(${m.color})` }}>{m.tag}</p>
+                  <p className="font-bold mb-0.5" style={{ fontSize: 15, color: TEXT, lineHeight: 1.2 }}>{m.line}</p>
+                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>{m.body}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
         {/* Four era cards */}
-        <div className="grid grid-cols-4 gap-4 mb-5">
+        <div className="grid grid-cols-4 gap-3 mb-4">
           {eras.map((e) => {
             const Icon = e.icon;
             return (
-              <div key={e.n} className="rounded-2xl border-2 p-5 flex flex-col"
+              <div key={e.n} className="rounded-2xl border-2 p-4 flex flex-col"
                    style={{ background: `hsl(${e.color} / 0.05)`, borderColor: `hsl(${e.color} / 0.45)` }}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono font-black tracking-tight" style={{ fontSize: 22, color: `hsl(${e.color})` }}>ERA {e.n}</span>
-                  <Icon size={22} style={{ color: `hsl(${e.color})` }} />
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-mono font-black tracking-tight" style={{ fontSize: 20, color: `hsl(${e.color})` }}>ERA {e.n}</span>
+                  <Icon size={20} style={{ color: `hsl(${e.color})` }} />
                 </div>
                 <p className="font-mono uppercase tracking-[0.15em] mb-1" style={{ fontSize: 11, color: MUTED }}>{e.era}</p>
-                <p className="font-bold mb-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>{e.name}</p>
-                <p className="mb-2" style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}><span className="font-semibold" style={{ color: SUBTLE }}>Mfg:</span> {e.mfg}</p>
-                <p className="flex-1" style={{ fontSize: 14, color: TEXT, lineHeight: 1.35 }}><span className="font-semibold" style={{ color: `hsl(${e.color})` }}>Knowledge work:</span> {e.kw}</p>
-                <div className="mt-3 pt-3 border-t text-center" style={{ borderColor: `hsl(${e.color} / 0.2)` }}>
+                <p className="font-bold mb-2" style={{ fontSize: 19, color: TEXT, lineHeight: 1.15 }}>{e.name}</p>
+                <p className="mb-1.5" style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}><span className="font-semibold" style={{ color: SUBTLE }}>Mfg:</span> {e.mfg}</p>
+                <p className="flex-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.3 }}><span className="font-semibold" style={{ color: `hsl(${e.color})` }}>Knowledge work:</span> {e.kw}</p>
+                <div className="mt-2 pt-2 border-t text-center" style={{ borderColor: `hsl(${e.color} / 0.2)` }}>
                   <span className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 10, color: `hsl(${e.color})` }}>{e.tag}</span>
                 </div>
               </div>
@@ -248,9 +276,9 @@ function FThreeStages() {
           {rows.map((r, i) => (
             <div key={r.label} className="grid grid-cols-[180px_1fr_1fr_1fr_1fr] items-center"
                  style={{ background: i % 2 === 0 ? "white" : CARD_ALT, borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
-              <span className="px-5 py-3 font-mono uppercase tracking-[0.14em] font-bold" style={{ fontSize: 12, color: MUTED }}>{r.label}</span>
+              <span className="px-5 py-2 font-mono uppercase tracking-[0.14em] font-bold" style={{ fontSize: 12, color: MUTED }}>{r.label}</span>
               {r.vals.map((v, j) => (
-                <span key={j} className="px-4 py-3" style={{ fontSize: 15, color: j === 3 ? TEXT : MUTED, fontWeight: j === 3 ? 700 : 500 }}>{v}</span>
+                <span key={j} className="px-4 py-2" style={{ fontSize: 14, color: j === 3 ? TEXT : MUTED, fontWeight: j === 3 ? 700 : 500 }}>{v}</span>
               ))}
             </div>
           ))}
@@ -264,71 +292,64 @@ function FThreeStages() {
 
 // ─── F_SKIPMIDDLE · Skip the failed middle stage ─────────────────────────────
 function FSkipMiddle() {
-  const compare = [
-    { dim: "Direction of flow",   ford: "Top-down push of tools and seats", toyota: "Pull from outcome through standard to token" },
-    { dim: "Worker role",         ford: "Execute uniform throughput",       toyota: "Design stations, stop the line, improve the line" },
-    { dim: "Quality control",     ford: "Inspect at the end",               toyota: "Built in at every station, every commit" },
-    { dim: "When something fails",ford: "Ship the defect, fix later",       toyota: "Andon cord. Stop the line. Fix the standard." },
-    { dim: "What compounds",      ford: "Nothing. Replace the line.",       toyota: "The standards, the rationale, the method." },
-    { dim: "Where craft lives",   ford: "Outside the line. Lost.",          toyota: "Encoded into the line by the workers themselves." },
+  const rows = [
+    { dim: "Direction of flow",   ford: "Top-down push of tools and seats", toyota: "Pull from outcome through standard",       era4: "Outcome compiles context, predictively" },
+    { dim: "Worker role",         ford: "Execute uniform throughput",       toyota: "Design and stop the stations",             era4: "Author standards. The system runs them." },
+    { dim: "Quality control",     ford: "Inspect at the end",               toyota: "Built in at every station",                era4: "Regression-tested on every commit" },
+    { dim: "When something fails",ford: "Ship the defect, fix later",       toyota: "Andon cord. Stop the line. Fix.",          era4: "Failure rewrites the standard, instantly" },
+    { dim: "What compounds",      ford: "Nothing. Replace the line.",       toyota: "Standards, rationale, method",             era4: "Every token. Every decision. Forever." },
+    { dim: "Where craft lives",   ford: "Outside the line. Lost.",          toyota: "Encoded by the workers themselves",        era4: "Encoded once. Executed per prompt." },
   ];
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
-      <div className="absolute inset-0 px-28 pt-28 pb-24 flex flex-col">
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag label="Why We Skip the Middle" color={GREEN} />
-        <h2 className="font-black mb-3" style={{ fontSize: 60, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
-          The market sells Ford. <span style={{ color: `hsl(${GREEN})` }}>We install Toyota.</span>
+        <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+          Buying more seats <span style={{ color: `hsl(${RED})` }}>is the Ford rollout</span>. We take you <span style={{ color: `hsl(${GREEN})` }}>past Toyota</span>.
         </h2>
-        <p className="mb-8" style={{ fontSize: 22, color: MUTED, maxWidth: 1280, lineHeight: 1.4 }}>
-          Six structural differences. Ford optimises for the supplier. Toyota optimises for the outcome and for the worker. LIZA is built on the second model from line zero.
+        <p className="mb-6" style={{ fontSize: 19, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          Most buyers think rolling out Copilot to five thousand desks is transformation. It is the Ford rollout. Toyota is the mechanic we steal. Era IV is the destination. Three columns, six rows, one trajectory.
         </p>
 
-        <div className="rounded-2xl border overflow-hidden flex-1" style={{ borderColor: CHROME_BORDER }}>
-          <div className="grid grid-cols-[1.1fr_1.4fr_1.4fr] px-8 py-4 font-mono uppercase tracking-[0.15em] font-bold border-b"
-               style={{ background: CARD_ALT, fontSize: 13, color: MUTED, borderColor: CHROME_BORDER }}>
-            <span>Dimension</span>
-            <span style={{ color: `hsl(${RED})` }}>Ford · the trap</span>
-            <span style={{ color: `hsl(${GREEN})` }}>Toyota · LIZA installs this</span>
-          </div>
-          {compare.map((r, i) => (
-            <div key={i} className="grid grid-cols-[1.1fr_1.4fr_1.4fr] px-8 py-4 border-t items-center"
+        {/* Three column headers */}
+        <div className="grid grid-cols-[1fr_1.3fr_1.3fr_1.3fr] gap-0 rounded-t-2xl border border-b-0 overflow-hidden" style={{ borderColor: CHROME_BORDER }}>
+          <div className="px-5 py-3 font-mono uppercase tracking-[0.15em] font-bold" style={{ background: CARD_ALT, fontSize: 12, color: MUTED }}>Dimension</div>
+          <div className="px-5 py-3 font-mono uppercase tracking-[0.15em] font-bold border-l" style={{ background: `hsl(${RED} / 0.06)`, color: `hsl(${RED})`, fontSize: 12, borderColor: CHROME_BORDER }}>Ford · the trap they push</div>
+          <div className="px-5 py-3 font-mono uppercase tracking-[0.15em] font-bold border-l" style={{ background: `hsl(${ACCENT} / 0.06)`, color: `hsl(${ACCENT})`, fontSize: 12, borderColor: CHROME_BORDER }}>Toyota · the bridge mechanic</div>
+          <div className="px-5 py-3 font-mono uppercase tracking-[0.15em] font-bold border-l" style={{ background: `hsl(${GREEN} / 0.08)`, color: `hsl(${GREEN})`, fontSize: 12, borderColor: CHROME_BORDER }}>Era IV · where LIZA installs you</div>
+        </div>
+        <div className="rounded-b-2xl border border-t-0 overflow-hidden flex-1" style={{ borderColor: CHROME_BORDER }}>
+          {rows.map((r, i) => (
+            <div key={i} className="grid grid-cols-[1fr_1.3fr_1.3fr_1.3fr] border-t items-center"
                  style={{ borderColor: CHROME_BORDER, background: i % 2 === 0 ? "white" : CARD_ALT }}>
-              <span className="font-semibold" style={{ fontSize: 17, color: TEXT }}>{r.dim}</span>
-              <span className="flex items-center gap-2" style={{ fontSize: 16, color: MUTED }}>
-                <X size={14} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
+              <span className="px-5 py-3 font-semibold" style={{ fontSize: 15, color: TEXT }}>{r.dim}</span>
+              <span className="px-5 py-3 flex items-center gap-2 border-l" style={{ fontSize: 14, color: MUTED, borderColor: CHROME_BORDER }}>
+                <X size={13} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
                 <span>{r.ford}</span>
               </span>
-              <span className="flex items-center gap-2 font-medium" style={{ fontSize: 16, color: TEXT }}>
-                <CheckCircle2 size={14} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+              <span className="px-5 py-3 flex items-center gap-2 border-l" style={{ fontSize: 14, color: TEXT, borderColor: CHROME_BORDER }}>
+                <CheckCircle2 size={13} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
                 <span>{r.toyota}</span>
+              </span>
+              <span className="px-5 py-3 flex items-center gap-2 border-l font-semibold" style={{ fontSize: 14, color: TEXT, borderColor: CHROME_BORDER, background: `hsl(${GREEN} / 0.04)` }}>
+                <Sparkles size={13} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+                <span>{r.era4}</span>
               </span>
             </div>
           ))}
         </div>
 
-        {/* Beyond Toyota · Era IV moves we go past */}
-        <div className="mt-6 grid grid-cols-3 gap-4">
-          {[
-            { k: "Beyond Just-in-Time", v: "Predictive context. The standard assembles the prompt before the worker asks.", icon: Clock },
-            { k: "Beyond Kaizen",       v: "Autonomous standards refinement. The system improves its own stations from every execution.", icon: GitBranch },
-            { k: "Beyond Flex-Batches", v: "Per-prompt customisation. Every execution bespoke, at zero marginal cost.", icon: Sparkles },
-          ].map((b) => {
-            const Icon = b.icon;
-            return (
-              <div key={b.k} className="rounded-xl border-l-4 px-5 py-4 flex gap-3" style={{ background: `hsl(${GREEN} / 0.05)`, borderColor: `hsl(${GREEN})` }}>
-                <Icon size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 2 }} />
-                <div>
-                  <p className="font-bold mb-1" style={{ fontSize: 15, color: TEXT }}>{b.k}</p>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>{b.v}</p>
-                </div>
-              </div>
-            );
-          })}
+        {/* Spine line */}
+        <div className="mt-5 px-7 py-3 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
+          <span className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>The spine</span>
+          <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+            Ford is the trap. Toyota is the bridge. Era IV is the destination. The next two slides explain why nobody has shipped it, and the substrate that does.
+          </p>
         </div>
       </div>
-      <Footer text="The Toyota Production System is the most-studied operations design in industrial history. We ported it to knowledge work." />
+      <Footer text="Toyota was the most-studied operations design of the 20th century. We borrowed the mechanics. We did not borrow the ceiling." />
       <SlideBar from={GREEN} to={ACCENT} />
     </div>
   );
@@ -915,7 +936,7 @@ function FWhyHard() {
         <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${RED} / 0.06)`, borderColor: `hsl(${RED})` }}>
           <Skull size={22} style={{ color: `hsl(${RED})` }} />
           <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-            <span className="font-black">This is why every org keeps buying more Copilot.</span> The shortcut is to push more seats and call it strategy. Era IV requires building the missing layer underneath.
+            <span className="font-black">Toyota was the bridge. Era IV is the destination.</span> The shortcut is to push more seats and call it strategy. The next slide is the substrate that breaks every wall above.
           </p>
         </div>
       </div>
@@ -953,11 +974,20 @@ function FHowWeBreak() {
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag label="The Stack · How LIZA Breaks the Wall" color={GREEN} />
-        <h2 className="font-black mb-3" style={{ fontSize: 56, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+        <h2 className="font-black mb-3" style={{ fontSize: 54, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
           Six layers. <span style={{ color: `hsl(${GREEN})` }}>Each one removes a reason nobody has done this.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
-          The wall is the absence of a substrate. We built the substrate. A typed knowledge graph holds the meaning. A context compiler assembles it on demand. Standards live as versioned code. The harness regression-tests every change. The loop logs every call. The router ties every token to an outcome. This is what makes the Pillars on the next four slides real, not slogans.
+
+        {/* Objection-kill banner */}
+        <div className="mb-5 px-6 py-3 rounded-xl border flex items-start gap-3" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT} / 0.35)` }}>
+          <Zap size={18} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 3 }} />
+          <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-bold" style={{ color: `hsl(${ACCENT})` }}>"Isn't this just a chat with better RAG?"</span> The surface is a chat. So is a Tesla dashboard. This slide is the line underneath. Six layers. Not retrieval. Not vibes.
+          </p>
+        </div>
+
+        <p className="mb-5" style={{ fontSize: 18, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
+          The wall is the absence of a substrate. We built the substrate. A typed knowledge graph holds the meaning. A context compiler assembles it on demand. Standards live as versioned code. The harness regression-tests every change. The loop logs every call. The router ties every token to an outcome.
         </p>
         <div className="grid grid-cols-3 gap-4 flex-1">
           {layers.map((l) => {
@@ -978,7 +1008,7 @@ function FHowWeBreak() {
         <div className="mt-6 px-7 py-4 rounded-xl border-l-4 flex items-center gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderColor: `hsl(${GREEN})` }}>
           <Zap size={22} style={{ color: `hsl(${GREEN})` }} />
           <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.45 }}>
-            <span className="font-black">This is the line.</span> The next four slides walk it station by station. Pull, Stations, Governance, Compile. Not metaphors. What this stack does on every call.
+            <span className="font-black">This is the substrate.</span> The next four slides run the line station by station: Pull, Stations, Governance, Compile. Not metaphors. What the stack does on every call.
           </p>
         </div>
       </div>
