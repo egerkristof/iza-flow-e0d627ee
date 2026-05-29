@@ -2050,6 +2050,115 @@ function FStoryFilm() {
   );
 }
 
+// ─── F_THESIS · The one sentence the whole deck defends ──────────────────────
+// Sits right after the Workshop. Names the trap, names the exit, plants the
+// four-era anchor that the next slides keep referring back to.
+function FThesis() {
+  const ERAS = [
+    { n: "I",   label: "Workshop",        sub: "Artisans. Tacit. Disposable.",       state: "you" },
+    { n: "II",  label: "Ford",            sub: "Top-down seats. Push. Rigid.",       state: "trap" },
+    { n: "III", label: "Toyota",          sub: "Standards as stations. Bridge.",     state: "bridge" },
+    { n: "IV",  label: "Production OS",   sub: "Typed. Compiled. Governed loop.",    state: "exit" },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <Tag color={GREEN}>The thesis · everything that follows defends this</Tag>
+      <PageNumber />
+
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-32" style={{ paddingTop: 180, paddingBottom: 280 }}>
+        {/* One sentence. The whole deck. */}
+        <div className="text-center max-w-[1500px] mb-20">
+          <p className="font-mono uppercase tracking-[0.35em] font-bold mb-8" style={{ fontSize: 16, color: SUBTLE }}>
+            What we do differently · in one sentence
+          </p>
+          <h1 className="font-black tracking-tight" style={{ fontSize: 78, lineHeight: 1.08, color: TEXT, letterSpacing: "-0.035em" }}>
+            You run a <span style={{ color: `hsl(${GOLD})` }}>workshop</span>.
+            The market is selling you a <span style={{ color: `hsl(${RED})` }}>Ford factory</span>.
+            <br />
+            We build the <span style={{ color: `hsl(${GREEN})` }}>Toyota substrate</span> that lets you skip both.
+          </h1>
+        </div>
+
+        {/* Four-era anchor strip. This bar is the mental model the audience carries
+            through every diagnosis slide that follows. */}
+        <div className="w-full max-w-[1600px]">
+          <div className="grid grid-cols-4 gap-6">
+            {ERAS.map((e) => {
+              const isYou    = e.state === "you";
+              const isTrap   = e.state === "trap";
+              const isBridge = e.state === "bridge";
+              const isExit   = e.state === "exit";
+              const accent =
+                isYou    ? `hsl(${GOLD})` :
+                isTrap   ? `hsl(${RED})` :
+                isBridge ? `hsl(215 15% 55%)` :
+                           `hsl(${GREEN})`;
+              const bg =
+                isYou    ? `hsl(${GOLD} / 0.06)` :
+                isTrap   ? `hsl(${RED} / 0.05)` :
+                isBridge ? `hsl(215 15% 55% / 0.04)` :
+                           `hsl(${GREEN} / 0.07)`;
+              const tag =
+                isYou    ? "YOU ARE HERE" :
+                isTrap   ? "THE TRAP" :
+                isBridge ? "WE SKIP THIS" :
+                           "THE EXIT";
+              return (
+                <div key={e.n} className="rounded-xl border p-7 relative" style={{
+                  borderColor: accent,
+                  borderWidth: isYou || isExit ? 2 : 1,
+                  background: bg,
+                }}>
+                  <div className="flex items-baseline gap-3 mb-3">
+                    <span className="font-black font-mono" style={{ fontSize: 36, color: accent, letterSpacing: "-0.02em" }}>
+                      {e.n}
+                    </span>
+                    <span className="font-bold" style={{ fontSize: 24, color: TEXT, letterSpacing: "-0.01em" }}>
+                      {e.label}
+                    </span>
+                  </div>
+                  <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35, marginBottom: 14 }}>
+                    {e.sub}
+                  </p>
+                  <span className="font-mono uppercase tracking-[0.18em] font-bold inline-block px-2.5 py-1 rounded" style={{
+                    fontSize: 10,
+                    color: accent,
+                    background: `hsl(0 0% 100% / 0.6)`,
+                    border: `1px solid ${accent}`,
+                  }}>
+                    {tag}
+                  </span>
+                  {isBridge && (
+                    <div className="absolute top-3 right-3 font-mono uppercase tracking-[0.2em] font-bold"
+                         style={{ fontSize: 10, color: SUBTLE }}>
+                      strike-through
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* The arrow: I jumps straight to IV. This is the "what's different". */}
+          <div className="relative mt-6 h-10">
+            <div className="absolute left-[7%] right-[7%] top-1/2 -translate-y-1/2 h-px" style={{
+              background: `linear-gradient(90deg, hsl(${GOLD}) 0%, hsl(${GOLD}) 12.5%, hsl(${RED} / 0.25) 25%, hsl(215 15% 70% / 0.2) 62.5%, hsl(${GREEN}) 87.5%, hsl(${GREEN}) 100%)`,
+            }} />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full font-mono uppercase tracking-[0.22em] font-bold"
+                 style={{ fontSize: 11, color: `hsl(${GREEN})`, background: BG, border: `1.5px solid hsl(${GREEN})` }}>
+              I → IV · skip the middle
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Footer text="Toyota was the bridge mechanic, not the destination. Era IV is the only exit that compounds." />
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
