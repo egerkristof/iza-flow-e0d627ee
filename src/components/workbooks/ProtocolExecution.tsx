@@ -583,13 +583,18 @@ export function ProtocolExecutionView({
     if (isStreaming) return;
     setChatInput("");
 
+    let attachmentUrl: string | undefined;
+    if (extra?.attachment?.file_path) {
+      const { data: signed } = await supabase.storage
+        .from("workbook-resources")
+        .createSignedUrl(extra.attachment.file_path, 3600);
+      attachmentUrl = signed?.signedUrl ?? undefined;
+    }
     const attachmentData = extra?.attachment ? {
       id: extra.attachment.id,
       title: extra.attachment.title,
       type: extra.attachment.resource_type,
-      url: extra.attachment.file_path
-        ? supabase.storage.from("workbook-resources").getPublicUrl(extra.attachment.file_path).data.publicUrl
-        : undefined,
+      url: attachmentUrl,
       content: extra.attachment.content ?? undefined,
       metadata: extra.attachment.metadata as Record<string, unknown> | undefined,
     } : undefined;
