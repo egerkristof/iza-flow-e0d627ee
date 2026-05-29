@@ -348,27 +348,48 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
   return (
     <Slide section="Business Model" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-12" style={{ fontSize: 76, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
-          Metered per <span style={{ color: `hsl(${GREEN})` }}>governed decision.</span>
+        <h2 className="font-black mb-3" style={{ fontSize: 64, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.04em" }}>
+          Three layers. <span style={{ color: `hsl(${GREEN})` }}>One meter.</span>
         </h2>
-        <div className="grid grid-cols-3 gap-10 mb-8">
+        <p className="mb-8" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1400 }}>
+          A platform fee carries the learning layer. Metered decisions monetise usage. Enterprise tier prices the deep audit surface.
+        </p>
+        <div className="grid grid-cols-3 gap-7 mb-7">
+          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Platform fee</p>
+            <div className="font-black" style={{ fontSize: 56, lineHeight: 0.95, color: TEXT, letterSpacing: "-0.035em" }}>per seat</div>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Funds the learning layer: playbooks, the standards graph, the receipt store. The factory itself.
+            </p>
+          </div>
+          <div className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Metered usage</p>
+            <div className="font-black" style={{ fontSize: 72, lineHeight: 0.9, color: `hsl(${GREEN})`, letterSpacing: "-0.04em" }}>€0.40<span style={{ fontSize: 22, color: MUTED, marginLeft: 8 }}>est. avg</span></div>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Per governed decision. Indicative blend across verticals — final pricing tuned per workload. Displaces €23 of manual labour.
+            </p>
+          </div>
+          <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 13, color: SUBTLE }}>Enterprise tier</p>
+            <div className="font-black" style={{ fontSize: 56, lineHeight: 0.95, color: TEXT, letterSpacing: "-0.035em" }}>annual</div>
+            <p className="mt-3" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Advanced audit: regulator-grade replay, SSO, residency, custom standards engines, advisory access.
+            </p>
+          </div>
+        </div>
+        <div className="grid grid-cols-3 gap-10 mb-5">
           {[
-            { v: "€0.40", l: "platform price per governed decision" },
-            { v: "€23",   l: "manual labour cost it displaces" },
-            { v: "95%",   l: "platform gross margin at steady state" },
+            { v: "95%", l: "platform gross margin at steady state" },
+            { v: "<6mo", l: "payback at typical enterprise volume" },
+            { v: "2×",  l: "billable unit and audit artefact at once" },
           ].map((s) => (
             <div key={s.l}>
-              <div className="font-black" style={{ fontSize: 112, lineHeight: 0.9, color: TEXT, letterSpacing: "-0.045em" }}>
+              <div className="font-black" style={{ fontSize: 64, lineHeight: 0.9, color: TEXT, letterSpacing: "-0.04em" }}>
                 {s.v}
               </div>
-              <p className="mt-3" style={{ fontSize: 19, color: MUTED, lineHeight: 1.35 }}>{s.l}</p>
+              <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.35 }}>{s.l}</p>
             </div>
           ))}
-        </div>
-        <div className="rounded-xl px-8 py-6 mb-5" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-          <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
-            Customers move spend from headcount (CapEx of expertise) to metered tokens tied to a standard. Every receipt is a billable unit and an audit artefact at the same time. Payback under 6 months at typical enterprise volume.
-          </p>
         </div>
         <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: SUBTLE }}>
           $4.2B standards-engine wedge inside a $48B AI governance market
