@@ -307,25 +307,26 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
 // ─── 06 · WEEKEND OBJECTION ─────────────────────────────────────────────────
 function S06WeekendObjection({ n, t }: { n: number; t: number }) {
   const rows = [
-    { left: "Chat UI plus model API", right: "Workflow control across roles, approvals and tools" },
-    { left: "PDFs in a vector store", right: "Typed standards, ownership, expiry, versioning and change control" },
-    { left: "A clever system prompt", right: "Playbook compilation on every governed decision" },
-    { left: "Helpful answer", right: "Signed receipt that survives audit and handover" },
-    { left: "Manual maintenance", right: "Closed loop where receipts sharpen the standard" },
+    { left: "Makes one analyst faster", right: "Makes the whole function execute the same way" },
+    { left: "One person's clever prompt", right: "The company's approved method, versioned and owned" },
+    { left: "PDFs dropped in a vector store", right: "Typed standards with ownership, expiry, change control" },
+    { left: "A helpful answer this time", right: "A signed receipt that survives audit and handover" },
+    { left: "Maintained by the user", right: "Closed loop where every receipt sharpens the standard" },
   ];
   return (
     <Slide section="Objection 01" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          A weekend project automates text. <span style={{ color: `hsl(${RED})` }}>It does not certify work.</span>
+          Most AI tools improve <span style={{ color: `hsl(${RED})` }}>individual artisanal work.</span><br/>
+          We certify <span style={{ color: `hsl(${GREEN})` }}>organisation-wide AI execution.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
-          The visible demo is easy. The production burden is the company.
+          A weekend project helps one person. A control layer holds an entire function to one standard.
         </p>
         <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}` }}>
           <div className="grid grid-cols-2" style={{ background: CARD_ALT }}>
-            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Weekend demo</div>
-            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, borderLeft: `1px solid ${CHROME_BORDER}` }}>Production system</div>
+            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Artisanal AI · individual work</div>
+            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, borderLeft: `1px solid ${CHROME_BORDER}` }}>Certified AI · organisation execution</div>
           </div>
           {rows.map((r, i) => (
             <div key={r.left} className="grid grid-cols-2" style={{ borderTop: `1px solid ${CHROME_BORDER}`, background: i % 2 === 1 ? CARD_ALT : "transparent" }}>
