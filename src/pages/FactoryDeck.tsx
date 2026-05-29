@@ -1128,164 +1128,156 @@ function FOpenTheHood() {
 
 // ─── F_SHAPE · Architecture-shape contrast · pipe vs system ─────────────────
 function FShapeContrast() {
-  const ragPipe = [
-    { icon: FileText, name: "User prompt", note: "free text, no intent type" },
-    { icon: Hash,     name: "Embed",       note: "one vector, model-dependent" },
-    { icon: Database, name: "Top-K vector search", note: "cosine over chunked docs" },
-    { icon: Layers,   name: "Stuff into context",  note: "string concatenation" },
-    { icon: Cpu,      name: "LLM call",            note: "model picks an answer" },
-    { icon: FileText, name: "Text output",         note: "no provenance, no replay" },
-  ];
+function FShapeContrast() {
+  // Visual-first: a pipe on the left, a closed loop on the right.
+  // Minimal labels. The shapes do the talking.
+  const ragSteps = ["Prompt", "Embed", "Search", "Stuff", "Model", "Text"];
   const lizaPlanes = [
-    { key: "INTENT",  icon: Crosshair,   parts: "Classifier · Playbook Registry · Session Lock",
-      gist: "Every prompt is matched to a process. The session locks to that process until done." },
-    { key: "COMPILE", icon: Layers,      parts: "Typed Graph · 5-Layer Stack · JIT XML Kernel · Snapshot",
-      gist: "Context is assembled, not retrieved. Filtered by security, scope, priority, version." },
-    { key: "GOVERN",  icon: ShieldCheck, parts: "Policy Engine · Mandate Gates · Impact Simulator",
-      gist: "Every call passes a typed policy. Blocking mandates refuse the call before it spends a token." },
-    { key: "EXECUTE", icon: Cpu,         parts: "Model Gateway · Prompt-by-Hash · Structured Output · Validator",
-      gist: "Model is pinned by version. Prompt is fetched by hash. Output is schema-validated, never free text." },
-    { key: "AUDIT",   icon: Fingerprint, parts: "Signed Receipt · Append-Only Log · Provenance Graph · Replay",
-      gist: "Every decision is signed and chained. Replay reconstructs the exact answer two years later." },
+    { key: "INTENT",  icon: Crosshair,   gist: "Lock to a playbook" },
+    { key: "COMPILE", icon: Layers,      gist: "Assemble typed context" },
+    { key: "GOVERN",  icon: ShieldCheck, gist: "Policy + mandate gates" },
+    { key: "EXECUTE", icon: Cpu,         gist: "Pinned model, typed output" },
+    { key: "AUDIT",   icon: Fingerprint, gist: "Signed receipt, replayable" },
   ];
-  const compareRows = [
-    { prop: "State",            rag: "stateless",                liza: "locked playbook, durable workflow" },
-    { prop: "Types",            rag: "free text in, free text out", liza: "typed in, typed out, typed across" },
-    { prop: "Governance",       rag: "none",                     liza: "policy + mandate gates per call" },
-    { prop: "Audit",            rag: "log line, maybe",          liza: "signed receipt, hash-chained" },
-    { prop: "Reproducibility",  rag: "not possible",             liza: "byte-reproducible on snapshot" },
-    { prop: "Loop",             rag: "open, one-shot",           liza: "closed, feedback into the graph" },
+  const contrasts = [
+    { left: "Open loop",  right: "Closed loop" },
+    { left: "Free text",  right: "Typed in & out" },
+    { left: "No receipt", right: "Signed receipt" },
   ];
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
-      <div className="absolute inset-0 px-20 pt-20 pb-16 flex flex-col">
+      <div className="absolute inset-0 px-24 pt-20 pb-16 flex flex-col">
         <Tag label="The Shape · Pipe vs System" color={ACCENT} />
-        <h2 className="font-black mb-2" style={{ fontSize: 50, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em" }}>
+        <h2 className="font-black mb-10" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em" }}>
           They feed a model.{" "}
           <span style={{ color: `hsl(${ACCENT})` }}>We run a system around it.</span>
         </h2>
-        <p className="mb-5" style={{ fontSize: 16, color: MUTED, maxWidth: 1380, lineHeight: 1.4 }}>
-          The market calls everything "AI." Look at the architecture and the gap is obvious. A RAG stack is a straight pipe with six stages on one plane. LIZA is five planes, a closed loop, and a signed audit trail. Not the same category. Not the same risk profile. Not the same buyer.
-        </p>
 
-        <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
-          {/* LEFT · RAG pipe */}
-          <div className="rounded-2xl border-2 p-5 flex flex-col" style={{ background: `hsl(${RED} / 0.04)`, borderColor: `hsl(${RED} / 0.4)` }}>
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <ArrowRight size={18} style={{ color: `hsl(${RED})` }} />
-                <span className="font-mono font-black uppercase tracking-[0.18em]" style={{ fontSize: 12, color: `hsl(${RED})` }}>
-                  Feeding the model · RAG pipe
-                </span>
-              </div>
-              <span className="font-mono" style={{ fontSize: 10.5, color: SUBTLE }}>1 plane · open loop</span>
+        {/* Two shapes, side by side. Equal weight. Minimal text. */}
+        <div className="grid grid-cols-2 gap-10 flex-1 min-h-0">
+          {/* LEFT · RAG pipe — a single straight line */}
+          <div className="flex flex-col">
+            <div className="flex items-baseline justify-between mb-5">
+              <span className="font-mono font-black uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${RED})` }}>
+                RAG · the pipe
+              </span>
+              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 12, color: SUBTLE }}>
+                1 plane · open
+              </span>
             </div>
-            <p className="font-bold mb-3" style={{ fontSize: 17, color: TEXT, lineHeight: 1.2 }}>
-              Six boxes on a string. The model is the system.
-            </p>
-            <div className="flex flex-col gap-1.5 flex-1">
-              {ragPipe.map((s, i) => {
-                const Icon = s.icon;
-                return (
-                  <React.Fragment key={s.name}>
-                    <div className="rounded-lg border px-3 py-2 flex items-center gap-3" style={{ background: `hsl(${RED} / 0.03)`, borderColor: `hsl(${RED} / 0.28)` }}>
-                      <Icon size={15} style={{ color: `hsl(${RED})`, flexShrink: 0 }} />
-                      <div className="flex-1 min-w-0">
-                        <p className="font-bold" style={{ fontSize: 13, color: TEXT, lineHeight: 1.15 }}>{s.name}</p>
-                        <p style={{ fontSize: 11, color: MUTED, lineHeight: 1.25 }}>{s.note}</p>
-                      </div>
-                      <span className="font-mono" style={{ fontSize: 10, color: SUBTLE }}>0{i + 1}</span>
+            <div className="flex-1 flex items-center justify-center">
+              <div className="flex flex-col items-center" style={{ gap: 6 }}>
+                {ragSteps.map((s, i) => (
+                  <React.Fragment key={s}>
+                    <div
+                      className="rounded-full border flex items-center justify-center font-bold"
+                      style={{
+                        width: 220, height: 46,
+                        background: `hsl(${RED} / 0.05)`,
+                        borderColor: `hsl(${RED} / 0.45)`,
+                        color: TEXT, fontSize: 18,
+                      }}
+                    >
+                      {s}
                     </div>
-                    {i < ragPipe.length - 1 && (
-                      <div className="flex justify-center" style={{ height: 10 }}>
-                        <ArrowDown size={12} style={{ color: `hsl(${RED} / 0.55)` }} />
-                      </div>
+                    {i < ragSteps.length - 1 && (
+                      <div style={{ width: 2, height: 18, background: `hsl(${RED} / 0.5)` }} />
                     )}
                   </React.Fragment>
-                );
-              })}
+                ))}
+                <div className="mt-2 flex flex-col items-center">
+                  <ArrowDown size={22} style={{ color: `hsl(${RED})` }} />
+                  <span className="font-mono uppercase tracking-[0.18em] mt-1" style={{ fontSize: 11, color: `hsl(${RED})` }}>
+                    drops on the floor
+                  </span>
+                </div>
+              </div>
             </div>
-            <p className="mt-3 font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: `hsl(${RED})` }}>
-              Stateless · untyped · ungoverned · unsigned · unrepeatable
-            </p>
           </div>
 
-          {/* RIGHT · LIZA system */}
-          <div className="rounded-2xl border-2 p-5 flex flex-col relative overflow-hidden" style={{ background: `hsl(${GREEN} / 0.05)`, borderColor: `hsl(${GREEN} / 0.5)` }}>
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <Workflow size={18} style={{ color: `hsl(${GREEN})` }} />
-                <span className="font-mono font-black uppercase tracking-[0.18em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
-                  LIZA · AACE runtime · 5 planes
-                </span>
-              </div>
-              <span className="font-mono" style={{ fontSize: 10.5, color: SUBTLE }}>5 planes · closed loop</span>
+          {/* RIGHT · LIZA loop — five planes that feed back */}
+          <div className="flex flex-col">
+            <div className="flex items-baseline justify-between mb-5">
+              <span className="font-mono font-black uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>
+                LIZA · the loop
+              </span>
+              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 12, color: SUBTLE }}>
+                5 planes · closed
+              </span>
             </div>
-            <p className="font-bold mb-3" style={{ fontSize: 17, color: TEXT, lineHeight: 1.2 }}>
-              Five planes, one synchronised loop. The model is one stage of five.
-            </p>
-            <div className="flex-1 flex flex-col gap-1.5 relative">
-              {lizaPlanes.map((p, i) => {
-                const Icon = p.icon;
-                return (
-                  <React.Fragment key={p.key}>
-                    <div className="rounded-lg border-2 px-3 py-2 flex items-start gap-3" style={{ background: `hsl(${GREEN} / 0.04)`, borderColor: `hsl(${GREEN} / 0.35)` }}>
-                      <Icon size={16} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 2 }} />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-baseline gap-2 mb-0.5">
-                          <span className="font-mono font-black tracking-[0.16em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
-                            {p.key} PLANE
-                          </span>
-                          <span className="font-mono" style={{ fontSize: 10, color: SUBTLE }}>{p.parts}</span>
+            <div className="flex-1 flex items-center justify-center">
+              <div className="relative flex items-center" style={{ gap: 18 }}>
+                {/* Stack of planes */}
+                <div className="flex flex-col" style={{ gap: 8 }}>
+                  {lizaPlanes.map((p) => {
+                    const Icon = p.icon;
+                    return (
+                      <div
+                        key={p.key}
+                        className="rounded-lg border-2 flex items-center gap-3 px-4"
+                        style={{
+                          width: 360, height: 56,
+                          background: `hsl(${GREEN} / 0.06)`,
+                          borderColor: `hsl(${GREEN} / 0.5)`,
+                        }}
+                      >
+                        <Icon size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-mono font-black tracking-[0.16em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
+                            {p.key}
+                          </div>
+                          <div style={{ fontSize: 13, color: MUTED, lineHeight: 1.1 }}>{p.gist}</div>
                         </div>
-                        <p style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.28 }}>{p.gist}</p>
                       </div>
-                    </div>
-                    {i < lizaPlanes.length - 1 && (
-                      <div className="flex justify-center" style={{ height: 8 }}>
-                        <ArrowDown size={11} style={{ color: `hsl(${GREEN} / 0.6)` }} />
-                      </div>
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-            <div className="mt-3 flex items-center gap-2 px-3 py-1.5 rounded-md border" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT} / 0.4)` }}>
-              <GitBranch size={13} style={{ color: `hsl(${ACCENT})` }} />
-              <p className="font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10, color: `hsl(${ACCENT})` }}>
-                Feedback: every signed receipt feeds the Graph Auditor · the loop closes
-              </p>
+                    );
+                  })}
+                </div>
+                {/* Feedback arrow back to top */}
+                <svg width="70" height="340" viewBox="0 0 70 340" style={{ overflow: "visible" }}>
+                  <defs>
+                    <marker id="arrowEnd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                      <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${ACCENT})`} />
+                    </marker>
+                  </defs>
+                  <path
+                    d="M 0,310 C 60,310 60,30 0,30"
+                    fill="none"
+                    stroke={`hsl(${ACCENT})`}
+                    strokeWidth="2.5"
+                    strokeDasharray="6 5"
+                    markerEnd="url(#arrowEnd)"
+                  />
+                  <text x="55" y="172" fontSize="11" fontFamily="ui-monospace, monospace" fill={`hsl(${ACCENT})`} textAnchor="middle" transform="rotate(90 55 172)" letterSpacing="2">
+                    RECEIPTS FEED THE GRAPH
+                  </text>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Comparison strip */}
-        <div className="mt-5 rounded-xl border overflow-hidden" style={{ background: CARD_ALT, borderColor: CHROME_BORDER }}>
-          <div className="grid grid-cols-7" style={{ background: `hsl(${ACCENT} / 0.05)` }}>
-            <div className="px-4 py-2 font-mono uppercase tracking-[0.14em]" style={{ fontSize: 10.5, color: SUBTLE }}>Property</div>
-            {compareRows.map((r) => (
-              <div key={r.prop} className="px-3 py-2 font-mono uppercase tracking-[0.14em] text-center" style={{ fontSize: 10.5, color: TEXT }}>
-                {r.prop}
+        {/* Three contrast pairs — the only takeaways */}
+        <div className="mt-8 grid grid-cols-3 gap-5">
+          {contrasts.map((c) => (
+            <div
+              key={c.right}
+              className="rounded-xl border flex items-center"
+              style={{ background: CARD_ALT, borderColor: CHROME_BORDER, height: 72 }}
+            >
+              <div className="flex-1 px-5 text-center" style={{ fontSize: 18, color: `hsl(${RED})`, fontWeight: 700, textDecoration: "line-through", textDecorationColor: `hsl(${RED} / 0.6)` }}>
+                {c.left}
               </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-7 border-t" style={{ borderColor: CHROME_BORDER }}>
-            <div className="px-4 py-2.5 font-mono font-black uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>RAG pipe</div>
-            {compareRows.map((r) => (
-              <div key={r.prop} className="px-3 py-2.5 text-center" style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.25 }}>{r.rag}</div>
-            ))}
-          </div>
-          <div className="grid grid-cols-7 border-t" style={{ borderColor: CHROME_BORDER, background: `hsl(${GREEN} / 0.04)` }}>
-            <div className="px-4 py-2.5 font-mono font-black uppercase tracking-[0.14em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>LIZA system</div>
-            {compareRows.map((r) => (
-              <div key={r.prop} className="px-3 py-2.5 text-center font-bold" style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.25 }}>{r.liza}</div>
-            ))}
-          </div>
+              <ArrowRight size={20} style={{ color: SUBTLE, flexShrink: 0 }} />
+              <div className="flex-1 px-5 text-center font-black" style={{ fontSize: 20, color: `hsl(${GREEN})` }}>
+                {c.right}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-      <Footer text="One pipe vs five planes. The chat surface is identical. The architecture under it is a different category of software." />
+      <Footer text="Same chat surface. Different category of software." />
       <SlideBar from={RED} to={GREEN} />
     </div>
   );
