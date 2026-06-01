@@ -5,6 +5,7 @@ import ImpactDeck from "@/pages/ImpactDeck";
 import FactoryDeck from "@/pages/FactoryDeck";
 import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import SeedPitchDeckSkeptic from "@/pages/SeedPitchDeckSkeptic";
+import SeedPitchDeckLens from "@/pages/SeedPitchDeckLens";
 import InsuranceDeck from "@/pages/InsuranceDeck";
 import InsuranceUnderwritingDeck from "@/pages/InsuranceUnderwritingDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
@@ -248,6 +249,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/SeedPitchDeckSkeptic.tsx",
     description: "10-slide defensive seed deck built for the sharpest objection in the room: 'anyone builds this in a weekend' and 'Anthropic ships this next quarter'. Names both objections on slide 02 and spends the rest of the deck dismantling them: weekend-demo vs enterprise-grade table, four non-code assets that compound (vertical standards corpus, receipt &amp; lineage graph, drift loop, regulator-tested install), four structural reasons foundation labs do not build organizational governance (business model, incentive, trust, surface area), the two-lane diagram (lab lane vs governance lane), buyer veto quotes from regulated CTOs, production proof (127 standards, 3.4K governed decisions/month, 62% time-to-spec, 0 audit failures), €2M ask broken into corpus / self-serve / partner channel, and a close that draws the line: if you believe Claude will own organizational governance, do not invest.",
     component: SeedPitchDeckSkeptic,
+    showInAdmin: true,
+  },
+  {
+    id: "seed-lens",
+    title: "Seed Pitch · Lens Edition",
+    path: "/seed-lens",
+    sourcePath: "src/pages/SeedPitchDeckLens.tsx",
+    description: "13-slide seed deck built around one repeating frame: how the venture market grades each topic (red, dim, narrow) vs. what regulated operators are actually buying (green, bold, wide). Cover establishes the two lenses, slide 02 (The Split) names the dichotomy explicitly, slide 03 explains why it exists via the context explosion, then slides 04-12 apply the exact same split to Problem, Solution unit, Why now, Weekend objection, Lab objection, Business model, Proof, Moat and the €2M Ask. Slide 13 collapses both lenses into one statement. Designed for the cold investor who has never met the founder and is tired of weekend AI projects.",
+    component: SeedPitchDeckLens,
     showInAdmin: true,
   },
   {
