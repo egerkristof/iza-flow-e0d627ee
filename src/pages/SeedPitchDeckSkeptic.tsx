@@ -45,6 +45,60 @@ function Slide({ section, n, total, children, dark = false }: {
   );
 }
 
+// ─── Recurring thread: the Context Explosion ────────────────────────────────
+// A single visual motif that runs through the deck. It encodes the core thesis:
+// today's "one chat, small context" reality vs. the org-scale context graph
+// that every regulated enterprise is one year away from. Each downstream slide
+// highlights which axis of the explosion (silos, efficiency, audit, compounding)
+// it answers, so the investor feels one thread instead of twelve arguments.
+type ContextAxis = "silos" | "efficiency" | "audit" | "compounding";
+const AXES: { id: ContextAxis; label: string; short: string }[] = [
+  { id: "silos",       label: "Cannot stay siloed",      short: "Silos break" },
+  { id: "efficiency",  label: "Must be efficient",       short: "Cost per call" },
+  { id: "audit",       label: "Must be auditable",       short: "Replay & approve" },
+  { id: "compounding", label: "Must compound",           short: "Each decision sharpens the next" },
+];
+
+function ContextThreadStrip({ active }: { active: ContextAxis }) {
+  // Thin recurring strip placed above the footer. Tiny dot → expanding cloud on
+  // the left, the four axes on the right with the current one lit in green.
+  return (
+    <div
+      className="absolute left-20 right-20 bottom-[88px] flex items-center gap-6 px-5 py-3 rounded-xl"
+      style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}
+    >
+      <div className="flex items-center gap-2 shrink-0">
+        <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
+          Context explosion
+        </span>
+        <span className="inline-block rounded-full" style={{ width: 4, height: 4, background: `hsl(${RED} / 0.7)` }} />
+        <span className="inline-block" style={{ width: 22, height: 1, background: `linear-gradient(90deg, hsl(${RED} / 0.4), hsl(${GREEN} / 0.7))` }} />
+        <span className="inline-block rounded-full" style={{ width: 14, height: 14, background: `radial-gradient(circle, hsl(${GREEN} / 0.55), hsl(${GREEN} / 0.05) 70%)`, border: `1px solid hsl(${GREEN} / 0.5)` }} />
+      </div>
+      <div className="flex-1 flex items-center justify-end gap-2 flex-wrap">
+        {AXES.map((a) => {
+          const on = a.id === active;
+          return (
+            <span
+              key={a.id}
+              className="font-mono uppercase tracking-[0.18em] px-2.5 py-1 rounded"
+              style={{
+                fontSize: 10,
+                color: on ? `hsl(${GREEN})` : SUBTLE,
+                background: on ? `hsl(${GREEN} / 0.08)` : "transparent",
+                border: `1px solid ${on ? `hsl(${GREEN} / 0.45)` : CHROME_BORDER}`,
+                fontWeight: on ? 800 : 500,
+              }}
+            >
+              {a.short}
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ─── 01 · COVER ──────────────────────────────────────────────────────────────
 function S01Cover({ n, t }: { n: number; t: number }) {
   return (
@@ -128,6 +182,78 @@ function S03Problem({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
+      <ContextThreadStrip active="audit" />
+    </Slide>
+  );
+}
+
+// ─── 03b · CONTEXT EXPLOSION (the spine of the deck) ────────────────────────
+function SContextExplosion({ n, t }: { n: number; t: number }) {
+  const consequences = [
+    { k: "Silos break",    v: "Context spans roles, tools, regions and regulators. It cannot live in one team's notebook." },
+    { k: "Cost matters",   v: "Every governed task pulls context. Inefficient assembly multiplies token and latency bills." },
+    { k: "Audit is law",   v: "Each output must be replayable. Which standard, which data, which approval, which model." },
+    { k: "It compounds",   v: "Receipts become the next context. The organization gets sharper with every decision." },
+  ];
+  return (
+    <Slide section="The spine" n={n} total={t}>
+      <div className="absolute inset-0 px-32 pt-36 pb-28 flex flex-col">
+        <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          The investor pitch hides one fact. <span style={{ color: `hsl(${GREEN})` }}>Context is about to explode.</span>
+        </h2>
+        <p className="font-mono uppercase tracking-[0.22em] mb-7" style={{ fontSize: 13, color: MUTED }}>
+          The thread that runs through every remaining slide of this deck.
+        </p>
+
+        {/* Two realities: today vs. coming */}
+        <div className="grid grid-cols-2 gap-7 mb-7">
+          {/* Today */}
+          <div className="rounded-2xl p-7 relative overflow-hidden" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: `hsl(${RED})` }}>What investors see today</p>
+            <p className="font-black mb-5" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              One user. One chat. A handful of files in the prompt.
+            </p>
+            <div className="relative h-[170px] flex items-center justify-center">
+              <div className="rounded-full" style={{
+                width: 26, height: 26,
+                background: `radial-gradient(circle, hsl(${RED} / 0.7), hsl(${RED} / 0.15) 70%)`,
+                border: `1px solid hsl(${RED} / 0.6)`,
+              }} />
+              <span className="absolute font-mono uppercase tracking-[0.18em]" style={{ fontSize: 10, color: SUBTLE, transform: "translateY(36px)" }}>
+                ~10K tokens · one workflow · zero receipts
+              </span>
+            </div>
+          </div>
+
+          {/* Coming */}
+          <div className="rounded-2xl p-7 relative overflow-hidden" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What is actually coming</p>
+            <p className="font-black mb-5" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              Every employee × every workflow × every policy × every receipt.
+            </p>
+            <div className="relative h-[170px] flex items-center justify-center">
+              {/* layered clouds suggesting explosion */}
+              <div className="absolute rounded-full" style={{ width: 200, height: 200, background: `radial-gradient(circle, hsl(${GREEN} / 0.18), hsl(${GREEN} / 0) 70%)` }} />
+              <div className="absolute rounded-full" style={{ width: 130, height: 130, background: `radial-gradient(circle, hsl(${GREEN} / 0.35), hsl(${GREEN} / 0) 70%)` }} />
+              <div className="absolute rounded-full" style={{ width: 70, height: 70, background: `radial-gradient(circle, hsl(${GREEN} / 0.6), hsl(${GREEN} / 0.1) 70%)`, border: `1px solid hsl(${GREEN} / 0.55)` }} />
+              <span className="absolute font-mono uppercase tracking-[0.18em]" style={{ fontSize: 10, color: SUBTLE, transform: "translateY(96px)" }}>
+                org-scale context graph · billions of governed tokens
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Four consequences — the axes carried through the deck */}
+        <div className="grid grid-cols-4 gap-4">
+          {consequences.map((c, i) => (
+            <div key={c.k} className="rounded-xl p-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}`, borderTop: `3px solid hsl(${GREEN})` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>0{i + 1}</p>
+              <p className="font-black mb-2" style={{ fontSize: 19, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{c.k}</p>
+              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{c.v}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </Slide>
   );
 }
@@ -166,6 +292,7 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
+      <ContextThreadStrip active="compounding" />
     </Slide>
   );
 }
@@ -212,6 +339,7 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
           </div>
         </div>
       </div>
+      <ContextThreadStrip active="efficiency" />
     </Slide>
   );
 }
@@ -323,6 +451,7 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
+      <ContextThreadStrip active="efficiency" />
     </Slide>
   );
 }
@@ -389,6 +518,7 @@ function S10Moat({ n, t }: { n: number; t: number }) {
           ))}
         </div>
       </div>
+      <ContextThreadStrip active="compounding" />
     </Slide>
   );
 }
@@ -454,6 +584,7 @@ function S12Close({ n, t }: { n: number; t: number }) {
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
   { id: "cover",        title: "Cover",                       render: (n, t) => <S01Cover n={n} t={t} /> },
   { id: "lens",         title: "Investor lens",               render: (n, t) => <S02InvestorLens n={n} t={t} /> },
+  { id: "explosion",    title: "Context explosion",           render: (n, t) => <SContextExplosion n={n} t={t} /> },
   { id: "problem",      title: "Problem",                     render: (n, t) => <S03Problem n={n} t={t} /> },
   { id: "solution",     title: "Solution unit",               render: (n, t) => <S04ProductUnit n={n} t={t} /> },
   { id: "why-now",      title: "Why now",                     render: (n, t) => <S05WhyNow n={n} t={t} /> },
