@@ -99,6 +99,55 @@ function ContextThreadStrip({ active }: { active: ContextAxis }) {
   );
 }
 
+// ─── Recurring lens ribbon ──────────────────────────────────────────────────
+// The deck's spine. Every body slide carries the same dichotomy in a thin
+// bottom strip: what the market grades vs. what operators are actually
+// building. The current slide's axis of the context explosion lights up on
+// the right so the investor feels one continuous argument.
+function LensRibbon({ market, operator, axis }: { market: string; operator: string; axis: ContextAxis }) {
+  return (
+    <div
+      className="absolute left-20 right-20 bottom-[84px] rounded-xl overflow-hidden"
+      style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}
+    >
+      <div className="grid grid-cols-[1fr_1fr_auto]">
+        {/* Market lens */}
+        <div className="px-6 py-3" style={{ borderRight: `1px solid ${CHROME_BORDER}`, background: `hsl(${RED} / 0.04)` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 10, color: `hsl(${RED})` }}>Market lens</p>
+          <p className="font-bold" style={{ fontSize: 15, color: MUTED, lineHeight: 1.25 }}>{market}</p>
+        </div>
+        {/* Operator lens */}
+        <div className="px-6 py-3" style={{ borderRight: `1px solid ${CHROME_BORDER}`, background: `hsl(${GREEN} / 0.05)` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Operator lens</p>
+          <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>{operator}</p>
+        </div>
+        {/* Axis indicator */}
+        <div className="px-5 py-3 flex items-center gap-2" style={{ minWidth: 280 }}>
+          {AXES.map((a) => {
+            const on = a.id === axis;
+            return (
+              <span
+                key={a.id}
+                className="rounded-full"
+                title={a.short}
+                style={{
+                  width: on ? 10 : 6, height: on ? 10 : 6,
+                  background: on ? `hsl(${GREEN})` : `hsl(${SUBTLE} / 0.4)`,
+                  border: on ? `1px solid hsl(${GREEN} / 0.6)` : "none",
+                  boxShadow: on ? `0 0 8px hsl(${GREEN} / 0.6)` : "none",
+                }}
+              />
+            );
+          })}
+          <span className="font-mono uppercase tracking-[0.22em] ml-2" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+            {AXES.find((a) => a.id === axis)?.short}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── 01 · COVER ──────────────────────────────────────────────────────────────
 function S01Cover({ n, t }: { n: number; t: number }) {
   return (
