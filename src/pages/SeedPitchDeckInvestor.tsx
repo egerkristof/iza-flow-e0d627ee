@@ -986,6 +986,9 @@ function S10Proof({ n, t }: { n: number; t: number }) {
         <p className="mt-6" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
           The wedge is live, not theoretical. The same playbook lifts into pharma, financial services and life sciences next.
         </p>
+        <p className="mt-3 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: SUBTLE }}>
+          Source: AACE v3.1 runtime · regulated AEC deployment · 12-month rolling window · CTO-sponsored, anonymised on request.
+        </p>
       </div>
     </Shell>
   );
