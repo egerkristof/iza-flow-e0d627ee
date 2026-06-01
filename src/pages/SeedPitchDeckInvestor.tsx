@@ -645,9 +645,9 @@ export function VizAskBar() {
 // The hero is the unit of comprehension. Bullets only annotate the visual.
 // ═════════════════════════════════════════════════════════════════════════════
 
-type LensItem = { h: string; v: string };
-type LensSide = { kicker?: string; headline: string; viz: React.ReactNode; vizLabel?: string; items: LensItem[] };
-type LensPayload = { market: LensSide; operator: LensSide & { signal?: string } };
+export type LensItem = { h: string; v: string };
+export type LensSide = { kicker?: string; headline: string; viz: React.ReactNode; vizLabel?: string; items: LensItem[] };
+export type LensPayload = { market: LensSide; operator: LensSide & { signal?: string } };
 
 export function LensSlide({
   section, n, total, topic, framing, payload, bottomLine,
