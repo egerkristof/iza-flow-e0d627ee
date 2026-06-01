@@ -710,6 +710,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
         market: {
           headline: "A smarter assistant.",
           viz: <VizModelOutputBare />,
+          vizLabel: "Diagram · raw model output, no metadata",
           items: [
             { h: "Better prompts",  v: "If outputs drift, prompt harder." },
             { h: "More PDFs in RAG", v: "Search dressed up as governance." },
@@ -719,6 +720,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "Standards, receipts, memory, accountability.",
           viz: <VizGovernedDecision />,
+          vizLabel: "Diagram · same output, wrapped in 4 governance bands",
           items: [
             { h: "Standard bound",   v: "The company's approved way of doing the work." },
             { h: "Receipt signed",   v: "Replayable on demand. Policy, data, model, approver." },
@@ -743,6 +745,7 @@ function S03Context({ n, t }: { n: number; t: number }) {
         market: {
           headline: "One chat at a time.",
           viz: <VizContextSmall />,
+          vizLabel: "Diagram · 1 user · 1 chat · ~10k tokens",
           items: [
             { h: "Prompt window",  v: "Whatever fits in 10k tokens." },
             { h: "No receipts",    v: "Nothing the regulator can replay." },
@@ -752,6 +755,7 @@ function S03Context({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "An organisation-scale context graph.",
           viz: <VizContextHuge />,
+          vizLabel: "Diagram · context surface across an enterprise",
           items: [
             { h: "Cannot stay siloed", v: "Spans roles, tools, regions, regulators." },
             { h: "Must be efficient",  v: "Inefficient assembly multiplies the token + latency bill." },
@@ -776,6 +780,7 @@ function S04Solution({ n, t }: { n: number; t: number }) {
         market: {
           headline: "Another wrapper.",
           viz: <VizWrapper />,
+          vizLabel: "Diagram · prompt → model → text. No receipt.",
           items: [
             { h: "Prompt orchestration", v: "A nicer DAG over the same call." },
             { h: "Tool use",             v: "Public patterns, public libraries." },
@@ -785,6 +790,7 @@ function S04Solution({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "LOCK · COMPILE · SIGN · LEARN. One accountable decision.",
           viz: <VizSolutionLoop />,
+          vizLabel: "Diagram · the 4-station AACE loop, one per call",
           items: [
             { h: "Lock",    v: "Bind the task to the versioned playbook." },
             { h: "Compile", v: "Assemble policy, data, rules for that one call." },
@@ -833,6 +839,7 @@ function S06WhyNow({ n, t }: { n: number; t: number }) {
         market: {
           headline: "Tokens cheaper. Margins worse.",
           viz: <VizTokenDown />,
+          vizLabel: "Chart · per-token price, 2024 → 2028",
           items: [
             { h: "Race to the bottom", v: "Whoever wraps the cheapest model wins." },
             { h: "Commodity AI",       v: "The interesting work moves into labs." },
@@ -842,6 +849,7 @@ function S06WhyNow({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "Tokens cheaper. Governed AI work explodes.",
           viz: <VizCrossingCurves />,
+          vizLabel: "Chart · token cost ↓ × governed decisions ↑, with crossover",
           items: [
             { h: "100×",          v: "more AI tasks once cost drops below decision value." },
             { h: "Policy lag",    v: "Each new task surfaces a missing standard. Demand compounds." },
@@ -867,6 +875,7 @@ function S07Weekend({ n, t }: { n: number; t: number }) {
           kicker: "The weekend demo",
           headline: "Model API plus a chat UI is the product.",
           viz: <VizWeekendDemo />,
+          vizLabel: "Code · 6 lines that look like the product",
           items: [
             { h: "Clever system prompt", v: "Looks like a method. Is one paragraph." },
             { h: "PDFs in a vector store", v: "Search dressed up as governance." },
@@ -877,6 +886,7 @@ function S07Weekend({ n, t }: { n: number; t: number }) {
           kicker: "The production system underneath",
           headline: "What survives audit, handover, and a year of org change.",
           viz: <VizIceberg />,
+          vizLabel: "Diagram · iceberg · 10% chat UI, 90% governance plumbing",
           items: [
             { h: "Workflow control",       v: "Across roles, approvals and tools." },
             { h: "Typed standards",        v: "Ownership, expiry, versioning, change control." },
@@ -901,6 +911,7 @@ function S08Lab({ n, t }: { n: number; t: number }) {
         market: {
           headline: "The lab ships this feature next quarter.",
           viz: <VizLabExpansion />,
+          vizLabel: "Diagram · adjacent lab features, none of them the layer",
           items: [
             { h: "Memory in Claude",   v: "Looks adjacent. Solves a different problem." },
             { h: "Custom GPTs",        v: "Per-user knobs, not org-wide governance." },
@@ -910,6 +921,7 @@ function S08Lab({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "No regulated buyer accepts the vendor as the auditor of the vendor.",
           viz: <VizGovernanceStack />,
+          vizLabel: "Diagram · governance stack · regulator ↑ control ↑ models",
           items: [
             { h: "Neutrality",     v: "Buyers run several models. The layer cannot be owned by one." },
             { h: "Sovereignty",    v: "Standards and receipts are the buyer's operational IP." },
@@ -934,6 +946,7 @@ function S09Model({ n, t }: { n: number; t: number }) {
         market: {
           headline: "Mark up tokens. Charge per seat. Pray for retention.",
           viz: <VizSeatDecay />,
+          vizLabel: "Chart · per-seat revenue decay after rollout",
           items: [
             { h: "Per-seat SaaS",  v: "Decays the moment the org questions adoption." },
             { h: "Token reseller", v: "Margin compresses every quarter." },
@@ -943,6 +956,7 @@ function S09Model({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "Price the accountable work unit. Model cost is a pass-through.",
           viz: <VizValueBar />,
+          vizLabel: "Chart · value vs. price vs. cost, per governed decision",
           items: [
             { h: "€0.40 / decision",     v: "What the customer pays per governed output." },
             { h: "€0.04 model + infra", v: "Pass-through. Falls every quarter." },
