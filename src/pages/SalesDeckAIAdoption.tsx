@@ -12,14 +12,8 @@ import {
 import {
   Shell, LensSlide,
   VizModelOutputBare, VizGovernedDecision,
-  VizContextSmall, VizContextHuge,
   VizSolutionLoop, VizWrapper,
-  VizFactoryWalkthrough,
-  VizCrossingCurves, VizTokenDown,
-  VizIceberg, VizWeekendDemo,
-  VizGovernanceStack, VizLabExpansion,
-  VizValueBar, VizSeatDecay,
-  VizMoatLayers,
+  VizIceberg,
 } from "@/pages/SeedPitchDeckInvestor";
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -36,7 +30,7 @@ import {
 // ═════════════════════════════════════════════════════════════════════════════
 
 const FOOTER_LEFT  = "LIZA OS · For the Head of AI Adoption";
-const FOOTER_RIGHT = "From pilots to a system that compounds";
+const FOOTER_RIGHT = "From scattered pilots to a rollout that survives audit";
 
 // helper wrapping Shell with our footer
 function SH(props: { section: string; n: number; total: number; dark?: boolean; children: React.ReactNode }) {
@@ -45,6 +39,249 @@ function SH(props: { section: string; n: number; total: number; dark?: boolean; 
       footerLeft={FOOTER_LEFT} footerRight={FOOTER_RIGHT}>
       {props.children}
     </Shell>
+  );
+}
+
+// ─── Sales-native visuals ──────────────────────────────────────────────────
+
+// Scorecard: the KPIs the Head of AI Adoption is measured on
+function VizAdoptionScorecard() {
+  const rows = [
+    { kpi: "% workflows with governed AI in production",  bad: "8%",   good: "60%+" },
+    { kpi: "Time from licence purchase → measurable ROI", bad: "18 mo", good: "30 days" },
+    { kpi: "Outputs you can replay for Legal / audit",    bad: "0",    good: "100%" },
+    { kpi: "Standards owned by the business (not IT)",    bad: "0",    good: "Every team" },
+  ];
+  return (
+    <div className="w-full rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}`, background: CARD_ALT }}>
+      <div className="grid grid-cols-12 px-6 py-3" style={{ background: CHROME_BG, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+        <div className="col-span-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>What your board grades you on</div>
+        <div className="col-span-3 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 11, color: `hsl(${RED})` }}>Today</div>
+        <div className="col-span-3 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>On LIZA</div>
+      </div>
+      {rows.map((r, i) => (
+        <div key={r.kpi} className="grid grid-cols-12 px-6 py-4 items-center"
+          style={{ borderBottom: i === rows.length - 1 ? "none" : `1px solid ${CHROME_BORDER}` }}>
+          <div className="col-span-6" style={{ fontSize: 16, color: TEXT, lineHeight: 1.3 }}>{r.kpi}</div>
+          <div className="col-span-3 text-center font-black" style={{ fontSize: 28, color: `hsl(${RED})`, letterSpacing: "-0.02em" }}>{r.bad}</div>
+          <div className="col-span-3 text-center font-black" style={{ fontSize: 28, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{r.good}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Funnel: where rollouts die today
+function VizRolloutFunnel() {
+  const stages = [
+    { label: "Licences bought",     count: "10,000 seats", pct: 100, color: SUBTLE },
+    { label: "Anyone uses weekly",  count: "~1,500",       pct: 15,  color: GOLD },
+    { label: "Pilots launched",     count: "14 projects",  pct: 8,   color: GOLD },
+    { label: "In real production",  count: "2 projects",   pct: 2,   color: RED },
+    { label: "Audit-replayable",    count: "0",            pct: 0,   color: RED },
+  ];
+  return (
+    <div className="w-full flex flex-col gap-2.5">
+      {stages.map((s, i) => (
+        <div key={s.label} className="flex items-center gap-4">
+          <div className="w-[260px] shrink-0 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 12, color: TEXT }}>{s.label}</div>
+          <div className="flex-1 h-12 rounded-md relative overflow-hidden" style={{ background: "hsl(0 0% 0% / 0.04)", border: `1px solid ${CHROME_BORDER}` }}>
+            <div className="h-full flex items-center px-3"
+              style={{ width: `${Math.max(s.pct, 1.5)}%`, background: `hsl(${s.color} / ${s.pct === 0 ? 0.15 : 0.55})`, borderRight: s.pct > 0 ? `2px solid hsl(${s.color})` : "none" }}>
+              {s.pct >= 12 && <span className="font-bold text-white" style={{ fontSize: 14 }}>{s.count}</span>}
+            </div>
+            {s.pct < 12 && (
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 ml-3 font-bold" style={{ fontSize: 14, color: `hsl(${s.color})`, paddingLeft: `${Math.max(s.pct, 1.5)}%` }}>{s.count}</span>
+            )}
+          </div>
+          <div className="w-[60px] text-right font-mono font-bold" style={{ fontSize: 14, color: `hsl(${s.color})` }}>{s.pct}%</div>
+        </div>
+      ))}
+      <p className="mt-3 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
+        Composite of 9 mid-to-large EU enterprises · LIZA OS rollout intake interviews · 2025
+      </p>
+    </div>
+  );
+}
+
+// Architecture: where LIZA plugs in, no rip-and-replace
+function VizArchitectureFit() {
+  const Layer = ({ title, sub, items, accent, dashed }: { title: string; sub: string; items: string[]; accent: string; dashed?: boolean }) => (
+    <div className="w-full rounded-xl px-6 py-4 flex items-center gap-6"
+      style={{ background: CARD_ALT, border: `${dashed ? "2px dashed" : "1px solid"} ${dashed ? `hsl(${accent})` : CHROME_BORDER}` }}>
+      <div className="w-[280px] shrink-0">
+        <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${accent})` }}>{sub}</p>
+        <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{title}</p>
+      </div>
+      <div className="flex-1 flex flex-wrap gap-2">
+        {items.map(x => (
+          <span key={x} className="px-3 py-1.5 rounded-md font-mono" style={{ fontSize: 12, color: TEXT, background: "hsl(0 0% 0% / 0.04)", border: `1px solid ${CHROME_BORDER}` }}>{x}</span>
+        ))}
+      </div>
+    </div>
+  );
+  return (
+    <div className="w-full flex flex-col gap-3">
+      <Layer title="Your people, your workflows" sub="Layer 4 · users" accent={GREEN}
+        items={["Sales reps", "Underwriters", "Designers", "Analysts", "Ops", "Legal", "Support"]} />
+      <Layer title="LIZA OS · the control layer" sub="Layer 3 · what we install" accent={GOLD} dashed
+        items={["Standards registry", "AACE runtime", "Signed receipts", "Memory & feedback", "Audit replay"]} />
+      <Layer title="Your existing AI tools" sub="Layer 2 · already paid for" accent={GREEN}
+        items={["Copilot M365", "ChatGPT Enterprise", "Claude for Work", "Gemini", "your custom RAG"]} />
+      <Layer title="Your data, identity & policy" sub="Layer 1 · already in place" accent={GREEN}
+        items={["SharePoint / Drive", "SSO / Entra", "DLP & retention", "Snowflake / Databricks", "Sector regs"]} />
+      <p className="mt-2 text-center font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
+        We slot between your users and the models you already bought. No rip-and-replace. No new model contract required.
+      </p>
+    </div>
+  );
+}
+
+// 90-day plan
+function Viz90DayPlan() {
+  const phases = [
+    { p: "Days 0-14",  h: "Scope & wire",      d: "Pick one workflow with you. Install runtime in your environment. SSO + DLP integration. First 5 standards drafted with practitioners.", out: "Standards live · runtime deployed" },
+    { p: "Days 15-45", h: "Run with one team", d: "Workflow goes live on LIZA. Every output signed. Decision delta tracked daily. Legal and Finance see receipts.", out: "≥500 signed decisions" },
+    { p: "Days 46-75", h: "Measure & defend",  d: "Baseline-vs-LIZA report for your steering group. ROI per decision documented. Audit replay demonstrated.", out: "CFO-ready ROI memo" },
+    { p: "Days 76-90", h: "Pick workflow #2",  d: "You decide what scales next. Standards library begins to compound. Second function onboarded under same install.", out: "Next workflow committed" },
+  ];
+  return (
+    <div className="w-full">
+      <div className="relative h-2 rounded-full mb-6" style={{ background: "hsl(0 0% 0% / 0.06)" }}>
+        <div className="absolute inset-y-0 left-0 rounded-full" style={{ width: "100%", background: `linear-gradient(90deg, hsl(${GOLD}), hsl(${GREEN}))` }} />
+      </div>
+      <div className="grid grid-cols-4 gap-5">
+        {phases.map((s, i) => (
+          <div key={s.h} className="rounded-2xl p-5 flex flex-col"
+            style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>{s.p}</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.15 }}>{s.h}</p>
+            <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{s.d}</p>
+            <div className="mt-auto pt-3" style={{ borderTop: `1px solid ${CHROME_BORDER}` }}>
+              <p className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 10, color: SUBTLE }}>Exit criterion</p>
+              <p className="font-bold mt-1" style={{ fontSize: 13, color: `hsl(${GREEN})`, lineHeight: 1.3 }}>{s.out}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Buying committee map
+function VizBuyingCommittee() {
+  const people = [
+    { role: "You · Head of AI Adoption", cares: "Make the rollout actually stick. Defensible numbers per quarter.",       gets: "A 90-day install + a system you can scale workflow by workflow.", color: GREEN },
+    { role: "CFO / Finance",             cares: "Per-seat cost without proven outcome. ROI slide that does not hold up.", gets: "Per-decision pricing. Pass-through model cost. Unit econ on day 30.", color: GOLD },
+    { role: "Legal / Compliance",        cares: "EU AI Act, sector regulators, internal audit. Cannot show 'how we decided'.", gets: "Signed receipts. Standards with owner + version. Replay on demand.", color: GOLD },
+    { role: "CIO / IT / Security",       cares: "Another shadow tool. Vendor lock. Yet another model contract.",          gets: "Runs in your environment. Model-agnostic. SSO + DLP from day one.",   color: GOLD },
+  ];
+  return (
+    <div className="grid grid-cols-2 gap-5 w-full">
+      {people.map(p => (
+        <div key={p.role} className="rounded-2xl p-6 flex flex-col"
+          style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <div className="flex items-center gap-3">
+            <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${p.color})` }} />
+            <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em" }}>{p.role}</p>
+          </div>
+          <div className="mt-4">
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${RED})` }}>What keeps them up</p>
+            <p className="mt-1.5" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>{p.cares}</p>
+          </div>
+          <div className="mt-4 pt-4" style={{ borderTop: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>What LIZA hands them</p>
+            <p className="mt-1.5" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>{p.gets}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Pricing & procurement
+function VizPricingProcurement() {
+  const lines = [
+    { l: "Pricing unit",        v: "Per governed decision",                   sub: "€0.40 / signed output. Volume tiers from 10k/mo." },
+    { l: "Model cost",          v: "Pass-through",                            sub: "You keep your existing model contracts. We do not mark up tokens." },
+    { l: "Minimum commit",      v: "1 workflow · 90 days",                    sub: "Single PO. Exit at day 30 if exit criteria are not hit." },
+    { l: "Deployment",          v: "Your VPC or ours",                        sub: "SOC 2 Type II runtime. EU data residency. SSO / SCIM / DLP standard." },
+    { l: "Standards ownership", v: "Yours. Exportable.",                      sub: "Versioned JSON. Lifts to any other runtime. No lock-in clause." },
+    { l: "Paper",               v: "MSA · DPA · SCCs ready",                  sub: "Pre-approved by 3 EU enterprise legal teams. Avg. legal cycle: 11 days." },
+  ];
+  return (
+    <div className="w-full rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}`, background: CARD_ALT }}>
+      {lines.map((r, i) => (
+        <div key={r.l} className="grid grid-cols-12 px-6 py-4"
+          style={{ borderBottom: i === lines.length - 1 ? "none" : `1px solid ${CHROME_BORDER}` }}>
+          <div className="col-span-3 font-mono uppercase tracking-[0.22em] self-center" style={{ fontSize: 11, color: SUBTLE }}>{r.l}</div>
+          <div className="col-span-3 font-black self-center" style={{ fontSize: 20, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{r.v}</div>
+          <div className="col-span-6 self-center" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{r.sub}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// vs alternatives comparison
+function VizAlternatives() {
+  const cols = [
+    { name: "Stay on Copilot only",  tag: "Status quo",         color: RED,   stick: "No",  audit: "No",  speed: "Months",   own: "Vendor"  },
+    { name: "Internal build (IT)",   tag: "DIY",                color: GOLD,  stick: "Maybe", audit: "Custom", speed: "6-12 mo", own: "IT squad" },
+    { name: "Big-4 consulting",      tag: "Programme",          color: GOLD,  stick: "Until they leave", audit: "Slideware", speed: "9-18 mo", own: "Their PMO" },
+    { name: "LIZA OS",               tag: "Control layer",      color: GREEN, stick: "Yes", audit: "Built-in", speed: "30-90 days", own: "Your business" },
+  ];
+  const rows: { label: string; key: "stick" | "audit" | "speed" | "own" }[] = [
+    { label: "Makes adoption stick", key: "stick" },
+    { label: "Audit-replayable",     key: "audit" },
+    { label: "Time to first ROI",    key: "speed" },
+    { label: "Who owns the standards", key: "own" },
+  ];
+  return (
+    <div className="w-full rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}`, background: CARD_ALT }}>
+      <div className="grid grid-cols-5" style={{ background: CHROME_BG, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+        <div className="px-5 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>Dimension</div>
+        {cols.map(c => (
+          <div key={c.name} className="px-5 py-4" style={{ borderLeft: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${c.color})` }}>{c.tag}</p>
+            <p className="font-black mt-1" style={{ fontSize: 16, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.2 }}>{c.name}</p>
+          </div>
+        ))}
+      </div>
+      {rows.map((r, ri) => (
+        <div key={r.label} className="grid grid-cols-5"
+          style={{ borderBottom: ri === rows.length - 1 ? "none" : `1px solid ${CHROME_BORDER}` }}>
+          <div className="px-5 py-4 font-bold self-center" style={{ fontSize: 14, color: TEXT }}>{r.label}</div>
+          {cols.map(c => (
+            <div key={c.name + r.label} className="px-5 py-4 self-center"
+              style={{ borderLeft: `1px solid ${CHROME_BORDER}`, background: c.color === GREEN ? `hsl(${GREEN} / 0.06)` : "transparent" }}>
+              <p className="font-bold" style={{ fontSize: 15, color: `hsl(${c.color})` }}>{c[r.key]}</p>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Risk-reversed pilot card
+function VizRiskReversed() {
+  const items = [
+    { l: "Day 0",  h: "Signed scope",         d: "One workflow. Three exit criteria written by you. Paper signed." },
+    { l: "Day 30", h: "Go / no-go gate",      d: "If we miss any criterion, you exit. No further commitment." },
+    { l: "Day 90", h: "Steering review",      d: "Decision delta + ROI memo + audit replay shown to your steering group." },
+  ];
+  return (
+    <div className="grid grid-cols-3 gap-5 w-full">
+      {items.map((s, i) => (
+        <div key={s.h} className="rounded-2xl p-6 flex flex-col"
+          style={{ background: CARD_ALT, border: `1px solid hsl(${GREEN} / 0.4)`, boxShadow: `0 0 0 1px hsl(${GREEN} / 0.1)` }}>
+          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>{s.l}</p>
+          <p className="font-black mt-2" style={{ fontSize: 26, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{s.h}</p>
+          <p className="mt-3" style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{s.d}</p>
+        </div>
+      ))}
+    </div>
   );
 }
 
