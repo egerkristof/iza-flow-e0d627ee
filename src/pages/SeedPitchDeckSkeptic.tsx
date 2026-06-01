@@ -485,7 +485,11 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
           </div>
         </div>
       </div>
-      <ContextThreadStrip active="efficiency" />
+      <LensRibbon
+        axis="efficiency"
+        market="Cheaper tokens win. Whoever ships the slickest model UI wins."
+        operator="Cheaper tokens mean 100× more governed work. The spend moves to the control layer."
+      />
     </Slide>
   );
 }
