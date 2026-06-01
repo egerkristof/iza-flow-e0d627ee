@@ -658,6 +658,11 @@ function S09Proof({ n, t }: { n: number; t: number }) {
           The first vertical proves the pattern: encode standards, govern decisions, price the work unit, expand into adjacent regulated functions.
         </p>
       </div>
+      <LensRibbon
+        axis="compounding"
+        market="A pilot. A logo on a slide. Nothing in production."
+        operator="A CTO-sponsored deployment. 127 standards encoded. 3,400 signed decisions per month, compounding."
+      />
     </Slide>
   );
 }
