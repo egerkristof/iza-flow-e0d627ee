@@ -182,6 +182,7 @@ function S03Problem({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
+      <ContextThreadStrip active="audit" />
     </Slide>
   );
 }
@@ -220,6 +221,7 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
+      <ContextThreadStrip active="compounding" />
     </Slide>
   );
 }
@@ -266,6 +268,7 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
           </div>
         </div>
       </div>
+      <ContextThreadStrip active="efficiency" />
     </Slide>
   );
 }
@@ -377,6 +380,7 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
+      <ContextThreadStrip active="efficiency" />
     </Slide>
   );
 }
@@ -443,6 +447,7 @@ function S10Moat({ n, t }: { n: number; t: number }) {
           ))}
         </div>
       </div>
+      <ContextThreadStrip active="compounding" />
     </Slide>
   );
 }
