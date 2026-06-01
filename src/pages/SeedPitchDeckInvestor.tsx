@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
-import { ChevronLeft, ChevronRight, Maximize2, X, Grid3x3 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, X, Grid3x3, Lock, Cog, FileCheck2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
 import { cn } from "@/lib/utils";
 import {
   ScaledSlide, SlideIndexProvider,
   BG, TEXT, MUTED, SUBTLE, CARD_ALT, CHROME_BG, CHROME_BORDER,
-  GREEN, GOLD, RED,
+  GREEN, GOLD, RED, ACCENT,
 } from "@/pages/TechDDDeck";
 
 // ═════════════════════════════════════════════════════════════════════════════
