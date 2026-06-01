@@ -187,6 +187,77 @@ function S03Problem({ n, t }: { n: number; t: number }) {
   );
 }
 
+// ─── 03b · CONTEXT EXPLOSION (the spine of the deck) ────────────────────────
+function SContextExplosion({ n, t }: { n: number; t: number }) {
+  const consequences = [
+    { k: "Silos break",    v: "Context spans roles, tools, regions and regulators. It cannot live in one team's notebook." },
+    { k: "Cost matters",   v: "Every governed task pulls context. Inefficient assembly multiplies token and latency bills." },
+    { k: "Audit is law",   v: "Each output must be replayable. Which standard, which data, which approval, which model." },
+    { k: "It compounds",   v: "Receipts become the next context. The organization gets sharper with every decision." },
+  ];
+  return (
+    <Slide section="The spine" n={n} total={t}>
+      <div className="absolute inset-0 px-32 pt-36 pb-28 flex flex-col">
+        <h2 className="font-black mb-3" style={{ fontSize: 62, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          The investor pitch hides one fact. <span style={{ color: `hsl(${GREEN})` }}>Context is about to explode.</span>
+        </h2>
+        <p className="font-mono uppercase tracking-[0.22em] mb-7" style={{ fontSize: 13, color: MUTED }}>
+          The thread that runs through every remaining slide of this deck.
+        </p>
+
+        {/* Two realities: today vs. coming */}
+        <div className="grid grid-cols-2 gap-7 mb-7">
+          {/* Today */}
+          <div className="rounded-2xl p-7 relative overflow-hidden" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: `hsl(${RED})` }}>What investors see today</p>
+            <p className="font-black mb-5" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              One user. One chat. A handful of files in the prompt.
+            </p>
+            <div className="relative h-[170px] flex items-center justify-center">
+              <div className="rounded-full" style={{
+                width: 26, height: 26,
+                background: `radial-gradient(circle, hsl(${RED} / 0.7), hsl(${RED} / 0.15) 70%)`,
+                border: `1px solid hsl(${RED} / 0.6)`,
+              }} />
+              <span className="absolute font-mono uppercase tracking-[0.18em]" style={{ fontSize: 10, color: SUBTLE, transform: "translateY(36px)" }}>
+                ~10K tokens · one workflow · zero receipts
+              </span>
+            </div>
+          </div>
+
+          {/* Coming */}
+          <div className="rounded-2xl p-7 relative overflow-hidden" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What is actually coming</p>
+            <p className="font-black mb-5" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              Every employee × every workflow × every policy × every receipt.
+            </p>
+            <div className="relative h-[170px] flex items-center justify-center">
+              {/* layered clouds suggesting explosion */}
+              <div className="absolute rounded-full" style={{ width: 200, height: 200, background: `radial-gradient(circle, hsl(${GREEN} / 0.18), hsl(${GREEN} / 0) 70%)` }} />
+              <div className="absolute rounded-full" style={{ width: 130, height: 130, background: `radial-gradient(circle, hsl(${GREEN} / 0.35), hsl(${GREEN} / 0) 70%)` }} />
+              <div className="absolute rounded-full" style={{ width: 70, height: 70, background: `radial-gradient(circle, hsl(${GREEN} / 0.6), hsl(${GREEN} / 0.1) 70%)`, border: `1px solid hsl(${GREEN} / 0.55)` }} />
+              <span className="absolute font-mono uppercase tracking-[0.18em]" style={{ fontSize: 10, color: SUBTLE, transform: "translateY(96px)" }}>
+                org-scale context graph · billions of governed tokens
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Four consequences — the axes carried through the deck */}
+        <div className="grid grid-cols-4 gap-4">
+          {consequences.map((c, i) => (
+            <div key={c.k} className="rounded-xl p-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}`, borderTop: `3px solid hsl(${GREEN})` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>0{i + 1}</p>
+              <p className="font-black mb-2" style={{ fontSize: 19, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{c.k}</p>
+              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{c.v}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Slide>
+  );
+}
+
 // ─── 04 · SOLUTION UNIT ─────────────────────────────────────────────────────
 function S04ProductUnit({ n, t }: { n: number; t: number }) {
   const steps = [
