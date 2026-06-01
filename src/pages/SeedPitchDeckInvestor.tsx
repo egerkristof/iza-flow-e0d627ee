@@ -708,6 +708,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
       framing="Enterprises do not lack models. They lack a way to govern what the models do."
       payload={{
         market: {
+          kicker: "What you are being sold today",
           headline: "A smarter assistant.",
           viz: <VizModelOutputBare />,
           vizLabel: "Diagram · raw model output, no metadata",
@@ -718,6 +719,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "What companies actually need",
           headline: "Standards, receipts, memory, accountability.",
           viz: <VizGovernedDecision />,
           vizLabel: "Diagram · same output, wrapped in 4 governance bands",
@@ -743,6 +745,7 @@ function S03Context({ n, t }: { n: number; t: number }) {
       framing="Today's context fits in a chat. Tomorrow's spans every employee, workflow, policy and receipt in the company."
       payload={{
         market: {
+          kicker: "What you are being sold today",
           headline: "One chat at a time.",
           viz: <VizContextSmall />,
           vizLabel: "Diagram · 1 user · 1 chat · ~10k tokens",
@@ -753,6 +756,7 @@ function S03Context({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "What companies actually need",
           headline: "An organisation-scale context graph.",
           viz: <VizContextHuge />,
           vizLabel: "Diagram · context surface across an enterprise",
@@ -778,6 +782,7 @@ function S04Solution({ n, t }: { n: number; t: number }) {
       framing="The market evaluates the text box. We sell the governed decision underneath it."
       payload={{
         market: {
+          kicker: "What you are being sold today",
           headline: "Another wrapper.",
           viz: <VizWrapper />,
           vizLabel: "Diagram · prompt → model → text. No receipt.",
@@ -788,6 +793,7 @@ function S04Solution({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "What companies actually need",
           headline: "LOCK · COMPILE · SIGN · LEARN. One accountable decision.",
           viz: <VizSolutionLoop />,
           vizLabel: "Diagram · the 4-station AACE loop, one per call",
@@ -837,6 +843,7 @@ function S06WhyNow({ n, t }: { n: number; t: number }) {
       framing="Cheaper tokens are not bad news. They are the trigger for the control layer to exist."
       payload={{
         market: {
+          kicker: "What the market is reading",
           headline: "Tokens cheaper. Margins worse.",
           viz: <VizTokenDown />,
           vizLabel: "Chart · per-token price, 2024 → 2028",
@@ -847,6 +854,7 @@ function S06WhyNow({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "What actually happens to the spend",
           headline: "Tokens cheaper. Governed AI work explodes.",
           viz: <VizCrossingCurves />,
           vizLabel: "Chart · token cost ↓ × governed decisions ↑, with crossover",
@@ -872,7 +880,7 @@ function S07Weekend({ n, t }: { n: number; t: number }) {
       framing="The weekend project automates text. It does not certify work."
       payload={{
         market: {
-          kicker: "The weekend demo",
+          kicker: "What looks like the product",
           headline: "Model API plus a chat UI is the product.",
           viz: <VizWeekendDemo />,
           vizLabel: "Code · 6 lines that look like the product",
@@ -883,7 +891,7 @@ function S07Weekend({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
-          kicker: "The production system underneath",
+          kicker: "What survives a year in production",
           headline: "What survives audit, handover, and a year of org change.",
           viz: <VizIceberg />,
           vizLabel: "Diagram · iceberg · 10% chat UI, 90% governance plumbing",
@@ -909,6 +917,7 @@ function S08Lab({ n, t }: { n: number; t: number }) {
       framing="Foundation labs are suppliers. They cannot become the customer's auditor."
       payload={{
         market: {
+          kicker: "What the lab roadmap looks like",
           headline: "The lab ships this feature next quarter.",
           viz: <VizLabExpansion />,
           vizLabel: "Diagram · adjacent lab features, none of them the layer",
@@ -919,6 +928,7 @@ function S08Lab({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "Why the regulator does not accept that",
           headline: "No regulated buyer accepts the vendor as the auditor of the vendor.",
           viz: <VizGovernanceStack />,
           vizLabel: "Diagram · governance stack · regulator ↑ control ↑ models",
@@ -944,6 +954,7 @@ function S09Model({ n, t }: { n: number; t: number }) {
       framing="We do not sell tokens or seats. We sell governed decisions."
       payload={{
         market: {
+          kicker: "How AI is priced today",
           headline: "Mark up tokens. Charge per seat. Pray for retention.",
           viz: <VizSeatDecay />,
           vizLabel: "Chart · per-seat revenue decay after rollout",
@@ -954,6 +965,7 @@ function S09Model({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "How we price it",
           headline: "Price the accountable work unit. Model cost is a pass-through.",
           viz: <VizValueBar />,
           vizLabel: "Chart · value vs. price vs. cost, per governed decision",
