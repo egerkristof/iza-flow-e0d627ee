@@ -273,6 +273,116 @@ function VizFactoryLine() {
   );
 }
 
+// ─── S05 · concrete walk-through ────────────────────────────────────────────
+// Shows ONE real request travelling through the 4 stations, producing a receipt.
+// Designed so a zero-context reader understands what LIZA does in 5 seconds.
+function VizFactoryWalkthrough() {
+  const stations = [
+    {
+      n: "01",
+      k: "LOCK",
+      icon: Lock,
+      what: "Pick the company's approved way of doing this work.",
+      shows: "Playbook: AEC-PROP v3.2",
+      meta: "owner · M. Schäfer · expires 2026-Q1",
+    },
+    {
+      n: "02",
+      k: "COMPILE",
+      icon: Cog,
+      what: "Assemble only what this one call needs.",
+      shows: "12 standards · 4 prior receipts · current pricing",
+      meta: "no blind RAG dump · cost capped before the call",
+    },
+    {
+      n: "03",
+      k: "SIGN",
+      icon: FileCheck2,
+      what: "Bind the output to a signed, replayable receipt.",
+      shows: "model · claude-3.5 · approver · M. Schäfer · 14:02",
+      meta: "hash of inputs, outputs and policy version",
+    },
+    {
+      n: "04",
+      k: "LEARN",
+      icon: RefreshCw,
+      what: "Feed the correction back into the playbook.",
+      shows: "Δ 'cooling load assumption' · pushed to v3.3",
+      meta: "next call inherits it · the corpus compounds",
+    },
+  ];
+
+  return (
+    <div className="w-full flex flex-col gap-5">
+      {/* TOP ROW · the worked example, end-to-end */}
+      <div className="grid grid-cols-[1fr_3.4fr_1.2fr] gap-5 items-stretch">
+        {/* INPUT */}
+        <div className="rounded-xl p-5 flex flex-col justify-center"
+          style={{ background: CARD_ALT, border: `1px dashed ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>Input</p>
+          <p className="font-black mt-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2 }}>
+            "Draft a proposal for the Munich school project."
+          </p>
+          <p className="mt-3 font-mono" style={{ fontSize: 11, color: MUTED }}>
+            sender · project lead<br/>
+            channel · workbook · 14:01
+          </p>
+        </div>
+
+        {/* 4 STATIONS */}
+        <div className="relative">
+          <div className="grid grid-cols-4 gap-3 relative z-10 h-full">
+            {stations.map((s) => {
+              const Icon = s.icon;
+              return (
+                <div key={s.k} className="rounded-xl p-4 flex flex-col"
+                  style={{ background: BG, border: `2px solid hsl(${GREEN} / 0.4)`, boxShadow: `0 0 18px hsl(${GREEN} / 0.08)` }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="font-mono" style={{ fontSize: 10, color: SUBTLE, letterSpacing: "0.22em" }}>{s.n}</p>
+                    <div className="rounded-full flex items-center justify-center"
+                      style={{ width: 32, height: 32, background: `hsl(${GREEN} / 0.1)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                      <Icon size={16} style={{ color: `hsl(${GREEN})` }} />
+                    </div>
+                  </div>
+                  <p className="font-black" style={{ fontSize: 20, color: TEXT, letterSpacing: "0.04em", lineHeight: 1 }}>{s.k}</p>
+                  <p className="mt-2" style={{ fontSize: 12, color: MUTED, lineHeight: 1.3 }}>{s.what}</p>
+                  <div className="mt-3 pt-3 flex-1" style={{ borderTop: `1px solid hsl(${GREEN} / 0.2)` }}>
+                    <p className="font-mono" style={{ fontSize: 10, color: `hsl(${GREEN})`, letterSpacing: "0.16em" }}>WHAT IT EMITS</p>
+                    <p className="font-mono mt-1" style={{ fontSize: 11, color: TEXT, lineHeight: 1.35 }}>{s.shows}</p>
+                    <p className="font-mono mt-1.5" style={{ fontSize: 10, color: SUBTLE, lineHeight: 1.35 }}>{s.meta}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* OUTPUT — the receipt */}
+        <div className="rounded-xl p-5 flex flex-col justify-center"
+          style={{ background: `hsl(${GREEN} / 0.08)`, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 22px hsl(${GREEN} / 0.18)` }}>
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
+          <p className="font-black mt-2" style={{ fontSize: 17, color: TEXT, lineHeight: 1.2 }}>
+            Signed proposal<br/>+ receipt
+          </p>
+          <p className="mt-3 font-mono" style={{ fontSize: 11, color: MUTED, lineHeight: 1.5 }}>
+            replay anytime<br/>
+            policy + data + model<br/>
+            + approver, hashed
+          </p>
+        </div>
+      </div>
+
+      {/* feedback loop arrow under the row */}
+      <div className="flex items-center justify-center gap-4 font-mono uppercase tracking-[0.24em] -mt-1"
+        style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
+        <span style={{ color: SUBTLE }}>04 LEARN</span>
+        <span>↻ feeds the next call's 01 LOCK</span>
+        <span style={{ color: SUBTLE }}>· the corpus is the asset</span>
+      </div>
+    </div>
+  );
+}
+
 // ─── S06 · crossing curves ──────────────────────────────────────────────────
 function VizCrossingCurves() {
   return (
@@ -559,21 +669,21 @@ function LensSlide({
         </div>
 
         {/* hero visual band — 2 columns */}
-        <div className="grid grid-cols-[0.78fr_1.22fr] gap-6 flex-1 min-h-0">
+        <div className="grid grid-cols-[0.7fr_1.3fr] gap-7 flex-1 min-h-0">
           {/* MARKET LENS */}
-          <div className="rounded-2xl p-6 flex flex-col"
+          <div className="rounded-2xl p-7 flex flex-col"
             style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.25)` }}>
             <div className="flex items-center gap-3 mb-3">
               <span className="inline-block rounded-full" style={{ width: 8, height: 8, background: `hsl(${RED})` }} />
-              <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>
-                {payload.market.kicker || "Market lens"}
+              <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 12, color: `hsl(${RED})` }}>
+                {payload.market.kicker || "What you are being sold today"}
               </p>
             </div>
-            <p className="font-black mb-4" style={{ fontSize: 22, color: MUTED, lineHeight: 1.15, letterSpacing: "-0.018em" }}>
+            <p className="font-black mb-4" style={{ fontSize: 26, color: MUTED, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
               {payload.market.headline}
             </p>
             {payload.market.vizLabel && (
-              <p className="font-mono uppercase tracking-[0.22em] mb-2 text-center" style={{ fontSize: 10, color: SUBTLE }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-3 text-center" style={{ fontSize: 11, color: SUBTLE }}>
                 {payload.market.vizLabel}
               </p>
             )}
@@ -582,11 +692,11 @@ function LensSlide({
               {payload.market.viz}
             </div>
             {/* compact captions */}
-            <div className="flex flex-col gap-2 pt-3" style={{ borderTop: `1px solid hsl(${RED} / 0.2)` }}>
+            <div className="flex flex-col gap-2.5 pt-4" style={{ borderTop: `1px solid hsl(${RED} / 0.2)` }}>
               {payload.market.items.slice(0, 3).map((it, i) => (
                 <div key={i} className="flex items-baseline gap-2">
-                  <span className="font-mono" style={{ fontSize: 11, color: `hsl(${RED})`, minWidth: 14 }}>×</span>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}>
+                  <span className="font-mono" style={{ fontSize: 13, color: `hsl(${RED})`, minWidth: 14 }}>×</span>
+                  <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>
                     <span className="font-bold" style={{ color: MUTED }}>{it.h}.</span> {it.v}
                   </p>
                 </div>
@@ -595,32 +705,32 @@ function LensSlide({
           </div>
 
           {/* OPERATOR LENS */}
-          <div className="rounded-2xl p-7 flex flex-col relative overflow-hidden"
+          <div className="rounded-2xl p-8 flex flex-col relative overflow-hidden"
             style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
             <div className="flex items-center gap-3 mb-3">
               <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${GREEN})`, boxShadow: `0 0 12px hsl(${GREEN} / 0.6)` }} />
-              <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
-                {payload.operator.kicker || "Operator lens"}
+              <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
+                {payload.operator.kicker || "What companies actually need"}
               </p>
             </div>
-            <p className="font-black mb-5" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.022em" }}>
+            <p className="font-black mb-5" style={{ fontSize: 38, color: TEXT, lineHeight: 1.06, letterSpacing: "-0.025em" }}>
               {payload.operator.headline}
             </p>
             {payload.operator.vizLabel && (
-              <p className="font-mono uppercase tracking-[0.22em] mb-2 text-center" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-3 text-center" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
                 {payload.operator.vizLabel}
               </p>
             )}
             {/* viz */}
-            <div className="flex-1 flex items-center justify-center min-h-0 mb-4">
+            <div className="flex-1 flex items-center justify-center min-h-0 mb-5">
               {payload.operator.viz}
             </div>
             {/* compact captions */}
-            <div className="flex flex-col gap-2 pt-3" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <div className="flex flex-col gap-2.5 pt-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
               {payload.operator.items.slice(0, 3).map((it, i) => (
                 <div key={i} className="flex items-baseline gap-2">
-                  <span className="font-mono" style={{ fontSize: 12, color: `hsl(${GREEN})`, minWidth: 14 }}>✓</span>
-                  <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.3 }}>
+                  <span className="font-mono" style={{ fontSize: 14, color: `hsl(${GREEN})`, minWidth: 16 }}>✓</span>
+                  <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
                     <span className="font-black">{it.h}.</span>{" "}
                     <span style={{ color: MUTED }}>{it.v}</span>
                   </p>
@@ -628,17 +738,17 @@ function LensSlide({
               ))}
             </div>
             {payload.operator.signal && (
-              <div className="mt-3 rounded-lg px-4 py-2.5" style={{ background: `hsl(${GREEN} / 0.12)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-                <p className="font-bold" style={{ fontSize: 13, color: TEXT, lineHeight: 1.3 }}>{payload.operator.signal}</p>
+              <div className="mt-4 rounded-lg px-5 py-3" style={{ background: `hsl(${GREEN} / 0.12)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{payload.operator.signal}</p>
               </div>
             )}
           </div>
         </div>
 
         {bottomLine && (
-          <div className="mt-4 rounded-xl px-6 py-3 flex items-center gap-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 11, color: SUBTLE }}>Net</span>
-            <p className="font-black" style={{ fontSize: 19, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.012em" }}>{bottomLine}</p>
+          <div className="mt-5 rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The point</span>
+            <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.014em" }}>{bottomLine}</p>
           </div>
         )}
       </div>
@@ -675,22 +785,22 @@ function S01Cover({ n, t }: { n: number; t: number }) {
         <p className="mt-6 font-mono uppercase tracking-[0.3em] relative z-10" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>
           Seed · €2M · For investors past the demo
         </p>
-        {/* Reading key — explains the two-tone grammar used across the deck */}
-        <div className="mt-16 relative z-10 rounded-2xl px-8 py-5 flex items-center gap-10"
+        {/* Reading key — every slide in this deck is split this way */}
+        <div className="mt-16 relative z-10 rounded-2xl px-10 py-6 flex items-center gap-12"
           style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.12)`, backdropFilter: "blur(6px)" }}>
-          <p className="font-mono uppercase tracking-[0.32em]" style={{ fontSize: 11, color: "hsl(0 0% 70%)" }}>
+          <p className="font-mono uppercase tracking-[0.32em]" style={{ fontSize: 13, color: "hsl(0 0% 72%)" }}>
             How to read this deck
           </p>
           <div className="flex items-center gap-3">
-            <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${RED})` }} />
-            <p style={{ fontSize: 14, color: "hsl(0 0% 85%)" }}>
-              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Market lens</span> — how the room currently frames AI
+            <span className="inline-block rounded-full" style={{ width: 12, height: 12, background: `hsl(${RED})` }} />
+            <p style={{ fontSize: 18, color: "hsl(0 0% 88%)" }}>
+              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Left side</span>: what you are being sold today
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${GREEN})`, boxShadow: `0 0 10px hsl(${GREEN} / 0.6)` }} />
-            <p style={{ fontSize: 14, color: "hsl(0 0% 85%)" }}>
-              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Operator lens</span> — how it must work inside a regulated enterprise
+            <span className="inline-block rounded-full" style={{ width: 12, height: 12, background: `hsl(${GREEN})`, boxShadow: `0 0 12px hsl(${GREEN} / 0.7)` }} />
+            <p style={{ fontSize: 18, color: "hsl(0 0% 88%)" }}>
+              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Right side</span>: what companies actually need
             </p>
           </div>
         </div>
@@ -708,6 +818,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
       framing="Enterprises do not lack models. They lack a way to govern what the models do."
       payload={{
         market: {
+          kicker: "What you are being sold today",
           headline: "A smarter assistant.",
           viz: <VizModelOutputBare />,
           vizLabel: "Diagram · raw model output, no metadata",
@@ -718,6 +829,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "What companies actually need",
           headline: "Standards, receipts, memory, accountability.",
           viz: <VizGovernedDecision />,
           vizLabel: "Diagram · same output, wrapped in 4 governance bands",
@@ -743,6 +855,7 @@ function S03Context({ n, t }: { n: number; t: number }) {
       framing="Today's context fits in a chat. Tomorrow's spans every employee, workflow, policy and receipt in the company."
       payload={{
         market: {
+          kicker: "What you are being sold today",
           headline: "One chat at a time.",
           viz: <VizContextSmall />,
           vizLabel: "Diagram · 1 user · 1 chat · ~10k tokens",
@@ -753,6 +866,7 @@ function S03Context({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "What companies actually need",
           headline: "An organisation-scale context graph.",
           viz: <VizContextHuge />,
           vizLabel: "Diagram · context surface across an enterprise",
@@ -778,6 +892,7 @@ function S04Solution({ n, t }: { n: number; t: number }) {
       framing="The market evaluates the text box. We sell the governed decision underneath it."
       payload={{
         market: {
+          kicker: "What you are being sold today",
           headline: "Another wrapper.",
           viz: <VizWrapper />,
           vizLabel: "Diagram · prompt → model → text. No receipt.",
@@ -788,6 +903,7 @@ function S04Solution({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "What companies actually need",
           headline: "LOCK · COMPILE · SIGN · LEARN. One accountable decision.",
           viz: <VizSolutionLoop />,
           vizLabel: "Diagram · the 4-station AACE loop, one per call",
@@ -808,20 +924,23 @@ function S04Solution({ n, t }: { n: number; t: number }) {
 function S05How({ n, t }: { n: number; t: number }) {
   return (
     <Shell section="How it works" n={n} total={t}>
-      <div className="absolute inset-0 px-20 pt-28 pb-20 flex flex-col">
-        <div className="mb-10">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-            The loop, once
+      <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
+        <div className="mb-6">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            How one call actually works
           </p>
-          <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Four stations that turn a model call into a governed decision.
+          <h2 className="font-black" style={{ fontSize: 56, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            A request comes in. Four stations turn it into a decision the regulator can replay.
           </h2>
         </div>
-        <div className="flex-1 flex flex-col justify-center">
-          <VizFactoryLine />
+
+        {/* Walk-through: INPUT → 4 stations → RECEIPT */}
+        <div className="flex-1 flex flex-col justify-center gap-6">
+          <VizFactoryWalkthrough />
         </div>
-        <p className="mt-6 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 12, color: SUBTLE }}>
-          AACE v3.1 · live in production · model-agnostic
+
+        <p className="mt-4 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 12, color: SUBTLE }}>
+          AACE v3.1 runtime · live in production · model-agnostic (Claude · GPT · Gemini · on-prem)
         </p>
       </div>
     </Shell>
@@ -837,6 +956,7 @@ function S06WhyNow({ n, t }: { n: number; t: number }) {
       framing="Cheaper tokens are not bad news. They are the trigger for the control layer to exist."
       payload={{
         market: {
+          kicker: "What the market is reading",
           headline: "Tokens cheaper. Margins worse.",
           viz: <VizTokenDown />,
           vizLabel: "Chart · per-token price, 2024 → 2028",
@@ -847,6 +967,7 @@ function S06WhyNow({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "What actually happens to the spend",
           headline: "Tokens cheaper. Governed AI work explodes.",
           viz: <VizCrossingCurves />,
           vizLabel: "Chart · token cost ↓ × governed decisions ↑, with crossover",
@@ -872,7 +993,7 @@ function S07Weekend({ n, t }: { n: number; t: number }) {
       framing="The weekend project automates text. It does not certify work."
       payload={{
         market: {
-          kicker: "The weekend demo",
+          kicker: "What looks like the product",
           headline: "Model API plus a chat UI is the product.",
           viz: <VizWeekendDemo />,
           vizLabel: "Code · 6 lines that look like the product",
@@ -883,7 +1004,7 @@ function S07Weekend({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
-          kicker: "The production system underneath",
+          kicker: "What survives a year in production",
           headline: "What survives audit, handover, and a year of org change.",
           viz: <VizIceberg />,
           vizLabel: "Diagram · iceberg · 10% chat UI, 90% governance plumbing",
@@ -909,6 +1030,7 @@ function S08Lab({ n, t }: { n: number; t: number }) {
       framing="Foundation labs are suppliers. They cannot become the customer's auditor."
       payload={{
         market: {
+          kicker: "What the lab roadmap looks like",
           headline: "The lab ships this feature next quarter.",
           viz: <VizLabExpansion />,
           vizLabel: "Diagram · adjacent lab features, none of them the layer",
@@ -919,6 +1041,7 @@ function S08Lab({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "Why the regulator does not accept that",
           headline: "No regulated buyer accepts the vendor as the auditor of the vendor.",
           viz: <VizGovernanceStack />,
           vizLabel: "Diagram · governance stack · regulator ↑ control ↑ models",
@@ -944,6 +1067,7 @@ function S09Model({ n, t }: { n: number; t: number }) {
       framing="We do not sell tokens or seats. We sell governed decisions."
       payload={{
         market: {
+          kicker: "How AI is priced today",
           headline: "Mark up tokens. Charge per seat. Pray for retention.",
           viz: <VizSeatDecay />,
           vizLabel: "Chart · per-seat revenue decay after rollout",
@@ -954,6 +1078,7 @@ function S09Model({ n, t }: { n: number; t: number }) {
           ],
         },
         operator: {
+          kicker: "How we price it",
           headline: "Price the accountable work unit. Model cost is a pass-through.",
           viz: <VizValueBar />,
           vizLabel: "Chart · value vs. price vs. cost, per governed decision",
