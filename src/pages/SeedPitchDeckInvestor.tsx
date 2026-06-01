@@ -814,20 +814,23 @@ function S04Solution({ n, t }: { n: number; t: number }) {
 function S05How({ n, t }: { n: number; t: number }) {
   return (
     <Shell section="How it works" n={n} total={t}>
-      <div className="absolute inset-0 px-20 pt-28 pb-20 flex flex-col">
-        <div className="mb-10">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-            The loop, once
+      <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
+        <div className="mb-6">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            How one call actually works
           </p>
-          <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Four stations that turn a model call into a governed decision.
+          <h2 className="font-black" style={{ fontSize: 56, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            A request comes in. Four stations turn it into a decision the regulator can replay.
           </h2>
         </div>
-        <div className="flex-1 flex flex-col justify-center">
-          <VizFactoryLine />
+
+        {/* Walk-through: INPUT → 4 stations → RECEIPT */}
+        <div className="flex-1 flex flex-col justify-center gap-6">
+          <VizFactoryWalkthrough />
         </div>
-        <p className="mt-6 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 12, color: SUBTLE }}>
-          AACE v3.1 · live in production · model-agnostic
+
+        <p className="mt-4 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 12, color: SUBTLE }}>
+          AACE v3.1 runtime · live in production · model-agnostic (Claude · GPT · Gemini · on-prem)
         </p>
       </div>
     </Shell>
