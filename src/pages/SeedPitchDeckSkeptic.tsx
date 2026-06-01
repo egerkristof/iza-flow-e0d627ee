@@ -196,6 +196,11 @@ function S02InvestorLens({ n, t }: { n: number; t: number }) {
           Weekend projects make AI look useful. LIZA makes AI accountable enough for regulated work.
         </p>
       </div>
+      <LensRibbon
+        axis="audit"
+        market="Evaluate the chatbot. Evaluate the model. Evaluate the demo."
+        operator="Evaluate the production control layer that makes any model safe to ship."
+      />
     </Slide>
   );
 }
