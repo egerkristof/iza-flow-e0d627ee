@@ -439,9 +439,9 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
         </div>
       </div>
       <LensRibbon
-        axis="compounding"
-        market="A clone with the same model and a weekend will catch up."
-        operator="The corpus, the receipt graph and the approval history compound. They cannot be cloned."
+        axis="silos"
+        market="One chat. One user. One file dropped in the prompt."
+        operator="Lock the playbook. Compile the standards. Sign the receipt. Every call, every team, every model."
       />
     </Slide>
   );
