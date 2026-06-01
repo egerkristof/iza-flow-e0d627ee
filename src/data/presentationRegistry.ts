@@ -58,7 +58,7 @@ export const presentationRoutes: PresentationRoute[] = [
   {
     id: "sales-ai-adoption",
     title: "Sales Deck · Head of AI Adoption",
-    path: "/sales-ai-adoption",
+    path: "/getstarted",
     sourcePath: "src/pages/SalesDeckAIAdoption.tsx",
     description: "Sales-side mirror of /investor for the Head of AI Adoption persona (also VP/Director of AI, CAIO, Head of AI Transformation). Same lens grammar (left = what your rollout looks like today, right = what a rollout that compounds looks like) applied to the operator's reality: flat Copilot usage, shadow ChatGPT, pilot purgatory, board ROI pressure, IT-build temptation. Closes on a 30-day install with one workflow as the buying motion.",
     component: SalesDeckAIAdoption,
