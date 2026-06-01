@@ -231,7 +231,11 @@ function S03Problem({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
-      <ContextThreadStrip active="audit" />
+      <LensRibbon
+        axis="audit"
+        market="Enterprises just need better prompts and a chat UI."
+        operator="Every output must carry standard, evidence, approver and model — replayable on demand."
+      />
     </Slide>
   );
 }
