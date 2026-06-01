@@ -21,7 +21,7 @@ import {
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ─── Chrome ──────────────────────────────────────────────────────────────────
-function Chrome({ section, n, total, dark = false }: { section: string; n: number; total: number; dark?: boolean }) {
+export function Chrome({ section, n, total, dark = false, footerLeft, footerRight }: { section: string; n: number; total: number; dark?: boolean; footerLeft?: string; footerRight?: string }) {
   const c = dark ? "hsl(0 0% 60%)" : SUBTLE;
   return (
     <>
@@ -32,21 +32,22 @@ function Chrome({ section, n, total, dark = false }: { section: string; n: numbe
         {String(n).padStart(2, "0")} / {String(total).padStart(2, "0")}
       </div>
       <div className="absolute bottom-10 left-20 font-mono uppercase tracking-[0.28em]" style={{ fontSize: 10, color: c }}>
-        LIZA OS · Seed · Confidential
+        {footerLeft ?? "LIZA OS · Seed · Confidential"}
       </div>
       <div className="absolute bottom-10 right-20 font-mono uppercase tracking-[0.28em]" style={{ fontSize: 10, color: c }}>
-        For investors past the demo
+        {footerRight ?? "For investors past the demo"}
       </div>
     </>
   );
 }
 
-function Shell({ section, n, total, children, dark = false }: {
+export function Shell({ section, n, total, children, dark = false, footerLeft, footerRight }: {
   section: string; n: number; total: number; children: React.ReactNode; dark?: boolean;
+  footerLeft?: string; footerRight?: string;
 }) {
   return (
     <div className="w-full h-full relative" style={{ background: dark ? "hsl(222 25% 8%)" : BG }}>
-      <Chrome section={section} n={n} total={total} dark={dark} />
+      <Chrome section={section} n={n} total={total} dark={dark} footerLeft={footerLeft} footerRight={footerRight} />
       {children}
     </div>
   );
@@ -101,7 +102,7 @@ function DotGrid({ rows, cols, color, size = 5, gap = 12, density = 1 }: {
 // ─── S02 · gap diagram ──────────────────────────────────────────────────────
 // Market viz: a model output with red "?" stamps where governance metadata is missing.
 // Operator viz: same output, but wrapped in 4 metadata bands (STANDARD/EVIDENCE/MODEL/APPROVER).
-function VizModelOutputBare() {
+export function VizModelOutputBare() {
   return (
     <div className="flex flex-col items-center gap-3">
       <div className="rounded-xl px-6 py-5 text-center"
@@ -118,7 +119,7 @@ function VizModelOutputBare() {
     </div>
   );
 }
-function VizGovernedDecision() {
+export function VizGovernedDecision() {
   const tags = [
     { k: "STANDARD",  v: "AEC-PROP v3.2" },
     { k: "EVIDENCE",  v: "12 sources, hashed" },
@@ -146,7 +147,7 @@ function VizGovernedDecision() {
 }
 
 // ─── S03 · context explosion ────────────────────────────────────────────────
-function VizContextSmall() {
+export function VizContextSmall() {
   return (
     <div className="flex flex-col items-center gap-3">
       <DotGrid rows={4} cols={4} color={`hsl(${RED})`} size={6} gap={14} />
@@ -154,7 +155,7 @@ function VizContextSmall() {
     </div>
   );
 }
-function VizContextHuge() {
+export function VizContextHuge() {
   return (
     <div className="flex flex-col items-center gap-3">
       <DotGrid rows={18} cols={34} color={`hsl(${GREEN})`} size={4} gap={9} density={0.92} />
@@ -166,7 +167,7 @@ function VizContextHuge() {
 }
 
 // ─── S04 · solution loop ────────────────────────────────────────────────────
-function VizSolutionLoop() {
+export function VizSolutionLoop() {
   // 4 stations in a ring with arrows; LEARN curves back to LOCK
   const stations = [
     { k: "LOCK",    a: "−45deg" },
@@ -211,7 +212,7 @@ function VizSolutionLoop() {
     </div>
   );
 }
-function VizWrapper() {
+export function VizWrapper() {
   return (
     <div className="rounded-xl px-5 py-4 text-center"
       style={{ background: BG, border: `1px dashed hsl(${RED} / 0.4)`, minWidth: 220 }}>
@@ -227,7 +228,7 @@ function VizWrapper() {
 }
 
 // ─── S05 · factory line ─────────────────────────────────────────────────────
-function VizFactoryLine() {
+export function VizFactoryLine() {
   const stations = [
     { k: "01", v: "LOCK",    icon: Lock,        d: "bind to the playbook" },
     { k: "02", v: "COMPILE", icon: Cog,         d: "assemble the call" },
@@ -276,7 +277,7 @@ function VizFactoryLine() {
 // ─── S05 · concrete walk-through ────────────────────────────────────────────
 // Shows ONE real request travelling through the 4 stations, producing a receipt.
 // Designed so a zero-context reader understands what LIZA does in 5 seconds.
-function VizFactoryWalkthrough() {
+export function VizFactoryWalkthrough() {
   const stations = [
     {
       n: "01",
@@ -384,7 +385,7 @@ function VizFactoryWalkthrough() {
 }
 
 // ─── S06 · crossing curves ──────────────────────────────────────────────────
-function VizCrossingCurves() {
+export function VizCrossingCurves() {
   return (
     <svg viewBox="0 0 480 240" className="w-full h-full">
       {/* axes */}
@@ -418,7 +419,7 @@ function VizCrossingCurves() {
     </svg>
   );
 }
-function VizTokenDown() {
+export function VizTokenDown() {
   return (
     <svg viewBox="0 0 220 200" className="w-full h-full">
       <line x1="20" y1="170" x2="200" y2="170" stroke={CHROME_BORDER} />
@@ -432,7 +433,7 @@ function VizTokenDown() {
 }
 
 // ─── S07 · iceberg ──────────────────────────────────────────────────────────
-function VizIceberg() {
+export function VizIceberg() {
   return (
     <svg viewBox="0 0 360 320" className="w-full h-full">
       {/* tip */}
@@ -458,7 +459,7 @@ function VizIceberg() {
     </svg>
   );
 }
-function VizWeekendDemo() {
+export function VizWeekendDemo() {
   return (
     <div className="rounded-xl p-5" style={{ background: BG, border: `1px dashed hsl(${RED} / 0.4)` }}>
       <div className="font-mono text-xs" style={{ color: SUBTLE, marginBottom: 8 }}>weekend.py</div>
@@ -477,7 +478,7 @@ print(response)`}
 }
 
 // ─── S08 · governance triangle ──────────────────────────────────────────────
-function VizGovernanceStack() {
+export function VizGovernanceStack() {
   return (
     <div className="flex flex-col items-center gap-2" style={{ width: 360 }}>
       {/* Regulator */}
@@ -511,7 +512,7 @@ function VizGovernanceStack() {
     </div>
   );
 }
-function VizLabExpansion() {
+export function VizLabExpansion() {
   return (
     <div className="rounded-xl p-5 text-center"
       style={{ background: BG, border: `1px dashed hsl(${RED} / 0.4)` }}>
@@ -528,7 +529,7 @@ function VizLabExpansion() {
 }
 
 // ─── S09 · cost / value bar ─────────────────────────────────────────────────
-function VizValueBar() {
+export function VizValueBar() {
   // 3 horizontal bars, scaled visually for storytelling clarity
   return (
     <div className="flex flex-col gap-4 w-full">
@@ -563,7 +564,7 @@ function VizValueBar() {
     </div>
   );
 }
-function VizSeatDecay() {
+export function VizSeatDecay() {
   return (
     <svg viewBox="0 0 220 200" className="w-full h-full">
       <line x1="20" y1="170" x2="200" y2="170" stroke={CHROME_BORDER} />
@@ -578,7 +579,7 @@ function VizSeatDecay() {
 }
 
 // ─── S11 · moat sediment ────────────────────────────────────────────────────
-function VizMoatLayers() {
+export function VizMoatLayers() {
   const layers = [
     { h: "Standards corpus",  d: "Typed playbooks, decision rules, owners, expiry. Per vertical, per customer.", op: 1.0 },
     { h: "Receipt graph",     d: "Real decisions, evidence, approvals, drift. The customer's accountable memory.", op: 0.85 },
@@ -605,7 +606,7 @@ function VizMoatLayers() {
 }
 
 // ─── S13 · ask stacked bar ──────────────────────────────────────────────────
-function VizAskBar() {
+export function VizAskBar() {
   const seg = [
     { p: 50, h: "Vertical corpus",     d: "Deepen AEC. Package pharma + finance.", c: `hsl(${GREEN})`,  bg: `hsl(${GREEN} / 0.15)` },
     { p: 30, h: "Repeatable install",  d: "Self-serve deploy, metering, admin.",   c: `hsl(${ACCENT})`, bg: `hsl(${ACCENT} / 0.15)` },
@@ -644,11 +645,11 @@ function VizAskBar() {
 // The hero is the unit of comprehension. Bullets only annotate the visual.
 // ═════════════════════════════════════════════════════════════════════════════
 
-type LensItem = { h: string; v: string };
-type LensSide = { kicker?: string; headline: string; viz: React.ReactNode; vizLabel?: string; items: LensItem[] };
-type LensPayload = { market: LensSide; operator: LensSide & { signal?: string } };
+export type LensItem = { h: string; v: string };
+export type LensSide = { kicker?: string; headline: string; viz: React.ReactNode; vizLabel?: string; items: LensItem[] };
+export type LensPayload = { market: LensSide; operator: LensSide & { signal?: string } };
 
-function LensSlide({
+export function LensSlide({
   section, n, total, topic, framing, payload, bottomLine,
 }: {
   section: string; n: number; total: number;
