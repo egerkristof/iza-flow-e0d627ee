@@ -7,6 +7,7 @@ import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import SeedPitchDeckSkeptic from "@/pages/SeedPitchDeckSkeptic";
 import SeedPitchDeckLens from "@/pages/SeedPitchDeckLens";
 import SeedPitchDeckInvestor from "@/pages/SeedPitchDeckInvestor";
+import SalesDeckAIAdoption from "@/pages/SalesDeckAIAdoption";
 import InsuranceDeck from "@/pages/InsuranceDeck";
 import InsuranceUnderwritingDeck from "@/pages/InsuranceUnderwritingDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
@@ -52,6 +53,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/SeedPitchDeckInvestor.tsx",
     description: "Primary investor deck. Airbnb-simple spine (one idea per slide, big type) with selective Market vs Operator lens. Designed for the cold investor who is tired of AI hype and has seen every chat wrapper.",
     component: SeedPitchDeckInvestor,
+    showInAdmin: true,
+  },
+  {
+    id: "sales-ai-adoption",
+    title: "Sales Deck · Head of AI Adoption",
+    path: "/sales-ai-adoption",
+    sourcePath: "src/pages/SalesDeckAIAdoption.tsx",
+    description: "Sales-side mirror of /investor for the Head of AI Adoption persona (also VP/Director of AI, CAIO, Head of AI Transformation). Same lens grammar (left = what your rollout looks like today, right = what a rollout that compounds looks like) applied to the operator's reality: flat Copilot usage, shadow ChatGPT, pilot purgatory, board ROI pressure, IT-build temptation. Closes on a 30-day install with one workflow as the buying motion.",
+    component: SalesDeckAIAdoption,
     showInAdmin: true,
   },
   {
