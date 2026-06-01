@@ -263,7 +263,6 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
   const steps = [
     { k: "LOCK", h: "Bind the task to a playbook", v: "Intent is matched to the company's versioned way of doing the work." },
     { k: "COMPILE", h: "Load the right standards", v: "Policies, procedures, decision rules and approved data are compiled fresh for that single call." },
-    // (unchanged)
     { k: "SIGN", h: "Issue a replayable receipt", v: "Every output carries the evidence needed to audit, approve and improve the decision." },
   ];
   return (
