@@ -6,6 +6,7 @@ import FactoryDeck from "@/pages/FactoryDeck";
 import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import SeedPitchDeckSkeptic from "@/pages/SeedPitchDeckSkeptic";
 import SeedPitchDeckLens from "@/pages/SeedPitchDeckLens";
+import SeedPitchDeckInvestor from "@/pages/SeedPitchDeckInvestor";
 import InsuranceDeck from "@/pages/InsuranceDeck";
 import InsuranceUnderwritingDeck from "@/pages/InsuranceUnderwritingDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
