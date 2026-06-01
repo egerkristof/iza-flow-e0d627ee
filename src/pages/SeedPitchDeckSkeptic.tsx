@@ -601,7 +601,11 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
-      <ContextThreadStrip active="efficiency" />
+      <LensRibbon
+        axis="efficiency"
+        market="Mark up tokens. Charge per seat. Hope retention holds."
+        operator="Price the accountable work unit. Token cost is a pass-through inside a 90% margin layer."
+      />
     </Slide>
   );
 }
