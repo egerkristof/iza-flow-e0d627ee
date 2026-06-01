@@ -273,6 +273,116 @@ function VizFactoryLine() {
   );
 }
 
+// ─── S05 · concrete walk-through ────────────────────────────────────────────
+// Shows ONE real request travelling through the 4 stations, producing a receipt.
+// Designed so a zero-context reader understands what LIZA does in 5 seconds.
+function VizFactoryWalkthrough() {
+  const stations = [
+    {
+      n: "01",
+      k: "LOCK",
+      icon: Lock,
+      what: "Pick the company's approved way of doing this work.",
+      shows: "Playbook: AEC-PROP v3.2",
+      meta: "owner · M. Schäfer · expires 2026-Q1",
+    },
+    {
+      n: "02",
+      k: "COMPILE",
+      icon: Cog,
+      what: "Assemble only what this one call needs.",
+      shows: "12 standards · 4 prior receipts · current pricing",
+      meta: "no blind RAG dump · cost capped before the call",
+    },
+    {
+      n: "03",
+      k: "SIGN",
+      icon: FileCheck2,
+      what: "Bind the output to a signed, replayable receipt.",
+      shows: "model · claude-3.5 · approver · M. Schäfer · 14:02",
+      meta: "hash of inputs, outputs and policy version",
+    },
+    {
+      n: "04",
+      k: "LEARN",
+      icon: RefreshCw,
+      what: "Feed the correction back into the playbook.",
+      shows: "Δ 'cooling load assumption' · pushed to v3.3",
+      meta: "next call inherits it · the corpus compounds",
+    },
+  ];
+
+  return (
+    <div className="w-full flex flex-col gap-5">
+      {/* TOP ROW · the worked example, end-to-end */}
+      <div className="grid grid-cols-[1fr_3.4fr_1.2fr] gap-5 items-stretch">
+        {/* INPUT */}
+        <div className="rounded-xl p-5 flex flex-col justify-center"
+          style={{ background: CARD_ALT, border: `1px dashed ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>Input</p>
+          <p className="font-black mt-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2 }}>
+            "Draft a proposal for the Munich school project."
+          </p>
+          <p className="mt-3 font-mono" style={{ fontSize: 11, color: MUTED }}>
+            sender · project lead<br/>
+            channel · workbook · 14:01
+          </p>
+        </div>
+
+        {/* 4 STATIONS */}
+        <div className="relative">
+          <div className="grid grid-cols-4 gap-3 relative z-10 h-full">
+            {stations.map((s) => {
+              const Icon = s.icon;
+              return (
+                <div key={s.k} className="rounded-xl p-4 flex flex-col"
+                  style={{ background: BG, border: `2px solid hsl(${GREEN} / 0.4)`, boxShadow: `0 0 18px hsl(${GREEN} / 0.08)` }}>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="font-mono" style={{ fontSize: 10, color: SUBTLE, letterSpacing: "0.22em" }}>{s.n}</p>
+                    <div className="rounded-full flex items-center justify-center"
+                      style={{ width: 32, height: 32, background: `hsl(${GREEN} / 0.1)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                      <Icon size={16} style={{ color: `hsl(${GREEN})` }} />
+                    </div>
+                  </div>
+                  <p className="font-black" style={{ fontSize: 20, color: TEXT, letterSpacing: "0.04em", lineHeight: 1 }}>{s.k}</p>
+                  <p className="mt-2" style={{ fontSize: 12, color: MUTED, lineHeight: 1.3 }}>{s.what}</p>
+                  <div className="mt-3 pt-3 flex-1" style={{ borderTop: `1px solid hsl(${GREEN} / 0.2)` }}>
+                    <p className="font-mono" style={{ fontSize: 10, color: `hsl(${GREEN})`, letterSpacing: "0.16em" }}>WHAT IT EMITS</p>
+                    <p className="font-mono mt-1" style={{ fontSize: 11, color: TEXT, lineHeight: 1.35 }}>{s.shows}</p>
+                    <p className="font-mono mt-1.5" style={{ fontSize: 10, color: SUBTLE, lineHeight: 1.35 }}>{s.meta}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* OUTPUT — the receipt */}
+        <div className="rounded-xl p-5 flex flex-col justify-center"
+          style={{ background: `hsl(${GREEN} / 0.08)`, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 22px hsl(${GREEN} / 0.18)` }}>
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
+          <p className="font-black mt-2" style={{ fontSize: 17, color: TEXT, lineHeight: 1.2 }}>
+            Signed proposal<br/>+ receipt
+          </p>
+          <p className="mt-3 font-mono" style={{ fontSize: 11, color: MUTED, lineHeight: 1.5 }}>
+            replay anytime<br/>
+            policy + data + model<br/>
+            + approver, hashed
+          </p>
+        </div>
+      </div>
+
+      {/* feedback loop arrow under the row */}
+      <div className="flex items-center justify-center gap-4 font-mono uppercase tracking-[0.24em] -mt-1"
+        style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
+        <span style={{ color: SUBTLE }}>04 LEARN</span>
+        <span>↻ feeds the next call's 01 LOCK</span>
+        <span style={{ color: SUBTLE }}>· the corpus is the asset</span>
+      </div>
+    </div>
+  );
+}
+
 // ─── S06 · crossing curves ──────────────────────────────────────────────────
 function VizCrossingCurves() {
   return (
