@@ -657,6 +657,25 @@ function S01Cover({ n, t }: { n: number; t: number }) {
         <p className="mt-6 font-mono uppercase tracking-[0.3em] relative z-10" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>
           Seed · €2M · For investors past the demo
         </p>
+        {/* Reading key — explains the two-tone grammar used across the deck */}
+        <div className="mt-16 relative z-10 rounded-2xl px-8 py-5 flex items-center gap-10"
+          style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.12)`, backdropFilter: "blur(6px)" }}>
+          <p className="font-mono uppercase tracking-[0.32em]" style={{ fontSize: 11, color: "hsl(0 0% 70%)" }}>
+            How to read this deck
+          </p>
+          <div className="flex items-center gap-3">
+            <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${RED})` }} />
+            <p style={{ fontSize: 14, color: "hsl(0 0% 85%)" }}>
+              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Market lens</span> — how the room currently frames AI
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${GREEN})`, boxShadow: `0 0 10px hsl(${GREEN} / 0.6)` }} />
+            <p style={{ fontSize: 14, color: "hsl(0 0% 85%)" }}>
+              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Operator lens</span> — how it must work inside a regulated enterprise
+            </p>
+          </div>
+        </div>
       </div>
     </Shell>
   );
