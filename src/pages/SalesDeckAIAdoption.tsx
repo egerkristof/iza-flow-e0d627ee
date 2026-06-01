@@ -73,8 +73,9 @@ function VizAdoptionScorecard() {
 
 // Funnel: where rollouts die today
 function VizRolloutFunnel() {
+  const SLATE = "215 20% 28%";
   const stages = [
-    { label: "Licences bought",     count: "10,000 seats", pct: 100, color: SUBTLE },
+    { label: "Licences bought",     count: "10,000 seats", pct: 100, color: SLATE },
     { label: "Anyone uses weekly",  count: "~1,500",       pct: 15,  color: GOLD },
     { label: "Pilots launched",     count: "14 projects",  pct: 8,   color: GOLD },
     { label: "In real production",  count: "2 projects",   pct: 2,   color: RED },
