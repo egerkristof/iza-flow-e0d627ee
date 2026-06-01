@@ -578,6 +578,11 @@ function S07LabObjection({ n, t }: { n: number; t: number }) {
           Claude can be inside the workflow. It cannot credibly certify the workflow for every other model, department and regulator.
         </p>
       </div>
+      <LensRibbon
+        axis="audit"
+        market="Anthropic and OpenAI will ship this feature next quarter."
+        operator="No regulator accepts the vendor being audited as the auditor. The control layer must be neutral."
+      />
     </Slide>
   );
 }
