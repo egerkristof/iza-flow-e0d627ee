@@ -258,6 +258,99 @@ function SContextExplosion({ n, t }: { n: number; t: number }) {
   );
 }
 
+// ─── 03c · INVESTOR BLIND SPOT (operator-side evidence) ─────────────────────
+// The context-explosion is not a LIZA thesis. Enterprise data leaders are
+// already writing about it publicly. This slide turns that into an investor
+// problem: the venture market is grading chat UIs while operators race to
+// build the governed semantic / control layer that LIZA is the productised
+// vertical version of.
+function SInvestorBlindSpot({ n, t }: { n: number; t: number }) {
+  const investorView = [
+    { h: "Chat UI", v: "Pretty, demoable, undifferentiated." },
+    { h: "Model wrapper", v: "Anyone can build it in a weekend." },
+    { h: "Foundation labs", v: "Will absorb it anyway." },
+  ];
+  const operatorView = [
+    { h: "Semantic layer", v: "Encoded, governed, machine-readable business definitions." },
+    { h: "Federated data products", v: "Domain teams own definitions. A central platform governs them." },
+    { h: "Metric registry & owners", v: "Every metric has a named owner, validated SQL, review cadence, audit trail." },
+    { h: "Agents query the layer", v: "AI runs against governed definitions. Reactive dashboards get wound down." },
+  ];
+  const signals = [
+    { v: "5×",   l: "decision-consumers served per analyst FTE in 12 months" },
+    { v: "11% → 330%", l: "ROIC trajectory once the layer compounds" },
+    { v: "≈0",  l: "marginal cost to serve the next decision-maker" },
+  ];
+  return (
+    <Slide section="Investor blind spot" n={n} total={t}>
+      <div className="absolute inset-0 px-32 pt-36 pb-28 flex flex-col">
+        <h2 className="font-black mb-3" style={{ fontSize: 58, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          Investors are grading chat UIs. <span style={{ color: `hsl(${GREEN})` }}>Operators are racing to build the layer underneath.</span>
+        </h2>
+        <p className="font-mono uppercase tracking-[0.22em] mb-7" style={{ fontSize: 13, color: MUTED }}>
+          Independent industry signal. Data-leadership commentary, May 2026.
+        </p>
+
+        {/* Two columns: market lens vs. operator lens */}
+        <div className="grid grid-cols-[0.85fr_1.15fr] gap-6 mb-6">
+          {/* Market lens (RED) */}
+          <div className="rounded-2xl p-7" style={{ background: `hsl(${RED} / 0.045)`, border: `1px solid hsl(${RED} / 0.28)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 12, color: `hsl(${RED})` }}>What the venture market evaluates</p>
+            <p className="font-black mb-5" style={{ fontSize: 26, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              The visible product. The hype surface.
+            </p>
+            <div className="flex flex-col gap-3">
+              {investorView.map((r) => (
+                <div key={r.h} className="rounded-lg px-4 py-3 flex items-baseline gap-3" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+                  <span className="font-mono font-black" style={{ fontSize: 13, color: `hsl(${RED})`, minWidth: 130 }}>{r.h}</span>
+                  <span style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{r.v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Operator lens (GREEN) — directly mirrors the article's future-state org */}
+          <div className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.38)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What data leaders are quietly building</p>
+            <p className="font-black mb-5" style={{ fontSize: 26, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              The governed layer between AI and the business.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              {operatorView.map((r) => (
+                <div key={r.h} className="rounded-lg px-4 py-3" style={{ background: BG, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+                  <p className="font-black mb-1" style={{ fontSize: 15, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.01em" }}>{r.h}</p>
+                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.35 }}>{r.v}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Signals strip + LIZA framing */}
+        <div className="grid grid-cols-[1.1fr_0.9fr] gap-6">
+          <div className="rounded-xl p-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>Operator-side signals already on the record</p>
+            <div className="grid grid-cols-3 gap-3">
+              {signals.map((s) => (
+                <div key={s.l}>
+                  <p className="font-black" style={{ fontSize: 28, lineHeight: 1.0, color: `hsl(${GREEN})`, letterSpacing: "-0.03em" }}>{s.v}</p>
+                  <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.3, marginTop: 4 }}>{s.l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-xl p-5" style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>The LIZA position</p>
+            <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>
+              Every enterprise needs this layer. Most will not staff a curator guild to build it from scratch. LIZA OS ships it as a product, vertical by vertical, with the receipts and ownership model already wired in.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Slide>
+  );
+}
+
 // ─── 04 · SOLUTION UNIT ─────────────────────────────────────────────────────
 function S04ProductUnit({ n, t }: { n: number; t: number }) {
   const steps = [
