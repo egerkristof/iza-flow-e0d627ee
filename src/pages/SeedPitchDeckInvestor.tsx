@@ -21,7 +21,7 @@ import {
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ─── Chrome ──────────────────────────────────────────────────────────────────
-function Chrome({ section, n, total, dark = false }: { section: string; n: number; total: number; dark?: boolean }) {
+export function Chrome({ section, n, total, dark = false, footerLeft, footerRight }: { section: string; n: number; total: number; dark?: boolean; footerLeft?: string; footerRight?: string }) {
   const c = dark ? "hsl(0 0% 60%)" : SUBTLE;
   return (
     <>
@@ -32,21 +32,22 @@ function Chrome({ section, n, total, dark = false }: { section: string; n: numbe
         {String(n).padStart(2, "0")} / {String(total).padStart(2, "0")}
       </div>
       <div className="absolute bottom-10 left-20 font-mono uppercase tracking-[0.28em]" style={{ fontSize: 10, color: c }}>
-        LIZA OS · Seed · Confidential
+        {footerLeft ?? "LIZA OS · Seed · Confidential"}
       </div>
       <div className="absolute bottom-10 right-20 font-mono uppercase tracking-[0.28em]" style={{ fontSize: 10, color: c }}>
-        For investors past the demo
+        {footerRight ?? "For investors past the demo"}
       </div>
     </>
   );
 }
 
-function Shell({ section, n, total, children, dark = false }: {
+export function Shell({ section, n, total, children, dark = false, footerLeft, footerRight }: {
   section: string; n: number; total: number; children: React.ReactNode; dark?: boolean;
+  footerLeft?: string; footerRight?: string;
 }) {
   return (
     <div className="w-full h-full relative" style={{ background: dark ? "hsl(222 25% 8%)" : BG }}>
-      <Chrome section={section} n={n} total={total} dark={dark} />
+      <Chrome section={section} n={n} total={total} dark={dark} footerLeft={footerLeft} footerRight={footerRight} />
       {children}
     </div>
   );
