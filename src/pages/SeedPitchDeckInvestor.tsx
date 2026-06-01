@@ -535,7 +535,7 @@ function VizAskBar() {
 // ═════════════════════════════════════════════════════════════════════════════
 
 type LensItem = { h: string; v: string };
-type LensSide = { kicker?: string; headline: string; viz: React.ReactNode; items: LensItem[] };
+type LensSide = { kicker?: string; headline: string; viz: React.ReactNode; vizLabel?: string; items: LensItem[] };
 type LensPayload = { market: LensSide; operator: LensSide & { signal?: string } };
 
 function LensSlide({
@@ -572,6 +572,11 @@ function LensSlide({
             <p className="font-black mb-4" style={{ fontSize: 22, color: MUTED, lineHeight: 1.15, letterSpacing: "-0.018em" }}>
               {payload.market.headline}
             </p>
+            {payload.market.vizLabel && (
+              <p className="font-mono uppercase tracking-[0.22em] mb-2 text-center" style={{ fontSize: 10, color: SUBTLE }}>
+                {payload.market.vizLabel}
+              </p>
+            )}
             {/* viz */}
             <div className="flex-1 flex items-center justify-center min-h-0 mb-4">
               {payload.market.viz}
@@ -601,6 +606,11 @@ function LensSlide({
             <p className="font-black mb-5" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.022em" }}>
               {payload.operator.headline}
             </p>
+            {payload.operator.vizLabel && (
+              <p className="font-mono uppercase tracking-[0.22em] mb-2 text-center" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+                {payload.operator.vizLabel}
+              </p>
+            )}
             {/* viz */}
             <div className="flex-1 flex items-center justify-center min-h-0 mb-4">
               {payload.operator.viz}
