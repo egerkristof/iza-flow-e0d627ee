@@ -159,6 +159,7 @@ const App = () => (
             <Route path="/seed-investor" element={<Navigate to="/investor" replace />} />
             <Route path="/pitch" element={<Navigate to="/sales" replace />} />
             <Route path="/investor-remred" element={<Navigate to="/space" replace />} />
+            <Route path="/sales-ai-adoption" element={<Navigate to="/getstarted" replace />} />
 
             {/* Decks */}
             {presentationRoutes.map((presentation) => {
