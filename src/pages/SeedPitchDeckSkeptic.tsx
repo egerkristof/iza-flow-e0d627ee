@@ -438,7 +438,11 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
-      <ContextThreadStrip active="compounding" />
+      <LensRibbon
+        axis="compounding"
+        market="A clone with the same model and a weekend will catch up."
+        operator="The corpus, the receipt graph and the approval history compound. They cannot be cloned."
+      />
     </Slide>
   );
 }
