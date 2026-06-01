@@ -60,13 +60,6 @@ function S01Cover({ n, t }: { n: number; t: number }) {
         <p className="mt-12" style={{ fontSize: 31, lineHeight: 1.35, color: "hsl(0 0% 76%)", maxWidth: 1280 }}>
           LIZA OS sits between Claude, GPT, Gemini and regulated enterprise workflows. It turns AI outputs into governed decisions with standards, evidence and receipts.
         </p>
-        <div className="mt-14 flex items-center gap-3 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 13, color: "hsl(0 0% 70%)" }}>
-          <span className="px-4 py-2 rounded-full" style={{ background: "hsl(0 0% 100% / 0.06)", border: "1px solid hsl(0 0% 100% / 0.18)" }}>Prompt</span>
-          <span style={{ color: "hsl(0 0% 45%)" }}>→</span>
-          <span className="px-4 py-2 rounded-full" style={{ background: `hsl(${GREEN} / 0.12)`, border: `1px solid hsl(${GREEN} / 0.45)`, color: `hsl(${GREEN})` }}>LIZA OS · control layer</span>
-          <span style={{ color: "hsl(0 0% 45%)" }}>→</span>
-          <span className="px-4 py-2 rounded-full" style={{ background: "hsl(0 0% 100% / 0.06)", border: "1px solid hsl(0 0% 100% / 0.18)" }}>Governed decision</span>
-        </div>
       </div>
     </Slide>
   );
@@ -74,61 +67,30 @@ function S01Cover({ n, t }: { n: number; t: number }) {
 
 // ─── 02 · INVESTOR LENS ─────────────────────────────────────────────────────
 function S02InvestorLens({ n, t }: { n: number; t: number }) {
-  const belowWater = [
-    { k: "Approved method", v: "The company's versioned playbook shaped the answer, not the model's training data. CIOs can finally point to the standard that was applied." },
-    { k: "Approval", v: "A named risk officer signed off the flagged section, with timestamp and scope. The CDO has a single source of who approved what." },
-    { k: "Model", v: "Multiple models can run, get compared and swapped without losing the audit trail. The CTO keeps optionality across vendors." },
-    { k: "Safety", v: "PII redaction, jurisdictional rules and data scope enforced before the call. The CISO gets a controlled perimeter, not a policy PDF." },
-    { k: "Cost", v: "Model spend tied to the work unit produced. The CFO finally sees AI as a line item with a denominator, not a runaway invoice." },
+  const rows = [
+    { k: "What you see first", v: "A user asks an AI system to do work." },
+    { k: "What actually matters", v: "The company can prove which standard shaped the answer, who approved it, which model ran it and why it was safe to ship." },
+    { k: "What LIZA sells", v: "That proof layer, packaged as software and priced per governed decision." },
   ];
   return (
     <Slide section="Investor lens" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
-        <h2 className="font-black mb-4" style={{ fontSize: 60, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Every AI pitch sells one chat session. <span style={{ color: `hsl(${GREEN})` }}>We sell the foundation that makes thousands of them scale.</span>
+        <h2 className="font-black mb-4" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
+          Do not evaluate us as <span style={{ color: `hsl(${RED})` }}>another chatbot.</span>
         </h2>
-
-        {/* Above the waterline — what every AI pitch shows */}
-        <div className="mt-8 rounded-2xl px-7 py-5 mb-2" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>What every investor has seen 100 times · a wrapper around one big LLM, one prompt at a time</p>
-          <div className="flex items-stretch gap-3 font-mono" style={{ fontSize: 14 }}>
-            <div className="flex-1 px-4 py-3 rounded-lg" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED }}>
-              <span className="uppercase tracking-[0.2em] block mb-1" style={{ fontSize: 10, color: SUBTLE }}>Prompt</span>
-              "Draft a Q4 underwriting risk memo for client Acme."
+        <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
+          The product is not the text box. The product is production control.
+        </p>
+        <div className="grid grid-cols-3 gap-6">
+          {rows.map((r, i) => (
+            <div key={r.k} className="rounded-2xl p-8" style={{ background: i === 2 ? `hsl(${GREEN} / 0.05)` : CARD_ALT, border: i === 2 ? `1px solid hsl(${GREEN} / 0.35)` : `1px solid ${CHROME_BORDER}` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 13, color: i === 2 ? `hsl(${GREEN})` : SUBTLE }}>{r.k}</p>
+              <p className="font-bold" style={{ fontSize: 27, color: TEXT, lineHeight: 1.28, letterSpacing: "-0.02em" }}>{r.v}</p>
             </div>
-            <div className="flex items-center" style={{ color: SUBTLE }}>→</div>
-            <div className="px-4 py-3 rounded-lg flex items-center" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED, fontSize: 13 }}>
-              ChatGPT · Claude · Copilot
-            </div>
-            <div className="flex items-center" style={{ color: SUBTLE }}>→</div>
-            <div className="flex-1 px-4 py-3 rounded-lg" style={{ background: BG, border: `1px solid ${CHROME_BORDER}`, color: MUTED }}>
-              <span className="uppercase tracking-[0.2em] block mb-1" style={{ fontSize: 10, color: SUBTLE }}>Answer</span>
-              "Here is the memo. 3 risks identified."
-            </div>
-          </div>
+          ))}
         </div>
-
-        {/* The waterline */}
-        <div className="relative h-5 my-1">
-          <div className="absolute inset-x-0 top-1/2 h-px" style={{ background: `hsl(${GREEN} / 0.45)` }} />
-          <span className="absolute right-0 -top-1 font-mono uppercase tracking-[0.22em] px-2" style={{ fontSize: 11, color: `hsl(${GREEN})`, background: BG }}>waterline</span>
-        </div>
-
-        {/* Below the waterline — what LIZA sells */}
-        <div className="rounded-2xl px-7 py-6" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-          <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What the CFO, CIO, CDO, CTO and CISO need before they let one chat session become ten thousand · this is what LIZA sells</p>
-          <div className="grid grid-cols-5 gap-4">
-            {belowWater.map((b) => (
-              <div key={b.k} className="rounded-xl p-4" style={{ background: BG, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-                <p className="font-black mb-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{b.k}</p>
-                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{b.v}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <p className="mt-7 font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35 }}>
-          Every other AI company is selling the prompt. LIZA is selling the foundation that lets a company run AI at scale: approved methods, named approvals, model optionality, enforced safety and a cost per work unit.
+        <p className="mt-10 font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35, maxWidth: 1360 }}>
+          Weekend projects make AI look useful. LIZA makes AI accountable enough for regulated work.
         </p>
       </div>
     </Slide>
@@ -173,10 +135,9 @@ function S03Problem({ n, t }: { n: number; t: number }) {
 // ─── 04 · SOLUTION UNIT ─────────────────────────────────────────────────────
 function S04ProductUnit({ n, t }: { n: number; t: number }) {
   const steps = [
-    { k: "BIND", h: "Bind the prompt to a playbook", v: "The user's intent is matched to the company's versioned way of doing the work before any model runs." },
-    { k: "EXECUTE", h: "Run the prompt with the right standards", v: "Policies, procedures, decision rules and approved data are compiled fresh into the call. The model executes against the standard, not against its training data." },
-    { k: "SIGN", h: "Finalise an auditable output", v: "Every output ships with the evidence behind it: playbook version, data, model, approver and cost. Replayable on demand." },
-    { k: "LEARN", h: "Feed what's new back into the standard", v: "Anything new learned in the session updates the playbook. The next prompt starts from a sharper standard." },
+    { k: "LOCK", h: "Bind the task to a playbook", v: "Intent is matched to the company's versioned way of doing the work." },
+    { k: "COMPILE", h: "Load the right standards", v: "Policies, procedures, decision rules and approved data are compiled fresh for that single call." },
+    { k: "SIGN", h: "Issue a replayable receipt", v: "Every output carries the evidence needed to audit, approve and improve the decision." },
   ];
   return (
     <Slide section="Solution" n={n} total={t}>
@@ -185,46 +146,23 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
           LIZA turns each AI task into <span style={{ color: `hsl(${GREEN})` }}>a governed decision.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          One unit. Four steps. A closed loop, model agnostic by design.
+          One unit. Three controls. Model agnostic by design.
         </p>
-        <div className="relative grid grid-cols-4 gap-4 mb-2">
+        <div className="grid grid-cols-3 gap-6 mb-8">
           {steps.map((s, i) => (
-            <div key={s.k} className="rounded-2xl p-6" style={{ background: `hsl(${GREEN} / 0.045)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="font-mono font-black flex items-center justify-center rounded-full" style={{ width: 30, height: 30, fontSize: 13, color: BG, background: `hsl(${GREEN})` }}>{i + 1}</span>
-                <span className="font-mono font-black uppercase tracking-[0.22em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>{s.k}</span>
+            <div key={s.k} className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.045)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+              <div className="flex items-center gap-4 mb-5">
+                <span className="font-mono font-black flex items-center justify-center rounded-full" style={{ width: 34, height: 34, fontSize: 15, color: BG, background: `hsl(${GREEN})` }}>{i + 1}</span>
+                <span className="font-mono font-black uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>{s.k}</span>
               </div>
-              <p className="font-black mb-3" style={{ fontSize: 22, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{s.h}</p>
-              <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.42 }}>{s.v}</p>
+              <p className="font-black mb-4" style={{ fontSize: 32, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.025em" }}>{s.h}</p>
+              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.42 }}>{s.v}</p>
             </div>
           ))}
         </div>
-
-        {/* Feedback loop visualization: arrow from LEARN back to BIND */}
-        <div className="relative mt-6 mb-4" style={{ height: 140 }}>
-          <svg viewBox="0 0 1000 140" className="w-full h-full" preserveAspectRatio="none">
-            <defs>
-              <marker id="loopArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
-                <path d="M0,0 L10,5 L0,10 z" fill={`hsl(${GREEN})`} />
-              </marker>
-            </defs>
-            {/* curved arrow from the LEARN card (right) back up to the BIND card (left) */}
-            <path d="M 920 5 C 940 130, 60 130, 80 5" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="2.5" strokeDasharray="7 6" markerEnd="url(#loopArrow)" />
-          </svg>
-          <div className="absolute left-1/2 -translate-x-1/2 px-6 py-3 rounded-full flex items-center gap-3"
-               style={{ top: 60, background: BG, border: `1.5px solid hsl(${GREEN})` }}>
-            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Every session</span>
-            <span style={{ color: SUBTLE }}>→</span>
-            <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>sharpens the standard</span>
-            <span style={{ color: SUBTLE }}>→</span>
-            <span className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>next prompt starts smarter</span>
-          </div>
-        </div>
-
-        <div className="rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded" style={{ fontSize: 11, color: `hsl(${GOLD})`, background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>Example</span>
-          <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>
-            <span style={{ color: TEXT, fontWeight: 700 }}>Risk memo.</span> Prompt bound to the firm's underwriting playbook. Executed with this quarter's policy. Signed with model, approver, evidence and cost. What the analyst learned about the new client segment is fed back into the playbook for the next memo.
+        <div className="rounded-xl px-8 py-6" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+          <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
+            The receipt feeds back into the standards layer. The next decision is not just faster. It is better governed.
           </p>
         </div>
       </div>
@@ -234,52 +172,44 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
 
 // ─── 05 · WHY NOW ───────────────────────────────────────────────────────────
 function S05WhyNow({ n, t }: { n: number; t: number }) {
-  const forces = [
-    {
-      k: "01",
-      tag: "Spend",
-      h: "The AI line item keeps growing",
-      v: "More teams, more agents, more workflows hit production every quarter. The bill goes up even as token prices go down. Finance now needs a denominator: cost per useful, accountable outcome.",
-    },
-    {
-      k: "02",
-      tag: "Audit",
-      h: "Compliance is catching up fast",
-      v: "EU AI Act, internal audit, sector regulators. Every AI-touched output must be explainable, replayable and owned. Screenshots of a chat transcript no longer count as evidence.",
-    },
-    {
-      k: "03",
-      tag: "Trust",
-      h: "The CRO will not sign without proof",
-      v: "No risk, legal or quality leader ships AI into regulated work without proof of method, approver, model and data. Without that proof, pilots stay pilots and never reach production scale.",
-    },
+  const moves = [
+    { label: "Token price", value: "Down", color: RED },
+    { label: "AI usage", value: "Up", color: GOLD },
+    { label: "Governance need", value: "Explodes", color: GREEN },
   ];
   return (
     <Slide section="Why now" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-4" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          AI spend is rising. <span style={{ color: `hsl(${GREEN})` }}>So is the bill for not governing it.</span>
+          Tokens get cheaper. <span style={{ color: `hsl(${GREEN})` }}>AI work gets bigger.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          Three forces are hitting the enterprise at the same time. Each one alone forces the buy. Together they make it urgent.
+          The spend moves from raw model calls to the control layer around them.
         </p>
-        <div className="grid grid-cols-3 gap-6 mb-8">
-          {forces.map((f) => (
-            <div key={f.k} className="rounded-2xl p-8 flex flex-col" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.32)` }}>
-              <div className="flex items-center justify-between mb-6">
-                <span className="font-mono font-black" style={{ fontSize: 44, color: `hsl(${GREEN})`, letterSpacing: "-0.03em", lineHeight: 1 }}>{f.k}</span>
-                <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded-full" style={{ fontSize: 12, color: `hsl(${GREEN})`, background: BG, border: `1px solid hsl(${GREEN} / 0.4)` }}>{f.tag}</span>
-              </div>
-              <p className="font-black mb-4" style={{ fontSize: 28, color: TEXT, lineHeight: 1.12, letterSpacing: "-0.025em" }}>{f.h}</p>
-              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.45 }}>{f.v}</p>
+        <div className="grid grid-cols-3 gap-6 mb-9">
+          {moves.map((m) => (
+            <div key={m.label} className="rounded-2xl p-8 text-center" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 13, color: SUBTLE }}>{m.label}</p>
+              <p className="font-black" style={{ fontSize: 64, lineHeight: 0.95, color: `hsl(${m.color})`, letterSpacing: "-0.04em" }}>{m.value}</p>
             </div>
           ))}
         </div>
-        <div className="rounded-xl px-7 py-5 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded" style={{ fontSize: 11, color: `hsl(${GOLD})`, background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>Net effect</span>
-          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.4 }}>
-            Spend, audit and trust converge on the same missing piece: a control layer that turns raw AI output into governed, defensible work. The window to own that layer is now.
-          </p>
+        <div className="grid grid-cols-[1.1fr_0.9fr] gap-6 items-stretch">
+          <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>LIZA captures the layer in between.</p>
+            <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.4 }}>
+              Foundation models commoditise intelligence. Enterprises still need policy, audit, routing, receipts and improvement loops around every important output.
+            </p>
+          </div>
+          <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <div className="h-36 relative mt-2">
+              <div className="absolute left-2 right-2 bottom-8 h-px" style={{ background: CHROME_BORDER }} />
+              <div className="absolute left-2 bottom-10 w-[42%] h-2 rounded-full" style={{ background: `hsl(${RED} / 0.45)`, transform: "rotate(-17deg)", transformOrigin: "left center" }} />
+              <div className="absolute left-2 bottom-8 w-[78%] h-2 rounded-full" style={{ background: `hsl(${GREEN} / 0.9)`, transform: "rotate(-20deg)", transformOrigin: "left center" }} />
+              <p className="absolute left-0 bottom-0 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>Model cost</p>
+              <p className="absolute right-0 top-0 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Governed work</p>
+            </div>
+          </div>
         </div>
       </div>
     </Slide>
@@ -289,26 +219,25 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
 // ─── 06 · WEEKEND OBJECTION ─────────────────────────────────────────────────
 function S06WeekendObjection({ n, t }: { n: number; t: number }) {
   const rows = [
-    { left: "Makes one analyst faster", right: "Makes the whole function execute the same way" },
-    { left: "One person's clever prompt", right: "The company's approved method, versioned and owned" },
-    { left: "PDFs dropped in a vector store", right: "Typed standards with ownership, expiry, change control" },
-    { left: "A helpful answer this time", right: "A signed receipt that survives audit and handover" },
-    { left: "Maintained by the user", right: "Closed loop where every receipt sharpens the standard" },
+    { left: "Chat UI plus model API", right: "Workflow control across roles, approvals and tools" },
+    { left: "PDFs in a vector store", right: "Typed standards, ownership, expiry, versioning and change control" },
+    { left: "A clever system prompt", right: "Playbook compilation on every governed decision" },
+    { left: "Helpful answer", right: "Signed receipt that survives audit and handover" },
+    { left: "Manual maintenance", right: "Closed loop where receipts sharpen the standard" },
   ];
   return (
     <Slide section="Objection 01" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Most AI tools improve <span style={{ color: `hsl(${RED})` }}>individual artisanal work.</span><br/>
-          We certify <span style={{ color: `hsl(${GREEN})` }}>organisation-wide AI execution.</span>
+          A weekend project automates text. <span style={{ color: `hsl(${RED})` }}>It does not certify work.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
-          A weekend project helps one person. A control layer holds an entire function to one standard.
+          The visible demo is easy. The production burden is the company.
         </p>
         <div className="rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}` }}>
           <div className="grid grid-cols-2" style={{ background: CARD_ALT }}>
-            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Artisanal AI · individual work</div>
-            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, borderLeft: `1px solid ${CHROME_BORDER}` }}>Certified AI · organisation execution</div>
+            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Weekend demo</div>
+            <div className="px-7 py-4 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, borderLeft: `1px solid ${CHROME_BORDER}` }}>Production system</div>
           </div>
           {rows.map((r, i) => (
             <div key={r.left} className="grid grid-cols-2" style={{ borderTop: `1px solid ${CHROME_BORDER}`, background: i % 2 === 1 ? CARD_ALT : "transparent" }}>
@@ -331,35 +260,20 @@ function S06WeekendObjection({ n, t }: { n: number; t: number }) {
 // ─── 07 · LAB OBJECTION ─────────────────────────────────────────────────────
 function S07LabObjection({ n, t }: { n: number; t: number }) {
   const reasons = [
-    { h: "Business model", v: "LLM providers sell token volume; their incentive is more generation, not less. LIZA monetises governed decisions, so the more work is certified, the more value the buyer gets." },
-    { h: "Neutrality", v: "Enterprises will run several models and switch them often. LIZA is the model-agnostic layer that scores, routes and certifies output across every vendor — something no single LLM provider can credibly do for its competitors." },
-    { h: "Sovereignty", v: "Company standards, decision rules and receipts are operational IP and must not flow into a vendor's training set. LIZA keeps that corpus inside the customer's perimeter, owned and portable." },
-    { h: "Accountability", v: "A model can generate an answer; it cannot sign for it. LIZA produces the auditable receipt — policy version, approver, data lineage, cost — that turns AI output into a defensible decision." },
+    { h: "Business model", v: "Labs sell token volume. LIZA governs decisions that sit on top of any token supplier." },
+    { h: "Neutrality", v: "Enterprises will run several models. The control layer cannot be owned by one of the vendors being controlled." },
+    { h: "Sovereignty", v: "Company standards, decision rules and receipts are operational IP. Buyers need to own that record." },
+    { h: "Accountability", v: "The model can generate. It cannot become the customer's auditable operating system." },
   ];
   return (
     <Slide section="Objection 02" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          LLM providers are suppliers. <span style={{ color: `hsl(${GREEN})` }}>Not the control layer.</span>
+          Foundation labs are suppliers. <span style={{ color: `hsl(${GREEN})` }}>Not the control layer.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
           They can add features. They cannot own the customer's governance position.
         </p>
-        {/* Lane diagram: LLM providers lane vs control lane */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="rounded-xl px-6 py-4 flex items-center justify-between" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>LLM provider lane</p>
-            <div className="flex items-center gap-2 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: MUTED }}>
-              <span className="px-3 py-1 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>Claude</span>
-              <span className="px-3 py-1 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>GPT</span>
-              <span className="px-3 py-1 rounded-full" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>Gemini</span>
-            </div>
-          </div>
-          <div className="rounded-xl px-6 py-4 flex items-center justify-between" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Governance lane</p>
-            <span className="px-3 py-1 rounded-full font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, background: BG, border: `1px solid hsl(${GREEN} / 0.4)` }}>LIZA OS · model-agnostic</span>
-          </div>
-        </div>
         <div className="grid grid-cols-2 gap-5 mb-9">
           {reasons.map((r) => (
             <div key={r.h} className="rounded-2xl p-7" style={{ background: CARD_ALT, borderLeft: `5px solid hsl(${GREEN})` }}>
@@ -369,7 +283,7 @@ function S07LabObjection({ n, t }: { n: number; t: number }) {
           ))}
         </div>
         <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
-          Any LLM can sit inside the workflow. None can credibly certify the workflow for every other model, department and regulator.
+          Claude can be inside the workflow. It cannot credibly certify the workflow for every other model, department and regulator.
         </p>
       </div>
     </Slide>
@@ -378,70 +292,35 @@ function S07LabObjection({ n, t }: { n: number; t: number }) {
 
 // ─── 08 · BUSINESS MODEL ────────────────────────────────────────────────────
 function S08BusinessModel({ n, t }: { n: number; t: number }) {
+  const economics = [
+    { v: "€0.40", l: "average governed decision price" },
+    { v: "€0.04", l: "model plus infra cost at current mix" },
+    { v: "90%+", l: "steady-state gross margin target" },
+  ];
   return (
     <Slide section="Business model" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Tokens get cheap. <span style={{ color: `hsl(${GREEN})` }}>Context gets expensive.</span>
+          We do not sell tokens. <span style={{ color: `hsl(${GREEN})` }}>We sell governed decisions.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
-          The cost of a token keeps falling. The cost of getting the right context into that token is what now decides whether the work is usable.
+          The cheaper tokens become, the more decisions customers run through the control layer.
         </p>
-        <div className="grid grid-cols-[1.2fr_1fr] gap-7 items-stretch">
-          {/* Visualization: token cost line falling, context cost line rising, LIZA captures the gap */}
-          <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 12, color: SUBTLE }}>Cost per usable AI decision · indexed</p>
-            <svg viewBox="0 0 540 300" className="w-full" style={{ height: 300 }}>
-              {/* axes */}
-              <line x1="60" y1="240" x2="510" y2="240" stroke={CHROME_BORDER} strokeWidth="1" />
-              <line x1="60" y1="40" x2="60" y2="240" stroke={CHROME_BORDER} strokeWidth="1" />
-              {/* x labels */}
-              {(["2023", "2025", "2027"] as const).map((year, i) => {
-                const x = 110 + i * 180;
-                return (
-                  <text key={year} x={x} y={260} textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="12" letterSpacing="1.5" fill={SUBTLE}>{year}</text>
-                );
-              })}
-              {/* token cost: falling */}
-              <path d="M 110 90 Q 200 160 290 200 T 470 225" fill="none" stroke={`hsl(${RED} / 0.7)`} strokeWidth="2.5" strokeDasharray="6 4" />
-              {/* context cost: rising */}
-              <path d="M 110 215 Q 200 180 290 130 T 470 60" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="3" />
-              {/* gap shading between the two lines on the right */}
-              <path d="M 290 130 T 470 60 L 470 225 T 290 200 Z" fill={`hsl(${GREEN} / 0.08)`} stroke="none" />
-              {/* end-point dots */}
-              <circle cx="470" cy="225" r="4" fill={`hsl(${RED} / 0.8)`} />
-              <circle cx="470" cy="60" r="5" fill={`hsl(${GREEN})`} />
-              {/* line labels */}
-              <text x="478" y="228" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.2" fill={MUTED}>TOKEN COST</text>
-              <text x="478" y="63" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.2" fill={`hsl(${GREEN})`}>CONTEXT COST</text>
-              {/* LIZA capture band callout */}
-              <g transform="translate(330, 110)">
-                <rect x="0" y="0" width="118" height="26" rx="13" fill={BG} stroke={`hsl(${GREEN} / 0.5)`} />
-                <text x="59" y="17" textAnchor="middle" fontFamily="ui-monospace, monospace" fontSize="10.5" letterSpacing="1.5" fill={`hsl(${GREEN})`}>LIZA CAPTURES THIS</text>
-              </g>
-              {/* legend */}
-              <g>
-                <line x1="70" y1="22" x2="92" y2="22" stroke={`hsl(${RED} / 0.7)`} strokeWidth="2.5" strokeDasharray="6 4" />
-                <text x="100" y="26" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.2" fill={MUTED}>TOKENS · COMMODITY</text>
-                <line x1="290" y1="22" x2="312" y2="22" stroke={`hsl(${GREEN})`} strokeWidth="3" />
-                <text x="320" y="26" fontFamily="ui-monospace, monospace" fontSize="11" letterSpacing="1.2" fill={TEXT}>CONTEXT · RELEVANT, SAFE, EFFICIENT</text>
-              </g>
-            </svg>
-          </div>
-          <div className="flex flex-col gap-5">
-            <div className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-              <p className="font-black mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>LIZA shapes the context.</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.42 }}>
-                Relevant, safe and token-efficient. Every prompt arrives with the right standards, the right data scope and the right guardrails attached.
-              </p>
+        <div className="grid grid-cols-3 gap-6 mb-8">
+          {economics.map((e) => (
+            <div key={e.v} className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <p className="font-black mb-4" style={{ fontSize: 62, lineHeight: 0.95, color: `hsl(${GREEN})`, letterSpacing: "-0.04em" }}>{e.v}</p>
+              <p className="font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.3 }}>{e.l}</p>
             </div>
-            <div className="rounded-2xl p-7" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <p className="font-black mb-3" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>We charge token plus value.</p>
-              <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.42 }}>
-                Tokens pass through at cost. Our margin is the usable, accountable decision the business actually gets out of them.
-              </p>
-            </div>
-          </div>
+          ))}
+        </div>
+        <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p className="font-black mb-4" style={{ fontSize: 34, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>
+            The value anchor is manual labor displaced, not token cost marked up.
+          </p>
+          <p style={{ fontSize: 22, color: MUTED, lineHeight: 1.42 }}>
+            Customers pay for accountable work units: proposals checked, specs drafted, risk memos reviewed, clinical summaries governed. The model cost becomes a pass-through input inside a higher-margin control layer.
+          </p>
         </div>
       </div>
     </Slide>
@@ -450,10 +329,11 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
 
 // ─── 09 · PROOF ─────────────────────────────────────────────────────────────
 function S09Proof({ n, t }: { n: number; t: number }) {
-  const proof = [
-    { k: "Live", h: "First production deployment", v: "A regulated AEC customer is running governed decisions through LIZA today. CTO-sponsored. Details under NDA." },
-    { k: "Encoded", h: "Standards captured", v: "The customer's approved playbooks, procedures and decision rules are encoded as typed standards inside LIZA." },
-    { k: "Compounding", h: "Receipts accumulating", v: "Every signed decision feeds the standards layer. The corpus and the receipt graph grow with use." },
+  const stats = [
+    { v: "1", l: "CTO-sponsored production deployment" },
+    { v: "127", l: "standards encoded inside one AEC customer" },
+    { v: "3,400", l: "signed governed decisions per month" },
+    { v: "62%", l: "drop in time-to-spec" },
   ];
   return (
     <Slide section="Proof" n={n} total={t}>
@@ -462,23 +342,19 @@ function S09Proof({ n, t }: { n: number; t: number }) {
           The wedge is live. <span style={{ color: `hsl(${GREEN})` }}>Not theoretical.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-10" style={{ fontSize: 14, color: MUTED }}>
-          One regulated vertical in production. Anonymized customer reference available on request.
+          One regulated AEC deployment. Anonymized details available under NDA.
         </p>
-        <div className="grid grid-cols-3 gap-6 mb-8">
-          {proof.map((p) => (
-            <div key={p.k} className="rounded-2xl p-7" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <p className="font-mono uppercase tracking-[0.22em] mb-4" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>{p.k}</p>
-              <p className="font-black mb-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.025em" }}>{p.h}</p>
-              <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.42 }}>{p.v}</p>
+        <div className="grid grid-cols-2 gap-6 mb-9">
+          {stats.map((s) => (
+            <div key={s.l} className="rounded-2xl p-8 flex items-baseline gap-7" style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <div className="font-black" style={{ fontSize: 82, lineHeight: 0.9, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", minWidth: 210 }}>{s.v}</div>
+              <p className="font-bold" style={{ fontSize: 21, color: TEXT, lineHeight: 1.35 }}>{s.l}</p>
             </div>
           ))}
         </div>
-        <div className="rounded-xl px-7 py-5 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <span className="font-mono uppercase tracking-[0.22em] px-3 py-1.5 rounded" style={{ fontSize: 11, color: `hsl(${GOLD})`, background: `hsl(${GOLD} / 0.1)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>Pattern</span>
-          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4, fontWeight: 700 }}>
+        <p className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
           The first vertical proves the pattern: encode standards, govern decisions, price the work unit, expand into adjacent regulated functions.
         </p>
-        </div>
       </div>
     </Slide>
   );
@@ -493,13 +369,13 @@ function S10Moat({ n, t }: { n: number; t: number }) {
     { k: "04", h: "Trust pattern", v: "A neutral control layer that lets buyers keep model optionality and governance ownership." },
   ];
   return (
-    <Slide section="Our moat" n={n} total={t}>
+    <Slide section="Moat" n={n} total={t}>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <h2 className="font-black mb-3" style={{ fontSize: 66, lineHeight: 1.0, color: TEXT, letterSpacing: "-0.035em" }}>
-          Our moat is not the code. <span style={{ color: `hsl(${GREEN})` }}>It is what compounds inside LIZA.</span>
+          The moat is not code. <span style={{ color: `hsl(${GREEN})` }}>It is accumulated governance.</span>
         </h2>
         <p className="font-mono uppercase tracking-[0.22em] mb-9" style={{ fontSize: 14, color: MUTED }}>
-          Four assets that LIZA accumulates with every customer and every signed decision. A clone can copy screens. It cannot copy these.
+          A clone can copy screens. It cannot copy the controlled corpus and decision history.
         </p>
         <div className="grid grid-cols-2 gap-5">
           {assets.map((a) => (
@@ -528,11 +404,11 @@ function S11Ask({ n, t }: { n: number; t: number }) {
     <Slide section="Seed round" n={n} total={t} dark>
       <div className="absolute inset-0 px-32 flex flex-col justify-center">
         <p className="font-mono uppercase tracking-[0.3em] mb-7" style={{ fontSize: 16, color: `hsl(${GREEN})` }}>
-          We are raising €2M · seed
+          €2M seed | turn one working factory into a repeatable company
         </p>
         <h2 className="font-black mb-10" style={{ fontSize: 112, lineHeight: 0.95, color: "hsl(0 0% 98%)", letterSpacing: "-0.05em" }}>
-          €2M to fund the control layer<br/>
-          <span style={{ color: `hsl(${GREEN})` }}>before it becomes obvious.</span>
+          Fund the control layer<br/>
+          before it becomes obvious.
         </h2>
         <div className="grid grid-cols-3 gap-7 mb-9">
           {uses.map((u) => (
