@@ -446,6 +446,9 @@ function VizValueBar() {
         <p className="font-bold mt-1" style={{ fontSize: 14, color: TEXT }}>
           90%+ gross margin. As token cost falls, margin expands.
         </p>
+        <p className="font-mono mt-2" style={{ fontSize: 11, color: MUTED, lineHeight: 1.45 }}>
+          Derivation: 20-min analyst task @ €70/hr fully loaded ≈ <b style={{ color: TEXT }}>€23</b> displaced. Customer pays <b style={{ color: TEXT }}>€0.40</b> (≈1.6% of value). Model + infra <b style={{ color: TEXT }}>€0.04</b>. Pass-through. ≈ <b style={{ color: `hsl(${GREEN})` }}>95% fully loaded gross margin</b>.
+        </p>
       </div>
     </div>
   );
