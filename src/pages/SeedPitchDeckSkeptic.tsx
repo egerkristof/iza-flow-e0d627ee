@@ -99,6 +99,55 @@ function ContextThreadStrip({ active }: { active: ContextAxis }) {
   );
 }
 
+// ─── Recurring lens ribbon ──────────────────────────────────────────────────
+// The deck's spine. Every body slide carries the same dichotomy in a thin
+// bottom strip: what the market grades vs. what operators are actually
+// building. The current slide's axis of the context explosion lights up on
+// the right so the investor feels one continuous argument.
+function LensRibbon({ market, operator, axis }: { market: string; operator: string; axis: ContextAxis }) {
+  return (
+    <div
+      className="absolute left-20 right-20 bottom-[84px] rounded-xl overflow-hidden"
+      style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}
+    >
+      <div className="grid grid-cols-[1fr_1fr_auto]">
+        {/* Market lens */}
+        <div className="px-6 py-3" style={{ borderRight: `1px solid ${CHROME_BORDER}`, background: `hsl(${RED} / 0.04)` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 10, color: `hsl(${RED})` }}>Market lens</p>
+          <p className="font-bold" style={{ fontSize: 15, color: MUTED, lineHeight: 1.25 }}>{market}</p>
+        </div>
+        {/* Operator lens */}
+        <div className="px-6 py-3" style={{ borderRight: `1px solid ${CHROME_BORDER}`, background: `hsl(${GREEN} / 0.05)` }}>
+          <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Operator lens</p>
+          <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.25 }}>{operator}</p>
+        </div>
+        {/* Axis indicator */}
+        <div className="px-5 py-3 flex items-center gap-2" style={{ minWidth: 280 }}>
+          {AXES.map((a) => {
+            const on = a.id === axis;
+            return (
+              <span
+                key={a.id}
+                className="rounded-full"
+                title={a.short}
+                style={{
+                  width: on ? 10 : 6, height: on ? 10 : 6,
+                  background: on ? `hsl(${GREEN})` : `hsl(${SUBTLE} / 0.4)`,
+                  border: on ? `1px solid hsl(${GREEN} / 0.6)` : "none",
+                  boxShadow: on ? `0 0 8px hsl(${GREEN} / 0.6)` : "none",
+                }}
+              />
+            );
+          })}
+          <span className="font-mono uppercase tracking-[0.22em] ml-2" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+            {AXES.find((a) => a.id === axis)?.short}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── 01 · COVER ──────────────────────────────────────────────────────────────
 function S01Cover({ n, t }: { n: number; t: number }) {
   return (
@@ -147,6 +196,11 @@ function S02InvestorLens({ n, t }: { n: number; t: number }) {
           Weekend projects make AI look useful. LIZA makes AI accountable enough for regulated work.
         </p>
       </div>
+      <LensRibbon
+        axis="audit"
+        market="Evaluate the chatbot. Evaluate the model. Evaluate the demo."
+        operator="Evaluate the production control layer that makes any model safe to ship."
+      />
     </Slide>
   );
 }
@@ -182,7 +236,11 @@ function S03Problem({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
-      <ContextThreadStrip active="audit" />
+      <LensRibbon
+        axis="audit"
+        market="Enterprises just need better prompts and a chat UI."
+        operator="Every output must carry standard, evidence, approver and model — replayable on demand."
+      />
     </Slide>
   );
 }
@@ -385,7 +443,11 @@ function S04ProductUnit({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
-      <ContextThreadStrip active="compounding" />
+      <LensRibbon
+        axis="silos"
+        market="One chat. One user. One file dropped in the prompt."
+        operator="Lock the playbook. Compile the standards. Sign the receipt. Every call, every team, every model."
+      />
     </Slide>
   );
 }
@@ -432,7 +494,11 @@ function S05WhyNow({ n, t }: { n: number; t: number }) {
           </div>
         </div>
       </div>
-      <ContextThreadStrip active="efficiency" />
+      <LensRibbon
+        axis="efficiency"
+        market="Cheaper tokens win. Whoever ships the slickest model UI wins."
+        operator="Cheaper tokens mean 100× more governed work. The spend moves to the control layer."
+      />
     </Slide>
   );
 }
@@ -474,6 +540,11 @@ function S06WeekendObjection({ n, t }: { n: number; t: number }) {
           ))}
         </div>
       </div>
+      <LensRibbon
+        axis="silos"
+        market="A model API plus a chat UI is a product."
+        operator="A product survives audit, handover, regulator review and a year of org change. The demo does not."
+      />
     </Slide>
   );
 }
@@ -507,6 +578,11 @@ function S07LabObjection({ n, t }: { n: number; t: number }) {
           Claude can be inside the workflow. It cannot credibly certify the workflow for every other model, department and regulator.
         </p>
       </div>
+      <LensRibbon
+        axis="audit"
+        market="Anthropic and OpenAI will ship this feature next quarter."
+        operator="No regulator accepts the vendor being audited as the auditor. The control layer must be neutral."
+      />
     </Slide>
   );
 }
@@ -544,7 +620,11 @@ function S08BusinessModel({ n, t }: { n: number; t: number }) {
           </p>
         </div>
       </div>
-      <ContextThreadStrip active="efficiency" />
+      <LensRibbon
+        axis="efficiency"
+        market="Mark up tokens. Charge per seat. Hope retention holds."
+        operator="Price the accountable work unit. Token cost is a pass-through inside a 90% margin layer."
+      />
     </Slide>
   );
 }
@@ -578,6 +658,11 @@ function S09Proof({ n, t }: { n: number; t: number }) {
           The first vertical proves the pattern: encode standards, govern decisions, price the work unit, expand into adjacent regulated functions.
         </p>
       </div>
+      <LensRibbon
+        axis="compounding"
+        market="A pilot. A logo on a slide. Nothing in production."
+        operator="A CTO-sponsored deployment. 127 standards encoded. 3,400 signed decisions per month, compounding."
+      />
     </Slide>
   );
 }
@@ -611,7 +696,11 @@ function S10Moat({ n, t }: { n: number; t: number }) {
           ))}
         </div>
       </div>
-      <ContextThreadStrip active="compounding" />
+      <LensRibbon
+        axis="compounding"
+        market="A clone with the same model and a weekend will catch up."
+        operator="The corpus, the receipt graph and the approval history compound. They cannot be cloned."
+      />
     </Slide>
   );
 }
