@@ -584,6 +584,7 @@ function S12Close({ n, t }: { n: number; t: number }) {
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
   { id: "cover",        title: "Cover",                       render: (n, t) => <S01Cover n={n} t={t} /> },
   { id: "lens",         title: "Investor lens",               render: (n, t) => <S02InvestorLens n={n} t={t} /> },
+  { id: "explosion",    title: "Context explosion",           render: (n, t) => <SContextExplosion n={n} t={t} /> },
   { id: "problem",      title: "Problem",                     render: (n, t) => <S03Problem n={n} t={t} /> },
   { id: "solution",     title: "Solution unit",               render: (n, t) => <S04ProductUnit n={n} t={t} /> },
   { id: "why-now",      title: "Why now",                     render: (n, t) => <S05WhyNow n={n} t={t} /> },
