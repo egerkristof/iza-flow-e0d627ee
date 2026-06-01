@@ -333,30 +333,30 @@ function S01Cover({ n, t }: { n: number; t: number }) {
   );
 }
 
-// ─── 02 · The rollout problem ──────────────────────────────────────────────
+// ─── 02 · The reality on your floor (lens) ─────────────────────────────────
 function S02Problem({ n, t }: { n: number; t: number }) {
   return (
     <LensSlide
-      section="The rollout problem" n={n} total={t}
-      topic="What you actually have on the floor"
-      framing="Your org bought the licences. The work did not change. Adoption flatlined the moment the demo ended."
+      section="The reality on your floor" n={n} total={t}
+      topic="What your rollout looks like today"
+      framing="You bought the licences. Your team uses AI inconsistently. Nothing the org can replay."
       payload={{
         market: {
-          kicker: "What your rollout looks like today",
+          kicker: "What you can already see",
           headline: "Seats handed out. Usage scattered.",
           viz: <VizModelOutputBare />,
           vizLabel: "Diagram · model output with no standard, no receipt, no signer",
           items: [
-            { h: "Copilot / ChatGPT Enterprise rolled out", v: "Heavy users 15%. The rest forgot the tab." },
-            { h: "Shadow ChatGPT everywhere",              v: "Your real policy is whatever each person types into a free model." },
-            { h: "Nothing the org can replay",             v: "When Legal or the regulator asks, the room goes quiet." },
+            { h: "Copilot / ChatGPT Enterprise live", v: "Heavy users 15%. The rest forgot the tab." },
+            { h: "Shadow ChatGPT everywhere",         v: "Your real policy is whatever each person types into a free model." },
+            { h: "Nothing the org can replay",        v: "When Legal or the regulator asks, the room goes quiet." },
           ],
         },
         operator: {
-          kicker: "What a rollout that compounds looks like",
+          kicker: "What stuck adoption actually looks like",
           headline: "Standards, receipts, memory — bound to every workflow.",
           viz: <VizGovernedDecision />,
-          vizLabel: "Diagram · same output, wrapped in 4 governance bands",
+          vizLabel: "Diagram · same output, wrapped in governance bands",
           items: [
             { h: "Standard bound",   v: "Every workflow runs on the version your team approved." },
             { h: "Receipt signed",   v: "Replayable on demand. Policy, data, model, approver." },
@@ -370,64 +370,78 @@ function S02Problem({ n, t }: { n: number; t: number }) {
   );
 }
 
-// ─── 03 · Why rollouts get stuck (context explosion) ───────────────────────
-function S03Why({ n, t }: { n: number; t: number }) {
+// ─── 03 · The job you were hired to do ─────────────────────────────────────
+function S03Job({ n, t }: { n: number; t: number }) {
   return (
-    <LensSlide
-      section="Why rollouts stall" n={n} total={t}
-      topic="The shape of the problem keeps changing under you"
-      framing="Today's pilot fits in a chat. Real adoption spans every team, workflow, policy and handover in the org."
-      payload={{
-        market: {
-          kicker: "What the pilot covered",
-          headline: "One team. One use case. One chat.",
-          viz: <VizContextSmall />,
-          vizLabel: "Diagram · 1 user · 1 chat · ~10k tokens",
-          items: [
-            { h: "Demo-grade context",  v: "Whatever fit in the prompt that day." },
-            { h: "No receipts",         v: "Nothing the next team can reuse." },
-            { h: "No compounding",      v: "The pilot ends. The org learns nothing." },
-          ],
-        },
-        operator: {
-          kicker: "What scaling AI actually looks like",
-          headline: "Every role, every workflow, every policy — all moving at once.",
-          viz: <VizContextHuge />,
-          vizLabel: "Diagram · context surface across an enterprise",
-          items: [
-            { h: "Cannot stay siloed",  v: "Sales, ops, legal, support — same standards must reach all of them." },
-            { h: "Cannot stay manual",  v: "PDFs and wiki pages will not keep up with the model release calendar." },
-            { h: "Must be auditable",   v: "Internal audit, EU AI Act, sector regulators all ask the same question." },
-          ],
-          signal: "Pilots fail not because the model is wrong. They fail because the org around it never changed shape.",
-        },
-      }}
-      bottomLine="Most rollouts try to scale a chat UI. What actually scales is the control layer underneath."
-    />
+    <SH section="The job you were hired to do" n={n} total={t}>
+      <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
+        <div className="mb-8">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            What your board is actually grading
+          </p>
+          <h2 className="font-black" style={{ fontSize: 56, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            You will be measured on adoption that holds up under audit, not on licences sold.
+          </h2>
+          <p className="mt-5" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1400 }}>
+            Four numbers decide whether next year's AI budget is yours to spend — or someone else's to defend.
+          </p>
+        </div>
+        <div className="flex-1 flex items-center">
+          <VizAdoptionScorecard />
+        </div>
+        <p className="mt-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
+          Source · 24 Head-of-AI-Adoption discovery interviews · EU mid-to-large enterprises · 2025
+        </p>
+      </div>
+    </SH>
   );
 }
 
-// ─── 04 · Solution unit (governed decision) ────────────────────────────────
-function S04Solution({ n, t }: { n: number; t: number }) {
+// ─── 04 · Where rollouts die today ─────────────────────────────────────────
+function S04Funnel({ n, t }: { n: number; t: number }) {
+  return (
+    <SH section="Where rollouts die" n={n} total={t}>
+      <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
+        <div className="mb-6">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            The funnel nobody puts in the steering deck
+          </p>
+          <h2 className="font-black" style={{ fontSize: 52, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Licences in. Production out. The drop-off is not a tool problem — it is a control problem.
+          </h2>
+        </div>
+        <div className="flex-1 flex items-center">
+          <VizRolloutFunnel />
+        </div>
+        <p className="mt-5" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
+          Every step down the funnel is missing the same thing: a standard, a signed receipt, a way to replay the decision next quarter.
+        </p>
+      </div>
+    </SH>
+  );
+}
+
+// ─── 05 · The accountable unit (lens) ──────────────────────────────────────
+function S05Solution({ n, t }: { n: number; t: number }) {
   return (
     <LensSlide
-      section="What we deploy" n={n} total={t}
-      topic="The unit of rollout"
+      section="What we install" n={n} total={t}
+      topic="The unit your rollout is actually missing"
       framing="Most vendors give you a tool. We give you an accountable work unit — and a system that produces it on every model you use."
       payload={{
         market: {
-          kicker: "What you get from most vendors today",
+          kicker: "What every other vendor sells",
           headline: "Another chat box. Another seat licence.",
           viz: <VizWrapper />,
           vizLabel: "Diagram · prompt → model → text. No receipt.",
           items: [
-            { h: "Per-seat copilots",    v: "Help individuals. Do not change how the team works." },
-            { h: "Prompt libraries",     v: "Live in a Notion page. Drift the moment one person edits it." },
-            { h: "Per-use-case bots",    v: "20 of them in 18 months. No common audit trail." },
+            { h: "Per-seat copilots",  v: "Help individuals. Do not change how the team works." },
+            { h: "Prompt libraries",   v: "Live in a Notion page. Drift the moment one person edits it." },
+            { h: "Per-use-case bots",  v: "20 of them in 18 months. No common audit trail." },
           ],
         },
         operator: {
-          kicker: "What we deploy inside your org",
+          kicker: "What LIZA installs in your org",
           headline: "LOCK · COMPILE · SIGN · LEARN. One accountable decision, repeated.",
           viz: <VizSolutionLoop />,
           vizLabel: "Diagram · the 4-station AACE loop, one per call",
@@ -444,180 +458,51 @@ function S04Solution({ n, t }: { n: number; t: number }) {
   );
 }
 
-// ─── 05 · How it works (factory walkthrough) ───────────────────────────────
-function S05How({ n, t }: { n: number; t: number }) {
+// ─── 06 · Where LIZA plugs in (architecture) ───────────────────────────────
+function S06Architecture({ n, t }: { n: number; t: number }) {
   return (
-    <SH section="How it works" n={n} total={t}>
+    <SH section="Where it plugs in" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
         <div className="mb-6">
           <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
-            What changes the day after install
+            What IT and security need to see first
           </p>
-          <h2 className="font-black" style={{ fontSize: 52, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            A request comes in. Four stations turn it into a decision your team, your auditor and your CFO can replay.
+          <h2 className="font-black" style={{ fontSize: 48, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            One layer between your people and the models you already paid for. No rip-and-replace.
           </h2>
         </div>
-        <div className="flex-1 flex flex-col justify-center gap-6">
-          <VizFactoryWalkthrough />
+        <div className="flex-1 flex items-center">
+          <VizArchitectureFit />
         </div>
-        <p className="mt-4 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 12, color: SUBTLE }}>
-          AACE v3.1 runtime · sits between your people and any model you choose — Claude · GPT · Gemini · on-prem
-        </p>
       </div>
     </SH>
   );
 }
 
-// ─── 06 · Why now (board pressure + cheaper tokens) ────────────────────────
-function S06WhyNow({ n, t }: { n: number; t: number }) {
+// ─── 07 · 90-day rollout plan ──────────────────────────────────────────────
+function S07Plan({ n, t }: { n: number; t: number }) {
   return (
-    <LensSlide
-      section="Why this year" n={n} total={t}
-      topic="The window is narrow on both sides"
-      framing="Tokens get cheaper every quarter. Board patience does not. The cost of staying in pilot mode is no longer abstract."
-      payload={{
-        market: {
-          kicker: "What it feels like inside",
-          headline: "Cheaper tokens. Same flat usage chart.",
-          viz: <VizTokenDown />,
-          vizLabel: "Chart · per-token price falling. Internal adoption is not.",
-          items: [
-            { h: "Board asks every quarter",  v: "\"Where is our AI ROI?\" — and the slide gets harder to make." },
-            { h: "Vendor sprawl grows",       v: "Procurement is now your second job." },
-            { h: "Champions burn out",        v: "The people doing the rollout leave. The standards leave with them." },
-          ],
-        },
-        operator: {
-          kicker: "What is actually happening to the spend",
-          headline: "Tokens cheaper. Governed AI work explodes — if you have a control layer.",
-          viz: <VizCrossingCurves />,
-          vizLabel: "Chart · token cost ↓ × governed decisions ↑, with crossover",
-          items: [
-            { h: "100×",          v: "more workflows worth automating once cost drops below decision value." },
-            { h: "Audit pressure", v: "EU AI Act, internal risk and sector regulators arrive in the same year." },
-            { h: "Replatform risk", v: "If you do not own the standards, you will redo this rollout in 2 years on the next vendor." },
-          ],
-          signal: "The cheap window for setting your organisational standard closes once the incumbents lock in.",
-        },
-      }}
-      bottomLine="The cost of waiting is not a missed pilot. It is rebuilding the same rollout from scratch in 18 months."
-    />
+    <SH section="The 90-day plan" n={n} total={t}>
+      <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
+        <div className="mb-8 flex items-baseline gap-10">
+          <h2 className="font-black" style={{ fontSize: 124, color: `hsl(${GREEN})`, letterSpacing: "-0.05em", lineHeight: 1 }}>90 days</h2>
+          <div>
+            <p className="font-mono uppercase tracking-[0.3em]" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>From kickoff to a workflow your CFO will defend</p>
+            <p className="font-black mt-2" style={{ fontSize: 28, color: TEXT, letterSpacing: "-0.025em", lineHeight: 1.15, maxWidth: 1100 }}>
+              One workflow live. One ROI memo. One audit replay. Then you pick what scales next.
+            </p>
+          </div>
+        </div>
+        <div className="flex-1 flex items-center">
+          <Viz90DayPlan />
+        </div>
+      </div>
+    </SH>
   );
 }
 
-// ─── 07 · Objection: "We have Copilot / ChatGPT Enterprise" ────────────────
-function S07Copilot({ n, t }: { n: number; t: number }) {
-  return (
-    <LensSlide
-      section="Objection 01" n={n} total={t}
-      topic="'We already bought Copilot / ChatGPT Enterprise'"
-      framing="Copilot is a seat. LIZA is the layer that makes those seats do the work the way your org actually approves of."
-      payload={{
-        market: {
-          kicker: "What the seat licence gives you",
-          headline: "A faster chat box on every desktop.",
-          viz: <VizWeekendDemo />,
-          vizLabel: "Code · the demo. Looks like the product.",
-          items: [
-            { h: "Per-user productivity", v: "Helps individuals draft faster. Does not change team output." },
-            { h: "No org standard",       v: "Every person prompts their own way. Your 'method' is 200 styles." },
-            { h: "No replay",             v: "Nothing the CFO, Legal or audit can point to as 'how we decided'." },
-          ],
-        },
-        operator: {
-          kicker: "What a real rollout sits on",
-          headline: "What survives audit, handover and a year of org change.",
-          viz: <VizIceberg />,
-          vizLabel: "Diagram · iceberg · 10% chat UI, 90% governance plumbing",
-          items: [
-            { h: "Workflow control",       v: "Across roles, approvals, and the tools your team already uses." },
-            { h: "Typed standards",        v: "Owner, expiry, version, change control. Not a Notion page." },
-            { h: "Signed receipts",        v: "Survive turnover, audit and the next CIO." },
-          ],
-          signal: "Copilot drafts the email. LIZA decides whether that email is on-policy, who signed it, and what it changes next time.",
-        },
-      }}
-      bottomLine="LIZA does not replace your Copilot or ChatGPT Enterprise. It is the layer that finally makes those tools defensible."
-    />
-  );
-}
-
-// ─── 08 · Objection: "Our IT / data team will build this" ──────────────────
-function S08Build({ n, t }: { n: number; t: number }) {
-  return (
-    <LensSlide
-      section="Objection 02" n={n} total={t}
-      topic="'IT will build this internally'"
-      framing="They might. The question is whether you want your team's standards owned by an internal squad — or by a neutral layer your auditor recognises."
-      payload={{
-        market: {
-          kicker: "What the internal build looks like",
-          headline: "Two FTEs, six months, a bespoke RAG. Then maintenance.",
-          viz: <VizLabExpansion />,
-          vizLabel: "Diagram · stack of adjacent tools, none of them the layer",
-          items: [
-            { h: "Bespoke RAG over SharePoint", v: "Stale within a quarter. Owned by whoever is on call." },
-            { h: "Custom prompts in code",       v: "Lives in a repo your business team cannot read or change." },
-            { h: "No standards model",           v: "Every change is a code review, not a policy decision." },
-          ],
-        },
-        operator: {
-          kicker: "What you get instead",
-          headline: "A neutral control layer. Your standards. Their model.",
-          viz: <VizGovernanceStack />,
-          vizLabel: "Diagram · governance stack · regulator ↑ control ↑ models",
-          items: [
-            { h: "Neutrality",     v: "Sits above any model vendor. Switch models without losing the rollout." },
-            { h: "Sovereignty",    v: "Standards and receipts stay yours. Exportable. Not vendor-trapped." },
-            { h: "Velocity",       v: "Your business owners edit playbooks directly. No quarter-long backlog." },
-          ],
-          signal: "Your IT team should own the platform. They should not also own every standard in every business function.",
-        },
-      }}
-      bottomLine="Internal build is one quote. Total cost is the second rebuild, when the FTEs leave and the standards leave with them."
-    />
-  );
-}
-
-// ─── 09 · Pricing model (per governed decision) ────────────────────────────
-function S09Pricing({ n, t }: { n: number; t: number }) {
-  return (
-    <LensSlide
-      section="How you pay for it" n={n} total={t}
-      topic="The unit you measure becomes the unit you defend"
-      framing="Per-seat AI is the reason your last rollout's ROI slide does not work. We price the work, not the desk."
-      payload={{
-        market: {
-          kicker: "How most AI is priced today",
-          headline: "Per seat. Pray for adoption. Renew anyway.",
-          viz: <VizSeatDecay />,
-          vizLabel: "Chart · per-seat revenue decay after rollout",
-          items: [
-            { h: "Per-seat SaaS",   v: "Cost scales with headcount. Value does not." },
-            { h: "Token reseller",  v: "Bill arrives. Nobody owns the line item." },
-            { h: "Bundled in suite",v: "Adoption invisible. Renewal a fight." },
-          ],
-        },
-        operator: {
-          kicker: "How LIZA priced",
-          headline: "Price the accountable decision. Model cost is a pass-through.",
-          viz: <VizValueBar />,
-          vizLabel: "Chart · value vs. price vs. cost, per governed decision",
-          items: [
-            { h: "€0.40 per decision",   v: "What you pay per governed output. Visible to Finance from day one." },
-            { h: "€0.04 model + infra",  v: "Pass-through. Falls every quarter." },
-            { h: "€23 displaced labour", v: "The work unit you are pricing against. Your ROI slide writes itself." },
-          ],
-          signal: "Cheaper tokens multiply decisions. Your unit cost drops. Your ROI slide gets stronger, not weaker.",
-        },
-      }}
-      bottomLine="You stop defending seats. You start reporting governed decisions per workflow per month."
-    />
-  );
-}
-
-// ─── 10 · Proof (operator framing) ─────────────────────────────────────────
-function S10Proof({ n, t }: { n: number; t: number }) {
+// ─── 08 · Proof in production ──────────────────────────────────────────────
+function S08Proof({ n, t }: { n: number; t: number }) {
   const stats = [
     { v: "127",       l: "standards live",         s: "Typed playbooks, decision rules and policies running in production across the org's workflows." },
     { v: "3,400 /mo", l: "signed decisions",       s: "Every output bound to a standard, model and approver. Replayable on internal audit." },
@@ -641,21 +526,12 @@ function S10Proof({ n, t }: { n: number; t: number }) {
               style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
               <p className="font-mono" style={{ fontSize: 11, color: SUBTLE, letterSpacing: "0.22em" }}>0{i + 1}</p>
               <p className="font-black mt-3" style={{ fontSize: 60, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.v}</p>
-              <svg className="mt-3" width="100" height="22" viewBox="0 0 100 22">
-                {i === 0 && [...Array(8)].map((_, k) => <rect key={k} x={k * 12} y={22 - (4 + (k * 2) % 14)} width="8" height={4 + (k * 2) % 14} fill={`hsl(${GREEN} / 0.6)`} />)}
-                {i === 1 && <path d="M 0 18 Q 25 5 50 14 T 100 4" stroke={`hsl(${GREEN})`} strokeWidth="2" fill="none" />}
-                {i === 2 && <path d="M 0 4 L 100 18" stroke={`hsl(${GREEN})`} strokeWidth="2" />}
-                {i === 3 && <circle cx="50" cy="11" r="9" fill="none" stroke={`hsl(${GREEN})`} strokeWidth="2" />}
-              </svg>
-              <p className="font-mono uppercase tracking-[0.22em] mt-3" style={{ fontSize: 12, color: TEXT }}>{s.l}</p>
+              <p className="font-mono uppercase tracking-[0.22em] mt-4" style={{ fontSize: 12, color: TEXT }}>{s.l}</p>
               <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{s.s}</p>
             </div>
           ))}
         </div>
-        <p className="mt-6" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
-          Same pattern lifts into your function: pick one workflow, install in 30 days, measure the decision delta, scale to the next.
-        </p>
-        <p className="mt-3 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: SUBTLE }}>
+        <p className="mt-6 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: SUBTLE }}>
           Source: AACE v3.1 runtime · regulated AEC deployment · 12-month rolling window · CTO-sponsored, anonymised on request.
         </p>
       </div>
@@ -663,67 +539,96 @@ function S10Proof({ n, t }: { n: number; t: number }) {
   );
 }
 
-// ─── 11 · What compounds inside your org (moat reframed) ───────────────────
-function S11Compounds({ n, t }: { n: number; t: number }) {
+// ─── 09 · Buying committee map ─────────────────────────────────────────────
+function S09Committee({ n, t }: { n: number; t: number }) {
   return (
-    <SH section="What compounds in your org" n={n} total={t}>
-      <div className="absolute inset-0 px-20 pt-28 pb-20 flex flex-col">
-        <div className="mb-8">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-            What you actually own after 12 months
+    <SH section="The buying committee" n={n} total={t}>
+      <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
+        <div className="mb-7">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            Four people you have to bring along
           </p>
-          <h2 className="font-black" style={{ fontSize: 52, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            The rollout's value is not the tool. It is the standards, receipts and memory you accumulate — none of which lift out on a vendor swap.
+          <h2 className="font-black" style={{ fontSize: 48, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            We give each of them exactly what they need to say yes — and nothing they have to fight you on.
           </h2>
         </div>
-        <div className="flex-1 flex items-center justify-center">
-          <div className="w-full max-w-[1400px]">
-            <VizMoatLayers />
-          </div>
+        <div className="flex-1 flex items-center">
+          <VizBuyingCommittee />
         </div>
       </div>
     </SH>
   );
 }
 
-// ─── 12 · The 30-day install (the ask) ─────────────────────────────────────
-function S12Install({ n, t }: { n: number; t: number }) {
-  const steps = [
-    { p: "Week 1", h: "Pick one workflow", d: "Highest-volume, highest-judgment task in your function. We scope it together in 90 minutes." },
-    { p: "Week 2", h: "Install the layer", d: "AACE v3.1 deploys in your environment. Your existing model contracts stay. We wire LOCK/COMPILE/SIGN/LEARN into the workflow." },
-    { p: "Week 3", h: "Turn it on, with one team", d: "Standards drafted with the actual practitioners. First signed decisions produced. Receipts visible to Legal and Finance from day one." },
-    { p: "Week 4", h: "Measure & expand", d: "Decision delta, time-to-spec, audit replay all reported. You decide which workflow scales next." },
-  ];
+// ─── 10 · Pricing & procurement ────────────────────────────────────────────
+function S10Pricing({ n, t }: { n: number; t: number }) {
   return (
-    <SH section="The 30-day install" n={n} total={t}>
+    <SH section="Pricing & procurement" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
-        <div className="mb-8 flex items-baseline gap-10">
-          <h2 className="font-black" style={{ fontSize: 124, color: `hsl(${GREEN})`, letterSpacing: "-0.05em", lineHeight: 1 }}>30 days</h2>
-          <div>
-            <p className="font-mono uppercase tracking-[0.3em]" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>From kickoff to first signed decision</p>
-            <p className="font-black mt-2" style={{ fontSize: 30, color: TEXT, letterSpacing: "-0.025em", lineHeight: 1.15, maxWidth: 1100 }}>
-              One workflow. One team. One measurable delta. Then you scale.
-            </p>
-          </div>
+        <div className="mb-7">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            What your CFO and CISO will ask first
+          </p>
+          <h2 className="font-black" style={{ fontSize: 48, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Per governed decision. Pass-through tokens. Standards stay yours.
+          </h2>
         </div>
-        <div className="grid grid-cols-4 gap-5 flex-1">
-          {steps.map((s, i) => (
-            <div key={s.h} className="rounded-2xl p-6 flex flex-col"
-              style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>{s.p}</p>
-              <p className="font-black mt-3" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.15 }}>{s.h}</p>
-              <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{s.d}</p>
-              <div className="mt-auto pt-4" style={{ borderTop: `1px solid ${CHROME_BORDER}` }}>
-                <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: SUBTLE }}>0{i + 1} / 04</p>
-              </div>
-            </div>
-          ))}
+        <div className="flex-1 flex items-center">
+          <VizPricingProcurement />
+        </div>
+        <p className="mt-5" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
+          You stop defending seats. You start reporting governed decisions per workflow per month.
+        </p>
+      </div>
+    </SH>
+  );
+}
+
+// ─── 11 · vs alternatives ──────────────────────────────────────────────────
+function S11Alternatives({ n, t }: { n: number; t: number }) {
+  return (
+    <SH section="Versus your other options" n={n} total={t}>
+      <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
+        <div className="mb-7">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            The board will ask why not one of these
+          </p>
+          <h2 className="font-black" style={{ fontSize: 48, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Stay on Copilot. Build it internally. Hire a Big-4 programme. Install the layer.
+          </h2>
+        </div>
+        <div className="flex-1 flex items-center">
+          <VizAlternatives />
+        </div>
+        <p className="mt-5 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
+          We do not replace Copilot or your custom builds. We are the control layer they were missing.
+        </p>
+      </div>
+    </SH>
+  );
+}
+
+// ─── 12 · Risk-reversed pilot ──────────────────────────────────────────────
+function S12Pilot({ n, t }: { n: number; t: number }) {
+  return (
+    <SH section="The pilot, risk-reversed" n={n} total={t}>
+      <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
+        <div className="mb-8">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            What you actually sign for
+          </p>
+          <h2 className="font-black" style={{ fontSize: 52, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Three gates. Your exit criteria, written by you. Walk away at day 30 with no further commitment.
+          </h2>
+        </div>
+        <div className="flex-1 flex items-center">
+          <VizRiskReversed />
         </div>
         <div className="mt-6 rounded-xl px-7 py-5 flex items-center gap-6"
           style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
           <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>What you bring</span>
           <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-            One sponsor. One workflow owner. Access to one model contract. We bring the runtime, the install team and the AACE playbook library.
+            One executive sponsor. One workflow owner. Access to one model contract. We bring the runtime, the install team and the standards library.
           </p>
         </div>
       </div>
@@ -731,7 +636,6 @@ function S12Install({ n, t }: { n: number; t: number }) {
   );
 }
 
-// ─── 13 · Close ────────────────────────────────────────────────────────────
 function S13Close({ n, t }: { n: number; t: number }) {
   return (
     <Shell section="LIZA OS" n={n} total={t} dark footerLeft={FOOTER_LEFT} footerRight={FOOTER_RIGHT}>
@@ -763,19 +667,19 @@ function S13Close({ n, t }: { n: number; t: number }) {
 
 // ─── Slide registry ────────────────────────────────────────────────────────
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
-  { id: "cover",     title: "Cover",                       render: (n, t) => <S01Cover n={n} t={t} /> },
-  { id: "problem",   title: "The rollout problem",         render: (n, t) => <S02Problem n={n} t={t} /> },
-  { id: "why",       title: "Why rollouts stall",          render: (n, t) => <S03Why n={n} t={t} /> },
-  { id: "solution",  title: "What we deploy",              render: (n, t) => <S04Solution n={n} t={t} /> },
-  { id: "how",       title: "How it works",                render: (n, t) => <S05How n={n} t={t} /> },
-  { id: "why-now",   title: "Why this year",               render: (n, t) => <S06WhyNow n={n} t={t} /> },
-  { id: "copilot",   title: "We already have Copilot",     render: (n, t) => <S07Copilot n={n} t={t} /> },
-  { id: "build",     title: "IT will build it",            render: (n, t) => <S08Build n={n} t={t} /> },
-  { id: "pricing",   title: "How you pay",                 render: (n, t) => <S09Pricing n={n} t={t} /> },
-  { id: "proof",     title: "Proof in production",         render: (n, t) => <S10Proof n={n} t={t} /> },
-  { id: "compounds", title: "What compounds in your org",  render: (n, t) => <S11Compounds n={n} t={t} /> },
-  { id: "install",   title: "30-day install",              render: (n, t) => <S12Install n={n} t={t} /> },
-  { id: "close",     title: "Closing",                     render: (n, t) => <S13Close n={n} t={t} /> },
+  { id: "cover",        title: "Cover",                     render: (n, t) => <S01Cover n={n} t={t} /> },
+  { id: "reality",      title: "The reality on your floor", render: (n, t) => <S02Problem n={n} t={t} /> },
+  { id: "job",          title: "The job you were hired for",render: (n, t) => <S03Job n={n} t={t} /> },
+  { id: "funnel",       title: "Where rollouts die",        render: (n, t) => <S04Funnel n={n} t={t} /> },
+  { id: "solution",     title: "What we install",           render: (n, t) => <S05Solution n={n} t={t} /> },
+  { id: "architecture", title: "Where it plugs in",         render: (n, t) => <S06Architecture n={n} t={t} /> },
+  { id: "plan",         title: "The 90-day plan",           render: (n, t) => <S07Plan n={n} t={t} /> },
+  { id: "proof",        title: "Proof in production",       render: (n, t) => <S08Proof n={n} t={t} /> },
+  { id: "committee",    title: "The buying committee",      render: (n, t) => <S09Committee n={n} t={t} /> },
+  { id: "pricing",      title: "Pricing & procurement",     render: (n, t) => <S10Pricing n={n} t={t} /> },
+  { id: "alternatives", title: "Versus your other options", render: (n, t) => <S11Alternatives n={n} t={t} /> },
+  { id: "pilot",        title: "The pilot, risk-reversed",  render: (n, t) => <S12Pilot n={n} t={t} /> },
+  { id: "close",        title: "Closing",                   render: (n, t) => <S13Close n={n} t={t} /> },
 ];
 
 const SLIDES = RAW_SLIDES.map((s, i) => ({
