@@ -262,6 +262,15 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
+    id: "seed-investor",
+    title: "Seed Pitch · Investor Edition",
+    path: "/seed-investor",
+    sourcePath: "src/pages/SeedPitchDeckInvestor.tsx",
+    description: "14-slide seed deck for investors who are tired of AI hype and have seen every chat wrapper. Keeps the Airbnb-style simplicity of /seed (one idea per slide, big type) as the spine — Cover, How it works, Proof, Moat, Team, Ask and Close are plain and concrete. The Market vs Operator lens from /seed-lens is applied ONLY where the contrast does the explaining: Problem, Context Explosion, Solution, Why Now, Weekend objection, Lab objection, Business Model. Substance lifted from /factory (€0.40 per governed decision, 95% margin, 127 standards, 3,400 signed decisions/mo, 62% time-to-spec, 0 audit failures, 15+ years productionising data and AI). Designed to be sent cold to a skeptical investor without the founder in the room.",
+    component: SeedPitchDeckInvestor,
+    showInAdmin: true,
+  },
+  {
     id: "impact",
     title: "Impact Thesis Deck",
     path: "/impact",
