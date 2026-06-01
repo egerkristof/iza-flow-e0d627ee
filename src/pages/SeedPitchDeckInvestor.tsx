@@ -300,6 +300,11 @@ function VizCrossingCurves() {
       <text x="455" y="225" fontSize="11" fill={MUTED} fontFamily="ui-monospace,monospace" textAnchor="end">2028</text>
       <text x="70" y="35" fontSize="12" fill={`hsl(${RED})`} fontWeight="700">$ token cost ↓</text>
       <text x="455" y="22" fontSize="12" fill={`hsl(${GREEN})`} fontWeight="700" textAnchor="end">governed decisions ↑</text>
+      {/* axis titles + crossover annotation, so the chart reads alone */}
+      <text x="250" y="244" fontSize="10" fill={SUBTLE} fontFamily="ui-monospace,monospace" textAnchor="middle">time →</text>
+      <text x="14" y="110" fontSize="10" fill={SUBTLE} fontFamily="ui-monospace,monospace" textAnchor="middle" transform="rotate(-90 14 110)">volume / $</text>
+      <text x="255" y="100" fontSize="10" fill={`hsl(${GOLD})`} fontWeight="700" textAnchor="middle">cost &lt; decision value</text>
+      <text x="255" y="128" fontSize="9" fill={SUBTLE} fontFamily="ui-monospace,monospace" textAnchor="middle">100× more AI work unlocked</text>
     </svg>
   );
 }
