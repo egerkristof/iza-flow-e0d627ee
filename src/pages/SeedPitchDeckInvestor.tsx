@@ -559,21 +559,21 @@ function LensSlide({
         </div>
 
         {/* hero visual band — 2 columns */}
-        <div className="grid grid-cols-[0.78fr_1.22fr] gap-6 flex-1 min-h-0">
+        <div className="grid grid-cols-[0.7fr_1.3fr] gap-7 flex-1 min-h-0">
           {/* MARKET LENS */}
-          <div className="rounded-2xl p-6 flex flex-col"
+          <div className="rounded-2xl p-7 flex flex-col"
             style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.25)` }}>
             <div className="flex items-center gap-3 mb-3">
               <span className="inline-block rounded-full" style={{ width: 8, height: 8, background: `hsl(${RED})` }} />
-              <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>
-                {payload.market.kicker || "Market lens"}
+              <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 12, color: `hsl(${RED})` }}>
+                {payload.market.kicker || "What you are being sold today"}
               </p>
             </div>
-            <p className="font-black mb-4" style={{ fontSize: 22, color: MUTED, lineHeight: 1.15, letterSpacing: "-0.018em" }}>
+            <p className="font-black mb-4" style={{ fontSize: 26, color: MUTED, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
               {payload.market.headline}
             </p>
             {payload.market.vizLabel && (
-              <p className="font-mono uppercase tracking-[0.22em] mb-2 text-center" style={{ fontSize: 10, color: SUBTLE }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-3 text-center" style={{ fontSize: 11, color: SUBTLE }}>
                 {payload.market.vizLabel}
               </p>
             )}
@@ -582,11 +582,11 @@ function LensSlide({
               {payload.market.viz}
             </div>
             {/* compact captions */}
-            <div className="flex flex-col gap-2 pt-3" style={{ borderTop: `1px solid hsl(${RED} / 0.2)` }}>
+            <div className="flex flex-col gap-2.5 pt-4" style={{ borderTop: `1px solid hsl(${RED} / 0.2)` }}>
               {payload.market.items.slice(0, 3).map((it, i) => (
                 <div key={i} className="flex items-baseline gap-2">
-                  <span className="font-mono" style={{ fontSize: 11, color: `hsl(${RED})`, minWidth: 14 }}>×</span>
-                  <p style={{ fontSize: 13, color: MUTED, lineHeight: 1.3 }}>
+                  <span className="font-mono" style={{ fontSize: 13, color: `hsl(${RED})`, minWidth: 14 }}>×</span>
+                  <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>
                     <span className="font-bold" style={{ color: MUTED }}>{it.h}.</span> {it.v}
                   </p>
                 </div>
@@ -595,32 +595,32 @@ function LensSlide({
           </div>
 
           {/* OPERATOR LENS */}
-          <div className="rounded-2xl p-7 flex flex-col relative overflow-hidden"
+          <div className="rounded-2xl p-8 flex flex-col relative overflow-hidden"
             style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
             <div className="flex items-center gap-3 mb-3">
               <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${GREEN})`, boxShadow: `0 0 12px hsl(${GREEN} / 0.6)` }} />
-              <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
-                {payload.operator.kicker || "Operator lens"}
+              <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>
+                {payload.operator.kicker || "What companies actually need"}
               </p>
             </div>
-            <p className="font-black mb-5" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.022em" }}>
+            <p className="font-black mb-5" style={{ fontSize: 38, color: TEXT, lineHeight: 1.06, letterSpacing: "-0.025em" }}>
               {payload.operator.headline}
             </p>
             {payload.operator.vizLabel && (
-              <p className="font-mono uppercase tracking-[0.22em] mb-2 text-center" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-3 text-center" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>
                 {payload.operator.vizLabel}
               </p>
             )}
             {/* viz */}
-            <div className="flex-1 flex items-center justify-center min-h-0 mb-4">
+            <div className="flex-1 flex items-center justify-center min-h-0 mb-5">
               {payload.operator.viz}
             </div>
             {/* compact captions */}
-            <div className="flex flex-col gap-2 pt-3" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <div className="flex flex-col gap-2.5 pt-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
               {payload.operator.items.slice(0, 3).map((it, i) => (
                 <div key={i} className="flex items-baseline gap-2">
-                  <span className="font-mono" style={{ fontSize: 12, color: `hsl(${GREEN})`, minWidth: 14 }}>✓</span>
-                  <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.3 }}>
+                  <span className="font-mono" style={{ fontSize: 14, color: `hsl(${GREEN})`, minWidth: 16 }}>✓</span>
+                  <p style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
                     <span className="font-black">{it.h}.</span>{" "}
                     <span style={{ color: MUTED }}>{it.v}</span>
                   </p>
@@ -628,17 +628,17 @@ function LensSlide({
               ))}
             </div>
             {payload.operator.signal && (
-              <div className="mt-3 rounded-lg px-4 py-2.5" style={{ background: `hsl(${GREEN} / 0.12)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-                <p className="font-bold" style={{ fontSize: 13, color: TEXT, lineHeight: 1.3 }}>{payload.operator.signal}</p>
+              <div className="mt-4 rounded-lg px-5 py-3" style={{ background: `hsl(${GREEN} / 0.12)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{payload.operator.signal}</p>
               </div>
             )}
           </div>
         </div>
 
         {bottomLine && (
-          <div className="mt-4 rounded-xl px-6 py-3 flex items-center gap-4" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 11, color: SUBTLE }}>Net</span>
-            <p className="font-black" style={{ fontSize: 19, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.012em" }}>{bottomLine}</p>
+          <div className="mt-5 rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The point</span>
+            <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.014em" }}>{bottomLine}</p>
           </div>
         )}
       </div>
