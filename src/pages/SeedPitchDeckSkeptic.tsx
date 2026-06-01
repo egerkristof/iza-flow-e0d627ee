@@ -45,6 +45,60 @@ function Slide({ section, n, total, children, dark = false }: {
   );
 }
 
+// ─── Recurring thread: the Context Explosion ────────────────────────────────
+// A single visual motif that runs through the deck. It encodes the core thesis:
+// today's "one chat, small context" reality vs. the org-scale context graph
+// that every regulated enterprise is one year away from. Each downstream slide
+// highlights which axis of the explosion (silos, efficiency, audit, compounding)
+// it answers, so the investor feels one thread instead of twelve arguments.
+type ContextAxis = "silos" | "efficiency" | "audit" | "compounding";
+const AXES: { id: ContextAxis; label: string; short: string }[] = [
+  { id: "silos",       label: "Cannot stay siloed",      short: "Silos break" },
+  { id: "efficiency",  label: "Must be efficient",       short: "Cost per call" },
+  { id: "audit",       label: "Must be auditable",       short: "Replay & approve" },
+  { id: "compounding", label: "Must compound",           short: "Each decision sharpens the next" },
+];
+
+function ContextThreadStrip({ active }: { active: ContextAxis }) {
+  // Thin recurring strip placed above the footer. Tiny dot → expanding cloud on
+  // the left, the four axes on the right with the current one lit in green.
+  return (
+    <div
+      className="absolute left-20 right-20 bottom-[88px] flex items-center gap-6 px-5 py-3 rounded-xl"
+      style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}
+    >
+      <div className="flex items-center gap-2 shrink-0">
+        <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
+          Context explosion
+        </span>
+        <span className="inline-block rounded-full" style={{ width: 4, height: 4, background: `hsl(${RED} / 0.7)` }} />
+        <span className="inline-block" style={{ width: 22, height: 1, background: `linear-gradient(90deg, hsl(${RED} / 0.4), hsl(${GREEN} / 0.7))` }} />
+        <span className="inline-block rounded-full" style={{ width: 14, height: 14, background: `radial-gradient(circle, hsl(${GREEN} / 0.55), hsl(${GREEN} / 0.05) 70%)`, border: `1px solid hsl(${GREEN} / 0.5)` }} />
+      </div>
+      <div className="flex-1 flex items-center justify-end gap-2 flex-wrap">
+        {AXES.map((a) => {
+          const on = a.id === active;
+          return (
+            <span
+              key={a.id}
+              className="font-mono uppercase tracking-[0.18em] px-2.5 py-1 rounded"
+              style={{
+                fontSize: 10,
+                color: on ? `hsl(${GREEN})` : SUBTLE,
+                background: on ? `hsl(${GREEN} / 0.08)` : "transparent",
+                border: `1px solid ${on ? `hsl(${GREEN} / 0.45)` : CHROME_BORDER}`,
+                fontWeight: on ? 800 : 500,
+              }}
+            >
+              {a.short}
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ─── 01 · COVER ──────────────────────────────────────────────────────────────
 function S01Cover({ n, t }: { n: number; t: number }) {
   return (
