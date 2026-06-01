@@ -1,7 +1,8 @@
-import type { ComponentType } from "react";
+import { createElement, type ComponentType } from "react";
 import BridgeDeck from "@/pages/BridgeDeck";
 import TechDDDeck from "@/pages/TechDDDeck";
 import ImpactDeck from "@/pages/ImpactDeck";
+import { ImpactGate } from "@/components/ImpactGate";
 import FactoryDeck from "@/pages/FactoryDeck";
 import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import SeedPitchDeckSkeptic from "@/pages/SeedPitchDeckSkeptic";
@@ -286,7 +287,7 @@ export const presentationRoutes: PresentationRoute[] = [
     path: "/impact",
     sourcePath: "src/pages/ImpactDeck.tsx",
     description: "11-slide internal impact-investing brief. Companion to /tech-dd. Frames the core question 'why keep humans in the age of AI', applies the IMP five dimensions (What/Who/HowMuch/Contribution/Risk), names the Portable Context Bundle as the unit of impact, lays out an explicit Theory of Change and a per-bundle measurement stack (outputs/outcomes/lagging impact), maps to WEF Core Skills 2030 and four UN SDG sub-targets, runs a counterfactual/additionality scan vs. big-tech AI, employer Copilots, personal memory tools, and public reskilling, then closes on a two-door decision: capital against the IMP scorecard, or strategic stake to co-define the open bundle schema.",
-    component: ImpactDeck,
+    component: () => createElement(ImpactGate, null, createElement(ImpactDeck)),
     showInAdmin: true,
   },
   {
