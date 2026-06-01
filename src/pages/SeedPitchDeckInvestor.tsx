@@ -1414,7 +1414,7 @@ export default function SeedPitchDeckInvestor() {
         style={{ borderColor: CHROME_BORDER, background: CHROME_BG }}>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full" style={{ background: `hsl(${GREEN})` }} />
-          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS · Seed Pitch · Investor Edition</span>
+          <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS · Investor Deck</span>
           <span className="text-xs px-2 py-0.5 rounded"
             style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
             Airbnb-simple spine · selective lens · {SLIDES.length} slides
