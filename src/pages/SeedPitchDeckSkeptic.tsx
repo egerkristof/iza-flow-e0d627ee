@@ -540,6 +540,11 @@ function S06WeekendObjection({ n, t }: { n: number; t: number }) {
           ))}
         </div>
       </div>
+      <LensRibbon
+        axis="silos"
+        market="A model API plus a chat UI is a product."
+        operator="A product survives audit, handover, regulator review and a year of org change. The demo does not."
+      />
     </Slide>
   );
 }
