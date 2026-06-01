@@ -300,6 +300,11 @@ function VizCrossingCurves() {
       <text x="455" y="225" fontSize="11" fill={MUTED} fontFamily="ui-monospace,monospace" textAnchor="end">2028</text>
       <text x="70" y="35" fontSize="12" fill={`hsl(${RED})`} fontWeight="700">$ token cost ↓</text>
       <text x="455" y="22" fontSize="12" fill={`hsl(${GREEN})`} fontWeight="700" textAnchor="end">governed decisions ↑</text>
+      {/* axis titles + crossover annotation, so the chart reads alone */}
+      <text x="250" y="244" fontSize="10" fill={SUBTLE} fontFamily="ui-monospace,monospace" textAnchor="middle">time →</text>
+      <text x="14" y="110" fontSize="10" fill={SUBTLE} fontFamily="ui-monospace,monospace" textAnchor="middle" transform="rotate(-90 14 110)">volume / $</text>
+      <text x="255" y="100" fontSize="10" fill={`hsl(${GOLD})`} fontWeight="700" textAnchor="middle">cost &lt; decision value</text>
+      <text x="255" y="128" fontSize="9" fill={SUBTLE} fontFamily="ui-monospace,monospace" textAnchor="middle">100× more AI work unlocked</text>
     </svg>
   );
 }
@@ -441,6 +446,9 @@ function VizValueBar() {
         <p className="font-bold mt-1" style={{ fontSize: 14, color: TEXT }}>
           90%+ gross margin. As token cost falls, margin expands.
         </p>
+        <p className="font-mono mt-2" style={{ fontSize: 11, color: MUTED, lineHeight: 1.45 }}>
+          Derivation: 20-min analyst task @ €70/hr fully loaded ≈ <b style={{ color: TEXT }}>€23</b> displaced. Customer pays <b style={{ color: TEXT }}>€0.40</b> (≈1.6% of value). Model + infra <b style={{ color: TEXT }}>€0.04</b>. Pass-through. ≈ <b style={{ color: `hsl(${GREEN})` }}>95% fully loaded gross margin</b>.
+        </p>
       </div>
     </div>
   );
@@ -527,7 +535,7 @@ function VizAskBar() {
 // ═════════════════════════════════════════════════════════════════════════════
 
 type LensItem = { h: string; v: string };
-type LensSide = { kicker?: string; headline: string; viz: React.ReactNode; items: LensItem[] };
+type LensSide = { kicker?: string; headline: string; viz: React.ReactNode; vizLabel?: string; items: LensItem[] };
 type LensPayload = { market: LensSide; operator: LensSide & { signal?: string } };
 
 function LensSlide({
@@ -564,6 +572,11 @@ function LensSlide({
             <p className="font-black mb-4" style={{ fontSize: 22, color: MUTED, lineHeight: 1.15, letterSpacing: "-0.018em" }}>
               {payload.market.headline}
             </p>
+            {payload.market.vizLabel && (
+              <p className="font-mono uppercase tracking-[0.22em] mb-2 text-center" style={{ fontSize: 10, color: SUBTLE }}>
+                {payload.market.vizLabel}
+              </p>
+            )}
             {/* viz */}
             <div className="flex-1 flex items-center justify-center min-h-0 mb-4">
               {payload.market.viz}
@@ -593,6 +606,11 @@ function LensSlide({
             <p className="font-black mb-5" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.022em" }}>
               {payload.operator.headline}
             </p>
+            {payload.operator.vizLabel && (
+              <p className="font-mono uppercase tracking-[0.22em] mb-2 text-center" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+                {payload.operator.vizLabel}
+              </p>
+            )}
             {/* viz */}
             <div className="flex-1 flex items-center justify-center min-h-0 mb-4">
               {payload.operator.viz}
@@ -657,6 +675,25 @@ function S01Cover({ n, t }: { n: number; t: number }) {
         <p className="mt-6 font-mono uppercase tracking-[0.3em] relative z-10" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>
           Seed · €2M · For investors past the demo
         </p>
+        {/* Reading key — explains the two-tone grammar used across the deck */}
+        <div className="mt-16 relative z-10 rounded-2xl px-8 py-5 flex items-center gap-10"
+          style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.12)`, backdropFilter: "blur(6px)" }}>
+          <p className="font-mono uppercase tracking-[0.32em]" style={{ fontSize: 11, color: "hsl(0 0% 70%)" }}>
+            How to read this deck
+          </p>
+          <div className="flex items-center gap-3">
+            <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${RED})` }} />
+            <p style={{ fontSize: 14, color: "hsl(0 0% 85%)" }}>
+              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Market lens</span> — how the room currently frames AI
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${GREEN})`, boxShadow: `0 0 10px hsl(${GREEN} / 0.6)` }} />
+            <p style={{ fontSize: 14, color: "hsl(0 0% 85%)" }}>
+              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Operator lens</span> — how it must work inside a regulated enterprise
+            </p>
+          </div>
+        </div>
       </div>
     </Shell>
   );
@@ -673,6 +710,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
         market: {
           headline: "A smarter assistant.",
           viz: <VizModelOutputBare />,
+          vizLabel: "Diagram · raw model output, no metadata",
           items: [
             { h: "Better prompts",  v: "If outputs drift, prompt harder." },
             { h: "More PDFs in RAG", v: "Search dressed up as governance." },
@@ -682,6 +720,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "Standards, receipts, memory, accountability.",
           viz: <VizGovernedDecision />,
+          vizLabel: "Diagram · same output, wrapped in 4 governance bands",
           items: [
             { h: "Standard bound",   v: "The company's approved way of doing the work." },
             { h: "Receipt signed",   v: "Replayable on demand. Policy, data, model, approver." },
@@ -706,6 +745,7 @@ function S03Context({ n, t }: { n: number; t: number }) {
         market: {
           headline: "One chat at a time.",
           viz: <VizContextSmall />,
+          vizLabel: "Diagram · 1 user · 1 chat · ~10k tokens",
           items: [
             { h: "Prompt window",  v: "Whatever fits in 10k tokens." },
             { h: "No receipts",    v: "Nothing the regulator can replay." },
@@ -715,6 +755,7 @@ function S03Context({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "An organisation-scale context graph.",
           viz: <VizContextHuge />,
+          vizLabel: "Diagram · context surface across an enterprise",
           items: [
             { h: "Cannot stay siloed", v: "Spans roles, tools, regions, regulators." },
             { h: "Must be efficient",  v: "Inefficient assembly multiplies the token + latency bill." },
@@ -739,6 +780,7 @@ function S04Solution({ n, t }: { n: number; t: number }) {
         market: {
           headline: "Another wrapper.",
           viz: <VizWrapper />,
+          vizLabel: "Diagram · prompt → model → text. No receipt.",
           items: [
             { h: "Prompt orchestration", v: "A nicer DAG over the same call." },
             { h: "Tool use",             v: "Public patterns, public libraries." },
@@ -748,6 +790,7 @@ function S04Solution({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "LOCK · COMPILE · SIGN · LEARN. One accountable decision.",
           viz: <VizSolutionLoop />,
+          vizLabel: "Diagram · the 4-station AACE loop, one per call",
           items: [
             { h: "Lock",    v: "Bind the task to the versioned playbook." },
             { h: "Compile", v: "Assemble policy, data, rules for that one call." },
@@ -796,6 +839,7 @@ function S06WhyNow({ n, t }: { n: number; t: number }) {
         market: {
           headline: "Tokens cheaper. Margins worse.",
           viz: <VizTokenDown />,
+          vizLabel: "Chart · per-token price, 2024 → 2028",
           items: [
             { h: "Race to the bottom", v: "Whoever wraps the cheapest model wins." },
             { h: "Commodity AI",       v: "The interesting work moves into labs." },
@@ -805,6 +849,7 @@ function S06WhyNow({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "Tokens cheaper. Governed AI work explodes.",
           viz: <VizCrossingCurves />,
+          vizLabel: "Chart · token cost ↓ × governed decisions ↑, with crossover",
           items: [
             { h: "100×",          v: "more AI tasks once cost drops below decision value." },
             { h: "Policy lag",    v: "Each new task surfaces a missing standard. Demand compounds." },
@@ -830,6 +875,7 @@ function S07Weekend({ n, t }: { n: number; t: number }) {
           kicker: "The weekend demo",
           headline: "Model API plus a chat UI is the product.",
           viz: <VizWeekendDemo />,
+          vizLabel: "Code · 6 lines that look like the product",
           items: [
             { h: "Clever system prompt", v: "Looks like a method. Is one paragraph." },
             { h: "PDFs in a vector store", v: "Search dressed up as governance." },
@@ -840,6 +886,7 @@ function S07Weekend({ n, t }: { n: number; t: number }) {
           kicker: "The production system underneath",
           headline: "What survives audit, handover, and a year of org change.",
           viz: <VizIceberg />,
+          vizLabel: "Diagram · iceberg · 10% chat UI, 90% governance plumbing",
           items: [
             { h: "Workflow control",       v: "Across roles, approvals and tools." },
             { h: "Typed standards",        v: "Ownership, expiry, versioning, change control." },
@@ -864,6 +911,7 @@ function S08Lab({ n, t }: { n: number; t: number }) {
         market: {
           headline: "The lab ships this feature next quarter.",
           viz: <VizLabExpansion />,
+          vizLabel: "Diagram · adjacent lab features, none of them the layer",
           items: [
             { h: "Memory in Claude",   v: "Looks adjacent. Solves a different problem." },
             { h: "Custom GPTs",        v: "Per-user knobs, not org-wide governance." },
@@ -873,6 +921,7 @@ function S08Lab({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "No regulated buyer accepts the vendor as the auditor of the vendor.",
           viz: <VizGovernanceStack />,
+          vizLabel: "Diagram · governance stack · regulator ↑ control ↑ models",
           items: [
             { h: "Neutrality",     v: "Buyers run several models. The layer cannot be owned by one." },
             { h: "Sovereignty",    v: "Standards and receipts are the buyer's operational IP." },
@@ -897,6 +946,7 @@ function S09Model({ n, t }: { n: number; t: number }) {
         market: {
           headline: "Mark up tokens. Charge per seat. Pray for retention.",
           viz: <VizSeatDecay />,
+          vizLabel: "Chart · per-seat revenue decay after rollout",
           items: [
             { h: "Per-seat SaaS",  v: "Decays the moment the org questions adoption." },
             { h: "Token reseller", v: "Margin compresses every quarter." },
@@ -906,6 +956,7 @@ function S09Model({ n, t }: { n: number; t: number }) {
         operator: {
           headline: "Price the accountable work unit. Model cost is a pass-through.",
           viz: <VizValueBar />,
+          vizLabel: "Chart · value vs. price vs. cost, per governed decision",
           items: [
             { h: "€0.40 / decision",     v: "What the customer pays per governed output." },
             { h: "€0.04 model + infra", v: "Pass-through. Falls every quarter." },
@@ -958,6 +1009,9 @@ function S10Proof({ n, t }: { n: number; t: number }) {
         </div>
         <p className="mt-6" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
           The wedge is live, not theoretical. The same playbook lifts into pharma, financial services and life sciences next.
+        </p>
+        <p className="mt-3 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: SUBTLE }}>
+          Source: AACE v3.1 runtime · regulated AEC deployment · 12-month rolling window · CTO-sponsored, anonymised on request.
         </p>
       </div>
     </Shell>
