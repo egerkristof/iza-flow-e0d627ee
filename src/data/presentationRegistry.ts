@@ -6,6 +6,7 @@ import FactoryDeck from "@/pages/FactoryDeck";
 import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import SeedPitchDeckSkeptic from "@/pages/SeedPitchDeckSkeptic";
 import SeedPitchDeckLens from "@/pages/SeedPitchDeckLens";
+import SeedPitchDeckInvestor from "@/pages/SeedPitchDeckInvestor";
 import InsuranceDeck from "@/pages/InsuranceDeck";
 import InsuranceUnderwritingDeck from "@/pages/InsuranceUnderwritingDeck";
 import ConsultingDeck from "@/pages/ConsultingDeck";
@@ -258,6 +259,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/SeedPitchDeckLens.tsx",
     description: "13-slide seed deck built around one repeating frame: how the venture market grades each topic (red, dim, narrow) vs. what regulated operators are actually buying (green, bold, wide). Cover establishes the two lenses, slide 02 (The Split) names the dichotomy explicitly, slide 03 explains why it exists via the context explosion, then slides 04-12 apply the exact same split to Problem, Solution unit, Why now, Weekend objection, Lab objection, Business model, Proof, Moat and the €2M Ask. Slide 13 collapses both lenses into one statement. Designed for the cold investor who has never met the founder and is tired of weekend AI projects.",
     component: SeedPitchDeckLens,
+    showInAdmin: true,
+  },
+  {
+    id: "seed-investor",
+    title: "Seed Pitch · Investor Edition",
+    path: "/seed-investor",
+    sourcePath: "src/pages/SeedPitchDeckInvestor.tsx",
+    description: "14-slide seed deck for investors who are tired of AI hype and have seen every chat wrapper. Keeps the Airbnb-style simplicity of /seed (one idea per slide, big type) as the spine — Cover, How it works, Proof, Moat, Team, Ask and Close are plain and concrete. The Market vs Operator lens from /seed-lens is applied ONLY where the contrast does the explaining: Problem, Context Explosion, Solution, Why Now, Weekend objection, Lab objection, Business Model. Substance lifted from /factory (€0.40 per governed decision, 95% margin, 127 standards, 3,400 signed decisions/mo, 62% time-to-spec, 0 audit failures, 15+ years productionising data and AI). Designed to be sent cold to a skeptical investor without the founder in the room.",
+    component: SeedPitchDeckInvestor,
     showInAdmin: true,
   },
   {
