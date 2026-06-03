@@ -212,7 +212,7 @@ function GovernanceGate() {
           <span className="ml-auto text-[10px] font-mono text-muted-foreground/70">applied to every AI session</span>
         </div>
         <p className="text-sm font-semibold text-foreground mb-4 leading-snug">
-          Your rules, encoded once. Regulatory, financial, operational. Production readiness guaranteed at source.
+          Your rules, encoded once. AI runs at full power inside them. Regulatory, financial, operational. Production readiness at source.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
           {CENTRAL_RULES.map((g, i) => {
