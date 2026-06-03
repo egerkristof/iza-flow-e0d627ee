@@ -30,12 +30,12 @@ const BRUISES = [
     icon: FileWarning,
     persona: "Control",
     stat: "0",
-    statLabel: "replayable outputs. No lineage, no audit trail.",
-    rootCause: "No signed runs.",
+    statLabel: "outputs you can defend to Legal, Finance, or a regulator.",
+    rootCause: "No compliance boundary at prompt time.",
     source: "LIZA OS intake, 2025",
     severity: "destructive" as const,
     detail:
-      "Prompt, model, data and output live in four places. Audit cannot reconstruct what shipped, on which playbook version, or who approved it.",
+      "No enforcement of your own rules at the moment AI runs. Regulatory (SOC 2, ISO, EU AI Act, GDPR), financial (token ROI, budget caps), and operational (brand, best practice, data scope) all sit outside the loop. Audit cannot reconstruct what shipped, on which playbook version, or who approved it.",
   },
 ];
 
