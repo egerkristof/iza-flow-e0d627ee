@@ -1,5 +1,18 @@
 import { motion } from "framer-motion";
-import { Sparkles, ShieldCheck, Check, RotateCw, Users, AlertTriangle, X } from "lucide-react";
+import {
+  Sparkles,
+  BookOpen,
+  Check,
+  Users,
+  AlertTriangle,
+  X,
+  MessageSquare,
+  GitBranch,
+  ArrowDown,
+  Bot,
+  Database,
+  Cpu,
+} from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 
 /**
