@@ -71,9 +71,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA is the infrastructure your teams iterate and learn on at full speed.
-          Every run defensible inside your rules. Regulatory, financial, operational.
-          The way Heads of AI turn pilots into results the board can see.
+          The infrastructure for full-speed AI iteration. Defensible by design.
         </motion.p>
 
         {/* DEMANDS: the three things you have to deliver, as evidence — not as headline */}
