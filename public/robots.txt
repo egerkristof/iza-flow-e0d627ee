@@ -15,3 +15,5 @@ Allow: /
 Disallow: /offers/
 Disallow: /impact
 Disallow: /impact/
+Disallow: /holding
+Disallow: /holding/
