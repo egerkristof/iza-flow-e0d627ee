@@ -1,6 +1,5 @@
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { HeroSection } from "@/components/marketing/home/HeroSection";
-import { TrustStrip } from "@/components/marketing/home/TrustStrip";
 import { ThreeBruisesStrip } from "@/components/marketing/home/ThreeBruisesStrip";
 import { GuideStrip } from "@/components/marketing/home/GuideStrip";
 import { PromptFactoryVisual } from "@/components/marketing/home/PromptFactoryVisual";
@@ -22,10 +21,7 @@ export default function HomePage() {
       {/* 1. Character + promise: AI rollout owner */}
       <HeroSection />
 
-      {/* 2. Tension stat strip: the questions you are being asked this quarter */}
-      <TrustStrip />
-
-      {/* 3. Problem: three places it breaks (escalating severity) */}
+      {/* 2. Problem: three places it breaks, each anchored to a board-level number */}
       <ThreeBruisesStrip />
 
       {/* 4. Guide: empathy + authority */}
