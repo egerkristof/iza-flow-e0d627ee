@@ -33,13 +33,6 @@ const STEPS = [
   },
 ];
 
-const METRICS = [
-  { from: "8%", to: "60%+", label: "AI workflows in governed production" },
-  { from: "18 months", to: "30 days", label: "licence purchase to first measurable ROI" },
-  { from: "0", to: "100%", label: "of outputs replayable for Legal or audit" },
-  { from: "Scattered pilots", to: "One playbook", label: "enforced across every AI surface" },
-];
-
 export function GetStartedPlan() {
   return (
     <section className="py-20 px-6">
@@ -126,42 +119,7 @@ export function GetStartedPlan() {
           })}
         </div>
 
-        {/* Metrics surfaced by step 3 */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="rounded-2xl border p-7 md:p-8"
-          style={{
-            borderColor: "hsl(var(--brand-green) / 0.3)",
-            background: "hsl(var(--brand-green) / 0.04)",
-          }}
-        >
-          <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground mb-5 text-center">
-            What 90 days delivers
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {METRICS.map((m) => (
-              <div key={m.label} className="text-center">
-                <p className="text-xs text-muted-foreground/70 line-through mb-1">
-                  {m.from}
-                </p>
-                <p
-                  className="text-2xl md:text-3xl font-black mb-1"
-                  style={{ color: "hsl(var(--brand-green))" }}
-                >
-                  {m.to}
-                </p>
-                <p className="text-[11px] text-foreground/70 leading-snug">
-                  {m.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <div className="mt-10 text-center">
+        <div className="mt-4 text-center">
           <a
             href={CAL_URL}
             target="_blank"
