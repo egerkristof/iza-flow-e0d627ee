@@ -59,9 +59,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Put AI into production
+          Maximum AI power.
           <br />
-          <span className="text-primary">without losing control.</span>
+          <span className="text-primary">Inside your rules.</span>
         </motion.h1>
 
         {/* SUBHEAD: one tight line, what LIZA is */}
@@ -71,8 +71,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA is the control layer that runs every AI session inside your rules.
-          Regulatory. Financial. Operational. Auditable. Owned. Replayable.
+          LIZA is the control layer that runs every AI session at full speed,
+          full creative range, full ROI. Inside your rules. Regulatory, financial,
+          operational. Auditable, owned, replayable by design.
         </motion.p>
 
         {/* DEMANDS: the three things you have to deliver, as evidence — not as headline */}
