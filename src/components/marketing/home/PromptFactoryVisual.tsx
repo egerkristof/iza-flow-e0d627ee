@@ -1,320 +1,219 @@
 import { motion } from "framer-motion";
-import {
-  Sparkles,
-  BookOpen,
-  Check,
-  Users,
-  AlertTriangle,
-  X,
-  MessageSquare,
-  GitBranch,
-  ArrowDown,
-  Bot,
-  Database,
-  Cpu,
-} from "lucide-react";
+import { BookOpen, Check, X, Bot, Database, Cpu } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
+import type { ReactNode } from "react";
 
 /**
- * Anatomy of a prompt at org scale — standalone story.
- * Reads top to bottom as a single narrative:
- *   1. Someone writes a prompt.
- *   2. Today: 800 versions of it scatter across the org. No control.
- *   3. LIZA wraps it in a standard your business owns.
- *   4. Every run comes back signed: source, model, cost, version.
- *   5. The standard learns every week.
- * Every stage carries its own label + caption so it makes sense alone.
+ * Anatomy of a prompt at org scale.
+ * Reweighted for the Head of AI Strategy ICP:
+ *   1. The seed prompt.
+ *   2. The CHAOS at scale (primary pain, sized up).
+ *   3. The SIGNED output (primary product moment, sized up).
+ *   4. The audit log evolution (versioned standard, replayable).
+ *   5. Closing: production infrastructure vs siloed POC graveyard.
  */
 
-const PEOPLE = 24;
-
-function StageHeader({ n, title, caption }: { n: string; title: string; caption: string }) {
+function StageRow({
+  n,
+  numberTone = "neutral",
+  title,
+  caption,
+  children,
+}: {
+  n: string;
+  numberTone?: "neutral" | "danger" | "primary" | "success";
+  title: ReactNode;
+  caption: string;
+  children: ReactNode;
+}) {
+  const tones = {
+    neutral: { bg: "hsl(var(--muted))", color: "hsl(var(--muted-foreground))", border: "transparent" },
+    danger: { bg: "hsl(var(--destructive) / 0.1)", color: "hsl(var(--destructive))", border: "hsl(var(--destructive) / 0.25)" },
+    primary: { bg: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))", border: "hsl(var(--primary))" },
+    success: { bg: "hsl(var(--brand-green) / 0.12)", color: "hsl(var(--brand-green))", border: "hsl(var(--brand-green) / 0.35)" },
+  }[numberTone];
   return (
-    <div className="flex items-start gap-3 mb-3">
-      <span
-        className="shrink-0 w-7 h-7 rounded-full grid place-items-center text-[11px] font-black"
-        style={{ background: "hsl(var(--primary) / 0.12)", color: "hsl(var(--primary))", border: "1px solid hsl(var(--primary) / 0.3)" }}
-      >
-        {n}
-      </span>
-      <div>
-        <p className="text-sm md:text-base font-black tracking-tight text-foreground leading-tight">{title}</p>
-        <p className="text-xs md:text-sm text-muted-foreground leading-snug mt-0.5">{caption}</p>
+    <motion.section
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5 }}
+      className="relative"
+    >
+      <div className="flex items-start gap-5 md:gap-8">
+        <div
+          className="flex-none w-10 h-10 rounded-full flex items-center justify-center text-sm font-black border"
+          style={{ background: tones.bg, color: tones.color, borderColor: tones.border }}
+        >
+          {n}
+        </div>
+        <div className="flex-1 min-w-0 space-y-5">
+          <div className="space-y-1.5">
+            <h3 className="text-xl md:text-2xl font-black tracking-tight text-foreground leading-tight">
+              {title}
+            </h3>
+            <p className="text-sm md:text-base text-muted-foreground leading-snug">{caption}</p>
+          </div>
+          {children}
+        </div>
       </div>
-    </div>
+    </motion.section>
   );
 }
 
 function PromptCard() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="mx-auto w-full max-w-md rounded-xl border bg-background shadow-[0_8px_32px_-12px_hsl(var(--primary)/0.25)]"
-      style={{ borderColor: "hsl(var(--primary) / 0.35)" }}
-    >
-      <div className="flex items-center justify-between px-4 py-2 border-b" style={{ borderColor: "hsl(var(--primary) / 0.2)" }}>
-        <div className="flex items-center gap-2">
-          <Sparkles className="w-3.5 h-3.5 text-primary" />
-          <span className="text-[11px] font-bold tracking-wider uppercase text-primary">What someone types into ChatGPT / Copilot</span>
-        </div>
-        <span className="text-[10px] font-mono text-muted-foreground">v7</span>
+    <div className="bg-background border border-border rounded-xl p-5 md:p-6 shadow-sm max-w-lg">
+      <div className="flex justify-between items-center mb-3">
+        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+          Draft v1
+        </span>
+        <span className="h-2 w-2 rounded-full bg-muted-foreground/30" />
       </div>
-      <div className="px-4 py-3">
-        <p className="text-sm font-semibold text-foreground leading-snug">
-          "Summarise the discovery call. Surface budget, decision timeline, stakeholders."
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-function PeopleSwarm() {
-  return (
-    <div
-      className="relative rounded-xl border px-4 py-5"
-      style={{ borderColor: "hsl(var(--destructive) / 0.3)", background: "hsl(var(--destructive) / 0.04)" }}
-    >
-      <div className="flex items-center justify-between mb-3">
-        <div className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-wider uppercase" style={{ color: "hsl(var(--destructive))" }}>
-          <AlertTriangle className="w-3 h-3" /> Today, without a standard
-        </div>
-        <span className="text-[10px] font-mono text-muted-foreground">847 runs / week · 23 teams</span>
-      </div>
-      <svg className="absolute left-0 right-0 top-12 h-10 w-full pointer-events-none" viewBox="0 0 400 40" preserveAspectRatio="none">
-        <motion.path
-          d="M 200 0 L 40 40"
-          stroke="hsl(var(--destructive) / 0.25)"
-          strokeWidth="1"
-          strokeDasharray="3 4"
-          fill="none"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        />
-        <motion.path
-          d="M 200 0 L 360 40"
-          stroke="hsl(var(--destructive) / 0.25)"
-          strokeWidth="1"
-          strokeDasharray="3 4"
-          fill="none"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        />
-      </svg>
-      <div className="relative grid grid-cols-12 gap-1.5 w-full">
-        {Array.from({ length: PEOPLE }).map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: 0.5 + i * 0.025 }}
-            className="w-5 h-5 mx-auto rounded-full flex items-center justify-center"
-            style={{
-              background: "hsl(var(--destructive) / 0.1)",
-              border: "1px solid hsl(var(--destructive) / 0.35)",
-            }}
-          >
-            <Users className="w-2.5 h-2.5" style={{ color: "hsl(var(--destructive))" }} />
-          </motion.div>
-        ))}
-      </div>
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {["different wording", "different data scope", "no token cap", "no audit trail", "no owner"].map((t) => (
-          <span
-            key={t}
-            className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded"
-            style={{ background: "hsl(var(--destructive) / 0.08)", color: "hsl(var(--destructive))" }}
-          >
-            <X className="w-2.5 h-2.5" /> {t}
-          </span>
-        ))}
-      </div>
+      <p className="text-base md:text-lg font-medium text-foreground leading-snug">
+        "Summarise the discovery call. Surface budget, decision timeline, stakeholders."
+      </p>
     </div>
   );
 }
 
-function PlaybookBar() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scaleX: 0.9 }}
-      whileInView={{ opacity: 1, scaleX: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.4 }}
-      className="mx-auto w-full rounded-xl border px-5 py-4"
-      style={{
-        borderColor: "hsl(var(--brand-green) / 0.4)",
-        background: "hsl(var(--brand-green) / 0.06)",
-        boxShadow: "0 0 24px -8px hsl(var(--brand-green) / 0.3)",
-      }}
-    >
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <BookOpen className="w-4 h-4" style={{ color: "hsl(var(--brand-green))" }} />
-          <span className="text-xs font-black tracking-[0.15em] uppercase" style={{ color: "hsl(var(--brand-green))" }}>
-            Playbook · discovery-call
-          </span>
-        </div>
-        <span className="text-[10px] font-mono text-muted-foreground">owned by RevOps · v7</span>
-      </div>
-      <div className="grid sm:grid-cols-4 gap-2">
-        {[
-          { k: "Data scope", v: "CRM + call notes only" },
-          { k: "Token cap", v: "€0.18 / run" },
-          { k: "Approved models", v: "GPT-5, Claude 4" },
-          { k: "Output schema", v: "JSON, 5 fields" },
-        ].map((r) => (
-          <div key={r.k} className="rounded-md border px-2.5 py-1.5" style={{ borderColor: "hsl(var(--brand-green) / 0.25)", background: "hsl(var(--background))" }}>
-            <p className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">{r.k}</p>
-            <p className="text-[11px] font-semibold text-foreground leading-tight">{r.v}</p>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
-}
-
-function SignedOutputs() {
+const CHAOS_TAGS = [
+  "Different wording.",
+  "Different data scope.",
+  "No token cap.",
+  "No audit trail.",
+  "No owner.",
+  "Shadow AI cost.",
+];
+function ChaosBlock() {
   return (
     <div
-      className="relative rounded-xl border px-4 py-5"
-      style={{ borderColor: "hsl(var(--brand-green) / 0.35)", background: "hsl(var(--brand-green) / 0.04)" }}
+      className="relative rounded-2xl border p-6 md:p-8 overflow-hidden"
+      style={{ borderColor: "hsl(var(--destructive) / 0.2)", background: "hsl(var(--destructive) / 0.04)" }}
     >
-      <div className="flex items-center justify-between mb-3">
-        <div className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-wider uppercase" style={{ color: "hsl(var(--brand-green))" }}>
-          <Check className="w-3 h-3" /> Same 847 runs, with the playbook
-        </div>
-        <span className="text-[10px] font-mono text-muted-foreground">every output signed</span>
-      </div>
-      <div className="relative grid grid-cols-12 gap-1.5 w-full">
-        {Array.from({ length: PEOPLE }).map((_, i) => (
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 relative z-10">
+        {CHAOS_TAGS.map((t, i) => (
           <motion.div
-            key={i}
-            initial={{ opacity: 0, y: -6 }}
+            key={t}
+            initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.3, delay: 0.2 + i * 0.02 }}
-            className="w-5 h-5 mx-auto rounded-md flex items-center justify-center"
-            style={{
-              background: "hsl(var(--brand-green) / 0.12)",
-              border: "1px solid hsl(var(--brand-green) / 0.4)",
-            }}
+            transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
+            className="bg-background/80 backdrop-blur p-3 rounded-md border text-xs font-black uppercase tracking-wider flex items-center gap-2"
+            style={{ borderColor: "hsl(var(--destructive) / 0.3)", color: "hsl(var(--destructive))" }}
           >
-            <Check className="w-2.5 h-2.5" style={{ color: "hsl(var(--brand-green))" }} />
+            <X className="w-3.5 h-3.5" />
+            {t}
           </motion.div>
         ))}
       </div>
-      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-1.5">
-        {[
-          { k: "Source", v: "CRM-#4821" },
-          { k: "Model", v: "GPT-5" },
-          { k: "Cost", v: "€0.14" },
-          { k: "Playbook", v: "discovery v7" },
-        ].map((r) => (
-          <div key={r.k} className="rounded-md border px-2 py-1" style={{ borderColor: "hsl(var(--brand-green) / 0.25)", background: "hsl(var(--background))" }}>
-            <p className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">{r.k}</p>
-            <p className="text-[11px] font-mono text-foreground">{r.v}</p>
-          </div>
-        ))}
+      <div className="mt-6 flex justify-center">
+        <p
+          className="font-mono text-[10px] md:text-[11px] uppercase tracking-wider"
+          style={{ color: "hsl(var(--destructive) / 0.75)" }}
+        >
+          Warning. 847 unmanaged runs this week. No governance detected.
+        </p>
       </div>
     </div>
   );
 }
 
-function OverrideToPlaybook() {
+const RECEIPT_FIELDS = [
+  { k: "Model", v: "GPT-5", mono: true, primary: false },
+  { k: "Token cost", v: "€0.142", mono: true, primary: false },
+  { k: "Playbook", v: "discovery.v9", mono: true, primary: true },
+  { k: "Data read", v: "crm.opp_4821", mono: true, primary: false },
+  { k: "Role", v: "AI + human", mono: false, primary: false },
+];
+function SignedReceipt() {
   return (
-    <div className="grid md:grid-cols-[1fr_auto_1fr] gap-4 items-stretch">
-      {/* Left: a real moment — chat override */}
-      <motion.div
-        initial={{ opacity: 0, x: -10 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="rounded-xl border bg-background p-4 flex flex-col"
-        style={{ borderColor: "hsl(var(--border))" }}
-      >
-        <div className="flex items-center gap-2 mb-3">
-          <MessageSquare className="w-3.5 h-3.5 text-muted-foreground" />
-          <span className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground">
-            Sales rep, Tuesday 14:02
-          </span>
-        </div>
-        <div className="space-y-2 text-xs leading-snug">
-          <div className="rounded-lg px-3 py-2" style={{ background: "hsl(var(--muted))" }}>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">AI output</p>
-            <p className="text-foreground">Budget: not disclosed. Timeline: Q3.</p>
-          </div>
-          <div className="rounded-lg px-3 py-2 border-l-2" style={{ borderColor: "hsl(var(--brand-green))", background: "hsl(var(--brand-green) / 0.06)" }}>
-            <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: "hsl(var(--brand-green))" }}>
-              Rep override
+    <div
+      className="relative bg-background rounded-2xl p-7 md:p-9 overflow-hidden shadow-[0_24px_64px_-24px_hsl(var(--brand-green)/0.35)]"
+      style={{ border: "3px solid hsl(var(--brand-green))" }}
+    >
+      <div className="absolute top-0 right-0 p-4 opacity-[0.08] pointer-events-none">
+        <Check className="w-32 h-32" style={{ color: "hsl(var(--brand-green))" }} strokeWidth={3} />
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-5 md:gap-6 relative">
+        {RECEIPT_FIELDS.map((f, i) => (
+          <motion.div
+            key={f.k}
+            initial={{ opacity: 0, y: 6 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.3, delay: 0.15 + i * 0.08 }}
+            className="space-y-1"
+          >
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+              {f.k}
             </p>
-            <p className="text-foreground">
-              Budget signal lives in procurement slot, not the call. Always check field 'rfp_value'.
+            <p
+              className={`text-sm font-bold ${f.mono ? "font-mono" : ""}`}
+              style={f.primary ? { color: "hsl(var(--primary))" } : { color: "hsl(var(--foreground))" }}
+            >
+              {f.v}
             </p>
-          </div>
-        </div>
-        <p className="mt-3 text-[10px] text-muted-foreground">LIZA captures the correction. No ticket. No re-prompting.</p>
-      </motion.div>
-
-      {/* Arrow */}
-      <div className="hidden md:flex items-center justify-center text-primary">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-          className="flex flex-col items-center gap-1"
+          </motion.div>
+        ))}
+      </div>
+      <div className="mt-7 pt-6 border-t border-border flex items-center gap-3">
+        <div
+          className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+          style={{ background: "hsl(var(--brand-green))", color: "hsl(var(--primary-foreground))" }}
         >
-          <GitBranch className="w-5 h-5" />
-          <span className="text-[9px] font-black tracking-widest uppercase">feeds</span>
-        </motion.div>
-      </div>
-      <div className="md:hidden flex justify-center text-primary">
-        <ArrowDown className="w-4 h-4" />
-      </div>
-
-      {/* Right: the playbook updates */}
-      <motion.div
-        initial={{ opacity: 0, x: 10 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="rounded-xl border p-4"
-        style={{
-          borderColor: "hsl(var(--primary) / 0.35)",
-          background: "hsl(var(--primary) / 0.04)",
-        }}
-      >
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <BookOpen className="w-3.5 h-3.5 text-primary" />
-            <span className="text-[10px] font-black tracking-wider uppercase text-primary">
-              Playbook · discovery-call
-            </span>
-          </div>
-          <span className="text-[10px] font-mono text-muted-foreground">v7 → v8</span>
+          <Check className="w-5 h-5" strokeWidth={3} />
         </div>
-        <div className="space-y-1.5 font-mono text-[11px] leading-snug">
-          <div className="rounded px-2 py-1" style={{ background: "hsl(var(--destructive) / 0.08)", color: "hsl(var(--destructive))" }}>
-            <span className="opacity-70">- </span>read: call_notes
-          </div>
-          <div className="rounded px-2 py-1" style={{ background: "hsl(var(--brand-green) / 0.1)", color: "hsl(var(--brand-green))" }}>
-            <span className="opacity-70">+ </span>read: call_notes, crm.rfp_value
-          </div>
-          <div className="rounded px-2 py-1" style={{ background: "hsl(var(--brand-green) / 0.1)", color: "hsl(var(--brand-green))" }}>
-            <span className="opacity-70">+ </span>rule: budget := crm.rfp_value
-          </div>
-        </div>
-        <p className="mt-3 text-[10px] text-muted-foreground">
-          Next 846 runs use v8 automatically. Every team. Every tool. Same playbook.
+        <p className="text-sm md:text-base font-bold text-foreground leading-snug">
+          Production-grade output. Every standard met. Replayable on demand.
         </p>
-      </motion.div>
+      </div>
+    </div>
+  );
+}
+
+const AUDIT_ROWS = [
+  { v: "v7", label: "Initial release", meta: "1,240 runs", state: "past" as const },
+  { v: "v8", label: "Added CRM context", meta: "+ data_field: 'rfp_value'", state: "past" as const },
+  { v: "v9", label: "Human-in-loop override applied", meta: "ACTIVE", state: "active" as const },
+];
+function AuditLog() {
+  return (
+    <div className="space-y-2 font-mono">
+      {AUDIT_ROWS.map((r, i) => {
+        const active = r.state === "active";
+        return (
+          <motion.div
+            key={r.v}
+            initial={{ opacity: 0, x: -8 }}
+            whileInView={{ opacity: active ? 1 : 0.6, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, delay: 0.1 + i * 0.1 }}
+            className="bg-background p-3.5 md:p-4 rounded-lg flex items-center justify-between text-xs gap-3 flex-wrap"
+            style={{
+              border: active ? "2px solid hsl(var(--primary))" : "1px solid hsl(var(--border))",
+            }}
+          >
+            <span className="font-bold" style={active ? { color: "hsl(var(--primary))" } : undefined}>
+              {r.v} . {r.label}
+            </span>
+            {active ? (
+              <span
+                className="px-2 py-0.5 rounded text-[10px] font-black tracking-wider"
+                style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
+              >
+                {r.meta}
+              </span>
+            ) : (
+              <span className="text-muted-foreground">{r.meta}</span>
+            )}
+          </motion.div>
+        );
+      })}
+      <p className="mt-3 text-[11px] text-muted-foreground leading-snug font-sans">
+        Any auditor can replay any run from any week. The standard that was in force is stamped on
+        the output.
+      </p>
     </div>
   );
 }
@@ -334,6 +233,7 @@ const COMPARE = [
     what: "A runner that executes steps. Needs a playbook to know how.",
     when: "Without LIZA, every agent invents its own rules.",
     accent: "hsl(var(--foreground))",
+    highlight: false,
   },
   {
     icon: Database,
@@ -341,6 +241,7 @@ const COMPARE = [
     what: "Pulls documents into the prompt. Doesn't decide what's allowed.",
     when: "Change your RAG and nothing tells the agents.",
     accent: "hsl(var(--foreground))",
+    highlight: false,
   },
   {
     icon: Cpu,
@@ -348,12 +249,13 @@ const COMPARE = [
     what: "Re-trains the model weights. Slow, expensive, opaque.",
     when: "Weeks to update. Can't show auditors what changed.",
     accent: "hsl(var(--foreground))",
+    highlight: false,
   },
 ];
 
 function ComparisonBlock() {
   return (
-    <div className="mt-16 max-w-5xl mx-auto">
+    <div className="mt-20 max-w-5xl mx-auto">
       <div className="text-center mb-6">
         <p className="text-[11px] font-black tracking-[0.2em] uppercase text-muted-foreground mb-2">
           So what is a playbook, exactly
@@ -396,6 +298,71 @@ function ComparisonBlock() {
   );
 }
 
+function InfrastructureCloser() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="mt-20 rounded-3xl p-10 md:p-14 text-center space-y-8 max-w-5xl mx-auto"
+      style={{ background: "hsl(222 20% 4%)" }}
+    >
+      <div className="space-y-4">
+        <h3
+          className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05]"
+          style={{ color: "hsl(0 0% 100%)" }}
+        >
+          This is how AI ships to production.
+        </h3>
+        <p
+          className="text-base md:text-xl max-w-2xl mx-auto leading-relaxed"
+          style={{ color: "hsl(0 0% 100% / 0.65)" }}
+        >
+          Stop building siloed AI POC hellholes. Start building infrastructure your CFO, board and
+          regulator can defend. LIZA is the standard.
+        </p>
+      </div>
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-6 pt-2">
+        <div className="flex flex-col items-center gap-2">
+          <span
+            className="text-[10px] uppercase font-black tracking-[0.2em]"
+            style={{ color: "hsl(0 0% 100% / 0.4)" }}
+          >
+            The old way
+          </span>
+          <div
+            className="px-6 py-3 rounded-full font-bold line-through"
+            style={{
+              border: "1px solid hsl(0 0% 100% / 0.15)",
+              color: "hsl(0 0% 100% / 0.45)",
+            }}
+          >
+            Siloed POC graveyard
+          </div>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <span
+            className="text-[10px] uppercase font-black tracking-[0.2em]"
+            style={{ color: "hsl(var(--brand-green))" }}
+          >
+            The LIZA way
+          </span>
+          <div
+            className="px-6 py-3 rounded-full font-bold"
+            style={{
+              background: "hsl(var(--brand-green))",
+              color: "hsl(var(--primary-foreground))",
+            }}
+          >
+            Production infrastructure
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export function PromptFactoryVisual() {
   return (
     <section className="py-24 px-6 relative overflow-hidden" style={{ background: "hsl(var(--card))" }}>
@@ -407,75 +374,65 @@ export function PromptFactoryVisual() {
         }}
       />
       <div className="max-w-6xl mx-auto relative">
-        <div className="text-center mb-12 max-w-3xl mx-auto">
+        <div className="text-center mb-16 max-w-3xl mx-auto">
           <SectionTag label="How LIZA actually works · one prompt at org scale" />
           <h2 className="text-2xl md:text-4xl font-black leading-[1.1] tracking-tight mb-4">
-            The same prompt runs 847 times this week.{" "}
-            <GradientText>LIZA turns those runs into infrastructure you can defend.</GradientText>
+            One prompt. 847 runs this week.{" "}
+            <GradientText>
+              LIZA turns every one into infrastructure you can defend.
+            </GradientText>
           </h2>
           <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-            Follow one prompt through your org. Five steps, top to bottom.
+            Follow it top to bottom. Where it breaks. What replaces it. What ships.
           </p>
         </div>
 
-        <div className="relative max-w-3xl mx-auto space-y-8">
-          <div>
-            <StageHeader
-              n="1"
-              title="One prompt. Someone on your team writes it."
-              caption="A sales rep, a PM, an analyst. Today this lives in their head and their chat history."
-            />
+        <div className="relative max-w-4xl mx-auto space-y-20 md:space-y-24">
+          <StageRow
+            n="1"
+            numberTone="neutral"
+            title="One prompt. Someone on your team writes it."
+            caption="Today it lives in a single chat history. Invisible to the organisation. Impossible to scale."
+          >
             <PromptCard />
-          </div>
+          </StageRow>
 
-          <div>
-            <StageHeader
-              n="2"
-              title="Then 23 teams run their own version of it."
-              caption="Different wording. Different data pulled in. No cap on cost. No record of what was asked or answered."
-            />
-            <PeopleSwarm />
-          </div>
+          <StageRow
+            n="2"
+            numberTone="danger"
+            title="The scaling failure. Chaos at 4,000 seats."
+            caption="Without infrastructure, every team invents their own risk. Zero visibility for the board. This is what most AI rollouts actually look like today."
+          >
+            <ChaosBlock />
+          </StageRow>
 
-          <div>
-            <StageHeader
-              n="3"
-              title="LIZA wraps the prompt in a playbook your business owns."
-              caption="One place where data scope, token cap, approved models and output shape are defined. Versioned. Auditable."
-            />
-            <PlaybookBar />
-          </div>
+          <StageRow
+            n="3"
+            numberTone="success"
+            title={
+              <>
+                The signed output.{" "}
+                <span className="text-muted-foreground font-bold">Every. Single. Run.</span>
+              </>
+            }
+            caption="The product moment. Every output stamped with the model used, the token cost, the playbook version, the data read, and the role of human vs AI. CFO and Legal can read it without translation."
+          >
+            <SignedReceipt />
+          </StageRow>
 
-          <div>
-            <StageHeader
-              n="4"
-              title="Every run comes back signed."
-              caption="Source data, model used, cost, and which version of the playbook it followed. Stamped on every output."
-            />
-            <SignedOutputs />
-          </div>
-
-          <div>
-            <StageHeader
-              n="5"
-              title="Someone corrects the AI. The playbook learns."
-              caption="A real moment from this week. A rep overrides a wrong answer in chat. LIZA turns the correction into the next version of the playbook. Every team running it gets the fix on the next prompt."
-            />
-            <OverrideToPlaybook />
-          </div>
+          <StageRow
+            n="4"
+            numberTone="primary"
+            title="The playbook evolves. The audit log proves it."
+            caption="Someone corrects the AI in chat. LIZA captures the correction, ships it as the next playbook version, and stamps every future run with which version was in force."
+          >
+            <AuditLog />
+          </StageRow>
         </div>
 
         <ComparisonBlock />
 
-        <div className="mt-12 max-w-3xl mx-auto rounded-2xl border px-6 py-5 text-center" style={{ borderColor: "hsl(var(--primary) / 0.25)", background: "hsl(var(--primary) / 0.04)" }}>
-          <p className="text-sm md:text-base font-semibold text-foreground leading-snug">
-            That is LIZA.{" "}
-            <span className="text-muted-foreground font-normal">
-              Not another chat tool. The control layer that sits over the ones you already use,
-              so every AI run in your org has an owner, a budget, and a paper trail.
-            </span>
-          </p>
-        </div>
+        <InfrastructureCloser />
       </div>
     </section>
   );
