@@ -4,11 +4,8 @@ import { ThreeBruisesStrip } from "@/components/marketing/home/ThreeBruisesStrip
 import { GuideStrip } from "@/components/marketing/home/GuideStrip";
 import { PromptFactoryVisual } from "@/components/marketing/home/PromptFactoryVisual";
 import { GetStartedPlan } from "@/components/marketing/home/GetStartedPlan";
-import { AccountableAIStrip } from "@/components/marketing/home/AccountableAIStrip";
-import { NinetyDayBeat } from "@/components/marketing/home/NinetyDayBeat";
-import { ThreeReasonsSection } from "@/components/marketing/home/ThreeReasonsSection";
+import { StakesAndTransform } from "@/components/marketing/home/StakesAndTransform";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
-import { SectionDivider } from "@/components/marketing/home/SectionDivider";
 
 /*
  * Homepage built on StoryBrand for the AI Rollout Owner.
@@ -18,33 +15,25 @@ import { SectionDivider } from "@/components/marketing/home/SectionDivider";
 export default function HomePage() {
   return (
     <MarketingLayout>
-      {/* 1. Character + promise: AI rollout owner */}
+      {/* 1. Character + promise */}
       <HeroSection />
 
-      {/* 2. Problem: three places it breaks, each anchored to a board-level number */}
+      {/* 2. Problem: three numbers, expand for root cause */}
       <ThreeBruisesStrip />
 
-      {/* 4. Guide: empathy + authority */}
+      {/* 3. Guide: empathy + authority */}
       <GuideStrip />
 
-      {/* 4b. Visual centerpiece: anatomy of a prompt at org scale */}
+      {/* 4. Product moment: anatomy of a prompt at org scale */}
       <PromptFactoryVisual />
 
-      {/* 5. Plan: 3 steps, co-built, with the metrics that surface at 90d */}
+      {/* 5. Plan: 3 co-built steps */}
       <GetStartedPlan />
 
-      {/* 6. Stakes: two ways this ends */}
-      <AccountableAIStrip />
+      {/* 6. Stakes + transformation: today vs day 90 */}
+      <StakesAndTransform />
 
-      {/* 7. Transformation: 90 days in */}
-      <NinetyDayBeat />
-
-      <SectionDivider />
-
-      {/* 8. Proof: structural reasons existing tools cannot close the gap */}
-      <ThreeReasonsSection />
-
-      {/* 9. Final ask: one CTA, no fragmentation */}
+      {/* 7. Final ask */}
       <BetaCTASection />
     </MarketingLayout>
   );
