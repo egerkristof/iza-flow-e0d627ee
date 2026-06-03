@@ -8,7 +8,7 @@ const STEPS = [
     n: "01",
     icon: Settings,
     title: "Set your org boundaries",
-    body: "We sit with you and write the playbook every AI tool in your org has to obey. Who can read what data. Hard token cost limits per team. Approved models. The guardrails that keep AI defensible from day one.",
+    body: "Write the playbook. Every AI tool in your org has to obey or define it. Who can read what data. Hard token cost limits per team. Approved models. The guardrails that keep AI defensible from day one.",
     tag: "Days 0–14 · co-built",
     mock: MockStandardEditor,
     caption: "One playbook. Enforced across ChatGPT, Copilot, Claude, internal LLMs.",
