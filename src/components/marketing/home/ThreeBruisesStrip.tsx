@@ -11,6 +11,10 @@ const BRUISES = [
     line: "Your pilots have become a graveyard. The board wants shipped outcomes, not another sandbox demo.",
     source: "MIT / BCG, 2024",
     severity: "warning" as const,
+    why: [
+      "No org-wide playbook. Every pilot rebuilds rules, prompts and guardrails from scratch.",
+      "Legal, Risk and IT block at the production gate. Nothing was governed by design.",
+    ],
   },
   {
     icon: Receipt,
@@ -20,6 +24,10 @@ const BRUISES = [
     line: "Token bills 4x. No one on your team can map a single euro to a named business outcome.",
     source: "Workday, AI at Work 2025",
     severity: "destructive-mid" as const,
+    why: [
+      "Same task re-prompted across teams. No reusable, versioned playbook to anchor it.",
+      "Shadow tools multiply seats. Outputs get redone because no one trusts the last run.",
+    ],
   },
   {
     icon: FileWarning,
@@ -29,6 +37,10 @@ const BRUISES = [
     line: "Outputs ship without context. One audit, one client question, and it lands on you personally.",
     source: "LIZA OS intake, 2025",
     severity: "destructive" as const,
+    why: [
+      "Prompt, model, data and output live in four places. Nothing ties them together.",
+      "No version, no owner. Audit cannot reconstruct what shipped or who approved it.",
+    ],
   },
 ];
 
@@ -93,6 +105,25 @@ export function ThreeBruisesStrip() {
                 <p className="text-[13px] text-muted-foreground leading-snug border-t border-border/60 pt-3">
                   {b.line}
                 </p>
+                <div className="mt-3 pt-3 border-t border-dashed border-border/50">
+                  <p className="text-[9px] font-black tracking-[0.2em] uppercase text-muted-foreground/70 mb-2">
+                    Why it happens
+                  </p>
+                  <ul className="space-y-1.5">
+                    {b.why.map((w) => (
+                      <li
+                        key={w}
+                        className="flex items-start gap-2 text-[12px] text-foreground/75 leading-snug"
+                      >
+                        <span
+                          className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0"
+                          style={{ background: s.text }}
+                        />
+                        <span>{w}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <p className="text-[10px] mt-3 text-muted-foreground/70 uppercase tracking-wider">
                   {b.source}
                 </p>
