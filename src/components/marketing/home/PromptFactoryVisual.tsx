@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { BookOpen, Check, X, Bot, Database, Cpu, Shield, Coins, Users, FileCheck, ScanLine } from "lucide-react";
+import { BookOpen, Check, X, Bot, Database, Cpu, Shield, Coins, Users, FileCheck, ScanLine, Building2, Workflow, ArrowDown } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -17,13 +17,11 @@ function StageRow({
   n,
   numberTone = "neutral",
   title,
-  caption,
   children,
 }: {
   n: string;
   numberTone?: "neutral" | "danger" | "primary" | "success";
   title: ReactNode;
-  caption: string;
   children: ReactNode;
 }) {
   const tones = {
@@ -48,12 +46,9 @@ function StageRow({
           {n}
         </div>
         <div className="flex-1 min-w-0 space-y-5">
-          <div className="space-y-1.5">
-            <h3 className="text-xl md:text-2xl font-black tracking-tight text-foreground leading-tight">
-              {title}
-            </h3>
-            <p className="text-sm md:text-base text-muted-foreground leading-snug">{caption}</p>
-          </div>
+          <h3 className="text-xl md:text-2xl font-black tracking-tight text-foreground leading-tight">
+            {title}
+          </h3>
           {children}
         </div>
       </div>
