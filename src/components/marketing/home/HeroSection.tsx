@@ -5,9 +5,9 @@ import { CAL_URL } from "./shared";
 import { GovernanceRail } from "./GovernanceRail";
 
 const DEMANDS = [
-  { k: "Defend the spend", v: "Board wants the AI line item justified this quarter." },
-  { k: "Prove the rollout", v: "Audit and risk want evidence, not screenshots." },
-  { k: "Scale without losing control", v: "Every team is already using ChatGPT, Copilot, Claude." },
+  { k: "Get out of POC hell", v: "Ship AI into production, across teams, this year." },
+  { k: "Make it auditable and safe", v: "Every output traceable. Risk and legal sign off." },
+  { k: "Prove the ROI", v: "Show the board what the AI spend actually returns." },
 ];
 
 export function HeroSection() {
@@ -34,7 +34,7 @@ export function HeroSection() {
       />
 
       {/* ── Content ── */}
-      <div className="max-w-3xl mx-auto relative z-10 text-center">
+      <div className="max-w-4xl mx-auto relative z-10 text-center">
         {/* WHO: the person under pressure */}
         <motion.div
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-6"
@@ -48,57 +48,38 @@ export function HeroSection() {
         >
           <span className="w-1.5 h-1.5 rounded-full bg-primary" />
           <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-primary">
-            For the person on the hook for AI this quarter
+            What you have to deliver this year
           </span>
         </motion.div>
 
-        {/* HEADLINE: name the demand */}
+        {/* HEADLINE: the three demands, as the headline */}
         <motion.h1
-          className="text-3xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.05] tracking-tight"
+          className="font-black tracking-tight leading-[0.95] mb-6 space-y-1 md:space-y-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          You can't delay the AI rollout any longer.{" "}
-          <span className="text-primary">And you can't ship one you can't defend.</span>
+          {DEMANDS.map((d, i) => (
+            <span key={d.k} className="block text-3xl md:text-5xl lg:text-[3.75rem]">
+              <span className="text-muted-foreground/40 font-bold mr-3 tabular-nums">0{i + 1}</span>
+              <span className={i === 0 ? "text-foreground" : i === 1 ? "text-foreground" : "text-primary"}>
+                {d.k}.
+              </span>
+            </span>
+          ))}
         </motion.h1>
 
-        {/* SUBHEAD: what's being asked of you */}
+        {/* SUBHEAD: smaller, the product explanation */}
         <motion.p
-          className="text-base md:text-lg mb-7 text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+          className="text-sm md:text-base mb-8 text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          This quarter you're being asked to defend the spend, prove the
-          rollout, and scale it across every team. LIZA is the control layer
-          that lets you answer all three without slowing the business down.
+          LIZA is the control layer that turns every AI run across ChatGPT,
+          Copilot, Claude and your internal models into a playbook your
+          business owns. So you can answer all three. Without slowing down.
         </motion.p>
-
-        {/* THE THREE DEMANDS, as the centerpiece */}
-        <motion.div
-          className="grid sm:grid-cols-3 gap-2 mb-8 text-left"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.22 }}
-        >
-          {DEMANDS.map((d, i) => (
-            <div
-              key={d.k}
-              className="rounded-xl border px-3.5 py-3"
-              style={{
-                borderColor: "hsl(var(--border))",
-                background: "hsl(var(--card))",
-              }}
-            >
-              <p className="text-[10px] font-black tracking-[0.15em] uppercase mb-1" style={{ color: "hsl(var(--primary))" }}>
-                Demand 0{i + 1}
-              </p>
-              <p className="text-sm font-bold text-foreground leading-tight mb-1">{d.k}</p>
-              <p className="text-[11px] text-muted-foreground leading-snug">{d.v}</p>
-            </div>
-          ))}
-        </motion.div>
 
         {/* CTA: explicit next step + time anchor */}
         <motion.div
