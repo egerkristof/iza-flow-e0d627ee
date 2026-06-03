@@ -69,16 +69,15 @@ export function HeroSection() {
           ))}
         </motion.h1>
 
-        {/* SUBHEAD: smaller, the product explanation */}
+        {/* SUBHEAD: one tight line */}
         <motion.p
-          className="text-sm md:text-base mb-8 text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+          className="text-sm md:text-base mb-8 text-muted-foreground max-w-xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA is the control layer that turns every AI run across ChatGPT,
-          Copilot, Claude and your internal models into a playbook your
-          business owns. So you can answer all three. Without slowing down.
+          LIZA is the control layer that turns every AI run in your org into
+          a playbook your business owns.
         </motion.p>
 
         {/* CTA: explicit next step + time anchor */}
@@ -113,7 +112,7 @@ export function HeroSection() {
         {/* Governance rail: the product mechanism, named */}
         <GovernanceRail />
         <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 font-semibold mt-2">
-          One standard. Enforced across every AI tool your teams already use.
+          One playbook. Enforced across ChatGPT, Copilot, Claude and your internal models.
         </p>
       </div>
 
