@@ -1,4 +1,4 @@
-import { Check, Circle, ShieldCheck, FileText, GitBranch, Sparkles } from "lucide-react";
+import { Check, ShieldCheck, FileText, GitBranch, Sparkles, Lock, Coins, Database, Cpu } from "lucide-react";
 
 /**
  * Lightweight UI mocks used inside GetStartedPlan to show what LIZA
@@ -21,42 +21,79 @@ function MockChrome({ title, children }: { title: string; children: React.ReactN
   );
 }
 
-/* ── Step 1: Standard being encoded ── */
+/* ── Step 1: Org boundaries / control plane ── */
 export function MockStandardEditor() {
+  const rules = [
+    {
+      icon: Database,
+      label: "Data access",
+      value: "GTM data: Sales + RevOps only",
+      pill: "Enforced",
+    },
+    {
+      icon: Lock,
+      label: "PII handling",
+      value: "Redacted before any external model",
+      pill: "Enforced",
+    },
+    {
+      icon: Cpu,
+      label: "Approved models",
+      value: "GPT-5 · Claude 4 · Internal Llama",
+      pill: "3 active",
+    },
+    {
+      icon: Coins,
+      label: "Token budget",
+      value: "€2,500 / team / month · hard cap",
+      pill: "On",
+    },
+  ];
   return (
-    <MockChrome title="liza · standards / discovery-call-summary.std">
-      <div className="space-y-2.5">
-        <div className="flex items-center justify-between">
+    <MockChrome title="liza · org / boundaries">
+      <div className="space-y-2">
+        <div className="flex items-center justify-between pb-2 border-b border-border/60">
           <div className="flex items-center gap-2">
-            <FileText className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-bold">Discovery Call Summary</span>
+            <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+            <span className="text-xs font-bold">Org control plane</span>
           </div>
           <span
             className="text-[9px] font-black tracking-[0.15em] uppercase px-1.5 py-0.5 rounded"
             style={{ background: "hsl(var(--brand-green) / 0.15)", color: "hsl(var(--brand-green))" }}
           >
-            Live · v3
+            Live
           </span>
         </div>
-        {[
-          { k: "MUST include", v: "Stated problem in customer's words" },
-          { k: "MUST include", v: "Budget signal + decision timeline" },
-          { k: "MUST NOT", v: "Invent metrics not said on the call" },
-          { k: "Tone", v: "Direct. No filler. Bullet form." },
-        ].map((r, i) => (
-          <div key={i} className="flex items-start gap-2 py-1 border-t border-border/60 first:border-t-0">
-            <Check className="w-3 h-3 mt-0.5 text-primary shrink-0" />
-            <div className="flex-1 min-w-0">
-              <span className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground mr-1.5">
-                {r.k}
+        {rules.map((r, i) => {
+          const Icon = r.icon;
+          return (
+            <div key={i} className="flex items-center gap-2.5 py-1.5">
+              <div
+                className="w-6 h-6 rounded-md flex items-center justify-center shrink-0"
+                style={{ background: "hsl(var(--primary) / 0.08)" }}
+              >
+                <Icon className="w-3 h-3 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground leading-tight">
+                  {r.label}
+                </p>
+                <p className="text-[11px] text-foreground/85 leading-tight truncate">
+                  {r.value}
+                </p>
+              </div>
+              <span
+                className="text-[9px] font-bold px-1.5 py-0.5 rounded shrink-0"
+                style={{ background: "hsl(var(--muted) / 0.5)", color: "hsl(var(--foreground) / 0.7)" }}
+              >
+                {r.pill}
               </span>
-              <span className="text-[11px] text-foreground/80">{r.v}</span>
             </div>
-          </div>
-        ))}
+          );
+        })}
         <div className="pt-2 mt-1 border-t border-border/60 flex items-center gap-1.5 text-[10px] text-muted-foreground">
           <Sparkles className="w-3 h-3 text-primary" />
-          Enforced across ChatGPT · Copilot · Claude · Internal LLM
+          Applied to every prompt across every AI surface
         </div>
       </div>
     </MockChrome>
