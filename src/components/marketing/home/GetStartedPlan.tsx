@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Settings, Workflow, TrendingUp, ArrowRight } from "lucide-react";
 import { SectionTag, GradientText, CAL_URL } from "./shared";
+import { MockStandardEditor, MockRun, MockDashboard } from "./StepMocks";
 
 const STEPS = [
   {
@@ -9,6 +10,8 @@ const STEPS = [
     title: "Wire your first standard",
     body: "We sit with your practitioners and encode five real decisions into LIZA. Not policy documents. Executable rules every AI tool you already pay for must follow.",
     tag: "Days 0–14 · co-built",
+    mock: MockStandardEditor,
+    caption: "A real standard, encoded once. Enforced everywhere your teams use AI.",
   },
   {
     n: "02",
@@ -16,6 +19,8 @@ const STEPS = [
     title: "Run one team on it",
     body: "Put real work through it. Every output signed. Every decision traceable. Legal sees the receipts. Finance sees cost per outcome.",
     tag: "Days 15–45 · one team live",
+    mock: MockRun,
+    caption: "Every output stamped with the standard, the model, the cost, the version.",
   },
   {
     n: "03",
@@ -23,6 +28,8 @@ const STEPS = [
     title: "Measure it. Then scale.",
     body: "The numbers your CFO and board are asking for surface automatically. You pick workflow two, team two, function two. The library compounds.",
     tag: "Days 46–90 · org rollout",
+    mock: MockDashboard,
+    caption: "The metrics your CFO and board already keep asking for. Live.",
   },
 ];
 
@@ -49,41 +56,71 @@ export function GetStartedPlan() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5 mb-12">
+        <div className="space-y-16 md:space-y-24 mb-16">
           {STEPS.map((s, i) => {
             const Icon = s.icon;
+            const Mock = s.mock;
+            const reverse = i % 2 === 1;
             return (
               <motion.div
                 key={s.n}
-                initial={{ opacity: 0, y: 14 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: i * 0.1 }}
-                className="rounded-2xl border border-border bg-card p-7 relative overflow-hidden hover:border-primary/40 transition-colors"
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.55, delay: 0.05 }}
+                className={`grid md:grid-cols-2 gap-8 md:gap-12 items-center ${
+                  reverse ? "md:[&>*:first-child]:order-2" : ""
+                }`}
               >
-                <div className="flex items-start justify-between mb-5">
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center"
-                    style={{
-                      background: "hsl(var(--primary) / 0.1)",
-                      color: "hsl(var(--primary))",
-                    }}
-                  >
-                    <Icon className="w-5 h-5" />
+                {/* Copy side */}
+                <div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-4xl md:text-5xl font-black text-muted-foreground/15 leading-none">
+                      {s.n}
+                    </span>
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center"
+                      style={{
+                        background: "hsl(var(--primary) / 0.1)",
+                        color: "hsl(var(--primary))",
+                      }}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <p className="text-[10px] font-black tracking-[0.18em] uppercase text-primary">
+                      {s.tag}
+                    </p>
                   </div>
-                  <span className="text-3xl font-black text-muted-foreground/20 leading-none">
-                    {s.n}
-                  </span>
+                  <h3 className="text-2xl md:text-3xl font-black tracking-tight mb-3 leading-[1.15]">
+                    {s.title}
+                  </h3>
+                  <p className="text-base text-muted-foreground leading-relaxed mb-4">
+                    {s.body}
+                  </p>
+                  <p className="text-sm font-semibold text-foreground/80 border-l-2 pl-3" style={{ borderColor: "hsl(var(--primary))" }}>
+                    {s.caption}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-2">
-                  {s.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                  {s.body}
-                </p>
-                <p className="text-[10px] font-black tracking-[0.18em] uppercase text-primary">
-                  {s.tag}
-                </p>
+
+                {/* Mock side */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
+                  className="relative"
+                >
+                  <div
+                    className="absolute -inset-4 rounded-3xl pointer-events-none"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at center, hsl(var(--primary) / 0.08), transparent 70%)",
+                    }}
+                  />
+                  <div className="relative">
+                    <Mock />
+                  </div>
+                </motion.div>
               </motion.div>
             );
           })}
