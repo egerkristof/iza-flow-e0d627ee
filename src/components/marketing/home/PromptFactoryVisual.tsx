@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { BookOpen, Check, X, Bot, Database, Cpu, Shield, Coins, Users, FileCheck, ScanLine } from "lucide-react";
+import { BookOpen, Check, X, Bot, Database, Cpu, Shield, Coins, Users, FileCheck, ScanLine, Building2, Workflow, ArrowDown } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -17,13 +17,11 @@ function StageRow({
   n,
   numberTone = "neutral",
   title,
-  caption,
   children,
 }: {
   n: string;
   numberTone?: "neutral" | "danger" | "primary" | "success";
   title: ReactNode;
-  caption: string;
   children: ReactNode;
 }) {
   const tones = {
@@ -48,12 +46,9 @@ function StageRow({
           {n}
         </div>
         <div className="flex-1 min-w-0 space-y-5">
-          <div className="space-y-1.5">
-            <h3 className="text-xl md:text-2xl font-black tracking-tight text-foreground leading-tight">
-              {title}
-            </h3>
-            <p className="text-sm md:text-base text-muted-foreground leading-snug">{caption}</p>
-          </div>
+          <h3 className="text-xl md:text-2xl font-black tracking-tight text-foreground leading-tight">
+            {title}
+          </h3>
           {children}
         </div>
       </div>
@@ -178,57 +173,132 @@ function ChaosBlock() {
   );
 }
 
-const GATE_CHECKS = [
-  { icon: Database, label: "Data scope" },
-  { icon: Coins, label: "Token cap" },
-  { icon: Shield, label: "Guardrails" },
-  { icon: Users, label: "Owner" },
-  { icon: FileCheck, label: "Playbook" },
-  { icon: ScanLine, label: "Audit trail" },
+const CENTRAL_RULES = [
+  { icon: Database, label: "Data scope", note: "What every AI session may read." },
+  { icon: Coins, label: "Token ROI cap", note: "Spend ceiling per run, per team." },
+  { icon: Shield, label: "Guardrails", note: "What AI must never say or do." },
+  { icon: Users, label: "Owner", note: "Who is accountable for the output." },
+];
+const WORKFLOW_PLAYBOOKS = [
+  { name: "Discovery call recap", owner: "RevOps", version: "v9" },
+  { name: "MSA risk review", owner: "Legal", version: "v4" },
+  { name: "QBR draft", owner: "CS", version: "v6" },
 ];
 function GovernanceGate() {
   return (
-    <div
-      className="relative rounded-2xl p-6 md:p-7 overflow-hidden"
-      style={{
-        border: "1px solid hsl(var(--primary) / 0.3)",
-        background: "linear-gradient(180deg, hsl(var(--primary) / 0.04), transparent 70%)",
-      }}
-    >
-      <div className="flex items-center justify-between mb-5">
-        <span className="text-[10px] font-black uppercase tracking-[0.22em]" style={{ color: "hsl(var(--primary))" }}>
-          The governance gate . every prompt routed through it
-        </span>
-        <span className="text-[10px] font-mono text-muted-foreground/70">LIZA runtime</span>
+    <div className="space-y-3">
+      {/* TIER 1 . Central governance */}
+      <div
+        className="relative rounded-2xl p-6 md:p-7 overflow-hidden"
+        style={{
+          border: "1px solid hsl(var(--primary) / 0.3)",
+          background: "linear-gradient(180deg, hsl(var(--primary) / 0.05), transparent 70%)",
+        }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <Building2 className="w-4 h-4" style={{ color: "hsl(var(--primary))" }} />
+          <span className="text-[10px] font-black uppercase tracking-[0.22em]" style={{ color: "hsl(var(--primary))" }}>
+            Tier 1 . Central guardrails
+          </span>
+          <span className="ml-auto text-[10px] font-mono text-muted-foreground/70">applied to every AI session</span>
+        </div>
+        <p className="text-sm font-semibold text-foreground mb-4 leading-snug">
+          Defined once by IT, Risk and Legal. Production readiness guaranteed at source.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+          {CENTRAL_RULES.map((g, i) => {
+            const Icon = g.icon;
+            return (
+              <motion.div
+                key={g.label}
+                initial={{ opacity: 0, y: 6 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
+                className="rounded-lg border bg-background px-3 py-2.5"
+                style={{ borderColor: "hsl(var(--primary) / 0.25)" }}
+              >
+                <div className="flex items-center gap-1.5 mb-1">
+                  <Icon className="w-3.5 h-3.5" style={{ color: "hsl(var(--primary))" }} />
+                  <span className="text-[11px] font-black uppercase tracking-wider text-foreground">{g.label}</span>
+                </div>
+                <p className="text-[10px] text-muted-foreground leading-snug">{g.note}</p>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5">
-        {GATE_CHECKS.map((g, i) => {
-          const Icon = g.icon;
-          return (
+
+      {/* connector */}
+      <div className="flex flex-col items-center gap-1">
+        <motion.div
+          initial={{ opacity: 0, scaleY: 0 }}
+          whileInView={{ opacity: 1, scaleY: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="w-px h-5"
+          style={{ background: "hsl(var(--primary) / 0.4)", transformOrigin: "top" }}
+        />
+        <ArrowDown className="w-3.5 h-3.5 text-muted-foreground/60" />
+      </div>
+
+      {/* TIER 2 . Workflow playbooks */}
+      <div
+        className="relative rounded-2xl p-6 md:p-7 overflow-hidden"
+        style={{
+          border: "1px solid hsl(var(--brand-green) / 0.35)",
+          background: "linear-gradient(180deg, hsl(var(--brand-green) / 0.05), transparent 70%)",
+        }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <Workflow className="w-4 h-4" style={{ color: "hsl(var(--brand-green))" }} />
+          <span className="text-[10px] font-black uppercase tracking-[0.22em]" style={{ color: "hsl(var(--brand-green))" }}>
+            Tier 2 . Workflow playbooks
+          </span>
+          <span className="ml-auto text-[10px] font-mono text-muted-foreground/70">owned by the business</span>
+        </div>
+        <p className="text-sm font-semibold text-foreground mb-4 leading-snug">
+          Each team writes the playbook that turns AI output into a real deliverable. Inherits every central rule above.
+        </p>
+        <div className="grid sm:grid-cols-3 gap-2.5">
+          {WORKFLOW_PLAYBOOKS.map((p, i) => (
             <motion.div
-              key={g.label}
+              key={p.name}
               initial={{ opacity: 0, y: 6 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
-              className="flex items-center gap-2 rounded-lg border bg-background px-3 py-2.5"
-              style={{ borderColor: "hsl(var(--primary) / 0.25)" }}
+              className="rounded-lg border bg-background px-3 py-2.5"
+              style={{ borderColor: "hsl(var(--brand-green) / 0.3)" }}
             >
-              <Icon className="w-3.5 h-3.5" style={{ color: "hsl(var(--primary))" }} />
-              <span className="text-xs font-bold text-foreground">{g.label}</span>
-              <Check className="w-3.5 h-3.5 ml-auto" style={{ color: "hsl(var(--brand-green))" }} strokeWidth={3} />
+              <div className="flex items-center justify-between mb-1.5">
+                <FileCheck className="w-3.5 h-3.5" style={{ color: "hsl(var(--brand-green))" }} />
+                <span
+                  className="text-[9px] font-mono font-black px-1.5 py-0.5 rounded"
+                  style={{
+                    background: "hsl(var(--brand-green) / 0.12)",
+                    color: "hsl(var(--brand-green))",
+                  }}
+                >
+                  {p.version}
+                </span>
+              </div>
+              <p className="text-[12px] font-bold text-foreground leading-snug">{p.name}</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">{p.owner}</p>
             </motion.div>
-          );
-        })}
+          ))}
+        </div>
       </div>
-      <div className="mt-5 flex justify-center">
+
+      {/* output connector */}
+      <div className="flex justify-center pt-1">
         <motion.div
           initial={{ opacity: 0, scaleY: 0 }}
           whileInView={{ opacity: 1, scaleY: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.5 }}
           className="w-px h-8"
-          style={{ background: "linear-gradient(180deg, hsl(var(--primary)), hsl(var(--brand-green)))", transformOrigin: "top" }}
+          style={{ background: "linear-gradient(180deg, hsl(var(--brand-green)), hsl(var(--brand-green) / 0.3))", transformOrigin: "top" }}
         />
       </div>
     </div>
@@ -529,7 +599,6 @@ export function PromptFactoryVisual() {
             n="1"
             numberTone="neutral"
             title="It is not one prompt. People prompt all the time."
-            caption="Every team, every hour, every week. Each chat is invisible to the next. The organisation has no view of what is actually being asked of AI on its behalf."
           >
             <PromptStream />
           </StageRow>
@@ -538,7 +607,6 @@ export function PromptFactoryVisual() {
             n="2"
             numberTone="danger"
             title="Scale those prompts. The foundations collapse."
-            caption="Different wording. Different data scope. No token cap. No owner. Every team invents their own risk. None of the foundations your company normally requires to ship to production are in place."
           >
             <ChaosBlock />
           </StageRow>
@@ -552,7 +620,6 @@ export function PromptFactoryVisual() {
                 <span className="text-muted-foreground font-bold">Then signs the output.</span>
               </>
             }
-            caption="Data scope, token cap, guardrails, owner, playbook, audit trail. Every run, every team. What comes out the other side is stamped with the model used, the cost, the playbook version, the data read, and the role of human vs AI. CFO and Legal can read it without translation."
           >
             <div className="space-y-5">
               <GovernanceGate />
@@ -564,7 +631,6 @@ export function PromptFactoryVisual() {
             n="4"
             numberTone="primary"
             title="The playbook evolves. Every version is replayable."
-            caption="A human corrects the AI in chat. LIZA captures the correction, ships it as the next playbook version, and stamps every future run with which version was in force. The standard compounds instead of resetting."
           >
             <AuditLog />
           </StageRow>
