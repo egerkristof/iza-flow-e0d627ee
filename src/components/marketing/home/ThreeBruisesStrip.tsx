@@ -12,8 +12,8 @@ const BRUISES = [
     source: "MIT / BCG, 2024",
     severity: "warning" as const,
     why: [
-      "No org-wide playbook. Every pilot rebuilds rules, prompts and guardrails from scratch.",
-      "Legal, Risk and IT block at the production gate. Nothing was governed by design.",
+      "No org-wide infrastructure to harness AI's semantic power with rule-prompts and guardrail-prompts that are deterministic where they must be and flexible where they can be.",
+      "Every team rebuilds rules, prompts and guardrails from scratch. Nothing was governed by design, so Legal, Risk and IT block at the production gate.",
     ],
   },
   {
@@ -25,8 +25,8 @@ const BRUISES = [
     source: "Workday, AI at Work 2025",
     severity: "destructive-mid" as const,
     why: [
-      "Same task re-prompted across teams. No reusable, versioned playbook to anchor it.",
-      "Shadow tools multiply seats. Outputs get redone because no one trusts the last run.",
+      "No org-wide standard means the same task is re-prompted ten ways across ten teams, with no versioned playbook to anchor model choice, data scope or guardrails.",
+      "Shadow tools multiply seats and burn tokens. Outputs get redone because no one trusts the last run, and no euro can be traced to a named outcome.",
     ],
   },
   {
@@ -38,8 +38,8 @@ const BRUISES = [
     source: "LIZA OS intake, 2025",
     severity: "destructive" as const,
     why: [
-      "Prompt, model, data and output live in four places. Nothing ties them together.",
-      "No version, no owner. Audit cannot reconstruct what shipped or who approved it.",
+      "Prompt, model, data, guardrails and output live in four disconnected places. No infrastructure ties them into a single signed, replayable run.",
+      "No version, no owner, no lineage. Audit, Legal or a client question cannot reconstruct what shipped, on which playbook version, or who approved it.",
     ],
   },
 ];
@@ -59,6 +59,9 @@ export function ThreeBruisesStrip() {
           <h2 className="text-2xl md:text-3xl font-black leading-[1.15] tracking-tight">
             Three numbers your board is already asking about.
           </h2>
+          <p className="mt-4 text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            The headline stats are symptoms. The real cause sits one layer deeper: no org-wide infrastructure for how AI is prompted, governed and signed off.
+          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {BRUISES.map((b, i) => {
@@ -105,18 +108,24 @@ export function ThreeBruisesStrip() {
                 <p className="text-[13px] text-muted-foreground leading-snug border-t border-border/60 pt-3">
                   {b.line}
                 </p>
-                <div className="mt-3 pt-3 border-t border-dashed border-border/50">
-                  <p className="text-[9px] font-black tracking-[0.2em] uppercase text-muted-foreground/70 mb-2">
-                    Why it happens
+                <div
+                  className="mt-4 pt-4 rounded-xl px-3 py-3 border"
+                  style={{ background: s.soft, borderColor: s.bar }}
+                >
+                  <p
+                    className="text-[10px] font-black tracking-[0.22em] uppercase mb-2.5"
+                    style={{ color: s.text }}
+                  >
+                    Why it actually happens
                   </p>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-2.5">
                     {b.why.map((w) => (
                       <li
                         key={w}
-                        className="flex items-start gap-2 text-[12px] text-foreground/75 leading-snug"
+                        className="flex items-start gap-2.5 text-[13px] md:text-[13.5px] text-foreground leading-snug font-medium"
                       >
                         <span
-                          className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0"
+                          className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0"
                           style={{ background: s.text }}
                         />
                         <span>{w}</span>
