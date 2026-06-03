@@ -33,8 +33,8 @@ export function StakesAndTransform() {
         <div className="text-center mb-12">
           <SectionTag label="What 90 days unlocks" />
           <h2 className="text-3xl md:text-4xl font-black leading-[1.1] tracking-tight">
-            Maximum AI power.{" "}
-            <GradientText>Inside every rule that matters.</GradientText>
+            Every AI experiment,{" "}
+            <GradientText>production-ready. In 90 days.</GradientText>
           </h2>
           <p className="mt-4 text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Speed, creative range, ROI. All the upside you hoped AI would deliver,
