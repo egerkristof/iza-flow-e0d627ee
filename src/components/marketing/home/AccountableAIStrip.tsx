@@ -10,7 +10,7 @@ const UNAUDITED = [
 ];
 
 const AUDITED = [
-  "Every token tied to a standard and an owner",
+  "Every token tied to a playbook and an owner",
   "Every output traceable to the source it came from",
   "Every workflow repeatable across the team",
   "Every answer governed by the rules you set",
@@ -127,7 +127,7 @@ export function AccountableAIStrip() {
 
         <div className="mt-10 text-center">
           <p className="text-sm md:text-base text-foreground/80 max-w-xl mx-auto">
-            LIZA is the layer that ties every output to a standard you own.{" "}
+            LIZA ties every output to a playbook you own.{" "}
             <a
               href={CAL_URL}
               target="_blank"
