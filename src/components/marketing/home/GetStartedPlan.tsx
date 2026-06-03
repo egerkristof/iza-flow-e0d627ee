@@ -8,19 +8,19 @@ const STEPS = [
     n: "01",
     icon: Settings,
     title: "Set your org boundaries",
-    body: "We sit with you and wire the rules every AI tool in your org has to obey. Who can access what data. Hard token cost limits per team. Budget calculus per workflow. Approved models. The guardrails that keep AI defensible from day one.",
+    body: "We sit with you and write the playbook every AI tool in your org has to obey. Who can read what data. Hard token cost limits per team. Approved models. The guardrails that keep AI defensible from day one.",
     tag: "Days 0–14 · co-built",
     mock: MockStandardEditor,
-    caption: "One control layer. Enforced across ChatGPT, Copilot, Claude, internal LLMs.",
+    caption: "One playbook. Enforced across ChatGPT, Copilot, Claude, internal LLMs.",
   },
   {
     n: "02",
     icon: Workflow,
     title: "Wire your first workflows",
-    body: "Pick one team. Encode the standards specific to their work: what good output looks like, what it must include, what it can never say. Put real work through it. Every output signed. Legal sees the receipts. Finance sees cost per outcome.",
+    body: "Pick one team. Encode the playbook for their work: what good output looks like, what it must include, what it can never say. Put real work through it. Every output signed. Legal sees the receipts. Finance sees cost per outcome.",
     tag: "Days 15–45 · one team live",
     mock: MockRun,
-    caption: "Every output stamped with the standard, the model, the cost, the version.",
+    caption: "Every output stamped with the playbook, the model, the cost, the version.",
   },
   {
     n: "03",
@@ -37,7 +37,7 @@ const METRICS = [
   { from: "8%", to: "60%+", label: "AI workflows in governed production" },
   { from: "18 months", to: "30 days", label: "licence purchase to first measurable ROI" },
   { from: "0", to: "100%", label: "of outputs replayable for Legal or audit" },
-  { from: "Scattered pilots", to: "One standard", label: "enforced across every AI surface" },
+  { from: "Scattered pilots", to: "One playbook", label: "enforced across every AI surface" },
 ];
 
 export function GetStartedPlan() {
