@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/marketing/home/HeroSection";
 import { TrustStrip } from "@/components/marketing/home/TrustStrip";
 import { ThreeBruisesStrip } from "@/components/marketing/home/ThreeBruisesStrip";
 import { GuideStrip } from "@/components/marketing/home/GuideStrip";
+import { PromptFactoryVisual } from "@/components/marketing/home/PromptFactoryVisual";
 import { GetStartedPlan } from "@/components/marketing/home/GetStartedPlan";
 import { AccountableAIStrip } from "@/components/marketing/home/AccountableAIStrip";
 import { NinetyDayBeat } from "@/components/marketing/home/NinetyDayBeat";
@@ -29,6 +30,9 @@ export default function HomePage() {
 
       {/* 4. Guide: empathy + authority */}
       <GuideStrip />
+
+      {/* 4b. Visual centerpiece: anatomy of a prompt at org scale */}
+      <PromptFactoryVisual />
 
       {/* 5. Plan: 3 steps, co-built, with the metrics that surface at 90d */}
       <GetStartedPlan />
