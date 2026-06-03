@@ -3,6 +3,8 @@ import BridgeDeck from "@/pages/BridgeDeck";
 import TechDDDeck from "@/pages/TechDDDeck";
 import ImpactDeck from "@/pages/ImpactDeck";
 import { ImpactGate } from "@/components/ImpactGate";
+import HoldingDeck from "@/pages/HoldingDeck";
+import { HoldingGate } from "@/components/HoldingGate";
 import FactoryDeck from "@/pages/FactoryDeck";
 import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import SeedPitchDeckSkeptic from "@/pages/SeedPitchDeckSkeptic";
@@ -288,6 +290,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/ImpactDeck.tsx",
     description: "11-slide internal impact-investing brief. Companion to /tech-dd. Frames the core question 'why keep humans in the age of AI', applies the IMP five dimensions (What/Who/HowMuch/Contribution/Risk), names the Portable Context Bundle as the unit of impact, lays out an explicit Theory of Change and a per-bundle measurement stack (outputs/outcomes/lagging impact), maps to WEF Core Skills 2030 and four UN SDG sub-targets, runs a counterfactual/additionality scan vs. big-tech AI, employer Copilots, personal memory tools, and public reskilling, then closes on a two-door decision: capital against the IMP scorecard, or strategic stake to co-define the open bundle schema.",
     component: () => createElement(ImpactGate, null, createElement(ImpactDeck)),
+    showInAdmin: true,
+  },
+  {
+    id: "holding",
+    title: "Holding Thesis · Council Brief",
+    path: "/holding",
+    sourcePath: "src/pages/HoldingDeck.tsx",
+    description: "Password-gated, no-bot council working brief on the LIZA Group holding thesis. Names the primitive (governed just-in-time operator moments — knowledge + data governance + token efficiency + lineage as one envelope), the foundry that manufactures it, the speedboat instantiations in markets enterprises can't serve, the compounding cross-vertical pattern library, real estate as worked example (dormant-buyer reactivation, 78-140M HUF ARR per agency), the L0/L1/L2 holding architecture, and an explicit position on what stays on vs. off the current investor deck. Closes with five decisions the council needs to make.",
+    component: () => createElement(HoldingGate, null, createElement(HoldingDeck)),
     showInAdmin: true,
   },
   {
