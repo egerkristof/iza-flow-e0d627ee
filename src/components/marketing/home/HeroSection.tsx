@@ -71,8 +71,8 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA is the control layer that turns every AI run in your org into a
-          playbook your business owns. Auditable. Owned. Replayable.
+          LIZA is the control layer that runs every AI session inside your rules.
+          Regulatory. Financial. Operational. Auditable. Owned. Replayable.
         </motion.p>
 
         {/* DEMANDS: the three things you have to deliver, as evidence — not as headline */}
