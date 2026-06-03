@@ -4,7 +4,7 @@ import { SectionTag } from "./shared";
 const PROOFS = [
   { k: "Design partners", v: "Live in consulting, pharma, AEC, and B2B scale-ups" },
   { k: "15+ years", v: "AI systems shipped inside regulated and high-stakes environments" },
-  { k: "Diagnostic", v: "Run by AI leaders across hundreds of enterprise workflows" },
+  { k: "Standards-aligned", v: "Controls map to SOC 2, ISO 27001, EU AI Act, GDPR, and your internal policy" },
 ];
 
 export function GuideStrip() {

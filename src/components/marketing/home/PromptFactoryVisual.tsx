@@ -174,10 +174,19 @@ function ChaosBlock() {
 }
 
 const CENTRAL_RULES = [
-  { icon: Database, label: "Data scope", note: "What every AI session may read." },
-  { icon: Coins, label: "Token ROI cap", note: "Spend ceiling per run, per team." },
-  { icon: Shield, label: "Guardrails", note: "What AI must never say or do." },
-  { icon: Users, label: "Owner", note: "Who is accountable for the output." },
+  { icon: Database, label: "Data scope & residency", note: "What every AI session may read. Where it may run." },
+  { icon: Coins, label: "Token ROI cap", note: "CFO-set spend ceiling per run, per team, per outcome." },
+  { icon: Shield, label: "Guardrails", note: "Regulatory, brand and policy lines AI must never cross." },
+  { icon: Users, label: "Accountable owner", note: "Named human on the hook. Risk, Legal, DPO or function lead." },
+];
+const COMPLIANCE_DOMAINS = [
+  "SOC 2",
+  "ISO 27001",
+  "EU AI Act",
+  "GDPR",
+  "CFO token ROI",
+  "Internal best practice",
+  "Brand & voice",
 ];
 const WORKFLOW_PLAYBOOKS = [
   { name: "Discovery call recap", owner: "RevOps", version: "v9" },
@@ -203,7 +212,7 @@ function GovernanceGate() {
           <span className="ml-auto text-[10px] font-mono text-muted-foreground/70">applied to every AI session</span>
         </div>
         <p className="text-sm font-semibold text-foreground mb-4 leading-snug">
-          Defined once by IT, Risk and Legal. Production readiness guaranteed at source.
+          Your rules, encoded once. Regulatory, financial, operational. Production readiness guaranteed at source.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
           {CENTRAL_RULES.map((g, i) => {
@@ -226,6 +235,28 @@ function GovernanceGate() {
               </motion.div>
             );
           })}
+        </div>
+        <div className="mt-4 pt-4 border-t flex flex-wrap items-center gap-1.5" style={{ borderColor: "hsl(var(--primary) / 0.15)" }}>
+          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground mr-1">
+            Covers
+          </span>
+          {COMPLIANCE_DOMAINS.map((d, i) => (
+            <motion.span
+              key={d}
+              initial={{ opacity: 0, y: 4 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.25, delay: 0.05 + i * 0.04 }}
+              className="text-[10px] font-bold px-2 py-0.5 rounded-full border"
+              style={{
+                borderColor: "hsl(var(--primary) / 0.25)",
+                background: "hsl(var(--primary) / 0.06)",
+                color: "hsl(var(--primary))",
+              }}
+            >
+              {d}
+            </motion.span>
+          ))}
         </div>
       </div>
 
