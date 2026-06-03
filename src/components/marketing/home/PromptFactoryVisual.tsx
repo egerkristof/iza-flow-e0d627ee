@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
-import { BookOpen, Check, X, Bot, Database, Cpu } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { BookOpen, Check, X, Bot, Database, Cpu, Shield, Coins, Users, FileCheck, ScanLine } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * Anatomy of a prompt at org scale.
@@ -77,6 +77,57 @@ function PromptCard() {
   );
 }
 
+const LIVE_PROMPTS = [
+  { who: "Account Exec . Berlin", text: "Summarise the discovery call. Surface budget, stakeholders, decision timeline." },
+  { who: "RevOps . Munich", text: "Pull every Q3 opportunity over €50k and flag the ones without a champion." },
+  { who: "Marketing . Vienna", text: "Rewrite this whitepaper for a CFO audience. Keep regulatory references intact." },
+  { who: "Legal Intern . Zurich", text: "Compare this MSA to our template. List every deviation and rate the risk." },
+  { who: "Customer Success", text: "Draft the QBR deck for ACME. Pull usage, NPS, open tickets, expansion signals." },
+  { who: "Finance . Frankfurt", text: "Reconcile this expense file against policy. Flag anything above threshold." },
+  { who: "Product Manager", text: "Cluster last quarter's feature requests. Rank by revenue impact and effort." },
+  { who: "HR Business Partner", text: "Summarise the engagement survey. Pull the three themes leadership must hear." },
+];
+function PromptStream() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % LIVE_PROMPTS.length), 2200);
+    return () => clearInterval(id);
+  }, []);
+  const current = LIVE_PROMPTS[idx];
+  return (
+    <div className="space-y-3 max-w-xl">
+      <div className="bg-background border border-border rounded-xl p-5 md:p-6 shadow-sm relative overflow-hidden min-h-[150px]">
+        <div className="flex justify-between items-center mb-3">
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-green animate-pulse" />
+            Live . {String(idx + 1).padStart(2, "0")} / {String(LIVE_PROMPTS.length).padStart(2, "0")}
+          </span>
+          <span className="text-[10px] font-mono text-muted-foreground/70">prompt stream</span>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.35 }}
+          >
+            <p className="text-[10px] font-black uppercase tracking-wider text-muted-foreground mb-2">
+              {current.who}
+            </p>
+            <p className="text-base md:text-lg font-medium text-foreground leading-snug">
+              "{current.text}"
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+      <p className="text-xs text-muted-foreground leading-snug">
+        Multiply this by every team, every hour, every week. That is your real AI footprint.
+      </p>
+    </div>
+  );
+}
+
 const CHAOS_TAGS = [
   "Different wording.",
   "Different data scope.",
@@ -91,6 +142,11 @@ function ChaosBlock() {
       className="relative rounded-2xl border p-6 md:p-8 overflow-hidden"
       style={{ borderColor: "hsl(var(--destructive) / 0.2)", background: "hsl(var(--destructive) / 0.04)" }}
     >
+      <div className="mb-5 flex items-center gap-2">
+        <span className="text-[10px] font-black uppercase tracking-[0.22em]" style={{ color: "hsl(var(--destructive))" }}>
+          Scale 1 prompt to 4,000 seats . this is what you get
+        </span>
+      </div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 relative z-10">
         {CHAOS_TAGS.map((t, i) => (
           <motion.div
@@ -114,6 +170,66 @@ function ChaosBlock() {
         >
           Warning. 847 unmanaged runs this week. No governance detected.
         </p>
+      </div>
+      <p className="mt-4 text-xs md:text-sm text-foreground/70 leading-snug text-center max-w-2xl mx-auto">
+        Every foundation your company normally requires to put something into production is missing. So nothing ships. Or everything ships, ungoverned.
+      </p>
+    </div>
+  );
+}
+
+const GATE_CHECKS = [
+  { icon: Database, label: "Data scope" },
+  { icon: Coins, label: "Token cap" },
+  { icon: Shield, label: "Guardrails" },
+  { icon: Users, label: "Owner" },
+  { icon: FileCheck, label: "Playbook" },
+  { icon: ScanLine, label: "Audit trail" },
+];
+function GovernanceGate() {
+  return (
+    <div
+      className="relative rounded-2xl p-6 md:p-7 overflow-hidden"
+      style={{
+        border: "1px solid hsl(var(--primary) / 0.3)",
+        background: "linear-gradient(180deg, hsl(var(--primary) / 0.04), transparent 70%)",
+      }}
+    >
+      <div className="flex items-center justify-between mb-5">
+        <span className="text-[10px] font-black uppercase tracking-[0.22em]" style={{ color: "hsl(var(--primary))" }}>
+          The governance gate . every prompt routed through it
+        </span>
+        <span className="text-[10px] font-mono text-muted-foreground/70">LIZA runtime</span>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5">
+        {GATE_CHECKS.map((g, i) => {
+          const Icon = g.icon;
+          return (
+            <motion.div
+              key={g.label}
+              initial={{ opacity: 0, y: 6 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
+              className="flex items-center gap-2 rounded-lg border bg-background px-3 py-2.5"
+              style={{ borderColor: "hsl(var(--primary) / 0.25)" }}
+            >
+              <Icon className="w-3.5 h-3.5" style={{ color: "hsl(var(--primary))" }} />
+              <span className="text-xs font-bold text-foreground">{g.label}</span>
+              <Check className="w-3.5 h-3.5 ml-auto" style={{ color: "hsl(var(--brand-green))" }} strokeWidth={3} />
+            </motion.div>
+          );
+        })}
+      </div>
+      <div className="mt-5 flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, scaleY: 0 }}
+          whileInView={{ opacity: 1, scaleY: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.5 }}
+          className="w-px h-8"
+          style={{ background: "linear-gradient(180deg, hsl(var(--primary)), hsl(var(--brand-green)))", transformOrigin: "top" }}
+        />
       </div>
     </div>
   );
@@ -364,6 +480,12 @@ function InfrastructureCloser() {
 }
 
 export function PromptFactoryVisual() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: trackRef,
+    offset: ["start 70%", "end 30%"],
+  });
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   return (
     <section className="py-24 px-6 relative overflow-hidden" style={{ background: "hsl(var(--card))" }}>
       <div
@@ -387,21 +509,36 @@ export function PromptFactoryVisual() {
           </p>
         </div>
 
-        <div className="relative max-w-4xl mx-auto space-y-20 md:space-y-24">
+        <div ref={trackRef} className="relative max-w-4xl mx-auto space-y-20 md:space-y-24">
+          {/* Scroll-driven connecting spine */}
+          <div
+            className="hidden md:block absolute left-5 top-0 bottom-0 w-px pointer-events-none"
+            style={{ background: "hsl(var(--border))" }}
+            aria-hidden
+          >
+            <motion.div
+              className="absolute top-0 left-0 w-full origin-top"
+              style={{
+                height: lineHeight,
+                background:
+                  "linear-gradient(180deg, hsl(var(--muted-foreground)) 0%, hsl(var(--destructive)) 28%, hsl(var(--primary)) 60%, hsl(var(--brand-green)) 100%)",
+              }}
+            />
+          </div>
           <StageRow
             n="1"
             numberTone="neutral"
-            title="One prompt. Someone on your team writes it."
-            caption="Today it lives in a single chat history. Invisible to the organisation. Impossible to scale."
+            title="It is not one prompt. People prompt all the time."
+            caption="Every team, every hour, every week. Each chat is invisible to the next. The organisation has no view of what is actually being asked of AI on its behalf."
           >
-            <PromptCard />
+            <PromptStream />
           </StageRow>
 
           <StageRow
             n="2"
             numberTone="danger"
-            title="The scaling failure. Chaos at 4,000 seats."
-            caption="Without infrastructure, every team invents their own risk. Zero visibility for the board. This is what most AI rollouts actually look like today."
+            title="Scale those prompts. The foundations collapse."
+            caption="Different wording. Different data scope. No token cap. No owner. Every team invents their own risk. None of the foundations your company normally requires to ship to production are in place."
           >
             <ChaosBlock />
           </StageRow>
@@ -411,20 +548,23 @@ export function PromptFactoryVisual() {
             numberTone="success"
             title={
               <>
-                The signed output.{" "}
-                <span className="text-muted-foreground font-bold">Every. Single. Run.</span>
+                LIZA routes every prompt through the governance gate.{" "}
+                <span className="text-muted-foreground font-bold">Then signs the output.</span>
               </>
             }
-            caption="The product moment. Every output stamped with the model used, the token cost, the playbook version, the data read, and the role of human vs AI. CFO and Legal can read it without translation."
+            caption="Data scope, token cap, guardrails, owner, playbook, audit trail. Every run, every team. What comes out the other side is stamped with the model used, the cost, the playbook version, the data read, and the role of human vs AI. CFO and Legal can read it without translation."
           >
-            <SignedReceipt />
+            <div className="space-y-5">
+              <GovernanceGate />
+              <SignedReceipt />
+            </div>
           </StageRow>
 
           <StageRow
             n="4"
             numberTone="primary"
-            title="The playbook evolves. The audit log proves it."
-            caption="Someone corrects the AI in chat. LIZA captures the correction, ships it as the next playbook version, and stamps every future run with which version was in force."
+            title="The playbook evolves. Every version is replayable."
+            caption="A human corrects the AI in chat. LIZA captures the correction, ships it as the next playbook version, and stamps every future run with which version was in force. The standard compounds instead of resetting."
           >
             <AuditLog />
           </StageRow>
