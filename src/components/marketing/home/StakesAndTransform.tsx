@@ -31,11 +31,15 @@ export function StakesAndTransform() {
     <section className="py-20 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <SectionTag label="Two ways this ends" />
+          <SectionTag label="What 90 days unlocks" />
           <h2 className="text-3xl md:text-4xl font-black leading-[1.1] tracking-tight">
-            Unaudited AI today. Or{" "}
-            <GradientText>AI your board can read in 90 days.</GradientText>
+            Maximum AI power.{" "}
+            <GradientText>Inside every rule that matters.</GradientText>
           </h2>
+          <p className="mt-4 text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Speed, creative range, ROI. All the upside you hoped AI would deliver,
+            running cleanly inside your regulatory, financial and operational rules.
+          </p>
         </div>
 
         <div className="space-y-3 mb-10">
