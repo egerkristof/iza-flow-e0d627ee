@@ -1,35 +1,8 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Rocket, Cpu, Zap, Briefcase, TrendingUp } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { CAL_URL } from "./shared";
-
-/* ── Floating ambient nodes ── */
-const NODES = [
-  { x: "12%", y: "18%", size: 6, delay: 0 },
-  { x: "85%", y: "25%", size: 4, delay: 0.8 },
-  { x: "72%", y: "72%", size: 5, delay: 1.6 },
-  { x: "20%", y: "78%", size: 3, delay: 2.2 },
-  { x: "50%", y: "12%", size: 4, delay: 0.4 },
-  { x: "38%", y: "85%", size: 3, delay: 1.2 },
-  { x: "92%", y: "55%", size: 5, delay: 1.8 },
-  { x: "8%",  y: "50%", size: 4, delay: 0.6 },
-];
-
-/* ── Fast-moving / transactional teams ── */
-const FAST_MOVING = [
-  { icon: Briefcase, label: "Consulting & Professional Services", sub: "Delivery lifecycle" },
-  { icon: Zap, label: "SaaS & Digital Business", sub: "Product lifecycle" },
-  { icon: TrendingUp, label: "Sales & GTM", sub: "Revenue lifecycle" },
-  { icon: Cpu, label: "Enterprise IT & AI", sub: "Delivery lifecycle" },
-];
-
-/* ── Regulated / high-stakes lifecycles ── */
-const REGULATED = [
-  { icon: FlaskConical, label: "Pharma & Life Sciences", sub: "GxP lifecycle" },
-  { icon: Building2, label: "AEC", sub: "Project lifecycle" },
-  { icon: Banknote, label: "Financial Services", sub: "Risk & compliance" },
-  { icon: ShieldCheck, label: "Regulated Manufacturing", sub: "Quality lifecycle" },
-];
+import { GovernanceRail } from "./GovernanceRail";
 
 export function HeroSection() {
   return (
@@ -54,32 +27,6 @@ export function HeroSection() {
         }}
       />
 
-      {/* ── Floating nodes ── */}
-      {NODES.map((node, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full pointer-events-none"
-          style={{
-            left: node.x,
-            top: node.y,
-            width: node.size,
-            height: node.size,
-            background: `hsl(var(--primary) / 0.25)`,
-            boxShadow: `0 0 ${node.size * 3}px hsl(var(--primary) / 0.15)`,
-          }}
-          animate={{
-            y: [0, -12, 0, 8, 0],
-            opacity: [0.3, 0.7, 0.4, 0.6, 0.3],
-          }}
-          transition={{
-            duration: 6 + i * 0.5,
-            repeat: Infinity,
-            delay: node.delay,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-
       {/* ── Content ── */}
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         <motion.p
@@ -88,7 +35,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          For the person in charge of AI rollout
+          For the person running AI rollout
         </motion.p>
         <motion.h1
           className="text-3xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.08] tracking-tight"
@@ -96,9 +43,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Your org went all-in on AI.
+          Your org bought the AI.
           <br />
-          <span className="text-primary">Now stand behind every output.</span>
+          <span className="text-primary">Nobody governs it.</span>
         </motion.h1>
 
         <motion.p
@@ -107,14 +54,14 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA is how you roll out AI as a system, not a thousand
-          disconnected chats. Every token, every output, every workflow
-          tied to a standard you own.
+          LIZA is the control layer that ties every AI output to a
+          standard your business owns. So you can defend the spend, the
+          decisions, and the rollout.
         </motion.p>
 
         {/* CTAs */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-3 justify-center mb-10"
+          className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-2"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -141,38 +88,12 @@ export function HeroSection() {
           </Link>
         </motion.div>
 
-      </div>
-
-      {/* ── Industry coverage (slim) ── */}
-      <motion.div
-        className="relative z-10 mt-2 w-full max-w-4xl mx-auto"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.45 }}
-      >
-        <p className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-4 text-center">
-          Built for fast-moving and regulated teams alike
+        {/* Governance rail: the product mechanism, named */}
+        <GovernanceRail />
+        <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 font-semibold mt-2">
+          One standard. Enforced across every AI tool you already bought.
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-2.5">
-          {[...FAST_MOVING, ...REGULATED].map((ind, i) => {
-            const Icon = ind.icon;
-            return (
-              <motion.div
-                key={ind.label}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: 0.5 + i * 0.04 }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background/50 backdrop-blur-sm hover:border-primary/40 transition-colors"
-              >
-                <Icon className="w-3.5 h-3.5 text-primary" />
-                <span className="text-[11px] md:text-[12px] font-medium text-foreground">
-                  {ind.label}
-                </span>
-              </motion.div>
-            );
-          })}
-        </div>
-      </motion.div>
+      </div>
 
       {/* ── Scroll hint ── */}
       <motion.div
