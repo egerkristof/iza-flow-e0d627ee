@@ -11,17 +11,14 @@ export function BetaCTASection() {
             style={{ background: "radial-gradient(ellipse, hsl(var(--primary) / 0.07) 0%, transparent 65%)" }} />
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
-            <h2 className="text-3xl font-black mb-4">
-              You were hired to make AI stick.
+            <h2 className="text-3xl md:text-4xl font-black mb-5 leading-[1.15]">
+              You were hired to make the rollout stick.
               <br />
-              <GradientText>We build the layer that lets it.</GradientText>
+              <GradientText>We build the layer that does.</GradientText>
             </h2>
-            <p className="text-base mb-2 text-muted-foreground">
-              One call. We map your rollout against the governance loop and
-              show you where the leverage is.
-            </p>
-            <p className="text-xs text-muted-foreground/60 mb-8">
-              Not ready for a call? Score your AI execution first.
+            <p className="text-base mb-8 text-muted-foreground max-w-md mx-auto">
+              One call. We map your current rollout against the governance gaps
+              and show you exactly where the leverage is.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -40,7 +37,11 @@ export function BetaCTASection() {
               </a>
               <Link
                 to="/diagnostic"
-                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-semibold border transition-colors"
+                style={{
+                  borderColor: "hsl(var(--primary) / 0.3)",
+                  color: "hsl(var(--primary))",
+                }}
               >
                 Score your AI execution <ArrowRight className="w-4 h-4" />
               </Link>

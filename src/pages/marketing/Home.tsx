@@ -7,7 +7,6 @@ import { GetStartedPlan } from "@/components/marketing/home/GetStartedPlan";
 import { AccountableAIStrip } from "@/components/marketing/home/AccountableAIStrip";
 import { NinetyDayBeat } from "@/components/marketing/home/NinetyDayBeat";
 import { ThreeReasonsSection } from "@/components/marketing/home/ThreeReasonsSection";
-import { PersonaLensExpander } from "@/components/marketing/home/PersonaLensExpander";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
 import { SectionDivider } from "@/components/marketing/home/SectionDivider";
 
@@ -19,34 +18,33 @@ import { SectionDivider } from "@/components/marketing/home/SectionDivider";
 export default function HomePage() {
   return (
     <MarketingLayout>
-      {/* 1. Character + promise */}
+      {/* 1. Character + promise: AI rollout owner */}
       <HeroSection />
+
+      {/* 2. Tension stat strip: the questions you are being asked this quarter */}
       <TrustStrip />
 
-      {/* 2. Problem: name the villain */}
+      {/* 3. Problem: three places it breaks (escalating severity) */}
       <ThreeBruisesStrip />
 
-      {/* 3. Guide: empathy + authority */}
+      {/* 4. Guide: empathy + authority */}
       <GuideStrip />
 
-      <SectionDivider />
-
-      {/* 4. Plan: 3 steps, co-built, with the metrics step 3 surfaces */}
+      {/* 5. Plan: 3 steps, co-built, with the metrics that surface at 90d */}
       <GetStartedPlan />
 
-      {/* 5. Stakes: two ways this ends */}
+      {/* 6. Stakes: two ways this ends */}
       <AccountableAIStrip />
 
-      {/* 6. Transformation: 90 days in */}
+      {/* 7. Transformation: 90 days in */}
       <NinetyDayBeat />
 
       <SectionDivider />
 
-      {/* 7. Proof */}
+      {/* 8. Proof: structural reasons existing tools cannot close the gap */}
       <ThreeReasonsSection />
-      <PersonaLensExpander />
 
-      {/* 8. Final ask */}
+      {/* 9. Final ask: one CTA, no fragmentation */}
       <BetaCTASection />
     </MarketingLayout>
   );
