@@ -524,7 +524,6 @@ export function PromptFactoryVisual() {
             n="1"
             numberTone="neutral"
             title="It is not one prompt. People prompt all the time."
-            caption="Every team, every hour, every week. Each chat is invisible to the next. The organisation has no view of what is actually being asked of AI on its behalf."
           >
             <PromptStream />
           </StageRow>
@@ -533,7 +532,6 @@ export function PromptFactoryVisual() {
             n="2"
             numberTone="danger"
             title="Scale those prompts. The foundations collapse."
-            caption="Different wording. Different data scope. No token cap. No owner. Every team invents their own risk. None of the foundations your company normally requires to ship to production are in place."
           >
             <ChaosBlock />
           </StageRow>
@@ -547,7 +545,6 @@ export function PromptFactoryVisual() {
                 <span className="text-muted-foreground font-bold">Then signs the output.</span>
               </>
             }
-            caption="Data scope, token cap, guardrails, owner, playbook, audit trail. Every run, every team. What comes out the other side is stamped with the model used, the cost, the playbook version, the data read, and the role of human vs AI. CFO and Legal can read it without translation."
           >
             <div className="space-y-5">
               <GovernanceGate />
@@ -559,7 +556,6 @@ export function PromptFactoryVisual() {
             n="4"
             numberTone="primary"
             title="The playbook evolves. Every version is replayable."
-            caption="A human corrects the AI in chat. LIZA captures the correction, ships it as the next playbook version, and stamps every future run with which version was in force. The standard compounds instead of resetting."
           >
             <AuditLog />
           </StageRow>
