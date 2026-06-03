@@ -6,31 +6,31 @@ const STEPS = [
   {
     n: "01",
     icon: Settings,
-    title: "Set up your controls",
-    body: "We co-build your first set of standards, token policies, and approved outputs inside LIZA. Light or comprehensive. Days, not months.",
-    tag: "Co-built with you",
+    title: "Wire your first standard",
+    body: "We sit with your practitioners and encode five real decisions into LIZA. Not policy documents. Executable rules every AI tool you already pay for must follow.",
+    tag: "Days 0–14 · co-built",
   },
   {
     n: "02",
     icon: Workflow,
-    title: "Run your first workflows",
-    body: "Put real work through it. Start with one team. Expand to multiple teams. Then cross-functional workflows. Every token tied back to a standard you own.",
-    tag: "One team → many → cross-functional",
+    title: "Run one team on it",
+    body: "Put real work through it. Every output signed. Every decision traceable. Legal sees the receipts. Finance sees cost per outcome.",
+    tag: "Days 15–45 · one team live",
   },
   {
     n: "03",
     icon: TrendingUp,
-    title: "Expand and prove it",
-    body: "Roll across the org. The metrics that matter to the CFO and the board surface automatically.",
-    tag: "Org rollout, with the numbers to defend it",
+    title: "Measure it. Then scale.",
+    body: "The numbers your CFO and board are asking for surface automatically. You pick workflow two, team two, function two. The library compounds.",
+    tag: "Days 46–90 · org rollout",
   },
 ];
 
 const METRICS = [
-  { from: "8%", to: "60%+", label: "workflows with governed AI in production" },
-  { from: "18 mo", to: "30 days", label: "from licence purchase to measurable ROI" },
-  { from: "0", to: "100%", label: "of outputs replayable for Legal and audit" },
-  { from: "Baseline", to: "62% faster", label: "time-to-spec on workflows that moved first" },
+  { from: "8%", to: "60%+", label: "AI workflows in governed production" },
+  { from: "18 months", to: "30 days", label: "licence purchase to first measurable ROI" },
+  { from: "0", to: "100%", label: "of outputs replayable for Legal or audit" },
+  { from: "Scattered pilots", to: "One standard", label: "enforced across every AI surface" },
 ];
 
 export function GetStartedPlan() {
@@ -38,14 +38,14 @@ export function GetStartedPlan() {
     <section className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <SectionTag label="The plan" />
+          <SectionTag label="How it works" />
           <h2 className="text-3xl md:text-4xl font-black leading-[1.1] tracking-tight">
-            Get started with LIZA in{" "}
-            <GradientText>three steps.</GradientText>
+            Three steps. We build the{" "}
+            <GradientText>first one with you.</GradientText>
           </h2>
           <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            We build the first version of your rollout with you. You take it
-            from there.
+            One workflow. One team. A standard in production within fourteen days.
+            Then you scale.
           </p>
         </div>
 
@@ -102,7 +102,7 @@ export function GetStartedPlan() {
           }}
         >
           <p className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground mb-5 text-center">
-            What step 3 surfaces, automatically
+            What 90 days delivers
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {METRICS.map((m) => (
@@ -136,7 +136,7 @@ export function GetStartedPlan() {
               boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
             }}
           >
-            Book a call to start step 1
+            Book a call to start
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>

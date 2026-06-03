@@ -23,13 +23,12 @@ export function AccountableAIStrip() {
         <div className="text-center mb-12">
           <SectionTag label="Two ways this ends" />
           <h2 className="text-3xl md:text-4xl font-black leading-[1.1] tracking-tight">
-            Unaudited AI, or{" "}
-            <GradientText>AI you can account for.</GradientText>
+            Unaudited AI. Or{" "}
+            <GradientText>AI your board can read.</GradientText>
           </h2>
           <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Every AI rollout ends up on one side or the other. The bill is
-            arriving. The CFO question coming next quarter is what every
-            token actually did for the business.
+            The CFO question arrives next quarter. Either every token maps to a
+            named outcome, or it does not.
           </p>
         </div>
 
@@ -74,8 +73,8 @@ export function AccountableAIStrip() {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 pt-4 border-t border-border/50 text-xs text-muted-foreground italic">
-              Expensive, often wrong, slow, untraceable.
+            <p className="mt-5 pt-4 border-t border-border/50 text-xs font-semibold text-muted-foreground">
+              Expensive. Inconsistent. Unrepeatable.
             </p>
           </motion.div>
 
@@ -120,16 +119,15 @@ export function AccountableAIStrip() {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 pt-4 border-t border-border/50 text-xs text-muted-foreground italic">
-              Defensible to your CFO, to your board, to your regulator.
+            <p className="mt-5 pt-4 border-t border-border/50 text-xs font-semibold" style={{ color: "hsl(var(--brand-green))" }}>
+              Defensible to your CFO, your board, your regulator.
             </p>
           </motion.div>
         </div>
 
         <div className="mt-10 text-center">
-          <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto">
-            LIZA is the layer that ties every token, every output, and every
-            workflow to a standard you own.{" "}
+          <p className="text-sm md:text-base text-foreground/80 max-w-xl mx-auto">
+            LIZA is the layer that ties every output to a standard you own.{" "}
             <a
               href={CAL_URL}
               target="_blank"

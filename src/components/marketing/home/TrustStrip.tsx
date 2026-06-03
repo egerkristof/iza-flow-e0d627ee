@@ -1,32 +1,50 @@
 import { motion } from "framer-motion";
 
+/**
+ * Tension strip, not vanity strip. Three sourced numbers that name the
+ * questions the AI rollout owner is being asked this quarter.
+ */
 const STATS = [
-  { value: "85%", label: "of enterprises adopted AI. Almost none govern what it produces.", source: "McKinsey State of AI, 2025" },
-  { value: "40%", label: "of AI productivity gains lost to rework and review.", source: "Workday, 2026" },
-  { value: "90%", label: "of operating knowledge stays tacit, in people and threads.", source: "Observed across regulated deployments" },
-  { value: "2027", label: "AI shifts from flat seats to metered consumption. Every token becomes a P&L line.", source: "Industry pricing trajectory" },
+  {
+    value: "85%",
+    label: "of enterprises deployed AI. Under 15% of seats are active weekly.",
+    source: "McKinsey, State of AI 2025",
+  },
+  {
+    value: "40%",
+    label: "of AI productivity gains lost to rework, hallucination review, version conflict.",
+    source: "Workday, AI at Work 2025",
+  },
+  {
+    value: "0",
+    label: "outputs most rollout owners can replay for Legal, audit, or the CFO.",
+    source: "LIZA OS intake, 2025",
+  },
 ];
 
 export function TrustStrip() {
   return (
-    <section className="py-10 md:py-14 px-6 border-y" style={{ borderColor: "hsl(var(--border))" }}>
-      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-6">
+    <section
+      className="py-12 md:py-16 px-6 border-y"
+      style={{ borderColor: "hsl(var(--border))" }}
+    >
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6">
         {STATS.map((s, i) => (
           <motion.div
             key={s.label}
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.4, delay: i * 0.06 }}
+            transition={{ duration: 0.4, delay: i * 0.08 }}
             className="text-center"
           >
-            <div className="text-3xl md:text-4xl font-black text-primary leading-none mb-2">
+            <div className="text-4xl md:text-5xl font-black text-primary leading-none mb-3">
               {s.value}
             </div>
-            <p className="text-[12px] md:text-[13px] font-semibold text-muted-foreground leading-snug">
+            <p className="text-[13px] md:text-sm font-semibold text-foreground leading-snug max-w-[260px] mx-auto">
               {s.label}
             </p>
-            <p className="text-[10px] mt-1.5 text-muted-foreground/70 italic">
+            <p className="text-[11px] mt-2 text-muted-foreground/80">
               {s.source}
             </p>
           </motion.div>

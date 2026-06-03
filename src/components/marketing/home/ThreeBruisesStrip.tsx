@@ -1,37 +1,48 @@
 import { motion } from "framer-motion";
 import { Activity, Receipt, FileWarning } from "lucide-react";
+import { SectionTag } from "./shared";
 
 const BRUISES = [
   {
     icon: Activity,
     persona: "Adoption",
-    line: "Licences are everywhere. Heavy users 15%. The rest forgot the tab. The rollout is flat.",
+    line: "Licences are paid. Heavy users 15%. The rest are back on Google. The rollout is flat.",
+    severity: "warning" as const,
   },
   {
     icon: Receipt,
     persona: "Spend",
-    line: "Token bills 4x. Nobody on your team can map a single euro to a business outcome.",
+    line: "Token bills 4x. No one on your team can map a single euro to a named business outcome.",
+    severity: "destructive-mid" as const,
   },
   {
     icon: FileWarning,
     persona: "Exposure",
-    line: "Outputs ship without lineage. One audit, one client question, and it lands on you.",
+    line: "Outputs ship without lineage. One audit, one client question, and it lands on you personally.",
+    severity: "destructive" as const,
   },
 ];
 
+const SEVERITY = {
+  warning: "hsl(var(--warning) / 0.85)",
+  "destructive-mid": "hsl(var(--destructive) / 0.7)",
+  destructive: "hsl(var(--destructive))",
+} as const;
+
 export function ThreeBruisesStrip() {
   return (
-    <section className="py-16 px-6">
+    <section className="py-20 px-6" style={{ background: "hsl(var(--card))" }}>
       <div className="max-w-5xl mx-auto">
-        <p
-          className="text-[11px] font-black tracking-[0.25em] uppercase mb-8 text-center"
-          style={{ color: "hsl(var(--primary))" }}
-        >
-          One enemy. Three places it shows up across your rollout.
-        </p>
+        <div className="text-center mb-10">
+          <SectionTag label="The three places it breaks" />
+          <h2 className="text-2xl md:text-3xl font-black leading-[1.15] tracking-tight">
+            One problem. Three numbers your board is already asking about.
+          </h2>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {BRUISES.map((b, i) => {
             const Icon = b.icon;
+            const bar = SEVERITY[b.severity];
             return (
               <motion.div
                 key={b.persona}
@@ -39,11 +50,23 @@ export function ThreeBruisesStrip() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="rounded-2xl border border-border bg-card p-6 hover:border-primary/40 transition-colors"
+                className="relative rounded-2xl border border-border bg-background p-6 pl-7 overflow-hidden hover:border-primary/40 transition-colors"
               >
+                {/* Severity rail (escalates left to right) */}
+                <motion.span
+                  className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
+                  style={{ background: bar, transformOrigin: "top" }}
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.2 + i * 0.12, ease: "easeOut" }}
+                />
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/10 text-primary">
-                    <Icon className="w-4 h-4" />
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center"
+                    style={{ background: `${bar.replace(/\)$/, " / 0.12)")}`, color: bar }}
+                  >
+                    <Icon className="w-4 h-4" style={{ color: bar }} />
                   </div>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     {b.persona}
