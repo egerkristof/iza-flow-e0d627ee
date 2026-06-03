@@ -10,6 +10,7 @@ import { PersonaLensExpander } from "@/components/marketing/home/PersonaLensExpa
 import { ProductMomentStrip } from "@/components/marketing/home/ProductMomentStrip";
 import { WhoItsForStrip } from "@/components/marketing/home/WhoItsForStrip";
 import { ExecutableKnowledgeVideo } from "@/components/marketing/home/ExecutableKnowledgeVideo";
+import { AccountableAIStrip } from "@/components/marketing/home/AccountableAIStrip";
 
 /* Homepage = 4 acts. Hook -> Story -> Proof -> Ask. Anatomy lives on /os. */
 export default function HomePage() {
@@ -25,6 +26,7 @@ export default function HomePage() {
       <SectionDivider />
       {/* 2. Story */}
       <ThreeBruisesStrip />
+      <AccountableAIStrip />
       <WhoItsForStrip />
       <SectionDivider />
       {/* 3. Proof */}
