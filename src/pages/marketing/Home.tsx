@@ -1,6 +1,7 @@
 import { MarketingLayout } from "@/components/marketing/MarketingLayout";
 import { HeroSection } from "@/components/marketing/home/HeroSection";
 import { TrustStrip } from "@/components/marketing/home/TrustStrip";
+import { WhatLizaDoes } from "@/components/marketing/home/WhatLizaDoes";
 import { ThreeBruisesStrip } from "@/components/marketing/home/ThreeBruisesStrip";
 import { GuideStrip } from "@/components/marketing/home/GuideStrip";
 import { GetStartedPlan } from "@/components/marketing/home/GetStartedPlan";
@@ -20,6 +21,9 @@ export default function HomePage() {
     <MarketingLayout>
       {/* 1. Character + promise: AI rollout owner */}
       <HeroSection />
+
+      {/* 1b. What the product actually does, in plain language */}
+      <WhatLizaDoes />
 
       {/* 2. Tension stat strip: the questions you are being asked this quarter */}
       <TrustStrip />
