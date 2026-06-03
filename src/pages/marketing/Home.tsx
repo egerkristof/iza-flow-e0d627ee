@@ -8,9 +8,8 @@ import { TrustStrip } from "@/components/marketing/home/TrustStrip";
 import { ThreeBruisesStrip } from "@/components/marketing/home/ThreeBruisesStrip";
 import { PersonaLensExpander } from "@/components/marketing/home/PersonaLensExpander";
 import { ProductMomentStrip } from "@/components/marketing/home/ProductMomentStrip";
-import { WhoItsForStrip } from "@/components/marketing/home/WhoItsForStrip";
 import { ExecutableKnowledgeVideo } from "@/components/marketing/home/ExecutableKnowledgeVideo";
-import { FactoryStrip } from "@/components/marketing/home/FactoryStrip";
+import { OneToThousandStrip } from "@/components/marketing/home/OneToThousandStrip";
 
 /* Homepage = 4 acts. Hook -> Story -> Proof -> Ask. Anatomy lives on /os. */
 export default function HomePage() {
@@ -26,8 +25,7 @@ export default function HomePage() {
       <SectionDivider />
       {/* 2. Story */}
       <ThreeBruisesStrip />
-      <FactoryStrip />
-      <WhoItsForStrip />
+      <OneToThousandStrip />
       <SectionDivider />
       {/* 3. Proof */}
       <ThreeReasonsSection />
