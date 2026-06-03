@@ -227,29 +227,172 @@ function SignedOutputs() {
   );
 }
 
-function FeedbackLoop() {
+function OverrideToPlaybook() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 1.0 }}
-      className="mx-auto inline-flex items-center gap-2 px-4 py-2 rounded-full border"
-      style={{
-        borderColor: "hsl(var(--primary) / 0.3)",
-        background: "hsl(var(--primary) / 0.05)",
-      }}
-    >
+    <div className="grid md:grid-cols-[1fr_auto_1fr] gap-4 items-stretch">
+      {/* Left: a real moment — chat override */}
       <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        initial={{ opacity: 0, x: -10 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="rounded-xl border bg-background p-4 flex flex-col"
+        style={{ borderColor: "hsl(var(--border))" }}
       >
-        <RotateCw className="w-3.5 h-3.5 text-primary" />
+        <div className="flex items-center gap-2 mb-3">
+          <MessageSquare className="w-3.5 h-3.5 text-muted-foreground" />
+          <span className="text-[10px] font-bold tracking-wider uppercase text-muted-foreground">
+            Sales rep, Tuesday 14:02
+          </span>
+        </div>
+        <div className="space-y-2 text-xs leading-snug">
+          <div className="rounded-lg px-3 py-2" style={{ background: "hsl(var(--muted))" }}>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-1">AI output</p>
+            <p className="text-foreground">Budget: not disclosed. Timeline: Q3.</p>
+          </div>
+          <div className="rounded-lg px-3 py-2 border-l-2" style={{ borderColor: "hsl(var(--brand-green))", background: "hsl(var(--brand-green) / 0.06)" }}>
+            <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: "hsl(var(--brand-green))" }}>
+              Rep override
+            </p>
+            <p className="text-foreground">
+              Budget signal lives in procurement slot, not the call. Always check field 'rfp_value'.
+            </p>
+          </div>
+        </div>
+        <p className="mt-3 text-[10px] text-muted-foreground">LIZA captures the correction. No ticket. No re-prompting.</p>
       </motion.div>
-      <span className="text-[11px] font-bold tracking-wider uppercase text-primary">
-        Every run teaches the standard. v7 today → v12 next quarter.
-      </span>
-    </motion.div>
+
+      {/* Arrow */}
+      <div className="hidden md:flex items-center justify-center text-primary">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="flex flex-col items-center gap-1"
+        >
+          <GitBranch className="w-5 h-5" />
+          <span className="text-[9px] font-black tracking-widest uppercase">feeds</span>
+        </motion.div>
+      </div>
+      <div className="md:hidden flex justify-center text-primary">
+        <ArrowDown className="w-4 h-4" />
+      </div>
+
+      {/* Right: the playbook updates */}
+      <motion.div
+        initial={{ opacity: 0, x: 10 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="rounded-xl border p-4"
+        style={{
+          borderColor: "hsl(var(--primary) / 0.35)",
+          background: "hsl(var(--primary) / 0.04)",
+        }}
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-3.5 h-3.5 text-primary" />
+            <span className="text-[10px] font-black tracking-wider uppercase text-primary">
+              Playbook · discovery-call
+            </span>
+          </div>
+          <span className="text-[10px] font-mono text-muted-foreground">v7 → v8</span>
+        </div>
+        <div className="space-y-1.5 font-mono text-[11px] leading-snug">
+          <div className="rounded px-2 py-1" style={{ background: "hsl(var(--destructive) / 0.08)", color: "hsl(var(--destructive))" }}>
+            <span className="opacity-70">- </span>read: call_notes
+          </div>
+          <div className="rounded px-2 py-1" style={{ background: "hsl(var(--brand-green) / 0.1)", color: "hsl(var(--brand-green))" }}>
+            <span className="opacity-70">+ </span>read: call_notes, crm.rfp_value
+          </div>
+          <div className="rounded px-2 py-1" style={{ background: "hsl(var(--brand-green) / 0.1)", color: "hsl(var(--brand-green))" }}>
+            <span className="opacity-70">+ </span>rule: budget := crm.rfp_value
+          </div>
+        </div>
+        <p className="mt-3 text-[10px] text-muted-foreground">
+          Next 846 runs use v8 automatically. Every team. Every tool. Same playbook.
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
+const COMPARE = [
+  {
+    icon: BookOpen,
+    name: "Playbook (LIZA)",
+    what: "Your business rules: data scope, budget, output, who can edit.",
+    when: "Changes the moment a human says so. Versioned. Per workflow.",
+    accent: "hsl(var(--primary))",
+    highlight: true,
+  },
+  {
+    icon: Bot,
+    name: "Agent",
+    what: "A runner that executes steps. Needs a playbook to know how.",
+    when: "Without LIZA, every agent invents its own rules.",
+    accent: "hsl(var(--foreground))",
+  },
+  {
+    icon: Database,
+    name: "RAG / context",
+    what: "Pulls documents into the prompt. Doesn't decide what's allowed.",
+    when: "Change your RAG and nothing tells the agents.",
+    accent: "hsl(var(--foreground))",
+  },
+  {
+    icon: Cpu,
+    name: "Fine-tune",
+    what: "Re-trains the model weights. Slow, expensive, opaque.",
+    when: "Weeks to update. Can't show auditors what changed.",
+    accent: "hsl(var(--foreground))",
+  },
+];
+
+function ComparisonBlock() {
+  return (
+    <div className="mt-16 max-w-5xl mx-auto">
+      <div className="text-center mb-6">
+        <p className="text-[11px] font-black tracking-[0.2em] uppercase text-muted-foreground mb-2">
+          So what is a playbook, exactly
+        </p>
+        <h3 className="text-xl md:text-2xl font-black tracking-tight">
+          The playbook is where your business decides.{" "}
+          <span className="text-muted-foreground font-bold">Everything else just runs.</span>
+        </h3>
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {COMPARE.map((c) => {
+          const Icon = c.icon;
+          return (
+            <div
+              key={c.name}
+              className="rounded-xl border p-4"
+              style={{
+                borderColor: c.highlight ? "hsl(var(--primary) / 0.4)" : "hsl(var(--border))",
+                background: c.highlight ? "hsl(var(--primary) / 0.04)" : "hsl(var(--background))",
+                boxShadow: c.highlight ? "0 0 24px -10px hsl(var(--primary) / 0.4)" : undefined,
+              }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <Icon className="w-4 h-4" style={{ color: c.accent }} />
+                <p className="text-xs font-black tracking-wider uppercase" style={{ color: c.accent }}>
+                  {c.name}
+                </p>
+              </div>
+              <p className="text-xs text-foreground leading-snug mb-2">{c.what}</p>
+              <p className="text-[11px] text-muted-foreground leading-snug">{c.when}</p>
+            </div>
+          );
+        })}
+      </div>
+      <p className="text-center mt-6 text-sm text-muted-foreground max-w-2xl mx-auto">
+        Agents run. RAG fetches. Models predict. The playbook is the only place your business
+        keeps control of what's allowed, what's true, and what changed.
+      </p>
+    </div>
   );
 }
 
@@ -297,17 +440,17 @@ export function PromptFactoryVisual() {
           <div>
             <StageHeader
               n="3"
-              title="LIZA wraps the prompt in a standard your business owns."
+              title="LIZA wraps the prompt in a playbook your business owns."
               caption="One place where data scope, token cap, approved models and output shape are defined. Versioned. Auditable."
             />
-            <StandardBar />
+            <PlaybookBar />
           </div>
 
           <div>
             <StageHeader
               n="4"
               title="Every run comes back signed."
-              caption="Source data, model used, cost, and which version of the standard it followed — stamped on every output."
+              caption="Source data, model used, cost, and which version of the playbook it followed. Stamped on every output."
             />
             <SignedOutputs />
           </div>
@@ -315,18 +458,22 @@ export function PromptFactoryVisual() {
           <div>
             <StageHeader
               n="5"
-              title="The standard learns from every run."
-              caption="Edits, overrides and outcomes feed the next version. Your AI gets sharper without anyone re-prompting."
+              title="Someone corrects the AI. The playbook learns."
+              caption="A real moment from this week. A rep overrides a wrong answer in chat. LIZA turns the correction into the next version of the playbook. Every team running it gets the fix on the next prompt."
             />
-            <div className="text-center pt-1">
-              <FeedbackLoop />
-            </div>
+            <OverrideToPlaybook />
           </div>
         </div>
 
-        <div className="mt-14 max-w-3xl mx-auto rounded-2xl border px-6 py-5 text-center" style={{ borderColor: "hsl(var(--primary) / 0.25)", background: "hsl(var(--primary) / 0.04)" }}>
+        <ComparisonBlock />
+
+        <div className="mt-12 max-w-3xl mx-auto rounded-2xl border px-6 py-5 text-center" style={{ borderColor: "hsl(var(--primary) / 0.25)", background: "hsl(var(--primary) / 0.04)" }}>
           <p className="text-sm md:text-base font-semibold text-foreground leading-snug">
-            That is LIZA. <span className="text-muted-foreground font-normal">Not another chat tool — the control layer that sits over the ones you already use, so every AI run in your org has an owner, a budget, and a paper trail.</span>
+            That is LIZA.{" "}
+            <span className="text-muted-foreground font-normal">
+              Not another chat tool. The control layer that sits over the ones you already use,
+              so every AI run in your org has an owner, a budget, and a paper trail.
+            </span>
           </p>
         </div>
       </div>
