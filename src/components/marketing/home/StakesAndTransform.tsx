@@ -10,19 +10,19 @@ import { SectionTag, GradientText, CAL_URL } from "./shared";
 
 const SHIFTS = [
   {
-    today: "Token spend you cannot explain to finance.",
-    day90: "Every euro tied to a named outcome on a P&L line.",
-    metric: "Cost per outcome",
+    today: "Token spend the CFO cannot explain.",
+    day90: "Every euro tied to a named outcome, inside the ROI cap.",
+    metric: "Financial compliance",
   },
   {
-    today: "Outputs shipped without lineage or owner.",
-    day90: "Every output replayable for Legal, audit, the board.",
-    metric: "% replayable",
+    today: "No answer when Legal, audit or a regulator asks.",
+    day90: "Every output replayable. SOC 2, ISO, EU AI Act, GDPR evidence on demand.",
+    metric: "Regulatory compliance",
   },
   {
-    today: "Adoption flat. Heavy users stuck at 15%.",
-    day90: "Governed AI in daily production across the teams that matter.",
-    metric: "Policy drift rate",
+    today: "Each team using AI its own way. Brand and policy drift.",
+    day90: "Your best practice enforced at every prompt, across every tool.",
+    metric: "Operational compliance",
   },
 ];
 
