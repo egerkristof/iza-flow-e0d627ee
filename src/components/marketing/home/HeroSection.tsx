@@ -5,9 +5,9 @@ import { CAL_URL } from "./shared";
 import { GovernanceRail } from "./GovernanceRail";
 
 const DEMANDS = [
-  { k: "Get out of POC hell", v: "Ship AI into production, across teams, this year." },
-  { k: "Make it auditable and safe", v: "Every output traceable. Risk and legal sign off." },
-  { k: "Prove the ROI", v: "Show the board what the AI spend actually returns." },
+  "Ship AI into production",
+  "Make every output auditable",
+  "Prove the ROI to the board",
 ];
 
 export function HeroSection() {
@@ -48,37 +48,54 @@ export function HeroSection() {
         >
           <span className="w-1.5 h-1.5 rounded-full bg-primary" />
           <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-primary">
-            What you have to deliver this year
+            For the person on the hook for AI this year
           </span>
         </motion.div>
 
-        {/* HEADLINE: the three demands, as the headline */}
+        {/* HEADLINE: one clear sentence that passes the grunt test */}
         <motion.h1
-          className="font-black tracking-tight leading-[0.95] mb-6 space-y-1 md:space-y-2"
+          className="font-black tracking-tight leading-[0.98] mb-6 text-4xl md:text-6xl lg:text-7xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          {DEMANDS.map((d, i) => (
-            <span key={d.k} className="block text-3xl md:text-5xl lg:text-[3.75rem]">
-              <span className="text-muted-foreground/40 font-bold mr-3 tabular-nums">0{i + 1}</span>
-              <span className={i === 0 ? "text-foreground" : i === 1 ? "text-foreground" : "text-primary"}>
-                {d.k}.
-              </span>
-            </span>
-          ))}
+          Put AI into production
+          <br />
+          <span className="text-primary">without losing control.</span>
         </motion.h1>
 
-        {/* SUBHEAD: one tight line */}
+        {/* SUBHEAD: one tight line, what LIZA is */}
         <motion.p
-          className="text-sm md:text-base mb-8 text-muted-foreground max-w-xl mx-auto leading-relaxed"
+          className="text-base md:text-lg mb-7 text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA is the control layer that turns every AI run in your org into
-          a playbook your business owns.
+          LIZA is the control layer that turns every AI run in your org into a
+          playbook your business owns. Auditable. Owned. Replayable.
         </motion.p>
+
+        {/* DEMANDS: the three things you have to deliver, as evidence — not as headline */}
+        <motion.ul
+          className="flex flex-wrap justify-center gap-2 mb-8"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.22 }}
+        >
+          {DEMANDS.map((d, i) => (
+            <li
+              key={d}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[12px] font-semibold text-foreground/85"
+              style={{
+                borderColor: "hsl(var(--border))",
+                background: "hsl(var(--card))",
+              }}
+            >
+              <span className="text-muted-foreground/60 tabular-nums text-[11px]">0{i + 1}</span>
+              {d}
+            </li>
+          ))}
+        </motion.ul>
 
         {/* CTA: explicit next step + time anchor */}
         <motion.div
