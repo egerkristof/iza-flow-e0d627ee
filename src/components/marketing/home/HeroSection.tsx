@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { CAL_URL } from "./shared";
 import { GovernanceRail } from "./GovernanceRail";
+
+const OUTCOMES = [
+  "Defend the spend",
+  "Prove the rollout",
+  "Scale without losing control",
+];
 
 export function HeroSection() {
   return (
@@ -29,37 +35,70 @@ export function HeroSection() {
 
       {/* ── Content ── */}
       <div className="max-w-3xl mx-auto relative z-10 text-center">
-        <motion.p
-          className="text-[11px] md:text-xs font-bold tracking-[0.22em] uppercase mb-5 text-primary"
+        {/* WHO: explicit audience badge */}
+        <motion.div
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-6"
+          style={{
+            borderColor: "hsl(var(--primary) / 0.3)",
+            background: "hsl(var(--primary) / 0.06)",
+          }}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          For the person running AI rollout
-        </motion.p>
+          <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+          <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-primary">
+            For Heads of AI &amp; VPs of AI Transformation
+          </span>
+        </motion.div>
+
+        {/* WHAT: lead with the product + the outcome */}
         <motion.h1
-          className="text-3xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.08] tracking-tight"
+          className="text-3xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.05] tracking-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Your org bought the AI.
-          <br />
-          <span className="text-primary">Nobody governs it.</span>
+          The control layer that makes your{" "}
+          <span className="text-primary">org's AI rollout defensible.</span>
         </motion.h1>
 
+        {/* WHY IT MATTERS: one tight sentence */}
         <motion.p
-          className="text-base md:text-lg mb-9 text-muted-foreground max-w-xl mx-auto leading-relaxed"
+          className="text-base md:text-lg mb-7 text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA is the control layer that ties every AI output to a
-          standard your business owns. So you can defend the spend, the
-          decisions, and the rollout.
+          LIZA ties every output from ChatGPT, Copilot, Claude, and your
+          internal models to a standard your business owns. So you can prove
+          the spend, the decisions, and the rollout.
         </motion.p>
 
-        {/* CTAs */}
+        {/* OUTCOME CHIPS */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-2 mb-8"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.22 }}
+        >
+          {OUTCOMES.map((o) => (
+            <span
+              key={o}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border"
+              style={{
+                borderColor: "hsl(var(--border))",
+                background: "hsl(var(--card))",
+                color: "hsl(var(--foreground) / 0.8)",
+              }}
+            >
+              <Check className="w-3 h-3" style={{ color: "hsl(var(--brand-green))" }} />
+              {o}
+            </span>
+          ))}
+        </motion.div>
+
+        {/* CTA: explicit next step + time anchor */}
         <motion.div
           className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-2"
           initial={{ opacity: 0, y: 14 }}
@@ -77,21 +116,21 @@ export function HeroSection() {
               boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
             }}
           >
-            Book a call
+            Book a 30-min call
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
           <Link
             to="/diagnostic"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
           >
-            Score your AI execution <ArrowRight className="w-3.5 h-3.5" />
+            Take the 5-min diagnostic <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </motion.div>
 
         {/* Governance rail: the product mechanism, named */}
         <GovernanceRail />
         <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 font-semibold mt-2">
-          One standard. Enforced across every AI tool you already bought.
+          One standard. Enforced across every AI tool your teams already use.
         </p>
       </div>
 
