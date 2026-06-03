@@ -24,9 +24,9 @@ const BRUISES = [
 ];
 
 const SEVERITY = {
-  warning: "hsl(var(--warning) / 0.85)",
-  "destructive-mid": "hsl(var(--destructive) / 0.7)",
-  destructive: "hsl(var(--destructive))",
+  warning: { bar: "hsl(var(--warning) / 0.85)", soft: "hsl(var(--warning) / 0.12)", text: "hsl(var(--warning))" },
+  "destructive-mid": { bar: "hsl(var(--destructive) / 0.7)", soft: "hsl(var(--destructive) / 0.1)", text: "hsl(var(--destructive))" },
+  destructive: { bar: "hsl(var(--destructive))", soft: "hsl(var(--destructive) / 0.14)", text: "hsl(var(--destructive))" },
 } as const;
 
 export function ThreeBruisesStrip() {
@@ -42,7 +42,7 @@ export function ThreeBruisesStrip() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {BRUISES.map((b, i) => {
             const Icon = b.icon;
-            const bar = SEVERITY[b.severity];
+            const s = SEVERITY[b.severity];
             return (
               <motion.div
                 key={b.persona}
@@ -55,7 +55,7 @@ export function ThreeBruisesStrip() {
                 {/* Severity rail (escalates left to right) */}
                 <motion.span
                   className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
-                  style={{ background: bar, transformOrigin: "top" }}
+                  style={{ background: s.bar, transformOrigin: "top" }}
                   initial={{ scaleY: 0 }}
                   whileInView={{ scaleY: 1 }}
                   viewport={{ once: true }}
@@ -64,9 +64,9 @@ export function ThreeBruisesStrip() {
                 <div className="flex items-center gap-2 mb-4">
                   <div
                     className="w-8 h-8 rounded-lg flex items-center justify-center"
-                    style={{ background: `${bar.replace(/\)$/, " / 0.12)")}`, color: bar }}
+                    style={{ background: s.soft, color: s.text }}
                   >
-                    <Icon className="w-4 h-4" style={{ color: bar }} />
+                    <Icon className="w-4 h-4" />
                   </div>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     {b.persona}
