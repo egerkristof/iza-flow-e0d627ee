@@ -1,21 +1,21 @@
 import { motion } from "framer-motion";
-import { Briefcase, Headphones, FlaskConical } from "lucide-react";
+import { Activity, Receipt, FileWarning } from "lucide-react";
 
 const BRUISES = [
   {
-    icon: Briefcase,
-    persona: "Sales Lead",
-    line: "Every rep writes their own pitch with AI. Half of them off-message by Wednesday.",
+    icon: Activity,
+    persona: "Adoption",
+    line: "Licences are everywhere. Heavy users 15%. The rest forgot the tab. The rollout is flat.",
   },
   {
-    icon: Headphones,
-    persona: "Consulting Partner",
-    line: "Your senior playbook lives in five people's heads. New hires take six months to ramp.",
+    icon: Receipt,
+    persona: "Spend",
+    line: "Token bills 4x. Nobody on your team can map a single euro to a business outcome.",
   },
   {
-    icon: FlaskConical,
-    persona: "Function Owner",
-    line: "Your team uses AI like a Ouija board. Output looks confident, drifts from policy.",
+    icon: FileWarning,
+    persona: "Exposure",
+    line: "Outputs ship without lineage. One audit, one client question, and it lands on you.",
   },
 ];
 
@@ -27,7 +27,7 @@ export function ThreeBruisesStrip() {
           className="text-[11px] font-black tracking-[0.25em] uppercase mb-8 text-center"
           style={{ color: "hsl(var(--primary))" }}
         >
-          One enemy. Different bruise depending on the function you run.
+          One enemy. Three places it shows up across your rollout.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {BRUISES.map((b, i) => {

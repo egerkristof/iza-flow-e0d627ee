@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { AlertTriangle, ShieldCheck, ArrowRight } from "lucide-react";
-import { SectionTag, GradientText } from "./shared";
+import { SectionTag, GradientText, CAL_URL } from "./shared";
 
 const UNAUDITED = [
   "Token spend you cannot explain to finance",
@@ -21,15 +21,15 @@ export function AccountableAIStrip() {
     <section className="py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <SectionTag label="The next AI shift" />
+          <SectionTag label="Two ways this ends" />
           <h2 className="text-3xl md:text-4xl font-black leading-[1.1] tracking-tight">
-            From unaudited AI to{" "}
+            Unaudited AI, or{" "}
             <GradientText>AI you can account for.</GradientText>
           </h2>
           <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            The shift is not seats to tokens. It is unaccountable to accountable.
-            The bill is arriving. The CFO question coming next quarter is what
-            every token actually did for the business.
+            Every AI rollout ends up on one side or the other. The bill is
+            arriving. The CFO question coming next quarter is what every
+            token actually did for the business.
           </p>
         </div>
 
@@ -121,7 +121,7 @@ export function AccountableAIStrip() {
               ))}
             </ul>
             <p className="mt-5 pt-4 border-t border-border/50 text-xs text-muted-foreground italic">
-              Defensible to finance, to the board, to the regulator.
+              Defensible to your CFO, to your board, to your regulator.
             </p>
           </motion.div>
         </div>
@@ -131,10 +131,12 @@ export function AccountableAIStrip() {
             LIZA is the layer that ties every token, every output, and every
             workflow to a standard you own.{" "}
             <a
-              href="/platform"
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
             >
-              See how it works <ArrowRight className="w-3.5 h-3.5" />
+              Book a call <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </p>
         </div>

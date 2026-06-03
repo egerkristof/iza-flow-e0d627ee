@@ -12,20 +12,23 @@ export function BetaCTASection() {
           <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: "var(--gradient-brand)" }} />
           <div className="relative z-10">
             <h2 className="text-3xl font-black mb-4">
-              Your expertise is your moat.
+              You were hired to make AI stick.
               <br />
-              <GradientText>Is it scaling with you?</GradientText>
+              <GradientText>We build the layer that lets it.</GradientText>
             </h2>
             <p className="text-base mb-2 text-muted-foreground">
-              One score, five dimensions, zero signup.
+              One call. We map your rollout against the governance loop and
+              show you where the leverage is.
             </p>
             <p className="text-xs text-muted-foreground/60 mb-8">
-              Get your score → Book a 20-min debrief → Walk away with an action plan.
+              Not ready for a call? Score your AI execution first.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link
-                to="/diagnostic"
+              <a
+                href={CAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold"
                 style={{
                   background: "var(--gradient-brand-btn)",
@@ -33,16 +36,14 @@ export function BetaCTASection() {
                   boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
                 }}
               >
-                Score your AI execution <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <a
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                Book a call <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <Link
+                to="/diagnostic"
                 className="inline-flex items-center gap-2 px-6 py-4 rounded-xl text-base font-medium border border-border text-muted-foreground hover:text-foreground transition-colors"
               >
-                Book a working session <ArrowRight className="w-4 h-4" />
-              </a>
+                Score your AI execution <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>
