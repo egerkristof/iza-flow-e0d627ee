@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { SectionTag } from "./shared";
 
 const PROOFS = [
-  { k: "15+ years", v: "AI systems shipped inside regulated and high-stakes environments" },
   { k: "Design partners", v: "Live in consulting, pharma, AEC, and B2B scale-ups" },
+  { k: "15+ years", v: "AI systems shipped inside regulated and high-stakes environments" },
   { k: "Diagnostic", v: "Run by AI leaders across hundreds of enterprise workflows" },
 ];
 
