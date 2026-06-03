@@ -140,7 +140,7 @@ function PeopleSwarm() {
   );
 }
 
-function StandardBar() {
+function PlaybookBar() {
   return (
     <motion.div
       initial={{ opacity: 0, scaleX: 0.9 }}
@@ -156,9 +156,9 @@ function StandardBar() {
     >
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4" style={{ color: "hsl(var(--brand-green))" }} />
+          <BookOpen className="w-4 h-4" style={{ color: "hsl(var(--brand-green))" }} />
           <span className="text-xs font-black tracking-[0.15em] uppercase" style={{ color: "hsl(var(--brand-green))" }}>
-            Standard #03 · discovery-call
+            Playbook · discovery-call
           </span>
         </div>
         <span className="text-[10px] font-mono text-muted-foreground">owned by RevOps · v7</span>
@@ -188,7 +188,7 @@ function SignedOutputs() {
     >
       <div className="flex items-center justify-between mb-3">
         <div className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-wider uppercase" style={{ color: "hsl(var(--brand-green))" }}>
-          <Check className="w-3 h-3" /> Same 847 runs, with the standard
+          <Check className="w-3 h-3" /> Same 847 runs, with the playbook
         </div>
         <span className="text-[10px] font-mono text-muted-foreground">every output signed</span>
       </div>
@@ -215,7 +215,7 @@ function SignedOutputs() {
           { k: "Source", v: "CRM-#4821" },
           { k: "Model", v: "GPT-5" },
           { k: "Cost", v: "€0.14" },
-          { k: "Standard", v: "#03 v7" },
+          { k: "Playbook", v: "discovery v7" },
         ].map((r) => (
           <div key={r.k} className="rounded-md border px-2 py-1" style={{ borderColor: "hsl(var(--brand-green) / 0.25)", background: "hsl(var(--background))" }}>
             <p className="text-[9px] font-bold tracking-wider uppercase text-muted-foreground">{r.k}</p>
