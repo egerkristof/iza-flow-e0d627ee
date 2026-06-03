@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, FlaskConical, Banknote, Building2, ShieldCheck, Rocket, Cpu, Zap, Briefcase, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
+import { CAL_URL } from "./shared";
 
 /* ── Floating ambient nodes ── */
 const NODES = [
@@ -81,15 +82,23 @@ export function HeroSection() {
 
       {/* ── Content ── */}
       <div className="max-w-3xl mx-auto relative z-10 text-center">
+        <motion.p
+          className="text-[11px] md:text-xs font-bold tracking-[0.22em] uppercase mb-5 text-primary"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          For the person in charge of AI rollout
+        </motion.p>
         <motion.h1
           className="text-3xl md:text-5xl lg:text-[3.5rem] font-black mb-5 leading-[1.08] tracking-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          Your best standard,
+          Your org went all-in on AI.
           <br />
-          <span className="text-primary">executed every time.</span>
+          <span className="text-primary">Now stand behind every output.</span>
         </motion.h1>
 
         <motion.p
@@ -98,8 +107,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          LIZA learns from your top performers and your latest knowledge, then
-          backs every person and every AI tool in the moments that matter most.
+          LIZA is how you roll out AI as a system, not a thousand
+          disconnected chats. Every token, every output, every workflow
+          tied to a standard you own.
         </motion.p>
 
         {/* CTAs */}
@@ -109,8 +119,10 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Link
-            to="/by-function"
+          <a
+            href={CAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold transition-all"
             style={{
               background: "var(--gradient-brand-btn)",
@@ -118,9 +130,9 @@ export function HeroSection() {
               boxShadow: "0 0 32px -4px hsl(var(--primary) / 0.4)",
             }}
           >
-            See it for your function
+            Book a call
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          </a>
           <Link
             to="/diagnostic"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
