@@ -6,14 +6,12 @@ const UNAUDITED = [
   "Token spend you cannot explain to finance",
   "Outputs you cannot trace back to a source",
   "Work that cannot be repeated by the next person",
-  "Confident answers, drifting from policy",
 ];
 
 const AUDITED = [
   "Every token tied to a playbook and an owner",
   "Every output traceable to the source it came from",
   "Every workflow repeatable across the team",
-  "Every answer governed by the rules you set",
 ];
 
 export function AccountableAIStrip() {

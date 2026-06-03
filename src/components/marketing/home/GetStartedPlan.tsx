@@ -26,7 +26,7 @@ const STEPS = [
     n: "03",
     icon: TrendingUp,
     title: "Measure it. Then scale.",
-    body: "The numbers your CFO and board are asking for surface automatically. You pick workflow two, team two, function two. The library compounds.",
+    body: "Cost per outcome. Percent of outputs replayable. Policy drift rate. The numbers your CFO and board are asking for surface automatically. You pick workflow two, team two, function two. The library compounds.",
     tag: "Days 46–90 · org rollout",
     mock: MockDashboard,
     caption: "The metrics your CFO and board already keep asking for. Live.",
