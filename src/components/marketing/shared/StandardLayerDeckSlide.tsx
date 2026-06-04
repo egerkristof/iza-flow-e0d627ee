@@ -14,7 +14,7 @@ export function StandardLayerDeckSlide({
 }) {
   return (
     <div
-      className="w-full h-full flex flex-col"
+      className="w-full h-full flex flex-col relative"
       style={{ background: "hsl(0 0% 100%)", padding: "72px 96px" }}
     >
       <p
