@@ -2977,7 +2977,7 @@ export default function BankingInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Sales-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -3026,7 +3026,7 @@ export default function BankingInvestorDeck() {
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
           <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Banking Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Sales-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -3068,7 +3068,7 @@ export default function BankingInvestorDeck() {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Sales-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>
