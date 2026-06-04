@@ -4,6 +4,7 @@ import { AlertTriangle, ArrowRight, Award, BookOpen, Brain, Briefcase, Building2
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { StandardLayerDeckSlide } from "@/components/marketing/shared/StandardLayerDeckSlide";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
 import zoltanPhoto from "@/assets/zoltan-kauker.png";
@@ -93,24 +94,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Retail Banking · Customer First, Investor Optional
+            LIZA OS · Retail Banking · Sales Deck
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Brand &amp; Compliance Memory Layer<br />
+          One standard. Every AI surface in your bank<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Retail Banking.
+            inherits it.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns brand, product, and compliance judgment into the operating layer between AI inputs and AI outputs in retail banking marketing.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Marketing Pilot · Memory Layer · Optional Strategic Stake</span>
+          LIZA OS is the standard layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>30-day marketing pilot. Then scale across KYC, complaints, credit and group governance.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Two-Door Conversation &nbsp;·&nbsp; Marketing Pilot · Memory Layer · Optional Strategic Stake
+          Confidential &nbsp;·&nbsp; For retail-banking marketing, compliance and AI leaders
         </p>
       </div>
       <SlideBar />
@@ -1893,7 +1894,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Annual infrastructure fee</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                The base fee anchors the knowledge graph, governance layer, and workflow infrastructure inside the account. The next investment phase turns that infrastructure into a repeatable self-serve product surface.
+                The base fee anchors the knowledge graph, governance layer, and workflow infrastructure inside the account. The same infrastructure becomes the repeatable self-serve product surface as your team expands rollout.
               </p>
             </div>
 
@@ -2156,78 +2157,37 @@ function Slide13() {
 
       <div className="relative z-10 w-full px-28">
         <div className="text-center mb-8">
-          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>Two-Door Conversation</p>
+          <p className="font-semibold tracking-[0.25em] uppercase mb-4" style={{ fontSize: 24, color: `hsl(${GREEN} / 0.8)` }}>The Next Step</p>
           <h2 className="font-black mb-3" style={{ fontSize: 72, color: TEXT, lineHeight: 1.05 }}>
-            Become a customer first. <span style={{ color: `hsl(${TEAL})` }}>Invest if you want to own the category with us.</span>
+            Pick one marketing workflow. <span style={{ color: `hsl(${TEAL})` }}>30 days to a defensible AI standard.</span>
           </h2>
           <p style={{ fontSize: 22, color: MUTED, maxWidth: 1280, marginInline: "auto", lineHeight: 1.45 }}>
-            Pilot the marketing memory layer in 30 days. If it earns its place inside your campaign and compliance workflow, you choose whether to take a strategic stake in the company that shipped it.
+            We codify the brand, product and compliance judgment that lives in your senior marketing and legal leads, prove it inside one of your existing workflows, and leave behind a standard layer your AI tools inherit from on day 31.
           </p>
         </div>
 
-        {/* Two doors */}
-        <div className="grid grid-cols-2 gap-6 mb-6">
-          {/* DOOR 1 — Customer */}
+        {/* Single sales path */}
+        <div className="grid grid-cols-1 gap-6 mb-6 max-w-[1200px] mx-auto">
           <div className="rounded-2xl border-2 p-7 flex flex-col"
             style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.06)` }}>
             <div className="flex items-center justify-between mb-3">
-              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>Door 1 · Recommended</p>
-              <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Start here</span>
+              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>30-Day Pilot</p>
+              <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Fixed scope · Fixed price</span>
             </div>
-            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Become a customer.</p>
+            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Install the standard layer in one marketing workflow.</p>
             <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-              Run a 30-day marketing pilot on one workflow you already own — campaign briefs, landing pages, or disclosures. We codify the brand, product, and compliance judgment that lives in your senior marketing and legal leads, then prove it inside your environment.
+              Pick one workflow you already own. Campaign briefs, landing pages, or disclosures. We encode your senior brand and compliance judgment into a versioned standard, plug it into the AI tools your team already uses, and prove the quality delta in your environment.
             </p>
-            <div className="grid grid-cols-1 gap-2 mt-auto">
+            <div className="grid grid-cols-3 gap-3 mt-auto">
               {[
-                { k: "30 days", v: "Pilot one marketing workflow with your team's brand and compliance judgment encoded." },
-                { k: "Quarter 2", v: "Convert to the marketing memory layer across briefs, landing pages, and disclosures." },
-                { k: "Year 1", v: "Standard memory layer across markets, segments, and regulated channels." },
+                { k: "Day 30", v: "One workflow live on the standard layer. Quality delta measured against senior reviewer and AI-alone." },
+                { k: "Quarter 2", v: "Standard layer extended across briefs, landing pages and disclosures. Audit trail by default." },
+                { k: "Year 1", v: "Same standard layer feeds KYC, complaints, credit and group governance. One source of truth across the bank." },
               ].map(({ k, v }) => (
-                <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2.5"
+                <div key={k} className="rounded-lg px-4 py-3"
                   style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
-                  <span className="font-bold shrink-0" style={{ fontSize: 13, color: `hsl(${TEAL})`, minWidth: 78 }}>{k}</span>
-                  <span style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{v}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* DOOR 2 — Strategic stake */}
-          <div className="rounded-2xl border-2 p-7 flex flex-col"
-            style={{ borderColor: `hsl(${GOLD} / 0.32)`, background: `hsl(${GOLD} / 0.05)` }}>
-            <div className="flex items-center justify-between mb-3">
-              <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Door 2 · Optional</p>
-              <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${GOLD} / 0.15)`, color: `hsl(${GOLD})` }}>If we earn it</span>
-            </div>
-            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Take a strategic stake.</p>
-            <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-              €3M strategic minority alongside the customer relationship. 18-month runway to harden the marketing memory layer, ship usage-priced rollout, and build the retail-banking beachhead across CEE with you on the inside.
-            </p>
-            <div className="grid grid-cols-2 gap-2 mb-3">
-              {[
-                { pct: "35%", label: "Banking-Native Product UX", color: ACCENT },
-                { pct: "25%", label: "Usage + Billing Infra", color: GREEN },
-                { pct: "25%", label: "Integrations + Pilots", color: GOLD },
-                { pct: "15%", label: "GTM + Operations", color: MUTED },
-              ].map(({ pct, label, color }) => (
-                <div key={label} className="rounded-lg border px-3 py-2 text-center"
-                  style={{ borderColor: `hsl(${color} / 0.22)`, background: `hsl(${color} / 0.05)` }}>
-                  <p className="font-black" style={{ fontSize: 18, color: TEXT, lineHeight: 1 }}>{pct}</p>
-                  <p className="font-bold mt-0.5" style={{ fontSize: 11, color: `hsl(${color})` }}>{label}</p>
-                </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-1 gap-2 mt-auto">
-              {[
-                { k: "Month 6", v: "Banking-native UX live with first lighthouse retail-bank deployments." },
-                { k: "Month 12", v: "Usage-priced rollout. CMS / marketing-cloud / GRC integration path in market." },
-                { k: "Month 18", v: "€1.5–2.5M ARR. 8–12 retail-banking customers on the marketing memory layer." },
-              ].map(({ k, v }) => (
-                <div key={k} className="flex items-start gap-3 rounded-lg px-3 py-2"
-                  style={{ background: `hsl(${GOLD} / 0.04)`, border: `1px solid hsl(${GOLD} / 0.14)` }}>
-                  <span className="font-bold shrink-0" style={{ fontSize: 13, color: `hsl(${GOLD})`, minWidth: 78 }}>{k}</span>
-                  <span style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{v}</span>
+                  <p className="font-black mb-1" style={{ fontSize: 13, color: `hsl(${TEAL})` }}>{k}</p>
+                  <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{v}</p>
                 </div>
               ))}
             </div>
@@ -2237,8 +2197,8 @@ function Slide13() {
         <div className="rounded-xl px-10 py-4 text-center"
           style={{ background: `hsl(${TEAL} / 0.08)`, border: `1px solid hsl(${TEAL} / 0.25)` }}>
           <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.5 }}>
-            Pilot first. Investment is not a prerequisite —{" "}
-            <strong style={{ color: `hsl(${TEAL})` }}>it's the natural second step once the marketing memory layer earns its place inside your retail-banking operations.</strong>
+            One workflow. 30 days. Fixed price.{" "}
+            <strong style={{ color: `hsl(${TEAL})` }}>On day 31 your AI tools run on a standard your senior people would sign.</strong>
           </p>
         </div>
 
@@ -2879,27 +2839,25 @@ function SlideOrgIntelligence() {
 
 const SLIDES = [
   { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "The Context Gap", component: <Slide02 /> },
-  { id: 3, title: "The Context Gap, Exemplified", component: <SlideContextGapExemplified /> },
-  { id: 4, title: "Where Missing Context Shows Up in Retail Banking", component: <Slide03 /> },
-  { id: 5, title: "What Missing Context Costs in Retail Banking", component: <Slide04Cost /> },
-  { id: 6, title: "Early Validation", component: <Slide08 /> },
-  { id: 7, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 8, title: "The Context Layer", component: <Slide05 /> },
-  { id: 9, title: "People as Nodes", component: <SlidePeopleAsNodes /> },
-  { id: 10, title: "Organizational Intelligence", component: <SlideOrgIntelligence /> },
-  { id: 11, title: "Strategic Pivot", component: <SlideVerticalization /> },
+  { id: 2, title: "The Category · One standard. Every AI surface inherits it.", component: <StandardLayerDeckSlide eyebrow="The category · What LIZA installs between AI and action in your bank" /> },
+  { id: 3, title: "The Context Gap", component: <Slide02 /> },
+  { id: 4, title: "The Context Gap, Exemplified", component: <SlideContextGapExemplified /> },
+  { id: 5, title: "Where Missing Context Shows Up in Retail Banking", component: <Slide03 /> },
+  { id: 6, title: "What Missing Context Costs in Retail Banking", component: <Slide04Cost /> },
+  { id: 7, title: "Early Validation", component: <Slide08 /> },
+  { id: 8, title: "Why Now", component: <SlideWhyNow /> },
+  { id: 9, title: "The Standard Layer in Retail Banking", component: <Slide05 /> },
+  { id: 10, title: "People as Nodes", component: <SlidePeopleAsNodes /> },
+  { id: 11, title: "Organizational Intelligence", component: <SlideOrgIntelligence /> },
   { id: 12, title: "Category Thesis & Moat", component: <Slide06 /> },
   { id: 13, title: "Expansion Path", component: <Slide09 /> },
-  { id: 14, title: "Strategic Partnership Path", component: <Slide09Partnership /> },
-  { id: 15, title: "Shape of the Company", component: <SlideShape /> },
-  { id: 16, title: "What's Built", component: <Slide10 /> },
-  { id: 17, title: "Business Model", component: <Slide11 /> },
-  { id: 18, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 19, title: "Team", component: <Slide12 /> },
-  { id: 20, title: "The Ask", component: <Slide13 /> },
-  { id: 21, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 22, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 14, title: "What's Built", component: <Slide10 /> },
+  { id: 15, title: "Pricing & Commercial Model", component: <Slide11 /> },
+  { id: 16, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
+  { id: 17, title: "Team", component: <Slide12 /> },
+  { id: 18, title: "The Next Step", component: <Slide13 /> },
+  { id: 19, title: "Appendix", component: <SlideAppendixDivider /> },
+  { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
@@ -3019,7 +2977,7 @@ export default function BankingInvestorDeck() {
             <ChevronRight size={18} style={{ color: TEXT }} />
           </button>
           <div className="w-px h-4" style={{ background: CHROME_BORDER }} />
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Sales-Deck" slideCount={SLIDES.length} variant="mobile" iconColor={MUTED} />
         </div>
 
         <div ref={exportRef} style={{ position: 'fixed', left: '-9999px', top: 0, width: 1920, pointerEvents: 'none' }}>
@@ -3068,7 +3026,7 @@ export default function BankingInvestorDeck() {
         <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: CHROME_BORDER, background: BG }}>
           <h2 className="font-bold" style={{ fontSize: 20, color: TEXT }}>LIZA OS · Banking Investor Deck</h2>
           <div className="flex items-center gap-3">
-            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} />
+            <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Sales-Deck" slideCount={SLIDES.length} />
             <Button variant="outline" size="sm" onClick={() => setShowGrid(false)}>
               <X size={16} className="mr-1.5" /> Close
             </Button>
@@ -3110,7 +3068,7 @@ export default function BankingInvestorDeck() {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Investor-Deck" slideCount={SLIDES.length} />
+          <ExportMenu exportRef={exportRef} fileName="LIZA-OS-Banking-Sales-Deck" slideCount={SLIDES.length} />
           <Button variant="ghost" size="sm" onClick={() => setShowGrid(true)}>
             <Grid3x3 size={16} className="mr-1.5" /> Grid
           </Button>
