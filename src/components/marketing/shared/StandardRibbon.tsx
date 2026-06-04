@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Database, Sparkles, ShieldCheck, Workflow, TrendingUp } from "lucide-react";
+import { Globe2, Radio, ShieldCheck, Zap, Trophy } from "lucide-react";
 
 /**
  * StandardRibbon — one-glance hero diagram.
@@ -21,35 +21,35 @@ type Block = {
 
 const BLOCKS: Block[] = [
   {
-    id: "records",
-    label: "Records",
-    sub: "Veeva, LIMS, ERP, Drive, SharePoint",
-    icon: <Database className="w-4 h-4" />,
+    id: "reality",
+    label: "Reality",
+    sub: "Your records, systems, documents. The world as it is.",
+    icon: <Globe2 className="w-4 h-4" />,
   },
   {
-    id: "ai",
-    label: "AI Tools",
-    sub: "Copilot, Claude, Gemini, vendor RAG",
-    icon: <Sparkles className="w-4 h-4" />,
+    id: "signal",
+    label: "Signal",
+    sub: "What Copilot, Claude and RAG surface from it.",
+    icon: <Radio className="w-4 h-4" />,
   },
   {
     id: "standard",
     label: "The Standard",
-    sub: "How your company decides and delivers work",
+    sub: "How your company decides. The rule signal must pass through.",
     icon: <ShieldCheck className="w-4 h-4" />,
     lit: true,
   },
   {
-    id: "work",
-    label: "Work",
-    sub: "Drafts, decisions, approvals, deliverables",
-    icon: <Workflow className="w-4 h-4" />,
+    id: "action",
+    label: "Action",
+    sub: "The work that gets done. Drafts, approvals, deliverables.",
+    icon: <Zap className="w-4 h-4" />,
   },
   {
-    id: "outcomes",
-    label: "Outcomes",
-    sub: "Audit-ready output your board can defend",
-    icon: <TrendingUp className="w-4 h-4" />,
+    id: "result",
+    label: "Result",
+    sub: "Outcomes your board and regulator can defend.",
+    icon: <Trophy className="w-4 h-4" />,
   },
 ];
 
@@ -78,7 +78,7 @@ export function StandardRibbon() {
           The stack
         </span>
         <span className="text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground">
-          Four layers everyone has. One layer nobody built.
+          Four words everyone knows. One layer nobody built.
         </span>
       </div>
 
