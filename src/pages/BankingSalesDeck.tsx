@@ -554,20 +554,20 @@ function S07Plan({ n, t }: { n: number; t: number }) {
 // ─── 08 · Proof in production ──────────────────────────────────────────────
 function S08Proof({ n, t }: { n: number; t: number }) {
   const stats = [
-    { v: "127",       l: "standards live",         s: "Typed playbooks, decision rules and policies running in production across regulated workflows." },
-    { v: "3,400 /mo", l: "signed decisions",       s: "Every output bound to a standard, model and approver. Replayable on internal audit." },
-    { v: "62%",       l: "drop in time-to-spec",   s: "On the workflows that moved first. Measured against the pre-LIZA baseline. CFO-visible." },
-    { v: "0",         l: "audit failures",         s: "Across the regulated reference deployment to date. Same install pattern available to your bank." },
+    { v: "127",       l: "standards live",          s: "Typed playbooks, brand rules and policy registers in production. The bank equivalent: campaign standards, KYC narratives, complaint templates, credit memos." },
+    { v: "3,400 /mo", l: "signed decisions",        s: "Every output bound to a standard, model and approver. The same shape your internal audit and the regulator will ask for, replayable on demand." },
+    { v: "62%",       l: "drop in time-to-spec",    s: "On the workflows that moved first. CFO-visible against the pre-LIZA baseline. In banking: campaign brief, KYC adjudication, complaint response time." },
+    { v: "0",         l: "audit failures",          s: "Across the regulated reference deployment to date. Same install pattern available for EBA, DORA, MNB / NBR and Consumer Duty scrutiny." },
   ];
   return (
     <SH section="Proof in production" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-28 pb-20 flex flex-col">
         <div className="mb-10">
           <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-            What another regulated enterprise already shipped on LIZA
+            What another regulated enterprise already shipped on LIZA · how it lands inside a bank
           </p>
           <h2 className="font-black" style={{ fontSize: 54, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            CTO-sponsored. Live in production. Same install pattern available to your bank.
+            CTO-sponsored. Live in production. The same install pattern, mapped to four banking workflows.
           </h2>
         </div>
         <div className="grid grid-cols-4 gap-5 flex-1">
@@ -582,7 +582,7 @@ function S08Proof({ n, t }: { n: number; t: number }) {
           ))}
         </div>
         <p className="mt-6 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: SUBTLE }}>
-          Source: AACE v3.1 runtime · regulated reference deployment · 12-month rolling window · CTO-sponsored, anonymised on request.
+          Source · AACE v3.1 runtime · regulated reference deployment · 12-month rolling window · CTO-sponsored, anonymised on request · banking workflows mapped 1:1 in pilot scoping.
         </p>
       </div>
     </SH>
