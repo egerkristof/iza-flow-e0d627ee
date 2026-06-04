@@ -240,12 +240,14 @@ function FlowBlock({
   icon,
   title,
   body,
+  examples,
   caption,
   index,
 }: {
   icon: React.ReactNode;
   title: string;
   body: string;
+  examples?: string[];
   caption: { head: string; body: string };
   index: number;
 }) {
@@ -275,7 +277,7 @@ function FlowBlock({
         >
           {icon}
         </span>
-        <div>
+        <div className="flex-1 min-w-0">
           <p
             className="text-lg md:text-xl font-black tracking-tight"
             style={{ color: "hsl(var(--primary))" }}
@@ -283,6 +285,23 @@ function FlowBlock({
             {title}
           </p>
           <p className="text-sm text-muted-foreground mt-0.5">{body}</p>
+          {examples && examples.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {examples.map((ex) => (
+                <span
+                  key={ex}
+                  className="text-[10.5px] md:text-[11px] font-semibold px-2 py-1 rounded-md"
+                  style={{
+                    background: "hsl(var(--primary) / 0.07)",
+                    color: "hsl(var(--primary))",
+                    border: "1px solid hsl(var(--primary) / 0.18)",
+                  }}
+                >
+                  {ex}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
