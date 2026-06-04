@@ -11,7 +11,7 @@ export default function MockLayerPage() {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-8">
           <span className="inline-block text-[10px] font-black tracking-[0.22em] uppercase text-muted-foreground">
-            Mock . Standard Layer diagram
+            Mock . Decision Layer diagram
           </span>
         </div>
         <StandardLayerDiagram />

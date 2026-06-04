@@ -1109,7 +1109,7 @@ function SlideArchitecture() {
 
 function Slide06() {
   const players = [
-    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed standard layer.", color: GREEN },
+    { name: "Procore Copilot", funding: "Public", round: "Procore · 2024", what: "AI assistant inside Procore. Project-aware Q&A, but no governed decision layer.", color: GREEN },
     { name: "Autodesk Construction IQ", funding: "Public", round: "Autodesk ACC · 2024", what: "Risk prediction & insights. Reads project data, doesn't encode firm judgment.", color: SEAFOAM },
     { name: "Document Crunch", funding: "$54M", round: "Series B · 2024", what: "Contract & spec compliance review. Document-level AI, not lifecycle memory.", color: BLUE },
     { name: "Bluebeam (Nemetschek)", funding: "Strategic", round: "Nemetschek portfolio", what: "PDF & markup workflow standard for GCs and A/E. Strong workflow position, but no shipped project-memory governance layer yet.", color: GOLD },

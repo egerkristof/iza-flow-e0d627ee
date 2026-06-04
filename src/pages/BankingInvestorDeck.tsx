@@ -106,7 +106,7 @@ function Slide01() {
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          The Standard Layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it. Built with Standards Engineering, governed by your own rules.<br />
+          The Decision Layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it. Built with Standards Engineering, governed by your own rules.<br />
           <span style={{ color: `hsl(${TEAL})` }}>30-day marketing pilot. Then scale across KYC, complaints, credit and group governance.</span>
         </p>
 
@@ -2162,7 +2162,7 @@ function Slide13() {
             Pick one marketing workflow. <span style={{ color: `hsl(${TEAL})` }}>30 days to a defensible AI standard.</span>
           </h2>
           <p style={{ fontSize: 22, color: MUTED, maxWidth: 1280, marginInline: "auto", lineHeight: 1.45 }}>
-            We codify the brand, product and compliance judgment that lives in your senior marketing and legal leads, prove it inside one of your existing workflows, and leave behind a standard layer your AI tools inherit from on day 31.
+            We codify the brand, product and compliance judgment that lives in your senior marketing and legal leads, prove it inside one of your existing workflows, and leave behind a decision layer your AI tools inherit from on day 31.
           </p>
         </div>
 
@@ -2174,15 +2174,15 @@ function Slide13() {
               <p className="font-black tracking-[0.18em] uppercase" style={{ fontSize: 12, color: `hsl(${TEAL})` }}>30-Day Pilot</p>
               <span className="px-2.5 py-1 rounded-full font-bold" style={{ fontSize: 11, background: `hsl(${TEAL} / 0.15)`, color: `hsl(${TEAL})` }}>Fixed scope · Fixed price</span>
             </div>
-            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Install the standard layer in one marketing workflow.</p>
+            <p className="font-black mb-2" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1 }}>Install the decision layer in one marketing workflow.</p>
             <p className="mb-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
               Pick one workflow you already own. Campaign briefs, landing pages, or disclosures. We encode your senior brand and compliance judgment into a versioned standard, plug it into the AI tools your team already uses, and prove the quality delta in your environment.
             </p>
             <div className="grid grid-cols-3 gap-3 mt-auto">
               {[
-                { k: "Day 30", v: "One workflow live on the standard layer. Quality delta measured against senior reviewer and AI-alone." },
+                { k: "Day 30", v: "One workflow live on the decision layer. Quality delta measured against senior reviewer and AI-alone." },
                 { k: "Quarter 2", v: "Standard layer extended across briefs, landing pages and disclosures. Audit trail by default." },
-                { k: "Year 1", v: "Same standard layer feeds KYC, complaints, credit and group governance. One source of truth across the bank." },
+                { k: "Year 1", v: "Same decision layer feeds KYC, complaints, credit and group governance. One source of truth across the bank." },
               ].map(({ k, v }) => (
                 <div key={k} className="rounded-lg px-4 py-3"
                   style={{ background: `hsl(${TEAL} / 0.05)`, border: `1px solid hsl(${TEAL} / 0.15)` }}>
@@ -2848,7 +2848,7 @@ const SLIDES = [
   { id: 5,  title: "Where rollouts die · The Context Gap",                                   component: <Slide02 /> },
   { id: 6,  title: "What it costs · The artisanal tax in retail banking",                    component: <Slide04Cost /> },
   { id: 7,  title: "Why now",                                                                component: <SlideWhyNow /> },
-  { id: 8,  title: "What we install · The Standard Layer in your bank",                      component: <Slide05 /> },
+  { id: 8,  title: "What we install · The Decision Layer in your bank",                      component: <Slide05 /> },
   { id: 9,  title: "Where it plugs in · Blueprint + nervous system",                         component: <SlideArchitecture /> },
   { id: 10, title: "Proof in production · Early validation",                                 component: <Slide08 /> },
   { id: 11, title: "People as nodes",                                                        component: <SlidePeopleAsNodes /> },

@@ -70,7 +70,7 @@ const PILLARS = [
 
 export function StandardLayerDeckSlide({
   eyebrow = "The category · One standard. Every AI surface inherits it.",
-  footnote = "Reality → AI Layer → The Standard Layer → Execution → Outcomes.",
+  footnote = "Reality → AI Layer → The Decision Layer → Execution → Outcomes.",
 }: {
   eyebrow?: string;
   footnote?: string;
@@ -91,14 +91,14 @@ export function StandardLayerDeckSlide({
       {/* Title */}
       <div className="flex items-baseline justify-between gap-8" style={{ marginBottom: 28 }}>
         <h2 style={{ fontSize: 44, fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
-          The Standard Layer
+          The Decision Layer
         </h2>
         <p style={{ fontSize: 16, color: MUTED, maxWidth: 540, textAlign: "right" }}>
           The missing layer between your AI and real action — where standards, governance and orchestration live.
         </p>
       </div>
 
-      {/* Flow row: Reality → AI → [STANDARD LAYER] → Execution → Outcomes */}
+      {/* Flow row: Reality → AI → [DECISION LAYER] → Execution → Outcomes */}
       <div className="flex-1 min-h-0 flex items-stretch gap-3">
         <StageCard stage={STAGES[0]} />
         <FlowArrow />
@@ -220,7 +220,7 @@ function StandardLayerCard() {
         }}
       >
         <p style={{ fontSize: 18, fontWeight: 900, letterSpacing: "0.04em", textTransform: "uppercase", lineHeight: 1.1 }}>
-          The Standard Layer
+          The Decision Layer
         </p>
         <p style={{ fontSize: 11, opacity: 0.9, marginTop: 4 }}>
           The missing layer between AI and action.

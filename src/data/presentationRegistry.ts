@@ -117,7 +117,7 @@ export const presentationRoutes: PresentationRoute[] = [
     title: "Banking Sales Deck",
     path: "/sales-banking",
     sourcePath: "src/pages/BankingSalesDeck.tsx",
-    description: "Lean StoryBrand sales deck for retail banking. Same grammar as /get-started and /factory, retail-banking flavor. 14 slides: cover, reality, the job, category (Standard Layer), funnel, what we install, where it plugs in, 90-day plan, proof, buying committee, pricing & procurement, alternatives, risk-reversed pilot, close. Persona: Head of AI / Digital / Compliance at a retail bank.",
+    description: "Lean StoryBrand sales deck for retail banking. Same grammar as /get-started and /factory, retail-banking flavor. 14 slides: cover, reality, the job, category (Decision Layer), funnel, what we install, where it plugs in, 90-day plan, proof, buying committee, pricing & procurement, alternatives, risk-reversed pilot, close. Persona: Head of AI / Digital / Compliance at a retail bank.",
     component: BankingSalesDeck,
     showInAdmin: true,
   },
