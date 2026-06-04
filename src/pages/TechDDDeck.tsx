@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
 import { cn } from "@/lib/utils";
+import { StandardLayerDeckSlide } from "@/components/marketing/shared/StandardLayerDeckSlide";
 
 // ─── Scaled slide container ──────────────────────────────────────────────────
 export function ScaledSlide({ children }: { children: React.ReactNode }) {
