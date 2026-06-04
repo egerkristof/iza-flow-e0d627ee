@@ -6,6 +6,7 @@ import { PromptFactoryVisual } from "@/components/marketing/home/PromptFactoryVi
 import { GetStartedPlan } from "@/components/marketing/home/GetStartedPlan";
 import { StakesAndTransform } from "@/components/marketing/home/StakesAndTransform";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
+import { StandardLayerSection } from "@/components/marketing/shared/StandardLayerSection";
 
 /*
  * Homepage built on StoryBrand for the AI Rollout Owner.
@@ -23,6 +24,9 @@ export default function HomePage() {
 
       {/* 3. Guide: empathy + authority */}
       <GuideStrip />
+
+      {/* 3.5 Category: the one-sentence story (canonical, identical on every surface) */}
+      <StandardLayerSection />
 
       {/* 4. Product moment: anatomy of a prompt at org scale */}
       <PromptFactoryVisual />
