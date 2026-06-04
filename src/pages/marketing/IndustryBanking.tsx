@@ -125,7 +125,7 @@ export default function IndustryBankingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/investor-banking"
+              to="/sales-banking"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",
@@ -320,7 +320,7 @@ export default function IndustryBankingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
-              to="/investor-banking"
+              to="/sales-banking"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-semibold transition-all"
               style={{
                 background: "var(--gradient-brand-btn)",

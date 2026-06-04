@@ -822,7 +822,7 @@ function Slide03Cost() {
       unit: "per consumer-protection finding",
       consequence: "Brand book, product rules and regulator guidance interpreted differently each time. EBA, DORA, Consumer Duty exposure compounds.",
       color: ACCENT,
-      href: "/investor-banking",
+      href: "/sales-banking",
       source: "EBA enforcement actions 2023–2024",
     },
     {
