@@ -106,77 +106,17 @@ export function StandardLayerDeckSlide({
         The missing layer between your AI and real action — where standards, governance and orchestration live.
       </p>
 
-      {/* Top row: 4 stage cards in a horizontal flow */}
+      {/* Flow: Reality -> AI Layer -> [Decision Layer] -> Execution -> Outcomes */}
       <div className="flex items-stretch gap-3 flex-1 min-h-0" style={{ marginBottom: 18 }}>
         <StageCard stage={merged[0]} />
         <FlowArrow />
         <StageCard stage={merged[1]} />
         <FlowArrow lit />
+        <DecisionLayerCard />
+        <FlowArrow lit />
         <StageCard stage={merged[2]} />
         <FlowArrow />
         <StageCard stage={merged[3]} />
-      </div>
-
-      {/* Decision Layer band: full-width below the flow, visually "underneath" AI→Execution */}
-      <div
-        className="rounded-2xl flex flex-col overflow-hidden"
-        style={{
-          border: `1.5px solid hsl(200 90% 42% / 0.55)`,
-          boxShadow:
-            "0 30px 70px -30px hsl(200 90% 42% / 0.55), 0 0 50px -18px hsl(200 90% 42% / 0.35)",
-        }}
-      >
-        <div
-          className="flex items-center justify-between px-7 py-3"
-          style={{ background: PRIMARY, color: "white" }}
-        >
-          <div>
-            <p style={{ fontSize: 11, opacity: 0.85, letterSpacing: "0.28em", textTransform: "uppercase" }}>
-              What LIZA installs
-            </p>
-            <p style={{ fontSize: 22, fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1 }}>
-              The Decision Layer
-            </p>
-          </div>
-          <p style={{ fontSize: 13, opacity: 0.9, maxWidth: 520, textAlign: "right", lineHeight: 1.3 }}>
-            Sits between every AI tool and every governed action. Same standard everywhere.
-          </p>
-        </div>
-        <div
-          className="grid grid-cols-5"
-          style={{ background: "hsl(200 90% 42% / 0.18)", gap: 1 }}
-        >
-          {PILLARS.map((p) => (
-            <div
-              key={p.label}
-              className="flex flex-col items-center justify-center text-center"
-              style={{ background: "hsl(0 0% 100%)", padding: "12px 8px" }}
-            >
-              <span
-                className="w-9 h-9 rounded-lg flex items-center justify-center mb-2"
-                style={{
-                  background: PRIMARY_SOFT,
-                  color: PRIMARY,
-                  border: `1px solid ${PRIMARY_BORDER}`,
-                }}
-              >
-                {p.icon}
-              </span>
-              <p
-                style={{
-                  fontSize: 12.5,
-                  fontWeight: 900,
-                  color: PRIMARY,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.04em",
-                  lineHeight: 1.15,
-                }}
-              >
-                {p.label}
-              </p>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* Footer signature row */}
@@ -278,6 +218,73 @@ function FlowArrow({ lit = false }: { lit?: boolean }) {
         className="w-6 h-6"
         style={{ color: lit ? PRIMARY : "hsl(215 20% 70%)" }}
       />
+    </div>
+  );
+}
+
+function DecisionLayerCard() {
+  return (
+    <div
+      className="rounded-2xl flex flex-col overflow-hidden shrink-0"
+      style={{
+        width: 320,
+        border: `1.5px solid hsl(200 90% 42% / 0.55)`,
+        boxShadow:
+          "0 30px 70px -30px hsl(200 90% 42% / 0.55), 0 0 50px -18px hsl(200 90% 42% / 0.35)",
+        background: "hsl(0 0% 100%)",
+      }}
+    >
+      <div
+        className="px-5 py-3 text-center"
+        style={{ background: PRIMARY, color: "white" }}
+      >
+        <p style={{ fontSize: 10, opacity: 0.85, letterSpacing: "0.28em", textTransform: "uppercase" }}>
+          What LIZA installs
+        </p>
+        <p style={{ fontSize: 22, fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1.05, marginTop: 2 }}>
+          The Decision Layer
+        </p>
+      </div>
+      <div className="flex-1 grid grid-cols-2" style={{ gap: 1, background: "hsl(200 90% 42% / 0.18)" }}>
+        {PILLARS.map((p) => (
+          <div
+            key={p.label}
+            className="flex flex-col items-center justify-center text-center"
+            style={{ background: "hsl(0 0% 100%)", padding: "10px 6px" }}
+          >
+            <span
+              className="w-8 h-8 rounded-lg flex items-center justify-center mb-1.5"
+              style={{
+                background: PRIMARY_SOFT,
+                color: PRIMARY,
+                border: `1px solid ${PRIMARY_BORDER}`,
+              }}
+            >
+              {p.icon}
+            </span>
+            <p
+              style={{
+                fontSize: 11,
+                fontWeight: 900,
+                color: PRIMARY,
+                textTransform: "uppercase",
+                letterSpacing: "0.04em",
+                lineHeight: 1.15,
+              }}
+            >
+              {p.label}
+            </p>
+          </div>
+        ))}
+        <div
+          className="flex items-center justify-center text-center"
+          style={{ background: "hsl(0 0% 100%)", padding: "10px 6px" }}
+        >
+          <p style={{ fontSize: 10, color: MUTED, lineHeight: 1.25 }}>
+            Same standard, every AI surface.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
