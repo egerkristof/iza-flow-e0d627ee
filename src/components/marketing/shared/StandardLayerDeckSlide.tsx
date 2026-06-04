@@ -221,3 +221,70 @@ function FlowArrow({ lit = false }: { lit?: boolean }) {
     </div>
   );
 }
+
+function DecisionLayerCard() {
+  return (
+    <div
+      className="rounded-2xl flex flex-col overflow-hidden shrink-0"
+      style={{
+        width: 320,
+        border: `1.5px solid hsl(200 90% 42% / 0.55)`,
+        boxShadow:
+          "0 30px 70px -30px hsl(200 90% 42% / 0.55), 0 0 50px -18px hsl(200 90% 42% / 0.35)",
+        background: "hsl(0 0% 100%)",
+      }}
+    >
+      <div
+        className="px-5 py-3 text-center"
+        style={{ background: PRIMARY, color: "white" }}
+      >
+        <p style={{ fontSize: 10, opacity: 0.85, letterSpacing: "0.28em", textTransform: "uppercase" }}>
+          What LIZA installs
+        </p>
+        <p style={{ fontSize: 22, fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1.05, marginTop: 2 }}>
+          The Decision Layer
+        </p>
+      </div>
+      <div className="flex-1 grid grid-cols-2" style={{ gap: 1, background: "hsl(200 90% 42% / 0.18)" }}>
+        {PILLARS.map((p) => (
+          <div
+            key={p.label}
+            className="flex flex-col items-center justify-center text-center"
+            style={{ background: "hsl(0 0% 100%)", padding: "10px 6px" }}
+          >
+            <span
+              className="w-8 h-8 rounded-lg flex items-center justify-center mb-1.5"
+              style={{
+                background: PRIMARY_SOFT,
+                color: PRIMARY,
+                border: `1px solid ${PRIMARY_BORDER}`,
+              }}
+            >
+              {p.icon}
+            </span>
+            <p
+              style={{
+                fontSize: 11,
+                fontWeight: 900,
+                color: PRIMARY,
+                textTransform: "uppercase",
+                letterSpacing: "0.04em",
+                lineHeight: 1.15,
+              }}
+            >
+              {p.label}
+            </p>
+          </div>
+        ))}
+        <div
+          className="flex items-center justify-center text-center"
+          style={{ background: "hsl(0 0% 100%)", padding: "10px 6px" }}
+        >
+          <p style={{ fontSize: 10, color: MUTED, lineHeight: 1.25 }}>
+            Same standard, every AI surface.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
