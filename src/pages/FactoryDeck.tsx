@@ -22,6 +22,7 @@ import {
   S07eAaceNotRag, S07dOrgLoop,
   S10UnitEconomics, S13LoopClosed,
 } from "@/pages/TechDDDeck";
+import { StandardLayerDeckSlide } from "@/components/marketing/shared/StandardLayerDeckSlide";
 
 // ═════════════════════════════════════════════════════════════════════════════
 // FACTORY DECK — Production-system spine
@@ -1519,6 +1520,7 @@ function FComplianceMap() {
 const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
+  { id: "category",         title: "The Category · One standard. Every AI surface inherits it.", component: <StandardLayerDeckSlide eyebrow="The category · How LIZA fits between AI and action" /> },
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
   { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
