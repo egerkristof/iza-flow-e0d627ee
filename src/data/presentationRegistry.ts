@@ -31,7 +31,7 @@ import SatcomBrief from "@/pages/SatcomBrief";
 import MADeck from "@/pages/MADeck";
 import StrategyOfficeDeck from "@/pages/StrategyOfficeDeck";
 import PharmaBrief from "@/pages/PharmaBrief";
-import BankingInvestorDeck from "@/pages/BankingInvestorDeck";
+import BankingSalesDeck from "@/pages/BankingSalesDeck";
 import AutomotiveInvestorDeck from "@/pages/AutomotiveInvestorDeck";
 import SpaceDefenseHoldingsDeck from "@/pages/SpaceDefenseHoldingsDeck";
 import SpaceDefenseHoldingsBrief from "@/pages/SpaceDefenseHoldingsBrief";
@@ -116,9 +116,9 @@ export const presentationRoutes: PresentationRoute[] = [
     id: "sales-banking",
     title: "Banking Sales Deck",
     path: "/sales-banking",
-    sourcePath: "src/pages/BankingInvestorDeck.tsx",
-    description: "Retail-banking sales deck. Channels the current LIZA pitch (standard layer, factory, get-started, homepage) into a single sales narrative for retail-bank marketing, compliance and AI leaders. 30-day marketing pilot wedge, then expansion to KYC, complaints, credit and group governance. No investment framing.",
-    component: BankingInvestorDeck,
+    sourcePath: "src/pages/BankingSalesDeck.tsx",
+    description: "Lean StoryBrand sales deck for retail banking. Same grammar as /get-started and /factory, retail-banking flavor. 14 slides: cover, reality, the job, category (Standard Layer), funnel, what we install, where it plugs in, 90-day plan, proof, buying committee, pricing & procurement, alternatives, risk-reversed pilot, close. Persona: Head of AI / Digital / Compliance at a retail bank.",
+    component: BankingSalesDeck,
     showInAdmin: true,
   },
   {
