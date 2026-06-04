@@ -123,7 +123,7 @@ function VizBankArchitecture() {
     <div className="w-full flex flex-col gap-3">
       <Layer title="Your people, your workflows" sub="Layer 4 · users" accent={GREEN}
         items={["Marketing", "RMs", "KYC analysts", "Underwriters", "Complaints", "Contact centre", "Compliance", "Legal"]} />
-      <Layer title="LIZA OS · the Standard Layer" sub="Layer 3 · what we install" accent={GOLD} dashed
+      <Layer title="LIZA OS · the Decision Layer" sub="Layer 3 · what we install" accent={GOLD} dashed
         items={["Brand & product standards", "Policy registry", "AACE runtime", "Signed receipts", "Audit replay", "Memory & feedback"]} />
       <Layer title="Your existing AI tools" sub="Layer 2 · already paid for" accent={GREEN}
         items={["Copilot M365", "ChatGPT Enterprise", "Gemini", "In-house RAG", "Vendor copilots in core / CRM"]} />
@@ -307,7 +307,7 @@ function S01Cover({ n, t }: { n: number; t: number }) {
           <span style={{ color: `hsl(${GREEN})` }}>Every AI surface in your bank inherits it.</span>
         </h1>
         <p className="mt-10 relative z-10" style={{ fontSize: 28, lineHeight: 1.3, color: "hsl(0 0% 78%)", maxWidth: 1320 }}>
-          LIZA OS is the Standard Layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it. Built with Standards Engineering. Governed by your own rules.
+          LIZA OS is the Decision Layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it. Built with Standards Engineering. Governed by your own rules.
         </p>
         <div className="mt-14 relative z-10 rounded-2xl px-10 py-6 flex items-center gap-12"
           style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.12)`, backdropFilter: "blur(6px)" }}>
@@ -323,7 +323,7 @@ function S01Cover({ n, t }: { n: number; t: number }) {
           <div className="flex items-center gap-3">
             <span className="inline-block rounded-full" style={{ width: 12, height: 12, background: `hsl(${GREEN})`, boxShadow: `0 0 12px hsl(${GREEN} / 0.7)` }} />
             <p style={{ fontSize: 18, color: "hsl(0 0% 88%)" }}>
-              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Right</span>: AI in a bank that has installed the Standard Layer
+              <span className="font-bold" style={{ color: "hsl(0 0% 98%)" }}>Right</span>: AI in a bank that has installed the Decision Layer
             </p>
           </div>
         </div>
@@ -426,7 +426,7 @@ function S05Solution({ n, t }: { n: number; t: number }) {
     <LensSlide
       section="What we install" n={n} total={t}
       topic="The unit your bank's AI rollout is missing"
-      framing="Other vendors give you a tool. We install the Standard Layer that produces one accountable, regulator-replayable decision, on every model your bank uses."
+      framing="Other vendors give you a tool. We install the Decision Layer that produces one accountable, regulator-replayable decision, on every model your bank uses."
       payload={{
         market: {
           kicker: "What every other vendor sells",
@@ -593,14 +593,14 @@ function S11Alternatives({ n, t }: { n: number; t: number }) {
             The board will ask why not one of these
           </p>
           <h2 className="font-black" style={{ fontSize: 46, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Stay on Copilot. Build it internally. Hire a Big-4 programme. Install the Standard Layer.
+            Stay on Copilot. Build it internally. Hire a Big-4 programme. Install the Decision Layer.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
           <VizBankAlternatives />
         </div>
         <p className="mt-5 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
-          We do not replace Copilot or your in-house RAG. We are the standard layer they were missing.
+          We do not replace Copilot or your in-house RAG. We are the decision layer they were missing.
         </p>
       </div>
     </SH>
@@ -645,7 +645,7 @@ function S13Close({ n, t }: { n: number; t: number }) {
         </p>
         <h2 className="font-black" style={{ fontSize: 88, lineHeight: 1.02, color: "hsl(0 0% 98%)", letterSpacing: "-0.045em", maxWidth: 1600 }}>
           Pilots commoditise.<br/>
-          <span style={{ color: `hsl(${GREEN})` }}>The Standard Layer compounds.</span>
+          <span style={{ color: `hsl(${GREEN})` }}>The Decision Layer compounds.</span>
         </h2>
         <p className="mt-10" style={{ fontSize: 26, color: "hsl(0 0% 78%)", maxWidth: 1320, lineHeight: 1.4 }}>
           You were hired to make AI stick inside the bank without blowing up brand or compliance. We build the layer that lets it. One workflow, 30 days, one signed decision, then you scale to KYC, complaints, credit and group governance.
@@ -670,7 +670,34 @@ const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) =>
   { id: "cover",        title: "Cover",                     render: (n, t) => <S01Cover n={n} t={t} /> },
   { id: "reality",      title: "The reality on your floor", render: (n, t) => <S02Problem n={n} t={t} /> },
   { id: "job",          title: "The job you were hired for",render: (n, t) => <S03Job n={n} t={t} /> },
-  { id: "category",     title: "The category · One standard. Every AI surface inherits it.", render: () => <StandardLayerDeckSlide eyebrow="The category · What LIZA installs between AI and action in your bank" /> },
+  { id: "category",     title: "The category · One standard. Every AI surface inherits it.", render: () => (
+    <StandardLayerDeckSlide
+      eyebrow="The category · What LIZA installs between AI and action in your bank"
+      footnote="Reality → AI Layer → The Decision Layer → Execution → Outcomes."
+      stages={[
+        {
+          title: "Reality",
+          sub: "Your bank's signals & data",
+          examples: ["Core banking, CRM, payments", "Data warehouse, customer 360", "Calls, complaints, tickets", "KYC docs, contracts, policies"],
+        },
+        {
+          title: "AI Layer",
+          sub: "Models, copilots, agents",
+          examples: ["Copilot M365, ChatGPT Ent.", "Gemini, Claude", "In-house RAG, vendor copilots", "Agent frameworks"],
+        },
+        {
+          title: "Execution",
+          sub: "Bank teams, systems, agents",
+          examples: ["Approved campaign briefs", "KYC adjudications, complaint replies", "Writes to core, CRM, GRC", "Regulator deliverables"],
+        },
+        {
+          title: "Outcomes",
+          sub: "Results, audit, learning",
+          examples: ["Time-to-launch, NPS, CSAT", "Signed receipts & lineage", "EBA / DORA / Consumer Duty evidence", "Standards updated for next case"],
+        },
+      ]}
+    />
+  ) },
   { id: "funnel",       title: "Where rollouts die",        render: (n, t) => <S04Funnel n={n} t={t} /> },
   { id: "solution",     title: "What we install",           render: (n, t) => <S05Solution n={n} t={t} /> },
   { id: "architecture", title: "Where it plugs in",         render: (n, t) => <S06Architecture n={n} t={t} /> },
@@ -835,7 +862,7 @@ export default function BankingSalesDeck() {
           <span className="text-sm font-semibold" style={{ color: TEXT }}>LIZA OS · Banking Sales Deck</span>
           <span className="text-xs px-2 py-0.5 rounded"
             style={{ background: `hsl(${GOLD} / 0.12)`, color: `hsl(${GOLD})` }}>
-            Retail banking · Standard Layer narrative · {SLIDES.length} slides
+            Retail banking · Decision Layer narrative · {SLIDES.length} slides
           </span>
         </div>
         <div className="flex items-center gap-2">

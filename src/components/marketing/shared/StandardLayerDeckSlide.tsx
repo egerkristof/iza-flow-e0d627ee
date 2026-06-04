@@ -14,49 +14,50 @@ import {
 
 /**
  * Canonical category slide for ScaledSlide (1920x1080) decks.
- * Compact 5-stage horizontal flow sized to fit a single 16:9 slide.
- * Mirrors the StandardLayerDiagram on marketing pages but in deck layout.
- * Do NOT remix per deck — update here, propagates everywhere.
+ * The Decision Layer — the missing layer between AI and action.
+ *
+ * Accepts optional `stages` override so vertical decks (banking, pharma, etc.)
+ * can show their own real-world systems in Reality / AI / Execution / Outcomes
+ * without forking the component.
  */
 
 const PRIMARY = "hsl(200 90% 42%)";
 const PRIMARY_SOFT = "hsl(200 90% 42% / 0.08)";
-const PRIMARY_BORDER = "hsl(200 90% 42% / 0.25)";
+const PRIMARY_BORDER = "hsl(200 90% 42% / 0.28)";
 const INK = "hsl(222 47% 11%)";
 const MUTED = "hsl(215 15% 42%)";
 const BORDER = "hsl(215 20% 88%)";
 
-type Stage = {
-  title: string;
-  sub: string;
-  icon: React.ReactNode;
-  examples: string[];
+export type StageOverride = {
+  title?: string;
+  sub?: string;
+  examples?: string[];
 };
 
-const STAGES: Stage[] = [
+const DEFAULT_STAGES = [
   {
     title: "Reality",
     sub: "Signals, data, events",
-    icon: <Globe2 className="w-6 h-6" />,
-    examples: ["CRM, ERP, EHR", "Data warehouse", "Email, tickets, calls", "Sensors, documents"],
+    icon: <Globe2 className="w-7 h-7" />,
+    examples: ["CRM, ERP, data warehouse", "Email, tickets, calls", "Documents, contracts", "Sensors, telemetry"],
   },
   {
     title: "AI Layer",
     sub: "Models, copilots, agents",
-    icon: <BrainCircuit className="w-6 h-6" />,
+    icon: <BrainCircuit className="w-7 h-7" />,
     examples: ["ChatGPT, Gemini, Claude", "Copilot, Glean", "Vendor RAG", "In-house agents"],
   },
   {
     title: "Execution",
     sub: "People, systems, agents",
-    icon: <Rocket className="w-6 h-6" />,
-    examples: ["Approved decisions", "Jira, ServiceNow", "Veeva, LIMS, ERP writes", "Regulator deliverables"],
+    icon: <Rocket className="w-7 h-7" />,
+    examples: ["Approved decisions", "Jira, ServiceNow", "Writes to core systems", "Regulator deliverables"],
   },
   {
-    title: "Outcomes & Learning",
-    sub: "Results, audit, adaptation",
-    icon: <RefreshCw className="w-6 h-6" />,
-    examples: ["KPIs", "Audit trail & lineage", "Board / regulator evidence", "Updates back into standard"],
+    title: "Outcomes",
+    sub: "Results, audit, learning",
+    icon: <RefreshCw className="w-7 h-7" />,
+    examples: ["KPIs", "Audit trail & lineage", "Board / regulator evidence", "Feedback into standard"],
   },
 ];
 
@@ -70,61 +71,128 @@ const PILLARS = [
 
 export function StandardLayerDeckSlide({
   eyebrow = "The category · One standard. Every AI surface inherits it.",
-  footnote = "Reality → AI Layer → The Standard Layer → Execution → Outcomes.",
+  footnote = "Reality → AI Layer → The Decision Layer → Execution → Outcomes.",
+  stages,
 }: {
   eyebrow?: string;
   footnote?: string;
+  stages?: [StageOverride, StageOverride, StageOverride, StageOverride];
 }) {
+  const merged = DEFAULT_STAGES.map((s, i) => ({
+    ...s,
+    title: stages?.[i]?.title ?? s.title,
+    sub: stages?.[i]?.sub ?? s.sub,
+    examples: stages?.[i]?.examples ?? s.examples,
+  }));
+
   return (
     <div
       className="w-full h-full flex flex-col relative"
-      style={{ background: "hsl(0 0% 100%)", padding: "56px 80px 48px", color: INK }}
+      style={{ background: "hsl(0 0% 100%)", padding: "48px 64px 40px", color: INK }}
     >
       {/* Eyebrow */}
       <p
         className="font-mono uppercase"
-        style={{ fontSize: 13, letterSpacing: "0.32em", color: PRIMARY, marginBottom: 16 }}
+        style={{ fontSize: 13, letterSpacing: "0.32em", color: PRIMARY, marginBottom: 14 }}
       >
         {eyebrow}
       </p>
 
       {/* Title */}
-      <div className="flex items-baseline justify-between gap-8" style={{ marginBottom: 28 }}>
-        <h2 style={{ fontSize: 44, fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
-          The Standard Layer
-        </h2>
-        <p style={{ fontSize: 16, color: MUTED, maxWidth: 540, textAlign: "right" }}>
-          The missing layer between your AI and real action — where standards, governance and orchestration live.
-        </p>
+      <h2 style={{ fontSize: 56, fontWeight: 900, lineHeight: 1, letterSpacing: "-0.025em", marginBottom: 6 }}>
+        The Decision Layer
+      </h2>
+      <p style={{ fontSize: 19, color: MUTED, maxWidth: 1280, marginBottom: 24, lineHeight: 1.35 }}>
+        The missing layer between your AI and real action — where standards, governance and orchestration live.
+      </p>
+
+      {/* Top row: 4 stage cards in a horizontal flow */}
+      <div className="flex items-stretch gap-3" style={{ marginBottom: 18 }}>
+        <StageCard stage={merged[0]} />
+        <FlowArrow />
+        <StageCard stage={merged[1]} />
+        <FlowArrow lit />
+        <StageCard stage={merged[2]} />
+        <FlowArrow />
+        <StageCard stage={merged[3]} />
       </div>
 
-      {/* Flow row: Reality → AI → [STANDARD LAYER] → Execution → Outcomes */}
-      <div className="flex-1 min-h-0 flex items-stretch gap-3">
-        <StageCard stage={STAGES[0]} />
-        <FlowArrow />
-        <StageCard stage={STAGES[1]} />
-        <FlowArrow lit />
-        <StandardLayerCard />
-        <FlowArrow lit />
-        <StageCard stage={STAGES[2]} />
-        <FlowArrow />
-        <StageCard stage={STAGES[3]} />
+      {/* Decision Layer band: full-width below the flow, visually "underneath" AI→Execution */}
+      <div
+        className="flex-1 min-h-0 rounded-2xl flex flex-col overflow-hidden"
+        style={{
+          border: `1.5px solid hsl(200 90% 42% / 0.55)`,
+          boxShadow:
+            "0 30px 70px -30px hsl(200 90% 42% / 0.55), 0 0 50px -18px hsl(200 90% 42% / 0.35)",
+        }}
+      >
+        <div
+          className="flex items-center justify-between px-8 py-4"
+          style={{ background: PRIMARY, color: "white" }}
+        >
+          <div>
+            <p style={{ fontSize: 12, opacity: 0.85, letterSpacing: "0.28em", textTransform: "uppercase" }}>
+              What LIZA installs
+            </p>
+            <p style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1 }}>
+              The Decision Layer
+            </p>
+          </div>
+          <p style={{ fontSize: 14, opacity: 0.9, maxWidth: 560, textAlign: "right", lineHeight: 1.3 }}>
+            Sits between every AI tool and every governed action. Same standard everywhere.
+          </p>
+        </div>
+        <div
+          className="grid grid-cols-5 flex-1"
+          style={{ background: "hsl(200 90% 42% / 0.18)", gap: 1 }}
+        >
+          {PILLARS.map((p) => (
+            <div
+              key={p.label}
+              className="flex flex-col items-center justify-center text-center"
+              style={{ background: "hsl(0 0% 100%)", padding: "18px 10px" }}
+            >
+              <span
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-3"
+                style={{
+                  background: PRIMARY_SOFT,
+                  color: PRIMARY,
+                  border: `1px solid ${PRIMARY_BORDER}`,
+                }}
+              >
+                {p.icon}
+              </span>
+              <p
+                style={{
+                  fontSize: 14,
+                  fontWeight: 900,
+                  color: PRIMARY,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.04em",
+                  lineHeight: 1.15,
+                }}
+              >
+                {p.label}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Footer signature row */}
       <div
-        className="mt-6 flex items-center justify-between gap-6 rounded-xl px-6 py-3"
+        className="mt-5 flex items-center justify-between gap-6 rounded-xl px-6 py-3"
         style={{ background: PRIMARY_SOFT, border: `1px solid ${PRIMARY_BORDER}` }}
       >
         <div className="flex items-center gap-3">
           <span
-            className="w-9 h-9 rounded-lg flex items-center justify-center"
+            className="w-10 h-10 rounded-lg flex items-center justify-center"
             style={{ background: "hsl(200 90% 42% / 0.15)", color: PRIMARY }}
           >
             <ShieldCheck className="w-5 h-5" />
           </span>
           <div>
-            <p style={{ fontSize: 14, fontWeight: 900, color: PRIMARY, lineHeight: 1.1 }}>
+            <p style={{ fontSize: 15, fontWeight: 900, color: PRIMARY, lineHeight: 1.1 }}>
               Standards Engineering
             </p>
             <p style={{ fontSize: 12, color: MUTED, marginTop: 2 }}>
@@ -147,7 +215,7 @@ export function StandardLayerDeckSlide({
   );
 }
 
-function StageCard({ stage }: { stage: Stage }) {
+function StageCard({ stage }: { stage: { title: string; sub: string; icon: React.ReactNode; examples: string[] } }) {
   return (
     <div
       className="flex-1 min-w-0 rounded-xl flex flex-col"
@@ -155,28 +223,32 @@ function StageCard({ stage }: { stage: Stage }) {
         background: "hsl(0 0% 100%)",
         border: `1px solid ${BORDER}`,
         boxShadow: "0 8px 24px -18px hsl(222 47% 11% / 0.18)",
-        padding: "18px 16px",
+        padding: "18px 18px",
       }}
     >
-      <span
-        className="w-10 h-10 rounded-lg flex items-center justify-center"
-        style={{ background: "hsl(215 20% 96%)", color: PRIMARY, border: `1px solid ${BORDER}` }}
-      >
-        {stage.icon}
-      </span>
-      <p style={{ fontSize: 18, fontWeight: 900, color: PRIMARY, marginTop: 12, lineHeight: 1.1 }}>
-        {stage.title}
-      </p>
-      <p style={{ fontSize: 12, color: MUTED, marginTop: 4 }}>{stage.sub}</p>
+      <div className="flex items-center gap-3">
+        <span
+          className="w-11 h-11 rounded-lg flex items-center justify-center shrink-0"
+          style={{ background: "hsl(215 20% 96%)", color: PRIMARY, border: `1px solid ${BORDER}` }}
+        >
+          {stage.icon}
+        </span>
+        <div className="min-w-0">
+          <p style={{ fontSize: 20, fontWeight: 900, color: PRIMARY, lineHeight: 1.1 }}>
+            {stage.title}
+          </p>
+          <p style={{ fontSize: 12, color: MUTED, marginTop: 2, lineHeight: 1.2 }}>{stage.sub}</p>
+        </div>
+      </div>
       <ul className="mt-3 space-y-1.5">
         {stage.examples.map((ex) => (
           <li
             key={ex}
             style={{
-              fontSize: 11,
+              fontSize: 12.5,
               color: INK,
               lineHeight: 1.3,
-              paddingLeft: 10,
+              paddingLeft: 12,
               position: "relative",
             }}
           >
@@ -184,9 +256,9 @@ function StageCard({ stage }: { stage: Stage }) {
               style={{
                 position: "absolute",
                 left: 0,
-                top: 6,
-                width: 4,
-                height: 4,
+                top: 7,
+                width: 5,
+                height: 5,
                 borderRadius: 999,
                 background: PRIMARY,
               }}
@@ -199,80 +271,13 @@ function StageCard({ stage }: { stage: Stage }) {
   );
 }
 
-function StandardLayerCard() {
-  return (
-    <div
-      className="rounded-xl flex flex-col overflow-hidden"
-      style={{
-        flex: "1.6 1 0",
-        minWidth: 0,
-        border: `1px solid hsl(200 90% 42% / 0.55)`,
-        boxShadow:
-          "0 24px 60px -30px hsl(200 90% 42% / 0.55), 0 0 50px -18px hsl(200 90% 42% / 0.35)",
-      }}
-    >
-      <div
-        style={{
-          background: PRIMARY,
-          color: "white",
-          padding: "14px 18px",
-          textAlign: "center",
-        }}
-      >
-        <p style={{ fontSize: 18, fontWeight: 900, letterSpacing: "0.04em", textTransform: "uppercase", lineHeight: 1.1 }}>
-          The Standard Layer
-        </p>
-        <p style={{ fontSize: 11, opacity: 0.9, marginTop: 4 }}>
-          The missing layer between AI and action.
-        </p>
-      </div>
-      <div
-        className="grid grid-cols-5 flex-1"
-        style={{ background: "hsl(200 90% 42% / 0.18)", gap: 1 }}
-      >
-        {PILLARS.map((p) => (
-          <div
-            key={p.label}
-            className="flex flex-col items-center justify-center text-center"
-            style={{ background: "hsl(0 0% 100%)", padding: "12px 6px" }}
-          >
-            <span
-              className="w-9 h-9 rounded-lg flex items-center justify-center mb-2"
-              style={{
-                background: PRIMARY_SOFT,
-                color: PRIMARY,
-                border: `1px solid ${PRIMARY_BORDER}`,
-              }}
-            >
-              {p.icon}
-            </span>
-            <p
-              style={{
-                fontSize: 10.5,
-                fontWeight: 900,
-                color: PRIMARY,
-                textTransform: "uppercase",
-                letterSpacing: "0.04em",
-                lineHeight: 1.15,
-              }}
-            >
-              {p.label}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function FlowArrow({ lit = false }: { lit?: boolean }) {
   return (
     <div className="flex items-center justify-center" style={{ width: 24 }}>
       <ArrowRight
-        className="w-5 h-5"
+        className="w-6 h-6"
         style={{ color: lit ? PRIMARY : "hsl(215 20% 70%)" }}
       />
     </div>
   );
 }
-

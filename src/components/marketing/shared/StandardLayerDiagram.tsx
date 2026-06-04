@@ -19,7 +19,7 @@ import {
  * in LIZA's vocabulary and design tokens.
  *
  * Vertical 5-block flow:
- *   Reality  ->  AI Layer  ->  [THE STANDARD LAYER + 5 pillars]  ->  Execution  ->  Outcomes & Learning
+ *   Reality  ->  AI Layer  ->  [THE DECISION LAYER + 5 pillars]  ->  Execution  ->  Outcomes & Learning
  *
  * The middle band is the lit, primary-tinted "missing layer" claim.
  * Side captions echo Regen's annotation pattern.
@@ -86,7 +86,7 @@ export function StandardLayerDiagram() {
           className="text-3xl md:text-5xl font-black leading-[1.05] tracking-tight"
           style={{ color: "hsl(var(--primary))" }}
         >
-          The Standard Layer
+          The Decision Layer
         </h2>
         <p className="mt-5 text-lg md:text-xl font-semibold leading-snug text-foreground">
           Everyone is talking about it.
@@ -139,7 +139,7 @@ export function StandardLayerDiagram() {
         />
         <Arrow />
 
-        {/* THE STANDARD LAYER — lit middle band */}
+        {/* THE DECISION LAYER — lit middle band */}
         <StandardBand index={2} />
         <Arrow />
 
@@ -351,7 +351,7 @@ function StandardBand({ index }: { index: number }) {
           }}
         >
           <p className="text-xl md:text-3xl font-black tracking-tight uppercase">
-            The Standard Layer
+            The Decision Layer
           </p>
           <p className="text-xs md:text-sm font-semibold opacity-90 mt-1">
             The missing layer between AI and action.

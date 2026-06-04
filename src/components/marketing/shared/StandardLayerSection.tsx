@@ -4,7 +4,7 @@ import { SectionTag, GradientText } from "@/components/marketing/home/shared";
 /**
  * Canonical "category" section. Drop into any marketing page above the fold
  * (or as the first explainer below the hero) so every surface tells the same
- * one-sentence story: Reality → AI Layer → [The Standard Layer] → Execution → Outcomes.
+ * one-sentence story: Reality → AI Layer → [The Decision Layer] → Execution → Outcomes.
  *
  * Do NOT remix per page. The whole point is repetition.
  */

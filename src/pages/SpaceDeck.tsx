@@ -1736,7 +1736,7 @@ function Slide09Partnership() {
     },
     {
       phase: "Months 6-18",
-      title: "Sovereign-Space Standard Layer",
+      title: "Sovereign-Space Decision Layer",
       color: GOLD,
       desc: "LIZA OS + a lighthouse partner jointly establish a European mission-knowledge layer. Optional strategic stake. Pathway to a sovereign-space capability adopted by partners across the European NewSpace ecosystem.",
     },
