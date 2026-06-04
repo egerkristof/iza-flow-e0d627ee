@@ -42,6 +42,57 @@ function SH(props: { section: string; n: number; total: number; dark?: boolean; 
 
 // ─── Banking-native visuals ────────────────────────────────────────────────
 
+// A model output a marketer / RM / KYC analyst would actually paste back into the bank
+function VizBankModelOutputBare() {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div className="rounded-xl px-6 py-5 text-center"
+        style={{ background: "hsl(0 0% 100%)", border: `1px dashed hsl(${RED} / 0.5)`, minWidth: 280 }}>
+        <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 9, color: SUBTLE }}>Draft from ChatGPT · personal account</p>
+        <p className="font-black" style={{ fontSize: 20, color: TEXT, lineHeight: 1.15 }}>
+          "Here is your<br/>campaign brief / KYC note."
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-2 justify-center" style={{ maxWidth: 320 }}>
+        {["no brand standard", "no policy version", "no signer", "no audit replay"].map((x) => (
+          <span key={x} className="font-mono px-2 py-1 rounded"
+            style={{ fontSize: 10, color: `hsl(${RED})`, background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>?{x}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Same draft, but signed inside the bank's Decision Layer
+function VizBankGovernedDecision() {
+  const tags = [
+    { k: "STANDARD",   v: "Retail-Mortgage-DE v4.1" },
+    { k: "POLICY",     v: "Consumer Duty · MiFID II" },
+    { k: "MODEL",      v: "gpt-5 · M365 tenant" },
+    { k: "APPROVER",   v: "Compliance · 14:02" },
+  ];
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="rounded-xl px-6 py-4 text-center"
+        style={{ background: "hsl(0 0% 100%)", border: `2px solid hsl(${GREEN} / 0.5)`, minWidth: 300, boxShadow: `0 0 24px hsl(${GREEN} / 0.15)` }}>
+        <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>Governed decision · signed receipt</p>
+        <p className="font-black" style={{ fontSize: 20, color: TEXT, lineHeight: 1.15 }}>
+          "Here is your<br/>campaign brief / KYC note."
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-1.5 mt-2" style={{ width: 360 }}>
+        {tags.map((t) => (
+          <div key={t.k} className="rounded px-2 py-1.5"
+            style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 8, color: `hsl(${GREEN})` }}>{t.k}</p>
+            <p className="font-mono" style={{ fontSize: 10, color: TEXT, marginTop: 1 }}>{t.v}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // What the board / regulator actually grades you on
 function VizBankScorecard() {
   const rows = [
@@ -343,7 +394,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
         market: {
           kicker: "What you can already see",
           headline: "Seats handed out. Brand and compliance drift everywhere.",
-          viz: <VizModelOutputBare />,
+          viz: <VizBankModelOutputBare />,
           vizLabel: "Diagram · AI output with no standard, no receipt, no signer",
           items: [
             { h: "Copilot / ChatGPT Enterprise live", v: "Heavy users 15%. The rest forgot the tab. Real usage is shadow ChatGPT on personal accounts." },
@@ -354,7 +405,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
         operator: {
           kicker: "What a governed rollout actually looks like",
           headline: "Standards, receipts, memory bound to every workflow.",
-          viz: <VizGovernedDecision />,
+          viz: <VizBankGovernedDecision />,
           vizLabel: "Diagram · the same output, wrapped in standards and signed receipts",
           items: [
             { h: "Standard bound",     v: "Every campaign brief, KYC narrative and complaint response runs on the version Brand, Product and Compliance approved." },
