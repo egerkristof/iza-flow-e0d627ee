@@ -106,6 +106,13 @@ export function StandardLayerDiagram() {
           icon={<Globe2 className="w-7 h-7" />}
           title="Reality"
           body="Signals, data, events"
+          examples={[
+            "CRM, ERP, EHR",
+            "Data warehouse",
+            "Email, tickets, calls",
+            "Sensors, telemetry",
+            "Documents and contracts",
+          ]}
           caption={{
             head: "The world",
             body: "Continuously generating signals and events.",
@@ -118,6 +125,12 @@ export function StandardLayerDiagram() {
           icon={<BrainCircuit className="w-7 h-7" />}
           title="AI Layer"
           body="Models, predictions, agents"
+          examples={[
+            "ChatGPT, Gemini, Claude",
+            "Copilot, Glean",
+            "Vendor RAG and copilots",
+            "In-house agents",
+          ]}
           caption={{
             head: "AI processes reality",
             body: "Turning signals into predictions and options.",
@@ -134,6 +147,12 @@ export function StandardLayerDiagram() {
           icon={<Rocket className="w-7 h-7" />}
           title="Execution"
           body="People, systems, agents"
+          examples={[
+            "Approved drafts and decisions",
+            "Workflow actions in Jira, ServiceNow",
+            "Writes back to Veeva, LIMS, ERP",
+            "Customer and regulator deliverables",
+          ]}
           caption={{
             head: "Standards become action",
             body: "Executed in the real world through aligned resources.",
@@ -146,6 +165,12 @@ export function StandardLayerDiagram() {
           icon={<RefreshCw className="w-7 h-7" />}
           title="Outcomes & Learning"
           body="Results, feedback, audit, adaptation"
+          examples={[
+            "KPIs and business outcomes",
+            "Audit trail and lineage",
+            "Regulator and board evidence",
+            "Updates back into the standard",
+          ]}
           caption={{
             head: "Improve and adapt",
             body: "Feedback closes the loop and updates the standard.",
