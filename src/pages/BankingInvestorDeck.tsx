@@ -4,6 +4,7 @@ import { AlertTriangle, ArrowRight, Award, BookOpen, Brain, Briefcase, Building2
 import { ExportMenu } from "@/components/ExportMenu";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { StandardLayerDeckSlide } from "@/components/marketing/shared/StandardLayerDeckSlide";
 import istvanPhoto from "@/assets/istvan-boscha.png";
 import kristofPhoto from "@/assets/kristof-eger.png";
 import zoltanPhoto from "@/assets/zoltan-kauker.png";
