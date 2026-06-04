@@ -13,13 +13,13 @@ export default function MockRibbonPage() {
             Mock · Factory hero diagram
           </span>
           <h1 className="text-3xl md:text-5xl font-black leading-[1.05] tracking-tight max-w-3xl mx-auto">
-            Records. AI. Work. Outcomes.{" "}
+            Reality. Signal. Action. Result.{" "}
             <span style={{ color: "hsl(var(--primary))" }}>
               The Standard is the layer nobody built.
             </span>
           </h1>
           <p className="mt-4 text-base text-muted-foreground max-w-2xl mx-auto">
-            Read it left to right. Four blocks you already own. One block we install.
+            Read it like a sentence. Four words every executive already owns. One layer we install between them.
           </p>
         </div>
 
