@@ -384,7 +384,7 @@ function StandardBand({ index }: { index: number }) {
                 {p.icon}
               </motion.span>
               <p
-                className="text-[11px] md:text-[13px] font-black leading-tight uppercase tracking-wide"
+                className="text-[10.5px] md:text-[12px] font-black leading-tight uppercase tracking-[0.02em] break-words"
                 style={{ color: "hsl(var(--primary))" }}
               >
                 {p.label}
