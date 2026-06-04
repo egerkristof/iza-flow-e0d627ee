@@ -11,7 +11,6 @@ import {
 } from "@/pages/TechDDDeck";
 import {
   Shell, LensSlide,
-  VizModelOutputBare, VizGovernedDecision,
   VizSolutionLoop, VizWrapper,
 } from "@/pages/SeedPitchDeckInvestor";
 import { StandardLayerDeckSlide } from "@/components/marketing/shared/StandardLayerDeckSlide";
@@ -41,6 +40,57 @@ function SH(props: { section: string; n: number; total: number; dark?: boolean; 
 }
 
 // ─── Banking-native visuals ────────────────────────────────────────────────
+
+// A model output a marketer / RM / KYC analyst would actually paste back into the bank
+function VizBankModelOutputBare() {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div className="rounded-xl px-6 py-5 text-center"
+        style={{ background: "hsl(0 0% 100%)", border: `1px dashed hsl(${RED} / 0.5)`, minWidth: 280 }}>
+        <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 9, color: SUBTLE }}>Draft from ChatGPT · personal account</p>
+        <p className="font-black" style={{ fontSize: 20, color: TEXT, lineHeight: 1.15 }}>
+          "Here is your<br/>campaign brief / KYC note."
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-2 justify-center" style={{ maxWidth: 320 }}>
+        {["no brand standard", "no policy version", "no signer", "no audit replay"].map((x) => (
+          <span key={x} className="font-mono px-2 py-1 rounded"
+            style={{ fontSize: 10, color: `hsl(${RED})`, background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>?{x}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Same draft, but signed inside the bank's Decision Layer
+function VizBankGovernedDecision() {
+  const tags = [
+    { k: "STANDARD",   v: "Retail-Mortgage-DE v4.1" },
+    { k: "POLICY",     v: "Consumer Duty · MiFID II" },
+    { k: "MODEL",      v: "gpt-5 · M365 tenant" },
+    { k: "APPROVER",   v: "Compliance · 14:02" },
+  ];
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="rounded-xl px-6 py-4 text-center"
+        style={{ background: "hsl(0 0% 100%)", border: `2px solid hsl(${GREEN} / 0.5)`, minWidth: 300, boxShadow: `0 0 24px hsl(${GREEN} / 0.15)` }}>
+        <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>Governed decision · signed receipt</p>
+        <p className="font-black" style={{ fontSize: 20, color: TEXT, lineHeight: 1.15 }}>
+          "Here is your<br/>campaign brief / KYC note."
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-1.5 mt-2" style={{ width: 360 }}>
+        {tags.map((t) => (
+          <div key={t.k} className="rounded px-2 py-1.5"
+            style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 8, color: `hsl(${GREEN})` }}>{t.k}</p>
+            <p className="font-mono" style={{ fontSize: 10, color: TEXT, marginTop: 1 }}>{t.v}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 // What the board / regulator actually grades you on
 function VizBankScorecard() {
@@ -343,7 +393,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
         market: {
           kicker: "What you can already see",
           headline: "Seats handed out. Brand and compliance drift everywhere.",
-          viz: <VizModelOutputBare />,
+          viz: <VizBankModelOutputBare />,
           vizLabel: "Diagram · AI output with no standard, no receipt, no signer",
           items: [
             { h: "Copilot / ChatGPT Enterprise live", v: "Heavy users 15%. The rest forgot the tab. Real usage is shadow ChatGPT on personal accounts." },
@@ -354,7 +404,7 @@ function S02Problem({ n, t }: { n: number; t: number }) {
         operator: {
           kicker: "What a governed rollout actually looks like",
           headline: "Standards, receipts, memory bound to every workflow.",
-          viz: <VizGovernedDecision />,
+          viz: <VizBankGovernedDecision />,
           vizLabel: "Diagram · the same output, wrapped in standards and signed receipts",
           items: [
             { h: "Standard bound",     v: "Every campaign brief, KYC narrative and complaint response runs on the version Brand, Product and Compliance approved." },
@@ -445,9 +495,10 @@ function S05Solution({ n, t }: { n: number; t: number }) {
           viz: <VizSolutionLoop />,
           vizLabel: "Diagram · the 4-station AACE loop, one per call",
           items: [
-            { h: "Lock",    v: "Every call binds to the bank's versioned standard (brand, product, regulator)." },
-            { h: "Compile", v: "Policy, data and rules assembled for that one decision. Country, segment, product." },
-            { h: "Sign",    v: "Receipt becomes the next call's context. The bank's AI gets smarter on its own." },
+            { h: "Lock",    v: "Every campaign brief, KYC narrative or complaint reply binds to the bank's versioned standard." },
+            { h: "Compile", v: "Brand, product T&Cs, MiFID / Consumer Duty rules and the customer record assembled for that one decision." },
+            { h: "Sign",    v: "Signed receipt: standard version, sources, model, approver. Replayable for internal audit and the regulator." },
+            { h: "Learn",   v: "Compliance corrections feed back into the standard. The next case inherits them automatically." },
           ],
           signal: "Model-agnostic. Sits in front of Copilot, ChatGPT, Gemini, your in-house RAG. Pick later, switch later.",
         },
@@ -503,20 +554,20 @@ function S07Plan({ n, t }: { n: number; t: number }) {
 // ─── 08 · Proof in production ──────────────────────────────────────────────
 function S08Proof({ n, t }: { n: number; t: number }) {
   const stats = [
-    { v: "127",       l: "standards live",         s: "Typed playbooks, decision rules and policies running in production across regulated workflows." },
-    { v: "3,400 /mo", l: "signed decisions",       s: "Every output bound to a standard, model and approver. Replayable on internal audit." },
-    { v: "62%",       l: "drop in time-to-spec",   s: "On the workflows that moved first. Measured against the pre-LIZA baseline. CFO-visible." },
-    { v: "0",         l: "audit failures",         s: "Across the regulated reference deployment to date. Same install pattern available to your bank." },
+    { v: "127",       l: "standards live",          s: "Typed playbooks, brand rules and policy registers in production. The bank equivalent: campaign standards, KYC narratives, complaint templates, credit memos." },
+    { v: "3,400 /mo", l: "signed decisions",        s: "Every output bound to a standard, model and approver. The same shape your internal audit and the regulator will ask for, replayable on demand." },
+    { v: "62%",       l: "drop in time-to-spec",    s: "On the workflows that moved first. CFO-visible against the pre-LIZA baseline. In banking: campaign brief, KYC adjudication, complaint response time." },
+    { v: "0",         l: "audit failures",          s: "Across the regulated reference deployment to date. Same install pattern available for EBA, DORA, MNB / NBR and Consumer Duty scrutiny." },
   ];
   return (
     <SH section="Proof in production" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-28 pb-20 flex flex-col">
         <div className="mb-10">
           <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-            What another regulated enterprise already shipped on LIZA
+            What another regulated enterprise already shipped on LIZA · how it lands inside a bank
           </p>
           <h2 className="font-black" style={{ fontSize: 54, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            CTO-sponsored. Live in production. Same install pattern available to your bank.
+            CTO-sponsored. Live in production. The same install pattern, mapped to four banking workflows.
           </h2>
         </div>
         <div className="grid grid-cols-4 gap-5 flex-1">
@@ -531,7 +582,7 @@ function S08Proof({ n, t }: { n: number; t: number }) {
           ))}
         </div>
         <p className="mt-6 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: SUBTLE }}>
-          Source: AACE v3.1 runtime · regulated reference deployment · 12-month rolling window · CTO-sponsored, anonymised on request.
+          Source · AACE v3.1 runtime · regulated reference deployment · 12-month rolling window · CTO-sponsored, anonymised on request · banking workflows mapped 1:1 in pilot scoping.
         </p>
       </div>
     </SH>
