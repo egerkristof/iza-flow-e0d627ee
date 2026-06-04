@@ -58,6 +58,7 @@ import FramedChatPage from "./pages/FramedChat";
 import ConditionsPage from "./pages/Conditions";
 import SanctionedPage from "./pages/Sanctioned";
 import PlaybookBuilderPage from "./pages/PlaybookBuilder";
+import MockRibbonPage from "./pages/marketing/MockRibbon";
 
 const queryClient = new QueryClient();
 
