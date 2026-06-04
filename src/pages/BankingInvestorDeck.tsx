@@ -1894,7 +1894,7 @@ function Slide11() {
                 <span className="font-bold" style={{ fontSize: 18, color: `hsl(${TEAL})` }}>Annual infrastructure fee</span>
               </div>
               <p style={{ fontSize: 17, color: MUTED, lineHeight: 1.5 }}>
-                The base fee anchors the knowledge graph, governance layer, and workflow infrastructure inside the account. The next investment phase turns that infrastructure into a repeatable self-serve product surface.
+                The base fee anchors the knowledge graph, governance layer, and workflow infrastructure inside the account. The same infrastructure becomes the repeatable self-serve product surface as your team expands rollout.
               </p>
             </div>
 
