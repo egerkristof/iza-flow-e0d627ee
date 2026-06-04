@@ -11,7 +11,6 @@ import {
 } from "@/pages/TechDDDeck";
 import {
   Shell, LensSlide,
-  VizModelOutputBare, VizGovernedDecision,
   VizSolutionLoop, VizWrapper,
 } from "@/pages/SeedPitchDeckInvestor";
 import { StandardLayerDeckSlide } from "@/components/marketing/shared/StandardLayerDeckSlide";
@@ -496,9 +495,10 @@ function S05Solution({ n, t }: { n: number; t: number }) {
           viz: <VizSolutionLoop />,
           vizLabel: "Diagram · the 4-station AACE loop, one per call",
           items: [
-            { h: "Lock",    v: "Every call binds to the bank's versioned standard (brand, product, regulator)." },
-            { h: "Compile", v: "Policy, data and rules assembled for that one decision. Country, segment, product." },
-            { h: "Sign",    v: "Receipt becomes the next call's context. The bank's AI gets smarter on its own." },
+            { h: "Lock",    v: "Every campaign brief, KYC narrative or complaint reply binds to the bank's versioned standard." },
+            { h: "Compile", v: "Brand, product T&Cs, MiFID / Consumer Duty rules and the customer record assembled for that one decision." },
+            { h: "Sign",    v: "Signed receipt: standard version, sources, model, approver. Replayable for internal audit and the regulator." },
+            { h: "Learn",   v: "Compliance corrections feed back into the standard. The next case inherits them automatically." },
           ],
           signal: "Model-agnostic. Sits in front of Copilot, ChatGPT, Gemini, your in-house RAG. Pick later, switch later.",
         },
