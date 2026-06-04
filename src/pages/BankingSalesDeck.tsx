@@ -670,7 +670,34 @@ const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) =>
   { id: "cover",        title: "Cover",                     render: (n, t) => <S01Cover n={n} t={t} /> },
   { id: "reality",      title: "The reality on your floor", render: (n, t) => <S02Problem n={n} t={t} /> },
   { id: "job",          title: "The job you were hired for",render: (n, t) => <S03Job n={n} t={t} /> },
-  { id: "category",     title: "The category · One standard. Every AI surface inherits it.", render: () => <StandardLayerDeckSlide eyebrow="The category · What LIZA installs between AI and action in your bank" /> },
+  { id: "category",     title: "The category · One standard. Every AI surface inherits it.", render: () => (
+    <StandardLayerDeckSlide
+      eyebrow="The category · What LIZA installs between AI and action in your bank"
+      footnote="Reality → AI Layer → The Decision Layer → Execution → Outcomes."
+      stages={[
+        {
+          title: "Reality",
+          sub: "Your bank's signals & data",
+          examples: ["Core banking, CRM, payments", "Data warehouse, customer 360", "Calls, complaints, tickets", "KYC docs, contracts, policies"],
+        },
+        {
+          title: "AI Layer",
+          sub: "Models, copilots, agents",
+          examples: ["Copilot M365, ChatGPT Ent.", "Gemini, Claude", "In-house RAG, vendor copilots", "Agent frameworks"],
+        },
+        {
+          title: "Execution",
+          sub: "Bank teams, systems, agents",
+          examples: ["Approved campaign briefs", "KYC adjudications, complaint replies", "Writes to core, CRM, GRC", "Regulator deliverables"],
+        },
+        {
+          title: "Outcomes",
+          sub: "Results, audit, learning",
+          examples: ["Time-to-launch, NPS, CSAT", "Signed receipts & lineage", "EBA / DORA / Consumer Duty evidence", "Standards updated for next case"],
+        },
+      ]}
+    />
+  ) },
   { id: "funnel",       title: "Where rollouts die",        render: (n, t) => <S04Funnel n={n} t={t} /> },
   { id: "solution",     title: "What we install",           render: (n, t) => <S05Solution n={n} t={t} /> },
   { id: "architecture", title: "Where it plugs in",         render: (n, t) => <S06Architecture n={n} t={t} /> },
