@@ -25,11 +25,11 @@ export default function HomePage() {
       {/* 3. Guide: empathy + authority */}
       <GuideStrip />
 
-      {/* 3.5 Category: the one-sentence story (canonical, identical on every surface) */}
-      <StandardLayerSection />
-
       {/* 4. Product moment: anatomy of a prompt at org scale */}
       <PromptFactoryVisual />
+
+      {/* 4.5 Category (collapsed by default): the one-sentence story */}
+      <StandardLayerSection collapsible />
 
       {/* 5. Plan: 3 co-built steps */}
       <GetStartedPlan />
