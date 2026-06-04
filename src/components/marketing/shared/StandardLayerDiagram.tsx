@@ -38,12 +38,12 @@ const PILLARS: Pillar[] = [
     sub: "Structure and context for every decision.",
   },
   {
-    label: "Context Quality Index",
+    label: "Context Quality",
     icon: <Gauge className="w-7 h-7" />,
     sub: "Measure how complete your standard is, continuously.",
   },
   {
-    label: "Governance Gates",
+    label: "Governance",
     icon: <DoorOpen className="w-7 h-7" />,
     sub: "Ensure policy, risk and regulator rules are met.",
   },
