@@ -4349,6 +4349,7 @@ export function S13LoopClosed() {
 const RAW_SLIDES = [
   { id: "cover", title: "Cover", component: <S01Cover /> },
   { id: "horizons", title: "Three Horizons Collapse", component: <S02Horizons /> },
+  { id: "category", title: "The Category · The Standard Layer", component: <StandardLayerDeckSlide eyebrow="The category · The missing layer between AI and action" /> },
   { id: "governance-loop", title: "The AI Governance Loop · Thesis", component: <S03GovernanceLoop /> },
   { id: "production-system", title: "The Production System · How the Loop scales", component: <S04ProductionSystem /> },
   { id: "shift", title: "Infrastructure Shift", component: <S03Shift /> },
