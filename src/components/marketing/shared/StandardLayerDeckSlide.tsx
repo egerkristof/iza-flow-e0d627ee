@@ -107,7 +107,7 @@ export function StandardLayerDeckSlide({
       </p>
 
       {/* Top row: 4 stage cards in a horizontal flow */}
-      <div className="flex items-stretch gap-3" style={{ marginBottom: 18 }}>
+      <div className="flex items-stretch gap-3 flex-1 min-h-0" style={{ marginBottom: 18 }}>
         <StageCard stage={merged[0]} />
         <FlowArrow />
         <StageCard stage={merged[1]} />
@@ -119,7 +119,7 @@ export function StandardLayerDeckSlide({
 
       {/* Decision Layer band: full-width below the flow, visually "underneath" AI→Execution */}
       <div
-        className="flex-1 min-h-0 rounded-2xl flex flex-col overflow-hidden"
+        className="rounded-2xl flex flex-col overflow-hidden"
         style={{
           border: `1.5px solid hsl(200 90% 42% / 0.55)`,
           boxShadow:
@@ -127,33 +127,33 @@ export function StandardLayerDeckSlide({
         }}
       >
         <div
-          className="flex items-center justify-between px-8 py-4"
+          className="flex items-center justify-between px-7 py-3"
           style={{ background: PRIMARY, color: "white" }}
         >
           <div>
-            <p style={{ fontSize: 12, opacity: 0.85, letterSpacing: "0.28em", textTransform: "uppercase" }}>
+            <p style={{ fontSize: 11, opacity: 0.85, letterSpacing: "0.28em", textTransform: "uppercase" }}>
               What LIZA installs
             </p>
-            <p style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1 }}>
+            <p style={{ fontSize: 22, fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1 }}>
               The Decision Layer
             </p>
           </div>
-          <p style={{ fontSize: 14, opacity: 0.9, maxWidth: 560, textAlign: "right", lineHeight: 1.3 }}>
+          <p style={{ fontSize: 13, opacity: 0.9, maxWidth: 520, textAlign: "right", lineHeight: 1.3 }}>
             Sits between every AI tool and every governed action. Same standard everywhere.
           </p>
         </div>
         <div
-          className="grid grid-cols-5 flex-1"
+          className="grid grid-cols-5"
           style={{ background: "hsl(200 90% 42% / 0.18)", gap: 1 }}
         >
           {PILLARS.map((p) => (
             <div
               key={p.label}
               className="flex flex-col items-center justify-center text-center"
-              style={{ background: "hsl(0 0% 100%)", padding: "18px 10px" }}
+              style={{ background: "hsl(0 0% 100%)", padding: "12px 8px" }}
             >
               <span
-                className="w-12 h-12 rounded-xl flex items-center justify-center mb-3"
+                className="w-9 h-9 rounded-lg flex items-center justify-center mb-2"
                 style={{
                   background: PRIMARY_SOFT,
                   color: PRIMARY,
@@ -164,7 +164,7 @@ export function StandardLayerDeckSlide({
               </span>
               <p
                 style={{
-                  fontSize: 14,
+                  fontSize: 12.5,
                   fontWeight: 900,
                   color: PRIMARY,
                   textTransform: "uppercase",
@@ -223,32 +223,32 @@ function StageCard({ stage }: { stage: { title: string; sub: string; icon: React
         background: "hsl(0 0% 100%)",
         border: `1px solid ${BORDER}`,
         boxShadow: "0 8px 24px -18px hsl(222 47% 11% / 0.18)",
-        padding: "18px 18px",
+        padding: "22px 22px",
       }}
     >
       <div className="flex items-center gap-3">
         <span
-          className="w-11 h-11 rounded-lg flex items-center justify-center shrink-0"
+          className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0"
           style={{ background: "hsl(215 20% 96%)", color: PRIMARY, border: `1px solid ${BORDER}` }}
         >
           {stage.icon}
         </span>
         <div className="min-w-0">
-          <p style={{ fontSize: 20, fontWeight: 900, color: PRIMARY, lineHeight: 1.1 }}>
+          <p style={{ fontSize: 24, fontWeight: 900, color: PRIMARY, lineHeight: 1.1 }}>
             {stage.title}
           </p>
-          <p style={{ fontSize: 12, color: MUTED, marginTop: 2, lineHeight: 1.2 }}>{stage.sub}</p>
+          <p style={{ fontSize: 13, color: MUTED, marginTop: 2, lineHeight: 1.2 }}>{stage.sub}</p>
         </div>
       </div>
-      <ul className="mt-3 space-y-1.5">
+      <ul className="mt-4 space-y-2">
         {stage.examples.map((ex) => (
           <li
             key={ex}
             style={{
-              fontSize: 12.5,
+              fontSize: 15,
               color: INK,
-              lineHeight: 1.3,
-              paddingLeft: 12,
+              lineHeight: 1.35,
+              paddingLeft: 14,
               position: "relative",
             }}
           >
@@ -256,9 +256,9 @@ function StageCard({ stage }: { stage: { title: string; sub: string; icon: React
               style={{
                 position: "absolute",
                 left: 0,
-                top: 7,
-                width: 5,
-                height: 5,
+                top: 8,
+                width: 6,
+                height: 6,
                 borderRadius: 999,
                 background: PRIMARY,
               }}
