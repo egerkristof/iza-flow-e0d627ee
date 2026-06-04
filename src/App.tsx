@@ -59,6 +59,7 @@ import ConditionsPage from "./pages/Conditions";
 import SanctionedPage from "./pages/Sanctioned";
 import PlaybookBuilderPage from "./pages/PlaybookBuilder";
 import MockRibbonPage from "./pages/marketing/MockRibbon";
+import MockLayerPage from "./pages/marketing/MockLayer";
 
 const queryClient = new QueryClient();
 
@@ -133,6 +134,7 @@ const App = () => (
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/mock/ribbon" element={<MockRibbonPage />} />
+            <Route path="/mock/layer" element={<MockLayerPage />} />
 
             {/* Standalone admin panel */}
             <Route path="/admin/manage" element={<AdminPage />} />
