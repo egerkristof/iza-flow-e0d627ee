@@ -106,7 +106,7 @@ function Slide01() {
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS is the standard layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it.<br />
+          The Standard Layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it. Built with Standards Engineering, governed by your own rules.<br />
           <span style={{ color: `hsl(${TEAL})` }}>30-day marketing pilot. Then scale across KYC, complaints, credit and group governance.</span>
         </p>
 
@@ -2837,27 +2837,30 @@ function SlideOrgIntelligence() {
 
 // ─── Slide registry ──────────────────────────────────────────────────────────
 
+// Sales arc, banking edition — mirrors Get Started + Factory:
+// Reality → Job → Category → Gap → Cost → Why Now → What We Install →
+// Where It Plugs In → Proof → People → Plan → Pricing → Team → Close.
 const SLIDES = [
-  { id: 1, title: "Cover", component: <Slide01 /> },
-  { id: 2, title: "The Category · One standard. Every AI surface inherits it.", component: <StandardLayerDeckSlide eyebrow="The category · What LIZA installs between AI and action in your bank" /> },
-  { id: 3, title: "The Context Gap", component: <Slide02 /> },
-  { id: 4, title: "The Context Gap, Exemplified", component: <SlideContextGapExemplified /> },
-  { id: 5, title: "Where Missing Context Shows Up in Retail Banking", component: <Slide03 /> },
-  { id: 6, title: "What Missing Context Costs in Retail Banking", component: <Slide04Cost /> },
-  { id: 7, title: "Early Validation", component: <Slide08 /> },
-  { id: 8, title: "Why Now", component: <SlideWhyNow /> },
-  { id: 9, title: "The Standard Layer in Retail Banking", component: <Slide05 /> },
-  { id: 10, title: "People as Nodes", component: <SlidePeopleAsNodes /> },
-  { id: 11, title: "Organizational Intelligence", component: <SlideOrgIntelligence /> },
-  { id: 12, title: "Category Thesis & Moat", component: <Slide06 /> },
-  { id: 13, title: "Expansion Path", component: <Slide09 /> },
-  { id: 14, title: "What's Built", component: <Slide10 /> },
-  { id: 15, title: "Pricing & Commercial Model", component: <Slide11 /> },
-  { id: 16, title: "30-Day Challenge", component: <SlideExecutionChallenge /> },
-  { id: 17, title: "Team", component: <Slide12 /> },
-  { id: 18, title: "The Next Step", component: <Slide13 /> },
-  { id: 19, title: "Appendix", component: <SlideAppendixDivider /> },
-  { id: 20, title: "Appendix: Architecture", component: <SlideArchitecture /> },
+  { id: 1,  title: "Cover · Your AI rollout in retail banking becomes a production system", component: <Slide01 /> },
+  { id: 2,  title: "The reality on your floor · Where missing context shows up in the bank", component: <Slide03 /> },
+  { id: 3,  title: "The job you were hired for · What you're actually accountable for",      component: <SlideContextGapExemplified /> },
+  { id: 4,  title: "The category · One standard. Every AI surface inherits it.",             component: <StandardLayerDeckSlide eyebrow="The category · What LIZA installs between AI and action in your bank" /> },
+  { id: 5,  title: "Where rollouts die · The Context Gap",                                   component: <Slide02 /> },
+  { id: 6,  title: "What it costs · The artisanal tax in retail banking",                    component: <Slide04Cost /> },
+  { id: 7,  title: "Why now",                                                                component: <SlideWhyNow /> },
+  { id: 8,  title: "What we install · The Standard Layer in your bank",                      component: <Slide05 /> },
+  { id: 9,  title: "Where it plugs in · Blueprint + nervous system",                         component: <SlideArchitecture /> },
+  { id: 10, title: "Proof in production · Early validation",                                 component: <Slide08 /> },
+  { id: 11, title: "People as nodes",                                                        component: <SlidePeopleAsNodes /> },
+  { id: 12, title: "Organizational intelligence, unpacked",                                  component: <SlideOrgIntelligence /> },
+  { id: 13, title: "Category thesis & moat",                                                 component: <Slide06 /> },
+  { id: 14, title: "Expansion path · Marketing → KYC → Credit → Group",                      component: <Slide09 /> },
+  { id: 15, title: "What's built",                                                           component: <Slide10 /> },
+  { id: 16, title: "The 30-day pilot, risk-reversed",                                        component: <SlideExecutionChallenge /> },
+  { id: 17, title: "Pricing & procurement",                                                  component: <Slide11 /> },
+  { id: 18, title: "Team",                                                                   component: <Slide12 /> },
+  { id: 19, title: "The next step",                                                          component: <Slide13 /> },
+  { id: 20, title: "Appendix",                                                               component: <SlideAppendixDivider /> },
 ];
 
 // ─── Main page ───────────────────────────────────────────────────────────────
