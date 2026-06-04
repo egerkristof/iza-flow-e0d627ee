@@ -94,24 +94,24 @@ function Slide01() {
           style={{ borderColor: `hsl(${TEAL} / 0.35)`, background: `hsl(${TEAL} / 0.1)` }}>
           <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: `hsl(${TEAL})` }} />
           <span className="font-bold tracking-[0.3em] uppercase" style={{ fontSize: 28, color: `hsl(${TEAL})` }}>
-            LIZA OS · Retail Banking · Customer First, Investor Optional
+            LIZA OS · Retail Banking · Sales Deck
           </span>
         </div>
 
         <h1 className="font-black mb-6" style={{ fontSize: 82, lineHeight: 1.05, color: TEXT }}>
-          The Brand &amp; Compliance Memory Layer<br />
+          One standard. Every AI surface in your bank<br />
           <span style={{ background: `linear-gradient(135deg, hsl(${TEAL}), hsl(${MINT}))`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            for AI-Native Retail Banking.
+            inherits it.
           </span>
         </h1>
 
         <p className="mb-14" style={{ fontSize: 28, color: MUTED, maxWidth: 1100, lineHeight: 1.5 }}>
-          LIZA OS turns brand, product, and compliance judgment into the operating layer between AI inputs and AI outputs in retail banking marketing.<br />
-          <span style={{ color: `hsl(${TEAL})` }}>Marketing Pilot · Memory Layer · Optional Strategic Stake</span>
+          LIZA OS is the standard layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it.<br />
+          <span style={{ color: `hsl(${TEAL})` }}>30-day marketing pilot. Then scale across KYC, complaints, credit and group governance.</span>
         </p>
 
         <p style={{ fontSize: 20, color: SUBTLE }}>
-          Confidential &nbsp;·&nbsp; Two-Door Conversation &nbsp;·&nbsp; Marketing Pilot · Memory Layer · Optional Strategic Stake
+          Confidential &nbsp;·&nbsp; For retail-banking marketing, compliance and AI leaders
         </p>
       </div>
       <SlideBar />
