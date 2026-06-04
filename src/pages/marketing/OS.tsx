@@ -9,6 +9,7 @@ import { LizaOSStack } from "@/components/marketing/os/LizaOSStack";
 import { FourMovesStrip } from "@/components/marketing/os/FourMovesStrip";
 import { ProductFilm } from "@/components/marketing/os/ProductFilm";
 import { ExpandableViewer } from "@/components/marketing/shared/ExpandableViewer";
+import { StandardLayerSection } from "@/components/marketing/shared/StandardLayerSection";
 
 const INDUSTRY_CARDS = [
   { label: "Pharma & Life Sciences", href: "/industries/regulated", icon: <Beaker className="w-5 h-5" /> },
@@ -84,6 +85,12 @@ export default function OSPage() {
       {/* The interactive stack — full anatomy on every device */}
       <section id="stack" className="py-8 md:py-12 px-6">
         <div className="max-w-6xl mx-auto">
+          {/* Canonical category diagram — identical on every surface */}
+          <StandardLayerSection
+            eyebrow="The OS, in one picture"
+            headline="One standard. Every AI surface inherits it."
+            subhead="This is the layer LIZA installs. Everything below is how it operates inside your stack."
+          />
           <LizaOSStack />
         </div>
       </section>
