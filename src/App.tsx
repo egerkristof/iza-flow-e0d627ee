@@ -58,6 +58,7 @@ import FramedChatPage from "./pages/FramedChat";
 import ConditionsPage from "./pages/Conditions";
 import SanctionedPage from "./pages/Sanctioned";
 import PlaybookBuilderPage from "./pages/PlaybookBuilder";
+import MockRibbonPage from "./pages/marketing/MockRibbon";
 
 const queryClient = new QueryClient();
 
@@ -131,6 +132,7 @@ const App = () => (
             <Route path="/playbook-builder" element={<PlaybookBuilderPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
+            <Route path="/mock/ribbon" element={<MockRibbonPage />} />
 
             {/* Standalone admin panel */}
             <Route path="/admin/manage" element={<AdminPage />} />
