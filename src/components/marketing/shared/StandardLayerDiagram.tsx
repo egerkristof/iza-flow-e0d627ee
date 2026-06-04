@@ -38,12 +38,12 @@ const PILLARS: Pillar[] = [
     sub: "Structure and context for every decision.",
   },
   {
-    label: "Context Quality Index",
+    label: "Context Quality",
     icon: <Gauge className="w-7 h-7" />,
     sub: "Measure how complete your standard is, continuously.",
   },
   {
-    label: "Governance Gates",
+    label: "Governance",
     icon: <DoorOpen className="w-7 h-7" />,
     sub: "Ensure policy, risk and regulator rules are met.",
   },
@@ -106,6 +106,13 @@ export function StandardLayerDiagram() {
           icon={<Globe2 className="w-7 h-7" />}
           title="Reality"
           body="Signals, data, events"
+          examples={[
+            "CRM, ERP, EHR",
+            "Data warehouse",
+            "Email, tickets, calls",
+            "Sensors, telemetry",
+            "Documents and contracts",
+          ]}
           caption={{
             head: "The world",
             body: "Continuously generating signals and events.",
@@ -118,6 +125,12 @@ export function StandardLayerDiagram() {
           icon={<BrainCircuit className="w-7 h-7" />}
           title="AI Layer"
           body="Models, predictions, agents"
+          examples={[
+            "ChatGPT, Gemini, Claude",
+            "Copilot, Glean",
+            "Vendor RAG and copilots",
+            "In-house agents",
+          ]}
           caption={{
             head: "AI processes reality",
             body: "Turning signals into predictions and options.",
@@ -134,6 +147,12 @@ export function StandardLayerDiagram() {
           icon={<Rocket className="w-7 h-7" />}
           title="Execution"
           body="People, systems, agents"
+          examples={[
+            "Approved drafts and decisions",
+            "Workflow actions in Jira, ServiceNow",
+            "Writes back to Veeva, LIMS, ERP",
+            "Customer and regulator deliverables",
+          ]}
           caption={{
             head: "Standards become action",
             body: "Executed in the real world through aligned resources.",
@@ -146,6 +165,12 @@ export function StandardLayerDiagram() {
           icon={<RefreshCw className="w-7 h-7" />}
           title="Outcomes & Learning"
           body="Results, feedback, audit, adaptation"
+          examples={[
+            "KPIs and business outcomes",
+            "Audit trail and lineage",
+            "Regulator and board evidence",
+            "Updates back into the standard",
+          ]}
           caption={{
             head: "Improve and adapt",
             body: "Feedback closes the loop and updates the standard.",
@@ -215,12 +240,14 @@ function FlowBlock({
   icon,
   title,
   body,
+  examples,
   caption,
   index,
 }: {
   icon: React.ReactNode;
   title: string;
   body: string;
+  examples?: string[];
   caption: { head: string; body: string };
   index: number;
 }) {
@@ -250,7 +277,7 @@ function FlowBlock({
         >
           {icon}
         </span>
-        <div>
+        <div className="flex-1 min-w-0">
           <p
             className="text-lg md:text-xl font-black tracking-tight"
             style={{ color: "hsl(var(--primary))" }}
@@ -258,6 +285,23 @@ function FlowBlock({
             {title}
           </p>
           <p className="text-sm text-muted-foreground mt-0.5">{body}</p>
+          {examples && examples.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {examples.map((ex) => (
+                <span
+                  key={ex}
+                  className="text-[10.5px] md:text-[11px] font-semibold px-2 py-1 rounded-md"
+                  style={{
+                    background: "hsl(var(--primary) / 0.07)",
+                    color: "hsl(var(--primary))",
+                    border: "1px solid hsl(var(--primary) / 0.18)",
+                  }}
+                >
+                  {ex}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -340,7 +384,7 @@ function StandardBand({ index }: { index: number }) {
                 {p.icon}
               </motion.span>
               <p
-                className="text-[11px] md:text-[13px] font-black leading-tight uppercase tracking-wide"
+                className="text-[10.5px] md:text-[12px] font-black leading-tight uppercase tracking-[0.02em] break-words"
                 style={{ color: "hsl(var(--primary))" }}
               >
                 {p.label}
