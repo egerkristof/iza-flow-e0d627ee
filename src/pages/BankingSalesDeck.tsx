@@ -18,17 +18,20 @@ import { StandardLayerDeckSlide } from "@/components/marketing/shared/StandardLa
 // ═════════════════════════════════════════════════════════════════════════════
 // BANKING SALES DECK
 //
-// ICP: Head of AI / Digital / Innovation at a retail bank. Sponsors who own
-// "make AI stick in the bank without blowing up brand, compliance or audit."
-// Co-buyers: CCO / Legal, CFO, CIO / CISO, Head of Marketing.
+// ICP: Head of AI / Digital / Innovation in a bank — including securities
+// (sales & trading), capital markets and bank operations. Sponsors who own
+// "make AI stick in the bank without blowing up the desk, the brand,
+// compliance or audit." Co-buyers: CCO / Legal, CFO, CIO / CISO, Head of
+// Trading / Markets, Head of Marketing.
 //
-// Same StoryBrand grammar as /get-started, retail-banking flavor:
+// Same StoryBrand grammar as /get-started, generic banking flavor that
+// reads cleanly to a Head of AI at a securities house or universal bank:
 //   Left  (red)   = what AI in the bank looks like today (shadow tools, no audit).
 //   Right (green) = what a governed rollout looks like (one standard, every surface).
 // ═════════════════════════════════════════════════════════════════════════════
 
-const FOOTER_LEFT  = "LIZA OS · For Heads of AI, Digital and Compliance in retail banking";
-const FOOTER_RIGHT = "From shadow Copilot to a rollout that survives the regulator";
+const FOOTER_LEFT  = "LIZA OS · For Heads of AI, Digital and Compliance in banking — markets, ops, risk";
+const FOOTER_RIGHT = "From shadow Copilot to a rollout the desk, audit and the regulator can defend";
 
 function SH(props: { section: string; n: number; total: number; dark?: boolean; children: React.ReactNode }) {
   return (
@@ -41,7 +44,7 @@ function SH(props: { section: string; n: number; total: number; dark?: boolean; 
 
 // ─── Banking-native visuals ────────────────────────────────────────────────
 
-// A model output a marketer / RM / KYC analyst would actually paste back into the bank
+// A model output a trader, salesperson, RM or KYC analyst would actually paste back into the bank
 function VizBankModelOutputBare() {
   return (
     <div className="flex flex-col items-center gap-3">
@@ -49,11 +52,11 @@ function VizBankModelOutputBare() {
         style={{ background: "hsl(0 0% 100%)", border: `1px dashed hsl(${RED} / 0.5)`, minWidth: 280 }}>
         <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 9, color: SUBTLE }}>Draft from ChatGPT · personal account</p>
         <p className="font-black" style={{ fontSize: 20, color: TEXT, lineHeight: 1.15 }}>
-          "Here is your<br/>campaign brief / KYC note."
+          "Here is your<br/>RFQ response / KYC note."
         </p>
       </div>
       <div className="flex flex-wrap gap-2 justify-center" style={{ maxWidth: 320 }}>
-        {["no brand standard", "no policy version", "no signer", "no audit replay"].map((x) => (
+        {["no desk standard", "no policy version", "no signer", "no audit replay"].map((x) => (
           <span key={x} className="font-mono px-2 py-1 rounded"
             style={{ fontSize: 10, color: `hsl(${RED})`, background: `hsl(${RED} / 0.08)`, border: `1px solid hsl(${RED} / 0.3)` }}>?{x}</span>
         ))}
@@ -65,10 +68,10 @@ function VizBankModelOutputBare() {
 // Same draft, but signed inside the bank's Decision Layer
 function VizBankGovernedDecision() {
   const tags = [
-    { k: "STANDARD",   v: "Retail-Mortgage-DE v4.1" },
-    { k: "POLICY",     v: "Consumer Duty · MiFID II" },
+    { k: "STANDARD",   v: "Credit-RFQ-Quote v4.1" },
+    { k: "POLICY",     v: "MiFID II Best Ex · Consumer Duty" },
     { k: "MODEL",      v: "gpt-5 · M365 tenant" },
-    { k: "APPROVER",   v: "Compliance · 14:02" },
+    { k: "APPROVER",   v: "Desk head + Compliance · 14:02" },
   ];
   return (
     <div className="flex flex-col items-center gap-2">
@@ -76,7 +79,7 @@ function VizBankGovernedDecision() {
         style={{ background: "hsl(0 0% 100%)", border: `2px solid hsl(${GREEN} / 0.5)`, minWidth: 300, boxShadow: `0 0 24px hsl(${GREEN} / 0.15)` }}>
         <p className="font-mono uppercase tracking-[0.22em] mb-1" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>Governed decision · signed receipt</p>
         <p className="font-black" style={{ fontSize: 20, color: TEXT, lineHeight: 1.15 }}>
-          "Here is your<br/>campaign brief / KYC note."
+          "Here is your<br/>RFQ response / KYC note."
         </p>
       </div>
       <div className="grid grid-cols-2 gap-1.5 mt-2" style={{ width: 360 }}>
@@ -95,15 +98,15 @@ function VizBankGovernedDecision() {
 // What the board / regulator actually grades you on
 function VizBankScorecard() {
   const rows = [
-    { kpi: "% of customer-facing AI outputs running on an approved standard", bad: "<10%",   good: "60%+" },
-    { kpi: "Days from campaign brief to live, compliance-approved asset",     bad: "6 weeks", good: "5 days" },
-    { kpi: "AI decisions you can replay for internal audit or the regulator", bad: "0",      good: "100%" },
-    { kpi: "Standards owned by Brand / Compliance / Product (not by IT)",     bad: "0",      good: "Every team" },
+    { kpi: "% of client- and regulator-facing AI outputs on an approved standard (RFQ, KYC, credit, complaints)", bad: "<10%",   good: "60%+" },
+    { kpi: "Cycle time from intake to compliance-approved output (RFQ response, KYC, credit memo, complaint)",    bad: "Days",   good: "Minutes" },
+    { kpi: "AI decisions you can replay for the desk, internal audit or the regulator",                            bad: "0",      good: "100%" },
+    { kpi: "Standards owned by the business and Compliance (desks, product, brand) — not by IT",                   bad: "0",      good: "Every team" },
   ];
   return (
     <div className="w-full rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}`, background: CARD_ALT }}>
       <div className="grid grid-cols-12 px-6 py-3" style={{ background: CHROME_BG, borderBottom: `1px solid ${CHROME_BORDER}` }}>
-        <div className="col-span-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>What your board and regulator grade you on</div>
+        <div className="col-span-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>What the desk, your board and the regulator grade you on</div>
         <div className="col-span-3 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 11, color: `hsl(${RED})` }}>Today</div>
         <div className="col-span-3 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>On LIZA</div>
       </div>
@@ -125,8 +128,8 @@ function VizBankFunnel() {
   const stages = [
     { label: "AI licences in the bank",     count: "12,000 seats",   pct: 100, color: SLATE },
     { label: "Anyone uses weekly",          count: "~1,800",         pct: 15,  color: GOLD },
-    { label: "Campaigns / cases drafted",   count: "~600 / month",   pct: 5,   color: GOLD },
-    { label: "Approved by compliance",      count: "~120 / month",   pct: 1,   color: RED },
+    { label: "Quotes / cases / drafts produced", count: "~600 / month", pct: 5, color: GOLD },
+    { label: "Approved by desk + compliance", count: "~120 / month",  pct: 1,   color: RED },
     { label: "Replayable for the regulator", count: "0",             pct: 0,   color: RED },
   ];
   return (
@@ -147,7 +150,7 @@ function VizBankFunnel() {
         </div>
       ))}
       <p className="mt-3 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
-        Composite of retail-bank AI rollout interviews · CEE and Western Europe · 2025
+        Composite of bank AI rollout interviews · retail, capital markets and securities · CEE and Western Europe · 2025
       </p>
     </div>
   );
@@ -172,13 +175,13 @@ function VizBankArchitecture() {
   return (
     <div className="w-full flex flex-col gap-3">
       <Layer title="Your people, your workflows" sub="Layer 4 · users" accent={GREEN}
-        items={["Marketing", "RMs", "KYC analysts", "Underwriters", "Complaints", "Contact centre", "Compliance", "Legal"]} />
+        items={["Traders & Sales", "RFQ desk", "RMs", "KYC analysts", "Underwriters", "Credit memos", "Complaints", "Contact centre", "Marketing", "Compliance", "Surveillance", "Legal"]} />
       <Layer title="LIZA OS · the Decision Layer" sub="Layer 3 · what we install" accent={GOLD} dashed
-        items={["Brand & product standards", "Policy registry", "AACE runtime", "Signed receipts", "Audit replay", "Memory & feedback"]} />
+        items={["Desk, product & brand standards", "Policy registry", "AACE runtime", "Signed receipts", "Audit replay", "Memory & feedback"]} />
       <Layer title="Your existing AI tools" sub="Layer 2 · already paid for" accent={GREEN}
         items={["Copilot M365", "ChatGPT Enterprise", "Gemini", "In-house RAG", "Vendor copilots in core / CRM"]} />
       <Layer title="Your bank stack, data, identity & policy" sub="Layer 1 · already in place" accent={GREEN}
-        items={["Core banking", "CRM", "Data warehouse", "GRC / AML", "SSO / Entra", "DLP & retention", "EBA · DORA · Consumer Duty · MNB / NBR"]} />
+        items={["Core banking", "OMS / EMS", "CRM", "Market data — Bloomberg · Tradeweb · MarketAxess", "Data warehouse", "GRC / AML / Surveillance", "SSO / Entra", "DLP & retention", "MiFID II · EBA · DORA · Consumer Duty"]} />
       <p className="mt-2 text-center font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
         We slot between your people and the models you already bought. No rip-and-replace. No new core contract.
       </p>
@@ -189,10 +192,10 @@ function VizBankArchitecture() {
 // 90-day banking rollout plan
 function Viz90DayBankPlan() {
   const phases = [
-    { p: "Days 0-14",  h: "Scope & wire",       d: "Pick one workflow with you (campaign brief, KYC adjudication or complaint response). Install runtime in your environment. SSO + DLP. First 5 standards drafted with Brand, Product and Compliance.", out: "Standards live · runtime deployed" },
-    { p: "Days 15-45", h: "Run with one team",  d: "Workflow goes live on LIZA. Every output signed. Compliance and Legal see receipts daily. Brand drift stops at the source.",                                                                  out: "500+ signed decisions" },
-    { p: "Days 46-75", h: "Measure & defend",   d: "Baseline-vs-LIZA report for your steering group. Time-to-launch and rework cost documented. Regulator-ready audit replay demonstrated.",                                                       out: "CFO-ready ROI memo" },
-    { p: "Days 76-90", h: "Pick workflow #2",   d: "You decide what scales next: KYC, complaints, credit memos or another country. Standards library begins to compound across the bank.",                                                          out: "Next workflow committed" },
+    { p: "Days 0-14",  h: "Scope & wire",       d: "Pick one workflow with you — RFQ triage / quote drafting, pre-trade checks, KYC adjudication, complaint response or credit memo. Install runtime in your environment. SSO + DLP. First 5 standards drafted with the desk, Product and Compliance.", out: "Standards live · runtime deployed" },
+    { p: "Days 15-45", h: "Run with one desk",  d: "Workflow goes live on LIZA with one team. Every output signed. Desk head, Compliance and Legal see receipts daily. Brand and policy drift stops at the source.",                                                                                 out: "500+ signed decisions" },
+    { p: "Days 46-75", h: "Measure & defend",   d: "Baseline-vs-LIZA report for your steering group. Response time, hit rate and rework cost documented. Regulator-ready audit replay demonstrated against MiFID II best-execution and record-keeping asks.",                                          out: "CFO-ready ROI memo" },
+    { p: "Days 76-90", h: "Pick workflow #2",   d: "You decide what scales next: another desk, KYC, complaints, credit memos, trade documentation or another entity. Standards library begins to compound across the bank.",                                                                            out: "Next workflow committed" },
   ];
   return (
     <div className="w-full">
@@ -220,10 +223,10 @@ function Viz90DayBankPlan() {
 // Bank buying-committee map
 function VizBankCommittee() {
   const people = [
-    { role: "You · Head of AI / Digital",         cares: "Make AI stick across the bank. Defensible ROI per quarter. Nothing that blows up in front of the regulator.", gets: "A 90-day install plus a system you can scale workflow by workflow, country by country.", color: GREEN },
-    { role: "Chief Compliance / Legal",           cares: "EBA, DORA, Consumer Duty, AML6, local regulators. Today you cannot show how AI decided.",                     gets: "Signed receipts. Standards with owner and version. Replay on demand.",                color: GOLD },
-    { role: "CFO / Finance",                      cares: "Per-seat AI spend with no proven outcome. ROI slides that do not hold up.",                                   gets: "Per-decision pricing. Pass-through model cost. Unit economics on day 30.",            color: GOLD },
-    { role: "CIO / CISO",                         cares: "Another shadow tool. Vendor lock. Yet another model contract. EU data residency.",                            gets: "Runs in your environment. Model-agnostic. SSO, DLP and EU residency from day one.",   color: GOLD },
+    { role: "You · Head of AI / Digital",         cares: "Make AI stick across the bank — markets, ops, risk. Defensible ROI per quarter. Nothing that blows up in front of the desk or the regulator.", gets: "A 90-day install plus a system you can scale workflow by workflow, desk by desk, entity by entity.", color: GREEN },
+    { role: "Chief Compliance / Legal",           cares: "MiFID II best execution and record-keeping. EBA, DORA, Consumer Duty, AML6, model risk. Today you cannot show how AI decided.",                gets: "Signed receipts. Standards with owner and version. Replay on demand for surveillance and the regulator.", color: GOLD },
+    { role: "CFO / Head of Markets / COO",        cares: "Per-seat AI spend with no proven outcome. Hit rate, response time and rework cost on the desk. ROI slides that do not hold up.",              gets: "Per-decision pricing. Pass-through model cost. Unit economics on day 30, tied to a real desk metric.",     color: GOLD },
+    { role: "CIO / CISO",                         cares: "Another shadow tool. Vendor lock. Another model contract. EU data residency. Information barriers between desks.",                              gets: "Runs in your environment. Model-agnostic. SSO, DLP, information-barrier-aware and EU residency from day one.", color: GOLD },
   ];
   return (
     <div className="grid grid-cols-2 gap-5 w-full">
@@ -350,14 +353,14 @@ function S01Cover({ n, t }: { n: number; t: number }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center px-32 text-center">
         <p className="font-mono uppercase tracking-[0.32em] mb-8 relative z-10" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>
-          For Heads of AI, Digital and Compliance in retail banking
+          For Heads of AI, Digital and Compliance in banking — markets, ops and risk
         </p>
         <h1 className="font-black relative z-10" style={{ fontSize: 108, lineHeight: 0.98, color: "hsl(0 0% 98%)", letterSpacing: "-0.045em", maxWidth: 1600 }}>
           One standard.<br/>
           <span style={{ color: `hsl(${GREEN})` }}>Every AI surface in your bank inherits it.</span>
         </h1>
         <p className="mt-10 relative z-10" style={{ fontSize: 28, lineHeight: 1.3, color: "hsl(0 0% 78%)", maxWidth: 1320 }}>
-          LIZA OS is the Decision Layer between every AI tool your bank already runs and every customer-facing, regulator-facing, board-facing decision that comes out of it. Built with Standards Engineering. Governed by your own rules.
+          LIZA OS is the Decision Layer between every AI tool your bank already runs and every client-facing, desk-facing, regulator-facing decision that comes out of it — from RFQs and quotes on the trading floor to KYC, credit memos and complaints. Built with Standards Engineering. Governed by your own rules.
         </p>
         <div className="mt-14 relative z-10 rounded-2xl px-10 py-6 flex items-center gap-12"
           style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.12)`, backdropFilter: "blur(6px)" }}>
@@ -387,34 +390,34 @@ function S02Problem({ n, t }: { n: number; t: number }) {
   return (
     <LensSlide
       section="The reality on your floor" n={n} total={t}
-      topic="What AI in your bank looks like today"
-      framing="You bought the licences. Marketing, RMs and contact-centre teams use AI inconsistently. Compliance never sees the same draft twice."
+      topic="What AI on your floor looks like today"
+      framing="You bought the licences. Traders, sales, RMs and ops teams use AI inconsistently. Compliance never sees the same draft twice, and the desk head cannot defend it."
       payload={{
         market: {
           kicker: "What you can already see",
-          headline: "Seats handed out. Brand and compliance drift everywhere.",
+          headline: "Seats handed out. Desk, brand and compliance drift everywhere.",
           viz: <VizBankModelOutputBare />,
           vizLabel: "Diagram · AI output with no standard, no receipt, no signer",
           items: [
             { h: "Copilot / ChatGPT Enterprise live", v: "Heavy users 15%. The rest forgot the tab. Real usage is shadow ChatGPT on personal accounts." },
-            { h: "Your real brand policy",            v: "Whatever each marketer or RM types into a free model on Friday afternoon." },
-            { h: "Nothing the bank can replay",       v: "When Compliance, internal audit or the regulator asks 'how did AI decide this?', the room goes quiet." },
+            { h: "Your real desk policy",             v: "Whatever each trader, salesperson, RM or analyst types into a free model between RFQs." },
+            { h: "Nothing the bank can replay",       v: "When the desk head, Compliance, internal audit or the regulator asks 'how did AI decide this?', the room goes quiet." },
           ],
         },
         operator: {
           kicker: "What a governed rollout actually looks like",
-          headline: "Standards, receipts, memory bound to every workflow.",
+          headline: "Standards, receipts, memory bound to every workflow — desk by desk.",
           viz: <VizBankGovernedDecision />,
           vizLabel: "Diagram · the same output, wrapped in standards and signed receipts",
           items: [
-            { h: "Standard bound",     v: "Every campaign brief, KYC narrative and complaint response runs on the version Brand, Product and Compliance approved." },
-            { h: "Receipt signed",     v: "Replayable on demand. Policy version, data, model, approver. Regulator-ready." },
-            { h: "Memory compounds",   v: "The next case inherits last week's correction automatically. The bank gets smarter without retraining anyone." },
+            { h: "Standard bound",     v: "Every RFQ response, KYC narrative, credit memo and complaint reply runs on the version the desk, Product and Compliance approved." },
+            { h: "Receipt signed",     v: "Replayable on demand. Standard version, data, model, approver, desk. MiFID II / Consumer Duty / EBA-ready." },
+            { h: "Memory compounds",   v: "The next case inherits last week's correction automatically. The desk gets smarter without retraining anyone." },
           ],
-          signal: "You stop selling AI inside the bank. The work pulls people in.",
+          signal: "You stop selling AI inside the bank. The desk pulls it in because it makes them faster and more defensible.",
         },
       }}
-      bottomLine="An AI rollout is not a tool deployment. It is the system that makes the new way of working accountable to your regulator."
+      bottomLine="An AI rollout is not a tool deployment. It is the system that makes the new way of working accountable to your desk, your auditor and your regulator."
     />
   );
 }
@@ -476,7 +479,7 @@ function S05Solution({ n, t }: { n: number; t: number }) {
     <LensSlide
       section="What we install" n={n} total={t}
       topic="The unit your bank's AI rollout is missing"
-      framing="Other vendors give you a tool. We install the Decision Layer that produces one accountable, regulator-replayable decision, on every model your bank uses."
+      framing="Other vendors give you a tool. We install the Decision Layer that produces one accountable, regulator-replayable decision — on every model your bank uses, on every desk and in every workflow."
       payload={{
         market: {
           kicker: "What every other vendor sells",
@@ -485,7 +488,7 @@ function S05Solution({ n, t }: { n: number; t: number }) {
           vizLabel: "Diagram · prompt to model to text. No receipt.",
           items: [
             { h: "Per-seat copilots",   v: "Help individuals. Do not change how the bank works." },
-            { h: "Prompt libraries",    v: "Live in a Notion page. Drift the moment one marketer edits one line." },
+            { h: "Prompt libraries",    v: "Live in a Notion page. Drift the moment one trader or marketer edits one line." },
             { h: "Per-use-case bots",   v: "20 of them in 18 months. No common audit trail. No regulator story." },
           ],
         },
@@ -495,8 +498,8 @@ function S05Solution({ n, t }: { n: number; t: number }) {
           viz: <VizSolutionLoop />,
           vizLabel: "Diagram · the 4-station AACE loop, one per call",
           items: [
-            { h: "Lock",    v: "Every campaign brief, KYC narrative or complaint reply binds to the bank's versioned standard." },
-            { h: "Compile", v: "Brand, product T&Cs, MiFID / Consumer Duty rules and the customer record assembled for that one decision." },
+            { h: "Lock",    v: "Every RFQ response, quote draft, KYC narrative, credit memo or complaint reply binds to the bank's versioned standard." },
+            { h: "Compile", v: "Desk policy, product T&Cs, MiFID II best-ex / Consumer Duty rules and the position / customer record assembled for that one decision." },
             { h: "Sign",    v: "Signed receipt: standard version, sources, model, approver. Replayable for internal audit and the regulator." },
             { h: "Learn",   v: "Compliance corrections feed back into the standard. The next case inherits them automatically." },
           ],
@@ -554,10 +557,10 @@ function S07Plan({ n, t }: { n: number; t: number }) {
 // ─── 08 · Proof in production ──────────────────────────────────────────────
 function S08Proof({ n, t }: { n: number; t: number }) {
   const stats = [
-    { v: "127",       l: "standards live",          s: "Typed playbooks, brand rules and policy registers in production. The bank equivalent: campaign standards, KYC narratives, complaint templates, credit memos." },
-    { v: "3,400 /mo", l: "signed decisions",        s: "Every output bound to a standard, model and approver. The same shape your internal audit and the regulator will ask for, replayable on demand." },
-    { v: "62%",       l: "drop in time-to-spec",    s: "On the workflows that moved first. CFO-visible against the pre-LIZA baseline. In banking: campaign brief, KYC adjudication, complaint response time." },
-    { v: "0",         l: "audit failures",          s: "Across the regulated reference deployment to date. Same install pattern available for EBA, DORA, MNB / NBR and Consumer Duty scrutiny." },
+    { v: "127",       l: "standards live",          s: "Typed playbooks, desk rules and policy registers in production. The bank equivalent: RFQ / quote standards, KYC narratives, credit memos, complaint templates, campaign briefs." },
+    { v: "3,400 /mo", l: "signed decisions",        s: "Every output bound to a standard, model and approver. The same shape your desk head, internal audit and the regulator will ask for, replayable on demand." },
+    { v: "62%",       l: "drop in time-to-output",  s: "On the workflows that moved first. CFO- and desk-visible against the pre-LIZA baseline. In banking: RFQ response, KYC adjudication, complaint response and credit-memo cycle time." },
+    { v: "0",         l: "audit failures",          s: "Across the regulated reference deployment to date. Same install pattern available for MiFID II, EBA, DORA, Consumer Duty and local regulator scrutiny." },
   ];
   return (
     <SH section="Proof in production" n={n} total={t}>
@@ -699,7 +702,7 @@ function S13Close({ n, t }: { n: number; t: number }) {
           <span style={{ color: `hsl(${GREEN})` }}>The Decision Layer compounds.</span>
         </h2>
         <p className="mt-10" style={{ fontSize: 26, color: "hsl(0 0% 78%)", maxWidth: 1320, lineHeight: 1.4 }}>
-          You were hired to make AI stick inside the bank without blowing up brand or compliance. We build the layer that lets it. One workflow, 30 days, one signed decision, then you scale to KYC, complaints, credit and group governance.
+          You were hired to make AI stick inside the bank without blowing up the desk, the brand or compliance. We build the layer that lets it. One workflow, 30 days, one signed decision — then you scale across RFQ / quote drafting, KYC, complaints, credit, trade documentation and group governance.
         </p>
         <div className="mt-14 flex items-center gap-6 rounded-2xl px-10 py-5"
           style={{ background: "hsl(0 0% 100% / 0.06)", border: `1px solid hsl(0 0% 100% / 0.16)` }}>
@@ -729,7 +732,7 @@ const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) =>
         {
           title: "Reality",
           sub: "Your bank's signals & data",
-          examples: ["Core banking, CRM, payments", "Data warehouse, customer 360", "Calls, complaints, tickets", "KYC docs, contracts, policies"],
+          examples: ["Core banking, CRM, payments", "OMS / EMS, market data (Bloomberg, Tradeweb, MarketAxess)", "Inbound RFQs, calls, complaints, tickets", "KYC docs, term sheets, contracts, policies"],
         },
         {
           title: "AI Layer",
@@ -739,12 +742,12 @@ const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) =>
         {
           title: "Execution",
           sub: "Bank teams, systems, agents",
-          examples: ["Approved campaign briefs", "KYC adjudications, complaint replies", "Writes to core, CRM, GRC", "Regulator deliverables"],
+          examples: ["Quote drafts & RFQ responses", "KYC adjudications, credit memos, complaint replies", "Writes to OMS, core, CRM, GRC", "Regulator & desk-head deliverables"],
         },
         {
           title: "Outcomes",
           sub: "Results, audit, learning",
-          examples: ["Time-to-launch, NPS, CSAT", "Signed receipts & lineage", "EBA / DORA / Consumer Duty evidence", "Standards updated for next case"],
+          examples: ["Hit rate, response time, NPS, CSAT", "Signed receipts & lineage", "MiFID II / EBA / DORA / Consumer Duty evidence", "Standards updated for next RFQ / case"],
         },
       ]}
     />
