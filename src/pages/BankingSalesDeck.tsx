@@ -642,7 +642,7 @@ function S06bLifecycle({ n, t }: { n: number; t: number }) {
             The trade lifecycle, with LIZA in it
           </p>
           <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Agents do the legwork. Humans keep P&amp;L.
+            AI does the legwork. Humans keep P&amp;L.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
