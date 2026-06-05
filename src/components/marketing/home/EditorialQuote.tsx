@@ -33,17 +33,9 @@ export function EditorialQuote() {
         </ScrollReveal>
 
         <ScrollReveal>
-          <div className="mt-10 space-y-1">
-            <p className="text-sm font-semibold text-foreground tracking-wide">
-              LIZA OS
-            </p>
-            <p
-              className="text-xs italic text-foreground/50"
-              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-            >
-              Findings from rollouts across regulated industries
-            </p>
-          </div>
+          <p className="mt-10 text-sm font-semibold text-foreground tracking-wide">
+            LIZA OS
+          </p>
         </ScrollReveal>
       </div>
     </section>
