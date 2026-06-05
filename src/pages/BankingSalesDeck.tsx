@@ -862,6 +862,7 @@ const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) =>
   { id: "funnel",       title: "Where rollouts die",        render: (n, t) => <S04Funnel n={n} t={t} /> },
   { id: "solution",     title: "What we install",           render: (n, t) => <S05Solution n={n} t={t} /> },
   { id: "architecture", title: "Where it plugs in",         render: (n, t) => <S06Architecture n={n} t={t} /> },
+  { id: "lifecycle",    title: "Where it plugs into the trade lifecycle", render: (n, t) => <S06bLifecycle n={n} t={t} /> },
   { id: "plan",         title: "The 90-day plan",           render: (n, t) => <S07Plan n={n} t={t} /> },
   { id: "proof",        title: "Proof in production",       render: (n, t) => <S08Proof n={n} t={t} /> },
   { id: "committee",    title: "The buying committee",      render: (n, t) => <S09Committee n={n} t={t} /> },
