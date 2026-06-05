@@ -560,31 +560,31 @@ function S05Solution({ n, t }: { n: number; t: number }) {
       framing="Other vendors give you a tool. We install the Decision Layer that produces one accountable, regulator-replayable decision — on every model your bank uses, on every desk and in every workflow."
       payload={{
         market: {
-          kicker: "What every other vendor sells",
+          kicker: "Other vendors",
           headline: "Another chat box. Another seat licence.",
           viz: <VizWrapper />,
-          vizLabel: "Diagram · prompt to model to text. No receipt.",
+          vizLabel: "Prompt → model → text. No receipt.",
           items: [
-            { h: "Per-seat copilots",   v: "Help individuals. Do not change how the bank works." },
-            { h: "Prompt libraries",    v: "Live in a Notion page. Drift the moment one trader or marketer edits one line." },
-            { h: "Per-use-case bots",   v: "20 of them in 18 months. No common audit trail. No regulator story." },
+            { h: "Per-seat copilots", v: "Help individuals. Don't change how the bank works." },
+            { h: "Prompt libraries",  v: "Drift the moment one trader edits one line." },
+            { h: "Per-use-case bots", v: "20 of them in 18 months. No common audit trail." },
           ],
         },
         operator: {
-          kicker: "What LIZA installs in your bank",
-          headline: "LOCK · COMPILE · SIGN · LEARN. One accountable decision, repeated across every surface.",
+          kicker: "LIZA",
+          headline: "Lock · Compile · Sign · Learn.",
           viz: <VizSolutionLoop />,
-          vizLabel: "Diagram · the 4-station AACE loop, one per call",
+          vizLabel: "The 4-station AACE loop · one per call",
           items: [
-            { h: "Lock",    v: "Every RFQ response, quote draft, KYC narrative, credit memo or complaint reply binds to the bank's versioned standard." },
-            { h: "Compile", v: "Desk policy, product T&Cs, MiFID II best-ex / Consumer Duty rules and the position / customer record assembled for that one decision." },
-            { h: "Sign",    v: "Signed receipt: standard version, sources, model, approver. Replayable for internal audit and the regulator." },
-            { h: "Learn",   v: "Compliance corrections feed back into the standard. The next case inherits them automatically." },
+            { h: "Lock",    v: "Every output binds to a versioned standard." },
+            { h: "Compile", v: "Desk policy, MiFID II, customer record — assembled per decision." },
+            { h: "Sign",    v: "Signed receipt. Replayable for audit and the regulator." },
+            { h: "Learn",   v: "Corrections feed back into the standard. Next case inherits them." },
           ],
-          signal: "Model-agnostic. Sits in front of Copilot, ChatGPT, Gemini, your in-house RAG. Pick later, switch later.",
+          signal: "Model-agnostic. Sits in front of Copilot, ChatGPT, Gemini, your RAG.",
         },
       }}
-      bottomLine="Adoption follows the unit you measure. We give your bank a unit the regulator agrees is worth measuring."
+      bottomLine="Adoption follows the unit you measure. We give you one the regulator agrees with."
     />
   );
 }
