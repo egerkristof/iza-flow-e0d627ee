@@ -639,6 +639,48 @@ function S07Plan({ n, t }: { n: number; t: number }) {
   );
 }
 
+// ─── 06b · Trade lifecycle map ─────────────────────────────────────────────
+function S06bLifecycle({ n, t }: { n: number; t: number }) {
+  return (
+    <SH section="Where it plugs into the trade lifecycle" n={n} total={t}>
+      <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
+        <div className="mb-6">
+          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            From client interaction to booking · the five stages, the named bottlenecks, where LIZA does the legwork
+          </p>
+          <h2 className="font-black" style={{ fontSize: 44, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Agents do the legwork around the trade. Humans keep the P&L decisions. Every step carries a signed receipt.
+          </h2>
+        </div>
+        <div className="flex-1 flex items-center">
+          <VizTradeLifecycle />
+        </div>
+      </div>
+    </SH>
+  );
+}
+
+function S07PlanReal({ n, t }: { n: number; t: number }) {
+  return (
+    <SH section="The 90-day plan" n={n} total={t}>
+      <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
+        <div className="mb-8 flex items-baseline gap-10">
+          <h2 className="font-black" style={{ fontSize: 124, color: `hsl(${GREEN})`, letterSpacing: "-0.05em", lineHeight: 1 }}>90 days</h2>
+          <div>
+            <p className="font-mono uppercase tracking-[0.3em]" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>From kickoff to a workflow your CFO and your regulator can both defend</p>
+            <p className="font-black mt-2" style={{ fontSize: 28, color: TEXT, letterSpacing: "-0.025em", lineHeight: 1.15, maxWidth: 1100 }}>
+              One workflow live. One ROI memo. One audit replay. Then you pick what scales next.
+            </p>
+          </div>
+        </div>
+        <div className="flex-1 flex items-center">
+          <Viz90DayBankPlan />
+        </div>
+      </div>
+    </SH>
+  );
+}
+
 // ─── 08 · Proof in production ──────────────────────────────────────────────
 function S08Proof({ n, t }: { n: number; t: number }) {
   const stats = [
