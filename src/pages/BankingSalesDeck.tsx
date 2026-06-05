@@ -98,24 +98,24 @@ function VizBankGovernedDecision() {
 // What the board / regulator actually grades you on
 function VizBankScorecard() {
   const rows = [
-    { kpi: "% of client- and regulator-facing AI outputs on an approved standard (RFQ, KYC, credit, complaints)", bad: "<10%",   good: "60%+" },
-    { kpi: "Cycle time from intake to compliance-approved output (RFQ response, KYC, credit memo, complaint)",    bad: "Days",   good: "Minutes" },
-    { kpi: "AI decisions you can replay for the desk, internal audit or the regulator",                            bad: "0",      good: "100%" },
-    { kpi: "Standards owned by the business and Compliance (desks, product, brand) — not by IT",                   bad: "0",      good: "Every team" },
+    { kpi: "AI outputs on an approved standard",       bad: "<10%", good: "60%+" },
+    { kpi: "Cycle time, intake to approved output",    bad: "Days", good: "Minutes" },
+    { kpi: "Decisions replayable for the regulator",   bad: "0",    good: "100%" },
+    { kpi: "Standards owned by the business, not IT",  bad: "0",    good: "Every team" },
   ];
   return (
     <div className="w-full rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}`, background: CARD_ALT }}>
       <div className="grid grid-cols-12 px-6 py-3" style={{ background: CHROME_BG, borderBottom: `1px solid ${CHROME_BORDER}` }}>
-        <div className="col-span-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>What the desk, your board and the regulator grade you on</div>
+        <div className="col-span-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>What you get graded on</div>
         <div className="col-span-3 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 11, color: `hsl(${RED})` }}>Today</div>
         <div className="col-span-3 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>On LIZA</div>
       </div>
       {rows.map((r, i) => (
-        <div key={r.kpi} className="grid grid-cols-12 px-6 py-4 items-center"
+        <div key={r.kpi} className="grid grid-cols-12 px-6 py-6 items-center"
           style={{ borderBottom: i === rows.length - 1 ? "none" : `1px solid ${CHROME_BORDER}` }}>
-          <div className="col-span-6" style={{ fontSize: 16, color: TEXT, lineHeight: 1.3 }}>{r.kpi}</div>
-          <div className="col-span-3 text-center font-black" style={{ fontSize: 28, color: `hsl(${RED})`, letterSpacing: "-0.02em" }}>{r.bad}</div>
-          <div className="col-span-3 text-center font-black" style={{ fontSize: 28, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{r.good}</div>
+          <div className="col-span-6 font-bold" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25 }}>{r.kpi}</div>
+          <div className="col-span-3 text-center font-black" style={{ fontSize: 40, color: `hsl(${RED})`, letterSpacing: "-0.03em" }}>{r.bad}</div>
+          <div className="col-span-3 text-center font-black" style={{ fontSize: 40, color: `hsl(${GREEN})`, letterSpacing: "-0.03em" }}>{r.good}</div>
         </div>
       ))}
     </div>
@@ -175,16 +175,13 @@ function VizBankArchitecture() {
   return (
     <div className="w-full flex flex-col gap-3">
       <Layer title="Your people, your workflows" sub="Layer 4 · users" accent={GREEN}
-        items={["Traders & Sales", "RFQ desk", "RMs", "KYC analysts", "Underwriters", "Credit memos", "Complaints", "Contact centre", "Marketing", "Compliance", "Surveillance", "Legal"]} />
+        items={["Traders & Sales", "RFQ desk", "RMs", "KYC", "Credit", "Complaints", "Marketing", "Compliance"]} />
       <Layer title="LIZA OS · the Decision Layer" sub="Layer 3 · what we install" accent={GOLD} dashed
-        items={["Desk, product & brand standards", "Policy registry", "AACE runtime", "Signed receipts", "Audit replay", "Memory & feedback"]} />
+        items={["Standards", "Policy registry", "AACE runtime", "Signed receipts", "Audit replay", "Memory"]} />
       <Layer title="Your existing AI tools" sub="Layer 2 · already paid for" accent={GREEN}
-        items={["Copilot M365", "ChatGPT Enterprise", "Gemini", "In-house RAG", "Vendor copilots in core / CRM"]} />
+        items={["Copilot M365", "ChatGPT Ent.", "Gemini", "In-house RAG", "Vendor copilots"]} />
       <Layer title="Your bank stack, data, identity & policy" sub="Layer 1 · already in place" accent={GREEN}
-        items={["Core banking", "OMS / EMS", "CRM", "Market data — Bloomberg · Tradeweb · MarketAxess", "Data warehouse", "GRC / AML / Surveillance", "SSO / Entra", "DLP & retention", "MiFID II · EBA · DORA · Consumer Duty"]} />
-      <p className="mt-2 text-center font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
-        We slot between your people and the models you already bought. No rip-and-replace. No new core contract.
-      </p>
+        items={["Core banking", "OMS / EMS", "CRM", "Bloomberg · Tradeweb · MarketAxess", "Data warehouse", "GRC / AML", "SSO · DLP", "MiFID II · EBA · DORA"]} />
     </div>
   );
 }
@@ -196,45 +193,44 @@ function VizTradeLifecycle() {
     {
       n: "01",
       stage: "Client interaction",
-      sub: "RFQ, order, voice, chat, email",
-      pain: "Fragmented intake across Bloomberg, Tradeweb, MarketAxess, voice and chat. Gut-feel prioritisation. Effort wasted pricing flow you lose.",
-      liza: "RFQ triage. Parse every channel. Pull axe, inventory, client history. Rank by hit-rate. Trader sees one ranked queue.",
+      sub: "RFQ · voice · chat",
+      pain: "Fragmented intake. Gut-feel prioritisation.",
+      liza: "RFQ triage. One ranked queue, every channel.",
     },
     {
       n: "02",
       stage: "Pricing & quoting",
-      sub: "Liquid auto. Credit & structured by hand.",
-      pain: "Trader is the bottleneck. Inputs scattered across systems. Slow quote in a fast market = adverse selection.",
-      liza: "Quote drafting. Auto-draft on standard / liquid. Assemble context (comps, position, market data) for the rest. Escalate non-standard to human.",
+      sub: "Liquid auto · structured by hand",
+      pain: "Trader is the bottleneck. Slow quote = adverse selection.",
+      liza: "Auto-draft the standard. Assemble context for the rest.",
     },
     {
       n: "03",
       stage: "Order management",
-      sub: "OMS · pre-trade checks",
-      pain: "Limit checks, best-ex, suitability and sanctions partly manual. Data re-keyed across systems where STP breaks.",
-      liza: "Pre-trade checks. Validate, enrich and limit-check. Flag anomalies. Every check carries a signed receipt for MiFID II best-ex.",
+      sub: "OMS · pre-trade",
+      pain: "Limits, best-ex, sanctions still partly manual.",
+      liza: "Validate, enrich, limit-check. Signed best-ex receipt.",
     },
     {
       n: "04",
       stage: "Execution & routing",
-      sub: "Algos for liquid. Voice for the rest.",
-      pain: "Low-latency electronic flow rules out agent reasoning in the hot path. Voice and illiquid trades remain manual.",
-      liza: "Carved out of the hot path on purpose. Agents do the legwork around the trade. Humans keep P&L decisions.",
+      sub: "Algos · voice",
+      pain: "Latency rules agents out of the hot path.",
+      liza: "Carved out by design. Humans keep P&L decisions.",
     },
     {
       n: "05",
       stage: "Trade capture & booking",
-      sub: "Then middle / back office",
-      pain: "Manual capture, acute for voice trades. Leading source of trade breaks, rework and operational risk downstream.",
-      liza: "Documentation & booking assist. Draft term sheets, confirms and capture. Anomaly flags before booking. Audit trail by default.",
+      sub: "Middle & back office",
+      pain: "Manual capture. Leading source of breaks and rework.",
+      liza: "Draft term sheets and confirms. Anomaly flags before booking.",
     },
   ];
   const realities = [
     "Explainable & auditable",
-    "High trust threshold for unsupervised action",
-    "Latency carve-out from the hot path",
-    "Information barriers respected by design",
-    "Passes model-risk governance",
+    "Latency carve-out",
+    "Information barriers",
+    "Model-risk governed",
   ];
   return (
     <div className="w-full flex flex-col gap-4">
@@ -242,29 +238,29 @@ function VizTradeLifecycle() {
         {stages.map((s) => (
           <div key={s.n} className="rounded-2xl overflow-hidden flex flex-col"
             style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <div className="px-4 py-3" style={{ background: CHROME_BG, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+            <div className="px-5 py-4" style={{ background: CHROME_BG, borderBottom: `1px solid ${CHROME_BORDER}` }}>
               <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: SUBTLE }}>Stage {s.n}</p>
-              <p className="font-black mt-1" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{s.stage}</p>
+              <p className="font-black mt-1" style={{ fontSize: 20, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{s.stage}</p>
               <p className="font-mono uppercase tracking-[0.18em] mt-1" style={{ fontSize: 9, color: SUBTLE }}>{s.sub}</p>
             </div>
-            <div className="px-4 py-3 flex-1" style={{ borderBottom: `1px solid ${CHROME_BORDER}`, background: `hsl(${RED} / 0.04)` }}>
-              <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 9, color: `hsl(${RED})` }}>Bottleneck today</p>
-              <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.35 }}>{s.pain}</p>
+            <div className="px-5 py-4 flex-1" style={{ borderBottom: `1px solid ${CHROME_BORDER}`, background: `hsl(${RED} / 0.04)` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 10, color: `hsl(${RED})` }}>Bottleneck</p>
+              <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{s.pain}</p>
             </div>
-            <div className="px-4 py-3 flex-1" style={{ background: `hsl(${GREEN} / 0.05)` }}>
-              <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>Where LIZA plugs in</p>
-              <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.35 }}>{s.liza}</p>
+            <div className="px-5 py-4 flex-1" style={{ background: `hsl(${GREEN} / 0.05)` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>LIZA</p>
+              <p style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{s.liza}</p>
             </div>
           </div>
         ))}
       </div>
-      <div className="rounded-xl px-5 py-3 flex items-center gap-5"
+      <div className="rounded-xl px-6 py-4 flex items-center gap-6"
         style={{ background: `hsl(${GOLD} / 0.07)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>
-        <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 10, color: `hsl(${GOLD})` }}>Deployment realities we design around</span>
-        <div className="flex flex-wrap gap-2">
+        <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>Designed around</span>
+        <div className="flex flex-wrap gap-2.5">
           {realities.map((r) => (
-            <span key={r} className="font-mono px-2.5 py-1 rounded-md"
-              style={{ fontSize: 11, color: TEXT, background: "hsl(0 0% 100%)", border: `1px solid ${CHROME_BORDER}` }}>
+            <span key={r} className="font-mono px-3 py-1.5 rounded-md"
+              style={{ fontSize: 12, color: TEXT, background: "hsl(0 0% 100%)", border: `1px solid ${CHROME_BORDER}` }}>
               {r}
             </span>
           ))}
@@ -277,10 +273,10 @@ function VizTradeLifecycle() {
 // 90-day banking rollout plan
 function Viz90DayBankPlan() {
   const phases = [
-    { p: "Days 0-14",  h: "Scope & wire",       d: "Pick one workflow with you — RFQ triage / quote drafting, pre-trade checks, KYC adjudication, complaint response or credit memo. Install runtime in your environment. SSO + DLP. First 5 standards drafted with the desk, Product and Compliance.", out: "Standards live · runtime deployed" },
-    { p: "Days 15-45", h: "Run with one desk",  d: "Workflow goes live on LIZA with one team. Every output signed. Desk head, Compliance and Legal see receipts daily. Brand and policy drift stops at the source.",                                                                                 out: "500+ signed decisions" },
-    { p: "Days 46-75", h: "Measure & defend",   d: "Baseline-vs-LIZA report for your steering group. Response time, hit rate and rework cost documented. Regulator-ready audit replay demonstrated against MiFID II best-execution and record-keeping asks.",                                          out: "CFO-ready ROI memo" },
-    { p: "Days 76-90", h: "Pick workflow #2",   d: "You decide what scales next: another desk, KYC, complaints, credit memos, trade documentation or another entity. Standards library begins to compound across the bank.",                                                                            out: "Next workflow committed" },
+    { p: "Days 0-14",  h: "Scope & wire",      d: "One workflow picked with you. Runtime in your environment, SSO + DLP. First 5 standards drafted.",         out: "Standards live · runtime deployed" },
+    { p: "Days 15-45", h: "Run with one desk", d: "Workflow live with one team. Every output signed. Desk head and Compliance see receipts daily.",          out: "500+ signed decisions" },
+    { p: "Days 46-75", h: "Measure & defend",  d: "Baseline-vs-LIZA report. Response time, hit rate, rework cost. Regulator-ready audit replay demonstrated.", out: "CFO-ready ROI memo" },
+    { p: "Days 76-90", h: "Pick workflow #2",  d: "You choose what scales next. Standards library starts compounding across the bank.",                       out: "Next workflow committed" },
   ];
   return (
     <div className="w-full">
@@ -291,12 +287,12 @@ function Viz90DayBankPlan() {
         {phases.map((s) => (
           <div key={s.h} className="rounded-2xl p-5 flex flex-col"
             style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>{s.p}</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.15 }}>{s.h}</p>
-            <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.45 }}>{s.d}</p>
-            <div className="mt-auto pt-3" style={{ borderTop: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>{s.p}</p>
+            <p className="font-black mt-3" style={{ fontSize: 28, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{s.h}</p>
+            <p className="mt-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.45 }}>{s.d}</p>
+            <div className="mt-auto pt-4" style={{ borderTop: `1px solid ${CHROME_BORDER}` }}>
               <p className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 10, color: SUBTLE }}>Exit criterion</p>
-              <p className="font-bold mt-1" style={{ fontSize: 13, color: `hsl(${GREEN})`, lineHeight: 1.3 }}>{s.out}</p>
+              <p className="font-bold mt-1.5" style={{ fontSize: 15, color: `hsl(${GREEN})`, lineHeight: 1.3 }}>{s.out}</p>
             </div>
           </div>
         ))}
@@ -308,27 +304,27 @@ function Viz90DayBankPlan() {
 // Bank buying-committee map
 function VizBankCommittee() {
   const people = [
-    { role: "You · Head of AI / Digital",         cares: "Make AI stick across the bank — markets, ops, risk. Defensible ROI per quarter. Nothing that blows up in front of the desk or the regulator.", gets: "A 90-day install plus a system you can scale workflow by workflow, desk by desk, entity by entity.", color: GREEN },
-    { role: "Chief Compliance / Legal",           cares: "MiFID II best execution and record-keeping. EBA, DORA, Consumer Duty, AML6, model risk. Today you cannot show how AI decided.",                gets: "Signed receipts. Standards with owner and version. Replay on demand for surveillance and the regulator.", color: GOLD },
-    { role: "CFO / Head of Markets / COO",        cares: "Per-seat AI spend with no proven outcome. Hit rate, response time and rework cost on the desk. ROI slides that do not hold up.",              gets: "Per-decision pricing. Pass-through model cost. Unit economics on day 30, tied to a real desk metric.",     color: GOLD },
-    { role: "CIO / CISO",                         cares: "Another shadow tool. Vendor lock. Another model contract. EU data residency. Information barriers between desks.",                              gets: "Runs in your environment. Model-agnostic. SSO, DLP, information-barrier-aware and EU residency from day one.", color: GOLD },
+    { role: "Head of AI / Digital",       cares: "Make AI stick. Defensible ROI. Nothing that blows up.",                   gets: "90-day install. Scales workflow by workflow, desk by desk.",       color: GREEN },
+    { role: "Chief Compliance / Legal",   cares: "MiFID II, EBA, DORA, Consumer Duty. Today you can't show how AI decided.", gets: "Signed receipts. Versioned standards. Replay on demand.",         color: GOLD },
+    { role: "CFO / Head of Markets",      cares: "Per-seat spend, no proven outcome. ROI that doesn't hold up.",            gets: "Per-decision pricing. Pass-through tokens. Unit economics on day 30.", color: GOLD },
+    { role: "CIO / CISO",                 cares: "Shadow tools. Vendor lock. Data residency. Information barriers.",        gets: "Runs in your VPC. Model-agnostic. SSO, DLP, barriers, EU residency.", color: GOLD },
   ];
   return (
     <div className="grid grid-cols-2 gap-5 w-full">
       {people.map(p => (
-        <div key={p.role} className="rounded-2xl p-6 flex flex-col"
+        <div key={p.role} className="rounded-2xl p-7 flex flex-col"
           style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <div className="flex items-center gap-3">
-            <span className="inline-block rounded-full" style={{ width: 10, height: 10, background: `hsl(${p.color})` }} />
-            <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em" }}>{p.role}</p>
+            <span className="inline-block rounded-full" style={{ width: 12, height: 12, background: `hsl(${p.color})` }} />
+            <p className="font-black" style={{ fontSize: 26, color: TEXT, letterSpacing: "-0.02em" }}>{p.role}</p>
           </div>
-          <div className="mt-4">
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${RED})` }}>What keeps them up</p>
-            <p className="mt-1.5" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>{p.cares}</p>
+          <div className="mt-5">
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>Keeps them up</p>
+            <p className="mt-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>{p.cares}</p>
           </div>
-          <div className="mt-4 pt-4" style={{ borderTop: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>What LIZA hands them</p>
-            <p className="mt-1.5" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>{p.gets}</p>
+          <div className="mt-5 pt-5" style={{ borderTop: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>LIZA hands them</p>
+            <p className="mt-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.4 }}>{p.gets}</p>
           </div>
         </div>
       ))}
@@ -339,21 +335,21 @@ function VizBankCommittee() {
 // Pricing & procurement (banking flavor)
 function VizBankPricing() {
   const lines = [
-    { l: "Pricing unit",        v: "Per governed decision",      sub: "€0.40 per signed output. Volume tiers from 10k/month." },
-    { l: "Model cost",          v: "Pass-through",               sub: "You keep your existing model contracts. We do not mark up tokens." },
-    { l: "Minimum commit",      v: "1 workflow · 90 days",       sub: "Single PO. Exit at day 30 if exit criteria are not hit." },
-    { l: "Deployment",          v: "Your VPC or ours",           sub: "SOC 2 Type II runtime. EU data residency. SSO / SCIM / DLP standard." },
-    { l: "Standards ownership", v: "Yours. Exportable.",         sub: "Versioned JSON. Lifts to any other runtime. No lock-in clause." },
-    { l: "Paper",               v: "MSA · DPA · SCCs ready",     sub: "Pre-approved by EU enterprise legal teams. Avg. legal cycle: 11 days." },
+    { l: "Pricing unit",        v: "Per governed decision", sub: "€0.40 per signed output. Tiers from 10k/month." },
+    { l: "Model cost",          v: "Pass-through",          sub: "Keep your model contracts. No token markup." },
+    { l: "Minimum commit",      v: "1 workflow · 90 days",  sub: "Single PO. Exit at day 30 if criteria miss." },
+    { l: "Deployment",          v: "Your VPC or ours",      sub: "SOC 2 Type II. EU residency. SSO / DLP standard." },
+    { l: "Standards ownership", v: "Yours · exportable",    sub: "Versioned JSON. No lock-in clause." },
+    { l: "Paper",               v: "MSA · DPA · SCCs",      sub: "Pre-approved by EU legal. 11-day avg cycle." },
   ];
   return (
     <div className="w-full rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}`, background: CARD_ALT }}>
       {lines.map((r, i) => (
-        <div key={r.l} className="grid grid-cols-12 px-6 py-4"
+        <div key={r.l} className="grid grid-cols-12 px-7 py-5"
           style={{ borderBottom: i === lines.length - 1 ? "none" : `1px solid ${CHROME_BORDER}` }}>
-          <div className="col-span-3 font-mono uppercase tracking-[0.22em] self-center" style={{ fontSize: 11, color: SUBTLE }}>{r.l}</div>
-          <div className="col-span-3 font-black self-center" style={{ fontSize: 20, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{r.v}</div>
-          <div className="col-span-6 self-center" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{r.sub}</div>
+          <div className="col-span-3 font-mono uppercase tracking-[0.22em] self-center" style={{ fontSize: 12, color: SUBTLE }}>{r.l}</div>
+          <div className="col-span-3 font-black self-center" style={{ fontSize: 24, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{r.v}</div>
+          <div className="col-span-6 self-center" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>{r.sub}</div>
         </div>
       ))}
     </div>
@@ -438,14 +434,14 @@ function S01Cover({ n, t }: { n: number; t: number }) {
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center px-32 text-center">
         <p className="font-mono uppercase tracking-[0.32em] mb-8 relative z-10" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>
-          For Heads of AI, Digital and Compliance in banking — markets, ops and risk
+          For banking · Heads of AI, Digital and Compliance
         </p>
         <h1 className="font-black relative z-10" style={{ fontSize: 108, lineHeight: 0.98, color: "hsl(0 0% 98%)", letterSpacing: "-0.045em", maxWidth: 1600 }}>
           One standard.<br/>
           <span style={{ color: `hsl(${GREEN})` }}>Every AI surface in your bank inherits it.</span>
         </h1>
-        <p className="mt-10 relative z-10" style={{ fontSize: 28, lineHeight: 1.3, color: "hsl(0 0% 78%)", maxWidth: 1320 }}>
-          LIZA OS is the Decision Layer between every AI tool your bank already runs and every client-facing, desk-facing, regulator-facing decision that comes out of it — from RFQs and quotes on the trading floor to KYC, credit memos and complaints. Built with Standards Engineering. Governed by your own rules.
+        <p className="mt-10 relative z-10" style={{ fontSize: 30, lineHeight: 1.3, color: "hsl(0 0% 78%)", maxWidth: 1280 }}>
+          The Decision Layer between every AI tool your bank runs and every decision that comes out of it.
         </p>
         <div className="mt-14 relative z-10 rounded-2xl px-10 py-6 flex items-center gap-12"
           style={{ background: "hsl(0 0% 100% / 0.04)", border: `1px solid hsl(0 0% 100% / 0.12)`, backdropFilter: "blur(6px)" }}>
@@ -479,30 +475,30 @@ function S02Problem({ n, t }: { n: number; t: number }) {
       framing="You bought the licences. Traders, sales, RMs and ops teams use AI inconsistently. Compliance never sees the same draft twice, and the desk head cannot defend it."
       payload={{
         market: {
-          kicker: "What you can already see",
-          headline: "Seats handed out. Desk, brand and compliance drift everywhere.",
+          kicker: "Today",
+          headline: "Seats handed out. Drift everywhere.",
           viz: <VizBankModelOutputBare />,
-          vizLabel: "Diagram · AI output with no standard, no receipt, no signer",
+          vizLabel: "AI output · no standard, no receipt, no signer",
           items: [
-            { h: "Copilot / ChatGPT Enterprise live", v: "Heavy users 15%. The rest forgot the tab. Real usage is shadow ChatGPT on personal accounts." },
-            { h: "Your real desk policy",             v: "Whatever each trader, salesperson, RM or analyst types into a free model between RFQs." },
-            { h: "Nothing the bank can replay",       v: "When the desk head, Compliance, internal audit or the regulator asks 'how did AI decide this?', the room goes quiet." },
+            { h: "Licences live, usage shadow", v: "15% heavy users. The rest on personal ChatGPT." },
+            { h: "No real desk policy",         v: "Whatever each trader types into a free model." },
+            { h: "Nothing the bank can replay", v: "Ask how AI decided — the room goes quiet." },
           ],
         },
         operator: {
-          kicker: "What a governed rollout actually looks like",
-          headline: "Standards, receipts, memory bound to every workflow — desk by desk.",
+          kicker: "Governed",
+          headline: "Standards, receipts, memory bound to every workflow.",
           viz: <VizBankGovernedDecision />,
-          vizLabel: "Diagram · the same output, wrapped in standards and signed receipts",
+          vizLabel: "Same output · wrapped in standards and receipts",
           items: [
-            { h: "Standard bound",     v: "Every RFQ response, KYC narrative, credit memo and complaint reply runs on the version the desk, Product and Compliance approved." },
-            { h: "Receipt signed",     v: "Replayable on demand. Standard version, data, model, approver, desk. MiFID II / Consumer Duty / EBA-ready." },
-            { h: "Memory compounds",   v: "The next case inherits last week's correction automatically. The desk gets smarter without retraining anyone." },
+            { h: "Standard bound",   v: "Every output runs on the version Compliance approved." },
+            { h: "Receipt signed",   v: "Replayable on demand. MiFID II / EBA / Consumer Duty ready." },
+            { h: "Memory compounds", v: "Next case inherits last week's correction automatically." },
           ],
-          signal: "You stop selling AI inside the bank. The desk pulls it in because it makes them faster and more defensible.",
+          signal: "The desk pulls AI in — because it makes them faster and defensible.",
         },
       }}
-      bottomLine="An AI rollout is not a tool deployment. It is the system that makes the new way of working accountable to your desk, your auditor and your regulator."
+      bottomLine="An AI rollout is not a tool deployment. It is the system that makes work accountable."
     />
   );
 }
@@ -513,21 +509,18 @@ function S03Job({ n, t }: { n: number; t: number }) {
     <SH section="The job you were hired to do" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
         <div className="mb-8">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
-            What your board and your regulator are actually grading
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            What you are graded on
           </p>
-          <h2 className="font-black" style={{ fontSize: 54, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            You will be measured on AI that holds up under audit, not on licences sold.
+          <h2 className="font-black" style={{ fontSize: 64, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            AI that holds up under audit, not licences sold.
           </h2>
-          <p className="mt-5" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4, maxWidth: 1400 }}>
-            Four numbers decide whether next year's AI budget is yours to spend or someone else's to defend.
-          </p>
         </div>
         <div className="flex-1 flex items-center">
           <VizBankScorecard />
         </div>
         <p className="mt-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
-          Source · Discovery interviews with Heads of AI, Digital and Compliance at retail banks · CEE and Western Europe · 2025
+          Source · Discovery interviews · CEE and Western Europe · 2025
         </p>
       </div>
     </SH>
@@ -539,19 +532,19 @@ function S04Funnel({ n, t }: { n: number; t: number }) {
   return (
     <SH section="Where rollouts die" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
-        <div className="mb-6">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+        <div className="mb-8">
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
             The funnel nobody puts in the steering deck
           </p>
-          <h2 className="font-black" style={{ fontSize: 50, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Licences in. Approved, audit-ready work out. The drop-off is not a tool problem, it is a control problem.
+          <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Licences in. Audit-ready work out.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
           <VizBankFunnel />
         </div>
-        <p className="mt-5" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
-          Every step down the funnel is missing the same thing: a standard, a signed receipt, a way to replay the decision next quarter.
+        <p className="mt-6" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
+          Every drop-off is missing the same thing: a standard, a signed receipt, a replayable decision.
         </p>
       </div>
     </SH>
@@ -567,31 +560,31 @@ function S05Solution({ n, t }: { n: number; t: number }) {
       framing="Other vendors give you a tool. We install the Decision Layer that produces one accountable, regulator-replayable decision — on every model your bank uses, on every desk and in every workflow."
       payload={{
         market: {
-          kicker: "What every other vendor sells",
+          kicker: "Other vendors",
           headline: "Another chat box. Another seat licence.",
           viz: <VizWrapper />,
-          vizLabel: "Diagram · prompt to model to text. No receipt.",
+          vizLabel: "Prompt → model → text. No receipt.",
           items: [
-            { h: "Per-seat copilots",   v: "Help individuals. Do not change how the bank works." },
-            { h: "Prompt libraries",    v: "Live in a Notion page. Drift the moment one trader or marketer edits one line." },
-            { h: "Per-use-case bots",   v: "20 of them in 18 months. No common audit trail. No regulator story." },
+            { h: "Per-seat copilots", v: "Help individuals. Don't change how the bank works." },
+            { h: "Prompt libraries",  v: "Drift the moment one trader edits one line." },
+            { h: "Per-use-case bots", v: "20 of them in 18 months. No common audit trail." },
           ],
         },
         operator: {
-          kicker: "What LIZA installs in your bank",
-          headline: "LOCK · COMPILE · SIGN · LEARN. One accountable decision, repeated across every surface.",
+          kicker: "LIZA",
+          headline: "Lock · Compile · Sign · Learn.",
           viz: <VizSolutionLoop />,
-          vizLabel: "Diagram · the 4-station AACE loop, one per call",
+          vizLabel: "The 4-station AACE loop · one per call",
           items: [
-            { h: "Lock",    v: "Every RFQ response, quote draft, KYC narrative, credit memo or complaint reply binds to the bank's versioned standard." },
-            { h: "Compile", v: "Desk policy, product T&Cs, MiFID II best-ex / Consumer Duty rules and the position / customer record assembled for that one decision." },
-            { h: "Sign",    v: "Signed receipt: standard version, sources, model, approver. Replayable for internal audit and the regulator." },
-            { h: "Learn",   v: "Compliance corrections feed back into the standard. The next case inherits them automatically." },
+            { h: "Lock",    v: "Every output binds to a versioned standard." },
+            { h: "Compile", v: "Desk policy, MiFID II, customer record — assembled per decision." },
+            { h: "Sign",    v: "Signed receipt. Replayable for audit and the regulator." },
+            { h: "Learn",   v: "Corrections feed back into the standard. Next case inherits them." },
           ],
-          signal: "Model-agnostic. Sits in front of Copilot, ChatGPT, Gemini, your in-house RAG. Pick later, switch later.",
+          signal: "Model-agnostic. Sits in front of Copilot, ChatGPT, Gemini, your RAG.",
         },
       }}
-      bottomLine="Adoption follows the unit you measure. We give your bank a unit the regulator agrees is worth measuring."
+      bottomLine="Adoption follows the unit you measure. We give you one the regulator agrees with."
     />
   );
 }
@@ -601,12 +594,12 @@ function S06Architecture({ n, t }: { n: number; t: number }) {
   return (
     <SH section="Where it plugs in" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
-        <div className="mb-6">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
-            What CIO, CISO and Compliance need to see first
+        <div className="mb-8">
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            How it slots into your stack
           </p>
-          <h2 className="font-black" style={{ fontSize: 46, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            One layer between your people and the models you already paid for. No rip-and-replace. No new core contract.
+          <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            One layer. No rip-and-replace.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
@@ -622,12 +615,12 @@ function S07Plan({ n, t }: { n: number; t: number }) {
   return (
     <SH section="The 90-day plan" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
-        <div className="mb-8 flex items-baseline gap-10">
-          <h2 className="font-black" style={{ fontSize: 124, color: `hsl(${GREEN})`, letterSpacing: "-0.05em", lineHeight: 1 }}>90 days</h2>
+        <div className="mb-10 flex items-baseline gap-12">
+          <h2 className="font-black" style={{ fontSize: 140, color: `hsl(${GREEN})`, letterSpacing: "-0.05em", lineHeight: 1 }}>90 days</h2>
           <div>
-            <p className="font-mono uppercase tracking-[0.3em]" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>From kickoff to a workflow your CFO and your regulator can both defend</p>
-            <p className="font-black mt-2" style={{ fontSize: 28, color: TEXT, letterSpacing: "-0.025em", lineHeight: 1.15, maxWidth: 1100 }}>
-              One workflow live. One ROI memo. One audit replay. Then you pick what scales next.
+            <p className="font-mono uppercase tracking-[0.3em]" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>From kickoff to defensible ROI</p>
+            <p className="font-black mt-3" style={{ fontSize: 36, color: TEXT, letterSpacing: "-0.025em", lineHeight: 1.1, maxWidth: 1100 }}>
+              One workflow live. One ROI memo. One audit replay.
             </p>
           </div>
         </div>
@@ -644,12 +637,12 @@ function S06bLifecycle({ n, t }: { n: number; t: number }) {
   return (
     <SH section="Where it plugs into the trade lifecycle" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
-        <div className="mb-6">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
-            From client interaction to booking · the five stages, the named bottlenecks, where LIZA does the legwork
+        <div className="mb-8">
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            The trade lifecycle, with LIZA in it
           </p>
-          <h2 className="font-black" style={{ fontSize: 44, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Agents do the legwork around the trade. Humans keep the P&L decisions. Every step carries a signed receipt.
+          <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Agents do the legwork. Humans keep P&amp;L.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
@@ -673,26 +666,25 @@ function S08Proof({ n, t }: { n: number; t: number }) {
     <SH section="Proof in production" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-28 pb-20 flex flex-col">
         <div className="mb-10">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-            What another regulated enterprise already shipped on LIZA · how it lands inside a bank
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            Live in production · regulated reference
           </p>
-          <h2 className="font-black" style={{ fontSize: 54, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            CTO-sponsored. Live in production. The same install pattern, mapped to four banking workflows.
+          <h2 className="font-black" style={{ fontSize: 64, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            The same install pattern, four banking workflows.
           </h2>
         </div>
         <div className="grid grid-cols-4 gap-5 flex-1">
           {stats.map((s, i) => (
-            <div key={s.l} className="rounded-2xl p-7 flex flex-col"
+            <div key={s.l} className="rounded-2xl p-8 flex flex-col"
               style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
               <p className="font-mono" style={{ fontSize: 11, color: SUBTLE, letterSpacing: "0.22em" }}>0{i + 1}</p>
-              <p className="font-black mt-3" style={{ fontSize: 60, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.v}</p>
-              <p className="font-mono uppercase tracking-[0.22em] mt-4" style={{ fontSize: 12, color: TEXT }}>{s.l}</p>
-              <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>{s.s}</p>
+              <p className="font-black mt-4" style={{ fontSize: 72, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", lineHeight: 1 }}>{s.v}</p>
+              <p className="font-mono uppercase tracking-[0.22em] mt-5" style={{ fontSize: 13, color: TEXT }}>{s.l}</p>
             </div>
           ))}
         </div>
-        <p className="mt-6 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: SUBTLE }}>
-          Source · AACE v3.1 runtime · regulated reference deployment · 12-month rolling window · CTO-sponsored, anonymised on request · banking workflows mapped 1:1 in pilot scoping.
+        <p className="mt-8 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: SUBTLE }}>
+          Source · AACE v3.1 runtime · CTO-sponsored, anonymised on request
         </p>
       </div>
     </SH>
@@ -704,12 +696,12 @@ function S09Committee({ n, t }: { n: number; t: number }) {
   return (
     <SH section="The buying committee" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
-        <div className="mb-7">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+        <div className="mb-8">
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
             Four people you have to bring along
           </p>
-          <h2 className="font-black" style={{ fontSize: 46, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            We give each of them exactly what they need to say yes, and nothing they have to fight you on.
+          <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            What each one needs to say yes.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
@@ -725,19 +717,19 @@ function S10Pricing({ n, t }: { n: number; t: number }) {
   return (
     <SH section="Pricing & procurement" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
-        <div className="mb-7">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
-            What your CFO and CISO will ask first
+        <div className="mb-8">
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+            Pricing &amp; procurement
           </p>
-          <h2 className="font-black" style={{ fontSize: 48, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Per governed decision. Pass-through tokens. Standards stay yours.
+          <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Per governed decision. Standards stay yours.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
           <VizBankPricing />
         </div>
-        <p className="mt-5" style={{ fontSize: 19, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
-          You stop defending seats. You start reporting governed decisions per workflow per month.
+        <p className="mt-6" style={{ fontSize: 22, color: TEXT, lineHeight: 1.35, maxWidth: 1500 }}>
+          Stop defending seats. Start reporting governed decisions.
         </p>
       </div>
     </SH>
@@ -749,19 +741,19 @@ function S11Alternatives({ n, t }: { n: number; t: number }) {
   return (
     <SH section="Versus your other options" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
-        <div className="mb-7">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+        <div className="mb-8">
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
             The board will ask why not one of these
           </p>
-          <h2 className="font-black" style={{ fontSize: 46, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Stay on Copilot. Build it internally. Hire a Big-4 programme. Install the Decision Layer.
+          <h2 className="font-black" style={{ fontSize: 60, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Four options. One Decision Layer.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
           <VizBankAlternatives />
         </div>
-        <p className="mt-5 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
-          We do not replace Copilot or your in-house RAG. We are the decision layer they were missing.
+        <p className="mt-6 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>
+          We do not replace Copilot or your RAG. We are the layer they were missing.
         </p>
       </div>
     </SH>
@@ -773,22 +765,22 @@ function S12Pilot({ n, t }: { n: number; t: number }) {
   return (
     <SH section="The pilot, risk-reversed" n={n} total={t}>
       <div className="absolute inset-0 px-20 pt-24 pb-20 flex flex-col">
-        <div className="mb-8">
-          <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
+        <div className="mb-10">
+          <p className="font-mono uppercase tracking-[0.3em] mb-4" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>
             What you actually sign for
           </p>
-          <h2 className="font-black" style={{ fontSize: 50, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Three gates. Your exit criteria, written by you. Walk away at day 30 with no further commitment.
+          <h2 className="font-black" style={{ fontSize: 64, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Three gates. Your exit criteria. Walk away at day 30.
           </h2>
         </div>
         <div className="flex-1 flex items-center">
           <VizBankRiskReversed />
         </div>
-        <div className="mt-6 rounded-xl px-7 py-5 flex items-center gap-6"
+        <div className="mt-8 rounded-xl px-8 py-6 flex items-center gap-8"
           style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-          <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>What you bring</span>
-          <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
-            One executive sponsor. One workflow owner from the business. Access to one model contract. We bring the runtime, the install team and the standards library.
+          <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>What you bring</span>
+          <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+            One sponsor. One workflow owner. One model contract. We bring the runtime, install team and standards library.
           </p>
         </div>
       </div>
@@ -804,12 +796,12 @@ function S13Close({ n, t }: { n: number; t: number }) {
         <p className="font-mono uppercase tracking-[0.32em] mb-8" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>
           One statement
         </p>
-        <h2 className="font-black" style={{ fontSize: 88, lineHeight: 1.02, color: "hsl(0 0% 98%)", letterSpacing: "-0.045em", maxWidth: 1600 }}>
+        <h2 className="font-black" style={{ fontSize: 96, lineHeight: 1.02, color: "hsl(0 0% 98%)", letterSpacing: "-0.045em", maxWidth: 1600 }}>
           Pilots commoditise.<br/>
           <span style={{ color: `hsl(${GREEN})` }}>The Decision Layer compounds.</span>
         </h2>
-        <p className="mt-10" style={{ fontSize: 26, color: "hsl(0 0% 78%)", maxWidth: 1320, lineHeight: 1.4 }}>
-          You were hired to make AI stick inside the bank without blowing up the desk, the brand or compliance. We build the layer that lets it. One workflow, 30 days, one signed decision — then you scale across RFQ / quote drafting, KYC, complaints, credit, trade documentation and group governance.
+        <p className="mt-10" style={{ fontSize: 28, color: "hsl(0 0% 78%)", maxWidth: 1280, lineHeight: 1.4 }}>
+          One workflow. 30 days. One signed decision. Then you scale across the bank.
         </p>
         <div className="mt-14 flex items-center gap-6 rounded-2xl px-10 py-5"
           style={{ background: "hsl(0 0% 100% / 0.06)", border: `1px solid hsl(0 0% 100% / 0.16)` }}>
