@@ -189,6 +189,91 @@ function VizBankArchitecture() {
   );
 }
 
+// Trade lifecycle map: 5 stages, named bottleneck, where LIZA plugs in.
+// Reads directly to a markets / securities reader (RFQ, pricing, OMS, booking).
+function VizTradeLifecycle() {
+  const stages = [
+    {
+      n: "01",
+      stage: "Client interaction",
+      sub: "RFQ, order, voice, chat, email",
+      pain: "Fragmented intake across Bloomberg, Tradeweb, MarketAxess, voice and chat. Gut-feel prioritisation. Effort wasted pricing flow you lose.",
+      liza: "RFQ triage. Parse every channel. Pull axe, inventory, client history. Rank by hit-rate. Trader sees one ranked queue.",
+    },
+    {
+      n: "02",
+      stage: "Pricing & quoting",
+      sub: "Liquid auto. Credit & structured by hand.",
+      pain: "Trader is the bottleneck. Inputs scattered across systems. Slow quote in a fast market = adverse selection.",
+      liza: "Quote drafting. Auto-draft on standard / liquid. Assemble context (comps, position, market data) for the rest. Escalate non-standard to human.",
+    },
+    {
+      n: "03",
+      stage: "Order management",
+      sub: "OMS · pre-trade checks",
+      pain: "Limit checks, best-ex, suitability and sanctions partly manual. Data re-keyed across systems where STP breaks.",
+      liza: "Pre-trade checks. Validate, enrich and limit-check. Flag anomalies. Every check carries a signed receipt for MiFID II best-ex.",
+    },
+    {
+      n: "04",
+      stage: "Execution & routing",
+      sub: "Algos for liquid. Voice for the rest.",
+      pain: "Low-latency electronic flow rules out agent reasoning in the hot path. Voice and illiquid trades remain manual.",
+      liza: "Carved out of the hot path on purpose. Agents do the legwork around the trade. Humans keep P&L decisions.",
+    },
+    {
+      n: "05",
+      stage: "Trade capture & booking",
+      sub: "Then middle / back office",
+      pain: "Manual capture, acute for voice trades. Leading source of trade breaks, rework and operational risk downstream.",
+      liza: "Documentation & booking assist. Draft term sheets, confirms and capture. Anomaly flags before booking. Audit trail by default.",
+    },
+  ];
+  const realities = [
+    "Explainable & auditable",
+    "High trust threshold for unsupervised action",
+    "Latency carve-out from the hot path",
+    "Information barriers respected by design",
+    "Passes model-risk governance",
+  ];
+  return (
+    <div className="w-full flex flex-col gap-4">
+      <div className="grid grid-cols-5 gap-3">
+        {stages.map((s) => (
+          <div key={s.n} className="rounded-2xl overflow-hidden flex flex-col"
+            style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <div className="px-4 py-3" style={{ background: CHROME_BG, borderBottom: `1px solid ${CHROME_BORDER}` }}>
+              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: SUBTLE }}>Stage {s.n}</p>
+              <p className="font-black mt-1" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{s.stage}</p>
+              <p className="font-mono uppercase tracking-[0.18em] mt-1" style={{ fontSize: 9, color: SUBTLE }}>{s.sub}</p>
+            </div>
+            <div className="px-4 py-3 flex-1" style={{ borderBottom: `1px solid ${CHROME_BORDER}`, background: `hsl(${RED} / 0.04)` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 9, color: `hsl(${RED})` }}>Bottleneck today</p>
+              <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.35 }}>{s.pain}</p>
+            </div>
+            <div className="px-4 py-3 flex-1" style={{ background: `hsl(${GREEN} / 0.05)` }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>Where LIZA plugs in</p>
+              <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.35 }}>{s.liza}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="rounded-xl px-5 py-3 flex items-center gap-5"
+        style={{ background: `hsl(${GOLD} / 0.07)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>
+        <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 10, color: `hsl(${GOLD})` }}>Deployment realities we design around</span>
+        <div className="flex flex-wrap gap-2">
+          {realities.map((r) => (
+            <span key={r} className="font-mono px-2.5 py-1 rounded-md"
+              style={{ fontSize: 11, color: TEXT, background: "hsl(0 0% 100%)", border: `1px solid ${CHROME_BORDER}` }}>
+              {r}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // 90-day banking rollout plan
 function Viz90DayBankPlan() {
   const phases = [
