@@ -335,21 +335,21 @@ function VizBankCommittee() {
 // Pricing & procurement (banking flavor)
 function VizBankPricing() {
   const lines = [
-    { l: "Pricing unit",        v: "Per governed decision",      sub: "€0.40 per signed output. Volume tiers from 10k/month." },
-    { l: "Model cost",          v: "Pass-through",               sub: "You keep your existing model contracts. We do not mark up tokens." },
-    { l: "Minimum commit",      v: "1 workflow · 90 days",       sub: "Single PO. Exit at day 30 if exit criteria are not hit." },
-    { l: "Deployment",          v: "Your VPC or ours",           sub: "SOC 2 Type II runtime. EU data residency. SSO / SCIM / DLP standard." },
-    { l: "Standards ownership", v: "Yours. Exportable.",         sub: "Versioned JSON. Lifts to any other runtime. No lock-in clause." },
-    { l: "Paper",               v: "MSA · DPA · SCCs ready",     sub: "Pre-approved by EU enterprise legal teams. Avg. legal cycle: 11 days." },
+    { l: "Pricing unit",        v: "Per governed decision", sub: "€0.40 per signed output. Tiers from 10k/month." },
+    { l: "Model cost",          v: "Pass-through",          sub: "Keep your model contracts. No token markup." },
+    { l: "Minimum commit",      v: "1 workflow · 90 days",  sub: "Single PO. Exit at day 30 if criteria miss." },
+    { l: "Deployment",          v: "Your VPC or ours",      sub: "SOC 2 Type II. EU residency. SSO / DLP standard." },
+    { l: "Standards ownership", v: "Yours · exportable",    sub: "Versioned JSON. No lock-in clause." },
+    { l: "Paper",               v: "MSA · DPA · SCCs",      sub: "Pre-approved by EU legal. 11-day avg cycle." },
   ];
   return (
     <div className="w-full rounded-2xl overflow-hidden" style={{ border: `1px solid ${CHROME_BORDER}`, background: CARD_ALT }}>
       {lines.map((r, i) => (
-        <div key={r.l} className="grid grid-cols-12 px-6 py-4"
+        <div key={r.l} className="grid grid-cols-12 px-7 py-5"
           style={{ borderBottom: i === lines.length - 1 ? "none" : `1px solid ${CHROME_BORDER}` }}>
-          <div className="col-span-3 font-mono uppercase tracking-[0.22em] self-center" style={{ fontSize: 11, color: SUBTLE }}>{r.l}</div>
-          <div className="col-span-3 font-black self-center" style={{ fontSize: 20, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{r.v}</div>
-          <div className="col-span-6 self-center" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{r.sub}</div>
+          <div className="col-span-3 font-mono uppercase tracking-[0.22em] self-center" style={{ fontSize: 12, color: SUBTLE }}>{r.l}</div>
+          <div className="col-span-3 font-black self-center" style={{ fontSize: 24, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>{r.v}</div>
+          <div className="col-span-6 self-center" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>{r.sub}</div>
         </div>
       ))}
     </div>
