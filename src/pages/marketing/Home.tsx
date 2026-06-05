@@ -7,6 +7,7 @@ import { GetStartedPlan } from "@/components/marketing/home/GetStartedPlan";
 import { StakesAndTransform } from "@/components/marketing/home/StakesAndTransform";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
 import { StandardLayerSection } from "@/components/marketing/shared/StandardLayerSection";
+import { EditorialQuote } from "@/components/marketing/home/EditorialQuote";
 
 /*
  * Homepage built on StoryBrand for the AI Rollout Owner.
@@ -24,6 +25,9 @@ export default function HomePage() {
 
       {/* 3. Guide: empathy + authority */}
       <GuideStrip />
+
+      {/* 3.5 Editorial pull-quote (Ogilvy: read like editorial, not ad) */}
+      <EditorialQuote />
 
       {/* 4. Product moment: anatomy of a prompt at org scale */}
       <PromptFactoryVisual />
