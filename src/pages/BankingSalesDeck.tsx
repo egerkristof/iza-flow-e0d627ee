@@ -175,16 +175,13 @@ function VizBankArchitecture() {
   return (
     <div className="w-full flex flex-col gap-3">
       <Layer title="Your people, your workflows" sub="Layer 4 · users" accent={GREEN}
-        items={["Traders & Sales", "RFQ desk", "RMs", "KYC analysts", "Underwriters", "Credit memos", "Complaints", "Contact centre", "Marketing", "Compliance", "Surveillance", "Legal"]} />
+        items={["Traders & Sales", "RFQ desk", "RMs", "KYC", "Credit", "Complaints", "Marketing", "Compliance"]} />
       <Layer title="LIZA OS · the Decision Layer" sub="Layer 3 · what we install" accent={GOLD} dashed
-        items={["Desk, product & brand standards", "Policy registry", "AACE runtime", "Signed receipts", "Audit replay", "Memory & feedback"]} />
+        items={["Standards", "Policy registry", "AACE runtime", "Signed receipts", "Audit replay", "Memory"]} />
       <Layer title="Your existing AI tools" sub="Layer 2 · already paid for" accent={GREEN}
-        items={["Copilot M365", "ChatGPT Enterprise", "Gemini", "In-house RAG", "Vendor copilots in core / CRM"]} />
+        items={["Copilot M365", "ChatGPT Ent.", "Gemini", "In-house RAG", "Vendor copilots"]} />
       <Layer title="Your bank stack, data, identity & policy" sub="Layer 1 · already in place" accent={GREEN}
-        items={["Core banking", "OMS / EMS", "CRM", "Market data — Bloomberg · Tradeweb · MarketAxess", "Data warehouse", "GRC / AML / Surveillance", "SSO / Entra", "DLP & retention", "MiFID II · EBA · DORA · Consumer Duty"]} />
-      <p className="mt-2 text-center font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>
-        We slot between your people and the models you already bought. No rip-and-replace. No new core contract.
-      </p>
+        items={["Core banking", "OMS / EMS", "CRM", "Bloomberg · Tradeweb · MarketAxess", "Data warehouse", "GRC / AML", "SSO · DLP", "MiFID II · EBA · DORA"]} />
     </div>
   );
 }
