@@ -475,30 +475,30 @@ function S02Problem({ n, t }: { n: number; t: number }) {
       framing="You bought the licences. Traders, sales, RMs and ops teams use AI inconsistently. Compliance never sees the same draft twice, and the desk head cannot defend it."
       payload={{
         market: {
-          kicker: "What you can already see",
-          headline: "Seats handed out. Desk, brand and compliance drift everywhere.",
+          kicker: "Today",
+          headline: "Seats handed out. Drift everywhere.",
           viz: <VizBankModelOutputBare />,
-          vizLabel: "Diagram · AI output with no standard, no receipt, no signer",
+          vizLabel: "AI output · no standard, no receipt, no signer",
           items: [
-            { h: "Copilot / ChatGPT Enterprise live", v: "Heavy users 15%. The rest forgot the tab. Real usage is shadow ChatGPT on personal accounts." },
-            { h: "Your real desk policy",             v: "Whatever each trader, salesperson, RM or analyst types into a free model between RFQs." },
-            { h: "Nothing the bank can replay",       v: "When the desk head, Compliance, internal audit or the regulator asks 'how did AI decide this?', the room goes quiet." },
+            { h: "Licences live, usage shadow", v: "15% heavy users. The rest on personal ChatGPT." },
+            { h: "No real desk policy",         v: "Whatever each trader types into a free model." },
+            { h: "Nothing the bank can replay", v: "Ask how AI decided — the room goes quiet." },
           ],
         },
         operator: {
-          kicker: "What a governed rollout actually looks like",
-          headline: "Standards, receipts, memory bound to every workflow — desk by desk.",
+          kicker: "Governed",
+          headline: "Standards, receipts, memory bound to every workflow.",
           viz: <VizBankGovernedDecision />,
-          vizLabel: "Diagram · the same output, wrapped in standards and signed receipts",
+          vizLabel: "Same output · wrapped in standards and receipts",
           items: [
-            { h: "Standard bound",     v: "Every RFQ response, KYC narrative, credit memo and complaint reply runs on the version the desk, Product and Compliance approved." },
-            { h: "Receipt signed",     v: "Replayable on demand. Standard version, data, model, approver, desk. MiFID II / Consumer Duty / EBA-ready." },
-            { h: "Memory compounds",   v: "The next case inherits last week's correction automatically. The desk gets smarter without retraining anyone." },
+            { h: "Standard bound",   v: "Every output runs on the version Compliance approved." },
+            { h: "Receipt signed",   v: "Replayable on demand. MiFID II / EBA / Consumer Duty ready." },
+            { h: "Memory compounds", v: "Next case inherits last week's correction automatically." },
           ],
-          signal: "You stop selling AI inside the bank. The desk pulls it in because it makes them faster and more defensible.",
+          signal: "The desk pulls AI in — because it makes them faster and defensible.",
         },
       }}
-      bottomLine="An AI rollout is not a tool deployment. It is the system that makes the new way of working accountable to your desk, your auditor and your regulator."
+      bottomLine="An AI rollout is not a tool deployment. It is the system that makes work accountable."
     />
   );
 }
