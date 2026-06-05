@@ -256,7 +256,7 @@ export default function DiagnosticPage() {
               <div className="flex items-center justify-center gap-2">
                 <div className="h-px w-8 bg-primary/30" />
                 <span className="text-[10px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-primary/70">
-                  AI Execution Diagnostic
+                  Field Study · AI Execution
                 </span>
                 <div className="h-px w-8 bg-primary/30" />
               </div>
