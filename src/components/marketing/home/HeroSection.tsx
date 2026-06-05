@@ -4,12 +4,6 @@ import { motion } from "framer-motion";
 import { CAL_URL } from "./shared";
 import { GovernanceRail } from "./GovernanceRail";
 
-const DEMANDS = [
-  "Ship AI into production",
-  "Make every output auditable",
-  "Prove the ROI to the board",
-];
-
 export function HeroSection() {
   return (
     <section className="relative min-h-[92vh] flex flex-col items-center justify-center px-6 overflow-hidden">
@@ -71,34 +65,12 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          The infrastructure for full-speed AI iteration. Defensible by design.
+          One governed standard your whole org runs on — across ChatGPT, Copilot, Claude and your internal models.
         </motion.p>
-
-        {/* DEMANDS: the three things you have to deliver, as evidence — not as headline */}
-        <motion.ul
-          className="flex flex-wrap justify-center gap-2 mb-8"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.22 }}
-        >
-          {DEMANDS.map((d, i) => (
-            <li
-              key={d}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[12px] font-semibold text-foreground/85"
-              style={{
-                borderColor: "hsl(var(--border))",
-                background: "hsl(var(--card))",
-              }}
-            >
-              <span className="text-muted-foreground/60 tabular-nums text-[11px]">0{i + 1}</span>
-              {d}
-            </li>
-          ))}
-        </motion.ul>
 
         {/* CTA: explicit next step + time anchor */}
         <motion.div
-          className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-2"
+          className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-2 mt-8"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}

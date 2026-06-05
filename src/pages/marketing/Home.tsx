@@ -6,7 +6,6 @@ import { PromptFactoryVisual } from "@/components/marketing/home/PromptFactoryVi
 import { GetStartedPlan } from "@/components/marketing/home/GetStartedPlan";
 import { StakesAndTransform } from "@/components/marketing/home/StakesAndTransform";
 import { BetaCTASection } from "@/components/marketing/home/BetaCTASection";
-import { StandardLayerSection } from "@/components/marketing/shared/StandardLayerSection";
 import { EditorialQuote } from "@/components/marketing/home/EditorialQuote";
 
 /*
@@ -26,14 +25,11 @@ export default function HomePage() {
       {/* 3. Guide: empathy + authority */}
       <GuideStrip />
 
-      {/* 3.5 Editorial pull-quote (Ogilvy: read like editorial, not ad) */}
-      <EditorialQuote />
-
       {/* 4. Product moment: anatomy of a prompt at org scale */}
       <PromptFactoryVisual />
 
-      {/* 4.5 Category (collapsed by default): the one-sentence story */}
-      <StandardLayerSection collapsible />
+      {/* 4.5 Editorial pull-quote — breather before the Plan */}
+      <EditorialQuote />
 
       {/* 5. Plan: 3 co-built steps */}
       <GetStartedPlan />
