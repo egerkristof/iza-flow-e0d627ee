@@ -286,73 +286,133 @@ function S02Horizons() {
 // Reclaims "governance" from model-governance vendors (Credo, Fiddler, Arthur).
 // ═════════════════════════════════════════════════════════════════════════════
 export function S03GovernanceLoop() {
-  const surfaces = [
-    { k: "Standards", safeguard: "Your quality bar from drift and dilution",      scale: "Consistent execution at AI velocity",          icon: ShieldCheck },
-    { k: "Judgment",  safeguard: "Senior expertise from attrition and averaging",  scale: "Decisions that reflect your best people",      icon: Brain },
-    { k: "Memory",    safeguard: "Institutional knowledge from leaking into LLMs", scale: "Compounding context, owned not rented",        icon: Database },
-    { k: "Spend",     safeguard: "AI budget from unanchored token consumption",    scale: "Every token tied to a named outcome",          icon: Coins },
-    { k: "Exposure",  safeguard: "IP, audit trail, regulatory surface",            scale: "Provable lineage for every AI decision",       icon: Lock },
+  type Surface = { k: string; line: string; icon: any };
+  const orgAsCode: Surface[] = [
+    { k: "Standards", line: "Quality bar, encoded and versioned.",          icon: ShieldCheck },
+    { k: "Judgment",  line: "Senior expertise, captured as policy.",        icon: Brain },
+    { k: "Memory",    line: "Institutional context, owned not rented.",     icon: Database },
   ];
+  const loopSurfaces: Surface[] = [
+    { k: "Spend",    line: "Every token tied to a named standard.",         icon: Coins },
+    { k: "Exposure", line: "Provable lineage for every AI decision.",       icon: Lock },
+  ];
+  const humanRoles: Surface[] = [
+    { k: "Author",   line: "Encode the standard, judgment and memory.",     icon: FileSignature },
+    { k: "Approve",  line: "Sign off what AI is allowed to do.",            icon: UserCheck },
+    { k: "Override", line: "Stop the line. Keep P&L accountability.",       icon: KeyRound },
+  ];
+
+  const LayerCard = ({
+    kicker, title, sub, items, accent, icon: HeadIcon,
+  }: {
+    kicker: string; title: string; sub: string; items: Surface[]; accent: string; icon: any;
+  }) => (
+    <div
+      className="rounded-2xl flex flex-col"
+      style={{
+        background: "white",
+        border: `1px solid hsl(${accent} / 0.32)`,
+        boxShadow: `0 1px 0 hsl(${accent} / 0.04), 0 18px 40px -24px hsl(${accent} / 0.35)`,
+        padding: 28,
+        minHeight: 560,
+      }}
+    >
+      <div className="flex items-center gap-3">
+        <div
+          className="rounded-lg flex items-center justify-center"
+          style={{ width: 44, height: 44, background: `hsl(${accent} / 0.10)`, border: `1px solid hsl(${accent} / 0.25)` }}
+        >
+          <HeadIcon size={22} color={`hsl(${accent})`} />
+        </div>
+        <span className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 13, color: `hsl(${accent})` }}>
+          {kicker}
+        </span>
+      </div>
+      <h3 className="font-bold mt-4" style={{ fontSize: 28, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+        {title}
+      </h3>
+      <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>{sub}</p>
+      <div className="mt-5 flex flex-col gap-2.5">
+        {items.map((s) => {
+          const Icon = s.icon;
+          return (
+            <div
+              key={s.k}
+              className="flex items-start gap-3 rounded-lg"
+              style={{ background: `hsl(${accent} / 0.04)`, border: `1px solid hsl(${accent} / 0.18)`, padding: "12px 14px" }}
+            >
+              <div
+                className="rounded-md flex items-center justify-center flex-shrink-0"
+                style={{ width: 32, height: 32, background: `hsl(${accent} / 0.12)`, border: `1px solid hsl(${accent} / 0.22)` }}
+              >
+                <Icon size={16} color={`hsl(${accent})`} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-bold" style={{ fontSize: 17, color: TEXT, letterSpacing: "-0.01em" }}>{s.k}</div>
+                <div style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>{s.line}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="w-full h-full relative px-28 pt-28 pb-24" style={{ background: BG }}>
+    <div className="w-full h-full relative px-28 pt-24 pb-24" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
       <PhaseChip phase="Phase 1 · Thesis" color={ACCENT} />
       <div className="relative z-10">
         <Tag label="The Thesis · AI Governance Loop" />
-        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 60, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1760 }}>
-          <span style={{ color: `hsl(${RED})` }}>Whatever you do not govern, AI invents.</span>{" "}
-          <span style={{ color: TEXT }}>Whatever you do not safeguard,</span>{" "}
-          <span style={{ color: `hsl(${RED})` }}>AI dissolves.</span>
+        <h2 className="font-bold leading-[1.05]" style={{ fontSize: 56, color: TEXT, letterSpacing: "-0.025em", maxWidth: 1760 }}>
+          <span style={{ color: TEXT }}>Your org is the new code AI runs on.</span>{" "}
+          <span style={{ color: `hsl(${ACCENT})` }}>Three layers, one loop.</span>
         </h2>
-        <p className="mt-3" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
-          Model governance watches the AI. <b style={{ color: TEXT }}>LIZA governs the moment of decision.</b> Five organizational surfaces, safeguarded from the speed of AI and compounded into your edge.
+        <p className="mt-3" style={{ fontSize: 20, color: MUTED, maxWidth: 1660 }}>
+          Model governance watches the AI. <b style={{ color: TEXT }}>LIZA governs the moment of decision</b> — where your encoded org meets the human accountable for the outcome.
         </p>
 
-        {/* Header row */}
-        <div className="grid mt-9" style={{ gridTemplateColumns: "260px 1fr 1fr", gap: 0 }}>
-          <div />
-          <div className="px-6 py-3" style={{ background: `hsl(${RED} / 0.06)`, borderTopLeftRadius: 12, borderTop: `1px solid hsl(${RED} / 0.3)`, borderLeft: `1px solid hsl(${RED} / 0.3)`, borderRight: `1px solid hsl(${RED} / 0.15)` }}>
-            <p className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 14, color: `hsl(${RED})` }}>Safeguard · without it, AI is dangerous</p>
-          </div>
-          <div className="px-6 py-3" style={{ background: `hsl(${GREEN} / 0.06)`, borderTopRightRadius: 12, borderTop: `1px solid hsl(${GREEN} / 0.35)`, borderRight: `1px solid hsl(${GREEN} / 0.35)`, borderLeft: `1px solid hsl(${GREEN} / 0.15)` }}>
-            <p className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Scale · without it, AI is meaningless</p>
-          </div>
+        {/* Three layers */}
+        <div className="grid mt-7" style={{ gridTemplateColumns: "1fr 1fr 1fr", gap: 22 }}>
+          <LayerCard
+            kicker="Layer 1 · Left"
+            title="Org-as-Code"
+            sub="What compounds. Your standards, judgment and memory, encoded and versioned."
+            items={orgAsCode}
+            accent={ACCENT}
+            icon={FileText}
+          />
+          <LayerCard
+            kicker="Layer 2 · Middle"
+            title="The Governance Loop"
+            sub="The runtime. Every AI moment-of-work passes through it — priced, audited, accountable."
+            items={loopSurfaces}
+            accent={GREEN}
+            icon={Workflow}
+          />
+          <LayerCard
+            kicker="Layer 3 · Right"
+            title="Humans in Charge"
+            sub="Who governs the code. Your people author, approve and override — P&L stays with them."
+            items={humanRoles}
+            accent={GOLD}
+            icon={Users}
+          />
         </div>
 
-        {/* Rows */}
-        <div style={{ borderLeft: `1px solid ${CHROME_BORDER}`, borderRight: `1px solid ${CHROME_BORDER}`, borderBottom: `1px solid ${CHROME_BORDER}`, borderBottomLeftRadius: 12, borderBottomRightRadius: 12, overflow: "hidden" }}>
-          {surfaces.map((s, i) => {
-            const Icon = s.icon;
-            const altBg = i % 2 === 0 ? "white" : CARD_ALT;
-            return (
-              <div key={s.k} className="grid items-stretch" style={{ gridTemplateColumns: "260px 1fr 1fr", background: altBg, borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
-                <div className="px-6 py-4 flex items-center gap-3" style={{ borderRight: `1px solid ${CHROME_BORDER}` }}>
-                  <div className="rounded-md flex items-center justify-center" style={{ width: 36, height: 36, background: `hsl(${ACCENT} / 0.10)`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
-                    <Icon size={20} color={`hsl(${ACCENT})`} />
-                  </div>
-                  <span className="font-bold" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.01em" }}>{s.k}</span>
-                </div>
-                <div className="px-6 py-4 flex items-center" style={{ borderRight: `1px solid ${CHROME_BORDER}`, background: `hsl(${RED} / 0.025)` }}>
-                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{s.safeguard}</span>
-                </div>
-                <div className="px-6 py-4 flex items-center" style={{ background: `hsl(${GREEN} / 0.035)` }}>
-                  <span style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{s.scale}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-7 flex items-center gap-3 px-5 py-3 rounded-xl" style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.2)`, maxWidth: 1600 }}>
+        <div
+          className="mt-6 flex items-center gap-3 px-5 py-3 rounded-xl"
+          style={{ background: `hsl(${ACCENT} / 0.05)`, border: `1px solid hsl(${ACCENT} / 0.2)`, maxWidth: 1760 }}
+        >
           <Workflow size={20} color={`hsl(${ACCENT})`} />
-          <span style={{ fontSize: 17, color: TEXT }}>
-            A <b>loop</b>, not an audit. Every decision feeds the standard. Every standard governs the next decision. AI-native means <b>governed</b>; ungoverned AI is just exposure at scale.
+          <span style={{ fontSize: 16, color: TEXT }}>
+            A <b>loop</b>, not an audit. The code on the left constrains the runtime in the middle. The humans on the right author the code and stay accountable for the outcome. Five surfaces, three layers, one continuous mechanism.
           </span>
         </div>
       </div>
       <Footer text="The rest of this deck is the loop, broken into its parts." />
-      <SlideBar from={RED} to={GREEN} />
+      <SlideBar from={ACCENT} to={GOLD} />
     </div>
   );
 }
