@@ -1521,35 +1521,35 @@ function FComplianceMap() {
 function FAtom() {
   const cards = [
     {
-      vendor: "Mem0",
-      kind: "Memory layer for agents",
-      atom: "A memory record",
-      good: "Recall across sessions for a dev-built agent.",
-      gap: "Cannot enforce a rule, price a token or own an audit trail. One surface, not a layer.",
+      vendor: "RAG chunk",
+      kind: "Vector-retrieved passage",
+      atom: "A text chunk",
+      good: "Surfaces what a document says when a query looks similar.",
+      gap: "Descriptive, not prescriptive. No owner, no version, no approval, no cost attribution. The model still decides what to do with it.",
       tone: "muted" as const,
     },
     {
-      vendor: "Interloom",
-      kind: "Ops procedures in NL",
-      atom: "A procedure / case",
-      good: "Describe a workflow, agents run it, a context graph compounds.",
-      gap: "Procedures are unversioned descriptions, not enforceable standards. No lineage of which rule ran.",
+      vendor: "Notion / Confluence page",
+      kind: "Wiki documentation",
+      atom: "A page",
+      good: "Human-readable reference. Easy to author, easy to share.",
+      gap: "AI-opaque. No machine-readable trigger, no enforcement, no audit lineage from page to decision. Read once, ignored under pressure.",
       tone: "muted" as const,
     },
     {
-      vendor: "Paradox",
-      kind: "Shared world model for orgs",
-      atom: "Continuous context sync",
-      good: "Same diagnosis: strategic drift, intent vs execution gap. Wants a shared substrate to replace OKRs, meetings and copilots.",
-      gap: "Implicit and emergent, not authored. Nothing to version, approve, override or show a regulator. Research stage, no enforcement.",
+      vendor: "Agent prompt",
+      kind: "LangChain / system prompt",
+      atom: "A prompt string",
+      good: "Tells one LLM call how to behave. Fast to ship for engineers.",
+      gap: "Lives in a git commit. No business owner, no approval gate, no expiry, no token budget. Drifts silently between releases.",
       tone: "muted" as const,
     },
     {
       vendor: "LIZA",
       kind: "The AI Governance Loop",
-      atom: "A Standard",
-      good: "Authored once. Versioned. Compiled into every AI moment of work. Audited on the way out.",
-      gap: "Procedures, memory, conversations and spend nest inside it. Standards do not nest in any of them.",
+      atom: "A Playbook",
+      good: "A captured micro-moment of work. Authored once, versioned, owner-signed, compiled JIT into every AI moment, audited on the way out.",
+      gap: "Carries the standard, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
       tone: "win" as const,
     },
   ];
@@ -1558,12 +1558,12 @@ function FAtom() {
       <SlideGrid />
       <div className="absolute inset-0 px-20 pt-20 pb-16 flex flex-col">
         <div className="mb-5">
-          <Tag color={GOLD} label="The atom · why the loop is non-arbitrary" />
+          <Tag color={GOLD} label="The atom · the Playbook" />
           <h2 className="font-black mt-4" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Every vendor in this category picked a different atom. Ours is the smallest unit that closes the loop.
+            Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Playbook.
           </h2>
           <p className="mt-3" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-            Whoever owns the smallest composable unit of the AI-native org wins the layer above it. The Standard is the only atom that procedures, memory, conversations and spend can nest inside.
+            A Playbook is a captured micro-moment of how work gets done. Versioned. Owner-signed. Compiled into every AI moment of work. Audited on the way out. Chunks, pages and prompts are what you fall back on when you do not have one.
           </p>
         </div>
         <div className="flex-1 grid grid-cols-4 gap-5 min-h-0">
@@ -1618,11 +1618,11 @@ function FAtom() {
         <div className="mt-5 rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The factory point</span>
           <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.014em" }}>
-            Memory recalls. Procedures execute. Conversations close. A Standard governs all three — and audits itself. The factory is built around the atom; that is why the loop is real.
+            Chunks recall. Pages reference. Prompts instruct. A Playbook governs all three and proves it ran. The factory is built around the atom. That is why the loop is real.
           </p>
         </div>
       </div>
-      <Footer text="The smallest composable unit of an AI-native organization." />
+      <Footer text="The Playbook · the smallest governable unit of an AI-native organization." />
       <SlideBar from={GREEN} to={GOLD} />
     </div>
   );
@@ -1632,9 +1632,9 @@ const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
   { id: "category",         title: "The Category · One standard. Every AI surface inherits it.", component: <StandardLayerDeckSlide eyebrow="The category · How LIZA fits between AI and action" /> },
-  { id: "atom",             title: "The Atom · Why a Standard is the smallest unit of an AI-native org", component: <FAtom /> },
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
+  { id: "atom",             title: "The Atom · The Playbook is the smallest unit of an AI-native org", component: <FAtom /> },
   { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
   { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
   // ACT I.5 — The wall and the substrate that breaks it

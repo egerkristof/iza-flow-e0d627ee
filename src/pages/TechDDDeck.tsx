@@ -288,16 +288,16 @@ function S02Horizons() {
 export function S03GovernanceLoop() {
   type Surface = { k: string; line: string; icon: any };
   const orgAsCode: Surface[] = [
-    { k: "Standards", line: "Quality bar, encoded and versioned.",          icon: ShieldCheck },
-    { k: "Judgment",  line: "Senior expertise, captured as policy.",        icon: Brain },
-    { k: "Memory",    line: "Institutional context, owned not rented.",     icon: Database },
+    { k: "Playbooks",  line: "Captured micro-moments of work. Versioned, owner-signed, the atom.", icon: FileText },
+    { k: "Standards",  line: "Carried inside each Playbook: the quality bar the work must obey.", icon: ShieldCheck },
+    { k: "Judgment & Memory", line: "Carried inside each Playbook: senior decisions and institutional context, encoded.", icon: Brain },
   ];
   const loopSurfaces: Surface[] = [
-    { k: "Spend",    line: "Every token tied to a named standard.",         icon: Coins },
+    { k: "Spend",    line: "Every token tied to a named Playbook.",         icon: Coins },
     { k: "Exposure", line: "Provable lineage for every AI decision.",       icon: Lock },
   ];
   const humanRoles: Surface[] = [
-    { k: "Author",   line: "Encode the standard, judgment and memory.",     icon: FileSignature },
+    { k: "Author",   line: "Encode the Playbook. Carry the standard, judgment and memory inside it.", icon: FileSignature },
     { k: "Approve",  line: "Sign off what AI is allowed to do.",            icon: UserCheck },
     { k: "Override", line: "Stop the line. Keep P&L accountability.",       icon: KeyRound },
   ];
@@ -378,7 +378,7 @@ export function S03GovernanceLoop() {
           <LayerCard
             kicker="Layer 1 · Left"
             title="Org-as-Code"
-            sub="What compounds. Your standards, judgment and memory, encoded and versioned."
+            sub="What compounds. A corpus of Playbooks. Each Playbook is a captured micro-moment of work, versioned and owner-signed."
             items={orgAsCode}
             accent={ACCENT}
             icon={FileText}
@@ -386,7 +386,7 @@ export function S03GovernanceLoop() {
           <LayerCard
             kicker="Layer 2 · Middle"
             title="The Governance Loop"
-            sub="The runtime. Every AI moment-of-work passes through it — priced, audited, accountable."
+            sub="The runtime. Every AI moment-of-work compiles the right Playbook, prices it, audits it, attributes it."
             items={loopSurfaces}
             accent={GREEN}
             icon={Workflow}
@@ -394,7 +394,7 @@ export function S03GovernanceLoop() {
           <LayerCard
             kicker="Layer 3 · Right"
             title="Humans in Charge"
-            sub="Who governs the code. Your people author, approve and override — P&L stays with them."
+            sub="Who governs the code. Your people author the Playbooks, approve what AI is allowed to do, override when needed. P&L stays with them."
             items={humanRoles}
             accent={GOLD}
             icon={Users}
@@ -407,7 +407,7 @@ export function S03GovernanceLoop() {
         >
           <Workflow size={20} color={`hsl(${ACCENT})`} />
           <span style={{ fontSize: 16, color: TEXT }}>
-            A <b>loop</b>, not an audit. The code on the left constrains the runtime in the middle. The humans on the right author the code and stay accountable for the outcome. Five surfaces, three layers, one continuous mechanism.
+            A <b>loop</b>, not an audit. Playbooks on the left constrain the runtime in the middle. Humans on the right author the Playbooks and stay accountable for the outcome. One atom, three layers, one continuous mechanism.
           </span>
         </div>
       </div>

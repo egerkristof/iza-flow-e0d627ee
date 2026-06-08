@@ -28,3 +28,11 @@ APPEND (default add), OVERRIDE (replace default with target ref ID), BLOCK (forb
 
 ## External framing (decks, video, marketing)
 A Playbook is composed of Directives, Knowledge, Procedures, and Preferences, and is invoked by an Intent trigger. Use the real category names verbatim. Source of truth: `docs/AACE v3.1 Master Specification.md`.
+
+## Playbook = the atom (canonical, June 2026)
+
+On marketing surfaces, **the Playbook is the smallest atom of an AI-native organization**. It is a captured micro-moment of how a piece of work is done, authored once, versioned, owner-signed, compiled just-in-time into the LLM, audited on the way out.
+
+- The other four AACE categories (Directive, Knowledge, Procedure, Preference) are **components of a Playbook**, not peers in marketing copy. Externally: "A Playbook bundles the rules (Directives), facts (Knowledge), steps (Procedures) and voice (Preferences) for one micro-moment of work."
+- "Standard" is **a property carried by a Playbook** (the quality bar / rule the work must obey), not a separate atom. Do not use "Standard" as a noun for the atom in new copy. Legacy slides that say "Standard" are being migrated to "Playbook."
+- Org-as-Code = a corpus of Playbooks. The Governance Loop = the runtime that compiles them. Humans in Charge author and approve them.

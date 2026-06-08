@@ -1156,35 +1156,35 @@ function S11Moat({ n, t }: { n: number; t: number }) {
 function AtomMoatBody() {
   const cards = [
     {
-      vendor: "Mem0",
-      kind: "Memory layer for agents",
-      atom: "A memory record",
-      good: "Recall across sessions for a dev-built agent.",
-      gap: "Cannot enforce a rule, price a token or own an audit trail. One of our five surfaces, not a category.",
+      vendor: "RAG chunk",
+      kind: "Vector-retrieved passage",
+      atom: "A text chunk",
+      good: "Surfaces what a document says when a query looks similar.",
+      gap: "Descriptive, not prescriptive. No owner, no version, no approval, no cost attribution. The model still decides what to do with it.",
       tone: "muted" as const,
     },
     {
-      vendor: "Interloom",
-      kind: "Ops procedures in natural language",
-      atom: "A procedure / case",
-      good: "Describe a workflow, an agent runs it, a context graph compounds.",
-      gap: "Procedures are unversioned descriptions, not enforceable standards. No audit lineage of which rule ran.",
+      vendor: "Notion / Confluence page",
+      kind: "Wiki documentation",
+      atom: "A page",
+      good: "Human-readable reference. Easy to author, easy to share.",
+      gap: "AI-opaque. No machine-readable trigger, no enforcement, no audit lineage from page to decision. Read once, ignored under pressure.",
       tone: "muted" as const,
     },
     {
-      vendor: "Paradox",
-      kind: "Shared world model for orgs",
-      atom: "Continuous context sync",
-      good: "Same diagnosis as us: strategic drift, intent vs execution gap. Wants to dissolve OKRs, meetings and copilots into a shared substrate.",
-      gap: "Implicit and emergent, not authored. Nothing to version, approve, override or show a regulator. Research stage, no enforcement, no audit, no token accounting.",
+      vendor: "Agent prompt",
+      kind: "LangChain / system prompt",
+      atom: "A prompt string",
+      good: "Tells one LLM call how to behave. Fast to ship for engineers.",
+      gap: "Lives in a git commit. No business owner, no approval gate, no expiry, no token budget. Drifts silently between releases.",
       tone: "muted" as const,
     },
     {
       vendor: "LIZA",
       kind: "The AI Governance Loop",
-      atom: "A Standard",
-      good: "Authored once. Versioned. Compiled into every AI moment of work. Audited on the way out.",
-      gap: "Procedures, memory, conversations and spend nest inside it. Standards do not nest inside any of them.",
+      atom: "A Playbook",
+      good: "A captured micro-moment of work. Authored once, versioned, owner-signed, compiled JIT into every AI moment, audited on the way out.",
+      gap: "Carries the standard, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
       tone: "win" as const,
     },
   ];
@@ -1192,13 +1192,13 @@ function AtomMoatBody() {
     <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
       <div className="mb-6">
         <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-          The atom · why the moat is non-arbitrary
+          The atom · the Playbook
         </p>
         <h2 className="font-black" style={{ fontSize: 50, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-          Every vendor in this category picked a different atom. Ours is the smallest unit that closes the loop.
+          Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Playbook.
         </h2>
         <p className="mt-4" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          Whoever owns the smallest composable unit of the AI-native org wins the layer above it. We picked the Standard — the rule a workflow must obey — because procedures, memory and conversations all nest inside it. The reverse is not true.
+          A Playbook is a captured micro-moment of how work gets done. Versioned. Owner-signed. Compiled into every AI moment of work. Audited on the way out. Chunks, pages and prompts are what teams fall back on when they do not have one.
         </p>
       </div>
       <div className="flex-1 grid grid-cols-4 gap-5 min-h-0">
@@ -1253,7 +1253,7 @@ function AtomMoatBody() {
       <div className="mt-5 rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
         <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The moat</span>
         <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.014em" }}>
-          Memory recalls. Procedures execute. Conversations close. A Standard governs all three — and audits itself. The customer accumulates Standards; they cannot get them back from a vendor swap.
+          Chunks recall. Pages reference. Prompts instruct. A Playbook governs all three and proves it ran. The customer accumulates Playbooks. They cannot get them back from a vendor swap.
         </p>
       </div>
     </div>
