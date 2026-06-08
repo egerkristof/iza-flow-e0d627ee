@@ -1538,10 +1538,10 @@ function FAtom() {
     },
     {
       vendor: "Paradox",
-      kind: "Vertical AI assistant (hiring)",
-      atom: "A conversation",
-      good: "Point-app ROI inside one workflow.",
-      gap: "A product, not a layer. The org around it still has nothing it can govern.",
+      kind: "Shared world model for orgs",
+      atom: "Continuous context sync",
+      good: "Same diagnosis: strategic drift, intent vs execution gap. Wants a shared substrate to replace OKRs, meetings and copilots.",
+      gap: "Implicit and emergent, not authored. Nothing to version, approve, override or show a regulator. Research stage, no enforcement.",
       tone: "muted" as const,
     },
     {
