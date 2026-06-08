@@ -1,8 +1,14 @@
 ---
 name: AI Governance Loop
-description: Category thesis. LIZA = the AI Governance Loop. Three layers (Org-as-Code, Governance Loop, Humans in Charge) with five surfaces nested inside (Standards, Judgment, Memory, Spend, Exposure). Wedge against model-governance vendors.
+description: Category thesis. LIZA = the AI Governance Loop. Atom = the Playbook (captured micro-moment of work). Three layers (Org-as-Code, Governance Loop, Humans in Charge) with five properties carried by Playbooks (Standards, Judgment, Memory, Spend, Exposure). Wedge against model-governance vendors.
 type: feature
 ---
+
+## The atom (canonical, June 2026)
+
+**The Playbook is the smallest atom of an AI-native organization.** A captured micro-moment of how a piece of work is done: authored once, versioned, owner-signed, compiled JIT into the LLM, audited on the way out. Many Playbooks compose Org-as-Code. The Loop is the runtime that runs them. Humans author and approve them.
+
+"Standard" is not the atom. Standard is a **property carried by a Playbook** (the quality bar the work must obey). Same for Judgment, Memory, Spend, Exposure. These are the five things a Playbook makes visible and governable, not five things that exist alongside it.
 
 ## Canonical thesis
 
@@ -24,29 +30,29 @@ AI-native = governed. Ungoverned AI is not AI-native, it is AI-exposed.
 
 ## The 3 layers (architecture of the Loop)
 
-The loop is the category; the three layers are its anatomy. Always nest the five surfaces inside the three layers — never present them as a flat list externally.
+The loop is the category; the three layers are its anatomy. The Playbook is the atom. The five properties (Standards, Judgment, Memory, Spend, Exposure) are carried by Playbooks and surfaced by the Loop. Never present them as five free-floating things.
 
-| Layer | Role | Surfaces nested here |
+| Layer | Role | What lives here |
 |---|---|---|
-| **1 · Org-as-Code** (left) | What compounds. Your standards, judgment and memory, encoded and versioned. The source your business compiles from. | Standards, Judgment, Memory |
-| **2 · The Governance Loop** (middle) | The runtime. Every AI moment-of-work passes through it — which standard applies, who approved it, what it cost, what it touched, what audit trail it leaves. | Spend, Exposure |
-| **3 · Humans in Charge** (right) | Who governs the code. People author the standards, approve what AI is allowed to do, override when needed. P&L stays with them. | Author, Approve, Override (roles, not surfaces) |
+| **1 · Org-as-Code** (left) | What compounds. A corpus of Playbooks, each one a captured micro-moment of work, versioned and owner-signed. | Playbooks (the atom). Each Playbook carries Standards, Judgment, Memory. |
+| **2 · The Governance Loop** (middle) | The runtime. Every AI moment-of-work compiles the right Playbook just-in-time, then emits a receipt. | Spend and Exposure: which Playbook ran, who approved it, what it cost, what it touched. |
+| **3 · Humans in Charge** (right) | Who governs the code. People author Playbooks, approve what AI is allowed to do, override when needed. P&L stays with them. | Author, Approve, Override (roles). |
 
-Mental model: **prompts/instructions are the new code for LLMs → your encoded org is the new code your business runs on.** The middle layer is where that code executes against reality, in real time, with a human accountable.
+Mental model: **a Playbook is a unit of org-code. Your business compiles from a corpus of Playbooks the way software compiles from a repo.** The middle layer is where that code executes against reality, in real time, with a human accountable.
 
 Defeats "model governance" cleanly: they watch the model after it runs. We govern the moment the org makes a decision — left layer constrains middle layer, right layer owns both.
 
-## The 5 surfaces (memorize order)
+## The 5 properties a Playbook carries (memorize order)
 
-| Surface | Safeguard | Scale |
+| Property | Safeguard | Scale |
 |---|---|---|
 | Standards | Quality bar from drift and dilution | Consistent execution at AI velocity |
 | Judgment | Senior expertise from attrition and averaging | Decisions that reflect your best people |
 | Memory | Institutional knowledge from leaking into LLMs | Compounding context, owned not rented |
-| Spend | AI budget from unanchored token consumption | Every token tied to a named outcome |
+| Spend | AI budget from unanchored token consumption | Every token tied to a named Playbook |
 | Exposure | IP, audit trail, regulatory surface | Provable lineage for every AI decision |
 
-Map to AACE primitives internally; do NOT lead with primitive names externally. Surfaces are the buyer-facing vocabulary.
+These are properties of the Playbook (the atom), not five parallel products. Buyer-facing copy: "One Playbook carries the standard, captures the judgment, owns the memory, prices the spend, proves the exposure."
 
 ## Competitive wedge
 
@@ -68,6 +74,6 @@ Credo AI, Fiddler, Arthur, Robust Intelligence, Holistic AI all use "AI governan
 
 - "AI compliance" or "AI audit" framing (deflates to checkbox).
 - "Governance" without "loop" or a qualifying noun on marketing surfaces.
-- Mixing AACE primitive names and the 5 surfaces in the same external sentence.
-- Presenting the 5 surfaces as a flat list externally — always nest them inside the 3 layers.
+- Calling the atom anything other than **Playbook** in new copy (no "Standard as atom", no "Context Bundle as atom"). Standard is a property carried by a Playbook.
+- Presenting the 5 properties as a flat list of independent surfaces — always show them as what a Playbook carries.
 - Inventing a new noun for the middle layer ("Execution Governance", "Decision Runtime", etc.). The middle layer **is** the AI Governance Loop. The three-layer model explains its anatomy; it does not replace the category name.
