@@ -1558,7 +1558,7 @@ function FAtom() {
       <SlideGrid />
       <div className="absolute inset-0 px-20 pt-20 pb-16 flex flex-col">
         <div className="mb-5">
-          <Tag color={GOLD}>The atom · why the loop is non-arbitrary</Tag>
+          <Tag color={GOLD} label="The atom · why the loop is non-arbitrary" />
           <h2 className="font-black mt-4" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
             Every vendor in this category picked a different atom. Ours is the smallest unit that closes the loop.
           </h2>
