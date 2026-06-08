@@ -1517,6 +1517,117 @@ function FComplianceMap() {
   );
 }
 
+// ─── F_ATOM · The smallest unit of an AI-native org ─────────────────────────
+function FAtom() {
+  const cards = [
+    {
+      vendor: "Mem0",
+      kind: "Memory layer for agents",
+      atom: "A memory record",
+      good: "Recall across sessions for a dev-built agent.",
+      gap: "Cannot enforce a rule, price a token or own an audit trail. One surface, not a layer.",
+      tone: "muted" as const,
+    },
+    {
+      vendor: "Interloom",
+      kind: "Ops procedures in NL",
+      atom: "A procedure / case",
+      good: "Describe a workflow, agents run it, a context graph compounds.",
+      gap: "Procedures are unversioned descriptions, not enforceable standards. No lineage of which rule ran.",
+      tone: "muted" as const,
+    },
+    {
+      vendor: "Paradox",
+      kind: "Vertical AI assistant (hiring)",
+      atom: "A conversation",
+      good: "Point-app ROI inside one workflow.",
+      gap: "A product, not a layer. The org around it still has nothing it can govern.",
+      tone: "muted" as const,
+    },
+    {
+      vendor: "LIZA",
+      kind: "The AI Governance Loop",
+      atom: "A Standard",
+      good: "Authored once. Versioned. Compiled into every AI moment of work. Audited on the way out.",
+      gap: "Procedures, memory, conversations and spend nest inside it. Standards do not nest in any of them.",
+      tone: "win" as const,
+    },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <div className="absolute inset-0 px-20 pt-20 pb-16 flex flex-col">
+        <div className="mb-5">
+          <Tag color={GOLD}>The atom · why the loop is non-arbitrary</Tag>
+          <h2 className="font-black mt-4" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
+            Every vendor in this category picked a different atom. Ours is the smallest unit that closes the loop.
+          </h2>
+          <p className="mt-3" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
+            Whoever owns the smallest composable unit of the AI-native org wins the layer above it. The Standard is the only atom that procedures, memory, conversations and spend can nest inside.
+          </p>
+        </div>
+        <div className="flex-1 grid grid-cols-4 gap-5 min-h-0">
+          {cards.map((c) => {
+            const isWin = c.tone === "win";
+            return (
+              <div
+                key={c.vendor}
+                className="rounded-2xl p-6 flex flex-col"
+                style={{
+                  background: isWin ? `hsl(${GREEN} / 0.08)` : CARD_ALT,
+                  border: `1px solid ${isWin ? `hsl(${GREEN} / 0.45)` : CHROME_BORDER}`,
+                }}
+              >
+                <div className="flex items-baseline justify-between mb-2">
+                  <p className="font-black" style={{ fontSize: 26, color: isWin ? `hsl(${GREEN})` : TEXT, letterSpacing: "-0.02em" }}>
+                    {c.vendor}
+                  </p>
+                  {isWin && (
+                    <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>
+                      Our atom
+                    </span>
+                  )}
+                </div>
+                <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 10, color: SUBTLE }}>
+                  {c.kind}
+                </p>
+                <div className="mb-4">
+                  <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 10, color: isWin ? `hsl(${GREEN})` : `hsl(${GOLD})` }}>
+                    Atom
+                  </p>
+                  <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.015em" }}>
+                    {c.atom}
+                  </p>
+                </div>
+                <div className="mb-4">
+                  <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
+                    Carries
+                  </p>
+                  <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{c.good}</p>
+                </div>
+                <div className="mt-auto pt-3" style={{ borderTop: `1px solid ${isWin ? `hsl(${GREEN} / 0.3)` : CHROME_BORDER}` }}>
+                  <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 10, color: isWin ? `hsl(${GREEN})` : `hsl(${RED})` }}>
+                    {isWin ? "Why it nests everything else" : "What it cannot carry"}
+                  </p>
+                  <p style={{ fontSize: 14, color: isWin ? TEXT : MUTED, lineHeight: 1.4 }}>{c.gap}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-5 rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The factory point</span>
+          <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.014em" }}>
+            Memory recalls. Procedures execute. Conversations close. A Standard governs all three — and audits itself. The factory is built around the atom; that is why the loop is real.
+          </p>
+        </div>
+      </div>
+      <Footer text="The smallest composable unit of an AI-native organization." />
+      <SlideBar from={GREEN} to={GOLD} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
