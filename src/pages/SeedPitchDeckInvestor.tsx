@@ -284,7 +284,7 @@ export function VizFactoryWalkthrough() {
       k: "LOCK",
       icon: Lock,
       what: "Pick the company's approved way of doing this work.",
-      shows: "Playbook: AEC-PROP v3.2",
+      shows: "Playbook: RFP-PUBSEC v4.1",
       meta: "owner · M. Schäfer · expires 2026-Q1",
     },
     {
@@ -292,7 +292,7 @@ export function VizFactoryWalkthrough() {
       k: "COMPILE",
       icon: Cog,
       what: "Assemble only what this one call needs.",
-      shows: "12 standards · 4 prior receipts · current pricing",
+      shows: "12 standards · 4 prior bids · current pricing tables",
       meta: "no blind RAG dump · cost capped before the call",
     },
     {
@@ -308,7 +308,7 @@ export function VizFactoryWalkthrough() {
       k: "LEARN",
       icon: RefreshCw,
       what: "Feed the correction back into the playbook.",
-      shows: "Δ 'cooling load assumption' · pushed to v3.3",
+      shows: "Δ 'Q2 pricing clause' · pushed to v4.2",
       meta: "next call inherits it · the corpus compounds",
     },
   ];
@@ -322,10 +322,10 @@ export function VizFactoryWalkthrough() {
           style={{ background: CARD_ALT, border: `1px dashed ${CHROME_BORDER}` }}>
           <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: SUBTLE }}>Input</p>
           <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
-            "Draft a proposal for the Munich school project."
+            "Prepare our response to the €40M RFP from the city of Hamburg."
           </p>
           <p className="mt-3 font-mono" style={{ fontSize: 13, color: MUTED }}>
-            sender · project lead<br/>
+            sender · bid lead<br/>
             channel · workbook · 14:01
           </p>
         </div>
@@ -374,22 +374,42 @@ export function VizFactoryWalkthrough() {
       </div>
 
       {/* feedback loop arrow under the row */}
-      <div className="relative mt-2">
-        <svg viewBox="0 0 1000 90" className="w-full" style={{ height: 90 }}>
+      {/* feedback loop — clean, generous spacing, text never crosses the arc */}
+      <div className="relative mt-4">
+        <svg viewBox="0 0 1000 140" preserveAspectRatio="none" className="w-full" style={{ height: 130 }}>
           <defs>
-            <marker id="loopArr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+            <marker id="loopArr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto">
               <path d="M0 0 L12 6 L0 12 z" fill={`hsl(${GREEN})`} />
             </marker>
           </defs>
-          {/* big curved arrow from right (LEARN) back to left (LOCK) */}
-          <path d="M 870 15 C 870 80, 130 80, 130 15"
-            stroke={`hsl(${GREEN})`} strokeWidth="3" fill="none" strokeDasharray="2 0" markerEnd="url(#loopArr)" />
-          <text x="500" y="62" textAnchor="middle"
-            fontSize="20" fontWeight="800" fill={`hsl(${GREEN})`}
-            fontFamily="ui-monospace, monospace" letterSpacing="0.04em">
-            ↻  LEARN feeds the next call's LOCK · the corpus compounds
+          {/* anchor pins */}
+          <circle cx="880" cy="14" r="5" fill={`hsl(${GREEN})`} />
+          <circle cx="120" cy="14" r="5" fill={`hsl(${GREEN})`} />
+          {/* arc curves DOWN and AROUND the caption, never through it */}
+          <path d="M 880 14 C 880 130, 120 130, 120 14"
+            stroke={`hsl(${GREEN})`} strokeWidth="2.5" fill="none"
+            markerEnd="url(#loopArr)" />
+          {/* arc endpoint labels */}
+          <text x="880" y="6" textAnchor="end" fontSize="12" fontWeight="800"
+            fill={`hsl(${GREEN})`} fontFamily="ui-monospace, monospace" letterSpacing="0.18em">
+            04 LEARN
+          </text>
+          <text x="120" y="6" textAnchor="start" fontSize="12" fontWeight="800"
+            fill={`hsl(${GREEN})`} fontFamily="ui-monospace, monospace" letterSpacing="0.18em">
+            01 LOCK
           </text>
         </svg>
+        {/* caption sits in clear space INSIDE the arc, no overlap */}
+        <div className="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none"
+          style={{ height: 130 }}>
+          <p className="rounded-full px-6 py-2 font-mono uppercase tracking-[0.24em]"
+            style={{
+              fontSize: 13, fontWeight: 800, color: `hsl(${GREEN})`,
+              background: BG, border: `1.5px solid hsl(${GREEN} / 0.45)`,
+            }}>
+            LEARN feeds the next call's LOCK · the corpus compounds
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -1651,14 +1671,14 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
           </div>
           <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Draft a proposal for the Munich school project."</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Prepare our response to the €40M RFP from the city of Hamburg."</p>
           </div>
           <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>Goes straight to the model</p>
           <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
             style={{ background: BG, border: `2px dashed hsl(${RED} / 0.5)` }}>
             <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>A plausible draft.</p>
             <p className="mt-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Uses whatever the user remembers. No source. No approval. No receipt. The next person starts from scratch.
+              Cites expired pricing. Uses a compliance clause we no longer offer. No source, no approver, no receipt. The next bid starts from scratch.
             </p>
           </div>
         </div>
@@ -1686,22 +1706,22 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
           </div>
           <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>Same request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Draft a proposal for the Munich school project."</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Prepare our response to the €40M RFP from the city of Hamburg."</p>
           </div>
           <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Routed through the governance loop</p>
           <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
             style={{ background: BG, border: `2px solid hsl(${GREEN})` }}>
             <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>The same draft &mdash; with a receipt.</p>
             <div className="mt-4 grid grid-cols-1 gap-1.5 font-mono" style={{ fontSize: 14, color: TEXT }}>
-              <p>· standard: AEC-PROP v3.2</p>
-              <p>· evidence: 12 hashed sources</p>
+              <p>· standard: RFP-PUBSEC v4.1 (current pricing locked)</p>
+              <p>· evidence: 12 hashed sources, legal-cleared</p>
               <p>· model: claude-3.5</p>
               <p>· approver: M. Schäfer · 14:02</p>
             </div>
             <div className="mt-5 pt-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
               <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>And because it carries a receipt…</p>
               <p className="font-bold mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-                every other answer that touches AEC-PROP v3.2 — pricing, compliance, the next RFP, the audit replay — moves with it. One correction, one signature, propagates through the whole corpus.
+                every other answer that touches RFP-PUBSEC v4.1 (pricing, the next bid, the audit replay) moves with it. One correction, one signature, propagates through the whole corpus.
               </p>
             </div>
           </div>
@@ -1728,8 +1748,8 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
             One Block
           </div>
           <p className="font-black" style={{ fontSize: 38, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>
-            "Proposals for school projects use AEC-PROP v3.2 cooling-load tables.<br/>
-            <span style={{ color: `hsl(${GREEN})` }}>Do not interpolate above 35°C.</span>"
+            "Public-sector RFP responses use RFP-PUBSEC v4.1 pricing tables and the legal-cleared compliance clause.<br/>
+            <span style={{ color: `hsl(${GREEN})` }}>Do not quote terms older than the current quarter.</span>"
           </p>
           <div className="mt-7 pt-5 grid grid-cols-3 gap-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
             <div>
