@@ -1762,9 +1762,9 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
 // one request → 4 stations → signed receipt. This is the deepest "how" slide.
 function S06StoryMoment({ n, t }: { n: number; t: number }) {
   return (
-    <StorySlide section="The product · the moment" n={n} t={t}
-      badge="What we actually ship"
-      headline="A request comes in. Four stations turn it into one accountable, replayable work unit."
+    <StorySlide section="Plan B · the governed moment" n={n} t={t}
+      badge="What we actually ship · one full loop"
+      headline="Every AI moment runs the same four-station loop. LEARN feeds back into LOCK — the corpus gets sharper with every call."
       footnote="AACE v3.1 runtime · live in production · regulated AEC deployment">
       <div className="h-full flex flex-col justify-center">
         <VizFactoryWalkthrough />
