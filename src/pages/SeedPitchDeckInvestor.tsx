@@ -1618,63 +1618,56 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 03 · Failure. Without governance every AI call invents the company again.
-// Visual: one model output with 4 missing-band stamps (concrete, not abstract).
+// 03 · Failure. Each moment needs 5 things. Today, all 5 are missing.
 function S03StoryFailure({ n, t }: { n: number; t: number }) {
-  const gaps = [
-    { k: "no context",   d: "the model uses whatever the user remembers, not the approved way of working" },
-    { k: "no owner",     d: "nobody can name the business rule used, who approved it, or when it expires" },
-    { k: "no receipt",   d: "the output cannot be replayed with inputs, policy, model and approver attached" },
-    { k: "no learning",  d: "the correction stays trapped in the thread; the next employee repeats the gap" },
-  ];
   return (
     <StorySlide section="Failure mode" n={n} t={t}
-      badge="Why ungoverned AI fails at scale"
-      headline="Every ungoverned AI call invents the company again.">
-      <div className="grid grid-cols-[1fr_1.3fr] gap-8 h-full">
+      badge="Why ungoverned moments cannot scale"
+      headline="Each moment of work needs five things. Today, all five are missing."
+      footnote="One ungoverned moment is a curiosity. Five thousand a day is operational risk.">
+      <div className="grid grid-cols-[1fr_1.25fr] gap-8 h-full">
         {/* the bare output */}
-        <div className="rounded-2xl p-10 flex flex-col items-center justify-center"
+        <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <div className="rounded-full px-6 py-2.5 mb-8 font-mono uppercase tracking-[0.24em]"
-            style={{ fontSize: 22, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
-            One AI output · no governance
+          <div className="self-start rounded-full px-5 py-2 mb-5 font-mono uppercase tracking-[0.24em]"
+            style={{ fontSize: 14, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
+            One moment of work · no governance
           </div>
-          <div className="rounded-xl px-5 py-3 mb-5 w-full"
+          <div className="rounded-xl px-5 py-4 mb-5 w-full"
             style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>
+            <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.25 }}>
               "Prepare our response to the €40M RFP from the city of Hamburg."
             </p>
           </div>
-          <div className="rounded-2xl px-8 py-7 w-full"
+          <div className="rounded-2xl px-7 py-6 w-full flex-1 flex flex-col justify-center"
             style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>model output, 4 seconds later</p>
-            <p className="font-black" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>output, 4 seconds later</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
               A 12-page response.<br/>
               <span style={{ color: `hsl(${RED})` }}>Confident. Coherent. Unaccountable.</span>
             </p>
             <p className="mt-4 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
               · cites pricing that expired last quarter<br/>
               · uses a compliance clause we no longer offer<br/>
-              · references a case study legal redacted<br/>
-              · nobody signed it; nobody can find out who didn't
+              · no source, no approver, no receipt
             </p>
           </div>
-          <p className="mt-6 text-center font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, maxWidth: 480, lineHeight: 1.35 }}>
-            Reads like the company. Carries nothing the company can stand on.
-          </p>
         </div>
-        {/* the four missing bands */}
+        {/* the five missing components */}
         <div className="flex flex-col gap-3 justify-center">
-          {gaps.map((g, i) => (
-            <div key={g.k} className="rounded-xl px-6 py-4 flex items-center gap-5"
-              style={{ background: CARD_ALT, border: `1px solid hsl(${RED} / 0.28)` }}>
+          <p className="font-mono uppercase tracking-[0.26em] mb-1" style={{ fontSize: 12, color: SUBTLE }}>
+            what is missing from this one moment
+          </p>
+          {MOMENT_NEEDS.map((g, i) => (
+            <div key={g.k} className="rounded-xl px-5 py-3.5 flex items-center gap-4"
+              style={{ background: CARD_ALT, border: `1px solid hsl(${RED} / 0.3)` }}>
               <span className="font-mono" style={{ fontSize: 12, color: SUBTLE, letterSpacing: "0.22em", minWidth: 28 }}>0{i + 1}</span>
-              <div className="rounded-md px-3 py-1.5 font-mono uppercase tracking-[0.18em] shrink-0"
-                style={{ fontSize: 12, color: `hsl(${RED})`, background: `hsl(${RED} / 0.1)`, border: `1px solid hsl(${RED} / 0.4)`, minWidth: 150, textAlign: "center" }}>
-                {g.k}
+              <div className="rounded-md px-3 py-1.5 font-mono uppercase tracking-[0.18em] shrink-0 text-center"
+                style={{ fontSize: 12, fontWeight: 800, color: `hsl(${RED})`, background: `hsl(${RED} / 0.1)`, border: `1px solid hsl(${RED} / 0.45)`, minWidth: 160 }}>
+                no {g.k}
               </div>
-              <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{g.d}</p>
+              <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{g.missing}</p>
             </div>
           ))}
         </div>
