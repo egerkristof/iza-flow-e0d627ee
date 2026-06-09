@@ -1843,29 +1843,27 @@ export function FTokenomics() {
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag color={GOLD} label="Tokenomics by design · the CFO finally sees the bill" />
-        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
-          AI stops being an opaque operational expense. <span style={{ color: `hsl(${GOLD})` }}>Every decision has a price tag, an owner, and a budget.</span>
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 66, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1700 }}>
+          AI stops being opaque OpEx.<br/>
+          <span style={{ color: `hsl(${GOLD})` }}>Every decision has a price, an owner, a budget.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          Modern CFOs have no way to tie a six-figure OpenAI bill to a single ROI line. Because every task is forced through AACE's typed Procedure gates, we attach compute cost to logic. Predictive FinOps is native, not bolted on.
-        </p>
 
         {/* Top: three pillars */}
         <div className="grid grid-cols-3 gap-5 mb-6">
           {[
             { icon: Gauge, k: "Design-time budgeting",
-              v: "Process Studio shows the projected token cost of a Playbook before deploy. The business knows the cost of a process upfront." },
+              v: "Projected token cost of a Playbook is shown before deploy." },
             { icon: Scale, k: "Distributed governance",
-              v: "CFO sets AI budgets top-down in the ontology. DOMAIN: SALES gets a quota. VP allocates to INITIATIVES. Runtime auto-enforces." },
+              v: "CFO sets budgets. Each Domain gets a quota. Runtime auto-enforces." },
             { icon: Hash, k: "Chargeback per decision",
-              v: "Every [DECISION] is a discrete graph node, tied to a Playbook, run by a User. Compute cost attached. Line-item chargeback." },
+              v: "Every [DECISION] is a graph node with cost attached. Line-item chargeback." },
           ].map((c) => {
             const Icon = c.icon;
             return (
               <div key={c.k} className="rounded-2xl p-6 flex flex-col" style={{ background: `hsl(${GOLD} / 0.05)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>
-                <Icon size={22} style={{ color: `hsl(${GOLD})` }} />
-                <p className="font-mono uppercase tracking-[0.18em] mt-3 mb-2" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>{c.k}</p>
-                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>{c.v}</p>
+                <Icon size={26} style={{ color: `hsl(${GOLD})` }} />
+                <p className="font-mono uppercase tracking-[0.18em] mt-3 mb-2 font-bold" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>{c.k}</p>
+                <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>{c.v}</p>
               </div>
             );
           })}
@@ -1874,12 +1872,12 @@ export function FTokenomics() {
         {/* Bottom: dashboard mock */}
         <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
           <div className="rounded-2xl p-5 flex flex-col" style={{ background: `hsl(${ACCENT} / 0.04)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
-            <p className="font-mono uppercase tracking-[0.2em] mb-3" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>AI budget allocation · Q4</p>
+            <p className="font-mono uppercase tracking-[0.2em] mb-3 font-bold" style={{ fontSize: 14, color: `hsl(${ACCENT})` }}>AI budget allocation · Q4</p>
             <div className="flex items-baseline gap-3 mb-4">
-              <span className="font-black" style={{ fontSize: 40, color: TEXT, letterSpacing: "-0.03em" }}>$10,000</span>
-              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: MUTED }}>compute envelope</span>
+              <span className="font-black" style={{ fontSize: 52, color: TEXT, letterSpacing: "-0.03em" }}>$10,000</span>
+              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 13, color: MUTED }}>compute envelope</span>
             </div>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-3">
               {[
                 { d: "DOMAIN: Sales",       a: "$4,000", pct: 40, used: 28 },
                 { d: "DOMAIN: Operations",  a: "$3,000", pct: 30, used: 19 },
@@ -1887,11 +1885,11 @@ export function FTokenomics() {
                 { d: "DOMAIN: Marketing",   a: "$1,000", pct: 10, used: 6  },
               ].map((b) => (
                 <div key={b.d}>
-                  <div className="flex justify-between mb-1" style={{ fontSize: 13, color: TEXT }}>
+                  <div className="flex justify-between mb-1.5" style={{ fontSize: 16, color: TEXT }}>
                     <span className="font-mono">{b.d}</span>
                     <span className="font-mono"><span style={{ color: MUTED }}>{b.used}% used · </span>{b.a}</span>
                   </div>
-                  <div className="h-2 rounded-full overflow-hidden" style={{ background: `hsl(${ACCENT} / 0.12)` }}>
+                  <div className="h-2.5 rounded-full overflow-hidden" style={{ background: `hsl(${ACCENT} / 0.12)` }}>
                     <div style={{ width: `${b.used}%`, height: "100%", background: `hsl(${ACCENT})` }} />
                   </div>
                 </div>
@@ -1900,26 +1898,26 @@ export function FTokenomics() {
           </div>
 
           <div className="rounded-2xl p-5 flex flex-col" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-            <p className="font-mono uppercase tracking-[0.2em] mb-3" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Chargeback ledger · per-decision</p>
-            <div className="flex flex-col gap-2 font-mono" style={{ fontSize: 12, color: TEXT, lineHeight: 1.5 }}>
-              <div className="rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+            <p className="font-mono uppercase tracking-[0.2em] mb-3 font-bold" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Chargeback ledger · per-decision</p>
+            <div className="flex flex-col gap-2.5 font-mono" style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>
+              <div className="rounded-lg px-4 py-3" style={{ background: `hsl(${GREEN} / 0.06)` }}>
                 <div className="flex justify-between"><span style={{ color: `hsl(${GREEN})` }}>DECISION #A43F1</span><span className="font-black">$0.07</span></div>
                 <div style={{ color: MUTED }}>deal_qualification · 1.2M tokens · sales/q4-pipeline</div>
               </div>
-              <div className="rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+              <div className="rounded-lg px-4 py-3" style={{ background: `hsl(${GREEN} / 0.06)` }}>
                 <div className="flex justify-between"><span style={{ color: `hsl(${GREEN})` }}>DECISION #A43F2</span><span className="font-black">$0.41</span></div>
                 <div style={{ color: MUTED }}>contract_review · 6.8M tokens · legal/master-template</div>
               </div>
-              <div className="rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+              <div className="rounded-lg px-4 py-3" style={{ background: `hsl(${GREEN} / 0.06)` }}>
                 <div className="flex justify-between"><span style={{ color: `hsl(${GREEN})` }}>INITIATIVE: Q4 Launch</span><span className="font-black">$1,452.19</span></div>
                 <div style={{ color: MUTED }}>3,841 decisions · rolled-up · owner: VP Marketing</div>
               </div>
-              <div className="rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+              <div className="rounded-lg px-4 py-3" style={{ background: `hsl(${GREEN} / 0.06)` }}>
                 <div className="flex justify-between"><span style={{ color: `hsl(${GREEN})` }}>TEAM: Sales · auto-qual</span><span className="font-black">$798.20</span></div>
                 <div style={{ color: MUTED }}>11,400 qualification decisions · Q4 to date</div>
               </div>
             </div>
-            <p className="mt-3 pt-3 border-t" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4, borderColor: `hsl(${GREEN} / 0.25)` }}>
+            <p className="mt-4 pt-3 border-t" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4, borderColor: `hsl(${GREEN} / 0.25)` }}>
               Platform unit economics: <span className="font-black" style={{ color: TEXT }}>$0.40</span> per governed decision · <span className="font-black" style={{ color: TEXT }}>95%</span> platform GM · <span className="font-black" style={{ color: TEXT }}>€23</span> displaced labour cost per decision.
             </p>
           </div>
