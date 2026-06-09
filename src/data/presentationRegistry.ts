@@ -6,6 +6,7 @@ import { ImpactGate } from "@/components/ImpactGate";
 import HoldingDeck from "@/pages/HoldingDeck";
 import { HoldingGate } from "@/components/HoldingGate";
 import FactoryDeck from "@/pages/FactoryDeck";
+import ThesisDeck from "@/pages/ThesisDeck";
 import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import SeedPitchDeckSkeptic from "@/pages/SeedPitchDeckSkeptic";
 import SeedPitchDeckLens from "@/pages/SeedPitchDeckLens";
