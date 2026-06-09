@@ -1703,9 +1703,10 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
 // reader sees how Blocks compose upward.
 function S05StoryBlock({ n, t }: { n: number; t: number }) {
   return (
-    <StorySlide section="The unit · the Block" n={n} t={t}
-      badge="The atom"
-      headline="A Block is one rule the company has agreed on, written down, signed, and version-controlled.">
+    <StorySlide section="Plan A · the new unit of work" n={n} t={t}
+      badge="The atom · your new operational unit"
+      headline="If AI is the new labour, the Block is the new unit you pay for, govern, and compound."
+      footnote="Headcount was the old OpEx unit. Tokens are the new raw material. The Block is the unit of governed AI work — what enterprises will measure, budget, and accumulate.">
       <div className="grid grid-cols-[1fr_1fr] gap-12 h-full items-center">
         {/* ONE concrete Block — looks like a card, not a spec sheet */}
         <div className="rounded-2xl p-10"
@@ -1736,18 +1737,18 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
 
         {/* How Blocks scale up — the ladder, but with bigger plain-English labels */}
         <div className="flex flex-col gap-5">
-          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 14, color: SUBTLE }}>Blocks scale into bigger things</p>
+          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 14, color: SUBTLE }}>One Block is the atom. Then it compounds.</p>
           {[
-            { k: "BLOCK",       size: 30, title: "one rule",        copy: "what you just saw on the left", color: GREEN },
-            { k: "PLAYBOOK",    size: 30, title: "a workflow",      copy: "many Blocks composed to get one job done", color: GOLD },
-            { k: "ORG-AS-CODE", size: 30, title: "the whole company", copy: "every Playbook the company runs, versioned", color: ACCENT },
+            { k: "BLOCK",       size: 30, title: "one rule = one priced, governed unit",  copy: "what you measure, budget and audit",         color: GREEN },
+            { k: "PLAYBOOK",    size: 30, title: "many Blocks = one workflow",            copy: "how a job gets done, repeatably",            color: GOLD  },
+            { k: "ORG-AS-CODE", size: 30, title: "all Playbooks = the company, in code", copy: "the asset that compounds; the new IP",       color: ACCENT },
           ].map((r, i) => (
             <div key={r.k} className="rounded-xl p-6 flex items-center gap-6"
               style={{ background: `hsl(${r.color} / 0.07)`, border: `1.5px solid hsl(${r.color} / 0.4)` }}>
               <p className="font-black tracking-[0.08em]" style={{ fontSize: r.size, color: `hsl(${r.color})`, minWidth: 240 }}>{r.k}</p>
               <div>
-                <p className="font-black" style={{ fontSize: 24, color: TEXT, letterSpacing: "-0.02em" }}>{r.title}</p>
-                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.35, marginTop: 2 }}>{r.copy}</p>
+                <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.018em", lineHeight: 1.2 }}>{r.title}</p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35, marginTop: 3 }}>{r.copy}</p>
               </div>
             </div>
           ))}
