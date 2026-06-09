@@ -1530,47 +1530,70 @@ function S01StoryCover({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 02 · Problem. The shift: from one chat to a thousand AI moments per day.
-// Visual: one chat box on the left, swarm of governed moments on the right.
+// ─── Shared narrative spine for S03 / S04 ──────────────────────────────────
+// The same five components anchor BOTH the failure slide (what is missing
+// from every ungoverned AI moment) and the guide slide (what LIZA gives back).
+const MOMENT_NEEDS = [
+  { k: "context",   missing: "the model uses whatever the user remembers, not the company's approved way of doing this work",
+                    gives:   "the approved standard is compiled into the call, just in time" },
+  { k: "owner",     missing: "no one can name the rule used, who approved it, or when it expires",
+                    gives:   "every rule is signed, versioned, with an expiry the org can see" },
+  { k: "receipt",   missing: "the output cannot be replayed with inputs, policy, model and approver attached",
+                    gives:   "every output is replayable: inputs · policy · model · approver · hash" },
+  { k: "learning",  missing: "the correction stays trapped in the thread; the next employee repeats the same gap",
+                    gives:   "every correction pushes back into the corpus; the next moment inherits it" },
+  { k: "token ROI", missing: "no visibility on what the call cost or whether it was even effective",
+                    gives:   "every call is metered against the standard it served; cost tied to value" },
+];
+
+// 02 · Problem. The unit of AI work changed: one moment of work → thousands.
 function S02StoryScale({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Problem" n={n} t={t}
-      badge="The shift · one chat → thousands of AI moments a day"
-      headline="The unit of AI work changed. The org's response hasn't.">
-      <div className="grid grid-cols-[0.7fr_1.3fr] gap-7 h-full">
+      badge="The unit of AI work changed"
+      headline="Yesterday, a moment of work was one person, one prompt, one reply. Today, the company runs thousands of them, every hour."
+      footnote="Each moment is now a request the company is responsible for: legally, commercially, operationally. Multiply by 5,000 a day.">
+      <div className="grid grid-cols-[0.72fr_1.28fr] gap-7 h-full">
         {/* TODAY · one isolated chat */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <div className="rounded-full px-7 py-3 self-start font-mono uppercase tracking-[0.32em]"
-            style={{ fontSize: 32, fontWeight: 900, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `2px solid hsl(${RED} / 0.55)` }}>
+          <div className="rounded-full px-6 py-2.5 self-start font-mono uppercase tracking-[0.3em]"
+            style={{ fontSize: 20, fontWeight: 900, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `2px solid hsl(${RED} / 0.55)` }}>
             Yesterday
           </div>
+          <p className="font-mono uppercase tracking-[0.22em] mt-6" style={{ fontSize: 13, color: SUBTLE }}>
+            one moment of work
+          </p>
           <div className="flex-1 flex items-center justify-center">
-            <div className="rounded-2xl px-10 py-10 text-center w-full"
+            <div className="rounded-2xl px-8 py-10 text-center w-full"
               style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
-              <p className="font-mono uppercase tracking-[0.24em] mb-4" style={{ fontSize: 13, color: SUBTLE }}>one chat</p>
-              <p className="font-black" style={{ fontSize: 64, color: TEXT, lineHeight: 1, letterSpacing: "-0.025em" }}>
+              <p className="font-black" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
                 1 person<br/>1 prompt<br/>1 reply
               </p>
-              <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>nothing the org keeps</p>
+              <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 12, color: `hsl(${RED})` }}>
+                lived in one person's head
+              </p>
             </div>
           </div>
-          <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>
-            Useful for the individual. Impossible to audit, improve, or compound for the organization.
+          <p className="mt-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+            Useful for the individual. Nothing the organisation can audit, improve, or compound.
           </p>
         </div>
         {/* TODAY/TOMORROW · a swarm of governed moments */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-          <div className="rounded-full px-7 py-3 self-start font-mono uppercase tracking-[0.32em]"
-            style={{ fontSize: 32, fontWeight: 900, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `2px solid hsl(${GREEN} / 0.6)`, boxShadow: `0 0 20px hsl(${GREEN} / 0.28)` }}>
+          <div className="rounded-full px-6 py-2.5 self-start font-mono uppercase tracking-[0.3em]"
+            style={{ fontSize: 20, fontWeight: 900, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `2px solid hsl(${GREEN} / 0.6)`, boxShadow: `0 0 18px hsl(${GREEN} / 0.25)` }}>
             Today · and from now on
           </div>
-          <p className="font-black mt-4" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
-            Thousands of AI calls · thousands of contexts · every hour.
+          <p className="font-black mt-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+            Thousands of moments of work, every hour.
           </p>
-          <div className="flex-1 flex items-center justify-center py-3">
-            <div className="grid grid-cols-14 gap-1.5" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))", width: "100%" }}>
+          <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+            Different people · different requests · different contexts. Same legal, brand and commercial exposure as anything else the company emits.
+          </p>
+          <div className="flex-1 flex items-center justify-center py-3 min-h-0">
+            <div className="grid gap-1.5" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))", width: "100%" }}>
               {Array.from({ length: 14 * 9 }).map((_, i) => {
                 const isPolicy   = i % 17 === 0;
                 const isApprover = i % 11 === 0;
@@ -1581,11 +1604,11 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
               })}
             </div>
           </div>
-          <p className="font-mono mt-4" style={{ fontSize: 18, color: MUTED, lineHeight: 1.3, letterSpacing: "0.02em" }}>
-            employees × workflows × policies × approvals × receipts
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>
+            each square = one moment of work
           </p>
           <div className="mt-3 flex gap-5 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11 }}>
-            <span style={{ color: `hsl(${GREEN})` }}>■ governed moment</span>
+            <span style={{ color: `hsl(${GREEN})` }}>■ AI moment of work</span>
             <span style={{ color: `hsl(${GOLD})` }}>■ policy in play</span>
             <span style={{ color: `hsl(${ACCENT})` }}>■ approver signed</span>
           </div>
@@ -1595,63 +1618,56 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 03 · Failure. Without governance every AI call invents the company again.
-// Visual: one model output with 4 missing-band stamps (concrete, not abstract).
+// 03 · Failure. Each moment needs 5 things. Today, all 5 are missing.
 function S03StoryFailure({ n, t }: { n: number; t: number }) {
-  const gaps = [
-    { k: "no context",   d: "the model uses whatever the user remembers, not the approved way of working" },
-    { k: "no owner",     d: "nobody can name the business rule used, who approved it, or when it expires" },
-    { k: "no receipt",   d: "the output cannot be replayed with inputs, policy, model and approver attached" },
-    { k: "no learning",  d: "the correction stays trapped in the thread; the next employee repeats the gap" },
-  ];
   return (
     <StorySlide section="Failure mode" n={n} t={t}
-      badge="Why ungoverned AI fails at scale"
-      headline="Every ungoverned AI call invents the company again.">
-      <div className="grid grid-cols-[1fr_1.3fr] gap-8 h-full">
+      badge="Why ungoverned moments cannot scale"
+      headline="Each moment of work needs five things. Today, all five are missing."
+      footnote="One ungoverned moment is a curiosity. Five thousand a day is operational risk.">
+      <div className="grid grid-cols-[1fr_1.25fr] gap-8 h-full">
         {/* the bare output */}
-        <div className="rounded-2xl p-10 flex flex-col items-center justify-center"
+        <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <div className="rounded-full px-6 py-2.5 mb-8 font-mono uppercase tracking-[0.24em]"
-            style={{ fontSize: 22, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
-            One AI output · no governance
+          <div className="self-start rounded-full px-5 py-2 mb-5 font-mono uppercase tracking-[0.24em]"
+            style={{ fontSize: 14, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
+            One moment of work · no governance
           </div>
-          <div className="rounded-xl px-5 py-3 mb-5 w-full"
+          <div className="rounded-xl px-5 py-4 mb-5 w-full"
             style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>
+            <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.25 }}>
               "Prepare our response to the €40M RFP from the city of Hamburg."
             </p>
           </div>
-          <div className="rounded-2xl px-8 py-7 w-full"
+          <div className="rounded-2xl px-7 py-6 w-full flex-1 flex flex-col justify-center"
             style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>model output, 4 seconds later</p>
-            <p className="font-black" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>output, 4 seconds later</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
               A 12-page response.<br/>
               <span style={{ color: `hsl(${RED})` }}>Confident. Coherent. Unaccountable.</span>
             </p>
             <p className="mt-4 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
               · cites pricing that expired last quarter<br/>
               · uses a compliance clause we no longer offer<br/>
-              · references a case study legal redacted<br/>
-              · nobody signed it; nobody can find out who didn't
+              · no source, no approver, no receipt
             </p>
           </div>
-          <p className="mt-6 text-center font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, maxWidth: 480, lineHeight: 1.35 }}>
-            Reads like the company. Carries nothing the company can stand on.
-          </p>
         </div>
-        {/* the four missing bands */}
+        {/* the five missing components */}
         <div className="flex flex-col gap-3 justify-center">
-          {gaps.map((g, i) => (
-            <div key={g.k} className="rounded-xl px-6 py-4 flex items-center gap-5"
-              style={{ background: CARD_ALT, border: `1px solid hsl(${RED} / 0.28)` }}>
+          <p className="font-mono uppercase tracking-[0.26em] mb-1" style={{ fontSize: 12, color: SUBTLE }}>
+            what is missing from this one moment
+          </p>
+          {MOMENT_NEEDS.map((g, i) => (
+            <div key={g.k} className="rounded-xl px-5 py-3.5 flex items-center gap-4"
+              style={{ background: CARD_ALT, border: `1px solid hsl(${RED} / 0.3)` }}>
               <span className="font-mono" style={{ fontSize: 12, color: SUBTLE, letterSpacing: "0.22em", minWidth: 28 }}>0{i + 1}</span>
-              <div className="rounded-md px-3 py-1.5 font-mono uppercase tracking-[0.18em] shrink-0"
-                style={{ fontSize: 12, color: `hsl(${RED})`, background: `hsl(${RED} / 0.1)`, border: `1px solid hsl(${RED} / 0.4)`, minWidth: 150, textAlign: "center" }}>
-                {g.k}
+              <div className="rounded-md px-3 py-1.5 font-mono uppercase tracking-[0.18em] shrink-0 text-center"
+                style={{ fontSize: 12, fontWeight: 800, color: `hsl(${RED})`, background: `hsl(${RED} / 0.1)`, border: `1px solid hsl(${RED} / 0.45)`, minWidth: 160 }}>
+                no {g.k}
               </div>
-              <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{g.d}</p>
+              <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{g.missing}</p>
             </div>
           ))}
         </div>
@@ -1660,179 +1676,182 @@ function S03StoryFailure({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 04 · Guide · LIZA. The actual loop diagram. Plain-English captions under it.
+// 04 · Guide · LIZA. The same five missing components, now provided.
 function S04StoryGuide({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Guide · meet LIZA" n={n} t={t}
-      badge="What LIZA actually does"
-      headline="LIZA sits between the person and the model. Same request, two very different outputs.">
-      <div className="grid grid-cols-[1fr_auto_1fr] gap-8 h-full items-stretch">
-        {/* WITHOUT */}
-        <div className="rounded-2xl p-8 flex flex-col"
-          style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.3)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em] mb-6"
-            style={{ fontSize: 18, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
-            Without LIZA
+      badge="What LIZA gives every moment of work"
+      headline="LIZA gives every AI moment the five things it was missing. Every output becomes production-ready, and connected to the rest of the company."
+      footnote="One correction propagates to every moment that touches the same standard. The company gets sharper with every call.">
+      <div className="flex flex-col gap-5 h-full">
+        {/* TOP · the transformation, said once */}
+        <div className="grid grid-cols-[1fr_auto_1fr] gap-5 items-stretch">
+          <div className="rounded-xl px-5 py-3.5 flex items-center gap-4"
+            style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.35)` }}>
+            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>Yesterday</span>
+            <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>
+              Every AI moment is missing 5 things.
+            </span>
           </div>
-          <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Prepare our response to the €40M RFP from the city of Hamburg."</p>
-          </div>
-          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>Goes straight to the model</p>
-          <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
-            style={{ background: BG, border: `2px dashed hsl(${RED} / 0.5)` }}>
-            <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>A plausible draft.</p>
-            <p className="mt-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Cites expired pricing. Uses a compliance clause we no longer offer. No source, no approver, no receipt. The next bid starts from scratch.
-            </p>
-          </div>
-        </div>
-
-        {/* LIZA arrow */}
-        <div className="flex flex-col items-center justify-center gap-4 px-2">
-          <div className="rounded-2xl px-6 py-8 text-center"
-            style={{ background: BG, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 24px hsl(${GREEN} / 0.25)` }}>
-            <p className="font-mono uppercase tracking-[0.28em] mb-2" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>LIZA</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>LOCK</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>COMPILE</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>SIGN</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>LEARN</p>
-            <p className="mt-3 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: SUBTLE }}>once, per call</p>
-          </div>
-          <p className="font-mono" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>→</p>
-        </div>
-
-        {/* WITH */}
-        <div className="rounded-2xl p-8 flex flex-col"
-          style={{ background: `hsl(${GREEN} / 0.07)`, border: `1.5px solid hsl(${GREEN} / 0.5)`, boxShadow: `0 0 22px hsl(${GREEN} / 0.12)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em] mb-6"
-            style={{ fontSize: 18, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `1.5px solid hsl(${GREEN} / 0.55)` }}>
-            With LIZA
-          </div>
-          <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>Same request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Prepare our response to the €40M RFP from the city of Hamburg."</p>
-          </div>
-          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Routed through the governance loop</p>
-          <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
-            style={{ background: BG, border: `2px solid hsl(${GREEN})` }}>
-            <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>The same draft &mdash; with a receipt.</p>
-            <div className="mt-4 grid grid-cols-1 gap-1.5 font-mono" style={{ fontSize: 14, color: TEXT }}>
-              <p>· standard: RFP-PUBSEC v4.1 (current pricing locked)</p>
-              <p>· evidence: 12 hashed sources, legal-cleared</p>
-              <p>· model: claude-3.5</p>
-              <p>· approver: M. Schäfer · 14:02</p>
+          <div className="flex items-center justify-center px-3">
+            <div className="rounded-full px-5 py-2 font-mono uppercase tracking-[0.28em]"
+              style={{ fontSize: 12, fontWeight: 900, color: `hsl(${GREEN})`, background: BG, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 14px hsl(${GREEN} / 0.3)` }}>
+              LIZA · the governance loop
             </div>
-            <div className="mt-5 pt-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>And because it carries a receipt…</p>
-              <p className="font-bold mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-                every other answer that touches RFP-PUBSEC v4.1 (pricing, the next bid, the audit replay) moves with it. One correction, one signature, propagates through the whole corpus.
+          </div>
+          <div className="rounded-xl px-5 py-3.5 flex items-center gap-4"
+            style={{ background: `hsl(${GREEN} / 0.08)`, border: `1.5px solid hsl(${GREEN} / 0.55)` }}>
+            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>From now on</span>
+            <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>
+              Every AI moment has all 5, signed and connected.
+            </span>
+          </div>
+        </div>
+
+        {/* FIVE columns · what was missing → what LIZA gives */}
+        <div className="grid grid-cols-5 gap-3 flex-1">
+          {MOMENT_NEEDS.map((m, i) => (
+            <div key={m.k} className="rounded-2xl p-4 flex flex-col"
+              style={{
+                background: `hsl(${GREEN} / 0.07)`,
+                border: `1.5px solid hsl(${GREEN} / 0.5)`,
+                boxShadow: `0 0 16px hsl(${GREEN} / 0.1)`,
+              }}>
+              <div className="flex items-baseline justify-between">
+                <span className="font-mono" style={{ fontSize: 11, color: SUBTLE, letterSpacing: "0.22em" }}>0{i + 1}</span>
+                <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>delivered</span>
+              </div>
+              <p className="font-black mt-1.5 uppercase tracking-[0.04em]" style={{ fontSize: 22, color: `hsl(${GREEN})`, lineHeight: 1.05 }}>
+                {m.k}
+              </p>
+              <div className="my-3 h-px" style={{ background: `hsl(${GREEN} / 0.35)` }} />
+              <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 9, color: SUBTLE }}>
+                what was missing
+              </p>
+              <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>
+                {m.missing}
+              </p>
+              <p className="font-mono uppercase tracking-[0.18em] mt-3" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>
+                LIZA gives you
+              </p>
+              <p className="font-bold mt-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>
+                {m.gives}
               </p>
             </div>
-          </div>
+          ))}
+        </div>
+
+        {/* BOTTOM band · the connective payoff */}
+        <div className="rounded-xl px-6 py-4 flex items-center justify-between gap-6"
+          style={{ background: `hsl(${GOLD} / 0.08)`, border: `1.5px solid hsl(${GOLD} / 0.45)` }}>
+          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
+            And because each moment now carries all five
+          </p>
+          <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>
+            Every moment connects to every other. Fix one standard, the whole company updates. Fast <em className="not-italic" style={{ color: `hsl(${GREEN})` }}>and</em> right, by construction.
+          </p>
         </div>
       </div>
     </StorySlide>
   );
 }
 
-// 05 · The Block. Anatomy of one Block on the left. Ladder on the right so the
-// reader sees how Blocks compose upward.
+// 05 · Plan A · the mechanics. Call → Receipt → Blocks → Playbook → Org-as-Code.
 function S05StoryBlock({ n, t }: { n: number; t: number }) {
   const blockTypes = [
-    {
-      type: "DIRECTIVE",
-      what: "a rule the company has agreed on",
-      example:
-        "Public-sector RFP responses use RFP-PUBSEC v4.1 pricing tables and the legal-cleared compliance clause. Do not quote terms older than the current quarter.",
-      hero: true,
-    },
-    {
-      type: "KNOWLEDGE",
-      what: "a fact AI must cite, not invent",
-      example:
-        "Hamburg public-sector procurement requires a German-language summary, a 7-year retention clause, and BaFin-compliant payment terms.",
-    },
-    {
-      type: "PROCEDURE",
-      what: "the steps a workflow must follow",
-      example:
-        "RFP intake: classify the bid, pull last 4 similar receipts, draft, route to bid lead, then to legal, then sign and emit.",
-    },
-    {
-      type: "PREFERENCE",
-      what: "the company's voice and house style",
-      example:
-        "Bids open with the city's stated outcome, not our credentials. Tables before prose. No superlatives. Active voice only.",
-    },
+    { type: "DIRECTIVE",  what: "a rule the company has agreed on" },
+    { type: "KNOWLEDGE",  what: "a fact AI must cite, not invent" },
+    { type: "PROCEDURE",  what: "the steps a workflow must follow" },
+    { type: "PREFERENCE", what: "the company's voice and house style" },
   ];
+  const Arrow = () => (
+    <div className="flex items-center justify-center px-1" style={{ color: SUBTLE }}>
+      <span className="font-mono" style={{ fontSize: 22 }}>→</span>
+    </div>
+  );
   return (
-    <StorySlide section="Plan A · the new unit of work" n={n} t={t}
-      badge="The atom · your new operational unit"
-      headline="A Block is one governed unit of how the company thinks. Four types, one shape, all signed."
-      footnote="Headcount was the old OpEx unit. Tokens are the new raw material. The Block is the unit of governed AI work — what enterprises will measure, budget, and accumulate.">
-      <div className="grid grid-cols-[1.35fr_1fr] gap-10 h-full items-stretch">
-        {/* FOUR Block types — same shape, different content. Hamburg RFP runs through all four. */}
-        <div className="flex flex-col gap-4">
-          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 13, color: SUBTLE }}>
-            One shape · four types · same Hamburg RFP, governed from every angle
-          </p>
-          <div className="grid grid-cols-2 gap-4 flex-1">
-            {blockTypes.map((b) => {
-              const isHero = b.hero;
-              return (
-                <div key={b.type} className="rounded-2xl p-5 flex flex-col"
-                  style={{
-                    background: isHero ? `hsl(${GREEN} / 0.09)` : CARD_ALT,
-                    border: isHero ? `2px solid hsl(${GREEN})` : `1px solid ${CHROME_BORDER}`,
-                    boxShadow: isHero ? `0 0 24px hsl(${GREEN} / 0.18)` : "none",
-                  }}>
-                  <div className="flex items-baseline justify-between mb-2">
-                    <p className="font-mono uppercase tracking-[0.22em] font-black"
-                      style={{ fontSize: 13, color: isHero ? `hsl(${GREEN})` : TEXT }}>
-                      {b.type}
-                    </p>
-                    <p className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 10, color: SUBTLE }}>
-                      v3 · signed
-                    </p>
-                  </div>
-                  <p className="font-mono uppercase tracking-[0.18em] mb-3" style={{ fontSize: 10, color: SUBTLE }}>
-                    {b.what}
-                  </p>
-                  <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>
-                    "{b.example}"
-                  </p>
-                  <div className="mt-auto pt-3 flex items-center justify-between font-mono uppercase tracking-[0.18em]"
-                    style={{ fontSize: 10, color: SUBTLE, borderTop: `1px solid ${isHero ? `hsl(${GREEN} / 0.3)` : CHROME_BORDER}`, marginTop: 12 }}>
-                    <span>owner · M. Schäfer</span>
-                    <span>expires 2026-Q1</span>
-                  </div>
-                </div>
-              );
-            })}
+    <StorySlide section="Plan A · the mechanics" n={n} t={t}
+      badge="How the corpus compounds"
+      headline="Every governed moment leaves a receipt. Receipts cite Blocks. Blocks bundle into Playbooks. Playbooks become the company, in code."
+      footnote="The Block is the smallest unit at which AI work and human governance share the same vocabulary. It is also the unit that compounds.">
+      <div className="flex flex-col gap-5 h-full justify-center">
+        {/* The chain · 4 stages with arrows */}
+        <div className="flex items-stretch gap-2">
+          {/* 01 CALL */}
+          <div className="flex-1 rounded-2xl p-5 flex flex-col"
+            style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>01 · CALL</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+              One moment of work
+            </p>
+            <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
+              A request arrives. The Hamburg RFP. A code review. A board memo. A lab note.
+            </p>
           </div>
-          <p className="font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>
-            Every Block carries the same metadata: type, owner, version, expiry, hash. That is what makes it governable, replayable, and accountable.
-          </p>
+          <Arrow />
+          {/* 02 RECEIPT */}
+          <div className="flex-1 rounded-2xl p-5 flex flex-col"
+            style={{ background: `hsl(${GREEN} / 0.07)`, border: `1.5px solid hsl(${GREEN} / 0.5)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>02 · RECEIPT</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+              Signed output
+            </p>
+            <p className="mt-3" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
+              Every output emits one: inputs · policy version · model · approver · hash. Replayable forever.
+            </p>
+            <div className="mt-auto pt-3 font-mono uppercase tracking-[0.18em]"
+              style={{ fontSize: 10, color: SUBTLE, borderTop: `1px solid hsl(${GREEN} / 0.3)`, marginTop: 12 }}>
+              cites the Blocks it used →
+            </div>
+          </div>
+          <Arrow />
+          {/* 03 BLOCKS · expanded into 4 types */}
+          <div className="flex-[1.6] rounded-2xl p-5 flex flex-col"
+            style={{ background: `hsl(${GOLD} / 0.07)`, border: `1.5px solid hsl(${GOLD} / 0.5)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>03 · BLOCKS</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+              The atoms of how the company decides
+            </p>
+            <div className="grid grid-cols-2 gap-2 mt-3">
+              {blockTypes.map(b => (
+                <div key={b.type} className="rounded-md px-2.5 py-2"
+                  style={{ background: BG, border: `1px solid hsl(${GOLD} / 0.4)` }}>
+                  <p className="font-mono uppercase tracking-[0.16em] font-black" style={{ fontSize: 10, color: `hsl(${GOLD})` }}>{b.type}</p>
+                  <p className="mt-0.5" style={{ fontSize: 11, color: MUTED, lineHeight: 1.25 }}>{b.what}</p>
+                </div>
+              ))}
+            </div>
+            <p className="font-mono uppercase tracking-[0.18em] mt-3"
+              style={{ fontSize: 10, color: SUBTLE }}>
+              same shape · typed · owner-signed · versioned
+            </p>
+          </div>
+          <Arrow />
+          {/* 04 PLAYBOOK */}
+          <div className="flex-1 rounded-2xl p-5 flex flex-col"
+            style={{ background: `hsl(${ACCENT} / 0.07)`, border: `1.5px solid hsl(${ACCENT} / 0.5)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>04 · PLAYBOOK</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+              Blocks bundled into a workflow
+            </p>
+            <p className="mt-3" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
+              The Hamburg RFP playbook bundles all four Block types into one signed way of working. Reused on the next bid, the next city, the next quarter.
+            </p>
+          </div>
         </div>
 
-        {/* How Blocks scale up — the ladder, but with bigger plain-English labels */}
-        <div className="flex flex-col gap-4 justify-center">
-          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 13, color: SUBTLE }}>
-            Blocks compile upward
+        {/* 05 · ORG-AS-CODE summary band */}
+        <div className="rounded-2xl p-6 flex items-center justify-between gap-8"
+          style={{ background: `hsl(${ACCENT} / 0.09)`, border: `2px solid hsl(${ACCENT})`, boxShadow: `0 0 22px hsl(${ACCENT} / 0.18)` }}>
+          <div>
+            <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 12, color: `hsl(${ACCENT})` }}>05 · ORG-AS-CODE</p>
+            <p className="font-black mt-2" style={{ fontSize: 30, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+              All Playbooks together = the company, in code.
+            </p>
+          </div>
+          <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45, maxWidth: 540 }}>
+            Models come and go. Vendors come and go. The corpus of Blocks, Playbooks and signed receipts is the IP the company keeps, and the asset that compounds with every governed moment.
           </p>
-          {[
-            { k: "BLOCK",       title: "the atom · 4 types",            copy: "Directive · Knowledge · Procedure · Preference",       color: GREEN  },
-            { k: "PLAYBOOK",    title: "many Blocks = one workflow",   copy: "the Hamburg RFP playbook bundles all four",            color: GOLD   },
-            { k: "ORG-AS-CODE", title: "all Playbooks = the company", copy: "the asset that compounds, the IP that travels",        color: ACCENT },
-          ].map((r) => (
-            <div key={r.k} className="rounded-xl p-5"
-              style={{ background: `hsl(${r.color} / 0.07)`, border: `1.5px solid hsl(${r.color} / 0.4)` }}>
-              <p className="font-black tracking-[0.08em]" style={{ fontSize: 22, color: `hsl(${r.color})` }}>{r.k}</p>
-              <p className="font-black mt-2" style={{ fontSize: 19, color: TEXT, letterSpacing: "-0.018em", lineHeight: 1.2 }}>{r.title}</p>
-              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35, marginTop: 4 }}>{r.copy}</p>
-            </div>
-          ))}
         </div>
       </div>
     </StorySlide>
@@ -2114,10 +2133,10 @@ function S09StoryAsk({ n, t }: { n: number; t: number }) {
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
   // StoryBrand 9-slide spine. Character → Problem → Guide → Plan → Success → Failure-avoided → Model/Moat → Team → Ask.
   { id: "cover",    title: "Cover · Character",                 render: (n, t) => <S01StoryCover n={n} t={t} /> },
-  { id: "problem",  title: "Problem · single chat → 1000 chats", render: (n, t) => <S02StoryScale n={n} t={t} /> },
-  { id: "context",  title: "Failure mode · context explosion",  render: (n, t) => <S03StoryFailure n={n} t={t} /> },
-  { id: "solution", title: "Guide · meet LIZA, the AI Governance Loop", render: (n, t) => <S04StoryGuide n={n} t={t} /> },
-  { id: "block",    title: "Plan A · the Block (the atom)",     render: (n, t) => <S05StoryBlock n={n} t={t} /> },
+  { id: "problem",  title: "Problem · the unit of AI work changed", render: (n, t) => <S02StoryScale n={n} t={t} /> },
+  { id: "context",  title: "Failure mode · five things are missing", render: (n, t) => <S03StoryFailure n={n} t={t} /> },
+  { id: "solution", title: "Guide · meet LIZA, the governance loop", render: (n, t) => <S04StoryGuide n={n} t={t} /> },
+  { id: "block",    title: "Plan A · the mechanics of how it compounds", render: (n, t) => <S05StoryBlock n={n} t={t} /> },
   { id: "category", title: "The category · vs RAG, vs Knowledge Graph", render: (n, t) => <S05bStoryVsRagKg n={n} t={t} /> },
   { id: "moment",   title: "Plan B · the governed moment",      render: (n, t) => <S06StoryMoment n={n} t={t} /> },
   { id: "success",  title: "Success · what compounds",          render: (n, t) => <S07StorySuccess n={n} t={t} /> },
