@@ -339,18 +339,18 @@ export function VizFactoryWalkthrough() {
                 <div key={s.k} className="rounded-xl p-4 flex flex-col"
                   style={{ background: BG, border: `2px solid hsl(${GREEN} / 0.4)`, boxShadow: `0 0 18px hsl(${GREEN} / 0.08)` }}>
                   <div className="flex items-center justify-between mb-2">
-                    <p className="font-mono" style={{ fontSize: 10, color: SUBTLE, letterSpacing: "0.22em" }}>{s.n}</p>
+                    <p className="font-mono" style={{ fontSize: 14, color: SUBTLE, letterSpacing: "0.22em" }}>{s.n}</p>
                     <div className="rounded-full flex items-center justify-center"
-                      style={{ width: 32, height: 32, background: `hsl(${GREEN} / 0.1)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-                      <Icon size={16} style={{ color: `hsl(${GREEN})` }} />
+                      style={{ width: 40, height: 40, background: `hsl(${GREEN} / 0.1)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+                      <Icon size={22} style={{ color: `hsl(${GREEN})` }} />
                     </div>
                   </div>
-                  <p className="font-black" style={{ fontSize: 20, color: TEXT, letterSpacing: "0.04em", lineHeight: 1 }}>{s.k}</p>
-                  <p className="mt-2" style={{ fontSize: 12, color: MUTED, lineHeight: 1.3 }}>{s.what}</p>
+                  <p className="font-black" style={{ fontSize: 28, color: TEXT, letterSpacing: "0.04em", lineHeight: 1 }}>{s.k}</p>
+                  <p className="mt-2" style={{ fontSize: 16, color: TEXT, lineHeight: 1.3 }}>{s.what}</p>
                   <div className="mt-3 pt-3 flex-1" style={{ borderTop: `1px solid hsl(${GREEN} / 0.2)` }}>
-                    <p className="font-mono" style={{ fontSize: 10, color: `hsl(${GREEN})`, letterSpacing: "0.16em" }}>WHAT IT EMITS</p>
-                    <p className="font-mono mt-1" style={{ fontSize: 11, color: TEXT, lineHeight: 1.35 }}>{s.shows}</p>
-                    <p className="font-mono mt-1.5" style={{ fontSize: 10, color: SUBTLE, lineHeight: 1.35 }}>{s.meta}</p>
+                    <p className="font-mono" style={{ fontSize: 12, color: `hsl(${GREEN})`, letterSpacing: "0.16em" }}>WHAT IT EMITS</p>
+                    <p className="font-mono mt-1.5" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>{s.shows}</p>
+                    <p className="font-mono mt-2" style={{ fontSize: 12, color: SUBTLE, lineHeight: 1.4 }}>{s.meta}</p>
                   </div>
                 </div>
               );
