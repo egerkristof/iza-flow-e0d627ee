@@ -374,11 +374,22 @@ export function VizFactoryWalkthrough() {
       </div>
 
       {/* feedback loop arrow under the row */}
-      <div className="flex items-center justify-center gap-4 font-mono uppercase tracking-[0.24em] -mt-1"
-        style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
-        <span style={{ color: SUBTLE }}>04 LEARN</span>
-        <span>↻ feeds the next call's 01 LOCK</span>
-        <span style={{ color: SUBTLE }}>· the corpus is the asset</span>
+      <div className="relative mt-2">
+        <svg viewBox="0 0 1000 90" className="w-full" style={{ height: 90 }}>
+          <defs>
+            <marker id="loopArr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+              <path d="M0 0 L12 6 L0 12 z" fill={`hsl(${GREEN})`} />
+            </marker>
+          </defs>
+          {/* big curved arrow from right (LEARN) back to left (LOCK) */}
+          <path d="M 870 15 C 870 80, 130 80, 130 15"
+            stroke={`hsl(${GREEN})`} strokeWidth="3" fill="none" strokeDasharray="2 0" markerEnd="url(#loopArr)" />
+          <text x="500" y="62" textAnchor="middle"
+            fontSize="20" fontWeight="800" fill={`hsl(${GREEN})`}
+            fontFamily="ui-monospace, monospace" letterSpacing="0.04em">
+            ↻  LEARN feeds the next call's LOCK · the corpus compounds
+          </text>
+        </svg>
       </div>
     </div>
   );
@@ -1424,7 +1435,7 @@ function ConceptLadder({ active = "all", dark = false }: { active?: "block" | "p
 // Compounding curve. Time on x, accumulated Blocks on y, with milestone markers.
 function CompoundingCurve() {
   return (
-    <svg viewBox="0 0 720 360" className="w-full h-full">
+    <svg viewBox="0 0 720 380" preserveAspectRatio="xMidYMid meet" className="w-full h-full">
       <line x1="60" y1="320" x2="700" y2="320" stroke={CHROME_BORDER} strokeWidth="1" />
       <line x1="60" y1="30"  x2="60"  y2="320" stroke={CHROME_BORDER} strokeWidth="1" />
       {[1,2,3,4].map(i => (
@@ -1435,24 +1446,25 @@ function CompoundingCurve() {
         stroke={`hsl(${GREEN})`} strokeWidth="3.5" fill="none" />
       <path d="M 60 310 Q 240 305 360 240 T 700 50 L 700 320 L 60 320 Z"
         fill={`hsl(${GREEN} / 0.08)`} stroke="none" />
+      {/* dashed competitor line — drawn FIRST so milestone markers sit on top */}
+      <path d="M 60 310 L 700 285" stroke={`hsl(${RED})`} strokeWidth="2" fill="none" strokeDasharray="6 6" opacity="0.55" />
+      <text x="694" y="278" fontSize="11" fill={`hsl(${RED})`} textAnchor="end" fontWeight="700">ungoverned AI · flat learning</text>
       {/* milestone markers */}
       {[
-        { x: 150, y: 300, k: "01", label: "First Blocks", note: "captured from real corrections" },
-        { x: 360, y: 240, k: "02", label: "Playbooks form", note: "workflows compile from the corpus" },
-        { x: 600, y: 90,  k: "03", label: "Org-as-Code",   note: "company runs from its own corpus" },
+        // labels above the line for milestone 1 (avoid the red competitor line)
+        { x: 150, y: 308, k: "01", label: "First Blocks",   note: "captured from real corrections", anchor: "start", lx: 18,  ly: -32, ny: -14 },
+        { x: 360, y: 240, k: "02", label: "Playbooks form", note: "workflows compile from corpus",  anchor: "start", lx: 16,  ly: -10, ny:  10 },
+        { x: 600, y: 90,  k: "03", label: "Org-as-Code",    note: "company runs from its corpus",   anchor: "end",   lx: -14, ly: -10, ny:  10 },
       ].map((m) => (
         <g key={m.k}>
           <circle cx={m.x} cy={m.y} r="7" fill={`hsl(${GREEN})`} stroke={BG} strokeWidth="3" />
-          <text x={m.x + 14} y={m.y - 10} fontSize="14" fontWeight="800" fill={TEXT}>{m.label}</text>
-          <text x={m.x + 14} y={m.y + 8}  fontSize="11" fill={MUTED} fontFamily="ui-monospace,monospace">{m.note}</text>
+          <text x={m.x + m.lx} y={m.y + m.ly} fontSize="14" fontWeight="800" fill={TEXT} textAnchor={m.anchor as any}>{m.label}</text>
+          <text x={m.x + m.lx} y={m.y + m.ny} fontSize="11" fill={MUTED} fontFamily="ui-monospace,monospace" textAnchor={m.anchor as any}>{m.note}</text>
         </g>
       ))}
       {/* axis labels */}
-      <text x="380" y="350" fontSize="11" fill={SUBTLE} textAnchor="middle" fontFamily="ui-monospace,monospace">months of operation →</text>
+      <text x="380" y="365" fontSize="11" fill={SUBTLE} textAnchor="middle" fontFamily="ui-monospace,monospace">months of operation →</text>
       <text x="30"  y="180" fontSize="11" fill={SUBTLE} textAnchor="middle" fontFamily="ui-monospace,monospace" transform="rotate(-90 30 180)">accumulated operational IP →</text>
-      {/* dashed competitor line */}
-      <path d="M 60 310 L 700 280" stroke={`hsl(${RED})`} strokeWidth="2" fill="none" strokeDasharray="6 6" opacity="0.7" />
-      <text x="700" y="272" fontSize="11" fill={`hsl(${RED})`} textAnchor="end" fontWeight="700">ungoverned AI · flat learning</text>
     </svg>
   );
 }
@@ -1498,22 +1510,24 @@ function S01StoryCover({ n, t }: { n: number; t: number }) {
 function S02StoryScale({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Problem" n={n} t={t}
-      badge="The shift · one chat to a thousand AI moments"
-      headline="Enterprise AI is no longer about model access. It is about governing a thousand AI moments a day.">
+      badge="The shift · one chat → thousands of AI moments a day"
+      headline="The unit of AI work changed. The org's response hasn't.">
       <div className="grid grid-cols-[0.7fr_1.3fr] gap-7 h-full">
         {/* TODAY · one isolated chat */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em]"
-            style={{ fontSize: 22, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
+          <div className="rounded-full px-7 py-3 self-start font-mono uppercase tracking-[0.32em]"
+            style={{ fontSize: 32, fontWeight: 900, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `2px solid hsl(${RED} / 0.55)` }}>
             Yesterday
           </div>
           <div className="flex-1 flex items-center justify-center">
-            <div className="rounded-2xl px-8 py-7 text-center"
-              style={{ background: BG, border: `1.5px dashed hsl(${RED} / 0.5)`, minWidth: 280 }}>
-              <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>one chat</p>
-              <p className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1 }}>1 person<br/>1 prompt<br/>1 reply</p>
-              <p className="mt-4 font-mono" style={{ fontSize: 11, color: `hsl(${RED})` }}>nothing the org keeps</p>
+            <div className="rounded-2xl px-10 py-10 text-center w-full"
+              style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
+              <p className="font-mono uppercase tracking-[0.24em] mb-4" style={{ fontSize: 13, color: SUBTLE }}>one chat</p>
+              <p className="font-black" style={{ fontSize: 64, color: TEXT, lineHeight: 1, letterSpacing: "-0.025em" }}>
+                1 person<br/>1 prompt<br/>1 reply
+              </p>
+              <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>nothing the org keeps</p>
             </div>
           </div>
           <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>
@@ -1523,10 +1537,13 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
         {/* TODAY/TOMORROW · a swarm of governed moments */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em]"
-            style={{ fontSize: 22, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `1.5px solid hsl(${GREEN} / 0.55)`, boxShadow: `0 0 14px hsl(${GREEN} / 0.25)` }}>
-            Today &nbsp;·&nbsp; and from now on
+          <div className="rounded-full px-7 py-3 self-start font-mono uppercase tracking-[0.32em]"
+            style={{ fontSize: 32, fontWeight: 900, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `2px solid hsl(${GREEN} / 0.6)`, boxShadow: `0 0 20px hsl(${GREEN} / 0.28)` }}>
+            Today · and from now on
           </div>
+          <p className="font-black mt-4" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+            Thousands of AI calls · thousands of contexts · every hour.
+          </p>
           <div className="flex-1 flex items-center justify-center py-3">
             <div className="grid grid-cols-14 gap-1.5" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))", width: "100%" }}>
               {Array.from({ length: 14 * 9 }).map((_, i) => {
@@ -1539,7 +1556,7 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
               })}
             </div>
           </div>
-          <p className="font-black mt-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+          <p className="font-mono mt-4" style={{ fontSize: 18, color: MUTED, lineHeight: 1.3, letterSpacing: "0.02em" }}>
             employees × workflows × policies × approvals × receipts
           </p>
           <div className="mt-3 flex gap-5 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11 }}>
@@ -1574,13 +1591,29 @@ function S03StoryFailure({ n, t }: { n: number; t: number }) {
             style={{ fontSize: 22, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
             One AI output · no governance
           </div>
-          <div className="rounded-2xl px-12 py-12 text-center w-full"
-            style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 14, color: SUBTLE }}>model output</p>
-            <p className="font-black" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>"Here is<br/>the answer."</p>
+          <div className="rounded-xl px-5 py-3 mb-5 w-full"
+            style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>
+              "Prepare our response to the €40M RFP from the city of Hamburg."
+            </p>
           </div>
-          <p className="mt-8 text-center font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, maxWidth: 460, lineHeight: 1.35 }}>
-            Looks confident. Carries nothing the organisation can stand on.
+          <div className="rounded-2xl px-8 py-7 w-full"
+            style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>model output, 4 seconds later</p>
+            <p className="font-black" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              A 12-page response.<br/>
+              <span style={{ color: `hsl(${RED})` }}>Confident. Coherent. Unaccountable.</span>
+            </p>
+            <p className="mt-4 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
+              · cites pricing that expired last quarter<br/>
+              · uses a compliance clause we no longer offer<br/>
+              · references a case study legal redacted<br/>
+              · nobody signed it; nobody can find out who didn't
+            </p>
+          </div>
+          <p className="mt-6 text-center font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, maxWidth: 480, lineHeight: 1.35 }}>
+            Reads like the company. Carries nothing the company can stand on.
           </p>
         </div>
         {/* the four missing bands */}
@@ -1665,9 +1698,12 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
               <p>· model: claude-3.5</p>
               <p>· approver: M. Schäfer · 14:02</p>
             </div>
-            <p className="mt-4 font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})`, lineHeight: 1.35 }}>
-              Replayable. Owned. The next call inherits the correction.
-            </p>
+            <div className="mt-5 pt-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>And because it carries a receipt…</p>
+              <p className="font-bold mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
+                every other answer that touches AEC-PROP v3.2 — pricing, compliance, the next RFP, the audit replay — moves with it. One correction, one signature, propagates through the whole corpus.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -1679,9 +1715,10 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
 // reader sees how Blocks compose upward.
 function S05StoryBlock({ n, t }: { n: number; t: number }) {
   return (
-    <StorySlide section="The unit · the Block" n={n} t={t}
-      badge="The atom"
-      headline="A Block is one rule the company has agreed on, written down, signed, and version-controlled.">
+    <StorySlide section="Plan A · the new unit of work" n={n} t={t}
+      badge="The atom · your new operational unit"
+      headline="If AI is the new labour, the Block is the new unit you pay for, govern, and compound."
+      footnote="Headcount was the old OpEx unit. Tokens are the new raw material. The Block is the unit of governed AI work — what enterprises will measure, budget, and accumulate.">
       <div className="grid grid-cols-[1fr_1fr] gap-12 h-full items-center">
         {/* ONE concrete Block — looks like a card, not a spec sheet */}
         <div className="rounded-2xl p-10"
@@ -1712,18 +1749,18 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
 
         {/* How Blocks scale up — the ladder, but with bigger plain-English labels */}
         <div className="flex flex-col gap-5">
-          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 14, color: SUBTLE }}>Blocks scale into bigger things</p>
+          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 14, color: SUBTLE }}>One Block is the atom. Then it compounds.</p>
           {[
-            { k: "BLOCK",       size: 30, title: "one rule",        copy: "what you just saw on the left", color: GREEN },
-            { k: "PLAYBOOK",    size: 30, title: "a workflow",      copy: "many Blocks composed to get one job done", color: GOLD },
-            { k: "ORG-AS-CODE", size: 30, title: "the whole company", copy: "every Playbook the company runs, versioned", color: ACCENT },
+            { k: "BLOCK",       size: 30, title: "one rule = one priced, governed unit",  copy: "what you measure, budget and audit",         color: GREEN },
+            { k: "PLAYBOOK",    size: 30, title: "many Blocks = one workflow",            copy: "how a job gets done, repeatably",            color: GOLD  },
+            { k: "ORG-AS-CODE", size: 30, title: "all Playbooks = the company, in code", copy: "the asset that compounds; the new IP",       color: ACCENT },
           ].map((r, i) => (
             <div key={r.k} className="rounded-xl p-6 flex items-center gap-6"
               style={{ background: `hsl(${r.color} / 0.07)`, border: `1.5px solid hsl(${r.color} / 0.4)` }}>
               <p className="font-black tracking-[0.08em]" style={{ fontSize: r.size, color: `hsl(${r.color})`, minWidth: 240 }}>{r.k}</p>
               <div>
-                <p className="font-black" style={{ fontSize: 24, color: TEXT, letterSpacing: "-0.02em" }}>{r.title}</p>
-                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.35, marginTop: 2 }}>{r.copy}</p>
+                <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.018em", lineHeight: 1.2 }}>{r.title}</p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35, marginTop: 3 }}>{r.copy}</p>
               </div>
             </div>
           ))}
@@ -1737,9 +1774,9 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
 // one request → 4 stations → signed receipt. This is the deepest "how" slide.
 function S06StoryMoment({ n, t }: { n: number; t: number }) {
   return (
-    <StorySlide section="The product · the moment" n={n} t={t}
-      badge="What we actually ship"
-      headline="A request comes in. Four stations turn it into one accountable, replayable work unit."
+    <StorySlide section="Plan B · the governed moment" n={n} t={t}
+      badge="What we actually ship · one full loop"
+      headline="Every AI moment runs the same four-station loop. LEARN feeds back into LOCK — the corpus gets sharper with every call."
       footnote="AACE v3.1 runtime · live in production · regulated AEC deployment">
       <div className="h-full flex flex-col justify-center">
         <VizFactoryWalkthrough />
@@ -1794,16 +1831,16 @@ function S08StoryModelMoat({ n, t }: { n: number; t: number }) {
         {/* THREE BIG NUMBERS — the pricing story in one row */}
         <div className="grid grid-cols-3 gap-6">
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GOLD} / 0.1)`, border: `2px solid hsl(${GOLD} / 0.5)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>Value to the customer</p>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>Value to the customer · avg</p>
             <p className="font-black mt-3" style={{ fontSize: 76, color: `hsl(${GOLD})`, letterSpacing: "-0.04em", lineHeight: 1 }}>€23</p>
             <p className="font-bold mt-3" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>per governed decision</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>The analyst hour LIZA replaces.</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>The analyst minutes LIZA replaces, fully loaded. Range €8–€120.</p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.1)`, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 22px hsl(${GREEN} / 0.18)` }}>
             <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>We charge</p>
             <p className="font-black mt-3" style={{ fontSize: 76, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", lineHeight: 1 }}>€0.40</p>
             <p className="font-bold mt-3" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>per governed decision</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>1-2% of the value we unlock. Easy yes.</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>≈1.7% of the value we unlock. Easy yes for procurement.</p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: SUBTLE }}>Our cost</p>
@@ -1824,12 +1861,40 @@ function S08StoryModelMoat({ n, t }: { n: number; t: number }) {
           </div>
         </div>
 
-        {/* MOAT — single line below */}
-        <div className="rounded-xl px-7 py-5 flex items-center gap-5"
+        {/* DERIVATION — show our maths plainly */}
+        <div className="rounded-xl px-7 py-5"
           style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 14, color: SUBTLE }}>The moat</span>
-          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>
-            We sit above Claude · GPT · Gemini as the neutral control layer. Models are suppliers; the receipts, standards and corpus belong to the customer — and to us as the system that runs them.
+          <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 12, color: SUBTLE }}>How we calculate it</p>
+          <div className="mt-3 grid grid-cols-4 gap-4 font-mono" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>
+            <div>
+              <p style={{ color: SUBTLE, fontSize: 11 }}>VALUE</p>
+              <p className="font-bold">20 min × €70/hr</p>
+              <p style={{ color: MUTED, fontSize: 12 }}>fully loaded analyst time displaced ≈ <b style={{ color: `hsl(${GOLD})` }}>€23</b></p>
+            </div>
+            <div>
+              <p style={{ color: SUBTLE, fontSize: 11 }}>PRICE</p>
+              <p className="font-bold">€0.40 metered</p>
+              <p style={{ color: MUTED, fontSize: 12 }}>per signed, replayable decision · volume tiers apply</p>
+            </div>
+            <div>
+              <p style={{ color: SUBTLE, fontSize: 11 }}>COST</p>
+              <p className="font-bold">€0.04 pass-through</p>
+              <p style={{ color: MUTED, fontSize: 12 }}>model tokens + infra · falling ~30% / yr</p>
+            </div>
+            <div>
+              <p style={{ color: SUBTLE, fontSize: 11 }}>MARGIN</p>
+              <p className="font-bold" style={{ color: `hsl(${GREEN})` }}>(€0.40 − €0.04) / €0.40</p>
+              <p style={{ color: MUTED, fontSize: 12 }}>≈ <b style={{ color: `hsl(${GREEN})` }}>90% gross</b>, expanding as model cost falls</p>
+            </div>
+          </div>
+        </div>
+
+        {/* MOAT — single line below */}
+        <div className="rounded-xl px-7 py-4 flex items-center gap-5"
+          style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+          <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The moat</span>
+          <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>
+            We sit above Claude · GPT · Gemini as the neutral control layer. Models are suppliers; receipts, standards and the corpus belong to the customer — and to us as the system that runs them.
           </p>
         </div>
       </div>
