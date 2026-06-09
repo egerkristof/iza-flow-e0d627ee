@@ -1604,32 +1604,71 @@ function S03StoryFailure({ n, t }: { n: number; t: number }) {
 
 // 04 · Guide · LIZA. The actual loop diagram. Plain-English captions under it.
 function S04StoryGuide({ n, t }: { n: number; t: number }) {
-  const stations = [
-    { k: "LOCK",    d: "bind the task to the approved Blocks" },
-    { k: "COMPILE", d: "assemble only the context this moment needs" },
-    { k: "SIGN",    d: "attach the receipt: inputs, model, owner, approval" },
-    { k: "LEARN",   d: "push the correction back into the corpus" },
-  ];
   return (
     <StorySlide section="Guide · meet LIZA" n={n} t={t}
-      badge="What LIZA is"
-      headline="LIZA is the AI Governance Loop. It sits between people, tools and models, and turns every AI moment into one accountable work unit.">
-      <div className="grid grid-cols-[1fr_1fr] gap-10 h-full items-center">
-        <div className="flex items-center justify-center">
-          <VizSolutionLoop />
+      badge="What LIZA actually does"
+      headline="LIZA sits between the person and the model. Same request, two very different outputs.">
+      <div className="grid grid-cols-[1fr_auto_1fr] gap-8 h-full items-stretch">
+        {/* WITHOUT */}
+        <div className="rounded-2xl p-8 flex flex-col"
+          style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.3)` }}>
+          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em] mb-6"
+            style={{ fontSize: 18, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
+            Without LIZA
+          </div>
+          <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Draft a proposal for the Munich school project."</p>
+          </div>
+          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>Goes straight to the model</p>
+          <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
+            style={{ background: BG, border: `2px dashed hsl(${RED} / 0.5)` }}>
+            <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>A plausible draft.</p>
+            <p className="mt-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+              Uses whatever the user remembers. No source. No approval. No receipt. The next person starts from scratch.
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col gap-3">
-          {stations.map((s, i) => (
-            <div key={s.k} className="rounded-xl px-6 py-4 flex items-center gap-5"
-              style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-              <span className="font-mono" style={{ fontSize: 12, color: SUBTLE, letterSpacing: "0.22em", minWidth: 28 }}>0{i + 1}</span>
-              <span className="font-black tracking-[0.1em]" style={{ fontSize: 22, color: `hsl(${GREEN})`, minWidth: 160 }}>{s.k}</span>
-              <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{s.d}</p>
+
+        {/* LIZA arrow */}
+        <div className="flex flex-col items-center justify-center gap-4 px-2">
+          <div className="rounded-2xl px-6 py-8 text-center"
+            style={{ background: BG, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 24px hsl(${GREEN} / 0.25)` }}>
+            <p className="font-mono uppercase tracking-[0.28em] mb-2" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>LIZA</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>LOCK</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>COMPILE</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>SIGN</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>LEARN</p>
+            <p className="mt-3 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: SUBTLE }}>once, per call</p>
+          </div>
+          <p className="font-mono" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>→</p>
+        </div>
+
+        {/* WITH */}
+        <div className="rounded-2xl p-8 flex flex-col"
+          style={{ background: `hsl(${GREEN} / 0.07)`, border: `1.5px solid hsl(${GREEN} / 0.5)`, boxShadow: `0 0 22px hsl(${GREEN} / 0.12)` }}>
+          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em] mb-6"
+            style={{ fontSize: 18, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `1.5px solid hsl(${GREEN} / 0.55)` }}>
+            With LIZA
+          </div>
+          <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>Same request</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Draft a proposal for the Munich school project."</p>
+          </div>
+          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Routed through the governance loop</p>
+          <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
+            style={{ background: BG, border: `2px solid hsl(${GREEN})` }}>
+            <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>The same draft &mdash; with a receipt.</p>
+            <div className="mt-4 grid grid-cols-1 gap-1.5 font-mono" style={{ fontSize: 14, color: TEXT }}>
+              <p>· standard: AEC-PROP v3.2</p>
+              <p>· evidence: 12 hashed sources</p>
+              <p>· model: claude-3.5</p>
+              <p>· approver: M. Schäfer · 14:02</p>
             </div>
-          ))}
-          <p className="mt-3 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>
-            model-agnostic by design · Claude · GPT · Gemini · on-prem
-          </p>
+            <p className="mt-4 font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})`, lineHeight: 1.35 }}>
+              Replayable. Owned. The next call inherits the correction.
+            </p>
+          </div>
         </div>
       </div>
     </StorySlide>
