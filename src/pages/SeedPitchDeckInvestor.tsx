@@ -375,41 +375,46 @@ export function VizFactoryWalkthrough() {
 
       {/* feedback loop arrow under the row */}
       {/* feedback loop — clean, generous spacing, text never crosses the arc */}
-      <div className="relative mt-4">
-        <svg viewBox="0 0 1000 140" preserveAspectRatio="none" className="w-full" style={{ height: 130 }}>
-          <defs>
-            <marker id="loopArr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto">
-              <path d="M0 0 L12 6 L0 12 z" fill={`hsl(${GREEN})`} />
-            </marker>
-          </defs>
-          {/* anchor pins */}
-          <circle cx="880" cy="14" r="5" fill={`hsl(${GREEN})`} />
-          <circle cx="120" cy="14" r="5" fill={`hsl(${GREEN})`} />
-          {/* arc curves DOWN and AROUND the caption, never through it */}
-          <path d="M 880 14 C 880 130, 120 130, 120 14"
-            stroke={`hsl(${GREEN})`} strokeWidth="2.5" fill="none"
-            markerEnd="url(#loopArr)" />
-          {/* arc endpoint labels */}
-          <text x="880" y="6" textAnchor="end" fontSize="12" fontWeight="800"
-            fill={`hsl(${GREEN})`} fontFamily="ui-monospace, monospace" letterSpacing="0.18em">
-            04 LEARN
-          </text>
-          <text x="120" y="6" textAnchor="start" fontSize="12" fontWeight="800"
-            fill={`hsl(${GREEN})`} fontFamily="ui-monospace, monospace" letterSpacing="0.18em">
-            01 LOCK
-          </text>
-        </svg>
-        {/* caption sits in clear space INSIDE the arc, no overlap */}
-        <div className="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none"
-          style={{ height: 130 }}>
-          <p className="rounded-full px-6 py-2 font-mono uppercase tracking-[0.24em]"
-            style={{
-              fontSize: 13, fontWeight: 800, color: `hsl(${GREEN})`,
-              background: BG, border: `1.5px solid hsl(${GREEN} / 0.45)`,
-            }}>
-            LEARN feeds the next call's LOCK · the corpus compounds
-          </p>
+      {/* Mirror the grid above so the arc spans ONLY the 4-stations column,
+          aligning its endpoints with the LOCK (01) and LEARN (04) cards. */}
+      <div className="grid grid-cols-[1fr_3.4fr_1.2fr] gap-5 items-stretch mt-3">
+        <div />
+        <div className="relative">
+          <svg viewBox="0 0 1000 150" preserveAspectRatio="none" className="w-full block" style={{ height: 140, overflow: "visible" }}>
+            <defs>
+              <marker id="loopArr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto">
+                <path d="M0 0 L12 6 L0 12 z" fill={`hsl(${GREEN})`} />
+              </marker>
+            </defs>
+            {/* LOCK is centered at ~12.5% of the 4-stations grid, LEARN at ~87.5% */}
+            <circle cx="875" cy="20" r="5" fill={`hsl(${GREEN})`} />
+            <circle cx="125" cy="20" r="5" fill={`hsl(${GREEN})`} />
+            {/* arc curves DOWN and AROUND the caption, never through it */}
+            <path d="M 875 20 C 875 140, 125 140, 125 20"
+              stroke={`hsl(${GREEN})`} strokeWidth="2.5" fill="none"
+              markerEnd="url(#loopArr)" />
+            <text x="855" y="12" textAnchor="end" fontSize="12" fontWeight="800"
+              fill={`hsl(${GREEN})`} fontFamily="ui-monospace, monospace" letterSpacing="0.18em">
+              04 LEARN
+            </text>
+            <text x="145" y="12" textAnchor="start" fontSize="12" fontWeight="800"
+              fill={`hsl(${GREEN})`} fontFamily="ui-monospace, monospace" letterSpacing="0.18em">
+              01 LOCK
+            </text>
+          </svg>
+          {/* caption sits in clear space INSIDE the arc, no overlap */}
+          <div className="absolute inset-x-0 top-0 flex items-center justify-center pointer-events-none"
+            style={{ height: 140 }}>
+            <p className="rounded-full px-6 py-2 font-mono uppercase tracking-[0.24em]"
+              style={{
+                fontSize: 13, fontWeight: 800, color: `hsl(${GREEN})`,
+                background: BG, border: `1.5px solid hsl(${GREEN} / 0.45)`,
+              }}>
+              LEARN feeds the next call's LOCK · the corpus compounds
+            </p>
+          </div>
         </div>
+        <div />
       </div>
     </div>
   );
