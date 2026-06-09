@@ -1435,7 +1435,7 @@ function ConceptLadder({ active = "all", dark = false }: { active?: "block" | "p
 // Compounding curve. Time on x, accumulated Blocks on y, with milestone markers.
 function CompoundingCurve() {
   return (
-    <svg viewBox="0 0 720 360" className="w-full h-full">
+    <svg viewBox="0 0 720 380" preserveAspectRatio="xMidYMid meet" className="w-full h-full">
       <line x1="60" y1="320" x2="700" y2="320" stroke={CHROME_BORDER} strokeWidth="1" />
       <line x1="60" y1="30"  x2="60"  y2="320" stroke={CHROME_BORDER} strokeWidth="1" />
       {[1,2,3,4].map(i => (
@@ -1446,24 +1446,25 @@ function CompoundingCurve() {
         stroke={`hsl(${GREEN})`} strokeWidth="3.5" fill="none" />
       <path d="M 60 310 Q 240 305 360 240 T 700 50 L 700 320 L 60 320 Z"
         fill={`hsl(${GREEN} / 0.08)`} stroke="none" />
+      {/* dashed competitor line — drawn FIRST so milestone markers sit on top */}
+      <path d="M 60 310 L 700 285" stroke={`hsl(${RED})`} strokeWidth="2" fill="none" strokeDasharray="6 6" opacity="0.55" />
+      <text x="694" y="278" fontSize="11" fill={`hsl(${RED})`} textAnchor="end" fontWeight="700">ungoverned AI · flat learning</text>
       {/* milestone markers */}
       {[
-        { x: 150, y: 300, k: "01", label: "First Blocks", note: "captured from real corrections" },
-        { x: 360, y: 240, k: "02", label: "Playbooks form", note: "workflows compile from the corpus" },
-        { x: 600, y: 90,  k: "03", label: "Org-as-Code",   note: "company runs from its own corpus" },
+        // labels above the line for milestone 1 (avoid the red competitor line)
+        { x: 150, y: 308, k: "01", label: "First Blocks",   note: "captured from real corrections", anchor: "start", lx: 18,  ly: -32, ny: -14 },
+        { x: 360, y: 240, k: "02", label: "Playbooks form", note: "workflows compile from corpus",  anchor: "start", lx: 16,  ly: -10, ny:  10 },
+        { x: 600, y: 90,  k: "03", label: "Org-as-Code",    note: "company runs from its corpus",   anchor: "end",   lx: -14, ly: -10, ny:  10 },
       ].map((m) => (
         <g key={m.k}>
           <circle cx={m.x} cy={m.y} r="7" fill={`hsl(${GREEN})`} stroke={BG} strokeWidth="3" />
-          <text x={m.x + 14} y={m.y - 10} fontSize="14" fontWeight="800" fill={TEXT}>{m.label}</text>
-          <text x={m.x + 14} y={m.y + 8}  fontSize="11" fill={MUTED} fontFamily="ui-monospace,monospace">{m.note}</text>
+          <text x={m.x + m.lx} y={m.y + m.ly} fontSize="14" fontWeight="800" fill={TEXT} textAnchor={m.anchor as any}>{m.label}</text>
+          <text x={m.x + m.lx} y={m.y + m.ny} fontSize="11" fill={MUTED} fontFamily="ui-monospace,monospace" textAnchor={m.anchor as any}>{m.note}</text>
         </g>
       ))}
       {/* axis labels */}
-      <text x="380" y="350" fontSize="11" fill={SUBTLE} textAnchor="middle" fontFamily="ui-monospace,monospace">months of operation →</text>
+      <text x="380" y="365" fontSize="11" fill={SUBTLE} textAnchor="middle" fontFamily="ui-monospace,monospace">months of operation →</text>
       <text x="30"  y="180" fontSize="11" fill={SUBTLE} textAnchor="middle" fontFamily="ui-monospace,monospace" transform="rotate(-90 30 180)">accumulated operational IP →</text>
-      {/* dashed competitor line */}
-      <path d="M 60 310 L 700 280" stroke={`hsl(${RED})`} strokeWidth="2" fill="none" strokeDasharray="6 6" opacity="0.7" />
-      <text x="700" y="272" fontSize="11" fill={`hsl(${RED})`} textAnchor="end" fontWeight="700">ungoverned AI · flat learning</text>
     </svg>
   );
 }
