@@ -1635,7 +1635,7 @@ function FAtom() {
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ─── F_THESIS · The infrastructure layer for the agentic workforce ───────────
-function FThesis() {
+export function FThesis() {
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
