@@ -1986,21 +1986,21 @@ export function FMoat() {
       icon: Ban,
       headline: "LLM Agnostic",
       subhead: "Zero Big Tech lock-in",
-      body: "We own the organizational logic and the Context Compiler. AACE routes parsing to a cheap local model and routes legal analysis to the frontier. Models swap. The org's code does not.",
+      body: "We own the org logic and the compiler. Models swap. The org's code does not.",
       hl: ACCENT,
     },
     {
       icon: ShieldCheck,
-      headline: "Compliance as native infrastructure",
+      headline: "Compliance as substrate",
       subhead: "EU AI Act ready on day one",
-      body: "Every action flows through the AACE graph. The result is a mathematically perfect, immutable audit trail for every agentic decision. Compliance is a query against the substrate, not a separate project.",
+      body: "Every action flows through the graph. Immutable audit trail by default. Compliance becomes a query, not a project.",
       hl: GOLD,
     },
     {
       icon: Coins,
-      headline: "Compound margins through metacognition",
+      headline: "Self-repairing margins",
       subhead: "The OS handles its own technical debt",
-      body: "Because the system autonomously repairs its own operational logic, we will not need an army of forward-deployed engineers to support customer workflows. Margins compound as the install base grows.",
+      body: "The system fixes its own playbooks. No army of forward-deployed engineers. Margins compound with the install base.",
       hl: GREEN,
     },
   ];
@@ -2010,33 +2010,31 @@ export function FMoat() {
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag color={GREEN} label="The moat · Why we win this market" />
-        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
-          We are not building a better model. <span style={{ color: `hsl(${GREEN})` }}>We are building the substrate that commoditizes every model.</span>
+        <h2 className="font-black mt-5 mb-9" style={{ fontSize: 72, lineHeight: 1.03, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1720 }}>
+          We are not building a better model.<br/>
+          <span style={{ color: `hsl(${GREEN})` }}>We commoditize every model.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 19, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          Three structural moats compound the longer we run: vendor independence, compliance-as-substrate, and self-repair economics. None of them depend on a model release.
-        </p>
 
-        <div className="grid grid-cols-3 gap-5 flex-1">
+        <div className="grid grid-cols-3 gap-6 flex-1">
           {pillars.map((p) => {
             const Icon = p.icon;
             return (
-              <div key={p.headline} className="rounded-2xl p-6 flex flex-col" style={{ background: `hsl(${p.hl} / 0.06)`, border: `1px solid hsl(${p.hl} / 0.4)` }}>
-                <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4" style={{ background: `hsl(${p.hl} / 0.15)`, border: `1px solid hsl(${p.hl} / 0.4)` }}>
-                  <Icon size={26} style={{ color: `hsl(${p.hl})` }} />
+              <div key={p.headline} className="rounded-2xl p-7 flex flex-col" style={{ background: `hsl(${p.hl} / 0.06)`, border: `1px solid hsl(${p.hl} / 0.4)` }}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center mb-5" style={{ background: `hsl(${p.hl} / 0.15)`, border: `1px solid hsl(${p.hl} / 0.4)` }}>
+                  <Icon size={30} style={{ color: `hsl(${p.hl})` }} />
                 </div>
-                <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 11, color: `hsl(${p.hl})` }}>{p.subhead}</p>
-                <p className="font-black mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{p.headline}</p>
-                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{p.body}</p>
+                <p className="font-mono uppercase tracking-[0.18em] mb-3 font-bold" style={{ fontSize: 13, color: `hsl(${p.hl})` }}>{p.subhead}</p>
+                <p className="font-black mb-4" style={{ fontSize: 32, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>{p.headline}</p>
+                <p style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>{p.body}</p>
               </div>
             );
           })}
         </div>
 
-        <div className="mt-6 rounded-xl px-7 py-5 border-l-4 flex items-center gap-5" style={{ background: `hsl(${GREEN} / 0.07)`, borderColor: `hsl(${GREEN})` }}>
-          <Layers size={24} style={{ color: `hsl(${GREEN})` }} />
-          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
-            <span className="font-black">This is not a productivity app.</span> It is a new category of enterprise software: an instruction-set architecture for human-agent collaboration.
+        <div className="mt-7 rounded-xl px-9 py-6 border-l-4 flex items-center gap-6" style={{ background: `hsl(${GREEN} / 0.07)`, borderColor: `hsl(${GREEN})` }}>
+          <Layers size={32} style={{ color: `hsl(${GREEN})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 26, color: TEXT, lineHeight: 1.35 }}>
+            <span className="font-black">This is not a productivity app.</span> It is a new category: an instruction-set architecture for human-agent collaboration.
           </p>
         </div>
       </div>
