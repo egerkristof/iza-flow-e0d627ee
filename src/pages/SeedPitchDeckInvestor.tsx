@@ -1182,9 +1182,9 @@ function AtomMoatBody() {
     {
       vendor: "LIZA",
       kind: "The AI Governance Loop",
-      atom: "A Playbook",
-      good: "A captured micro-moment of work. Authored once, versioned, owner-signed, compiled JIT into every AI moment, audited on the way out.",
-      gap: "Carries the standard, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
+      atom: "A Block",
+      good: "Typed (Directive · Knowledge · Procedure · Preference). Owner-signed, versioned, compiled JIT into every AI moment, audited on the way out. Blocks compose into Playbooks. Playbooks compose into Org-as-Code.",
+      gap: "Carries the rule, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
       tone: "win" as const,
     },
   ];
@@ -1192,13 +1192,13 @@ function AtomMoatBody() {
     <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
       <div className="mb-6">
         <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-          The atom · the Playbook
+          The atom · the Block
         </p>
         <h2 className="font-black" style={{ fontSize: 50, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-          Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Playbook.
+          Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Block.
         </h2>
         <p className="mt-4" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          A Playbook is a captured micro-moment of how work gets done. Versioned. Owner-signed. Compiled into every AI moment of work. Audited on the way out. Chunks, pages and prompts are what teams fall back on when they do not have one.
+          A Block is the smallest typed, owner-signed unit of how your org thinks: one Directive, Knowledge item, Procedure, or Preference. Blocks compose into Playbooks. Playbooks compose into Org-as-Code. Every AI moment of work compiles from that corpus, just in time, with a receipt.
         </p>
       </div>
       <div className="flex-1 grid grid-cols-4 gap-5 min-h-0">
@@ -1253,7 +1253,7 @@ function AtomMoatBody() {
       <div className="mt-5 rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
         <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The moat</span>
         <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.014em" }}>
-          Chunks recall. Pages reference. Prompts instruct. A Playbook governs all three and proves it ran. The customer accumulates Playbooks. They cannot get them back from a vendor swap.
+          Chunks recall. Pages reference. Prompts instruct. A Block governs and proves it ran. The customer accumulates Blocks, compounds them into Playbooks, and cannot get that corpus back from a vendor swap.
         </p>
       </div>
     </div>
@@ -1343,20 +1343,16 @@ function S14Close({ n, t }: { n: number; t: number }) {
 
 // ─── Slide registry ──────────────────────────────────────────────────────────
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
-  { id: "cover",    title: "Cover",                render: (n, t) => <S01Cover n={n} t={t} /> },
-  { id: "problem",  title: "Problem · lens",       render: (n, t) => <S02Problem n={n} t={t} /> },
-  { id: "context",  title: "Context explosion",    render: (n, t) => <S03Context n={n} t={t} /> },
-  { id: "solution", title: "Solution · lens",      render: (n, t) => <S04Solution n={n} t={t} /> },
-  { id: "how",      title: "How it works",         render: (n, t) => <S05How n={n} t={t} /> },
-  { id: "why-now",  title: "Why now · lens",       render: (n, t) => <S06WhyNow n={n} t={t} /> },
-  { id: "weekend",  title: "Weekend objection",    render: (n, t) => <S07Weekend n={n} t={t} /> },
-  { id: "labs",     title: "Lab objection",        render: (n, t) => <S08Lab n={n} t={t} /> },
-  { id: "model",    title: "Business model",       render: (n, t) => <S09Model n={n} t={t} /> },
-  { id: "proof",    title: "Proof",                render: (n, t) => <S10Proof n={n} t={t} /> },
-  { id: "moat",     title: "Moat",                 render: (n, t) => <S11Moat n={n} t={t} /> },
-  { id: "team",     title: "Team",                 render: (n, t) => <S12Team n={n} t={t} /> },
-  { id: "ask",      title: "Ask · €2M",            render: (n, t) => <S13Ask n={n} t={t} /> },
-  { id: "close",    title: "Closing",              render: (n, t) => <S14Close n={n} t={t} /> },
+  // StoryBrand 9-slide spine. Character → Problem → Guide → Plan → Success → Failure-avoided → Model/Moat → Team → Ask.
+  { id: "cover",    title: "Cover · Character",                 render: (n, t) => <S01Cover n={n} t={t} /> },
+  { id: "problem",  title: "Problem · single chat → 1000 chats", render: (n, t) => <S02Problem n={n} t={t} /> },
+  { id: "context",  title: "Failure mode · context explosion",  render: (n, t) => <S03Context n={n} t={t} /> },
+  { id: "solution", title: "Guide · meet LIZA, the AI Governance Loop", render: (n, t) => <S04Solution n={n} t={t} /> },
+  { id: "moat",     title: "Plan A · the Block (the atom)",     render: (n, t) => <S11Moat n={n} t={t} /> },
+  { id: "how",      title: "Plan B · the governed moment",      render: (n, t) => <S05How n={n} t={t} /> },
+  { id: "proof",    title: "Success · what compounds",          render: (n, t) => <S10Proof n={n} t={t} /> },
+  { id: "model",    title: "Business model + moat",             render: (n, t) => <S09Model n={n} t={t} /> },
+  { id: "ask",      title: "Team + Ask · €2M",                  render: (n, t) => <S13Ask n={n} t={t} /> },
 ];
 
 const SLIDES = RAW_SLIDES.map((s, i) => ({

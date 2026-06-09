@@ -1547,9 +1547,9 @@ function FAtom() {
     {
       vendor: "LIZA",
       kind: "The AI Governance Loop",
-      atom: "A Playbook",
-      good: "A captured micro-moment of work. Authored once, versioned, owner-signed, compiled JIT into every AI moment, audited on the way out.",
-      gap: "Carries the standard, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
+      atom: "A Block",
+      good: "Typed (Directive · Knowledge · Procedure · Preference). Owner-signed, versioned, compiled JIT into every AI moment, audited on the way out. Blocks compose into Playbooks. Playbooks compose into Org-as-Code.",
+      gap: "Carries the rule, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
       tone: "win" as const,
     },
   ];
@@ -1558,12 +1558,12 @@ function FAtom() {
       <SlideGrid />
       <div className="absolute inset-0 px-20 pt-20 pb-16 flex flex-col">
         <div className="mb-5">
-          <Tag color={GOLD} label="The atom · the Playbook" />
+          <Tag color={GOLD} label="The atom · the Block" />
           <h2 className="font-black mt-4" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-            Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Playbook.
+            Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Block.
           </h2>
           <p className="mt-3" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-            A Playbook is a captured micro-moment of how work gets done. Versioned. Owner-signed. Compiled into every AI moment of work. Audited on the way out. Chunks, pages and prompts are what you fall back on when you do not have one.
+            A Block is the smallest typed, owner-signed unit of how your org thinks: one Directive, Knowledge item, Procedure, or Preference. Blocks compose into Playbooks. The factory compiles them into every AI moment of work, just in time, with a receipt.
           </p>
         </div>
         <div className="flex-1 grid grid-cols-4 gap-5 min-h-0">
@@ -1618,11 +1618,11 @@ function FAtom() {
         <div className="mt-5 rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
           <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The factory point</span>
           <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.014em" }}>
-            Chunks recall. Pages reference. Prompts instruct. A Playbook governs all three and proves it ran. The factory is built around the atom. That is why the loop is real.
+            Chunks recall. Pages reference. Prompts instruct. A Block governs and proves it ran. The factory is built around the atom — that is why the loop is real, and why Playbooks compound into Org-as-Code.
           </p>
         </div>
       </div>
-      <Footer text="The Playbook · the smallest governable unit of an AI-native organization." />
+      <Footer text="The Block · the smallest governable unit of an AI-native organization. Blocks compose Playbooks. Playbooks compose Org-as-Code." />
       <SlideBar from={GREEN} to={GOLD} />
     </div>
   );
@@ -1634,7 +1634,7 @@ const RAW_SLIDES = [
   { id: "category",         title: "The Category · One standard. Every AI surface inherits it.", component: <StandardLayerDeckSlide eyebrow="The category · How LIZA fits between AI and action" /> },
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
-  { id: "atom",             title: "The Atom · The Playbook is the smallest unit of an AI-native org", component: <FAtom /> },
+  { id: "atom",             title: "The Atom · The Block is the smallest unit of an AI-native org", component: <FAtom /> },
   { id: "four-eras",        title: "Four Eras of Production · The aha",                 component: <FThreeStages /> },
   { id: "skip-middle",      title: "Why We Skip the Middle · Ford vs Toyota",           component: <FSkipMiddle /> },
   // ACT I.5 — The wall and the substrate that breaks it

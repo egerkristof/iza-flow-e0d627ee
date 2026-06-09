@@ -6,9 +6,13 @@ type: feature
 
 ## The atom (canonical, June 2026)
 
-**The Playbook is the smallest atom of an AI-native organization.** A captured micro-moment of how a piece of work is done: authored once, versioned, owner-signed, compiled JIT into the LLM, audited on the way out. Many Playbooks compose Org-as-Code. The Loop is the runtime that runs them. Humans author and approve them.
+**The Block is the smallest atom of an AI-native organization.** A Block is one typed, owner-signed, versioned AACE element — one Directive, Knowledge item, Procedure, or Preference. Compiled JIT into the LLM, audited on the way out.
 
-"Standard" is not the atom. Standard is a **property carried by a Playbook** (the quality bar the work must obey). Same for Judgment, Memory, Spend, Exposure. These are the five things a Playbook makes visible and governable, not five things that exist alongside it.
+Composition chain: **Block → Playbook → Org-as-Code.** A Playbook is many Blocks composed for one micro-moment of work, fired by an Intent trigger. Org-as-Code is the corpus of Playbooks. The Loop is the runtime that compiles them. Humans author and approve them.
+
+"Standard" is not the atom. Standard is a **property carried by a Block** (the quality bar the work must obey). Same for Judgment, Memory, Spend, Exposure. These are the five things a Block makes visible and governable, surfaced by the Loop.
+
+Vocabulary: never use "Codon" externally (rejected June 2026 — unfamiliar to buyers). Use **Block**.
 
 ## Canonical thesis
 
