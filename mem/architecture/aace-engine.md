@@ -29,10 +29,17 @@ APPEND (default add), OVERRIDE (replace default with target ref ID), BLOCK (forb
 ## External framing (decks, video, marketing)
 A Playbook is composed of Directives, Knowledge, Procedures, and Preferences, and is invoked by an Intent trigger. Use the real category names verbatim. Source of truth: `docs/AACE v3.1 Master Specification.md`.
 
-## Playbook = the atom (canonical, June 2026)
+## Block = the atom (canonical, June 2026, supersedes Playbook-as-atom)
 
-On marketing surfaces, **the Playbook is the smallest atom of an AI-native organization**. It is a captured micro-moment of how a piece of work is done, authored once, versioned, owner-signed, compiled just-in-time into the LLM, audited on the way out.
+On marketing surfaces, **the Block is the smallest atom of an AI-native organization**. A Block is one typed, owner-signed, versioned AACE element — exactly one of: Directive, Knowledge, Procedure, or Preference. It compiles just-in-time into the LLM and emits a receipt on the way out.
 
-- The other four AACE categories (Directive, Knowledge, Procedure, Preference) are **components of a Playbook**, not peers in marketing copy. Externally: "A Playbook bundles the rules (Directives), facts (Knowledge), steps (Procedures) and voice (Preferences) for one micro-moment of work."
-- "Standard" is **a property carried by a Playbook** (the quality bar / rule the work must obey), not a separate atom. Do not use "Standard" as a noun for the atom in new copy. Legacy slides that say "Standard" are being migrated to "Playbook."
-- Org-as-Code = a corpus of Playbooks. The Governance Loop = the runtime that compiles them. Humans in Charge author and approve them.
+Composition chain (memorize):
+- **Block** (atom · one AACE element, typed and owner-signed)
+- → **Playbook** (molecule · many Blocks composed for one micro-moment of work, with an Intent trigger)
+- → **Org-as-Code** (the corpus of Playbooks; the codebase of the org)
+- The Governance Loop is the runtime that compiles Blocks via Playbooks; Humans in Charge author and approve them.
+
+Vocabulary rules:
+- Do NOT call the Playbook "the atom" anymore. The Playbook is the molecule. Migrate any "Playbook = atom" copy to "Block = atom; Playbooks compose Blocks."
+- "Standard" is **a property carried by a Block** (the quality bar / rule the work must obey), not a separate atom. Same for Judgment, Memory, Spend, Exposure — properties carried, surfaced by the Loop.
+- Never use "Codon" externally — investor feedback (June 2026): too unfamiliar.
