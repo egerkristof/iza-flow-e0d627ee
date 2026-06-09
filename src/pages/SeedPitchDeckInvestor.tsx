@@ -1788,20 +1788,49 @@ function S07StorySuccess({ n, t }: { n: number; t: number }) {
 function S08StoryModelMoat({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Business model + moat" n={n} t={t}
-      badge="How we make money. Why we keep making it."
-      headline="We price the accountable work unit. Models are pass-through suppliers under the governance layer.">
-      <div className="grid grid-cols-[1.2fr_1fr] gap-10 h-full items-center">
-        {/* pricing geometry */}
-        <div className="rounded-2xl p-7 flex flex-col h-full"
-          style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <p className="font-mono uppercase tracking-[0.26em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>Pricing geometry · per governed decision</p>
-          <div className="flex-1 flex items-center"><VizValueBar /></div>
+      badge="The business model"
+      headline="We get paid every time AI does a piece of work the company can stand behind.">
+      <div className="flex flex-col gap-7 h-full">
+        {/* THREE BIG NUMBERS — the pricing story in one row */}
+        <div className="grid grid-cols-3 gap-6">
+          <div className="rounded-2xl p-8" style={{ background: `hsl(${GOLD} / 0.1)`, border: `2px solid hsl(${GOLD} / 0.5)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>Value to the customer</p>
+            <p className="font-black mt-3" style={{ fontSize: 76, color: `hsl(${GOLD})`, letterSpacing: "-0.04em", lineHeight: 1 }}>€23</p>
+            <p className="font-bold mt-3" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>per governed decision</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>The analyst hour LIZA replaces.</p>
+          </div>
+          <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.1)`, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 22px hsl(${GREEN} / 0.18)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>We charge</p>
+            <p className="font-black mt-3" style={{ fontSize: 76, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", lineHeight: 1 }}>€0.40</p>
+            <p className="font-bold mt-3" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>per governed decision</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>1-2% of the value we unlock. Easy yes.</p>
+          </div>
+          <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: SUBTLE }}>Our cost</p>
+            <p className="font-black mt-3" style={{ fontSize: 76, color: MUTED, letterSpacing: "-0.04em", lineHeight: 1 }}>€0.04</p>
+            <p className="font-bold mt-3" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>model + infra, pass-through</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>Falls every quarter. Our margin expands.</p>
+          </div>
         </div>
-        {/* governance stack */}
-        <div className="rounded-2xl p-7 flex flex-col items-center h-full"
+
+        {/* THE PUNCHLINE — single statement, big */}
+        <div className="rounded-2xl p-7 flex items-center gap-8"
+          style={{ background: `hsl(${GREEN} / 0.08)`, border: `2px solid hsl(${GREEN})` }}>
+          <p className="font-black" style={{ fontSize: 88, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", lineHeight: 1 }}>~90%</p>
+          <div className="flex-1">
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+              Gross margin per governed decision. Metered, not seat-priced. Spend scales with AI usage, not headcount.
+            </p>
+          </div>
+        </div>
+
+        {/* MOAT — single line below */}
+        <div className="rounded-xl px-7 py-5 flex items-center gap-5"
           style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <p className="font-mono uppercase tracking-[0.26em] mb-5 self-start" style={{ fontSize: 12, color: SUBTLE }}>Position · the neutral control layer</p>
-          <div className="flex-1 flex items-center"><VizGovernanceStack /></div>
+          <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 14, color: SUBTLE }}>The moat</span>
+          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>
+            We sit above Claude · GPT · Gemini as the neutral control layer. Models are suppliers; the receipts, standards and corpus belong to the customer — and to us as the system that runs them.
+          </p>
         </div>
       </div>
     </StorySlide>
