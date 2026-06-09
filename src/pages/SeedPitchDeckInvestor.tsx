@@ -1498,22 +1498,24 @@ function S01StoryCover({ n, t }: { n: number; t: number }) {
 function S02StoryScale({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Problem" n={n} t={t}
-      badge="The shift · one chat to a thousand AI moments"
-      headline="Enterprise AI is no longer about model access. It is about governing a thousand AI moments a day.">
+      badge="The shift · one chat → thousands of AI moments a day"
+      headline="The unit of AI work changed. The org's response hasn't.">
       <div className="grid grid-cols-[0.7fr_1.3fr] gap-7 h-full">
         {/* TODAY · one isolated chat */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em]"
-            style={{ fontSize: 22, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
+          <div className="rounded-full px-7 py-3 self-start font-mono uppercase tracking-[0.32em]"
+            style={{ fontSize: 32, fontWeight: 900, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `2px solid hsl(${RED} / 0.55)` }}>
             Yesterday
           </div>
           <div className="flex-1 flex items-center justify-center">
-            <div className="rounded-2xl px-8 py-7 text-center"
-              style={{ background: BG, border: `1.5px dashed hsl(${RED} / 0.5)`, minWidth: 280 }}>
-              <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>one chat</p>
-              <p className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1 }}>1 person<br/>1 prompt<br/>1 reply</p>
-              <p className="mt-4 font-mono" style={{ fontSize: 11, color: `hsl(${RED})` }}>nothing the org keeps</p>
+            <div className="rounded-2xl px-10 py-10 text-center w-full"
+              style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
+              <p className="font-mono uppercase tracking-[0.24em] mb-4" style={{ fontSize: 13, color: SUBTLE }}>one chat</p>
+              <p className="font-black" style={{ fontSize: 64, color: TEXT, lineHeight: 1, letterSpacing: "-0.025em" }}>
+                1 person<br/>1 prompt<br/>1 reply
+              </p>
+              <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>nothing the org keeps</p>
             </div>
           </div>
           <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>
@@ -1523,10 +1525,13 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
         {/* TODAY/TOMORROW · a swarm of governed moments */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em]"
-            style={{ fontSize: 22, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `1.5px solid hsl(${GREEN} / 0.55)`, boxShadow: `0 0 14px hsl(${GREEN} / 0.25)` }}>
-            Today &nbsp;·&nbsp; and from now on
+          <div className="rounded-full px-7 py-3 self-start font-mono uppercase tracking-[0.32em]"
+            style={{ fontSize: 32, fontWeight: 900, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `2px solid hsl(${GREEN} / 0.6)`, boxShadow: `0 0 20px hsl(${GREEN} / 0.28)` }}>
+            Today · and from now on
           </div>
+          <p className="font-black mt-4" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+            Thousands of AI calls · thousands of contexts · every hour.
+          </p>
           <div className="flex-1 flex items-center justify-center py-3">
             <div className="grid grid-cols-14 gap-1.5" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))", width: "100%" }}>
               {Array.from({ length: 14 * 9 }).map((_, i) => {
@@ -1539,7 +1544,7 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
               })}
             </div>
           </div>
-          <p className="font-black mt-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+          <p className="font-mono mt-4" style={{ fontSize: 18, color: MUTED, lineHeight: 1.3, letterSpacing: "0.02em" }}>
             employees × workflows × policies × approvals × receipts
           </p>
           <div className="mt-3 flex gap-5 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11 }}>
