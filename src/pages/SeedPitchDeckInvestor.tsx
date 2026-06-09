@@ -1182,9 +1182,9 @@ function AtomMoatBody() {
     {
       vendor: "LIZA",
       kind: "The AI Governance Loop",
-      atom: "A Playbook",
-      good: "A captured micro-moment of work. Authored once, versioned, owner-signed, compiled JIT into every AI moment, audited on the way out.",
-      gap: "Carries the standard, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
+      atom: "A Block",
+      good: "Typed (Directive · Knowledge · Procedure · Preference). Owner-signed, versioned, compiled JIT into every AI moment, audited on the way out. Blocks compose into Playbooks. Playbooks compose into Org-as-Code.",
+      gap: "Carries the rule, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
       tone: "win" as const,
     },
   ];
@@ -1192,13 +1192,13 @@ function AtomMoatBody() {
     <div className="absolute inset-0 px-20 pt-24 pb-16 flex flex-col">
       <div className="mb-6">
         <p className="font-mono uppercase tracking-[0.3em] mb-3" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-          The atom · the Playbook
+          The atom · the Block
         </p>
         <h2 className="font-black" style={{ fontSize: 50, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1640 }}>
-          Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Playbook.
+          Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Block.
         </h2>
         <p className="mt-4" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          A Playbook is a captured micro-moment of how work gets done. Versioned. Owner-signed. Compiled into every AI moment of work. Audited on the way out. Chunks, pages and prompts are what teams fall back on when they do not have one.
+          A Block is the smallest typed, owner-signed unit of how your org thinks: one Directive, Knowledge item, Procedure, or Preference. Blocks compose into Playbooks. Playbooks compose into Org-as-Code. Every AI moment of work compiles from that corpus, just in time, with a receipt.
         </p>
       </div>
       <div className="flex-1 grid grid-cols-4 gap-5 min-h-0">
@@ -1253,7 +1253,7 @@ function AtomMoatBody() {
       <div className="mt-5 rounded-xl px-7 py-4 flex items-center gap-5" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
         <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The moat</span>
         <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.014em" }}>
-          Chunks recall. Pages reference. Prompts instruct. A Playbook governs all three and proves it ran. The customer accumulates Playbooks. They cannot get them back from a vendor swap.
+          Chunks recall. Pages reference. Prompts instruct. A Block governs and proves it ran. The customer accumulates Blocks, compounds them into Playbooks, and cannot get that corpus back from a vendor swap.
         </p>
       </div>
     </div>
