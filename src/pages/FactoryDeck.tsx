@@ -1642,36 +1642,34 @@ export function FThesis() {
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag color={ACCENT} label="Thesis · The category we are building" />
-        <h2 className="font-black mt-4 mb-4" style={{ fontSize: 64, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1620 }}>
-          The era of the AI assistant is ending. <span style={{ color: `hsl(${ACCENT})` }}>The agentic enterprise needs an OS.</span>
+        <h2 className="font-black mt-5 mb-10" style={{ fontSize: 76, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1700 }}>
+          The AI assistant era is ending.<br/>
+          <span style={{ color: `hsl(${ACCENT})` }}>The agentic enterprise needs an OS.</span>
         </h2>
-        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1480, lineHeight: 1.45 }}>
-          Companies are throwing audits, claims triage, supply chain decisions at LLMs inside open chat windows. Microsoft and Anthropic research shows the same collapse: long-horizon agentic work loses roughly 39% of reliability as the model drowns in narrative and loses the thread. Generic AI breaks the moment it has to enforce real corporate policy.
-        </p>
 
-        <div className="grid grid-cols-3 gap-5 mb-7">
+        <div className="grid grid-cols-3 gap-6 mb-8">
           {[
             { k: "What everyone is shipping", v: "Better chat. Better agents. Better demos.", tone: "muted" as const, icon: Sparkles },
-            { k: "What enterprises actually need", v: "An execution substrate that makes any agent organizationally intelligent and compliant.", tone: "win" as const, icon: Cpu },
-            { k: "What we are building", v: "LIZA OS. The infrastructure layer for the agentic workforce.", tone: "win" as const, icon: Layers },
+            { k: "What enterprises need", v: "A substrate that makes any agent governed and compliant.", tone: "win" as const, icon: Cpu },
+            { k: "What we are building", v: "LIZA OS. The infrastructure for the agentic workforce.", tone: "win" as const, icon: Layers },
           ].map((c) => {
             const Icon = c.icon;
             const win = c.tone === "win";
             return (
-              <div key={c.k} className="rounded-2xl p-6 flex flex-col"
+              <div key={c.k} className="rounded-2xl p-7 flex flex-col"
                 style={{ background: win ? `hsl(${ACCENT} / 0.06)` : CARD_ALT, border: `1px solid ${win ? `hsl(${ACCENT} / 0.4)` : CHROME_BORDER}` }}>
-                <Icon size={22} style={{ color: win ? `hsl(${ACCENT})` : SUBTLE }} />
-                <p className="font-mono uppercase tracking-[0.18em] mt-3 mb-2" style={{ fontSize: 11, color: win ? `hsl(${ACCENT})` : SUBTLE }}>{c.k}</p>
-                <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.015em" }}>{c.v}</p>
+                <Icon size={28} style={{ color: win ? `hsl(${ACCENT})` : SUBTLE }} />
+                <p className="font-mono uppercase tracking-[0.18em] mt-4 mb-3" style={{ fontSize: 13, color: win ? `hsl(${ACCENT})` : SUBTLE }}>{c.k}</p>
+                <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.2, letterSpacing: "-0.02em" }}>{c.v}</p>
               </div>
             );
           })}
         </div>
 
-        <div className="mt-auto rounded-xl px-7 py-5 border-l-4 flex items-center gap-5" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
-          <Workflow size={24} style={{ color: `hsl(${ACCENT})` }} />
-          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
-            <span className="font-black">We are not building another AI agent.</span> We are building the OS that turns any model into a governed, auditable, cost-attributable member of your workforce.
+        <div className="mt-auto rounded-xl px-9 py-7 border-l-4 flex items-center gap-6" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
+          <Workflow size={32} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 26, color: TEXT, lineHeight: 1.35 }}>
+            <span className="font-black">We are not building another AI agent.</span> We are building the OS that turns any model into a governed, auditable member of your workforce.
           </p>
         </div>
       </div>
