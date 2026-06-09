@@ -258,6 +258,15 @@ export const presentationRoutes: PresentationRoute[] = [
     showInAdmin: true,
   },
   {
+    id: "thesis",
+    title: "Thesis Deck (Organization as Code)",
+    path: "/thesis",
+    sourcePath: "src/pages/ThesisDeck.tsx",
+    description: "Standalone 6-slide technical thesis deck for purely technical investor rooms. The strongest architectural argument from /factory, distilled and unbundled from the production-system spine. Sequence: (1) Thesis · Infrastructure for the Agentic Workforce, (2) Organization as Code · Terraform for Organizations, (3) VSM Architecture · Brain · Spine · Sensors, (4) Tokenomics by Design · Cost-Per-Decision FinOps with design-time budgeting and per-decision chargeback, (5) Metacognitive Auto-Repair · Ghost Protocol, (6) The Moat · LLM-agnostic, compliance-native, self-repairing. Slide components shared with /factory (single source of truth).",
+    component: ThesisDeck,
+    showInAdmin: true,
+  },
+  {
     id: "seed-pitch",
     title: "Seed Pitch (Airbnb-style)",
     path: "/seed",
