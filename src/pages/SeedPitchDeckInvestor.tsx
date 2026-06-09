@@ -1530,47 +1530,70 @@ function S01StoryCover({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 02 · Problem. The shift: from one chat to a thousand AI moments per day.
-// Visual: one chat box on the left, swarm of governed moments on the right.
+// ─── Shared narrative spine for S03 / S04 ──────────────────────────────────
+// The same five components anchor BOTH the failure slide (what is missing
+// from every ungoverned AI moment) and the guide slide (what LIZA gives back).
+const MOMENT_NEEDS = [
+  { k: "context",   missing: "the model uses whatever the user remembers, not the company's approved way of doing this work",
+                    gives:   "the approved standard is compiled into the call, just in time" },
+  { k: "owner",     missing: "no one can name the rule used, who approved it, or when it expires",
+                    gives:   "every rule is signed, versioned, with an expiry the org can see" },
+  { k: "receipt",   missing: "the output cannot be replayed with inputs, policy, model and approver attached",
+                    gives:   "every output is replayable: inputs · policy · model · approver · hash" },
+  { k: "learning",  missing: "the correction stays trapped in the thread; the next employee repeats the same gap",
+                    gives:   "every correction pushes back into the corpus; the next moment inherits it" },
+  { k: "token ROI", missing: "no visibility on what the call cost or whether it was even effective",
+                    gives:   "every call is metered against the standard it served; cost tied to value" },
+];
+
+// 02 · Problem. The unit of AI work changed: one moment of work → thousands.
 function S02StoryScale({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Problem" n={n} t={t}
-      badge="The shift · one chat → thousands of AI moments a day"
-      headline="The unit of AI work changed. The org's response hasn't.">
-      <div className="grid grid-cols-[0.7fr_1.3fr] gap-7 h-full">
+      badge="The unit of AI work changed"
+      headline="Yesterday, a moment of work was one person, one prompt, one reply. Today, the company runs thousands of them, every hour."
+      footnote="Each moment is now a request the company is responsible for: legally, commercially, operationally. Multiply by 5,000 a day.">
+      <div className="grid grid-cols-[0.72fr_1.28fr] gap-7 h-full">
         {/* TODAY · one isolated chat */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <div className="rounded-full px-7 py-3 self-start font-mono uppercase tracking-[0.32em]"
-            style={{ fontSize: 32, fontWeight: 900, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `2px solid hsl(${RED} / 0.55)` }}>
+          <div className="rounded-full px-6 py-2.5 self-start font-mono uppercase tracking-[0.3em]"
+            style={{ fontSize: 20, fontWeight: 900, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `2px solid hsl(${RED} / 0.55)` }}>
             Yesterday
           </div>
+          <p className="font-mono uppercase tracking-[0.22em] mt-6" style={{ fontSize: 13, color: SUBTLE }}>
+            one moment of work
+          </p>
           <div className="flex-1 flex items-center justify-center">
-            <div className="rounded-2xl px-10 py-10 text-center w-full"
+            <div className="rounded-2xl px-8 py-10 text-center w-full"
               style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
-              <p className="font-mono uppercase tracking-[0.24em] mb-4" style={{ fontSize: 13, color: SUBTLE }}>one chat</p>
-              <p className="font-black" style={{ fontSize: 64, color: TEXT, lineHeight: 1, letterSpacing: "-0.025em" }}>
+              <p className="font-black" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.025em" }}>
                 1 person<br/>1 prompt<br/>1 reply
               </p>
-              <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>nothing the org keeps</p>
+              <p className="mt-6 font-mono uppercase tracking-[0.2em]" style={{ fontSize: 12, color: `hsl(${RED})` }}>
+                lived in one person's head
+              </p>
             </div>
           </div>
-          <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>
-            Useful for the individual. Impossible to audit, improve, or compound for the organization.
+          <p className="mt-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+            Useful for the individual. Nothing the organisation can audit, improve, or compound.
           </p>
         </div>
         {/* TODAY/TOMORROW · a swarm of governed moments */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-          <div className="rounded-full px-7 py-3 self-start font-mono uppercase tracking-[0.32em]"
-            style={{ fontSize: 32, fontWeight: 900, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `2px solid hsl(${GREEN} / 0.6)`, boxShadow: `0 0 20px hsl(${GREEN} / 0.28)` }}>
+          <div className="rounded-full px-6 py-2.5 self-start font-mono uppercase tracking-[0.3em]"
+            style={{ fontSize: 20, fontWeight: 900, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `2px solid hsl(${GREEN} / 0.6)`, boxShadow: `0 0 18px hsl(${GREEN} / 0.25)` }}>
             Today · and from now on
           </div>
-          <p className="font-black mt-4" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
-            Thousands of AI calls · thousands of contexts · every hour.
+          <p className="font-black mt-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+            Thousands of moments of work, every hour.
           </p>
-          <div className="flex-1 flex items-center justify-center py-3">
-            <div className="grid grid-cols-14 gap-1.5" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))", width: "100%" }}>
+          <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
+            Different people · different requests · different contexts. Same legal, brand and commercial exposure as anything else the company emits.
+          </p>
+          <div className="flex-1 flex items-center justify-center py-3 min-h-0">
+            <div className="grid gap-1.5" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))", width: "100%" }}>
               {Array.from({ length: 14 * 9 }).map((_, i) => {
                 const isPolicy   = i % 17 === 0;
                 const isApprover = i % 11 === 0;
@@ -1581,11 +1604,11 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
               })}
             </div>
           </div>
-          <p className="font-mono mt-4" style={{ fontSize: 18, color: MUTED, lineHeight: 1.3, letterSpacing: "0.02em" }}>
-            employees × workflows × policies × approvals × receipts
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>
+            each square = one moment of work
           </p>
           <div className="mt-3 flex gap-5 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11 }}>
-            <span style={{ color: `hsl(${GREEN})` }}>■ governed moment</span>
+            <span style={{ color: `hsl(${GREEN})` }}>■ AI moment of work</span>
             <span style={{ color: `hsl(${GOLD})` }}>■ policy in play</span>
             <span style={{ color: `hsl(${ACCENT})` }}>■ approver signed</span>
           </div>
