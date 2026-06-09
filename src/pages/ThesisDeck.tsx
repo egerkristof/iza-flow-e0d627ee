@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import {
   ScaledSlide, SlideIndexProvider,
   TEXT, MUTED, SUBTLE, CARD_ALT, CHROME_BG, CHROME_BORDER,
-  GREEN, BG,
+  GREEN, BG, ACCENT,
 } from "@/pages/TechDDDeck";
 import {
   FThesis, FOrgAsCode, FVsmArchitecture, FTokenomics, FAutoRepair, FMoat,
@@ -19,17 +19,71 @@ import {
 // This deck is the technical-room weapon: lean, no spine, just the thesis.
 // ═════════════════════════════════════════════════════════════════════════════
 
+const ACTS = [
+  { act: "The Bet",          short: "Thesis" },
+  { act: "The Paradigm",     short: "Org as Code" },
+  { act: "The Architecture", short: "Nervous System" },
+  { act: "The Economics",    short: "Per Decision" },
+  { act: "The Compounding",  short: "Self-Repair" },
+  { act: "The Moat",         short: "Why We Win" },
+];
+
+function ActRail({ index }: { index: number }) {
+  return (
+    <div className="absolute top-0 left-0 right-0 z-20 px-24 pt-6 pb-3 flex items-center gap-3"
+      style={{ background: "linear-gradient(180deg, hsl(0 0% 100% / 0.96), hsl(0 0% 100% / 0))" }}>
+      <span className="font-mono uppercase tracking-[0.3em] font-bold" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>
+        LIZA OS · Thesis
+      </span>
+      <div className="flex-1 grid grid-cols-6 gap-2">
+        {ACTS.map((a, i) => {
+          const active = i === index;
+          const past = i < index;
+          return (
+            <div key={a.act} className="flex flex-col gap-1.5">
+              <div className="h-1 rounded-full" style={{
+                background: active ? `hsl(${ACCENT})` : past ? `hsl(${ACCENT} / 0.35)` : CHROME_BORDER,
+              }} />
+              <div className="flex items-baseline gap-2" style={{ opacity: active ? 1 : 0.55 }}>
+                <span className="font-mono" style={{ fontSize: 10, color: MUTED, letterSpacing: "0.1em" }}>
+                  0{i + 1}
+                </span>
+                <span className="font-bold" style={{ fontSize: 11, color: active ? TEXT : MUTED, letterSpacing: "-0.005em" }}>
+                  {a.short}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function WithRail({ index, children }: { index: number; children: React.ReactNode }) {
+  return (
+    <div className="w-full h-full relative">
+      {children}
+      <ActRail index={index} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
-  { id: "thesis",           title: "Thesis · The Infrastructure Layer for the Agentic Workforce", component: <FThesis /> },
-  { id: "org-as-code",      title: "Organization as Code · Terraform for Organizations",          component: <FOrgAsCode /> },
-  { id: "vsm-architecture", title: "Architecture · Brain · Spine · Sensors (VSM)",                component: <FVsmArchitecture /> },
-  { id: "tokenomics",       title: "Tokenomics by Design · Cost-Per-Decision FinOps",             component: <FTokenomics /> },
-  { id: "auto-repair",      title: "Metacognitive Auto-Repair · The Code Fixes the Code",         component: <FAutoRepair /> },
-  { id: "moat",             title: "The Moat · Why We Win",                                       component: <FMoat /> },
+  { id: "thesis",           title: "01 · The Bet · The agentic enterprise needs an OS",        component: <FThesis /> },
+  { id: "org-as-code",      title: "02 · The Paradigm · Organization as Code",                 component: <FOrgAsCode /> },
+  { id: "vsm-architecture", title: "03 · The Architecture · Brain · Spine · Sensors",          component: <FVsmArchitecture /> },
+  { id: "tokenomics",       title: "04 · The Economics · Cost-per-decision FinOps",            component: <FTokenomics /> },
+  { id: "auto-repair",      title: "05 · The Compounding · The code fixes the code",           component: <FAutoRepair /> },
+  { id: "moat",             title: "06 · The Moat · We commoditize every model",               component: <FMoat /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
-  component: <SlideIndexProvider index={i} total={RAW_SLIDES.length}>{s.component}</SlideIndexProvider>,
+  component: (
+    <SlideIndexProvider index={i} total={RAW_SLIDES.length}>
+      <WithRail index={i}>{s.component}</WithRail>
+    </SlideIndexProvider>
+  ),
 }));
 
 export default function ThesisDeck() {
