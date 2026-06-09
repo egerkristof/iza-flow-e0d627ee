@@ -1932,46 +1932,44 @@ export function FTokenomics() {
 // ─── F_AUTO_REPAIR · Metacognitive auto-repair (Ghost Protocol) ──────────────
 export function FAutoRepair() {
   const steps = [
-    { i: AlertTriangle, k: "Edge detects failure",        v: "Sensory layer clusters errors. \"Sales playbook now has a 15% error rate. CRM API changed.\"", hl: RED },
-    { i: GitBranch,     k: "[FINDINGS] enter the graph",  v: "Failure cluster becomes a typed node. Linked to the affected Playbook, Initiative, and Owner.", hl: GOLD },
-    { i: Sparkles,      k: "Ghost Protocol wakes",        v: "An agent loads its own system Playbook to analyze its own failing code. Reads the failure context.", hl: ACCENT },
-    { i: Wrench,        k: "Structural fix proposed",     v: "Generates a <repair_strategy> block to handle the new edge case. Writes it as a typed patch.", hl: ACCENT },
-    { i: GitMerge,      k: "Human approves in one click", v: "Pushed as a pull request to the owning manager. Single approval merges into the live Playbook.", hl: GREEN },
-    { i: CheckCircle2,  k: "Playbook self-heals",         v: "Error rate drops. New rule is now versioned, signed, auditable. The system has learned, not crashed.", hl: GREEN },
+    { i: AlertTriangle, k: "Edge detects failure",        v: "Sales playbook hits 15% error rate. CRM API changed.", hl: RED },
+    { i: GitBranch,     k: "[FINDINGS] enter the graph",  v: "Failure cluster becomes a typed node linked to Playbook and Owner.", hl: GOLD },
+    { i: Sparkles,      k: "Ghost Protocol wakes",        v: "An agent loads its own Playbook to read the failure context.", hl: ACCENT },
+    { i: Wrench,        k: "Structural fix proposed",     v: "Writes a <repair_strategy> block as a typed patch.", hl: ACCENT },
+    { i: GitMerge,      k: "Human approves in one click", v: "Pull request to the owner. Single approval merges into the live Playbook.", hl: GREEN },
+    { i: CheckCircle2,  k: "Playbook self-heals",         v: "Error rate drops. New rule is versioned, signed, auditable.", hl: GREEN },
   ];
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
-        <Tag color={ACCENT} label="Metacognitive auto-repair · Double-loop learning, in production" />
-        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
-          Writing this executable code by hand is hard. <span style={{ color: `hsl(${ACCENT})` }}>So the system writes it for itself.</span>
+        <Tag color={ACCENT} label="Metacognitive auto-repair · Double-loop learning in production" />
+        <h2 className="font-black mt-5 mb-7" style={{ fontSize: 66, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1700 }}>
+          Writing executable org-code by hand is hard.<br/>
+          <span style={{ color: `hsl(${ACCENT})` }}>So the system writes it for itself.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          Terraform for infrastructure is static. Organization-as-Code is a living, autonomic system. When a Playbook starts failing, LIZA does not file a bug. It clusters the failure as a [FINDING], wakes the Ghost Protocol, drafts a structural fix, and ships a one-click pull request to the human owner.
-        </p>
 
-        <div className="grid grid-cols-3 gap-4 flex-1">
+        <div className="grid grid-cols-3 gap-5 flex-1">
           {steps.map((s, idx) => {
             const Icon = s.i;
             return (
-              <div key={s.k} className="rounded-2xl p-5 flex flex-col" style={{ background: `hsl(${s.hl} / 0.05)`, border: `1px solid hsl(${s.hl} / 0.35)` }}>
+              <div key={s.k} className="rounded-2xl p-6 flex flex-col" style={{ background: `hsl(${s.hl} / 0.05)`, border: `1px solid hsl(${s.hl} / 0.35)` }}>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${s.hl})` }}>Step {idx + 1}</span>
-                  <Icon size={20} style={{ color: `hsl(${s.hl})` }} />
+                  <span className="font-mono uppercase tracking-[0.22em] font-bold" style={{ fontSize: 13, color: `hsl(${s.hl})` }}>Step {idx + 1}</span>
+                  <Icon size={26} style={{ color: `hsl(${s.hl})` }} />
                 </div>
-                <p className="font-black mb-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2, letterSpacing: "-0.015em" }}>{s.k}</p>
-                <p style={{ fontSize: 13.5, color: MUTED, lineHeight: 1.4 }}>{s.v}</p>
+                <p className="font-black mb-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{s.k}</p>
+                <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{s.v}</p>
               </div>
             );
           })}
         </div>
 
-        <div className="mt-6 rounded-xl px-7 py-5 border-l-4 flex items-center gap-5" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
-          <GitMerge size={24} style={{ color: `hsl(${ACCENT})` }} />
-          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
-            <span className="font-black">The code fixes the code.</span> Every customer's failures train every customer's repair agent. The system gets smarter about its own technical debt without our engineers in the loop.
+        <div className="mt-7 rounded-xl px-9 py-6 border-l-4 flex items-center gap-6" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
+          <GitMerge size={32} style={{ color: `hsl(${ACCENT})`, flexShrink: 0 }} />
+          <p style={{ fontSize: 26, color: TEXT, lineHeight: 1.35 }}>
+            <span className="font-black">The code fixes the code.</span> Every customer's failures train every customer's repair agent. Margins compound without engineers in the loop.
           </p>
         </div>
       </div>
