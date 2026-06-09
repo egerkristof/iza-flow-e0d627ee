@@ -1,86 +1,48 @@
-## The reframe
+## Goal
 
-You're right. The current 4-domain maturity probe is the wrong instrument. The leader walking in doesn't want to score themselves on tiers. They want to describe **what they're trying to achieve, the AI tools they're using, and the limitations they're hitting**, and walk out with a read on their **AI Operating Model** seen through the LIZA grid (the same grid that anchors `/os` and `/tech-dd`: in-the-moment execution sitting between intent and outcomes, governed by a knowledge layer).
+Fold the 6-slide "Organization as Code" thesis into `/factory` without bloating it. Replace existing slides where the new material is a sharper version, and insert only the genuinely new slides.
 
-This makes The Brief consistent with the rest of the system instead of inventing its own vocabulary.
+## Slot mapping
 
-## New flow (one screen, three inputs, one diagnosis)
+| Thesis slide | Action in `/factory` | Why |
+|---|---|---|
+| 1. Thesis · Infrastructure for Agentic Workforce | **Replace** S02 `category` | Sharper category statement; current `category` slide is the weakest opener |
+| 2. Terraform for Organizations (Legacy AI vs LizaOS) | **Replace** `aace-not-rag` | Same argument, stronger frame (Terraform / Organization as Code) |
+| 3. VSM Architecture (Brain / Spine / Sensors) | **Replace** `engine-bay` | Cleaner architectural diagram than current AACE-exposed slide |
+| 4. Tokenomics by Design (cost-per-decision, design-time budgets, chargeback) | **Replace** `unit-economics` | Big upgrade: adds CFO-grade FinOps (design-time budgeting + per-decision chargeback) on top of current $0.40/decision economics |
+| 5. Metacognitive Auto-Repair (Ghost Protocol) | **Insert NEW** before `org-loop` | Net-new defensible moat material; pairs naturally with the compounding network slide |
+| 6. The Moat (LLM-agnostic, compliance, margins) | **Insert NEW** after `org-loop`, before `install` | Net-new explicit moat slide; current deck has no single moat slide |
 
-```text
-┌─────────────────────────────────────────────────────────────┐
-│  INPUT — Describe your current AI state                     │
-├─────────────────────────────────────────────────────────────┤
-│  1. Goal                                                    │
-│     What are you trying to achieve with AI in your unit?    │
-│                                                             │
-│  2. Current stack                                           │
-│     Which AI tools / copilots / agents are in use today?    │
-│     (multi-select chips + free text)                        │
-│                                                             │
-│  3. Limitations                                             │
-│     What's not working? Where does it break down?           │
-│     (multi-select chips + free text)                        │
-└─────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│  DIAGNOSIS — Your AI Operating Model, mapped to the grid    │
-├─────────────────────────────────────────────────────────────┤
-│  A. Read of your current model                              │
-│     One paragraph naming what they're actually running      │
-│                                                             │
-│  B. Tool limitations (per tool they named)                  │
-│     ChatGPT       → no persistent context, every prompt    │
-│                     restarts the conversation               │
-│     Copilot       → bounded to code, no business standard  │
-│     Notion AI     → reads pages, not your decision logic   │
-│                                                             │
-│  C. Gaps on the LIZA grid                                   │
-│     Visualised on the same stack you show at /os:           │
-│       Intent  ──▶  KNOWLEDGE LAYER  ──▶  Execution  ──▶ Out │
-│       (goal)      (where they're empty)   (their tools)     │
-│     Red/amber/green per layer.                              │
-│                                                             │
-│  D. What they haven't thought about yet                     │
-│     2 to 3 specific blind spots, grounded in their stack    │
-│                                                             │
-│  E. The correction                                          │
-│     One move that closes the biggest gap. Named, scoped,    │
-│     tied to LIZA capability.                                │
-└─────────────────────────────────────────────────────────────┘
-```
+Net change: 27 → 29 slides. Four replacements, two insertions.
 
-## What I'd build
+## Voice & visual conformance
 
-**Frontend — rewrite `src/pages/TheBrief.tsx`**
-- Replace seat → 4 probes → blueprint with a single input screen (goal, tool chips + other, limitation chips + other).
-- Tool chip set, curated: ChatGPT, Claude, Gemini, Copilot (M365), GitHub Copilot, Cursor, Glean, Notion AI, custom GPTs, internal RAG, agent framework (LangChain/CrewAI), none yet.
-- Limitation chip set, curated: hallucinations, no memory across sessions, can't enforce our standards, no audit trail, siloed per user, doesn't know our data, output quality inconsistent, no governance, can't hand off between tools.
-- Submit shows a **single diagnosis view** rendered on the LIZA grid (reuse the visual language from `/os` — three horizontal layers: Intent → Knowledge → Execution).
+- No em-dashes / en-dashes (core rule). Use periods, mid-dots, or colons.
+- High-contrast white theme (core rule).
+- GRN for success, RED/NEU for gaps (core rule).
+- Reuse existing slide component patterns and typography (`.slide-title`, `.slide-body`, etc.).
+- Keep "moment of work with AI" lexicon where it appears.
+- AACE locked to v3.1.
 
-**Edge function — replace `generate-brief` modes**
-- One mode: `diagnose_operating_model`. Takes `{ goal, tools[], limitations[], freeText }`, returns a structured diagnosis via tool call:
-  - `current_model_read` (paragraph)
-  - `tool_limitations[]` — `{ tool, limitation }` (only for tools they named, grounded in known properties of each tool)
-  - `grid_status` — `{ intent: status, knowledge: status, execution: status }` with one-line `why` each
-  - `blind_spots[]` — 2 to 3 items, each `{ title, why }`
-  - `correction` — `{ move, scope, liza_capability }`
-- Model: `google/gemini-3-flash-preview`, 18s timeout, deterministic fallback if it times out (same pattern we have now).
+## Implementation
 
-**Visual — the grid panel**
-- Inline component (not a new page). Three horizontal bands stacked: **Intent**, **Knowledge Layer**, **Execution**. Each band shows status colour (red = missing, amber = partial, green = working). Their tools render as chips inside the Execution band. The Knowledge Layer is the one we expect to be empty — that's the punchline.
+All work in `src/pages/FactoryDeck.tsx`. New slide components co-located in the same file (matching existing pattern of `F01Cover`, `FAtom`, etc.). Slide IDs:
 
-## What goes away
-- Seat selection (function / unit shape / scale) — gone, or collapsed into one optional dropdown.
-- The 4-domain probes (Demand / Capacity / Quality / Economics) — gone for this surface. They remain valid for a future consulting-grade audit but are the wrong instrument for first contact.
-- The blueprint pillar animation — replaced with the LIZA grid diagram (which already exists conceptually on /os and is on-brand).
+- `thesis` (replaces `category`)
+- `org-as-code` (replaces `aace-not-rag`)
+- `vsm-architecture` (replaces `engine-bay`)
+- `tokenomics` (replaces `unit-economics`)
+- `auto-repair` (new)
+- `moat` (new)
 
-## One thing to confirm before I build
+## Technical notes
 
-**Scope of this rewrite.** Two options:
+- `RAW_SLIDES` array order updated in one edit.
+- Old components (`StandardLayerDeckSlide` import for category, `FEngineBay`, `S07eAaceNotRag`, `S10UnitEconomics`) stay defined but are no longer referenced from `/factory` (other decks may use them — verified by ripgrep before removing imports).
+- New components built with existing visual primitives (badges, grids, two-column layouts) already used in the file.
 
-**A. Replace the existing `/the-brief` entirely** with this new flow. Old seat + 4-domain code is removed. This is what I'd recommend — keeps one surface, one story.
+## Out of scope
 
-**B. Keep the existing flow at `/the-brief` and add the new diagnosis at `/the-brief/quick`** so we can A/B. More code to maintain, more places for the user to get lost.
-
-I'll proceed with **A** unless you say otherwise.
+- No changes to `/investor`, `/tech-dd`, or other decks.
+- No new route. No standalone thesis deck.
+- No memory updates yet (will update `mem://features/lifecycle-investor-deck` or equivalent after build if you want).
