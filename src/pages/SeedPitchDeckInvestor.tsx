@@ -1651,14 +1651,14 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
           </div>
           <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Draft a proposal for the Munich school project."</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Prepare our response to the €40M RFP from the city of Hamburg."</p>
           </div>
           <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>Goes straight to the model</p>
           <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
             style={{ background: BG, border: `2px dashed hsl(${RED} / 0.5)` }}>
             <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>A plausible draft.</p>
             <p className="mt-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Uses whatever the user remembers. No source. No approval. No receipt. The next person starts from scratch.
+              Cites expired pricing. Uses a compliance clause we no longer offer. No source, no approver, no receipt. The next bid starts from scratch.
             </p>
           </div>
         </div>
@@ -1686,22 +1686,22 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
           </div>
           <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>Same request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Draft a proposal for the Munich school project."</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Prepare our response to the €40M RFP from the city of Hamburg."</p>
           </div>
           <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Routed through the governance loop</p>
           <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
             style={{ background: BG, border: `2px solid hsl(${GREEN})` }}>
             <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>The same draft &mdash; with a receipt.</p>
             <div className="mt-4 grid grid-cols-1 gap-1.5 font-mono" style={{ fontSize: 14, color: TEXT }}>
-              <p>· standard: AEC-PROP v3.2</p>
-              <p>· evidence: 12 hashed sources</p>
+              <p>· standard: RFP-PUBSEC v4.1 (current pricing locked)</p>
+              <p>· evidence: 12 hashed sources, legal-cleared</p>
               <p>· model: claude-3.5</p>
               <p>· approver: M. Schäfer · 14:02</p>
             </div>
             <div className="mt-5 pt-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
               <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>And because it carries a receipt…</p>
               <p className="font-bold mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-                every other answer that touches AEC-PROP v3.2 — pricing, compliance, the next RFP, the audit replay — moves with it. One correction, one signature, propagates through the whole corpus.
+                every other answer that touches RFP-PUBSEC v4.1 (pricing, the next bid, the audit replay) moves with it. One correction, one signature, propagates through the whole corpus.
               </p>
             </div>
           </div>
