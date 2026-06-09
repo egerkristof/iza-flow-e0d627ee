@@ -1728,8 +1728,8 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
             One Block
           </div>
           <p className="font-black" style={{ fontSize: 38, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>
-            "Proposals for school projects use AEC-PROP v3.2 cooling-load tables.<br/>
-            <span style={{ color: `hsl(${GREEN})` }}>Do not interpolate above 35°C.</span>"
+            "Public-sector RFP responses use RFP-PUBSEC v4.1 pricing tables and the legal-cleared compliance clause.<br/>
+            <span style={{ color: `hsl(${GREEN})` }}>Do not quote terms older than the current quarter.</span>"
           </p>
           <div className="mt-7 pt-5 grid grid-cols-3 gap-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
             <div>
