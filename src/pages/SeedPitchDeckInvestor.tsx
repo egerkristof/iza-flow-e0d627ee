@@ -2113,6 +2113,7 @@ const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) =>
   { id: "context",  title: "Failure mode · context explosion",  render: (n, t) => <S03StoryFailure n={n} t={t} /> },
   { id: "solution", title: "Guide · meet LIZA, the AI Governance Loop", render: (n, t) => <S04StoryGuide n={n} t={t} /> },
   { id: "block",    title: "Plan A · the Block (the atom)",     render: (n, t) => <S05StoryBlock n={n} t={t} /> },
+  { id: "category", title: "The category · vs RAG, vs Knowledge Graph", render: (n, t) => <S05bStoryVsRagKg n={n} t={t} /> },
   { id: "moment",   title: "Plan B · the governed moment",      render: (n, t) => <S06StoryMoment n={n} t={t} /> },
   { id: "success",  title: "Success · what compounds",          render: (n, t) => <S07StorySuccess n={n} t={t} /> },
   { id: "model",    title: "Business model + moat",             render: (n, t) => <S08StoryModelMoat n={n} t={t} /> },
