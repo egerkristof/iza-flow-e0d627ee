@@ -1676,76 +1676,80 @@ function S03StoryFailure({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 04 · Guide · LIZA. The actual loop diagram. Plain-English captions under it.
+// 04 · Guide · LIZA. The same five missing components, now provided.
 function S04StoryGuide({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Guide · meet LIZA" n={n} t={t}
-      badge="What LIZA actually does"
-      headline="LIZA sits between the person and the model. Same request, two very different outputs.">
-      <div className="grid grid-cols-[1fr_auto_1fr] gap-8 h-full items-stretch">
-        {/* WITHOUT */}
-        <div className="rounded-2xl p-8 flex flex-col"
-          style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.3)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em] mb-6"
-            style={{ fontSize: 18, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
-            Without LIZA
+      badge="What LIZA gives every moment of work"
+      headline="LIZA gives every AI moment the five things it was missing. Every output becomes production-ready, and connected to the rest of the company."
+      footnote="One correction propagates to every moment that touches the same standard. The company gets sharper with every call.">
+      <div className="flex flex-col gap-5 h-full">
+        {/* TOP · the transformation, said once */}
+        <div className="grid grid-cols-[1fr_auto_1fr] gap-5 items-stretch">
+          <div className="rounded-xl px-5 py-3.5 flex items-center gap-4"
+            style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.35)` }}>
+            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>Yesterday</span>
+            <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>
+              Every AI moment is missing 5 things.
+            </span>
           </div>
-          <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Prepare our response to the €40M RFP from the city of Hamburg."</p>
-          </div>
-          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>Goes straight to the model</p>
-          <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
-            style={{ background: BG, border: `2px dashed hsl(${RED} / 0.5)` }}>
-            <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>A plausible draft.</p>
-            <p className="mt-4" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
-              Cites expired pricing. Uses a compliance clause we no longer offer. No source, no approver, no receipt. The next bid starts from scratch.
-            </p>
-          </div>
-        </div>
-
-        {/* LIZA arrow */}
-        <div className="flex flex-col items-center justify-center gap-4 px-2">
-          <div className="rounded-2xl px-6 py-8 text-center"
-            style={{ background: BG, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 24px hsl(${GREEN} / 0.25)` }}>
-            <p className="font-mono uppercase tracking-[0.28em] mb-2" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>LIZA</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>LOCK</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>COMPILE</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>SIGN</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1, letterSpacing: "-0.02em" }}>LEARN</p>
-            <p className="mt-3 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: SUBTLE }}>once, per call</p>
-          </div>
-          <p className="font-mono" style={{ fontSize: 28, color: `hsl(${GREEN})` }}>→</p>
-        </div>
-
-        {/* WITH */}
-        <div className="rounded-2xl p-8 flex flex-col"
-          style={{ background: `hsl(${GREEN} / 0.07)`, border: `1.5px solid hsl(${GREEN} / 0.5)`, boxShadow: `0 0 22px hsl(${GREEN} / 0.12)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em] mb-6"
-            style={{ fontSize: 18, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `1.5px solid hsl(${GREEN} / 0.55)` }}>
-            With LIZA
-          </div>
-          <div className="rounded-xl px-5 py-4 mb-5" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>Same request</p>
-            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>"Prepare our response to the €40M RFP from the city of Hamburg."</p>
-          </div>
-          <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Routed through the governance loop</p>
-          <div className="rounded-xl p-6 flex-1 flex flex-col justify-center"
-            style={{ background: BG, border: `2px solid hsl(${GREEN})` }}>
-            <p className="font-black" style={{ fontSize: 28, color: TEXT, lineHeight: 1.1 }}>The same draft &mdash; with a receipt.</p>
-            <div className="mt-4 grid grid-cols-1 gap-1.5 font-mono" style={{ fontSize: 14, color: TEXT }}>
-              <p>· standard: RFP-PUBSEC v4.1 (current pricing locked)</p>
-              <p>· evidence: 12 hashed sources, legal-cleared</p>
-              <p>· model: claude-3.5</p>
-              <p>· approver: M. Schäfer · 14:02</p>
+          <div className="flex items-center justify-center px-3">
+            <div className="rounded-full px-5 py-2 font-mono uppercase tracking-[0.28em]"
+              style={{ fontSize: 12, fontWeight: 900, color: `hsl(${GREEN})`, background: BG, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 14px hsl(${GREEN} / 0.3)` }}>
+              LIZA · the governance loop
             </div>
-            <div className="mt-5 pt-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
-              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>And because it carries a receipt…</p>
-              <p className="font-bold mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-                every other answer that touches RFP-PUBSEC v4.1 (pricing, the next bid, the audit replay) moves with it. One correction, one signature, propagates through the whole corpus.
+          </div>
+          <div className="rounded-xl px-5 py-3.5 flex items-center gap-4"
+            style={{ background: `hsl(${GREEN} / 0.08)`, border: `1.5px solid hsl(${GREEN} / 0.55)` }}>
+            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>From now on</span>
+            <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>
+              Every AI moment has all 5, signed and connected.
+            </span>
+          </div>
+        </div>
+
+        {/* FIVE columns · what was missing → what LIZA gives */}
+        <div className="grid grid-cols-5 gap-3 flex-1">
+          {MOMENT_NEEDS.map((m, i) => (
+            <div key={m.k} className="rounded-2xl p-4 flex flex-col"
+              style={{
+                background: `hsl(${GREEN} / 0.07)`,
+                border: `1.5px solid hsl(${GREEN} / 0.5)`,
+                boxShadow: `0 0 16px hsl(${GREEN} / 0.1)`,
+              }}>
+              <div className="flex items-baseline justify-between">
+                <span className="font-mono" style={{ fontSize: 11, color: SUBTLE, letterSpacing: "0.22em" }}>0{i + 1}</span>
+                <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>delivered</span>
+              </div>
+              <p className="font-black mt-1.5 uppercase tracking-[0.04em]" style={{ fontSize: 22, color: `hsl(${GREEN})`, lineHeight: 1.05 }}>
+                {m.k}
+              </p>
+              <div className="my-3 h-px" style={{ background: `hsl(${GREEN} / 0.35)` }} />
+              <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 9, color: SUBTLE }}>
+                what was missing
+              </p>
+              <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>
+                {m.missing}
+              </p>
+              <p className="font-mono uppercase tracking-[0.18em] mt-3" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>
+                LIZA gives you
+              </p>
+              <p className="font-bold mt-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>
+                {m.gives}
               </p>
             </div>
-          </div>
+          ))}
+        </div>
+
+        {/* BOTTOM band · the connective payoff */}
+        <div className="rounded-xl px-6 py-4 flex items-center justify-between gap-6"
+          style={{ background: `hsl(${GOLD} / 0.08)`, border: `1.5px solid hsl(${GOLD} / 0.45)` }}>
+          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
+            And because each moment now carries all five
+          </p>
+          <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>
+            Every moment connects to every other. Fix one standard, the whole company updates. Fast <em className="not-italic" style={{ color: `hsl(${GREEN})` }}>and</em> right, by construction.
+          </p>
         </div>
       </div>
     </StorySlide>
