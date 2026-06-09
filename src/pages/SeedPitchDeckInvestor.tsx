@@ -1681,9 +1681,12 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
               <p>· model: claude-3.5</p>
               <p>· approver: M. Schäfer · 14:02</p>
             </div>
-            <p className="mt-4 font-bold" style={{ fontSize: 16, color: `hsl(${GREEN})`, lineHeight: 1.35 }}>
-              Replayable. Owned. The next call inherits the correction.
-            </p>
+            <div className="mt-5 pt-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
+              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>And because it carries a receipt…</p>
+              <p className="font-bold mt-2" style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
+                every other answer that touches AEC-PROP v3.2 — pricing, compliance, the next RFP, the audit replay — moves with it. One correction, one signature, propagates through the whole corpus.
+              </p>
+            </div>
           </div>
         </div>
       </div>
