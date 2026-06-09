@@ -1343,20 +1343,16 @@ function S14Close({ n, t }: { n: number; t: number }) {
 
 // ─── Slide registry ──────────────────────────────────────────────────────────
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
-  { id: "cover",    title: "Cover",                render: (n, t) => <S01Cover n={n} t={t} /> },
-  { id: "problem",  title: "Problem · lens",       render: (n, t) => <S02Problem n={n} t={t} /> },
-  { id: "context",  title: "Context explosion",    render: (n, t) => <S03Context n={n} t={t} /> },
-  { id: "solution", title: "Solution · lens",      render: (n, t) => <S04Solution n={n} t={t} /> },
-  { id: "how",      title: "How it works",         render: (n, t) => <S05How n={n} t={t} /> },
-  { id: "why-now",  title: "Why now · lens",       render: (n, t) => <S06WhyNow n={n} t={t} /> },
-  { id: "weekend",  title: "Weekend objection",    render: (n, t) => <S07Weekend n={n} t={t} /> },
-  { id: "labs",     title: "Lab objection",        render: (n, t) => <S08Lab n={n} t={t} /> },
-  { id: "model",    title: "Business model",       render: (n, t) => <S09Model n={n} t={t} /> },
-  { id: "proof",    title: "Proof",                render: (n, t) => <S10Proof n={n} t={t} /> },
-  { id: "moat",     title: "Moat",                 render: (n, t) => <S11Moat n={n} t={t} /> },
-  { id: "team",     title: "Team",                 render: (n, t) => <S12Team n={n} t={t} /> },
-  { id: "ask",      title: "Ask · €2M",            render: (n, t) => <S13Ask n={n} t={t} /> },
-  { id: "close",    title: "Closing",              render: (n, t) => <S14Close n={n} t={t} /> },
+  // StoryBrand 9-slide spine. Character → Problem → Guide → Plan → Success → Failure-avoided → Model/Moat → Team → Ask.
+  { id: "cover",    title: "Cover · Character",                 render: (n, t) => <S01Cover n={n} t={t} /> },
+  { id: "problem",  title: "Problem · single chat → 1000 chats", render: (n, t) => <S02Problem n={n} t={t} /> },
+  { id: "context",  title: "Failure mode · context explosion",  render: (n, t) => <S03Context n={n} t={t} /> },
+  { id: "solution", title: "Guide · meet LIZA, the AI Governance Loop", render: (n, t) => <S04Solution n={n} t={t} /> },
+  { id: "moat",     title: "Plan A · the Block (the atom)",     render: (n, t) => <S11Moat n={n} t={t} /> },
+  { id: "how",      title: "Plan B · the governed moment",      render: (n, t) => <S05How n={n} t={t} /> },
+  { id: "proof",    title: "Success · what compounds",          render: (n, t) => <S10Proof n={n} t={t} /> },
+  { id: "model",    title: "Business model + moat",             render: (n, t) => <S09Model n={n} t={t} /> },
+  { id: "ask",      title: "Team + Ask · €2M",                  render: (n, t) => <S13Ask n={n} t={t} /> },
 ];
 
 const SLIDES = RAW_SLIDES.map((s, i) => ({
