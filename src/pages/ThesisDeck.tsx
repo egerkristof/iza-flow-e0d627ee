@@ -30,27 +30,22 @@ const ACTS = [
 
 function ActRail({ index }: { index: number }) {
   return (
-    <div className="absolute top-0 left-0 right-0 z-20 px-24 pt-6 pb-3 flex items-center gap-3"
-      style={{ background: "linear-gradient(180deg, hsl(0 0% 100% / 0.96), hsl(0 0% 100% / 0))" }}>
-      <span className="font-mono uppercase tracking-[0.3em] font-bold" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>
-        LIZA OS · Thesis
+    <div className="absolute z-30 flex items-center gap-4" style={{ top: 24, left: 96, right: 96, height: 44 }}>
+      <span className="font-mono uppercase tracking-[0.3em] font-bold whitespace-nowrap" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>
+        LIZA OS Thesis
       </span>
       <div className="flex-1 grid grid-cols-6 gap-2">
         {ACTS.map((a, i) => {
           const active = i === index;
           const past = i < index;
           return (
-            <div key={a.act} className="flex flex-col gap-1.5">
-              <div className="h-1 rounded-full" style={{
+            <div key={a.act} className="flex flex-col gap-1">
+              <div className="h-[3px] rounded-full" style={{
                 background: active ? `hsl(${ACCENT})` : past ? `hsl(${ACCENT} / 0.35)` : CHROME_BORDER,
               }} />
-              <div className="flex items-baseline gap-2" style={{ opacity: active ? 1 : 0.55 }}>
-                <span className="font-mono" style={{ fontSize: 10, color: MUTED, letterSpacing: "0.1em" }}>
-                  0{i + 1}
-                </span>
-                <span className="font-bold" style={{ fontSize: 11, color: active ? TEXT : MUTED, letterSpacing: "-0.005em" }}>
-                  {a.short}
-                </span>
+              <div className="flex items-baseline gap-1.5 whitespace-nowrap overflow-hidden" style={{ opacity: active ? 1 : 0.5 }}>
+                <span className="font-mono" style={{ fontSize: 10, color: MUTED, letterSpacing: "0.08em" }}>0{i + 1}</span>
+                <span className="font-bold" style={{ fontSize: 11, color: active ? TEXT : MUTED }}>{a.short}</span>
               </div>
             </div>
           );
