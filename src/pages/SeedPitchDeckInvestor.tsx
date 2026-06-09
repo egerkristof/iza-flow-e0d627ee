@@ -1219,7 +1219,7 @@ function AtomMoatBody() {
       vendor: "LIZA",
       kind: "The AI Governance Loop",
       atom: "A Block",
-      good: "Typed (Directive · Knowledge · Procedure · Preference). Owner-signed, versioned, compiled JIT into every AI moment, audited on the way out. Blocks compose into Playbooks. Playbooks compose into Org-as-Code.",
+      good: "Typed (Directive · Knowledge · Procedure · Preference). Owner-signed, versioned, compiled JIT into every moment of work with AI, audited on the way out. Blocks compose into Playbooks. Playbooks compose into Org-as-Code.",
       gap: "Carries the rule, the judgment, the memory, the cost and the audit trail in one governed unit. Pages, prompts and chunks all collapse into it.",
       tone: "win" as const,
     },
@@ -1234,7 +1234,7 @@ function AtomMoatBody() {
           Every AI org has a smallest unit. Most picked something the org cannot govern. We picked the Block.
         </h2>
         <p className="mt-4" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4, maxWidth: 1500 }}>
-          A Block is the smallest typed, owner-signed unit of how your org thinks: one Directive, Knowledge item, Procedure, or Preference. Blocks compose into Playbooks. Playbooks compose into Org-as-Code. Every AI moment of work compiles from that corpus, just in time, with a receipt.
+          A Block is the smallest typed, owner-signed unit of how your org thinks: one Directive, Knowledge item, Procedure, or Preference. Blocks compose into Playbooks. Playbooks compose into Org-as-Code. Every moment of work with AI compiles from that corpus, just in time, with a receipt.
         </p>
       </div>
       <div className="flex-1 grid grid-cols-4 gap-5 min-h-0">
@@ -1382,7 +1382,7 @@ function S14Close({ n, t }: { n: number; t: number }) {
 // Visual grammar is consistent across the deck:
 //   • the ladder       Block → Playbook → Org-as-Code     (the unit)
 //   • the loop         Lock → Compile → Sign → Learn      (the runtime)
-//   • the moment       request → corpus → model → receipt (the product)
+//   • the moment of work with AI       request → corpus → model → receipt (the product)
 // ═════════════════════════════════════════════════════════════════════════════
 
 function StoryBadge({ children, tone = "gold" }: { children: React.ReactNode; tone?: "gold" | "green" | "red" }) {
@@ -1532,7 +1532,7 @@ function S01StoryCover({ n, t }: { n: number; t: number }) {
 
 // ─── Shared narrative spine for S03 / S04 ──────────────────────────────────
 // The same five components anchor BOTH the failure slide (what is missing
-// from every ungoverned AI moment) and the guide slide (what LIZA gives back).
+// from every ungoverned moment of work with AI) and the guide slide (what LIZA gives back).
 const MOMENT_NEEDS = [
   { k: "context",   missing: "the model uses whatever the user remembers, not the company's approved way of doing this work",
                     gives:   "the approved standard is compiled into the call, just in time" },
@@ -1541,18 +1541,18 @@ const MOMENT_NEEDS = [
   { k: "receipt",   missing: "the output cannot be replayed with inputs, policy, model and approver attached",
                     gives:   "every output is replayable: inputs · policy · model · approver · hash" },
   { k: "learning",  missing: "the correction stays trapped in the thread; the next employee repeats the same gap",
-                    gives:   "every correction pushes back into the corpus; the next moment inherits it" },
+                    gives:   "every correction pushes back into the corpus; the next moment of work with AI inherits it" },
   { k: "token ROI", missing: "no visibility on what the call cost or whether it was even effective",
                     gives:   "every call is metered against the standard it served; cost tied to value" },
 ];
 
-// 02 · Problem. The unit of AI work changed: one moment of work → thousands.
+// 02 · Problem. The unit of AI work changed: one moment of work with AI → thousands.
 function S02StoryScale({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Problem" n={n} t={t}
       badge="The unit of AI work changed"
-      headline="Yesterday, a moment of work was one person, one prompt, one reply. Today, the company runs thousands of them, every hour."
-      footnote="Each moment is now a request the company is responsible for: legally, commercially, operationally. Multiply by 5,000 a day.">
+      headline="Yesterday, a moment of work with AI was one person, one prompt, one reply. Today, the company runs thousands of them, every hour."
+      footnote="Each moment of work with AI is now a request the company is responsible for: legally, commercially, operationally. Multiply by 5,000 a day.">
       <div className="grid grid-cols-[0.72fr_1.28fr] gap-7 h-full">
         {/* TODAY · one isolated chat */}
         <div className="rounded-2xl p-8 flex flex-col"
@@ -1562,7 +1562,7 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
             Yesterday
           </div>
           <p className="font-mono uppercase tracking-[0.22em] mt-6" style={{ fontSize: 13, color: SUBTLE }}>
-            one moment of work
+            one moment of work with AI
           </p>
           <div className="flex-1 flex items-center justify-center">
             <div className="rounded-2xl px-8 py-10 text-center w-full"
@@ -1579,7 +1579,7 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
             Useful for the individual. Nothing the organisation can audit, improve, or compound.
           </p>
         </div>
-        {/* TODAY/TOMORROW · a swarm of governed moments */}
+        {/* TODAY/TOMORROW · a swarm of governed moments of work with AI */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
           <div className="rounded-full px-6 py-2.5 self-start font-mono uppercase tracking-[0.3em]"
@@ -1587,7 +1587,7 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
             Today · and from now on
           </div>
           <p className="font-black mt-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
-            Thousands of moments of work, every hour.
+            Thousands of moments of work with AI, every hour.
           </p>
           <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
             Different people · different requests · different contexts. Same legal, brand and commercial exposure as anything else the company emits.
@@ -1605,10 +1605,10 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
             </div>
           </div>
           <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>
-            each square = one moment of work
+            each square = one moment of work with AI
           </p>
           <div className="mt-3 flex gap-5 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11 }}>
-            <span style={{ color: `hsl(${GREEN})` }}>■ AI moment of work</span>
+            <span style={{ color: `hsl(${GREEN})` }}>■ moment of work with AI</span>
             <span style={{ color: `hsl(${GOLD})` }}>■ policy in play</span>
             <span style={{ color: `hsl(${ACCENT})` }}>■ approver signed</span>
           </div>
@@ -1618,20 +1618,20 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 03 · Failure. Each moment needs 5 things. Today, all 5 are missing.
+// 03 · Failure. Each moment of work with AI needs 5 things. Today, all 5 are missing.
 function S03StoryFailure({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Failure mode" n={n} t={t}
-      badge="Why ungoverned moments cannot scale"
-      headline="Each moment of work needs five things. Today, all five are missing."
-      footnote="One ungoverned moment is a curiosity. Five thousand a day is operational risk.">
+      badge="Why ungoverned moments of work with AI cannot scale"
+      headline="Each moment of work with AI needs five things. Today, all five are missing."
+      footnote="One ungoverned moment of work with AI is a curiosity. Five thousand a day is operational risk.">
       <div className="grid grid-cols-[1fr_1.25fr] gap-8 h-full">
         {/* the bare output */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
           <div className="self-start rounded-full px-5 py-2 mb-5 font-mono uppercase tracking-[0.24em]"
             style={{ fontSize: 14, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
-            One moment of work · no governance
+            One moment of work with AI · no governance
           </div>
           <div className="rounded-xl px-5 py-4 mb-5 w-full"
             style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
@@ -1657,7 +1657,7 @@ function S03StoryFailure({ n, t }: { n: number; t: number }) {
         {/* the five missing components */}
         <div className="flex flex-col gap-3 justify-center">
           <p className="font-mono uppercase tracking-[0.26em] mb-1" style={{ fontSize: 12, color: SUBTLE }}>
-            what is missing from this one moment
+            what is missing from this one moment of work with AI
           </p>
           {MOMENT_NEEDS.map((g, i) => (
             <div key={g.k} className="rounded-xl px-5 py-3.5 flex items-center gap-4"
@@ -1680,9 +1680,9 @@ function S03StoryFailure({ n, t }: { n: number; t: number }) {
 function S04StoryGuide({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Guide · meet LIZA" n={n} t={t}
-      badge="What LIZA gives every moment of work"
-      headline="LIZA gives every AI moment the five things it was missing. Every output becomes production-ready, and connected to the rest of the company."
-      footnote="One correction propagates to every moment that touches the same standard. The company gets sharper with every call.">
+      badge="What LIZA gives every moment of work with AI"
+      headline="LIZA gives every moment of work with AI the five things it was missing. Every output becomes production-ready, and connected to the rest of the company."
+      footnote="One correction propagates to every moment of work with AI that touches the same standard. The company gets sharper with every call.">
       <div className="flex flex-col gap-5 h-full">
         {/* TOP · the transformation, said once */}
         <div className="grid grid-cols-[1fr_auto_1fr] gap-5 items-stretch">
@@ -1690,7 +1690,7 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
             style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.35)` }}>
             <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>Yesterday</span>
             <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>
-              Every AI moment is missing 5 things.
+              Every moment of work with AI is missing 5 things.
             </span>
           </div>
           <div className="flex items-center justify-center px-3">
@@ -1703,7 +1703,7 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
             style={{ background: `hsl(${GREEN} / 0.08)`, border: `1.5px solid hsl(${GREEN} / 0.55)` }}>
             <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>From now on</span>
             <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>
-              Every AI moment has all 5, signed and connected.
+              Every moment of work with AI has all 5, signed and connected.
             </span>
           </div>
         </div>
@@ -1745,10 +1745,10 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
         <div className="rounded-xl px-6 py-4 flex items-center justify-between gap-6"
           style={{ background: `hsl(${GOLD} / 0.08)`, border: `1.5px solid hsl(${GOLD} / 0.45)` }}>
           <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-            And because each moment now carries all five
+            And because each moment of work with AI now carries all five
           </p>
           <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>
-            Every moment connects to every other. Fix one standard, the whole company updates. Fast <em className="not-italic" style={{ color: `hsl(${GREEN})` }}>and</em> right, by construction.
+            Every moment of work with AI connects to every other. Fix one standard, the whole company updates. Fast <em className="not-italic" style={{ color: `hsl(${GREEN})` }}>and</em> right, by construction.
           </p>
         </div>
       </div>
@@ -1772,7 +1772,7 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Plan A · the mechanics" n={n} t={t}
       badge="How the corpus compounds"
-      headline="Every governed moment leaves a receipt. Receipts cite Blocks. Blocks bundle into Playbooks. Playbooks become the company, in code."
+      headline="Every governed moment of work with AI leaves a receipt. Receipts cite Blocks. Blocks bundle into Playbooks. Playbooks become the company, in code."
       footnote="The Block is the smallest unit at which AI work and human governance share the same vocabulary. It is also the unit that compounds.">
       <div className="flex flex-col gap-5 h-full justify-center">
         {/* The chain · 4 stages with arrows */}
@@ -1782,7 +1782,7 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
             style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>01 · CALL</p>
             <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-              One moment of work
+              One moment of work with AI
             </p>
             <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
               A request arrives. The Hamburg RFP. A code review. A board memo. A lab note.
@@ -1850,7 +1850,7 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
             </p>
           </div>
           <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45, maxWidth: 540 }}>
-            Models come and go. Vendors come and go. The corpus of Blocks, Playbooks and signed receipts is the IP the company keeps, and the asset that compounds with every governed moment.
+            Models come and go. Vendors come and go. The corpus of Blocks, Playbooks and signed receipts is the IP the company keeps, and the asset that compounds with every governed moment of work with AI.
           </p>
         </div>
       </div>
@@ -1858,13 +1858,13 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 06 · The Moment. The product is the moment. Use the factory walk-through:
+// 06 · The Moment of Work with AI. The product is the moment of work with AI. Use the factory walk-through:
 // one request → 4 stations → signed receipt. This is the deepest "how" slide.
 function S06StoryMoment({ n, t }: { n: number; t: number }) {
   return (
-    <StorySlide section="Plan B · the governed moment" n={n} t={t}
+    <StorySlide section="Plan B · the governed moment of work with AI" n={n} t={t}
       badge="What we actually ship · one full loop"
-      headline="Every AI moment runs the same four-station loop. LEARN feeds back into LOCK — the corpus gets sharper with every call."
+      headline="Every moment of work with AI runs the same four-station loop. LEARN feeds back into LOCK — the corpus gets sharper with every call."
       footnote="AACE v3.1 runtime · live in production · regulated AEC deployment">
       <div className="h-full flex flex-col justify-center">
         <VizFactoryWalkthrough />
@@ -2138,7 +2138,7 @@ const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) =>
   { id: "solution", title: "Guide · meet LIZA, the governance loop", render: (n, t) => <S04StoryGuide n={n} t={t} /> },
   { id: "block",    title: "Plan A · the mechanics of how it compounds", render: (n, t) => <S05StoryBlock n={n} t={t} /> },
   { id: "category", title: "The category · vs RAG, vs Knowledge Graph", render: (n, t) => <S05bStoryVsRagKg n={n} t={t} /> },
-  { id: "moment",   title: "Plan B · the governed moment",      render: (n, t) => <S06StoryMoment n={n} t={t} /> },
+  { id: "moment",   title: "Plan B · the governed moment of work with AI",      render: (n, t) => <S06StoryMoment n={n} t={t} /> },
   { id: "success",  title: "Success · what compounds",          render: (n, t) => <S07StorySuccess n={n} t={t} /> },
   { id: "model",    title: "Business model + moat",             render: (n, t) => <S08StoryModelMoat n={n} t={t} /> },
   { id: "ask",      title: "Team + Ask · €2M",                  render: (n, t) => <S09StoryAsk n={n} t={t} /> },
