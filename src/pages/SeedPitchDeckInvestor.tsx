@@ -2133,10 +2133,10 @@ function S09StoryAsk({ n, t }: { n: number; t: number }) {
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
   // StoryBrand 9-slide spine. Character → Problem → Guide → Plan → Success → Failure-avoided → Model/Moat → Team → Ask.
   { id: "cover",    title: "Cover · Character",                 render: (n, t) => <S01StoryCover n={n} t={t} /> },
-  { id: "problem",  title: "Problem · single chat → 1000 chats", render: (n, t) => <S02StoryScale n={n} t={t} /> },
-  { id: "context",  title: "Failure mode · context explosion",  render: (n, t) => <S03StoryFailure n={n} t={t} /> },
-  { id: "solution", title: "Guide · meet LIZA, the AI Governance Loop", render: (n, t) => <S04StoryGuide n={n} t={t} /> },
-  { id: "block",    title: "Plan A · the Block (the atom)",     render: (n, t) => <S05StoryBlock n={n} t={t} /> },
+  { id: "problem",  title: "Problem · the unit of AI work changed", render: (n, t) => <S02StoryScale n={n} t={t} /> },
+  { id: "context",  title: "Failure mode · five things are missing", render: (n, t) => <S03StoryFailure n={n} t={t} /> },
+  { id: "solution", title: "Guide · meet LIZA, the governance loop", render: (n, t) => <S04StoryGuide n={n} t={t} /> },
+  { id: "block",    title: "Plan A · the mechanics of how it compounds", render: (n, t) => <S05StoryBlock n={n} t={t} /> },
   { id: "category", title: "The category · vs RAG, vs Knowledge Graph", render: (n, t) => <S05bStoryVsRagKg n={n} t={t} /> },
   { id: "moment",   title: "Plan B · the governed moment",      render: (n, t) => <S06StoryMoment n={n} t={t} /> },
   { id: "success",  title: "Success · what compounds",          render: (n, t) => <S07StorySuccess n={n} t={t} /> },
