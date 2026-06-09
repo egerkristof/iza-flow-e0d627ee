@@ -1574,13 +1574,29 @@ function S03StoryFailure({ n, t }: { n: number; t: number }) {
             style={{ fontSize: 22, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
             One AI output · no governance
           </div>
-          <div className="rounded-2xl px-12 py-12 text-center w-full"
-            style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 14, color: SUBTLE }}>model output</p>
-            <p className="font-black" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>"Here is<br/>the answer."</p>
+          <div className="rounded-xl px-5 py-3 mb-5 w-full"
+            style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request</p>
+            <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.25 }}>
+              "Prepare our response to the €40M RFP from the city of Hamburg."
+            </p>
           </div>
-          <p className="mt-8 text-center font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, maxWidth: 460, lineHeight: 1.35 }}>
-            Looks confident. Carries nothing the organisation can stand on.
+          <div className="rounded-2xl px-8 py-7 w-full"
+            style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: SUBTLE }}>model output, 4 seconds later</p>
+            <p className="font-black" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              A 12-page response.<br/>
+              <span style={{ color: `hsl(${RED})` }}>Confident. Coherent. Unaccountable.</span>
+            </p>
+            <p className="mt-4 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
+              · cites pricing that expired last quarter<br/>
+              · uses a compliance clause we no longer offer<br/>
+              · references a case study legal redacted<br/>
+              · nobody signed it; nobody can find out who didn't
+            </p>
+          </div>
+          <p className="mt-6 text-center font-bold" style={{ fontSize: 18, color: `hsl(${RED})`, maxWidth: 480, lineHeight: 1.35 }}>
+            Reads like the company. Carries nothing the company can stand on.
           </p>
         </div>
         {/* the four missing bands */}
