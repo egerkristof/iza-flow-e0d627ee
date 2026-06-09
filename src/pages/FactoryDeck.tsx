@@ -1760,7 +1760,7 @@ export function FVsmArchitecture() {
     {
       role: "Brain",
       name: "Knowledge Graph & LVT",
-      desc: "Property-graph ontology of Vision, Bets, Initiatives, Teams, Roles, Domains. The org's reality, machine-readable.",
+      desc: "The org's reality, machine-readable. Vision, Bets, Teams, Roles, Domains.",
       hl: ACCENT,
       icon: Cpu,
       payload: ["VISION → BET → INITIATIVE", "TEAM → ROLE → DOMAIN", "Authority and budget edges"],
@@ -1768,7 +1768,7 @@ export function FVsmArchitecture() {
     {
       role: "Spine",
       name: "AACE v3.1 Runtime",
-      desc: "Compiler and execution gate. Holds Playbooks and precondition logic. Every AI call passes through here.",
+      desc: "Compiler and execution gate. Every AI call passes through here.",
       hl: GREEN,
       icon: Workflow,
       payload: ["[PLAYBOOK] compilation", "<precondition> evaluation", "Role-scoped, JIT context"],
@@ -1776,7 +1776,7 @@ export function FVsmArchitecture() {
     {
       role: "Sensors",
       name: "Edge Execution Loop",
-      desc: "Where real work happens. Anomalies, tensions, errors flow back as [FINDINGS] into the graph.",
+      desc: "Where work happens. Errors flow back as [FINDINGS] into the graph.",
       hl: GOLD,
       icon: Radar,
       payload: ["Live agent calls", "[FINDINGS] back to brain", "Continuous feedback signal"],
@@ -1788,27 +1788,25 @@ export function FVsmArchitecture() {
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
         <Tag color={ACCENT} label="Architecture · A Viable System Model for the agentic enterprise" />
-        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
-          The whole organization is one <span style={{ color: `hsl(${ACCENT})` }}>nervous system.</span> Brain. Spine. Sensors.
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 68, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1700 }}>
+          The whole organization is one <span style={{ color: `hsl(${ACCENT})` }}>nervous system.</span><br/>
+          Brain. Spine. Sensors.
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          Mapped into a multi-dimensional property graph, LIZA functions as a VSM-compliant nervous system. Two technical wins fall out: dynamic sandboxing (security is graph relationships, not brittle if-statements) and progressive disclosure (agents query for context as the procedure demands, never stuffed).
-        </p>
 
-        <div className="grid grid-cols-3 gap-5 flex-1">
+        <div className="grid grid-cols-3 gap-6 flex-1">
           {layers.map((l, idx) => {
             const Icon = l.icon;
             return (
-              <div key={l.role} className="rounded-2xl p-6 flex flex-col relative" style={{ background: `hsl(${l.hl} / 0.05)`, border: `1px solid hsl(${l.hl} / 0.4)` }}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: `hsl(${l.hl})` }}>Layer {idx + 1} · {l.role}</span>
-                  <Icon size={22} style={{ color: `hsl(${l.hl})` }} />
+              <div key={l.role} className="rounded-2xl p-7 flex flex-col relative" style={{ background: `hsl(${l.hl} / 0.05)`, border: `1px solid hsl(${l.hl} / 0.4)` }}>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 13, color: `hsl(${l.hl})` }}>Layer {idx + 1} · {l.role}</span>
+                  <Icon size={28} style={{ color: `hsl(${l.hl})` }} />
                 </div>
-                <p className="font-black mb-2" style={{ fontSize: 26, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{l.name}</p>
-                <p style={{ fontSize: 14.5, color: MUTED, lineHeight: 1.45 }}>{l.desc}</p>
-                <div className="mt-4 pt-3 border-t flex flex-col gap-1.5" style={{ borderColor: `hsl(${l.hl} / 0.25)` }}>
+                <p className="font-black mb-3" style={{ fontSize: 32, color: TEXT, letterSpacing: "-0.025em", lineHeight: 1.1 }}>{l.name}</p>
+                <p style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>{l.desc}</p>
+                <div className="mt-5 pt-4 border-t flex flex-col gap-2" style={{ borderColor: `hsl(${l.hl} / 0.25)` }}>
                   {l.payload.map((p) => (
-                    <p key={p} className="font-mono" style={{ fontSize: 12, color: TEXT }}>· {p}</p>
+                    <p key={p} className="font-mono" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>· {p}</p>
                   ))}
                 </div>
               </div>
@@ -1816,17 +1814,17 @@ export function FVsmArchitecture() {
           })}
         </div>
 
-        <div className="mt-6 grid grid-cols-2 gap-4">
-          <div className="rounded-xl px-5 py-4 flex items-start gap-4" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
-            <Lock size={20} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 2 }} />
-            <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-              <span className="font-black">Dynamic Sandboxing.</span> Before any call, AACE checks the graph: does this Role have authority over this Domain? Security is mathematically enforced. No jailbreakable if-statements.
+        <div className="mt-7 grid grid-cols-2 gap-5">
+          <div className="rounded-xl px-6 py-5 flex items-start gap-4" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+            <Lock size={26} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 2 }} />
+            <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>
+              <span className="font-black">Dynamic Sandboxing.</span> Security is graph relationships, not jailbreakable if-statements.
             </p>
           </div>
-          <div className="rounded-xl px-5 py-4 flex items-start gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
-            <Filter size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 2 }} />
-            <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-              <span className="font-black">Progressive Disclosure.</span> Agents start minimal, pull more via read_resource() only when a Procedure requires it. Token cost down. Distractor context gone. Hallucinations down.
+          <div className="rounded-xl px-6 py-5 flex items-start gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <Filter size={26} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 2 }} />
+            <p style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>
+              <span className="font-black">Progressive Disclosure.</span> Agents pull context only when the Procedure demands. Token cost down, hallucinations down.
             </p>
           </div>
         </div>
