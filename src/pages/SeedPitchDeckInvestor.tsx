@@ -374,11 +374,22 @@ export function VizFactoryWalkthrough() {
       </div>
 
       {/* feedback loop arrow under the row */}
-      <div className="flex items-center justify-center gap-4 font-mono uppercase tracking-[0.24em] -mt-1"
-        style={{ fontSize: 12, color: `hsl(${GREEN})` }}>
-        <span style={{ color: SUBTLE }}>04 LEARN</span>
-        <span>↻ feeds the next call's 01 LOCK</span>
-        <span style={{ color: SUBTLE }}>· the corpus is the asset</span>
+      <div className="relative mt-2">
+        <svg viewBox="0 0 1000 90" className="w-full" style={{ height: 90 }}>
+          <defs>
+            <marker id="loopArr" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto">
+              <path d="M0 0 L12 6 L0 12 z" fill={`hsl(${GREEN})`} />
+            </marker>
+          </defs>
+          {/* big curved arrow from right (LEARN) back to left (LOCK) */}
+          <path d="M 870 15 C 870 80, 130 80, 130 15"
+            stroke={`hsl(${GREEN})`} strokeWidth="3" fill="none" strokeDasharray="2 0" markerEnd="url(#loopArr)" />
+          <text x="500" y="62" textAnchor="middle"
+            fontSize="20" fontWeight="800" fill={`hsl(${GREEN})`}
+            fontFamily="ui-monospace, monospace" letterSpacing="0.04em">
+            ↻  LEARN feeds the next call's LOCK · the corpus compounds
+          </text>
+        </svg>
       </div>
     </div>
   );
