@@ -1849,6 +1849,98 @@ function S06StoryMoment({ n, t }: { n: number; t: number }) {
   );
 }
 
+// 05b · Why a Block (vs RAG vs Knowledge Graph). The category-defining contrast.
+// Three columns: what each models, what it gives you, where it breaks. The Block
+// wins because it is the only structure that models how humans actually decide
+// AND closes the governance loop with them.
+function S05bStoryVsRagKg({ n, t }: { n: number; t: number }) {
+  const cols = [
+    {
+      name: "RAG",
+      kind: "vector-retrieved chunks",
+      models: "what the document says",
+      gives: "a passage the model can paraphrase",
+      breaks: "no owner, no version, no decision logic. The model still chooses what to do with it. Humans cannot update it without re-ingesting documents.",
+      tone: "muted" as const,
+    },
+    {
+      name: "Knowledge Graph",
+      kind: "entities and relations",
+      models: "what things are and how they connect",
+      gives: "a structured map: people, products, contracts, clauses",
+      breaks: "models the org as a static schema. Does not carry the decision, the approver, or the receipt. Hard to update from the loop where work actually happens.",
+      tone: "muted" as const,
+    },
+    {
+      name: "LIZA Block",
+      kind: "governed unit of how the company thinks",
+      models: "how humans actually decide: directives, knowledge, procedures, preferences",
+      gives: "a typed, signed, versioned unit the org can edit, approve, replay, and compound",
+      breaks: "nothing — it is the only level of definition that integrates with human updates from inside the work loop. The graph that runs the company is the graph of its Blocks.",
+      tone: "win" as const,
+    },
+  ];
+  return (
+    <StorySlide section="The category" n={n} t={t}
+      badge="Why not RAG · why not a knowledge graph"
+      headline="A graph of documents recalls. A graph of entities describes. A graph of Blocks decides — and updates with the humans who govern it."
+      footnote="The Block is the smallest unit at which AI work and human governance share the same vocabulary. That is the level of definition that compounds.">
+      <div className="grid grid-cols-3 gap-6 h-full">
+        {cols.map((c) => {
+          const isWin = c.tone === "win";
+          return (
+            <div key={c.name} className="rounded-2xl p-7 flex flex-col"
+              style={{
+                background: isWin ? `hsl(${GREEN} / 0.08)` : CARD_ALT,
+                border: isWin ? `2px solid hsl(${GREEN})` : `1px solid ${CHROME_BORDER}`,
+                boxShadow: isWin ? `0 0 28px hsl(${GREEN} / 0.18)` : "none",
+              }}>
+              <div className="flex items-baseline justify-between mb-2">
+                <p className="font-black" style={{ fontSize: 30, color: isWin ? `hsl(${GREEN})` : TEXT, letterSpacing: "-0.02em" }}>
+                  {c.name}
+                </p>
+                {isWin && (
+                  <span className="font-mono uppercase tracking-[0.22em]"
+                    style={{ fontSize: 10, color: `hsl(${GREEN})` }}>
+                    our atom
+                  </span>
+                )}
+              </div>
+              <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 11, color: SUBTLE }}>
+                {c.kind}
+              </p>
+
+              <div className="mb-4">
+                <p className="font-mono uppercase tracking-[0.2em] mb-1.5"
+                  style={{ fontSize: 10, color: isWin ? `hsl(${GREEN})` : `hsl(${GOLD})` }}>
+                  Models
+                </p>
+                <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>{c.models}</p>
+              </div>
+
+              <div className="mb-4">
+                <p className="font-mono uppercase tracking-[0.2em] mb-1.5" style={{ fontSize: 10, color: SUBTLE }}>
+                  Gives you
+                </p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>{c.gives}</p>
+              </div>
+
+              <div className="mt-auto pt-4"
+                style={{ borderTop: `1px solid ${isWin ? `hsl(${GREEN} / 0.3)` : CHROME_BORDER}` }}>
+                <p className="font-mono uppercase tracking-[0.2em] mb-1.5"
+                  style={{ fontSize: 10, color: isWin ? `hsl(${GREEN})` : `hsl(${RED})` }}>
+                  {isWin ? "Why humans stay in the loop" : "Where it breaks at scale"}
+                </p>
+                <p style={{ fontSize: 14, color: isWin ? TEXT : MUTED, lineHeight: 1.4 }}>{c.breaks}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </StorySlide>
+  );
+}
+
 // 07 · Compounding. What the customer accumulates over time. Curve + ladder.
 function S07StorySuccess({ n, t }: { n: number; t: number }) {
   return (
