@@ -1963,20 +1963,48 @@ export function FAutoRepair() {
           <span style={{ color: `hsl(${ACCENT})` }}>So the system writes it for itself.</span>
         </h2>
 
-        <div className="grid grid-cols-3 gap-5 flex-1">
-          {steps.map((s, idx) => {
-            const Icon = s.i;
-            return (
-              <div key={s.k} className="rounded-2xl p-6 flex flex-col" style={{ background: `hsl(${s.hl} / 0.05)`, border: `1px solid hsl(${s.hl} / 0.35)` }}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-mono uppercase tracking-[0.22em] font-bold" style={{ fontSize: 13, color: `hsl(${s.hl})` }}>Step {idx + 1}</span>
-                  <Icon size={26} style={{ color: `hsl(${s.hl})` }} />
-                </div>
-                <p className="font-black mb-3" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{s.k}</p>
-                <p style={{ fontSize: 18, color: MUTED, lineHeight: 1.4 }}>{s.v}</p>
+        {/* 3 phases of 2 steps each, horizontally flowing */}
+        <div className="flex-1 flex flex-col gap-4">
+          {[
+            { phase: "DETECT", color: RED,    items: [0, 1] },
+            { phase: "DIAGNOSE", color: ACCENT, items: [2, 3] },
+            { phase: "HEAL",   color: GREEN,  items: [4, 5] },
+          ].map((ph, phIdx) => (
+            <div key={ph.phase} className="flex items-stretch gap-4">
+              <div className="flex flex-col items-center justify-center px-4 rounded-xl"
+                style={{ background: `hsl(${ph.color} / 0.08)`, border: `1px solid hsl(${ph.color} / 0.4)`, minWidth: 140 }}>
+                <span className="font-mono uppercase tracking-[0.24em] font-black" style={{ fontSize: 14, color: `hsl(${ph.color})` }}>
+                  {ph.phase}
+                </span>
+                <span className="font-mono" style={{ fontSize: 11, color: MUTED, marginTop: 4 }}>Phase {phIdx + 1}</span>
               </div>
-            );
-          })}
+              <div className="flex-1 grid grid-cols-2 gap-4">
+                {ph.items.map((iIdx, j) => {
+                  const s = steps[iIdx];
+                  const Icon = s.i;
+                  return (
+                    <div key={s.k} className="rounded-xl px-5 py-4 flex items-center gap-4 relative"
+                      style={{ background: `hsl(${s.hl} / 0.05)`, border: `1px solid hsl(${s.hl} / 0.3)` }}>
+                      <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
+                        style={{ background: `hsl(${s.hl} / 0.15)`, border: `1px solid hsl(${s.hl} / 0.4)` }}>
+                        <Icon size={20} style={{ color: `hsl(${s.hl})` }} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-black mb-0.5" style={{ fontSize: 18, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.015em" }}>
+                          <span className="font-mono mr-2" style={{ fontSize: 12, color: `hsl(${s.hl})` }}>{String(iIdx + 1).padStart(2, "0")}</span>
+                          {s.k}
+                        </p>
+                        <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35 }}>{s.v}</p>
+                      </div>
+                      {j === 0 && (
+                        <ArrowRight size={20} style={{ color: `hsl(${s.hl} / 0.6)`, position: "absolute", right: -22, top: "50%", marginTop: -10, zIndex: 2 }} />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="mt-7 rounded-xl px-9 py-6 border-l-4 flex items-center gap-6" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
