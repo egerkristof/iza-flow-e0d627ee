@@ -1341,195 +1341,463 @@ function S14Close({ n, t }: { n: number; t: number }) {
   );
 }
 
-// 9-slide investor spine, rebuilt so /investor no longer reuses the old lens slides.
+// ═════════════════════════════════════════════════════════════════════════════
+// 9-slide investor spine. Every slide carries ONE idea, anchored by ONE diagram.
+// Visual grammar is consistent across the deck:
+//   • the ladder       Block → Playbook → Org-as-Code     (the unit)
+//   • the loop         Lock → Compile → Sign → Learn      (the runtime)
+//   • the moment       request → corpus → model → receipt (the product)
+// ═════════════════════════════════════════════════════════════════════════════
+
 function StoryBadge({ children, tone = "gold" }: { children: React.ReactNode; tone?: "gold" | "green" | "red" }) {
   const color = tone === "green" ? GREEN : tone === "red" ? RED : GOLD;
   return (
-    <span className="font-mono uppercase tracking-[0.28em] rounded-full px-4 py-2" style={{ fontSize: 11, color: `hsl(${color})`, background: `hsl(${color} / 0.09)`, border: `1px solid hsl(${color} / 0.28)` }}>
+    <span className="font-mono uppercase tracking-[0.28em] rounded-full px-5 py-2"
+      style={{ fontSize: 14, color: `hsl(${color})`, background: `hsl(${color} / 0.09)`, border: `1px solid hsl(${color} / 0.28)` }}>
       {children}
     </span>
   );
 }
 
-function StoryCard({ label, title, copy, tone = "neutral" }: { label: string; title: string; copy: string; tone?: "neutral" | "green" | "red" | "gold" }) {
-  const color = tone === "green" ? GREEN : tone === "red" ? RED : tone === "gold" ? GOLD : TEXT;
+// Frame: badge + headline (no subline by default). Visual carries the meaning.
+function StorySlide({ section, n, t, badge, headline, dark = false, children, footnote }: {
+  section: string; n: number; t: number; badge: string; headline: React.ReactNode;
+  dark?: boolean; children: React.ReactNode; footnote?: string;
+}) {
   return (
-    <div className="rounded-2xl p-7 flex flex-col min-h-[210px]" style={{ background: tone === "neutral" ? CARD_ALT : `hsl(${color} / 0.07)`, border: `1px solid ${tone === "neutral" ? CHROME_BORDER : `hsl(${color} / 0.35)`}` }}>
-      <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: tone === "neutral" ? SUBTLE : `hsl(${color})` }}>{label}</p>
-      <p className="font-black mt-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.02em" }}>{title}</p>
-      <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.42 }}>{copy}</p>
+    <Shell section={section} n={n} total={t} dark={dark}>
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <div className="mb-8">
+          <StoryBadge>{badge}</StoryBadge>
+          <h2 className="font-black mt-6"
+            style={{ fontSize: 64, lineHeight: 1.02, color: dark ? "hsl(0 0% 98%)" : TEXT, letterSpacing: "-0.04em", maxWidth: 1620 }}>
+            {headline}
+          </h2>
+        </div>
+        <div className="flex-1 min-h-0">{children}</div>
+        {footnote && (
+          <p className="mt-5 font-mono uppercase tracking-[0.24em]" style={{ fontSize: 12, color: SUBTLE }}>{footnote}</p>
+        )}
+      </div>
+    </Shell>
+  );
+}
+
+// ─── Shared visual primitives ────────────────────────────────────────────────
+
+// The concept ladder. Reused on Cover, Block and Compounding slides so the
+// reader always sees the same shape (atom → molecule → corpus).
+function ConceptLadder({ active = "all", dark = false }: { active?: "block" | "playbook" | "org" | "all"; dark?: boolean }) {
+  const text = dark ? "hsl(0 0% 96%)" : TEXT;
+  const muted = dark ? "hsl(0 0% 68%)" : MUTED;
+  const rows = [
+    { k: "block",    label: "BLOCK",       title: "the atom",     copy: "one Directive · Knowledge · Procedure · Preference", w: 360,  color: GREEN },
+    { k: "playbook", label: "PLAYBOOK",    title: "the molecule", copy: "Blocks composed into how a workflow gets done",       w: 620,  color: GOLD  },
+    { k: "org",      label: "ORG-AS-CODE", title: "the corpus",   copy: "every Playbook the company runs, versioned",          w: 880,  color: ACCENT },
+  ];
+  return (
+    <div className="flex flex-col items-center gap-3">
+      {rows.map((r) => {
+        const on = active === "all" || active === r.k;
+        return (
+          <div key={r.k} className="rounded-xl flex items-center gap-5 px-6 py-4"
+            style={{
+              width: r.w,
+              background: on ? `hsl(${r.color} / 0.10)` : `hsl(${r.color} / 0.03)`,
+              border: `1.5px solid hsl(${r.color} / ${on ? 0.55 : 0.18})`,
+              boxShadow: on ? `0 0 22px hsl(${r.color} / 0.18)` : "none",
+              opacity: on ? 1 : 0.55,
+            }}>
+            <p className="font-mono uppercase tracking-[0.22em] shrink-0"
+              style={{ fontSize: 11, color: `hsl(${r.color})`, minWidth: 110 }}>{r.label}</p>
+            <div className="flex-1 flex items-baseline gap-3">
+              <p className="font-black" style={{ fontSize: 22, color: text, letterSpacing: "-0.015em" }}>{r.title}</p>
+              <p style={{ fontSize: 14, color: muted, lineHeight: 1.3 }}>· {r.copy}</p>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-function BigStorySlide({ section, n, t, badge, headline, subline, children, dark = false }: { section: string; n: number; t: number; badge: string; headline: React.ReactNode; subline?: string; children?: React.ReactNode; dark?: boolean }) {
+// Compounding curve. Time on x, accumulated Blocks on y, with milestone markers.
+function CompoundingCurve() {
   return (
-    <Shell section={section} n={n} total={t} dark={dark}>
-      <div className="absolute inset-0 px-24 pt-28 pb-20 flex flex-col">
-        <div className="mb-10">
-          <StoryBadge>{badge}</StoryBadge>
-          <h2 className="font-black mt-7" style={{ fontSize: 76, lineHeight: 1.01, color: dark ? "hsl(0 0% 98%)" : TEXT, letterSpacing: "-0.045em", maxWidth: 1540 }}>
-            {headline}
-          </h2>
-          {subline && <p className="mt-6" style={{ fontSize: 25, color: dark ? "hsl(0 0% 76%)" : MUTED, lineHeight: 1.35, maxWidth: 1320 }}>{subline}</p>}
-        </div>
-        {children && <div className="flex-1 min-h-0">{children}</div>}
-      </div>
-    </Shell>
+    <svg viewBox="0 0 720 360" className="w-full h-full">
+      <line x1="60" y1="320" x2="700" y2="320" stroke={CHROME_BORDER} strokeWidth="1" />
+      <line x1="60" y1="30"  x2="60"  y2="320" stroke={CHROME_BORDER} strokeWidth="1" />
+      {[1,2,3,4].map(i => (
+        <line key={i} x1="60" y1={320 - i*60} x2="700" y2={320 - i*60} stroke={CHROME_BORDER} strokeWidth="0.5" strokeDasharray="2 5" />
+      ))}
+      {/* compounding curve */}
+      <path d="M 60 310 Q 240 305 360 240 T 700 50"
+        stroke={`hsl(${GREEN})`} strokeWidth="3.5" fill="none" />
+      <path d="M 60 310 Q 240 305 360 240 T 700 50 L 700 320 L 60 320 Z"
+        fill={`hsl(${GREEN} / 0.08)`} stroke="none" />
+      {/* milestone markers */}
+      {[
+        { x: 150, y: 300, k: "01", label: "First Blocks", note: "captured from real corrections" },
+        { x: 360, y: 240, k: "02", label: "Playbooks form", note: "workflows compile from the corpus" },
+        { x: 600, y: 90,  k: "03", label: "Org-as-Code",   note: "company runs from its own corpus" },
+      ].map((m) => (
+        <g key={m.k}>
+          <circle cx={m.x} cy={m.y} r="7" fill={`hsl(${GREEN})`} stroke={BG} strokeWidth="3" />
+          <text x={m.x + 14} y={m.y - 10} fontSize="14" fontWeight="800" fill={TEXT}>{m.label}</text>
+          <text x={m.x + 14} y={m.y + 8}  fontSize="11" fill={MUTED} fontFamily="ui-monospace,monospace">{m.note}</text>
+        </g>
+      ))}
+      {/* axis labels */}
+      <text x="380" y="350" fontSize="11" fill={SUBTLE} textAnchor="middle" fontFamily="ui-monospace,monospace">months of operation →</text>
+      <text x="30"  y="180" fontSize="11" fill={SUBTLE} textAnchor="middle" fontFamily="ui-monospace,monospace" transform="rotate(-90 30 180)">accumulated operational IP →</text>
+      {/* dashed competitor line */}
+      <path d="M 60 310 L 700 280" stroke={`hsl(${RED})`} strokeWidth="2" fill="none" strokeDasharray="6 6" opacity="0.7" />
+      <text x="700" y="272" fontSize="11" fill={`hsl(${RED})`} textAnchor="end" fontWeight="700">ungoverned AI · flat learning</text>
+    </svg>
   );
 }
 
+// ─── Slides ──────────────────────────────────────────────────────────────────
+
+// 01 · Cover. One title. One sentence. The concept ladder so the reader sees
+// the unit before they read any slide.
 function S01StoryCover({ n, t }: { n: number; t: number }) {
   return (
     <Shell section="LIZA OS" n={n} total={t} dark>
+      {/* faint dot field */}
+      <svg className="absolute inset-0 w-full h-full opacity-20" preserveAspectRatio="none" viewBox="0 0 1920 1080">
+        {Array.from({ length: 18 }).map((_, r) =>
+          Array.from({ length: 30 }).map((_, c) => {
+            const seed = (r * 37 + c * 17) % 100;
+            return <circle key={`${r}-${c}`} cx={120 + c * 58} cy={120 + r * 50} r={2.2}
+              fill={c % 5 === 0 ? `hsl(${GREEN})` : "hsl(0 0% 100%)"} opacity={0.25 + seed / 400} />;
+          })
+        )}
+      </svg>
       <div className="absolute inset-0 px-28 py-24 flex flex-col justify-between">
-        <div className="flex justify-between items-start">
-          <StoryBadge>Seed · €2M · Primary investor deck</StoryBadge>
-          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: "hsl(0 0% 62%)" }}>Confidential</p>
+        <div className="flex justify-between items-start relative z-10">
+          <StoryBadge>Seed · €2M · Investor deck</StoryBadge>
+          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 13, color: "hsl(0 0% 62%)" }}>Confidential</p>
         </div>
-        <div>
-          <h1 className="font-black" style={{ fontSize: 134, lineHeight: 0.95, color: "hsl(0 0% 98%)", letterSpacing: "-0.055em" }}>LIZA OS</h1>
-          <p className="mt-9" style={{ fontSize: 40, color: "hsl(0 0% 78%)", lineHeight: 1.18, maxWidth: 1320 }}>
-            The governance layer that turns enterprise AI from isolated chats into accountable work.
+        <div className="relative z-10">
+          <h1 className="font-black" style={{ fontSize: 168, lineHeight: 0.92, color: "hsl(0 0% 98%)", letterSpacing: "-0.06em" }}>LIZA OS</h1>
+          <p className="mt-8" style={{ fontSize: 42, color: "hsl(0 0% 82%)", lineHeight: 1.15, maxWidth: 1340 }}>
+            The governance layer that turns enterprise AI into accountable work.
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-5">
-          <StoryCard label="The shift" title="Single chat to AI at scale" copy="The buyer problem is no longer model access. It is governing thousands of AI moments across the organization." tone="red" />
-          <StoryCard label="The unit" title="Blocks compose the company" copy="One Block captures one Directive, Knowledge item, Procedure, or Preference. Playbooks are built from Blocks." tone="gold" />
-          <StoryCard label="The outcome" title="Every moment leaves a receipt" copy="Each governed output carries context, owner, version, model, approval and learning history." tone="green" />
+        <div className="relative z-10 flex justify-center">
+          <ConceptLadder dark />
         </div>
       </div>
     </Shell>
   );
 }
 
+// 02 · Problem. The shift: from one chat to a thousand AI moments per day.
+// Visual: one chat box on the left, swarm of governed moments on the right.
 function S02StoryScale({ n, t }: { n: number; t: number }) {
   return (
-    <BigStorySlide section="Problem" n={n} t={t} badge="Single chat to 1000 chats" headline="AI adoption breaks when the unit of work is still one isolated chat." subline="The enterprise is moving from artisanal prompts to industrial AI work. That shift creates a governance problem, not a model problem.">
-      <div className="grid grid-cols-[0.8fr_1.2fr] gap-7 h-full">
-        <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: `hsl(${RED})` }}>Today</p>
-          <p className="font-black mt-5" style={{ fontSize: 54, color: TEXT, lineHeight: 1 }}>1 person<br/>1 chat<br/>1 prompt</p>
-          <p className="mt-6" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>Useful for the individual. Almost impossible to audit, improve or compound for the organization.</p>
-        </div>
-        <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.38)` }}>
-          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Tomorrow</p>
-          <div className="mt-5 grid grid-cols-12 gap-2">
-            {Array.from({ length: 96 }).map((_, i) => <span key={i} className="rounded-sm" style={{ height: 13, background: i % 7 === 0 ? `hsl(${GOLD} / 0.7)` : `hsl(${GREEN} / ${0.22 + (i % 5) * 0.08})` }} />)}
+    <StorySlide section="Problem" n={n} t={t}
+      badge="The shift · one chat to a thousand AI moments"
+      headline="Enterprise AI is no longer about model access. It is about governing a thousand AI moments a day.">
+      <div className="grid grid-cols-[0.7fr_1.3fr] gap-7 h-full">
+        {/* TODAY · one isolated chat */}
+        <div className="rounded-2xl p-8 flex flex-col"
+          style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
+          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Yesterday</p>
+          <div className="flex-1 flex items-center justify-center">
+            <div className="rounded-2xl px-8 py-7 text-center"
+              style={{ background: BG, border: `1.5px dashed hsl(${RED} / 0.5)`, minWidth: 280 }}>
+              <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>one chat</p>
+              <p className="font-black" style={{ fontSize: 44, color: TEXT, lineHeight: 1 }}>1 person<br/>1 prompt<br/>1 reply</p>
+              <p className="mt-4 font-mono" style={{ fontSize: 11, color: `hsl(${RED})` }}>nothing the org keeps</p>
+            </div>
           </div>
-          <p className="font-black mt-7" style={{ fontSize: 38, color: TEXT, lineHeight: 1.05 }}>Employees × workflows × policies × approvals × receipts.</p>
+          <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.4 }}>
+            Useful for the individual. Impossible to audit, improve, or compound for the organization.
+          </p>
+        </div>
+        {/* TODAY/TOMORROW · a swarm of governed moments */}
+        <div className="rounded-2xl p-8 flex flex-col"
+          style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
+          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Today, and from now on</p>
+          <div className="flex-1 flex items-center justify-center py-3">
+            <div className="grid grid-cols-14 gap-1.5" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))", width: "100%" }}>
+              {Array.from({ length: 14 * 9 }).map((_, i) => {
+                const isPolicy   = i % 17 === 0;
+                const isApprover = i % 11 === 0;
+                const isReceipt  = i % 5 === 0;
+                const c = isPolicy ? GOLD : isApprover ? ACCENT : isReceipt ? GREEN : GREEN;
+                const op = isPolicy || isApprover ? 0.85 : 0.22 + ((i * 7) % 5) * 0.12;
+                return <span key={i} className="rounded-sm" style={{ height: 22, background: `hsl(${c} / ${op})`, border: `1px solid hsl(${c} / 0.35)` }} />;
+              })}
+            </div>
+          </div>
+          <p className="font-black mt-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+            employees × workflows × policies × approvals × receipts
+          </p>
+          <div className="mt-3 flex gap-5 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11 }}>
+            <span style={{ color: `hsl(${GREEN})` }}>■ governed moment</span>
+            <span style={{ color: `hsl(${GOLD})` }}>■ policy in play</span>
+            <span style={{ color: `hsl(${ACCENT})` }}>■ approver signed</span>
+          </div>
         </div>
       </div>
-    </BigStorySlide>
+    </StorySlide>
   );
 }
 
+// 03 · Failure. Without governance every AI call invents the company again.
+// Visual: one model output with 4 missing-band stamps (concrete, not abstract).
 function S03StoryFailure({ n, t }: { n: number; t: number }) {
+  const gaps = [
+    { k: "no context",   d: "the model uses whatever the user remembers, not the approved way of working" },
+    { k: "no owner",     d: "nobody can name the business rule used, who approved it, or when it expires" },
+    { k: "no receipt",   d: "the output cannot be replayed with inputs, policy, model and approver attached" },
+    { k: "no learning",  d: "the correction stays trapped in the thread; the next employee repeats the gap" },
+  ];
   return (
-    <BigStorySlide section="Failure mode" n={n} t={t} badge="The unmanaged path" headline="Without a shared spine, every AI call invents the company again." subline="That is where semantic debt enters the operating model. The organization gets outputs, but no lineage, no memory and no defensible learning loop.">
-      <div className="grid grid-cols-4 gap-5 h-full items-stretch">
-        <StoryCard label="01" title="No approved context" copy="The model receives whatever the user remembers, not the organization-approved way of working." tone="red" />
-        <StoryCard label="02" title="No owner" copy="Nobody can say which business rule was used, who approved it, or when it expires." tone="red" />
-        <StoryCard label="03" title="No receipt" copy="The output cannot be replayed with inputs, policy, model and approver attached." tone="red" />
-        <StoryCard label="04" title="No compounding" copy="Corrections stay trapped inside a chat thread. The next employee repeats the same gap." tone="red" />
+    <StorySlide section="Failure mode" n={n} t={t}
+      badge="Why ungoverned AI fails at scale"
+      headline="Every ungoverned AI call invents the company again.">
+      <div className="grid grid-cols-[1fr_1.3fr] gap-8 h-full">
+        {/* the bare output */}
+        <div className="rounded-2xl p-8 flex flex-col items-center justify-center"
+          style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
+          <p className="font-mono uppercase tracking-[0.28em] mb-6" style={{ fontSize: 13, color: `hsl(${RED})` }}>One AI output, no governance</p>
+          <div className="rounded-xl px-10 py-8 text-center"
+            style={{ background: BG, border: `1.5px dashed hsl(${RED} / 0.55)`, minWidth: 340 }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>model output</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>"Here is the answer."</p>
+          </div>
+          <p className="mt-6 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 12, color: `hsl(${RED})`, maxWidth: 320, lineHeight: 1.5 }}>
+            looks confident · carries nothing the organisation can stand on
+          </p>
+        </div>
+        {/* the four missing bands */}
+        <div className="flex flex-col gap-3 justify-center">
+          {gaps.map((g, i) => (
+            <div key={g.k} className="rounded-xl px-6 py-4 flex items-center gap-5"
+              style={{ background: CARD_ALT, border: `1px solid hsl(${RED} / 0.28)` }}>
+              <span className="font-mono" style={{ fontSize: 12, color: SUBTLE, letterSpacing: "0.22em", minWidth: 28 }}>0{i + 1}</span>
+              <div className="rounded-md px-3 py-1.5 font-mono uppercase tracking-[0.18em] shrink-0"
+                style={{ fontSize: 12, color: `hsl(${RED})`, background: `hsl(${RED} / 0.1)`, border: `1px solid hsl(${RED} / 0.4)`, minWidth: 150, textAlign: "center" }}>
+                {g.k}
+              </div>
+              <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{g.d}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </BigStorySlide>
+    </StorySlide>
   );
 }
 
+// 04 · Guide · LIZA. The actual loop diagram. Plain-English captions under it.
 function S04StoryGuide({ n, t }: { n: number; t: number }) {
+  const stations = [
+    { k: "LOCK",    d: "bind the task to the approved Blocks" },
+    { k: "COMPILE", d: "assemble only the context this moment needs" },
+    { k: "SIGN",    d: "attach the receipt: inputs, model, owner, approval" },
+    { k: "LEARN",   d: "push the correction back into the corpus" },
+  ];
   return (
-    <BigStorySlide section="Guide" n={n} t={t} badge="Meet LIZA" headline="LIZA is the AI Governance Loop for enterprise work." subline="It sits between people, tools and models. It locks the approved way of working, compiles the right context, signs the output, and learns from corrections.">
-      <div className="grid grid-cols-4 gap-5 h-full items-center">
-        {[
-          ["Lock", "Bind the task to approved Blocks and Playbooks."],
-          ["Compile", "Assemble only the context this moment needs."],
-          ["Sign", "Attach a receipt with inputs, model, owner and approval."],
-          ["Learn", "Push corrections back into the corpus for the next call."],
-        ].map(([h, d], i) => <StoryCard key={h} label={`0${i + 1}`} title={h} copy={d} tone="green" />)}
+    <StorySlide section="Guide · meet LIZA" n={n} t={t}
+      badge="What LIZA is"
+      headline="LIZA is the AI Governance Loop. It sits between people, tools and models, and turns every AI moment into one accountable work unit.">
+      <div className="grid grid-cols-[1fr_1fr] gap-10 h-full items-center">
+        <div className="flex items-center justify-center">
+          <VizSolutionLoop />
+        </div>
+        <div className="flex flex-col gap-3">
+          {stations.map((s, i) => (
+            <div key={s.k} className="rounded-xl px-6 py-4 flex items-center gap-5"
+              style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+              <span className="font-mono" style={{ fontSize: 12, color: SUBTLE, letterSpacing: "0.22em", minWidth: 28 }}>0{i + 1}</span>
+              <span className="font-black tracking-[0.1em]" style={{ fontSize: 22, color: `hsl(${GREEN})`, minWidth: 160 }}>{s.k}</span>
+              <p style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{s.d}</p>
+            </div>
+          ))}
+          <p className="mt-3 font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>
+            model-agnostic by design · Claude · GPT · Gemini · on-prem
+          </p>
+        </div>
       </div>
-    </BigStorySlide>
+    </StorySlide>
   );
 }
 
+// 05 · The Block. Anatomy of one Block on the left. Ladder on the right so the
+// reader sees how Blocks compose upward.
 function S05StoryBlock({ n, t }: { n: number; t: number }) {
   return (
-    <BigStorySlide section="Plan A" n={n} t={t} badge="The atom is the Block" headline="A Block is the smallest governed unit of how the organization thinks." subline="Not a whole playbook. Not a document. One typed, owner-signed piece of operational judgment that AI can compile at the exact moment of work.">
-      <div className="grid grid-cols-[1fr_1.1fr] gap-7 h-full">
-        <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${GREEN} / 0.08)`, border: `2px solid hsl(${GREEN} / 0.45)` }}>
-          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Block structure</p>
-          <p className="font-black mt-5" style={{ fontSize: 64, color: TEXT, lineHeight: 1 }}>One Block</p>
-          <div className="mt-7 grid grid-cols-2 gap-3">
-            {["Directive", "Knowledge", "Procedure", "Preference"].map((x) => <div key={x} className="rounded-lg px-4 py-3 font-black" style={{ fontSize: 18, color: TEXT, background: BG, border: `1px solid hsl(${GREEN} / 0.3)` }}>{x}</div>)}
+    <StorySlide section="The unit · the Block" n={n} t={t}
+      badge="The atom"
+      headline="The Block is the smallest governed unit of how the organisation thinks."
+      footnote="One Block is exactly one type. Blocks compose into Playbooks. Playbooks compile into Org-as-Code.">
+      <div className="grid grid-cols-[1fr_1fr] gap-10 h-full items-center">
+        {/* anatomy of a Block */}
+        <div className="rounded-2xl p-8"
+          style={{ background: `hsl(${GREEN} / 0.06)`, border: `2px solid hsl(${GREEN} / 0.45)`, boxShadow: `0 0 26px hsl(${GREEN} / 0.12)` }}>
+          <div className="flex items-center justify-between mb-5">
+            <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>One Block</p>
+            <p className="font-mono" style={{ fontSize: 11, color: SUBTLE }}>v3 · signed M. Schäfer · expires 2026-Q1</p>
           </div>
-          <p className="mt-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>Typed · versioned · owner-signed · expiry-aware · compiled just in time.</p>
+          <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 11, color: SUBTLE }}>type · one of four</p>
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            {[
+              { k: "DIRECTIVE",  d: "a rule that must be followed" },
+              { k: "KNOWLEDGE",  d: "a fact the org treats as true" },
+              { k: "PROCEDURE",  d: "an ordered way of doing a step" },
+              { k: "PREFERENCE", d: "a tone or style choice" },
+            ].map((x, i) => (
+              <div key={x.k} className="rounded-lg px-4 py-3"
+                style={{ background: BG, border: `1px solid hsl(${GREEN} / ${i === 0 ? 0.6 : 0.22})`, boxShadow: i === 0 ? `0 0 12px hsl(${GREEN} / 0.18)` : "none" }}>
+                <p className="font-black tracking-[0.1em]" style={{ fontSize: 14, color: i === 0 ? `hsl(${GREEN})` : TEXT }}>{x.k}</p>
+                <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.3, marginTop: 2 }}>{x.d}</p>
+              </div>
+            ))}
+          </div>
+          <div className="rounded-lg px-4 py-3 mb-3" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: SUBTLE }}>example · DIRECTIVE</p>
+            <p className="font-mono mt-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.4 }}>
+              "Proposals for school projects use AEC-PROP v3.2 cooling-load tables; do not interpolate above 35°C."
+            </p>
+          </div>
+          <div className="grid grid-cols-4 gap-2 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 10 }}>
+            {["typed", "versioned", "owner-signed", "expiry-aware"].map(x => (
+              <span key={x} className="rounded px-2 py-1 text-center" style={{ color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>{x}</span>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col justify-center gap-4">
-          <StoryCard label="Level 01" title="Blocks" copy="Single atomic rules, judgments, procedures and preferences." tone="green" />
-          <StoryCard label="Level 02" title="Playbooks" copy="Composed sets of Blocks that describe how a workflow is done." tone="gold" />
-          <StoryCard label="Level 03" title="Org-as-Code" copy="The versioned corpus of how the company runs, improves and proves work." tone="neutral" />
+        {/* the ladder */}
+        <div className="flex justify-center">
+          <ConceptLadder />
         </div>
       </div>
-    </BigStorySlide>
+    </StorySlide>
   );
 }
 
+// 06 · The Moment. The product is the moment. Use the factory walk-through:
+// one request → 4 stations → signed receipt. This is the deepest "how" slide.
 function S06StoryMoment({ n, t }: { n: number; t: number }) {
   return (
-    <BigStorySlide section="Plan B" n={n} t={t} badge="The governed moment" headline="The product is the moment where human intent, company context and model output meet." subline="Every AI action becomes a controlled work event: request, context, model, output, approval, receipt and learning update.">
-      <div className="grid grid-cols-5 gap-4 h-full items-center">
-        {[
-          ["Request", "What the user is trying to do."],
-          ["Blocks", "The relevant operational judgment."],
-          ["Model", "The replaceable reasoning supplier."],
-          ["Receipt", "The proof trail for this output."],
-          ["Learn", "The correction that compounds."],
-        ].map(([h, d], i) => <StoryCard key={h} label={`0${i + 1}`} title={h} copy={d} tone={i === 2 ? "gold" : "green"} />)}
+    <StorySlide section="The product · the moment" n={n} t={t}
+      badge="What we actually ship"
+      headline="A request comes in. Four stations turn it into one accountable, replayable work unit."
+      footnote="AACE v3.1 runtime · live in production · regulated AEC deployment">
+      <div className="h-full flex flex-col justify-center">
+        <VizFactoryWalkthrough />
       </div>
-    </BigStorySlide>
+    </StorySlide>
   );
 }
 
+// 07 · Compounding. What the customer accumulates over time. Curve + ladder.
 function S07StorySuccess({ n, t }: { n: number; t: number }) {
   return (
-    <BigStorySlide section="Success" n={n} t={t} badge="What compounds" headline="The customer does not just use AI. The customer accumulates operational IP." subline="Every governed moment improves the corpus. The more work runs through LIZA, the harder the system is to replace.">
-      <div className="grid grid-cols-3 gap-6 h-full items-center">
-        <StoryCard label="01" title="Blocks accumulate" copy="Corrections become reusable operational judgment, not forgotten chat history." tone="green" />
-        <StoryCard label="02" title="Playbooks sharpen" copy="Workflows become cheaper, faster and easier to audit with every repetition." tone="green" />
-        <StoryCard label="03" title="The corpus becomes sovereign" copy="The customer owns the operating memory. Models can be swapped without losing the company." tone="green" />
+    <StorySlide section="What compounds" n={n} t={t}
+      badge="The success state"
+      headline="The customer does not just use AI. They accumulate the operational IP that makes AI work for them.">
+      <div className="grid grid-cols-[1.4fr_1fr] gap-10 h-full items-center">
+        <div className="h-full rounded-2xl p-6 flex flex-col"
+          style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.26em] mb-2" style={{ fontSize: 12, color: SUBTLE }}>Accumulated operational IP over time</p>
+          <div className="flex-1 min-h-0">
+            <CompoundingCurve />
+          </div>
+        </div>
+        <div className="flex flex-col gap-4">
+          <div className="rounded-xl px-6 py-5" style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Inside the customer</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Blocks accrue from real corrections.</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>Every receipt that gets corrected becomes a Block the next call inherits.</p>
+          </div>
+          <div className="rounded-xl px-6 py-5" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>Inside the workflow</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Playbooks sharpen with each run.</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>Each repetition is cheaper, faster, and easier to audit than the last.</p>
+          </div>
+          <div className="rounded-xl px-6 py-5" style={{ background: `hsl(${ACCENT} / 0.07)`, border: `1px solid hsl(${ACCENT} / 0.35)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>Inside the company</p>
+            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Org-as-Code becomes sovereign IP.</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>Models can be swapped. The corpus stays with the customer.</p>
+          </div>
+        </div>
       </div>
-    </BigStorySlide>
+    </StorySlide>
   );
 }
 
+// 08 · Model + Moat. Two paired visuals: pricing geometry + governance stack.
 function S08StoryModelMoat({ n, t }: { n: number; t: number }) {
   return (
-    <BigStorySlide section="Model + Moat" n={n} t={t} badge="Why this is a company" headline="We monetize accountable work units, not seats or raw tokens." subline="Model costs fall. Governed AI work explodes. LIZA captures the control position around every important output.">
-      <div className="grid grid-cols-4 gap-5 h-full items-stretch">
-        <StoryCard label="Pricing" title="Per governed decision" copy="Charge against displaced labor value. Pass model cost through transparently." tone="green" />
-        <StoryCard label="Margin" title="Token cost compression helps us" copy="Cheaper inference expands the volume of governed work and protects gross margin." tone="green" />
-        <StoryCard label="Moat" title="Blocks plus receipts" copy="The corpus and receipt graph are customer-specific, versioned and hard to lift out." tone="gold" />
-        <StoryCard label="Position" title="Neutral control layer" copy="Claude, GPT, Gemini and on-prem models become suppliers beneath the same governance surface." tone="neutral" />
+    <StorySlide section="Business model + moat" n={n} t={t}
+      badge="How we make money. Why we keep making it."
+      headline="We price the accountable work unit. Models are pass-through suppliers under the governance layer.">
+      <div className="grid grid-cols-[1.2fr_1fr] gap-10 h-full items-center">
+        {/* pricing geometry */}
+        <div className="rounded-2xl p-7 flex flex-col h-full"
+          style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.26em] mb-4" style={{ fontSize: 12, color: SUBTLE }}>Pricing geometry · per governed decision</p>
+          <div className="flex-1 flex items-center"><VizValueBar /></div>
+        </div>
+        {/* governance stack */}
+        <div className="rounded-2xl p-7 flex flex-col items-center h-full"
+          style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+          <p className="font-mono uppercase tracking-[0.26em] mb-5 self-start" style={{ fontSize: 12, color: SUBTLE }}>Position · the neutral control layer</p>
+          <div className="flex-1 flex items-center"><VizGovernanceStack /></div>
+        </div>
       </div>
-    </BigStorySlide>
+    </StorySlide>
   );
 }
 
+// 09 · Team + Ask. €2M, allocation, and the one-line team credibility.
 function S09StoryAsk({ n, t }: { n: number; t: number }) {
+  const alloc = [
+    { p: "50%", h: "Vertical corpus",    d: "deepen AEC; package regulated playbooks for pharma and finance", color: GREEN },
+    { p: "30%", h: "Repeatable install", d: "Day-30 deployment, metering, admin, self-serve configuration",   color: GOLD  },
+    { p: "20%", h: "Channel + audit kit", d: "partner enablement, regulated buyer proof, audit material",      color: ACCENT },
+  ];
   return (
-    <BigStorySlide section="Team + Ask" n={n} t={t} badge="€2M seed" headline="Fund the repeatable governance layer for AI-native organizations." subline="The founder has 15+ years building data and AI systems inside regulated enterprises. The round turns one working wedge into a repeatable install motion.">
-      <div className="grid grid-cols-[1fr_1.2fr] gap-7 h-full items-center">
-        <div className="rounded-2xl p-9" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.38)` }}>
-          <p className="font-black" style={{ fontSize: 112, color: `hsl(${GREEN})`, letterSpacing: "-0.06em", lineHeight: 0.9 }}>€2M</p>
-          <p className="font-black mt-5" style={{ fontSize: 34, color: TEXT, lineHeight: 1.08 }}>Vertical corpus, repeatable install, channel and audit kit.</p>
+    <StorySlide section="Team + Ask" n={n} t={t}
+      badge="€2M seed"
+      headline="Fund the repeatable governance layer for AI-native organisations.">
+      <div className="grid grid-cols-[0.9fr_1.4fr] gap-10 h-full items-center">
+        <div className="rounded-2xl p-9 flex flex-col"
+          style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.4)`, boxShadow: `0 0 30px hsl(${GREEN} / 0.15)` }}>
+          <p className="font-black" style={{ fontSize: 144, color: `hsl(${GREEN})`, letterSpacing: "-0.07em", lineHeight: 0.85 }}>€2M</p>
+          <p className="font-black mt-4" style={{ fontSize: 26, color: TEXT, lineHeight: 1.1 }}>One working wedge → repeatable install motion.</p>
+          <div className="mt-7 pt-5" style={{ borderTop: `1px solid hsl(${GREEN} / 0.25)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 11, color: SUBTLE }}>Team</p>
+            <p style={{ fontSize: 17, color: TEXT, lineHeight: 1.4 }}>
+              15+ years building data and AI systems inside regulated enterprises. Built it, sold it, walked auditors through it.
+            </p>
+          </div>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          <StoryCard label="50%" title="Vertical corpus" copy="Deepen AEC. Package regulated playbooks for pharma and finance." tone="green" />
-          <StoryCard label="30%" title="Repeatable install" copy="Day-30 deployment, metering, admin and self-serve configuration." tone="gold" />
-          <StoryCard label="20%" title="Channel kit" copy="Partner enablement, audit material and regulated buyer proof." tone="neutral" />
+        <div className="flex flex-col gap-4">
+          {alloc.map((a) => (
+            <div key={a.h} className="rounded-xl p-6 flex items-center gap-6"
+              style={{ background: `hsl(${a.color} / 0.06)`, border: `1px solid hsl(${a.color} / 0.35)` }}>
+              <p className="font-black" style={{ fontSize: 56, color: `hsl(${a.color})`, letterSpacing: "-0.03em", minWidth: 130, lineHeight: 1 }}>{a.p}</p>
+              <div className="flex-1">
+                <p className="font-black" style={{ fontSize: 24, color: TEXT, letterSpacing: "-0.02em" }}>{a.h}</p>
+                <p className="mt-1.5" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>{a.d}</p>
+              </div>
+            </div>
+          ))}
+          <div className="rounded-xl px-6 py-4 mt-1"
+            style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Series A milestone</p>
+            <p className="font-bold mt-1" style={{ fontSize: 16, color: TEXT, lineHeight: 1.35 }}>
+              3 verticals live · Day-30 deploy · metered governed decisions · governance spend rises while model cost falls.
+            </p>
+          </div>
         </div>
       </div>
-    </BigStorySlide>
+    </StorySlide>
   );
 }
 
