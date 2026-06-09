@@ -1744,99 +1744,91 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
 // 05 · Plan A · the mechanics. Call → Receipt → Blocks → Playbook → Org-as-Code.
 function S05StoryBlock({ n, t }: { n: number; t: number }) {
   const blockTypes = [
-    { type: "DIRECTIVE",  what: "a rule the company has agreed on" },
-    { type: "KNOWLEDGE",  what: "a fact AI must cite, not invent" },
-    { type: "PROCEDURE",  what: "the steps a workflow must follow" },
-    { type: "PREFERENCE", what: "the company's voice and house style" },
+    { type: "DIRECTIVE",  what: "a rule",     example: "\"All public-sector bids ≥ €10M require Legal sign-off before send.\"" },
+    { type: "KNOWLEDGE",  what: "a fact",     example: "\"Current Hamburg pricing standard is v4.2, valid until Q3.\"" },
+    { type: "PROCEDURE",  what: "the steps",  example: "\"RFP response: pull tender → match clauses → price → Legal review → submit.\"" },
+    { type: "PREFERENCE", what: "the voice",  example: "\"German public sector: formal Sie, no superlatives, cite §-paragraphs.\"" },
   ];
-  const Arrow = () => (
-    <div className="flex items-center justify-center px-1" style={{ color: SUBTLE }}>
-      <span className="font-mono" style={{ fontSize: 22 }}>→</span>
-    </div>
-  );
   return (
     <StorySlide section="Plan A · the mechanics" n={n} t={t}
-      badge="How the corpus compounds"
-      headline="Every governed moment of work with AI leaves a receipt. Receipts cite Blocks. Blocks bundle into Playbooks. Playbooks become the company, in code."
+      badge="How the corpus compounds · zoom in on one moment of work with AI"
+      headline="Watch one Hamburg RFP moment break into typed Blocks, bundle into a Playbook, and become part of the company in code."
       footnote="The Block is the smallest unit at which AI work and human governance share the same vocabulary. It is also the unit that compounds.">
-      <div className="flex flex-col gap-5 h-full justify-center">
-        {/* The chain · 4 stages with arrows */}
-        <div className="flex items-stretch gap-2">
-          {/* 01 CALL */}
-          <div className="flex-1 rounded-2xl p-5 flex flex-col"
+      <div className="grid grid-cols-[0.95fr_1.5fr_1fr] gap-6 h-full items-stretch">
+        {/* COL 1 · the moment · same Hamburg request + receipt */}
+        <div className="flex flex-col gap-3">
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>01 · one moment of work with AI</p>
+          <div className="rounded-2xl p-5 flex-1 flex flex-col"
             style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>01 · CALL</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-              One moment of work with AI
-            </p>
-            <p className="mt-3" style={{ fontSize: 14, color: MUTED, lineHeight: 1.4 }}>
-              A request arrives. The Hamburg RFP. A code review. A board memo. A lab note.
-            </p>
-          </div>
-          <Arrow />
-          {/* 02 RECEIPT */}
-          <div className="flex-1 rounded-2xl p-5 flex flex-col"
-            style={{ background: `hsl(${GREEN} / 0.07)`, border: `1.5px solid hsl(${GREEN} / 0.5)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>02 · RECEIPT</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-              Signed output
-            </p>
-            <p className="mt-3" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              Every output emits one: inputs · policy version · model · approver · hash. Replayable forever.
-            </p>
-            <div className="mt-auto pt-3 font-mono uppercase tracking-[0.18em]"
-              style={{ fontSize: 10, color: SUBTLE, borderTop: `1px solid hsl(${GREEN} / 0.3)`, marginTop: 12 }}>
-              cites the Blocks it used →
+            <div className="rounded-lg px-3 py-2 mb-3" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+              <p className="font-mono uppercase tracking-[0.2em] mb-1" style={{ fontSize: 9, color: SUBTLE }}>chat · 14:02</p>
+              <p className="font-bold" style={{ fontSize: 13, color: TEXT, lineHeight: 1.3 }}>
+                "Prepare our response to the €40M Hamburg RFP."
+              </p>
             </div>
-          </div>
-          <Arrow />
-          {/* 03 BLOCKS · expanded into 4 types */}
-          <div className="flex-[1.6] rounded-2xl p-5 flex flex-col"
-            style={{ background: `hsl(${GOLD} / 0.07)`, border: `1.5px solid hsl(${GOLD} / 0.5)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>03 · BLOCKS</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-              The atoms of how the company decides
-            </p>
-            <div className="grid grid-cols-2 gap-2 mt-3">
-              {blockTypes.map(b => (
-                <div key={b.type} className="rounded-md px-2.5 py-2"
-                  style={{ background: BG, border: `1px solid hsl(${GOLD} / 0.4)` }}>
-                  <p className="font-mono uppercase tracking-[0.16em] font-black" style={{ fontSize: 10, color: `hsl(${GOLD})` }}>{b.type}</p>
-                  <p className="mt-0.5" style={{ fontSize: 11, color: MUTED, lineHeight: 1.25 }}>{b.what}</p>
-                </div>
-              ))}
+            <div className="rounded-lg px-3 py-2 flex-1"
+              style={{ background: `hsl(${GREEN} / 0.07)`, border: `1.5px solid hsl(${GREEN} / 0.5)` }}>
+              <p className="font-mono uppercase tracking-[0.2em] mb-1" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>signed output + receipt</p>
+              <p style={{ fontSize: 12, color: TEXT, lineHeight: 1.4 }}>
+                12-page response, attached receipt:
+              </p>
+              <p className="font-mono mt-1.5" style={{ fontSize: 10, color: MUTED, lineHeight: 1.55 }}>
+                inputs · policy v4.2 · model · approver · hash
+              </p>
             </div>
-            <p className="font-mono uppercase tracking-[0.18em] mt-3"
-              style={{ fontSize: 10, color: SUBTLE }}>
-              same shape · typed · owner-signed · versioned
-            </p>
-          </div>
-          <Arrow />
-          {/* 04 PLAYBOOK */}
-          <div className="flex-1 rounded-2xl p-5 flex flex-col"
-            style={{ background: `hsl(${ACCENT} / 0.07)`, border: `1.5px solid hsl(${ACCENT} / 0.5)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>04 · PLAYBOOK</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-              Blocks bundled into a workflow
-            </p>
-            <p className="mt-3" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4 }}>
-              The Hamburg RFP playbook bundles all four Block types into one signed way of working. Reused on the next bid, the next city, the next quarter.
+            <p className="font-mono uppercase tracking-[0.2em] mt-3 text-center" style={{ fontSize: 10, color: SUBTLE }}>
+              receipt cites the Blocks it used ↓
             </p>
           </div>
         </div>
 
-        {/* 05 · ORG-AS-CODE summary band */}
-        <div className="rounded-2xl p-6 flex items-center justify-between gap-8"
-          style={{ background: `hsl(${ACCENT} / 0.09)`, border: `2px solid hsl(${ACCENT})`, boxShadow: `0 0 22px hsl(${ACCENT} / 0.18)` }}>
-          <div>
-            <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 12, color: `hsl(${ACCENT})` }}>05 · ORG-AS-CODE</p>
-            <p className="font-black mt-2" style={{ fontSize: 30, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-              All Playbooks together = the company, in code.
+        {/* COL 2 · 4 typed Blocks with real examples */}
+        <div className="flex flex-col gap-3">
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>
+            02 · the receipt cites 4 typed Blocks
+          </p>
+          <div className="grid grid-cols-2 gap-2.5 flex-1">
+            {blockTypes.map(b => (
+              <div key={b.type} className="rounded-xl p-3 flex flex-col"
+                style={{ background: `hsl(${GOLD} / 0.06)`, border: `1.5px solid hsl(${GOLD} / 0.5)` }}>
+                <div className="flex items-baseline gap-2">
+                  <p className="font-mono uppercase tracking-[0.18em] font-black" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>{b.type}</p>
+                  <p className="font-mono" style={{ fontSize: 9, color: SUBTLE }}>· {b.what}</p>
+                </div>
+                <p className="mt-1.5 italic" style={{ fontSize: 11.5, color: TEXT, lineHeight: 1.35 }}>
+                  {b.example}
+                </p>
+              </div>
+            ))}
+          </div>
+          <p className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 10, color: SUBTLE }}>
+            same shape across all 4 types · typed · owner-signed · versioned · replayable
+          </p>
+        </div>
+
+        {/* COL 3 · Playbook → Org-as-code */}
+        <div className="flex flex-col gap-3">
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>03 · Blocks bundle up</p>
+          <div className="rounded-2xl p-4 flex flex-col"
+            style={{ background: `hsl(${ACCENT} / 0.07)`, border: `1.5px solid hsl(${ACCENT} / 0.5)` }}>
+            <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 10, color: `hsl(${ACCENT})` }}>Playbook</p>
+            <p className="font-black mt-1" style={{ fontSize: 17, color: TEXT, lineHeight: 1.15, letterSpacing: "-0.01em" }}>
+              Public-sector RFP response
+            </p>
+            <p className="mt-1.5" style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.4 }}>
+              All 4 Blocks above, bundled into one signed way of working. Reused on the next bid, the next city, the next quarter.
             </p>
           </div>
-          <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45, maxWidth: 540 }}>
-            Models come and go. Vendors come and go. The corpus of Blocks, Playbooks and signed receipts is the IP the company keeps, and the asset that compounds with every governed moment of work with AI.
-          </p>
+          <div className="rounded-2xl p-4 flex-1 flex flex-col justify-center"
+            style={{ background: `hsl(${ACCENT} / 0.12)`, border: `2px solid hsl(${ACCENT})`, boxShadow: `0 0 22px hsl(${ACCENT} / 0.2)` }}>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${ACCENT})` }}>04 · org-as-code</p>
+            <p className="font-black mt-1.5" style={{ fontSize: 22, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+              All Playbooks together =<br/>the company, in code.
+            </p>
+            <p className="mt-2.5" style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.4 }}>
+              Models and vendors come and go. The corpus of Blocks, Playbooks and receipts is the IP that compounds with every call.
+            </p>
+          </div>
         </div>
       </div>
     </StorySlide>
