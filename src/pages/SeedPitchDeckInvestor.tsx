@@ -1587,7 +1587,7 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
             Today · and from now on
           </div>
           <p className="font-black mt-5" style={{ fontSize: 32, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
-            Thousands of moments of work, every hour.
+            Thousands of moments of work with AI, every hour.
           </p>
           <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>
             Different people · different requests · different contexts. Same legal, brand and commercial exposure as anything else the company emits.
