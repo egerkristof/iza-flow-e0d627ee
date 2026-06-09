@@ -1681,46 +1681,52 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="The unit · the Block" n={n} t={t}
       badge="The atom"
-      headline="The Block is the smallest governed unit of how the organisation thinks."
-      footnote="One Block is exactly one type. Blocks compose into Playbooks. Playbooks compile into Org-as-Code.">
-      <div className="grid grid-cols-[1fr_1fr] gap-10 h-full items-center">
-        {/* anatomy of a Block */}
-        <div className="rounded-2xl p-8"
-          style={{ background: `hsl(${GREEN} / 0.06)`, border: `2px solid hsl(${GREEN} / 0.45)`, boxShadow: `0 0 26px hsl(${GREEN} / 0.12)` }}>
-          <div className="flex items-center justify-between mb-5">
-            <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>One Block</p>
-            <p className="font-mono" style={{ fontSize: 11, color: SUBTLE }}>v3 · signed M. Schäfer · expires 2026-Q1</p>
+      headline="A Block is one rule the company has agreed on, written down, signed, and version-controlled.">
+      <div className="grid grid-cols-[1fr_1fr] gap-12 h-full items-center">
+        {/* ONE concrete Block — looks like a card, not a spec sheet */}
+        <div className="rounded-2xl p-10"
+          style={{ background: `hsl(${GREEN} / 0.07)`, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 30px hsl(${GREEN} / 0.18)` }}>
+          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em] inline-block mb-6"
+            style={{ fontSize: 18, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `1.5px solid hsl(${GREEN} / 0.5)` }}>
+            One Block
           </div>
-          <p className="font-mono uppercase tracking-[0.22em] mb-2" style={{ fontSize: 11, color: SUBTLE }}>type · one of four</p>
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            {[
-              { k: "DIRECTIVE",  d: "a rule that must be followed" },
-              { k: "KNOWLEDGE",  d: "a fact the org treats as true" },
-              { k: "PROCEDURE",  d: "an ordered way of doing a step" },
-              { k: "PREFERENCE", d: "a tone or style choice" },
-            ].map((x, i) => (
-              <div key={x.k} className="rounded-lg px-4 py-3"
-                style={{ background: BG, border: `1px solid hsl(${GREEN} / ${i === 0 ? 0.6 : 0.22})`, boxShadow: i === 0 ? `0 0 12px hsl(${GREEN} / 0.18)` : "none" }}>
-                <p className="font-black tracking-[0.1em]" style={{ fontSize: 14, color: i === 0 ? `hsl(${GREEN})` : TEXT }}>{x.k}</p>
-                <p style={{ fontSize: 12, color: MUTED, lineHeight: 1.3, marginTop: 2 }}>{x.d}</p>
-              </div>
-            ))}
-          </div>
-          <div className="rounded-lg px-4 py-3 mb-3" style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: SUBTLE }}>example · DIRECTIVE</p>
-            <p className="font-mono mt-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.4 }}>
-              "Proposals for school projects use AEC-PROP v3.2 cooling-load tables; do not interpolate above 35°C."
-            </p>
-          </div>
-          <div className="grid grid-cols-4 gap-2 font-mono uppercase tracking-[0.18em]" style={{ fontSize: 10 }}>
-            {["typed", "versioned", "owner-signed", "expiry-aware"].map(x => (
-              <span key={x} className="rounded px-2 py-1 text-center" style={{ color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>{x}</span>
-            ))}
+          <p className="font-black" style={{ fontSize: 38, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>
+            "Proposals for school projects use AEC-PROP v3.2 cooling-load tables.<br/>
+            <span style={{ color: `hsl(${GREEN})` }}>Do not interpolate above 35°C.</span>"
+          </p>
+          <div className="mt-7 pt-5 grid grid-cols-3 gap-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <div>
+              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Owner</p>
+              <p className="font-bold mt-1" style={{ fontSize: 18, color: TEXT }}>M. Schäfer</p>
+            </div>
+            <div>
+              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Version</p>
+              <p className="font-bold mt-1" style={{ fontSize: 18, color: TEXT }}>v3 · signed</p>
+            </div>
+            <div>
+              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Expires</p>
+              <p className="font-bold mt-1" style={{ fontSize: 18, color: TEXT }}>2026-Q1</p>
+            </div>
           </div>
         </div>
-        {/* the ladder */}
-        <div className="flex justify-center">
-          <ConceptLadder />
+
+        {/* How Blocks scale up — the ladder, but with bigger plain-English labels */}
+        <div className="flex flex-col gap-5">
+          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 14, color: SUBTLE }}>Blocks scale into bigger things</p>
+          {[
+            { k: "BLOCK",       size: 30, title: "one rule",        copy: "what you just saw on the left", color: GREEN },
+            { k: "PLAYBOOK",    size: 30, title: "a workflow",      copy: "many Blocks composed to get one job done", color: GOLD },
+            { k: "ORG-AS-CODE", size: 30, title: "the whole company", copy: "every Playbook the company runs, versioned", color: ACCENT },
+          ].map((r, i) => (
+            <div key={r.k} className="rounded-xl p-6 flex items-center gap-6"
+              style={{ background: `hsl(${r.color} / 0.07)`, border: `1.5px solid hsl(${r.color} / 0.4)` }}>
+              <p className="font-black tracking-[0.08em]" style={{ fontSize: r.size, color: `hsl(${r.color})`, minWidth: 240 }}>{r.k}</p>
+              <div>
+                <p className="font-black" style={{ fontSize: 24, color: TEXT, letterSpacing: "-0.02em" }}>{r.title}</p>
+                <p style={{ fontSize: 16, color: MUTED, lineHeight: 1.35, marginTop: 2 }}>{r.copy}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </StorySlide>
