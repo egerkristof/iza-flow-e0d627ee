@@ -1831,16 +1831,16 @@ function S08StoryModelMoat({ n, t }: { n: number; t: number }) {
         {/* THREE BIG NUMBERS — the pricing story in one row */}
         <div className="grid grid-cols-3 gap-6">
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GOLD} / 0.1)`, border: `2px solid hsl(${GOLD} / 0.5)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>Value to the customer</p>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GOLD})` }}>Value to the customer · avg</p>
             <p className="font-black mt-3" style={{ fontSize: 76, color: `hsl(${GOLD})`, letterSpacing: "-0.04em", lineHeight: 1 }}>€23</p>
             <p className="font-bold mt-3" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>per governed decision</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>The analyst hour LIZA replaces.</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>The analyst minutes LIZA replaces, fully loaded. Range €8–€120.</p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: `hsl(${GREEN} / 0.1)`, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 22px hsl(${GREEN} / 0.18)` }}>
             <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>We charge</p>
             <p className="font-black mt-3" style={{ fontSize: 76, color: `hsl(${GREEN})`, letterSpacing: "-0.04em", lineHeight: 1 }}>€0.40</p>
             <p className="font-bold mt-3" style={{ fontSize: 18, color: TEXT, lineHeight: 1.3 }}>per governed decision</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>1-2% of the value we unlock. Easy yes.</p>
+            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>≈1.7% of the value we unlock. Easy yes for procurement.</p>
           </div>
           <div className="rounded-2xl p-8" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
             <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: SUBTLE }}>Our cost</p>
@@ -1861,12 +1861,40 @@ function S08StoryModelMoat({ n, t }: { n: number; t: number }) {
           </div>
         </div>
 
-        {/* MOAT — single line below */}
-        <div className="rounded-xl px-7 py-5 flex items-center gap-5"
+        {/* DERIVATION — show our maths plainly */}
+        <div className="rounded-xl px-7 py-5"
           style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-          <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 14, color: SUBTLE }}>The moat</span>
-          <p className="font-bold" style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>
-            We sit above Claude · GPT · Gemini as the neutral control layer. Models are suppliers; the receipts, standards and corpus belong to the customer — and to us as the system that runs them.
+          <p className="font-mono uppercase tracking-[0.26em]" style={{ fontSize: 12, color: SUBTLE }}>How we calculate it</p>
+          <div className="mt-3 grid grid-cols-4 gap-4 font-mono" style={{ fontSize: 14, color: TEXT, lineHeight: 1.4 }}>
+            <div>
+              <p style={{ color: SUBTLE, fontSize: 11 }}>VALUE</p>
+              <p className="font-bold">20 min × €70/hr</p>
+              <p style={{ color: MUTED, fontSize: 12 }}>fully loaded analyst time displaced ≈ <b style={{ color: `hsl(${GOLD})` }}>€23</b></p>
+            </div>
+            <div>
+              <p style={{ color: SUBTLE, fontSize: 11 }}>PRICE</p>
+              <p className="font-bold">€0.40 metered</p>
+              <p style={{ color: MUTED, fontSize: 12 }}>per signed, replayable decision · volume tiers apply</p>
+            </div>
+            <div>
+              <p style={{ color: SUBTLE, fontSize: 11 }}>COST</p>
+              <p className="font-bold">€0.04 pass-through</p>
+              <p style={{ color: MUTED, fontSize: 12 }}>model tokens + infra · falling ~30% / yr</p>
+            </div>
+            <div>
+              <p style={{ color: SUBTLE, fontSize: 11 }}>MARGIN</p>
+              <p className="font-bold" style={{ color: `hsl(${GREEN})` }}>(€0.40 − €0.04) / €0.40</p>
+              <p style={{ color: MUTED, fontSize: 12 }}>≈ <b style={{ color: `hsl(${GREEN})` }}>90% gross</b>, expanding as model cost falls</p>
+            </div>
+          </div>
+        </div>
+
+        {/* MOAT — single line below */}
+        <div className="rounded-xl px-7 py-4 flex items-center gap-5"
+          style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+          <span className="font-mono uppercase tracking-[0.26em] shrink-0" style={{ fontSize: 12, color: SUBTLE }}>The moat</span>
+          <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>
+            We sit above Claude · GPT · Gemini as the neutral control layer. Models are suppliers; receipts, standards and the corpus belong to the customer — and to us as the system that runs them.
           </p>
         </div>
       </div>
