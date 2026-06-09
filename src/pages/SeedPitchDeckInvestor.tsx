@@ -1341,18 +1341,210 @@ function S14Close({ n, t }: { n: number; t: number }) {
   );
 }
 
+// 9-slide investor spine, rebuilt so /investor no longer reuses the old lens slides.
+function StoryBadge({ children, tone = "gold" }: { children: React.ReactNode; tone?: "gold" | "green" | "red" }) {
+  const color = tone === "green" ? GREEN : tone === "red" ? RED : GOLD;
+  return (
+    <span className="font-mono uppercase tracking-[0.28em] rounded-full px-4 py-2" style={{ fontSize: 11, color: `hsl(${color})`, background: `hsl(${color} / 0.09)`, border: `1px solid hsl(${color} / 0.28)` }}>
+      {children}
+    </span>
+  );
+}
+
+function StoryCard({ label, title, copy, tone = "neutral" }: { label: string; title: string; copy: string; tone?: "neutral" | "green" | "red" | "gold" }) {
+  const color = tone === "green" ? GREEN : tone === "red" ? RED : tone === "gold" ? GOLD : TEXT;
+  return (
+    <div className="rounded-2xl p-7 flex flex-col min-h-[210px]" style={{ background: tone === "neutral" ? CARD_ALT : `hsl(${color} / 0.07)`, border: `1px solid ${tone === "neutral" ? CHROME_BORDER : `hsl(${color} / 0.35)`}` }}>
+      <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: tone === "neutral" ? SUBTLE : `hsl(${color})` }}>{label}</p>
+      <p className="font-black mt-4" style={{ fontSize: 30, color: TEXT, lineHeight: 1.08, letterSpacing: "-0.02em" }}>{title}</p>
+      <p className="mt-4" style={{ fontSize: 17, color: MUTED, lineHeight: 1.42 }}>{copy}</p>
+    </div>
+  );
+}
+
+function BigStorySlide({ section, n, t, badge, headline, subline, children, dark = false }: { section: string; n: number; t: number; badge: string; headline: React.ReactNode; subline?: string; children?: React.ReactNode; dark?: boolean }) {
+  return (
+    <Shell section={section} n={n} total={t} dark={dark}>
+      <div className="absolute inset-0 px-24 pt-28 pb-20 flex flex-col">
+        <div className="mb-10">
+          <StoryBadge>{badge}</StoryBadge>
+          <h2 className="font-black mt-7" style={{ fontSize: 76, lineHeight: 1.01, color: dark ? "hsl(0 0% 98%)" : TEXT, letterSpacing: "-0.045em", maxWidth: 1540 }}>
+            {headline}
+          </h2>
+          {subline && <p className="mt-6" style={{ fontSize: 25, color: dark ? "hsl(0 0% 76%)" : MUTED, lineHeight: 1.35, maxWidth: 1320 }}>{subline}</p>}
+        </div>
+        {children && <div className="flex-1 min-h-0">{children}</div>}
+      </div>
+    </Shell>
+  );
+}
+
+function S01StoryCover({ n, t }: { n: number; t: number }) {
+  return (
+    <Shell section="LIZA OS" n={n} total={t} dark>
+      <div className="absolute inset-0 px-28 py-24 flex flex-col justify-between">
+        <div className="flex justify-between items-start">
+          <StoryBadge>Seed · €2M · Primary investor deck</StoryBadge>
+          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: "hsl(0 0% 62%)" }}>Confidential</p>
+        </div>
+        <div>
+          <h1 className="font-black" style={{ fontSize: 134, lineHeight: 0.95, color: "hsl(0 0% 98%)", letterSpacing: "-0.055em" }}>LIZA OS</h1>
+          <p className="mt-9" style={{ fontSize: 40, color: "hsl(0 0% 78%)", lineHeight: 1.18, maxWidth: 1320 }}>
+            The governance layer that turns enterprise AI from isolated chats into accountable work.
+          </p>
+        </div>
+        <div className="grid grid-cols-3 gap-5">
+          <StoryCard label="The shift" title="Single chat to AI at scale" copy="The buyer problem is no longer model access. It is governing thousands of AI moments across the organization." tone="red" />
+          <StoryCard label="The unit" title="Blocks compose the company" copy="One Block captures one Directive, Knowledge item, Procedure, or Preference. Playbooks are built from Blocks." tone="gold" />
+          <StoryCard label="The outcome" title="Every moment leaves a receipt" copy="Each governed output carries context, owner, version, model, approval and learning history." tone="green" />
+        </div>
+      </div>
+    </Shell>
+  );
+}
+
+function S02StoryScale({ n, t }: { n: number; t: number }) {
+  return (
+    <BigStorySlide section="Problem" n={n} t={t} badge="Single chat to 1000 chats" headline="AI adoption breaks when the unit of work is still one isolated chat." subline="The enterprise is moving from artisanal prompts to industrial AI work. That shift creates a governance problem, not a model problem.">
+      <div className="grid grid-cols-[0.8fr_1.2fr] gap-7 h-full">
+        <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.28)` }}>
+          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: `hsl(${RED})` }}>Today</p>
+          <p className="font-black mt-5" style={{ fontSize: 54, color: TEXT, lineHeight: 1 }}>1 person<br/>1 chat<br/>1 prompt</p>
+          <p className="mt-6" style={{ fontSize: 20, color: MUTED, lineHeight: 1.4 }}>Useful for the individual. Almost impossible to audit, improve or compound for the organization.</p>
+        </div>
+        <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.38)` }}>
+          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Tomorrow</p>
+          <div className="mt-5 grid grid-cols-12 gap-2">
+            {Array.from({ length: 96 }).map((_, i) => <span key={i} className="rounded-sm" style={{ height: 13, background: i % 7 === 0 ? `hsl(${GOLD} / 0.7)` : `hsl(${GREEN} / ${0.22 + (i % 5) * 0.08})` }} />)}
+          </div>
+          <p className="font-black mt-7" style={{ fontSize: 38, color: TEXT, lineHeight: 1.05 }}>Employees × workflows × policies × approvals × receipts.</p>
+        </div>
+      </div>
+    </BigStorySlide>
+  );
+}
+
+function S03StoryFailure({ n, t }: { n: number; t: number }) {
+  return (
+    <BigStorySlide section="Failure mode" n={n} t={t} badge="The unmanaged path" headline="Without a shared spine, every AI call invents the company again." subline="That is where semantic debt enters the operating model. The organization gets outputs, but no lineage, no memory and no defensible learning loop.">
+      <div className="grid grid-cols-4 gap-5 h-full items-stretch">
+        <StoryCard label="01" title="No approved context" copy="The model receives whatever the user remembers, not the organization-approved way of working." tone="red" />
+        <StoryCard label="02" title="No owner" copy="Nobody can say which business rule was used, who approved it, or when it expires." tone="red" />
+        <StoryCard label="03" title="No receipt" copy="The output cannot be replayed with inputs, policy, model and approver attached." tone="red" />
+        <StoryCard label="04" title="No compounding" copy="Corrections stay trapped inside a chat thread. The next employee repeats the same gap." tone="red" />
+      </div>
+    </BigStorySlide>
+  );
+}
+
+function S04StoryGuide({ n, t }: { n: number; t: number }) {
+  return (
+    <BigStorySlide section="Guide" n={n} t={t} badge="Meet LIZA" headline="LIZA is the AI Governance Loop for enterprise work." subline="It sits between people, tools and models. It locks the approved way of working, compiles the right context, signs the output, and learns from corrections.">
+      <div className="grid grid-cols-4 gap-5 h-full items-center">
+        {[
+          ["Lock", "Bind the task to approved Blocks and Playbooks."],
+          ["Compile", "Assemble only the context this moment needs."],
+          ["Sign", "Attach a receipt with inputs, model, owner and approval."],
+          ["Learn", "Push corrections back into the corpus for the next call."],
+        ].map(([h, d], i) => <StoryCard key={h} label={`0${i + 1}`} title={h} copy={d} tone="green" />)}
+      </div>
+    </BigStorySlide>
+  );
+}
+
+function S05StoryBlock({ n, t }: { n: number; t: number }) {
+  return (
+    <BigStorySlide section="Plan A" n={n} t={t} badge="The atom is the Block" headline="A Block is the smallest governed unit of how the organization thinks." subline="Not a whole playbook. Not a document. One typed, owner-signed piece of operational judgment that AI can compile at the exact moment of work.">
+      <div className="grid grid-cols-[1fr_1.1fr] gap-7 h-full">
+        <div className="rounded-2xl p-8 flex flex-col justify-center" style={{ background: `hsl(${GREEN} / 0.08)`, border: `2px solid hsl(${GREEN} / 0.45)` }}>
+          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Block structure</p>
+          <p className="font-black mt-5" style={{ fontSize: 64, color: TEXT, lineHeight: 1 }}>One Block</p>
+          <div className="mt-7 grid grid-cols-2 gap-3">
+            {["Directive", "Knowledge", "Procedure", "Preference"].map((x) => <div key={x} className="rounded-lg px-4 py-3 font-black" style={{ fontSize: 18, color: TEXT, background: BG, border: `1px solid hsl(${GREEN} / 0.3)` }}>{x}</div>)}
+          </div>
+          <p className="mt-6" style={{ fontSize: 19, color: MUTED, lineHeight: 1.4 }}>Typed · versioned · owner-signed · expiry-aware · compiled just in time.</p>
+        </div>
+        <div className="flex flex-col justify-center gap-4">
+          <StoryCard label="Level 01" title="Blocks" copy="Single atomic rules, judgments, procedures and preferences." tone="green" />
+          <StoryCard label="Level 02" title="Playbooks" copy="Composed sets of Blocks that describe how a workflow is done." tone="gold" />
+          <StoryCard label="Level 03" title="Org-as-Code" copy="The versioned corpus of how the company runs, improves and proves work." tone="neutral" />
+        </div>
+      </div>
+    </BigStorySlide>
+  );
+}
+
+function S06StoryMoment({ n, t }: { n: number; t: number }) {
+  return (
+    <BigStorySlide section="Plan B" n={n} t={t} badge="The governed moment" headline="The product is the moment where human intent, company context and model output meet." subline="Every AI action becomes a controlled work event: request, context, model, output, approval, receipt and learning update.">
+      <div className="grid grid-cols-5 gap-4 h-full items-center">
+        {[
+          ["Request", "What the user is trying to do."],
+          ["Blocks", "The relevant operational judgment."],
+          ["Model", "The replaceable reasoning supplier."],
+          ["Receipt", "The proof trail for this output."],
+          ["Learn", "The correction that compounds."],
+        ].map(([h, d], i) => <StoryCard key={h} label={`0${i + 1}`} title={h} copy={d} tone={i === 2 ? "gold" : "green"} />)}
+      </div>
+    </BigStorySlide>
+  );
+}
+
+function S07StorySuccess({ n, t }: { n: number; t: number }) {
+  return (
+    <BigStorySlide section="Success" n={n} t={t} badge="What compounds" headline="The customer does not just use AI. The customer accumulates operational IP." subline="Every governed moment improves the corpus. The more work runs through LIZA, the harder the system is to replace.">
+      <div className="grid grid-cols-3 gap-6 h-full items-center">
+        <StoryCard label="01" title="Blocks accumulate" copy="Corrections become reusable operational judgment, not forgotten chat history." tone="green" />
+        <StoryCard label="02" title="Playbooks sharpen" copy="Workflows become cheaper, faster and easier to audit with every repetition." tone="green" />
+        <StoryCard label="03" title="The corpus becomes sovereign" copy="The customer owns the operating memory. Models can be swapped without losing the company." tone="green" />
+      </div>
+    </BigStorySlide>
+  );
+}
+
+function S08StoryModelMoat({ n, t }: { n: number; t: number }) {
+  return (
+    <BigStorySlide section="Model + Moat" n={n} t={t} badge="Why this is a company" headline="We monetize accountable work units, not seats or raw tokens." subline="Model costs fall. Governed AI work explodes. LIZA captures the control position around every important output.">
+      <div className="grid grid-cols-4 gap-5 h-full items-stretch">
+        <StoryCard label="Pricing" title="Per governed decision" copy="Charge against displaced labor value. Pass model cost through transparently." tone="green" />
+        <StoryCard label="Margin" title="Token cost compression helps us" copy="Cheaper inference expands the volume of governed work and protects gross margin." tone="green" />
+        <StoryCard label="Moat" title="Blocks plus receipts" copy="The corpus and receipt graph are customer-specific, versioned and hard to lift out." tone="gold" />
+        <StoryCard label="Position" title="Neutral control layer" copy="Claude, GPT, Gemini and on-prem models become suppliers beneath the same governance surface." tone="neutral" />
+      </div>
+    </BigStorySlide>
+  );
+}
+
+function S09StoryAsk({ n, t }: { n: number; t: number }) {
+  return (
+    <BigStorySlide section="Team + Ask" n={n} t={t} badge="€2M seed" headline="Fund the repeatable governance layer for AI-native organizations." subline="The founder has 15+ years building data and AI systems inside regulated enterprises. The round turns one working wedge into a repeatable install motion.">
+      <div className="grid grid-cols-[1fr_1.2fr] gap-7 h-full items-center">
+        <div className="rounded-2xl p-9" style={{ background: `hsl(${GREEN} / 0.08)`, border: `1px solid hsl(${GREEN} / 0.38)` }}>
+          <p className="font-black" style={{ fontSize: 112, color: `hsl(${GREEN})`, letterSpacing: "-0.06em", lineHeight: 0.9 }}>€2M</p>
+          <p className="font-black mt-5" style={{ fontSize: 34, color: TEXT, lineHeight: 1.08 }}>Vertical corpus, repeatable install, channel and audit kit.</p>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          <StoryCard label="50%" title="Vertical corpus" copy="Deepen AEC. Package regulated playbooks for pharma and finance." tone="green" />
+          <StoryCard label="30%" title="Repeatable install" copy="Day-30 deployment, metering, admin and self-serve configuration." tone="gold" />
+          <StoryCard label="20%" title="Channel kit" copy="Partner enablement, audit material and regulated buyer proof." tone="neutral" />
+        </div>
+      </div>
+    </BigStorySlide>
+  );
+}
+
 // ─── Slide registry ──────────────────────────────────────────────────────────
 const RAW_SLIDES: { id: string; title: string; render: (n: number, t: number) => React.ReactNode }[] = [
   // StoryBrand 9-slide spine. Character → Problem → Guide → Plan → Success → Failure-avoided → Model/Moat → Team → Ask.
-  { id: "cover",    title: "Cover · Character",                 render: (n, t) => <S01Cover n={n} t={t} /> },
-  { id: "problem",  title: "Problem · single chat → 1000 chats", render: (n, t) => <S02Problem n={n} t={t} /> },
-  { id: "context",  title: "Failure mode · context explosion",  render: (n, t) => <S03Context n={n} t={t} /> },
-  { id: "solution", title: "Guide · meet LIZA, the AI Governance Loop", render: (n, t) => <S04Solution n={n} t={t} /> },
-  { id: "moat",     title: "Plan A · the Block (the atom)",     render: (n, t) => <S11Moat n={n} t={t} /> },
-  { id: "how",      title: "Plan B · the governed moment",      render: (n, t) => <S05How n={n} t={t} /> },
-  { id: "proof",    title: "Success · what compounds",          render: (n, t) => <S10Proof n={n} t={t} /> },
-  { id: "model",    title: "Business model + moat",             render: (n, t) => <S09Model n={n} t={t} /> },
-  { id: "ask",      title: "Team + Ask · €2M",                  render: (n, t) => <S13Ask n={n} t={t} /> },
+  { id: "cover",    title: "Cover · Character",                 render: (n, t) => <S01StoryCover n={n} t={t} /> },
+  { id: "problem",  title: "Problem · single chat → 1000 chats", render: (n, t) => <S02StoryScale n={n} t={t} /> },
+  { id: "context",  title: "Failure mode · context explosion",  render: (n, t) => <S03StoryFailure n={n} t={t} /> },
+  { id: "solution", title: "Guide · meet LIZA, the AI Governance Loop", render: (n, t) => <S04StoryGuide n={n} t={t} /> },
+  { id: "block",    title: "Plan A · the Block (the atom)",     render: (n, t) => <S05StoryBlock n={n} t={t} /> },
+  { id: "moment",   title: "Plan B · the governed moment",      render: (n, t) => <S06StoryMoment n={n} t={t} /> },
+  { id: "success",  title: "Success · what compounds",          render: (n, t) => <S07StorySuccess n={n} t={t} /> },
+  { id: "model",    title: "Business model + moat",             render: (n, t) => <S08StoryModelMoat n={n} t={t} /> },
+  { id: "ask",      title: "Team + Ask · €2M",                  render: (n, t) => <S09StoryAsk n={n} t={t} /> },
 ];
 
 const SLIDES = RAW_SLIDES.map((s, i) => ({
