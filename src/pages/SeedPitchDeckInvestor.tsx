@@ -1734,54 +1734,98 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
 // 05 · The Block. Anatomy of one Block on the left. Ladder on the right so the
 // reader sees how Blocks compose upward.
 function S05StoryBlock({ n, t }: { n: number; t: number }) {
+  const blockTypes = [
+    {
+      type: "DIRECTIVE",
+      what: "a rule the company has agreed on",
+      example:
+        "Public-sector RFP responses use RFP-PUBSEC v4.1 pricing tables and the legal-cleared compliance clause. Do not quote terms older than the current quarter.",
+      hero: true,
+    },
+    {
+      type: "KNOWLEDGE",
+      what: "a fact AI must cite, not invent",
+      example:
+        "Hamburg public-sector procurement requires a German-language summary, a 7-year retention clause, and BaFin-compliant payment terms.",
+    },
+    {
+      type: "PROCEDURE",
+      what: "the steps a workflow must follow",
+      example:
+        "RFP intake: classify the bid, pull last 4 similar receipts, draft, route to bid lead, then to legal, then sign and emit.",
+    },
+    {
+      type: "PREFERENCE",
+      what: "the company's voice and house style",
+      example:
+        "Bids open with the city's stated outcome, not our credentials. Tables before prose. No superlatives. Active voice only.",
+    },
+  ];
   return (
     <StorySlide section="Plan A · the new unit of work" n={n} t={t}
       badge="The atom · your new operational unit"
-      headline="If AI is the new labour, the Block is the new unit you pay for, govern, and compound."
+      headline="A Block is one governed unit of how the company thinks. Four types, one shape, all signed."
       footnote="Headcount was the old OpEx unit. Tokens are the new raw material. The Block is the unit of governed AI work — what enterprises will measure, budget, and accumulate.">
-      <div className="grid grid-cols-[1fr_1fr] gap-12 h-full items-center">
-        {/* ONE concrete Block — looks like a card, not a spec sheet */}
-        <div className="rounded-2xl p-10"
-          style={{ background: `hsl(${GREEN} / 0.07)`, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 30px hsl(${GREEN} / 0.18)` }}>
-          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em] inline-block mb-6"
-            style={{ fontSize: 18, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `1.5px solid hsl(${GREEN} / 0.5)` }}>
-            One Block
-          </div>
-          <p className="font-black" style={{ fontSize: 38, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.025em" }}>
-            "Public-sector RFP responses use RFP-PUBSEC v4.1 pricing tables and the legal-cleared compliance clause.<br/>
-            <span style={{ color: `hsl(${GREEN})` }}>Do not quote terms older than the current quarter.</span>"
+      <div className="grid grid-cols-[1.35fr_1fr] gap-10 h-full items-stretch">
+        {/* FOUR Block types — same shape, different content. Hamburg RFP runs through all four. */}
+        <div className="flex flex-col gap-4">
+          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 13, color: SUBTLE }}>
+            One shape · four types · same Hamburg RFP, governed from every angle
           </p>
-          <div className="mt-7 pt-5 grid grid-cols-3 gap-4" style={{ borderTop: `1px solid hsl(${GREEN} / 0.3)` }}>
-            <div>
-              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Owner</p>
-              <p className="font-bold mt-1" style={{ fontSize: 18, color: TEXT }}>M. Schäfer</p>
-            </div>
-            <div>
-              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Version</p>
-              <p className="font-bold mt-1" style={{ fontSize: 18, color: TEXT }}>v3 · signed</p>
-            </div>
-            <div>
-              <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 12, color: SUBTLE }}>Expires</p>
-              <p className="font-bold mt-1" style={{ fontSize: 18, color: TEXT }}>2026-Q1</p>
-            </div>
+          <div className="grid grid-cols-2 gap-4 flex-1">
+            {blockTypes.map((b) => {
+              const isHero = b.hero;
+              return (
+                <div key={b.type} className="rounded-2xl p-5 flex flex-col"
+                  style={{
+                    background: isHero ? `hsl(${GREEN} / 0.09)` : CARD_ALT,
+                    border: isHero ? `2px solid hsl(${GREEN})` : `1px solid ${CHROME_BORDER}`,
+                    boxShadow: isHero ? `0 0 24px hsl(${GREEN} / 0.18)` : "none",
+                  }}>
+                  <div className="flex items-baseline justify-between mb-2">
+                    <p className="font-mono uppercase tracking-[0.22em] font-black"
+                      style={{ fontSize: 13, color: isHero ? `hsl(${GREEN})` : TEXT }}>
+                      {b.type}
+                    </p>
+                    <p className="font-mono uppercase tracking-[0.2em]" style={{ fontSize: 10, color: SUBTLE }}>
+                      v3 · signed
+                    </p>
+                  </div>
+                  <p className="font-mono uppercase tracking-[0.18em] mb-3" style={{ fontSize: 10, color: SUBTLE }}>
+                    {b.what}
+                  </p>
+                  <p className="font-bold" style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>
+                    "{b.example}"
+                  </p>
+                  <div className="mt-auto pt-3 flex items-center justify-between font-mono uppercase tracking-[0.18em]"
+                    style={{ fontSize: 10, color: SUBTLE, borderTop: `1px solid ${isHero ? `hsl(${GREEN} / 0.3)` : CHROME_BORDER}`, marginTop: 12 }}>
+                    <span>owner · M. Schäfer</span>
+                    <span>expires 2026-Q1</span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
+          <p className="font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.45 }}>
+            Every Block carries the same metadata: type, owner, version, expiry, hash. That is what makes it governable, replayable, and accountable.
+          </p>
         </div>
 
         {/* How Blocks scale up — the ladder, but with bigger plain-English labels */}
-        <div className="flex flex-col gap-5">
-          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 14, color: SUBTLE }}>One Block is the atom. Then it compounds.</p>
+        <div className="flex flex-col gap-4 justify-center">
+          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 13, color: SUBTLE }}>
+            Blocks compile upward
+          </p>
           {[
-            { k: "BLOCK",       size: 30, title: "one rule = one priced, governed unit",  copy: "what you measure, budget and audit",         color: GREEN },
-            { k: "PLAYBOOK",    size: 30, title: "many Blocks = one workflow",            copy: "how a job gets done, repeatably",            color: GOLD  },
-            { k: "ORG-AS-CODE", size: 30, title: "all Playbooks = the company, in code", copy: "the asset that compounds; the new IP",       color: ACCENT },
-          ].map((r, i) => (
-            <div key={r.k} className="rounded-xl p-6 flex items-center gap-6"
+            { k: "BLOCK",       title: "the atom · 4 types",            copy: "Directive · Knowledge · Procedure · Preference",       color: GREEN  },
+            { k: "PLAYBOOK",    title: "many Blocks = one workflow",   copy: "the Hamburg RFP playbook bundles all four",            color: GOLD   },
+            { k: "ORG-AS-CODE", title: "all Playbooks = the company", copy: "the asset that compounds, the IP that travels",        color: ACCENT },
+          ].map((r) => (
+            <div key={r.k} className="rounded-xl p-5"
               style={{ background: `hsl(${r.color} / 0.07)`, border: `1.5px solid hsl(${r.color} / 0.4)` }}>
-              <p className="font-black tracking-[0.08em]" style={{ fontSize: r.size, color: `hsl(${r.color})`, minWidth: 240 }}>{r.k}</p>
-              <div>
-                <p className="font-black" style={{ fontSize: 22, color: TEXT, letterSpacing: "-0.018em", lineHeight: 1.2 }}>{r.title}</p>
-                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.35, marginTop: 3 }}>{r.copy}</p>
-              </div>
+              <p className="font-black tracking-[0.08em]" style={{ fontSize: 22, color: `hsl(${r.color})` }}>{r.k}</p>
+              <p className="font-black mt-2" style={{ fontSize: 19, color: TEXT, letterSpacing: "-0.018em", lineHeight: 1.2 }}>{r.title}</p>
+              <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.35, marginTop: 4 }}>{r.copy}</p>
             </div>
           ))}
         </div>
