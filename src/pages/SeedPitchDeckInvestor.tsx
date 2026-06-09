@@ -1764,19 +1764,19 @@ function S07StorySuccess({ n, t }: { n: number; t: number }) {
         </div>
         <div className="flex flex-col gap-4">
           <div className="rounded-xl px-6 py-5" style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Inside the customer</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Blocks accrue from real corrections.</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>Every receipt that gets corrected becomes a Block the next call inherits.</p>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>First Blocks form</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>Governance gets established.</p>
+            <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>The company finally has typed, signed rules that AI must obey. Every output carries a receipt.</p>
           </div>
           <div className="rounded-xl px-6 py-5" style={{ background: `hsl(${GOLD} / 0.08)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>Inside the workflow</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Playbooks sharpen with each run.</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>Each repetition is cheaper, faster, and easier to audit than the last.</p>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GOLD})` }}>Playbooks form</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>AI work scales — and token spend stops bleeding.</p>
+            <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>Every call compiles only the context it needs. Token-optimised, repeatable, faster with every run.</p>
           </div>
           <div className="rounded-xl px-6 py-5" style={{ background: `hsl(${ACCENT} / 0.07)`, border: `1px solid hsl(${ACCENT} / 0.35)` }}>
-            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>Inside the company</p>
-            <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>Org-as-Code becomes sovereign IP.</p>
-            <p className="mt-2" style={{ fontSize: 15, color: MUTED, lineHeight: 1.4 }}>Models can be swapped. The corpus stays with the customer.</p>
+            <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${ACCENT})` }}>Org-as-Code</p>
+            <p className="font-black mt-2" style={{ fontSize: 24, color: TEXT, lineHeight: 1.15 }}>Your IP is protected in the AI-native era.</p>
+            <p className="mt-2" style={{ fontSize: 16, color: MUTED, lineHeight: 1.4 }}>The company's setup, judgment and standards live in a corpus you own. Models come and go; the corpus stays.</p>
           </div>
         </div>
       </div>
