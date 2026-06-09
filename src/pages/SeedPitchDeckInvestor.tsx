@@ -1681,75 +1681,60 @@ function S04StoryGuide({ n, t }: { n: number; t: number }) {
   return (
     <StorySlide section="Guide · meet LIZA" n={n} t={t}
       badge="What LIZA gives every moment of work with AI"
-      headline="LIZA gives every moment of work with AI the five things it was missing. Every output becomes production-ready, and connected to the rest of the company."
+      headline="The same Hamburg RFP. Now routed through LIZA. The five things that were missing are now attached, signed, and connected to the rest of the company."
       footnote="One correction propagates to every moment of work with AI that touches the same standard. The company gets sharper with every call.">
-      <div className="flex flex-col gap-5 h-full">
-        {/* TOP · the transformation, said once */}
-        <div className="grid grid-cols-[1fr_auto_1fr] gap-5 items-stretch">
-          <div className="rounded-xl px-5 py-3.5 flex items-center gap-4"
-            style={{ background: `hsl(${RED} / 0.05)`, border: `1px solid hsl(${RED} / 0.35)` }}>
-            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${RED})` }}>Yesterday</span>
-            <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>
-              Every moment of work with AI is missing 5 things.
-            </span>
+      <div className="grid grid-cols-[1fr_1.25fr] gap-8 h-full">
+        {/* LEFT · same Hamburg request, now the governed output */}
+        <div className="rounded-2xl p-8 flex flex-col"
+          style={{ background: `hsl(${GREEN} / 0.06)`, border: `1.5px solid hsl(${GREEN} / 0.5)`, boxShadow: `0 0 24px hsl(${GREEN} / 0.1)` }}>
+          <div className="self-start rounded-full px-5 py-2 mb-5 font-mono uppercase tracking-[0.24em]"
+            style={{ fontSize: 14, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.12)`, border: `1.5px solid hsl(${GREEN} / 0.55)` }}>
+            One moment of work with AI · routed through LIZA
           </div>
-          <div className="flex items-center justify-center px-3">
-            <div className="rounded-full px-5 py-2 font-mono uppercase tracking-[0.28em]"
-              style={{ fontSize: 12, fontWeight: 900, color: `hsl(${GREEN})`, background: BG, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 14px hsl(${GREEN} / 0.3)` }}>
-              LIZA · the governance loop
-            </div>
+          <div className="rounded-xl px-5 py-4 mb-5 w-full"
+            style={{ background: BG, border: `1px solid ${CHROME_BORDER}` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-1.5" style={{ fontSize: 11, color: SUBTLE }}>The request · unchanged</p>
+            <p className="font-bold" style={{ fontSize: 19, color: TEXT, lineHeight: 1.25 }}>
+              "Prepare our response to the €40M RFP from the city of Hamburg."
+            </p>
           </div>
-          <div className="rounded-xl px-5 py-3.5 flex items-center gap-4"
-            style={{ background: `hsl(${GREEN} / 0.08)`, border: `1.5px solid hsl(${GREEN} / 0.55)` }}>
-            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>From now on</span>
-            <span className="font-bold" style={{ fontSize: 16, color: TEXT }}>
-              Every moment of work with AI has all 5, signed and connected.
-            </span>
+          <div className="rounded-2xl px-7 py-6 w-full flex-1 flex flex-col justify-center"
+            style={{ background: BG, border: `2px solid hsl(${GREEN} / 0.6)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>output · with receipt attached</p>
+            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>
+              A 12-page response.<br/>
+              <span style={{ color: `hsl(${GREEN})` }}>Signed. Sourced. Replayable.</span>
+            </p>
+            <p className="mt-4 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
+              · cites the current pricing standard (v4.2)<br/>
+              · uses the compliance clause the legal team signed last week<br/>
+              · approver, model, inputs and hash on the receipt
+            </p>
           </div>
         </div>
-
-        {/* FIVE columns · what was missing → what LIZA gives */}
-        <div className="grid grid-cols-5 gap-3 flex-1">
+        {/* RIGHT · same five rows as failure, now GREEN and filled in */}
+        <div className="flex flex-col gap-3 justify-center">
+          <p className="font-mono uppercase tracking-[0.26em] mb-1" style={{ fontSize: 12, color: SUBTLE }}>
+            what LIZA attaches to this same moment of work with AI
+          </p>
           {MOMENT_NEEDS.map((m, i) => (
-            <div key={m.k} className="rounded-2xl p-4 flex flex-col"
-              style={{
-                background: `hsl(${GREEN} / 0.07)`,
-                border: `1.5px solid hsl(${GREEN} / 0.5)`,
-                boxShadow: `0 0 16px hsl(${GREEN} / 0.1)`,
-              }}>
-              <div className="flex items-baseline justify-between">
-                <span className="font-mono" style={{ fontSize: 11, color: SUBTLE, letterSpacing: "0.22em" }}>0{i + 1}</span>
-                <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>delivered</span>
+            <div key={m.k} className="rounded-xl px-5 py-3.5 flex items-center gap-4"
+              style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.5)` }}>
+              <span className="font-mono" style={{ fontSize: 12, color: SUBTLE, letterSpacing: "0.22em", minWidth: 28 }}>0{i + 1}</span>
+              <div className="rounded-md px-3 py-1.5 font-mono uppercase tracking-[0.18em] shrink-0 text-center"
+                style={{ fontSize: 12, fontWeight: 800, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.12)`, border: `1px solid hsl(${GREEN} / 0.55)`, minWidth: 160 }}>
+                {m.k} ✓
               </div>
-              <p className="font-black mt-1.5 uppercase tracking-[0.04em]" style={{ fontSize: 22, color: `hsl(${GREEN})`, lineHeight: 1.05 }}>
-                {m.k}
-              </p>
-              <div className="my-3 h-px" style={{ background: `hsl(${GREEN} / 0.35)` }} />
-              <p className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 9, color: SUBTLE }}>
-                what was missing
-              </p>
-              <p className="mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>
-                {m.missing}
-              </p>
-              <p className="font-mono uppercase tracking-[0.18em] mt-3" style={{ fontSize: 9, color: `hsl(${GREEN})` }}>
-                LIZA gives you
-              </p>
-              <p className="font-bold mt-1" style={{ fontSize: 13, color: TEXT, lineHeight: 1.35 }}>
-                {m.gives}
-              </p>
+              <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{m.gives}</p>
             </div>
           ))}
-        </div>
-
-        {/* BOTTOM band · the connective payoff */}
-        <div className="rounded-xl px-6 py-4 flex items-center justify-between gap-6"
-          style={{ background: `hsl(${GOLD} / 0.08)`, border: `1.5px solid hsl(${GOLD} / 0.45)` }}>
-          <p className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>
-            And because each moment of work with AI now carries all five
-          </p>
-          <p className="font-bold" style={{ fontSize: 17, color: TEXT, lineHeight: 1.35 }}>
-            Every moment of work with AI connects to every other. Fix one standard, the whole company updates. Fast <em className="not-italic" style={{ color: `hsl(${GREEN})` }}>and</em> right, by construction.
-          </p>
+          <div className="rounded-xl px-5 py-3.5 mt-1 flex items-center gap-3"
+            style={{ background: `hsl(${GOLD} / 0.08)`, border: `1.5px solid hsl(${GOLD} / 0.45)` }}>
+            <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>and</span>
+            <p className="font-bold" style={{ fontSize: 14, color: TEXT, lineHeight: 1.35 }}>
+              Fix one standard once, every future moment of work with AI on the same topic updates.
+            </p>
+          </div>
         </div>
       </div>
     </StorySlide>
