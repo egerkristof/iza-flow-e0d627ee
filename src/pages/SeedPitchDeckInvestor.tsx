@@ -1765,7 +1765,7 @@ function S05StoryBlock({ n, t }: { n: number; t: number }) {
     { type: "PREFERENCE", what: "the company's voice and house style" },
   ];
   const Arrow = () => (
-    <div className="flex items-center justify-center px-1" style={{ color: `hsl(${SUBTLE})` }}>
+    <div className="flex items-center justify-center px-1" style={{ color: SUBTLE }}>
       <span className="font-mono" style={{ fontSize: 22 }}>→</span>
     </div>
   );
