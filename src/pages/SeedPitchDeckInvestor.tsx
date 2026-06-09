@@ -1568,16 +1568,19 @@ function S03StoryFailure({ n, t }: { n: number; t: number }) {
       headline="Every ungoverned AI call invents the company again.">
       <div className="grid grid-cols-[1fr_1.3fr] gap-8 h-full">
         {/* the bare output */}
-        <div className="rounded-2xl p-8 flex flex-col items-center justify-center"
+        <div className="rounded-2xl p-10 flex flex-col items-center justify-center"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <p className="font-mono uppercase tracking-[0.28em] mb-6" style={{ fontSize: 13, color: `hsl(${RED})` }}>One AI output, no governance</p>
-          <div className="rounded-xl px-10 py-8 text-center"
-            style={{ background: BG, border: `1.5px dashed hsl(${RED} / 0.55)`, minWidth: 340 }}>
-            <p className="font-mono uppercase tracking-[0.22em] mb-3" style={{ fontSize: 11, color: SUBTLE }}>model output</p>
-            <p className="font-black" style={{ fontSize: 30, color: TEXT, lineHeight: 1.1 }}>"Here is the answer."</p>
+          <div className="rounded-full px-6 py-2.5 mb-8 font-mono uppercase tracking-[0.24em]"
+            style={{ fontSize: 22, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
+            One AI output · no governance
           </div>
-          <p className="mt-6 font-mono uppercase tracking-[0.22em] text-center" style={{ fontSize: 12, color: `hsl(${RED})`, maxWidth: 320, lineHeight: 1.5 }}>
-            looks confident · carries nothing the organisation can stand on
+          <div className="rounded-2xl px-12 py-12 text-center w-full"
+            style={{ background: BG, border: `2px dashed hsl(${RED} / 0.55)` }}>
+            <p className="font-mono uppercase tracking-[0.22em] mb-5" style={{ fontSize: 14, color: SUBTLE }}>model output</p>
+            <p className="font-black" style={{ fontSize: 56, color: TEXT, lineHeight: 1.05, letterSpacing: "-0.02em" }}>"Here is<br/>the answer."</p>
+          </div>
+          <p className="mt-8 text-center font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, maxWidth: 460, lineHeight: 1.35 }}>
+            Looks confident. Carries nothing the organisation can stand on.
           </p>
         </div>
         {/* the four missing bands */}
