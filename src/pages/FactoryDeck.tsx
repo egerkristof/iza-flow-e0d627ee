@@ -1686,65 +1686,63 @@ export function FOrgAsCode() {
       <SlideGrid />
       <PageNumber />
       <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
-        <Tag color={GREEN} label="Organization as Code · Terraform did this for infra. We do it for orgs." />
-        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
-          A non-technical manager writes strategy in plain English. <span style={{ color: `hsl(${GREEN})` }}>AACE compiles it into executable logic gates.</span>
+        <Tag color={GREEN} label="Organization as Code · Terraform for orgs" />
+        <h2 className="font-black mt-5 mb-8" style={{ fontSize: 68, lineHeight: 1.04, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1700 }}>
+          Plain-English strategy in.<br/>
+          <span style={{ color: `hsl(${GREEN})` }}>Executable logic gates out.</span>
         </h2>
-        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
-          Terraform and Kubernetes did this for cloud. We do it for organizational behavior. The Adaptive Agentic Context Engine intercepts the narrative, strips the fluff, and compiles it into a typed Domain-Specific Language. To a human it reads as a procedure. To an agent it is mathematically precise gates.
-        </p>
 
         <div className="grid grid-cols-2 gap-6 flex-1">
           {/* Legacy */}
-          <div className="rounded-2xl p-7 flex flex-col" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-            <div className="flex items-center justify-between mb-4">
-              <p className="font-black" style={{ fontSize: 26, color: TEXT, letterSpacing: "-0.02em" }}>Legacy AI</p>
-              <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${RED})` }}>RAG + prompting</span>
+          <div className="rounded-2xl p-8 flex flex-col" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <div className="flex items-center justify-between mb-5">
+              <p className="font-black" style={{ fontSize: 36, color: TEXT, letterSpacing: "-0.025em" }}>Legacy AI</p>
+              <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>RAG + prompting</span>
             </div>
-            <div className="flex flex-col gap-3 flex-1">
+            <div className="flex flex-col gap-4 flex-1">
               {[
                 { i: FileText, t: "Unstructured PDFs, slides, wiki pages" },
-                { i: Filter,   t: "Messy RAG pipeline. Vector similarity, no governance." },
-                { i: Megaphone,t: "Open chat interface. No owner, no policy enforcement." },
-                { i: Ban,      t: "Output: hallucinations and silent non-compliance" },
+                { i: Filter,   t: "Vector similarity. No governance." },
+                { i: Megaphone,t: "Open chat. No owner, no policy." },
+                { i: Ban,      t: "Hallucinations and silent non-compliance." },
               ].map((r) => {
                 const Icon = r.i;
                 return (
-                  <div key={r.t} className="flex items-start gap-3 rounded-lg px-3 py-2.5" style={{ background: `hsl(0 0% 0% / 0.03)` }}>
-                    <Icon size={16} style={{ color: `hsl(${RED})`, flexShrink: 0, marginTop: 3 }} />
-                    <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{r.t}</p>
+                  <div key={r.t} className="flex items-start gap-4 rounded-lg px-4 py-3.5" style={{ background: `hsl(0 0% 0% / 0.03)` }}>
+                    <Icon size={22} style={{ color: `hsl(${RED})`, flexShrink: 0, marginTop: 3 }} />
+                    <p style={{ fontSize: 21, color: TEXT, lineHeight: 1.3 }}>{r.t}</p>
                   </div>
                 );
               })}
             </div>
-            <p className="mt-4 pt-3 border-t font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${RED})`, borderColor: CHROME_BORDER }}>
+            <p className="mt-5 pt-4 border-t font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 15, color: `hsl(${RED})`, borderColor: CHROME_BORDER }}>
               Documents in. Guesses out.
             </p>
           </div>
 
           {/* LIZA */}
-          <div className="rounded-2xl p-7 flex flex-col" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.45)` }}>
-            <div className="flex items-center justify-between mb-4">
-              <p className="font-black" style={{ fontSize: 26, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>LIZA OS</p>
-              <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Organization as Code</span>
+          <div className="rounded-2xl p-8 flex flex-col" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.45)` }}>
+            <div className="flex items-center justify-between mb-5">
+              <p className="font-black" style={{ fontSize: 36, color: `hsl(${GREEN})`, letterSpacing: "-0.025em" }}>LIZA OS</p>
+              <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Organization as Code</span>
             </div>
-            <div className="flex flex-col gap-3 flex-1">
+            <div className="flex flex-col gap-4 flex-1">
               {[
-                { i: Network,     t: "Typed Knowledge Graph. Vision, Bets, Initiatives, Teams, Roles." },
-                { i: Binary,      t: "AACE v3.1 compiles narrative into typed Blocks and Playbooks." },
-                { i: Workflow,    t: "Runtime enforces preconditions, owners, budgets at the call site." },
-                { i: CheckCircle2,t: "Output: deterministic, signed, regulator-ready receipts" },
+                { i: Network,     t: "Typed graph of Vision, Bets, Teams, Roles." },
+                { i: Binary,      t: "AACE compiles narrative into typed Playbooks." },
+                { i: Workflow,    t: "Runtime enforces owners and budgets at the call site." },
+                { i: CheckCircle2,t: "Deterministic, signed, regulator-ready receipts." },
               ].map((r) => {
                 const Icon = r.i;
                 return (
-                  <div key={r.t} className="flex items-start gap-3 rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.08)` }}>
-                    <Icon size={16} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 3 }} />
-                    <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{r.t}</p>
+                  <div key={r.t} className="flex items-start gap-4 rounded-lg px-4 py-3.5" style={{ background: `hsl(${GREEN} / 0.08)` }}>
+                    <Icon size={22} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 3 }} />
+                    <p style={{ fontSize: 21, color: TEXT, lineHeight: 1.3 }}>{r.t}</p>
                   </div>
                 );
               })}
             </div>
-            <p className="mt-4 pt-3 border-t font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.3)` }}>
+            <p className="mt-5 pt-4 border-t font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 15, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.3)` }}>
               Policy in. Auditable decisions out.
             </p>
           </div>
