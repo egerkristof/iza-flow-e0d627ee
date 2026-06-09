@@ -1631,7 +1631,7 @@ function FAtom() {
 const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
-  { id: "category",         title: "The Category · One standard. Every AI surface inherits it.", component: <StandardLayerDeckSlide eyebrow="The category · How LIZA fits between AI and action" /> },
+  { id: "thesis",           title: "Thesis · The Infrastructure Layer for the Agentic Workforce", component: <FThesis /> },
   { id: "workshop",         title: "The Workshop You Already Run · Artisan portraits", component: <FWorkshop /> },
   { id: "disposable",       title: "Disposable Expertise · Every session dies",         component: <FDisposable /> },
   { id: "atom",             title: "The Atom · The Block is the smallest unit of an AI-native org", component: <FAtom /> },
@@ -1643,7 +1643,7 @@ const RAW_SLIDES = [
 
   { id: "open-the-hood",     title: "Open the Hood · Trabant vs Ferrari",                component: <FOpenTheHood /> },
   { id: "shape-contrast",    title: "The Shape · Pipe vs System",                        component: <FShapeContrast /> },
-  { id: "engine-bay",        title: "The Engine Bay · AACE v3.1 Exposed",                component: <FEngineBay /> },
+  { id: "vsm-architecture",  title: "Architecture · The Agentic Nervous System (Brain · Spine · Sensors)", component: <FVsmArchitecture /> },
   // ACT II — Pillars holding it up (push/pull demoted from arrowhead)
   { id: "pillar-pull",       title: "Pillar 1 · Pull, Not Push",                        component: <FPillarPull /> },
   { id: "pillar-stations",   title: "Pillar 2 · Standards as Stations",                 component: <FPillarStations /> },
@@ -1653,12 +1653,14 @@ const RAW_SLIDES = [
   { id: "pillar-compile",    title: "Pillar 4 · Every Prompt Is a Compile",             component: <S07cFunnel /> },
   // ACT III — Proof
   { id: "artisanal-tax",     title: "The Artisanal Tax · €550K → $2.6B",                component: <FArtisanalTax /> },
-  { id: "aace-not-rag",      title: "This Is AACE, Not RAG · The Defence",              component: <S07eAaceNotRag /> },
+  { id: "org-as-code",       title: "Organization as Code · Terraform for Organizations", component: <FOrgAsCode /> },
+  { id: "auto-repair",       title: "Metacognitive Auto-Repair · The Code Fixes the Code", component: <FAutoRepair /> },
   { id: "org-loop",          title: "Every Commit Compounds · The Network",             component: <S07dOrgLoop /> },
+  { id: "moat",              title: "The Moat · Why We Win",                            component: <FMoat /> },
   // ACT IV — Path & ask
   { id: "install",           title: "30-Day Install · Metered from Day 31",             component: <F13Install /> },
   { id: "vertical",          title: "Hero Vertical · AEC · Pattern Repeats",            component: <F14Vertical /> },
-  { id: "unit-economics",    title: "Unit Economics · 95% Platform GM",                 component: <S10UnitEconomics /> },
+  { id: "tokenomics",        title: "Tokenomics by Design · Cost-Per-Decision FinOps",  component: <FTokenomics /> },
   { id: "team",              title: "Team · Data & AI Architecture in Production",      component: <F16Team /> },
   { id: "ask",               title: "The Ask · €2M Seed",                               component: <F17Ask /> },
   { id: "closer",            title: "The Loop, Closed",                                 component: <S13LoopClosed /> },
