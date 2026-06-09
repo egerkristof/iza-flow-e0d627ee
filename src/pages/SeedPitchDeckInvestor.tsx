@@ -1504,7 +1504,10 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
         {/* TODAY · one isolated chat */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${RED} / 0.04)`, border: `1px solid hsl(${RED} / 0.28)` }}>
-          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 13, color: `hsl(${RED})` }}>Yesterday</p>
+          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em]"
+            style={{ fontSize: 22, color: `hsl(${RED})`, background: `hsl(${RED} / 0.12)`, border: `1.5px solid hsl(${RED} / 0.5)` }}>
+            Yesterday
+          </div>
           <div className="flex-1 flex items-center justify-center">
             <div className="rounded-2xl px-8 py-7 text-center"
               style={{ background: BG, border: `1.5px dashed hsl(${RED} / 0.5)`, minWidth: 280 }}>
@@ -1520,7 +1523,10 @@ function S02StoryScale({ n, t }: { n: number; t: number }) {
         {/* TODAY/TOMORROW · a swarm of governed moments */}
         <div className="rounded-2xl p-8 flex flex-col"
           style={{ background: `hsl(${GREEN} / 0.07)`, border: `1px solid hsl(${GREEN} / 0.4)` }}>
-          <p className="font-mono uppercase tracking-[0.28em]" style={{ fontSize: 13, color: `hsl(${GREEN})` }}>Today, and from now on</p>
+          <div className="rounded-full px-5 py-2 self-start font-mono uppercase tracking-[0.24em]"
+            style={{ fontSize: 22, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.14)`, border: `1.5px solid hsl(${GREEN} / 0.55)`, boxShadow: `0 0 14px hsl(${GREEN} / 0.25)` }}>
+            Today &nbsp;·&nbsp; and from now on
+          </div>
           <div className="flex-1 flex items-center justify-center py-3">
             <div className="grid grid-cols-14 gap-1.5" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))", width: "100%" }}>
               {Array.from({ length: 14 * 9 }).map((_, i) => {
