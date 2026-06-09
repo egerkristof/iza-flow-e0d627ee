@@ -320,11 +320,11 @@ export function VizFactoryWalkthrough() {
         {/* INPUT */}
         <div className="rounded-xl p-5 flex flex-col justify-center"
           style={{ background: CARD_ALT, border: `1px dashed ${CHROME_BORDER}` }}>
-          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: SUBTLE }}>Input</p>
-          <p className="font-black mt-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2 }}>
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: SUBTLE }}>Input</p>
+          <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.2 }}>
             "Draft a proposal for the Munich school project."
           </p>
-          <p className="mt-3 font-mono" style={{ fontSize: 11, color: MUTED }}>
+          <p className="mt-3 font-mono" style={{ fontSize: 13, color: MUTED }}>
             sender · project lead<br/>
             channel · workbook · 14:01
           </p>
@@ -361,11 +361,11 @@ export function VizFactoryWalkthrough() {
         {/* OUTPUT — the receipt */}
         <div className="rounded-xl p-5 flex flex-col justify-center"
           style={{ background: `hsl(${GREEN} / 0.08)`, border: `2px solid hsl(${GREEN})`, boxShadow: `0 0 22px hsl(${GREEN} / 0.18)` }}>
-          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Output</p>
-          <p className="font-black mt-2" style={{ fontSize: 17, color: TEXT, lineHeight: 1.2 }}>
+          <p className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 14, color: `hsl(${GREEN})` }}>Output</p>
+          <p className="font-black mt-2" style={{ fontSize: 22, color: TEXT, lineHeight: 1.15 }}>
             Signed proposal<br/>+ receipt
           </p>
-          <p className="mt-3 font-mono" style={{ fontSize: 11, color: MUTED, lineHeight: 1.5 }}>
+          <p className="mt-3 font-mono" style={{ fontSize: 13, color: MUTED, lineHeight: 1.5 }}>
             replay anytime<br/>
             policy + data + model<br/>
             + approver, hashed
