@@ -1628,6 +1628,434 @@ function FAtom() {
   );
 }
 
+// ═════════════════════════════════════════════════════════════════════════════
+// THESIS FOLD · "Organization as Code" 6-slide arc
+// Folded into the spine (not appended). Replaces category / aace-not-rag /
+// engine-bay / unit-economics, and inserts auto-repair + moat.
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ─── F_THESIS · The infrastructure layer for the agentic workforce ───────────
+function FThesis() {
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag color={ACCENT} label="Thesis · The category we are building" />
+        <h2 className="font-black mt-4 mb-4" style={{ fontSize: 64, lineHeight: 1.02, color: TEXT, letterSpacing: "-0.04em", maxWidth: 1620 }}>
+          The era of the AI assistant is ending. <span style={{ color: `hsl(${ACCENT})` }}>The agentic enterprise needs an OS.</span>
+        </h2>
+        <p className="mb-7" style={{ fontSize: 20, color: MUTED, maxWidth: 1480, lineHeight: 1.45 }}>
+          Companies are throwing audits, claims triage, supply chain decisions at LLMs inside open chat windows. Microsoft and Anthropic research shows the same collapse: long-horizon agentic work loses roughly 39% of reliability as the model drowns in narrative and loses the thread. Generic AI breaks the moment it has to enforce real corporate policy.
+        </p>
+
+        <div className="grid grid-cols-3 gap-5 mb-7">
+          {[
+            { k: "What everyone is shipping", v: "Better chat. Better agents. Better demos.", tone: "muted" as const, icon: Sparkles },
+            { k: "What enterprises actually need", v: "An execution substrate that makes any agent organizationally intelligent and compliant.", tone: "win" as const, icon: Cpu },
+            { k: "What we are building", v: "LIZA OS. The infrastructure layer for the agentic workforce.", tone: "win" as const, icon: Layers },
+          ].map((c) => {
+            const Icon = c.icon;
+            const win = c.tone === "win";
+            return (
+              <div key={c.k} className="rounded-2xl p-6 flex flex-col"
+                style={{ background: win ? `hsl(${ACCENT} / 0.06)` : CARD_ALT, border: `1px solid ${win ? `hsl(${ACCENT} / 0.4)` : CHROME_BORDER}` }}>
+                <Icon size={22} style={{ color: win ? `hsl(${ACCENT})` : SUBTLE }} />
+                <p className="font-mono uppercase tracking-[0.18em] mt-3 mb-2" style={{ fontSize: 11, color: win ? `hsl(${ACCENT})` : SUBTLE }}>{c.k}</p>
+                <p className="font-black" style={{ fontSize: 22, color: TEXT, lineHeight: 1.25, letterSpacing: "-0.015em" }}>{c.v}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-auto rounded-xl px-7 py-5 border-l-4 flex items-center gap-5" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
+          <Workflow size={24} style={{ color: `hsl(${ACCENT})` }} />
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-black">We are not building another AI agent.</span> We are building the OS that turns any model into a governed, auditable, cost-attributable member of your workforce.
+          </p>
+        </div>
+      </div>
+      <Footer text="The agentic enterprise is the next platform shift. LIZA OS is its execution substrate." />
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ─── F_ORG_AS_CODE · Terraform for organizations (Legacy AI vs LIZA) ─────────
+function FOrgAsCode() {
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag color={GREEN} label="Organization as Code · Terraform did this for infra. We do it for orgs." />
+        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
+          A non-technical manager writes strategy in plain English. <span style={{ color: `hsl(${GREEN})` }}>AACE compiles it into executable logic gates.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
+          Terraform and Kubernetes did this for cloud. We do it for organizational behavior. The Adaptive Agentic Context Engine intercepts the narrative, strips the fluff, and compiles it into a typed Domain-Specific Language. To a human it reads as a procedure. To an agent it is mathematically precise gates.
+        </p>
+
+        <div className="grid grid-cols-2 gap-6 flex-1">
+          {/* Legacy */}
+          <div className="rounded-2xl p-7 flex flex-col" style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            <div className="flex items-center justify-between mb-4">
+              <p className="font-black" style={{ fontSize: 26, color: TEXT, letterSpacing: "-0.02em" }}>Legacy AI</p>
+              <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${RED})` }}>RAG + prompting</span>
+            </div>
+            <div className="flex flex-col gap-3 flex-1">
+              {[
+                { i: FileText, t: "Unstructured PDFs, slides, wiki pages" },
+                { i: Filter,   t: "Messy RAG pipeline. Vector similarity, no governance." },
+                { i: Megaphone,t: "Open chat interface. No owner, no policy enforcement." },
+                { i: Ban,      t: "Output: hallucinations and silent non-compliance" },
+              ].map((r) => {
+                const Icon = r.i;
+                return (
+                  <div key={r.t} className="flex items-start gap-3 rounded-lg px-3 py-2.5" style={{ background: `hsl(0 0% 0% / 0.03)` }}>
+                    <Icon size={16} style={{ color: `hsl(${RED})`, flexShrink: 0, marginTop: 3 }} />
+                    <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{r.t}</p>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="mt-4 pt-3 border-t font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${RED})`, borderColor: CHROME_BORDER }}>
+              Documents in. Guesses out.
+            </p>
+          </div>
+
+          {/* LIZA */}
+          <div className="rounded-2xl p-7 flex flex-col" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.45)` }}>
+            <div className="flex items-center justify-between mb-4">
+              <p className="font-black" style={{ fontSize: 26, color: `hsl(${GREEN})`, letterSpacing: "-0.02em" }}>LIZA OS</p>
+              <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${GREEN})` }}>Organization as Code</span>
+            </div>
+            <div className="flex flex-col gap-3 flex-1">
+              {[
+                { i: Network,     t: "Typed Knowledge Graph. Vision, Bets, Initiatives, Teams, Roles." },
+                { i: Binary,      t: "AACE v3.1 compiles narrative into typed Blocks and Playbooks." },
+                { i: Workflow,    t: "Runtime enforces preconditions, owners, budgets at the call site." },
+                { i: CheckCircle2,t: "Output: deterministic, signed, regulator-ready receipts" },
+              ].map((r) => {
+                const Icon = r.i;
+                return (
+                  <div key={r.t} className="flex items-start gap-3 rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.08)` }}>
+                    <Icon size={16} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 3 }} />
+                    <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.35 }}>{r.t}</p>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="mt-4 pt-3 border-t font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: `hsl(${GREEN})`, borderColor: `hsl(${GREEN} / 0.3)` }}>
+              Policy in. Auditable decisions out.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Footer text="Corporate policy becomes executable code. Every AI call is a compiled, governed function." />
+      <SlideBar from={GREEN} to={ACCENT} />
+    </div>
+  );
+}
+
+// ─── F_VSM_ARCHITECTURE · Brain / Spine / Sensors ────────────────────────────
+function FVsmArchitecture() {
+  const layers = [
+    {
+      role: "Brain",
+      name: "Knowledge Graph & LVT",
+      desc: "Property-graph ontology of Vision, Bets, Initiatives, Teams, Roles, Domains. The org's reality, machine-readable.",
+      hl: ACCENT,
+      icon: Cpu,
+      payload: ["VISION → BET → INITIATIVE", "TEAM → ROLE → DOMAIN", "Authority and budget edges"],
+    },
+    {
+      role: "Spine",
+      name: "AACE v3.1 Runtime",
+      desc: "Compiler and execution gate. Holds Playbooks and precondition logic. Every AI call passes through here.",
+      hl: GREEN,
+      icon: Workflow,
+      payload: ["[PLAYBOOK] compilation", "<precondition> evaluation", "Role-scoped, JIT context"],
+    },
+    {
+      role: "Sensors",
+      name: "Edge Execution Loop",
+      desc: "Where real work happens. Anomalies, tensions, errors flow back as [FINDINGS] into the graph.",
+      hl: GOLD,
+      icon: Radar,
+      payload: ["Live agent calls", "[FINDINGS] back to brain", "Continuous feedback signal"],
+    },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag color={ACCENT} label="Architecture · A Viable System Model for the agentic enterprise" />
+        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
+          The whole organization is one <span style={{ color: `hsl(${ACCENT})` }}>nervous system.</span> Brain. Spine. Sensors.
+        </h2>
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
+          Mapped into a multi-dimensional property graph, LIZA functions as a VSM-compliant nervous system. Two technical wins fall out: dynamic sandboxing (security is graph relationships, not brittle if-statements) and progressive disclosure (agents query for context as the procedure demands, never stuffed).
+        </p>
+
+        <div className="grid grid-cols-3 gap-5 flex-1">
+          {layers.map((l, idx) => {
+            const Icon = l.icon;
+            return (
+              <div key={l.role} className="rounded-2xl p-6 flex flex-col relative" style={{ background: `hsl(${l.hl} / 0.05)`, border: `1px solid hsl(${l.hl} / 0.4)` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-mono uppercase tracking-[0.24em]" style={{ fontSize: 11, color: `hsl(${l.hl})` }}>Layer {idx + 1} · {l.role}</span>
+                  <Icon size={22} style={{ color: `hsl(${l.hl})` }} />
+                </div>
+                <p className="font-black mb-2" style={{ fontSize: 26, color: TEXT, letterSpacing: "-0.02em", lineHeight: 1.1 }}>{l.name}</p>
+                <p style={{ fontSize: 14.5, color: MUTED, lineHeight: 1.45 }}>{l.desc}</p>
+                <div className="mt-4 pt-3 border-t flex flex-col gap-1.5" style={{ borderColor: `hsl(${l.hl} / 0.25)` }}>
+                  {l.payload.map((p) => (
+                    <p key={p} className="font-mono" style={{ fontSize: 12, color: TEXT }}>· {p}</p>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 grid grid-cols-2 gap-4">
+          <div className="rounded-xl px-5 py-4 flex items-start gap-4" style={{ background: `hsl(${ACCENT} / 0.06)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+            <Lock size={20} style={{ color: `hsl(${ACCENT})`, flexShrink: 0, marginTop: 2 }} />
+            <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
+              <span className="font-black">Dynamic Sandboxing.</span> Before any call, AACE checks the graph: does this Role have authority over this Domain? Security is mathematically enforced. No jailbreakable if-statements.
+            </p>
+          </div>
+          <div className="rounded-xl px-5 py-4 flex items-start gap-4" style={{ background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <Filter size={20} style={{ color: `hsl(${GREEN})`, flexShrink: 0, marginTop: 2 }} />
+            <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
+              <span className="font-black">Progressive Disclosure.</span> Agents start minimal, pull more via read_resource() only when a Procedure requires it. Token cost down. Distractor context gone. Hallucinations down.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Footer text="Brain reasons. Spine compiles and gates. Sensors feed back. The graph is the substrate." />
+      <SlideBar from={ACCENT} to={GOLD} />
+    </div>
+  );
+}
+
+// ─── F_TOKENOMICS · CFO-grade FinOps · cost-per-decision ─────────────────────
+function FTokenomics() {
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag color={GOLD} label="Tokenomics by design · the CFO finally sees the bill" />
+        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
+          AI stops being an opaque operational expense. <span style={{ color: `hsl(${GOLD})` }}>Every decision has a price tag, an owner, and a budget.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
+          Modern CFOs have no way to tie a six-figure OpenAI bill to a single ROI line. Because every task is forced through AACE's typed Procedure gates, we attach compute cost to logic. Predictive FinOps is native, not bolted on.
+        </p>
+
+        {/* Top: three pillars */}
+        <div className="grid grid-cols-3 gap-5 mb-6">
+          {[
+            { icon: Gauge, k: "Design-time budgeting",
+              v: "Process Studio shows the projected token cost of a Playbook before deploy. The business knows the cost of a process upfront." },
+            { icon: Scale, k: "Distributed governance",
+              v: "CFO sets AI budgets top-down in the ontology. DOMAIN: SALES gets a quota. VP allocates to INITIATIVES. Runtime auto-enforces." },
+            { icon: Hash, k: "Chargeback per decision",
+              v: "Every [DECISION] is a discrete graph node, tied to a Playbook, run by a User. Compute cost attached. Line-item chargeback." },
+          ].map((c) => {
+            const Icon = c.icon;
+            return (
+              <div key={c.k} className="rounded-2xl p-6 flex flex-col" style={{ background: `hsl(${GOLD} / 0.05)`, border: `1px solid hsl(${GOLD} / 0.35)` }}>
+                <Icon size={22} style={{ color: `hsl(${GOLD})` }} />
+                <p className="font-mono uppercase tracking-[0.18em] mt-3 mb-2" style={{ fontSize: 11, color: `hsl(${GOLD})` }}>{c.k}</p>
+                <p style={{ fontSize: 15, color: TEXT, lineHeight: 1.45 }}>{c.v}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Bottom: dashboard mock */}
+        <div className="grid grid-cols-2 gap-5 flex-1 min-h-0">
+          <div className="rounded-2xl p-5 flex flex-col" style={{ background: `hsl(${ACCENT} / 0.04)`, border: `1px solid hsl(${ACCENT} / 0.3)` }}>
+            <p className="font-mono uppercase tracking-[0.2em] mb-3" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>AI budget allocation · Q4</p>
+            <div className="flex items-baseline gap-3 mb-4">
+              <span className="font-black" style={{ fontSize: 40, color: TEXT, letterSpacing: "-0.03em" }}>$10,000</span>
+              <span className="font-mono uppercase tracking-[0.18em]" style={{ fontSize: 11, color: MUTED }}>compute envelope</span>
+            </div>
+            <div className="flex flex-col gap-2.5">
+              {[
+                { d: "DOMAIN: Sales",       a: "$4,000", pct: 40, used: 28 },
+                { d: "DOMAIN: Operations",  a: "$3,000", pct: 30, used: 19 },
+                { d: "DOMAIN: Legal",       a: "$2,000", pct: 20, used: 11 },
+                { d: "DOMAIN: Marketing",   a: "$1,000", pct: 10, used: 6  },
+              ].map((b) => (
+                <div key={b.d}>
+                  <div className="flex justify-between mb-1" style={{ fontSize: 13, color: TEXT }}>
+                    <span className="font-mono">{b.d}</span>
+                    <span className="font-mono"><span style={{ color: MUTED }}>{b.used}% used · </span>{b.a}</span>
+                  </div>
+                  <div className="h-2 rounded-full overflow-hidden" style={{ background: `hsl(${ACCENT} / 0.12)` }}>
+                    <div style={{ width: `${b.used}%`, height: "100%", background: `hsl(${ACCENT})` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl p-5 flex flex-col" style={{ background: `hsl(${GREEN} / 0.04)`, border: `1px solid hsl(${GREEN} / 0.3)` }}>
+            <p className="font-mono uppercase tracking-[0.2em] mb-3" style={{ fontSize: 11, color: `hsl(${GREEN})` }}>Chargeback ledger · per-decision</p>
+            <div className="flex flex-col gap-2 font-mono" style={{ fontSize: 12, color: TEXT, lineHeight: 1.5 }}>
+              <div className="rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+                <div className="flex justify-between"><span style={{ color: `hsl(${GREEN})` }}>DECISION #A43F1</span><span className="font-black">$0.07</span></div>
+                <div style={{ color: MUTED }}>deal_qualification · 1.2M tokens · sales/q4-pipeline</div>
+              </div>
+              <div className="rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+                <div className="flex justify-between"><span style={{ color: `hsl(${GREEN})` }}>DECISION #A43F2</span><span className="font-black">$0.41</span></div>
+                <div style={{ color: MUTED }}>contract_review · 6.8M tokens · legal/master-template</div>
+              </div>
+              <div className="rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+                <div className="flex justify-between"><span style={{ color: `hsl(${GREEN})` }}>INITIATIVE: Q4 Launch</span><span className="font-black">$1,452.19</span></div>
+                <div style={{ color: MUTED }}>3,841 decisions · rolled-up · owner: VP Marketing</div>
+              </div>
+              <div className="rounded-lg px-3 py-2.5" style={{ background: `hsl(${GREEN} / 0.06)` }}>
+                <div className="flex justify-between"><span style={{ color: `hsl(${GREEN})` }}>TEAM: Sales · auto-qual</span><span className="font-black">$798.20</span></div>
+                <div style={{ color: MUTED }}>11,400 qualification decisions · Q4 to date</div>
+              </div>
+            </div>
+            <p className="mt-3 pt-3 border-t" style={{ fontSize: 13, color: MUTED, lineHeight: 1.4, borderColor: `hsl(${GREEN} / 0.25)` }}>
+              Platform unit economics: <span className="font-black" style={{ color: TEXT }}>$0.40</span> per governed decision · <span className="font-black" style={{ color: TEXT }}>95%</span> platform GM · <span className="font-black" style={{ color: TEXT }}>€23</span> displaced labour cost per decision.
+            </p>
+          </div>
+        </div>
+      </div>
+      <Footer text="From opaque OpEx to fully auditable, project-based capital allocation. AI spend becomes legible." />
+      <SlideBar from={GOLD} to={GREEN} />
+    </div>
+  );
+}
+
+// ─── F_AUTO_REPAIR · Metacognitive auto-repair (Ghost Protocol) ──────────────
+function FAutoRepair() {
+  const steps = [
+    { i: AlertTriangle, k: "Edge detects failure",        v: "Sensory layer clusters errors. \"Sales playbook now has a 15% error rate. CRM API changed.\"", hl: RED },
+    { i: GitBranch,     k: "[FINDINGS] enter the graph",  v: "Failure cluster becomes a typed node. Linked to the affected Playbook, Initiative, and Owner.", hl: GOLD },
+    { i: Sparkles,      k: "Ghost Protocol wakes",        v: "An agent loads its own system Playbook to analyze its own failing code. Reads the failure context.", hl: ACCENT },
+    { i: Wrench,        k: "Structural fix proposed",     v: "Generates a <repair_strategy> block to handle the new edge case. Writes it as a typed patch.", hl: ACCENT },
+    { i: GitMerge,      k: "Human approves in one click", v: "Pushed as a pull request to the owning manager. Single approval merges into the live Playbook.", hl: GREEN },
+    { i: CheckCircle2,  k: "Playbook self-heals",         v: "Error rate drops. New rule is now versioned, signed, auditable. The system has learned, not crashed.", hl: GREEN },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag color={ACCENT} label="Metacognitive auto-repair · Double-loop learning, in production" />
+        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 52, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
+          Writing this executable code by hand is hard. <span style={{ color: `hsl(${ACCENT})` }}>So the system writes it for itself.</span>
+        </h2>
+        <p className="mb-6" style={{ fontSize: 18, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
+          Terraform for infrastructure is static. Organization-as-Code is a living, autonomic system. When a Playbook starts failing, LIZA does not file a bug. It clusters the failure as a [FINDING], wakes the Ghost Protocol, drafts a structural fix, and ships a one-click pull request to the human owner.
+        </p>
+
+        <div className="grid grid-cols-3 gap-4 flex-1">
+          {steps.map((s, idx) => {
+            const Icon = s.i;
+            return (
+              <div key={s.k} className="rounded-2xl p-5 flex flex-col" style={{ background: `hsl(${s.hl} / 0.05)`, border: `1px solid hsl(${s.hl} / 0.35)` }}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="font-mono uppercase tracking-[0.22em]" style={{ fontSize: 10, color: `hsl(${s.hl})` }}>Step {idx + 1}</span>
+                  <Icon size={20} style={{ color: `hsl(${s.hl})` }} />
+                </div>
+                <p className="font-black mb-2" style={{ fontSize: 18, color: TEXT, lineHeight: 1.2, letterSpacing: "-0.015em" }}>{s.k}</p>
+                <p style={{ fontSize: 13.5, color: MUTED, lineHeight: 1.4 }}>{s.v}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 rounded-xl px-7 py-5 border-l-4 flex items-center gap-5" style={{ background: `hsl(${ACCENT} / 0.06)`, borderColor: `hsl(${ACCENT})` }}>
+          <GitMerge size={24} style={{ color: `hsl(${ACCENT})` }} />
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-black">The code fixes the code.</span> Every customer's failures train every customer's repair agent. The system gets smarter about its own technical debt without our engineers in the loop.
+          </p>
+        </div>
+      </div>
+      <Footer text="Ghost Protocol · the system reads its own failing logic and proposes a typed structural fix." />
+      <SlideBar from={ACCENT} to={GREEN} />
+    </div>
+  );
+}
+
+// ─── F_MOAT · Why we win ─────────────────────────────────────────────────────
+function FMoat() {
+  const pillars = [
+    {
+      icon: Ban,
+      headline: "LLM Agnostic",
+      subhead: "Zero Big Tech lock-in",
+      body: "We own the organizational logic and the Context Compiler. AACE routes parsing to a cheap local model and routes legal analysis to the frontier. Models swap. The org's code does not.",
+      hl: ACCENT,
+    },
+    {
+      icon: ShieldCheck,
+      headline: "Compliance as native infrastructure",
+      subhead: "EU AI Act ready on day one",
+      body: "Every action flows through the AACE graph. The result is a mathematically perfect, immutable audit trail for every agentic decision. Compliance is a query against the substrate, not a separate project.",
+      hl: GOLD,
+    },
+    {
+      icon: Coins,
+      headline: "Compound margins through metacognition",
+      subhead: "The OS handles its own technical debt",
+      body: "Because the system autonomously repairs its own operational logic, we will not need an army of forward-deployed engineers to support customer workflows. Margins compound as the install base grows.",
+      hl: GREEN,
+    },
+  ];
+  return (
+    <div className="w-full h-full relative" style={{ background: BG }}>
+      <SlideGrid />
+      <PageNumber />
+      <div className="absolute inset-0 px-24 pt-24 pb-20 flex flex-col">
+        <Tag color={GREEN} label="The moat · Why we win this market" />
+        <h2 className="font-black mt-4 mb-3" style={{ fontSize: 56, lineHeight: 1.05, color: TEXT, letterSpacing: "-0.035em", maxWidth: 1620 }}>
+          We are not building a better model. <span style={{ color: `hsl(${GREEN})` }}>We are building the substrate that commoditizes every model.</span>
+        </h2>
+        <p className="mb-7" style={{ fontSize: 19, color: MUTED, maxWidth: 1500, lineHeight: 1.4 }}>
+          Three structural moats compound the longer we run: vendor independence, compliance-as-substrate, and self-repair economics. None of them depend on a model release.
+        </p>
+
+        <div className="grid grid-cols-3 gap-5 flex-1">
+          {pillars.map((p) => {
+            const Icon = p.icon;
+            return (
+              <div key={p.headline} className="rounded-2xl p-6 flex flex-col" style={{ background: `hsl(${p.hl} / 0.06)`, border: `1px solid hsl(${p.hl} / 0.4)` }}>
+                <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4" style={{ background: `hsl(${p.hl} / 0.15)`, border: `1px solid hsl(${p.hl} / 0.4)` }}>
+                  <Icon size={26} style={{ color: `hsl(${p.hl})` }} />
+                </div>
+                <p className="font-mono uppercase tracking-[0.18em] mb-2" style={{ fontSize: 11, color: `hsl(${p.hl})` }}>{p.subhead}</p>
+                <p className="font-black mb-3" style={{ fontSize: 26, color: TEXT, lineHeight: 1.1, letterSpacing: "-0.02em" }}>{p.headline}</p>
+                <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.45 }}>{p.body}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 rounded-xl px-7 py-5 border-l-4 flex items-center gap-5" style={{ background: `hsl(${GREEN} / 0.07)`, borderColor: `hsl(${GREEN})` }}>
+          <Layers size={24} style={{ color: `hsl(${GREEN})` }} />
+          <p style={{ fontSize: 19, color: TEXT, lineHeight: 1.4 }}>
+            <span className="font-black">This is not a productivity app.</span> It is a new category of enterprise software: an instruction-set architecture for human-agent collaboration.
+          </p>
+        </div>
+      </div>
+      <Footer text="LLM-agnostic. Compliance-native. Self-repairing. Three structural moats, all independent of the next model release." />
+      <SlideBar from={GREEN} to={ACCENT} />
+    </div>
+  );
+}
+
 const RAW_SLIDES = [
   // ACT I — Arrowhead: workshop → production system (skip Ford)
   { id: "cover",            title: "Cover · Your workshop becomes a production system", component: <F01Cover /> },
