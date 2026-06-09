@@ -1635,7 +1635,7 @@ function FAtom() {
 // ═════════════════════════════════════════════════════════════════════════════
 
 // ─── F_THESIS · The infrastructure layer for the agentic workforce ───────────
-function FThesis() {
+export function FThesis() {
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
@@ -1682,7 +1682,7 @@ function FThesis() {
 }
 
 // ─── F_ORG_AS_CODE · Terraform for organizations (Legacy AI vs LIZA) ─────────
-function FOrgAsCode() {
+export function FOrgAsCode() {
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
@@ -1759,7 +1759,7 @@ function FOrgAsCode() {
 }
 
 // ─── F_VSM_ARCHITECTURE · Brain / Spine / Sensors ────────────────────────────
-function FVsmArchitecture() {
+export function FVsmArchitecture() {
   const layers = [
     {
       role: "Brain",
@@ -1842,7 +1842,7 @@ function FVsmArchitecture() {
 }
 
 // ─── F_TOKENOMICS · CFO-grade FinOps · cost-per-decision ─────────────────────
-function FTokenomics() {
+export function FTokenomics() {
   return (
     <div className="w-full h-full relative" style={{ background: BG }}>
       <SlideGrid />
@@ -1938,7 +1938,7 @@ function FTokenomics() {
 }
 
 // ─── F_AUTO_REPAIR · Metacognitive auto-repair (Ghost Protocol) ──────────────
-function FAutoRepair() {
+export function FAutoRepair() {
   const steps = [
     { i: AlertTriangle, k: "Edge detects failure",        v: "Sensory layer clusters errors. \"Sales playbook now has a 15% error rate. CRM API changed.\"", hl: RED },
     { i: GitBranch,     k: "[FINDINGS] enter the graph",  v: "Failure cluster becomes a typed node. Linked to the affected Playbook, Initiative, and Owner.", hl: GOLD },
@@ -1990,7 +1990,7 @@ function FAutoRepair() {
 }
 
 // ─── F_MOAT · Why we win ─────────────────────────────────────────────────────
-function FMoat() {
+export function FMoat() {
   const pillars = [
     {
       icon: Ban,

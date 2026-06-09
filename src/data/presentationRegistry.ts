@@ -6,6 +6,7 @@ import { ImpactGate } from "@/components/ImpactGate";
 import HoldingDeck from "@/pages/HoldingDeck";
 import { HoldingGate } from "@/components/HoldingGate";
 import FactoryDeck from "@/pages/FactoryDeck";
+import ThesisDeck from "@/pages/ThesisDeck";
 import SeedPitchDeck from "@/pages/SeedPitchDeck";
 import SeedPitchDeckSkeptic from "@/pages/SeedPitchDeckSkeptic";
 import SeedPitchDeckLens from "@/pages/SeedPitchDeckLens";
@@ -254,6 +255,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/FactoryDeck.tsx",
     description: "18-slide seed-round investor deck built on the production-system spine. \"AI is the machine. LIZA is the production system.\" Leads with the math ($0.40 per governed decision, 95% platform GM, €23 displaced labour cost). Toyota referenced once on slide 02; the rest of the deck demonstrates the factory floor without naming it. Absorbs the strongest material from /tech-dd and /impact and adds: 30-day install with metered Day 31 + post-Seed self-serve PLG resolution, AEC hero vertical (Nemetschek-scale partner) with the pattern-repeats grid, team slide grounded in 15+ years of data and AI architecture in production, and the €2M Seed ask with milestone-to-Series-A logic. AACE locked to v3.1.",
     component: FactoryDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "thesis",
+    title: "Thesis Deck (Organization as Code)",
+    path: "/thesis",
+    sourcePath: "src/pages/ThesisDeck.tsx",
+    description: "Standalone 6-slide technical thesis deck for purely technical investor rooms. The strongest architectural argument from /factory, distilled and unbundled from the production-system spine. Sequence: (1) Thesis · Infrastructure for the Agentic Workforce, (2) Organization as Code · Terraform for Organizations, (3) VSM Architecture · Brain · Spine · Sensors, (4) Tokenomics by Design · Cost-Per-Decision FinOps with design-time budgeting and per-decision chargeback, (5) Metacognitive Auto-Repair · Ghost Protocol, (6) The Moat · LLM-agnostic, compliance-native, self-repairing. Slide components shared with /factory (single source of truth).",
+    component: ThesisDeck,
     showInAdmin: true,
   },
   {
