@@ -35,3 +35,18 @@ export function AuthRoute({ children }: { children: React.ReactNode }) {
     </AuthProvider>
   );
 }
+
+function AdminContent({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+  if (loading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
+  if (!user) return <Navigate to="/auth" replace />;
+  return <>{children}</>;
+}
+
+export function AdminRoute({ children }: { children: React.ReactNode }) {
+  return (
+    <AuthProvider>
+      <AdminContent>{children}</AdminContent>
+    </AuthProvider>
+  );
+}
