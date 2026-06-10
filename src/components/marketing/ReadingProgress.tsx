@@ -8,6 +8,9 @@ import { useEffect, useRef } from "react";
 export function ReadingProgress() {
   const barRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px) and (prefers-reduced-motion: no-preference)");
+    if (!media.matches) return;
+
     let ticking = false;
     const update = () => {
       ticking = false;
@@ -33,7 +36,7 @@ export function ReadingProgress() {
   }, []);
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-[60] h-[3px] pointer-events-none"
+      className="fixed top-0 left-0 right-0 z-[60] h-[3px] pointer-events-none hidden md:block"
       aria-hidden="true"
     >
       <div
