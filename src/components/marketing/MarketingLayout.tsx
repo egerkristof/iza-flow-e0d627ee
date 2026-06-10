@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
-import { ReadingProgress } from "@/components/marketing/ReadingProgress";
 
 const NAV_ITEMS = [
   { label: "LIZA OS", href: "/" },
@@ -14,8 +13,6 @@ const NAV_ITEMS = [
 
 
 export function MarketingLayout({ children }: { children: React.ReactNode }) {
-  const [scrolled, setScrolled] = useState(false);
-  const scrolledRef = useRef(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const location = useLocation();
@@ -24,31 +21,16 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => setMounted(true), []);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const next = window.scrollY > 24;
-      if (next === scrolledRef.current) return;
-      scrolledRef.current = next;
-      setScrolled(next);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   useEffect(() => setMobileOpen(false), [location]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <ReadingProgress />
       {/* Nav */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+        className="fixed top-0 left-0 right-0 z-50"
         style={{
-          background: scrolled
-            ? "hsl(var(--background) / 0.98)"
-            : "hsl(var(--background) / 0.9)",
-          borderBottom: scrolled ? "1px solid hsl(var(--border))" : "1px solid transparent",
+          background: "hsl(var(--background) / 0.96)",
+          borderBottom: "1px solid hsl(var(--border))",
         }}
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
