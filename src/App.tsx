@@ -11,6 +11,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
+const AdminRoute = lazy(() => import("@/components/routing/AuthRoutes").then((module) => ({ default: module.AdminRoute })));
 const AuthRoute = lazy(() => import("@/components/routing/AuthRoutes").then((module) => ({ default: module.AuthRoute })));
 const ProtectedRoute = lazy(() => import("@/components/routing/AuthRoutes").then((module) => ({ default: module.ProtectedRoute })));
 const Index = lazy(() => import("./pages/Index"));
@@ -124,7 +125,7 @@ const App = () => (
             <Route path="/mock/layer" element={<MockLayerPage />} />
 
             {/* Standalone admin panel */}
-            <Route path="/admin/manage" element={<AdminPage />} />
+            <Route path="/admin/manage" element={<AdminRoute><AdminPage /></AdminRoute>} />
             <Route path="/admin/insights" element={<Navigate to="/admin/manage" replace />} />
 
             {/* Retired pages - redirect to home */}
