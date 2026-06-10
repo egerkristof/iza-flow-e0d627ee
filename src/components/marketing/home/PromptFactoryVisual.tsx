@@ -568,12 +568,6 @@ function InfrastructureCloser() {
 }
 
 export function PromptFactoryVisual() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start 70%", "end 30%"],
-  });
-  const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
   return (
     <section className="py-24 px-6 relative overflow-hidden" style={{ background: "hsl(var(--card))" }}>
       <div
@@ -597,22 +591,16 @@ export function PromptFactoryVisual() {
           </p>
         </div>
 
-        <div ref={trackRef} className="relative max-w-4xl mx-auto space-y-20 md:space-y-24">
+        <div className="relative max-w-4xl mx-auto space-y-20 md:space-y-24">
           {/* Scroll-driven connecting spine */}
           <div
             className="hidden md:block absolute left-5 top-0 bottom-0 w-px pointer-events-none"
-            style={{ background: "hsl(var(--border))" }}
+            style={{
+              background:
+                "linear-gradient(180deg, hsl(var(--muted-foreground)) 0%, hsl(var(--destructive)) 28%, hsl(var(--primary)) 60%, hsl(var(--brand-green)) 100%)",
+            }}
             aria-hidden
-          >
-            <motion.div
-              className="absolute top-0 left-0 w-full h-full origin-top"
-              style={{
-                scaleY: lineScale,
-                background:
-                  "linear-gradient(180deg, hsl(var(--muted-foreground)) 0%, hsl(var(--destructive)) 28%, hsl(var(--primary)) 60%, hsl(var(--brand-green)) 100%)",
-              }}
-            />
-          </div>
+          />
           <StageRow
             n="1"
             numberTone="neutral"
