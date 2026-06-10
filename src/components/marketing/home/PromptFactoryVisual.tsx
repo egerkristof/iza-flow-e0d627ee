@@ -1,7 +1,7 @@
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { BookOpen, Check, X, Bot, Database, Cpu, Shield, Coins, Users, FileCheck, ScanLine, Building2, Workflow, ArrowDown } from "lucide-react";
 import { SectionTag, GradientText } from "./shared";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 /**
  * Anatomy of a prompt at org scale.
@@ -83,38 +83,25 @@ const LIVE_PROMPTS = [
   { who: "HR Business Partner", text: "Summarise the engagement survey. Pull the three themes leadership must hear." },
 ];
 function PromptStream() {
-  const [idx, setIdx] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setIdx((i) => (i + 1) % LIVE_PROMPTS.length), 2200);
-    return () => clearInterval(id);
-  }, []);
-  const current = LIVE_PROMPTS[idx];
+  const current = LIVE_PROMPTS[0];
   return (
     <div className="space-y-3 max-w-xl">
       <div className="bg-background border border-border rounded-xl p-5 md:p-6 shadow-sm relative overflow-hidden min-h-[150px]">
         <div className="flex justify-between items-center mb-3">
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-green animate-pulse" />
-            Live . {String(idx + 1).padStart(2, "0")} / {String(LIVE_PROMPTS.length).padStart(2, "0")}
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-green" />
+            Live sample . 01 / {String(LIVE_PROMPTS.length).padStart(2, "0")}
           </span>
           <span className="text-[10px] font-mono text-muted-foreground/70">prompt stream</span>
         </div>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.35 }}
-          >
-            <p className="text-[10px] font-black uppercase tracking-wider text-muted-foreground mb-2">
-              {current.who}
-            </p>
-            <p className="text-base md:text-lg font-medium text-foreground leading-snug">
-              "{current.text}"
-            </p>
-          </motion.div>
-        </AnimatePresence>
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-wider text-muted-foreground mb-2">
+            {current.who}
+          </p>
+          <p className="text-base md:text-lg font-medium text-foreground leading-snug">
+            "{current.text}"
+          </p>
+        </div>
       </div>
       <p className="text-xs text-muted-foreground leading-snug">
         Multiply this by every team, every hour, every week. That is your real AI footprint.
