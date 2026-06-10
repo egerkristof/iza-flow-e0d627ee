@@ -150,7 +150,7 @@ function ChaosBlock() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.3, delay: 0.1 + i * 0.05 }}
-            className="bg-background/80 backdrop-blur p-3 rounded-md border text-xs font-black uppercase tracking-wider flex items-center gap-2"
+            className="bg-background p-3 rounded-md border text-xs font-black uppercase tracking-wider flex items-center gap-2"
             style={{ borderColor: "hsl(var(--destructive) / 0.3)", color: "hsl(var(--destructive))" }}
           >
             <X className="w-3.5 h-3.5" />
@@ -586,7 +586,7 @@ export function PromptFactoryVisual() {
     target: trackRef,
     offset: ["start 70%", "end 30%"],
   });
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
   return (
     <section className="py-24 px-6 relative overflow-hidden" style={{ background: "hsl(var(--card))" }}>
       <div
@@ -618,9 +618,9 @@ export function PromptFactoryVisual() {
             aria-hidden
           >
             <motion.div
-              className="absolute top-0 left-0 w-full origin-top"
+              className="absolute top-0 left-0 w-full h-full origin-top"
               style={{
-                height: lineHeight,
+                scaleY: lineScale,
                 background:
                   "linear-gradient(180deg, hsl(var(--muted-foreground)) 0%, hsl(var(--destructive)) 28%, hsl(var(--primary)) 60%, hsl(var(--brand-green)) 100%)",
               }}

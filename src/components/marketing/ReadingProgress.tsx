@@ -1,16 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
-/* Top reading progress bar. Lightweight, no deps. */
+/*
+ * Top reading progress bar.
+ * Writes the width directly to the DOM inside a rAF tick to avoid
+ * triggering a React re-render on every scroll event.
+ */
 export function ReadingProgress() {
-  const [pct, setPct] = useState(0);
+  const barRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const onScroll = () => {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const el = barRef.current;
+      if (!el) return;
       const doc = document.documentElement;
       const max = doc.scrollHeight - window.innerHeight;
-      if (max <= 0) return setPct(0);
-      setPct(Math.min(100, Math.max(0, (window.scrollY / max) * 100)));
+      const pct = max <= 0 ? 0 : Math.min(100, Math.max(0, (window.scrollY / max) * 100));
+      el.style.width = pct + "%";
     };
-    onScroll();
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
@@ -24,9 +37,10 @@ export function ReadingProgress() {
       aria-hidden="true"
     >
       <div
-        className="h-full transition-[width] duration-150 ease-out"
+        ref={barRef}
+        className="h-full"
         style={{
-          width: `${pct}%`,
+          width: "0%",
           background: "var(--gradient-brand-btn, hsl(var(--primary)))",
           boxShadow: "0 0 12px hsl(var(--primary) / 0.6)",
         }}

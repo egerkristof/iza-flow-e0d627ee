@@ -36,11 +36,11 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
       <ReadingProgress />
       {/* Nav */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
           background: scrolled
-            ? "hsl(var(--background) / 0.95)"
-            : "hsl(var(--background) / 0.6)",
+            ? "hsl(var(--background) / 0.98)"
+            : "hsl(var(--background) / 0.9)",
           borderBottom: scrolled ? "1px solid hsl(var(--border))" : "1px solid transparent",
         }}
       >
