@@ -1,84 +1,72 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { AppLayout } from "@/components/AppLayout";
 import { presentationRoutes } from "@/data/presentationRegistry";
-import Index from "./pages/Index";
-import AuthPage from "./pages/Auth";
-import WorkbooksPage from "./pages/Workbooks";
-import WorkbookDetailPage from "./pages/WorkbookDetail";
-import ContextManagementPage from "./pages/ContextManagement";
-import OversightPage from "./pages/Oversight";
-import MyKnowledgePage from "./pages/MyKnowledge";
-import AdminPromptsPage from "./pages/AdminPrompts";
-import ResearchTemplatesPage from "./pages/ResearchTemplates";
-import ResourceEditorPage from "./pages/ResourceEditor";
-import NotFound from "./pages/NotFound";
-import AdminTrials from "./pages/AdminTrials";
-import AdminPage from "./pages/Admin";
-import SecurityAuditPage from "./pages/marketing/SecurityAuditSolution";
 import HomePage from "./pages/marketing/Home";
-import ManifestoPage from "./pages/marketing/Manifesto";
-import UseCasesPage from "./pages/marketing/UseCases";
-import IndustriesPage from "./pages/marketing/Industries";
-import IndustryPharmaPage from "./pages/marketing/IndustryPharma";
-import IndustrySpacePage from "./pages/marketing/IndustrySpace";
-import IndustrySatcomPage from "./pages/marketing/IndustrySatcom";
-import IndustryAECPage from "./pages/marketing/IndustryAEC";
-import IndustrySpaceDefensePage from "./pages/marketing/IndustrySpaceDefense";
-import IndustryBankingPage from "./pages/marketing/IndustryBanking";
-import IndustryAutomotivePage from "./pages/marketing/IndustryAutomotive";
-import IndustryProfessionalServicesPage from "./pages/marketing/IndustryProfessionalServices";
-import IndustrySalesPage from "./pages/marketing/IndustrySales";
-import IndustryGTMPage from "./pages/marketing/IndustryGTM";
-import IndustryMarketingPage from "./pages/marketing/IndustryMarketing";
-import IndustryBizDevPage from "./pages/marketing/IndustryBizDev";
-import IndustryAccountMgmtPage from "./pages/marketing/IndustryAccountMgmt";
-import IndustryOnboardingPage from "./pages/marketing/IndustryOnboarding";
-import IndustryMeetingsPage from "./pages/marketing/IndustryMeetings";
-import IndustryStrategyOfficePage from "./pages/marketing/IndustryStrategyOffice";
-import ProductPage from "./pages/marketing/Product";
 import { ThemeProvider } from "next-themes";
 import { ScrollToTop } from "@/components/ScrollToTop";
-import BetaPage from "./pages/marketing/Beta";
-import PlatformSignupPage from "./pages/marketing/PlatformSignup";
-import DiagnosticPage from "./pages/marketing/Diagnostic";
-import PrivacyPage from "./pages/marketing/Privacy";
-import TermsPage from "./pages/marketing/Terms";
-import CalculatorPage from "./pages/marketing/Calculator";
-import AuditLandingPage from "./pages/marketing/AuditLanding";
-import OSPage from "./pages/marketing/OS";
-import ByFunctionPage from "./pages/marketing/ByFunction";
-import ForPersonaPage from "./pages/marketing/ForPersona";
-import TheBriefPage from "./pages/TheBrief";
-import FramedChatPage from "./pages/FramedChat";
-import ConditionsPage from "./pages/Conditions";
-import SanctionedPage from "./pages/Sanctioned";
-import PlaybookBuilderPage from "./pages/PlaybookBuilder";
-import MockRibbonPage from "./pages/marketing/MockRibbon";
-import MockLayerPage from "./pages/marketing/MockLayer";
 
 const queryClient = new QueryClient();
 
-function ProtectedRoute({ children, blockedRoles }: { children: React.ReactNode; blockedRoles?: string[] }) {
-  const { user, loading, activeRole } = useAuth();
-  if (loading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
-  if (!user) return <Navigate to="/auth" replace />;
-  if (blockedRoles?.includes(activeRole)) return <Navigate to="/app" replace />;
-  return <AppLayout>{children}</AppLayout>;
-}
+const AdminRoute = lazy(() => import("@/components/routing/AuthRoutes").then((module) => ({ default: module.AdminRoute })));
+const AuthRoute = lazy(() => import("@/components/routing/AuthRoutes").then((module) => ({ default: module.AuthRoute })));
+const ProtectedRoute = lazy(() => import("@/components/routing/AuthRoutes").then((module) => ({ default: module.ProtectedRoute })));
+const Index = lazy(() => import("./pages/Index"));
+const AuthPage = lazy(() => import("./pages/Auth"));
+const WorkbooksPage = lazy(() => import("./pages/Workbooks"));
+const WorkbookDetailPage = lazy(() => import("./pages/WorkbookDetail"));
+const ContextManagementPage = lazy(() => import("./pages/ContextManagement"));
+const OversightPage = lazy(() => import("./pages/Oversight"));
+const MyKnowledgePage = lazy(() => import("./pages/MyKnowledge"));
+const AdminPromptsPage = lazy(() => import("./pages/AdminPrompts"));
+const ResearchTemplatesPage = lazy(() => import("./pages/ResearchTemplates"));
+const ResourceEditorPage = lazy(() => import("./pages/ResourceEditor"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AdminTrials = lazy(() => import("./pages/AdminTrials"));
+const AdminPage = lazy(() => import("./pages/Admin"));
+const SecurityAuditPage = lazy(() => import("./pages/marketing/SecurityAuditSolution"));
+const ManifestoPage = lazy(() => import("./pages/marketing/Manifesto"));
+const UseCasesPage = lazy(() => import("./pages/marketing/UseCases"));
+const IndustriesPage = lazy(() => import("./pages/marketing/Industries"));
+const IndustryPharmaPage = lazy(() => import("./pages/marketing/IndustryPharma"));
+const IndustrySpacePage = lazy(() => import("./pages/marketing/IndustrySpace"));
+const IndustrySatcomPage = lazy(() => import("./pages/marketing/IndustrySatcom"));
+const IndustryAECPage = lazy(() => import("./pages/marketing/IndustryAEC"));
+const IndustrySpaceDefensePage = lazy(() => import("./pages/marketing/IndustrySpaceDefense"));
+const IndustryBankingPage = lazy(() => import("./pages/marketing/IndustryBanking"));
+const IndustryAutomotivePage = lazy(() => import("./pages/marketing/IndustryAutomotive"));
+const IndustryProfessionalServicesPage = lazy(() => import("./pages/marketing/IndustryProfessionalServices"));
+const IndustrySalesPage = lazy(() => import("./pages/marketing/IndustrySales"));
+const IndustryGTMPage = lazy(() => import("./pages/marketing/IndustryGTM"));
+const IndustryMarketingPage = lazy(() => import("./pages/marketing/IndustryMarketing"));
+const IndustryBizDevPage = lazy(() => import("./pages/marketing/IndustryBizDev"));
+const IndustryAccountMgmtPage = lazy(() => import("./pages/marketing/IndustryAccountMgmt"));
+const IndustryOnboardingPage = lazy(() => import("./pages/marketing/IndustryOnboarding"));
+const IndustryMeetingsPage = lazy(() => import("./pages/marketing/IndustryMeetings"));
+const IndustryStrategyOfficePage = lazy(() => import("./pages/marketing/IndustryStrategyOffice"));
+const BetaPage = lazy(() => import("./pages/marketing/Beta"));
+const PlatformSignupPage = lazy(() => import("./pages/marketing/PlatformSignup"));
+const DiagnosticPage = lazy(() => import("./pages/marketing/Diagnostic"));
+const PrivacyPage = lazy(() => import("./pages/marketing/Privacy"));
+const TermsPage = lazy(() => import("./pages/marketing/Terms"));
+const CalculatorPage = lazy(() => import("./pages/marketing/Calculator"));
+const AuditLandingPage = lazy(() => import("./pages/marketing/AuditLanding"));
+const OSPage = lazy(() => import("./pages/marketing/OS"));
+const ByFunctionPage = lazy(() => import("./pages/marketing/ByFunction"));
+const ForPersonaPage = lazy(() => import("./pages/marketing/ForPersona"));
+const TheBriefPage = lazy(() => import("./pages/TheBrief"));
+const FramedChatPage = lazy(() => import("./pages/FramedChat"));
+const ConditionsPage = lazy(() => import("./pages/Conditions"));
+const SanctionedPage = lazy(() => import("./pages/Sanctioned"));
+const PlaybookBuilderPage = lazy(() => import("./pages/PlaybookBuilder"));
+const MockRibbonPage = lazy(() => import("./pages/marketing/MockRibbon"));
+const MockLayerPage = lazy(() => import("./pages/marketing/MockLayer"));
 
-function AuthRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading, roles } = useAuth();
-  if (loading) return null;
-  if (user) {
-    const isArchitect = roles.includes("architect");
-    return <Navigate to={isArchitect ? "/admin/manage" : "/app"} replace />;
-  }
-  return <>{children}</>;
+function RouteLoader() {
+  return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
 }
 
 const App = () => (
@@ -89,7 +77,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
-        <AuthProvider>
+          <Suspense fallback={<RouteLoader />}>
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
 
@@ -137,7 +125,7 @@ const App = () => (
             <Route path="/mock/layer" element={<MockLayerPage />} />
 
             {/* Standalone admin panel */}
-            <Route path="/admin/manage" element={<AdminPage />} />
+            <Route path="/admin/manage" element={<AdminRoute><AdminPage /></AdminRoute>} />
             <Route path="/admin/insights" element={<Navigate to="/admin/manage" replace />} />
 
             {/* Retired pages - redirect to home */}
@@ -168,7 +156,17 @@ const App = () => (
             {/* Decks */}
             {presentationRoutes.map((presentation) => {
               const Component = presentation.component;
-              return <Route key={presentation.id} path={presentation.path} element={<Component />} />;
+              return (
+                <Route
+                  key={presentation.id}
+                  path={presentation.path}
+                  element={
+                    <Suspense fallback={<RouteLoader />}>
+                      <Component />
+                    </Suspense>
+                  }
+                />
+              );
             })}
 
             {/* App */}
@@ -184,7 +182,7 @@ const App = () => (
             <Route path="/admin/trials" element={<ProtectedRoute blockedRoles={["operator", "manager"]}><AdminTrials /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </AuthProvider>
+          </Suspense>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -105,11 +105,7 @@ export function HeroSection() {
       </div>
 
       {/* ── Scroll hint ── */}
-      <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      >
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
         <div
           className="w-5 h-8 rounded-full border-2 flex justify-center pt-1.5"
           style={{ borderColor: "hsl(var(--muted-foreground) / 0.3)" }}
@@ -119,7 +115,7 @@ export function HeroSection() {
             style={{ background: "hsl(var(--muted-foreground) / 0.5)" }}
           />
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
