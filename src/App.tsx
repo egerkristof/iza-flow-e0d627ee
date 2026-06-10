@@ -95,6 +95,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <AuthProvider>
+          <Suspense fallback={<RouteLoader />}>
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
 
@@ -199,6 +200,7 @@ const App = () => (
             <Route path="/admin/trials" element={<ProtectedRoute blockedRoles={["operator", "manager"]}><AdminTrials /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
