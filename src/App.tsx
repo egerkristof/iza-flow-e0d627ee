@@ -5,7 +5,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { AppLayout } from "@/components/AppLayout";
 import { presentationRoutes } from "@/data/presentationRegistry";
 import HomePage from "./pages/marketing/Home";
 import { ThemeProvider } from "next-themes";
@@ -13,6 +12,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
+const AppLayout = lazy(() => import("@/components/AppLayout").then((module) => ({ default: module.AppLayout })));
 const Index = lazy(() => import("./pages/Index"));
 const AuthPage = lazy(() => import("./pages/Auth"));
 const WorkbooksPage = lazy(() => import("./pages/Workbooks"));
