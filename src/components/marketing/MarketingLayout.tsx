@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -15,6 +15,7 @@ const NAV_ITEMS = [
 
 export function MarketingLayout({ children }: { children: React.ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
+  const scrolledRef = useRef(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const location = useLocation();
@@ -24,7 +25,13 @@ export function MarketingLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      const next = window.scrollY > 24;
+      if (next === scrolledRef.current) return;
+      scrolledRef.current = next;
+      setScrolled(next);
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
