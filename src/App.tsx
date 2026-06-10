@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -62,6 +63,10 @@ import MockRibbonPage from "./pages/marketing/MockRibbon";
 import MockLayerPage from "./pages/marketing/MockLayer";
 
 const queryClient = new QueryClient();
+
+function RouteLoader() {
+  return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
+}
 
 function ProtectedRoute({ children, blockedRoles }: { children: React.ReactNode; blockedRoles?: string[] }) {
   const { user, loading, activeRole } = useAuth();
@@ -168,7 +173,17 @@ const App = () => (
             {/* Decks */}
             {presentationRoutes.map((presentation) => {
               const Component = presentation.component;
-              return <Route key={presentation.id} path={presentation.path} element={<Component />} />;
+              return (
+                <Route
+                  key={presentation.id}
+                  path={presentation.path}
+                  element={
+                    <Suspense fallback={<RouteLoader />}>
+                      <Component />
+                    </Suspense>
+                  }
+                />
+              );
             })}
 
             {/* App */}
