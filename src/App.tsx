@@ -4,7 +4,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { presentationRoutes } from "@/data/presentationRegistry";
 import HomePage from "./pages/marketing/Home";
 import { ThemeProvider } from "next-themes";
@@ -12,7 +11,8 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
-const AppLayout = lazy(() => import("@/components/AppLayout").then((module) => ({ default: module.AppLayout })));
+const AuthRoute = lazy(() => import("@/components/routing/AuthRoutes").then((module) => ({ default: module.AuthRoute })));
+const ProtectedRoute = lazy(() => import("@/components/routing/AuthRoutes").then((module) => ({ default: module.ProtectedRoute })));
 const Index = lazy(() => import("./pages/Index"));
 const AuthPage = lazy(() => import("./pages/Auth"));
 const WorkbooksPage = lazy(() => import("./pages/Workbooks"));
@@ -68,24 +68,6 @@ function RouteLoader() {
   return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
 }
 
-function ProtectedRoute({ children, blockedRoles }: { children: React.ReactNode; blockedRoles?: string[] }) {
-  const { user, loading, activeRole } = useAuth();
-  if (loading) return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
-  if (!user) return <Navigate to="/auth" replace />;
-  if (blockedRoles?.includes(activeRole)) return <Navigate to="/app" replace />;
-  return <AppLayout>{children}</AppLayout>;
-}
-
-function AuthRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading, roles } = useAuth();
-  if (loading) return null;
-  if (user) {
-    const isArchitect = roles.includes("architect");
-    return <Navigate to={isArchitect ? "/admin/manage" : "/app"} replace />;
-  }
-  return <>{children}</>;
-}
-
 const App = () => (
   <ThemeProvider attribute="class" defaultTheme="light">
   <QueryClientProvider client={queryClient}>
@@ -94,7 +76,6 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
-        <AuthProvider>
           <Suspense fallback={<RouteLoader />}>
           <Routes>
             <Route path="/auth" element={<AuthRoute><AuthPage /></AuthRoute>} />
@@ -201,7 +182,6 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           </Suspense>
-        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
