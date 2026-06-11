@@ -1,0 +1,336 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1700" font-family="Inter, system-ui, sans-serif">
+  <defs>
+    <!-- technical-illustration tokens -->
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e8eaed" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#cbd5e1" stroke-width="1"/>
+    </pattern>
+    <pattern id="hatchRed" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#b91c1c" stroke-width="1" opacity="0.4"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1700" fill="#fafafa"/>
+
+  <!-- ============================================================ -->
+  <!-- FRAME 1 — DESKTOP CROSS-SECTION (current state)               -->
+  <!-- ============================================================ -->
+  <g transform="translate(0,0)">
+    <rect x="40" y="40" width="1520" height="500" fill="#ffffff" stroke="#e5e7eb"/>
+    <rect x="40" y="40" width="1520" height="500" fill="url(#grid)" opacity="0.6"/>
+
+    <text x="70" y="78" font-size="11" letter-spacing="3" fill="#64748b" font-weight="700">FRAME 01 — DESKTOP, CURRENT STATE</text>
+    <text x="70" y="106" font-size="20" font-weight="700" fill="#0a0a0a">Your AI factory floor today</text>
+    <text x="70" y="128" font-size="13" fill="#64748b">Read left to right. Input enters. Output ships. Four stations on one line.</text>
+
+    <!-- Conveyor belt baseline -->
+    <g transform="translate(0,310)">
+      <line x1="100" y1="0" x2="1500" y2="0" stroke="#475569" stroke-width="2"/>
+      <line x1="100" y1="14" x2="1500" y2="14" stroke="#475569" stroke-width="2"/>
+      <rect x="100" y="0" width="1400" height="14" fill="url(#hatch)"/>
+      <!-- belt direction arrow -->
+      <line x1="1480" y1="-30" x2="1520" y2="-30" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <text x="1450" y="-38" font-size="10" fill="#64748b" text-anchor="end">flow</text>
+      <!-- input/output labels -->
+      <text x="100" y="42" font-size="10" letter-spacing="2" fill="#64748b">INPUT</text>
+      <text x="1500" y="42" text-anchor="end" font-size="10" letter-spacing="2" fill="#64748b">OUTPUT</text>
+    </g>
+
+    <!-- STATION 1: STANDARD — spec sheet on the wall, present -->
+    <g transform="translate(180,160)">
+      <!-- spec card -->
+      <rect x="0" y="0" width="120" height="140" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+      <line x1="10" y1="20" x2="110" y2="20" stroke="#0f172a"/>
+      <line x1="10" y1="36" x2="100" y2="36" stroke="#94a3b8"/>
+      <line x1="10" y1="50" x2="110" y2="50" stroke="#94a3b8"/>
+      <line x1="10" y1="64" x2="80"  y2="64" stroke="#94a3b8"/>
+      <line x1="10" y1="78" x2="105" y2="78" stroke="#94a3b8"/>
+      <text x="10" y="14" font-size="9" letter-spacing="1.5" fill="#0f172a" font-weight="700">SPEC</text>
+      <!-- present stamp -->
+      <g transform="translate(64,100)">
+        <circle r="22" fill="#0f172a"/>
+        <path d="M-9,-1 L-3,5 L9,-7" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <!-- dropline to belt -->
+      <line x1="60" y1="140" x2="60" y2="150" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <!-- label -->
+      <text x="60" y="190" text-anchor="middle" font-size="11" letter-spacing="2" fill="#0f172a" font-weight="700">01 STANDARD</text>
+      <text x="60" y="206" text-anchor="middle" font-size="11" fill="#64748b">Written. Used.</text>
+    </g>
+
+    <!-- STATION 2: LINE — templating jig over belt, partial -->
+    <g transform="translate(520,160)">
+      <rect x="0" y="40" width="120" height="100" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+      <text x="10" y="58" font-size="9" letter-spacing="1.5" fill="#0f172a" font-weight="700">TEMPLATE</text>
+      <!-- three slots, two filled, one drifted -->
+      <rect x="14" y="70" width="92" height="10" fill="#0f172a"/>
+      <rect x="14" y="86" width="92" height="10" fill="#0f172a"/>
+      <rect x="14" y="102" width="92" height="10" fill="url(#hatch)" stroke="#94a3b8" stroke-dasharray="2 2"/>
+      <!-- partial stamp -->
+      <g transform="translate(64,20)">
+        <rect x="-22" y="-12" width="44" height="24" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+        <text y="4" text-anchor="middle" font-size="10" font-weight="700" fill="#0f172a">PARTIAL</text>
+      </g>
+      <line x1="60" y1="140" x2="60" y2="150" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="60" y="190" text-anchor="middle" font-size="11" letter-spacing="2" fill="#0f172a" font-weight="700">02 LINE</text>
+      <text x="60" y="206" text-anchor="middle" font-size="11" fill="#64748b">Depends on person.</text>
+    </g>
+
+    <!-- STATION 3: QA — inline scanner over belt, MISSING (the weakest part, accent) -->
+    <g transform="translate(860,160)">
+      <!-- scanner arch, drawn as outline-only (ghost) -->
+      <path d="M0,140 L0,60 Q0,40 20,40 L100,40 Q120,40 120,60 L120,140"
+            fill="none" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <!-- crack/hole through it -->
+      <text x="60" y="100" text-anchor="middle" font-size="40" font-weight="800" fill="#b91c1c" opacity="0.85">·  ·  ·</text>
+      <text x="60" y="124" text-anchor="middle" font-size="10" letter-spacing="1" fill="#b91c1c" font-weight="700">NO SCANNER</text>
+      <!-- accent ring (the weakest part) -->
+      <rect x="-12" y="-12" width="144" height="170" fill="none" stroke="#b91c1c" stroke-width="1.5"/>
+      <text x="-12" y="-18" font-size="9" letter-spacing="2" fill="#b91c1c" font-weight="700">WEAKEST PART</text>
+      <line x1="60" y1="158" x2="60" y2="150" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="60" y="190" text-anchor="middle" font-size="11" letter-spacing="2" fill="#0f172a" font-weight="700">03 QA</text>
+      <text x="60" y="206" text-anchor="middle" font-size="11" fill="#64748b">Whoever notices.</text>
+    </g>
+
+    <!-- STATION 4: METER — gauge at end of belt, unknown -->
+    <g transform="translate(1200,160)">
+      <rect x="0" y="40" width="120" height="100" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+      <text x="10" y="58" font-size="9" letter-spacing="1.5" fill="#0f172a" font-weight="700">METER</text>
+      <!-- gauge -->
+      <path d="M20,120 A40,40 0 0 1 100,120" fill="none" stroke="#cbd5e1" stroke-width="6"/>
+      <line x1="60" y1="120" x2="60" y2="90" stroke="#94a3b8" stroke-width="2"/>
+      <circle cx="60" cy="120" r="3" fill="#94a3b8"/>
+      <text x="60" y="108" text-anchor="middle" font-size="18" font-weight="800" fill="#94a3b8">?</text>
+      <line x1="60" y1="140" x2="60" y2="150" stroke="#475569" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="60" y="190" text-anchor="middle" font-size="11" letter-spacing="2" fill="#0f172a" font-weight="700">04 METER</text>
+      <text x="60" y="206" text-anchor="middle" font-size="11" fill="#64748b">Unknown.</text>
+    </g>
+
+    <!-- Verdict line (integrated, no black bar) -->
+    <g transform="translate(70,490)">
+      <text font-size="13" fill="#0f172a">
+        <tspan font-weight="700">Workshop.</tspan>
+        <tspan fill="#64748b"> Weakest station:</tspan>
+        <tspan fill="#b91c1c" font-weight="700"> QA.</tspan>
+        <tspan fill="#64748b"> Install one automated check in 30 days.</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- FRAME 2 — VERDICT SHIFT (current state ▸ Monday in 6 months) -->
+  <!-- ============================================================ -->
+  <g transform="translate(0,580)">
+    <rect x="40" y="0" width="1520" height="560" fill="#ffffff" stroke="#e5e7eb"/>
+    <rect x="40" y="0" width="1520" height="560" fill="url(#grid)" opacity="0.6"/>
+
+    <text x="70" y="38" font-size="11" letter-spacing="3" fill="#64748b" font-weight="700">FRAME 02 — VERDICT SHIFT (THE SCREENSHOT MOMENT)</text>
+    <text x="70" y="66" font-size="20" font-weight="700" fill="#0a0a0a">Today, and a Monday in six months at current trajectory</text>
+    <text x="70" y="88" font-size="13" fill="#64748b">Same scene. Lighting changes. The bleed is the lesson.</text>
+
+    <!-- LEFT PANE: today -->
+    <g transform="translate(70,120)">
+      <rect x="0" y="0" width="700" height="380" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="14" y="22" font-size="10" letter-spacing="2" fill="#64748b" font-weight="700">TODAY</text>
+
+      <!-- mini cross-section -->
+      <line x1="40" y1="280" x2="660" y2="280" stroke="#475569" stroke-width="2"/>
+      <line x1="40" y1="288" x2="660" y2="288" stroke="#475569" stroke-width="2"/>
+      <rect x="40" y="280" width="620" height="8" fill="url(#hatch)"/>
+
+      <!-- Std present -->
+      <g transform="translate(80,180)">
+        <rect width="80" height="80" fill="#ffffff" stroke="#0f172a"/>
+        <circle cx="40" cy="40" r="14" fill="#0f172a"/>
+        <path d="M34,40 L38,44 L46,36" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="40" y="100" text-anchor="middle" font-size="9" letter-spacing="1" fill="#0f172a" font-weight="700">STD</text>
+      </g>
+      <!-- Line partial -->
+      <g transform="translate(230,180)">
+        <rect width="80" height="80" fill="#ffffff" stroke="#0f172a"/>
+        <rect x="10" y="14" width="60" height="8" fill="#0f172a"/>
+        <rect x="10" y="28" width="60" height="8" fill="#0f172a"/>
+        <rect x="10" y="42" width="60" height="8" fill="url(#hatch)"/>
+        <text x="40" y="100" text-anchor="middle" font-size="9" letter-spacing="1" fill="#0f172a" font-weight="700">LINE</text>
+      </g>
+      <!-- QA missing -->
+      <g transform="translate(380,180)">
+        <path d="M0,80 L0,18 Q0,0 20,0 L60,0 Q80,0 80,18 L80,80" fill="none" stroke="#b91c1c" stroke-dasharray="4 3"/>
+        <text x="40" y="50" text-anchor="middle" font-size="22" font-weight="800" fill="#b91c1c">·  ·  ·</text>
+        <text x="40" y="100" text-anchor="middle" font-size="9" letter-spacing="1" fill="#b91c1c" font-weight="700">QA</text>
+      </g>
+      <!-- Meter unknown -->
+      <g transform="translate(530,180)">
+        <rect width="80" height="80" fill="#ffffff" stroke="#0f172a"/>
+        <path d="M14,68 A26,26 0 0 1 66,68" fill="none" stroke="#cbd5e1" stroke-width="5"/>
+        <text x="40" y="60" text-anchor="middle" font-size="16" font-weight="800" fill="#94a3b8">?</text>
+        <text x="40" y="100" text-anchor="middle" font-size="9" letter-spacing="1" fill="#0f172a" font-weight="700">METER</text>
+      </g>
+
+      <text x="14" y="350" font-size="11" fill="#0f172a"><tspan font-weight="700">3 of 12 stations missing.</tspan><tspan fill="#64748b"> Volume = low. Bleed = invisible.</tspan></text>
+    </g>
+
+    <!-- ARROW between panes -->
+    <g transform="translate(790,310)">
+      <line x1="0" y1="0" x2="48" y2="0" stroke="#0f172a" stroke-width="2" marker-end="url(#arrow)"/>
+      <text x="24" y="-12" text-anchor="middle" font-size="9" letter-spacing="2" fill="#64748b">6 MONTHS</text>
+      <text x="24" y="22" text-anchor="middle" font-size="9" letter-spacing="2" fill="#64748b">NO CHANGE</text>
+    </g>
+
+    <!-- RIGHT PANE: Monday in 6 months -->
+    <g transform="translate(860,120)">
+      <rect x="0" y="0" width="700" height="380" fill="#fff5f5" stroke="#fecaca"/>
+      <text x="14" y="22" font-size="10" letter-spacing="2" fill="#b91c1c" font-weight="700">MONDAY IN 6 MONTHS</text>
+
+      <line x1="40" y1="280" x2="660" y2="280" stroke="#475569" stroke-width="2"/>
+      <line x1="40" y1="288" x2="660" y2="288" stroke="#475569" stroke-width="2"/>
+      <rect x="40" y="280" width="620" height="8" fill="url(#hatch)"/>
+
+      <!-- Std present (still ok, but dimmed by surrounding chaos) -->
+      <g transform="translate(80,180)">
+        <rect width="80" height="80" fill="#ffffff" stroke="#0f172a"/>
+        <circle cx="40" cy="40" r="14" fill="#0f172a"/>
+        <path d="M34,40 L38,44 L46,36" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="40" y="100" text-anchor="middle" font-size="9" letter-spacing="1" fill="#0f172a" font-weight="700">STD</text>
+      </g>
+      <!-- Line cracked -->
+      <g transform="translate(230,180)">
+        <rect width="80" height="80" fill="#ffffff" stroke="#b91c1c"/>
+        <rect x="10" y="14" width="60" height="8" fill="url(#hatchRed)"/>
+        <rect x="10" y="28" width="60" height="8" fill="url(#hatchRed)"/>
+        <rect x="10" y="42" width="60" height="8" fill="url(#hatchRed)"/>
+        <line x1="0" y1="0" x2="80" y2="80" stroke="#b91c1c" stroke-width="0.8" opacity="0.5"/>
+        <text x="40" y="100" text-anchor="middle" font-size="9" letter-spacing="1" fill="#b91c1c" font-weight="700">LINE</text>
+      </g>
+      <!-- QA missing, now leaking -->
+      <g transform="translate(380,180)">
+        <path d="M0,80 L0,18 Q0,0 20,0 L60,0 Q80,0 80,18 L80,80" fill="none" stroke="#b91c1c" stroke-dasharray="4 3"/>
+        <!-- leak drops -->
+        <circle cx="20" cy="92" r="3" fill="#b91c1c"/>
+        <circle cx="40" cy="98" r="4" fill="#b91c1c"/>
+        <circle cx="60" cy="92" r="3" fill="#b91c1c"/>
+        <text x="40" y="50" text-anchor="middle" font-size="22" font-weight="800" fill="#b91c1c">·  ·  ·</text>
+        <text x="40" y="120" text-anchor="middle" font-size="9" letter-spacing="1" fill="#b91c1c" font-weight="700">QA · LEAKING</text>
+      </g>
+      <!-- Meter still ? -->
+      <g transform="translate(530,180)">
+        <rect width="80" height="80" fill="#ffffff" stroke="#b91c1c"/>
+        <path d="M14,68 A26,26 0 0 1 66,68" fill="none" stroke="#fecaca" stroke-width="5"/>
+        <text x="40" y="60" text-anchor="middle" font-size="16" font-weight="800" fill="#b91c1c">?</text>
+        <text x="40" y="100" text-anchor="middle" font-size="9" letter-spacing="1" fill="#b91c1c" font-weight="700">METER · DARK</text>
+      </g>
+
+      <text x="14" y="350" font-size="11" fill="#0f172a">
+        <tspan font-weight="700">23 stations live.</tspan>
+        <tspan fill="#64748b"> CFO asks ROI. You have no defensible number.</tspan>
+      </text>
+    </g>
+
+    <!-- caption strip -->
+    <g transform="translate(70,520)">
+      <text font-size="12" fill="#0f172a">
+        <tspan font-weight="700">Same factory.</tspan>
+        <tspan fill="#64748b"> Six months of volume. The same missing parts now bleed in public.</tspan>
+      </text>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- FRAME 3 — MOBILE STACK (375px-equivalent)                     -->
+  <!-- ============================================================ -->
+  <g transform="translate(0,1180)">
+    <rect x="40" y="0" width="1520" height="500" fill="#ffffff" stroke="#e5e7eb"/>
+    <rect x="40" y="0" width="1520" height="500" fill="url(#grid)" opacity="0.6"/>
+
+    <text x="70" y="38" font-size="11" letter-spacing="3" fill="#64748b" font-weight="700">FRAME 03 — MOBILE STACK (375PX, VERTICAL LINE TOP-DOWN)</text>
+    <text x="70" y="66" font-size="20" font-weight="700" fill="#0a0a0a">Same factory, read top to bottom</text>
+    <text x="70" y="88" font-size="13" fill="#64748b">German engineers read schematics top-down too. Same metaphor. No information lost.</text>
+
+    <!-- Mobile device frame, centered -->
+    <g transform="translate(620,110)">
+      <rect x="0" y="0" width="375" height="370" rx="20" fill="#0a0a0a"/>
+      <rect x="8" y="8" width="359" height="354" rx="14" fill="#ffffff"/>
+
+      <!-- vertical belt -->
+      <g transform="translate(180,40)">
+        <line x1="0" y1="0" x2="0" y2="290" stroke="#475569" stroke-width="2"/>
+        <line x1="14" y1="0" x2="14" y2="290" stroke="#475569" stroke-width="2"/>
+        <rect x="0" y="0" width="14" height="290" fill="url(#hatch)"/>
+        <line x1="7" y1="0" x2="7" y2="-14" stroke="#64748b" stroke-width="1" marker-end="url(#arrow)"/>
+      </g>
+
+      <!-- Station 1 -->
+      <g transform="translate(30,40)">
+        <rect width="120" height="58" fill="#ffffff" stroke="#0f172a"/>
+        <text x="8" y="16" font-size="9" letter-spacing="1.5" fill="#0f172a" font-weight="700">01 STANDARD</text>
+        <text x="8" y="34" font-size="10" fill="#64748b">Written. Used.</text>
+        <circle cx="100" cy="40" r="9" fill="#0f172a"/>
+        <path d="M95,40 L99,44 L106,36" stroke="#ffffff" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- Station 2 -->
+      <g transform="translate(220,108)">
+        <rect width="120" height="58" fill="#ffffff" stroke="#0f172a"/>
+        <text x="8" y="16" font-size="9" letter-spacing="1.5" fill="#0f172a" font-weight="700">02 LINE</text>
+        <text x="8" y="34" font-size="10" fill="#64748b">Partial.</text>
+        <rect x="80" y="32" width="30" height="6" fill="#0f172a"/>
+        <rect x="80" y="40" width="30" height="6" fill="#0f172a"/>
+        <rect x="80" y="48" width="30" height="6" fill="url(#hatch)"/>
+      </g>
+
+      <!-- Station 3 - QA missing, accent -->
+      <g transform="translate(30,176)">
+        <rect x="-4" y="-4" width="128" height="66" fill="none" stroke="#b91c1c" stroke-width="1.5"/>
+        <rect width="120" height="58" fill="#fff5f5" stroke="#b91c1c"/>
+        <text x="8" y="16" font-size="9" letter-spacing="1.5" fill="#b91c1c" font-weight="700">03 QA</text>
+        <text x="8" y="34" font-size="10" fill="#b91c1c" font-weight="700">Whoever notices.</text>
+        <text x="8" y="50" font-size="9" fill="#b91c1c">WEAKEST</text>
+        <text x="104" y="42" text-anchor="middle" font-size="24" font-weight="800" fill="#b91c1c">·</text>
+      </g>
+
+      <!-- Station 4 -->
+      <g transform="translate(220,244)">
+        <rect width="120" height="58" fill="#ffffff" stroke="#0f172a"/>
+        <text x="8" y="16" font-size="9" letter-spacing="1.5" fill="#0f172a" font-weight="700">04 METER</text>
+        <text x="8" y="34" font-size="10" fill="#64748b">Unknown.</text>
+        <text x="104" y="46" text-anchor="middle" font-size="20" font-weight="800" fill="#94a3b8">?</text>
+      </g>
+
+      <!-- Verdict mini -->
+      <g transform="translate(20,322)">
+        <text font-size="9" fill="#0f172a">
+          <tspan font-weight="700">Workshop.</tspan>
+          <tspan fill="#64748b"> Install QA in 30 days.</tspan>
+        </text>
+      </g>
+    </g>
+
+    <!-- Annotations to the side -->
+    <g transform="translate(110,150)" font-size="11" fill="#64748b">
+      <text font-weight="700" fill="#0f172a">Mobile design rules</text>
+      <text y="22">- Belt runs vertical, top to bottom.</text>
+      <text y="40">- Each station alternates left/right of belt for breathing room.</text>
+      <text y="58">- Weakest station gets the only accent.</text>
+      <text y="76">- Status chip lives inside the station card.</text>
+      <text y="94">- Verdict line sits below the device, not as a black bar.</text>
+    </g>
+
+    <g transform="translate(1040,150)" font-size="11" fill="#64748b">
+      <text font-weight="700" fill="#0f172a">Motion budget (mobile + desktop)</text>
+      <text y="22">- Question answered: station fills, 200ms ease-out.</text>
+      <text y="40">- "No": station stays ghost outline. No shake.</text>
+      <text y="58">- Verdict reached: 800ms lighting shift.</text>
+      <text y="76">- Missing stations gain hairline crack, leak drops.</text>
+      <text y="94">- Present stations gain soft glow. Scene does not move.</text>
+    </g>
+  </g>
+</svg>
