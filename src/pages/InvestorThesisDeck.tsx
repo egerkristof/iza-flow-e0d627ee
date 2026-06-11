@@ -293,15 +293,15 @@ function S5Moat() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Moat" color={GREEN} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
-          When execution gets commoditized, the human becomes the advantage.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          What used to be the advantage in the pre AI native age is not the advantage in the AI native age.
         </h1>
       </div>
 
       <div className="absolute grid grid-cols-2 gap-6" style={{ left: 112, right: 112, top: 360 }}>
         {/* Old mode */}
         <div className="rounded-2xl border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, overflow: "hidden" }}>
-          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderBottom: `1px solid ${CHROME_BORDER}` }}>Old mode · Execution as the advantage</div>
+          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderBottom: `1px solid ${CHROME_BORDER}` }}>Pre AI native age · Execution was the advantage</div>
           <div className="px-7 py-6">
             {oldMode.map((r, i) => (
               <div key={r.k} className="py-4" style={{ borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
@@ -313,7 +313,7 @@ function S5Moat() {
         </div>
         {/* New mode */}
         <div className="rounded-2xl border" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)`, overflow: "hidden", boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
-          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, borderBottom: `1px solid hsl(${GREEN} / 0.25)` }}>New mode · Judgment as the advantage</div>
+          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, borderBottom: `1px solid hsl(${GREEN} / 0.25)` }}>AI native age · Judgment is the advantage</div>
           <div className="px-7 py-6">
             {newMode.map((r, i) => (
               <div key={r.k} className="py-4" style={{ borderTop: i === 0 ? "none" : `1px solid hsl(${GREEN} / 0.18)` }}>
@@ -326,10 +326,10 @@ function S5Moat() {
       </div>
 
       {/* Regulatory anchor */}
-      <div className="absolute rounded-2xl px-7 py-5 flex items-center gap-6"
-        style={{ left: 112, right: 112, bottom: 100, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-        <div className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 12, color: SUBTLE }}>Regulation agrees</div>
-        <div style={{ fontSize: 19, color: TEXT, lineHeight: 1.35 }}>
+      <div className="absolute rounded-2xl px-8 py-6 flex items-start gap-7"
+        style={{ left: 112, right: 112, bottom: 80, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 14, color: `hsl(${GREEN})`, paddingTop: 4 }}>Regulation agrees</div>
+        <div style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
           <span className="font-bold">EU AI Act, GDPR and sector regulators</span> all put responsibility on a named human. Approving a clinical protocol, signing off a credit decision, releasing a financial statement. The accountable person does not get automated away. The infrastructure has to make them faster, not replace them.
         </div>
       </div>
