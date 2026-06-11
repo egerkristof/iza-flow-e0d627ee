@@ -18,8 +18,7 @@
  * 10. "AI task" language throughout (not "workflow" / "use case").
  * 11. Bonus number ("23 stations") emphasized as emotional spike in 6-month pane.
  */
-import { useMemo, useState } from "react";
-import { Helmet } from "react-helmet-async";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -181,6 +180,12 @@ export default function FactoryFloor() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    const prev = document.title;
+    document.title = "Factory Floor — workshop or factory? A 90-second AI diagnostic.";
+    return () => { document.title = prev; };
+  }, []);
+
   const verdictState = useMemo(() => (scale ? pickVerdictState(scale) : null), [scale]);
   const weakest = useMemo(
     () => (verdictState ? pickWeakest(answers, verdictState) : null),
@@ -228,22 +233,6 @@ export default function FactoryFloor() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Helmet>
-        <title>Factory Floor — workshop or factory? A 90-second AI diagnostic.</title>
-        <meta
-          name="description"
-          content="4 questions. 90 seconds. See whether your AI operation is a workshop or a factory, and what's missing to scale it."
-        />
-        <link rel="canonical" href="https://lizaos.ai/factory-floor" />
-        <meta property="og:title" content="Workshop or factory? A 90-second AI diagnostic." />
-        <meta
-          property="og:description"
-          content="Most orgs scale AI like a craft workshop. See what's missing to run it like a factory floor."
-        />
-        <meta property="og:url" content="https://lizaos.ai/factory-floor" />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
       {/* Top progress strip */}
       <div className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
