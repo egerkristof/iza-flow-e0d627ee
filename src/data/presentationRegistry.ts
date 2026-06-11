@@ -8,6 +8,7 @@ const ImpactDeck = lazy(() => import("@/pages/ImpactDeck"));
 const HoldingDeck = lazy(() => import("@/pages/HoldingDeck"));
 const FactoryDeck = lazy(() => import("@/pages/FactoryDeck"));
 const ThesisDeck = lazy(() => import("@/pages/ThesisDeck"));
+const InvestorThesisDeck = lazy(() => import("@/pages/InvestorThesisDeck"));
 const SeedPitchDeck = lazy(() => import("@/pages/SeedPitchDeck"));
 const SeedPitchDeckSkeptic = lazy(() => import("@/pages/SeedPitchDeckSkeptic"));
 const SeedPitchDeckLens = lazy(() => import("@/pages/SeedPitchDeckLens"));
@@ -265,6 +266,15 @@ export const presentationRoutes: PresentationRoute[] = [
     sourcePath: "src/pages/ThesisDeck.tsx",
     description: "Standalone 6-slide technical thesis deck for purely technical investor rooms. The strongest architectural argument from /factory, distilled and unbundled from the production-system spine. Sequence: (1) Thesis · Infrastructure for the Agentic Workforce, (2) Organization as Code · Terraform for Organizations, (3) VSM Architecture · Brain · Spine · Sensors, (4) Tokenomics by Design · Cost-Per-Decision FinOps with design-time budgeting and per-decision chargeback, (5) Metacognitive Auto-Repair · Ghost Protocol, (6) The Moat · LLM-agnostic, compliance-native, self-repairing. Slide components shared with /factory (single source of truth).",
     component: ThesisDeck,
+    showInAdmin: true,
+  },
+  {
+    id: "investor-thesis",
+    title: "Investor Thesis Deck (Pre/Post AI-Native)",
+    path: "/investor-thesis",
+    sourcePath: "src/pages/InvestorThesisDeck.tsx",
+    description: "5-slide council-approved thesis deck for the investor room. Reframes the comp set before the investor anchors on SaaS multiples. Sequence: (1) Pre-AI-Native vs Post-AI-Native investing (the 2-column table that kills the SaaS comp), (2) The AI Infrastructure Bet (not a model, not a tool, not a deployment service), (3) Four-Quadrant Map (Wonderful · Paradox · Interloom · LIZA on human role × deployment model), (4) Self-serve is the architecture, not the GTM (tacit-knowledge loop), (5) The Team Bet (operator scars in org dev, business model, tech, human systems). Separate from /investor — this sells the lens, /investor sells the product.",
+    component: InvestorThesisDeck,
     showInAdmin: true,
   },
   {
