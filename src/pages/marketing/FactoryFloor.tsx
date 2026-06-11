@@ -80,13 +80,13 @@ export default function FactoryFloor() {
       // Persist the submission, capture id for the call-request follow-up
       const { data: inserted, error: insErr } = await supabase
         .from("factory_floor_submissions")
-        .insert({
+        .insert([{
           promise,
           workflow,
           grading,
           verdict: v as unknown as Record<string, unknown>,
           user_agent: navigator.userAgent.slice(0, 240),
-        })
+        }])
         .select("id")
         .single();
       if (!insErr && inserted?.id) setSubmissionId(inserted.id);
