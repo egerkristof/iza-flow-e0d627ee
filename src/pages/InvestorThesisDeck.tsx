@@ -66,27 +66,24 @@ function SlideShell({ children }: { children: React.ReactNode }) {
 // ─── Slide 01 · Known frame vs Unknown frame ────────────────────────────────
 function S1Reframe() {
   const rows = [
-    { k: "What you underwrite", pre: "Proven categories. Known winners.",         post: "A firm core. Experimentation around it." },
-    { k: "How you price",       pre: "Multiples on an existing comp set.",         post: "A bet on category formation." },
-    { k: "What signals it",     pre: "Revenue per seat. Logo count.",              post: "Operator depth. Strategic co-architects." },
+    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The enterprise core. The part of the company that has to exist no matter which model wins." },
+    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "There is no comp set yet. You are pricing a team that can build the core." },
+    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The team holds a firm core while the shell around it keeps moving." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.03, color: TEXT, marginBottom: 18 }}>
-          In a known world you invest in known categories. In an unknown world you invest in a firm core.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 76, lineHeight: 1.03, color: TEXT, marginBottom: 0 }}>
+          In a known world you invest in known categories. In an unknown world you invest in the enterprise core.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 28, color: MUTED, maxWidth: 1600 }}>
-          AI-native is not a new category inside the old frame. It is a new frame. Your own investing model has to change with it.
-        </p>
       </div>
 
-      <div className="absolute" style={{ left: 112, right: 112, top: 480 }}>
+      <div className="absolute" style={{ left: 112, right: 112, top: 410 }}>
         <div className="grid grid-cols-[240px_1fr_1fr] gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: CHROME_BORDER, background: BG }}>
           <div className="px-7 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: SUBTLE, background: CARD_ALT }}>Dimension</div>
-          <div className="px-8 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Known World · Known Categories</div>
-          <div className="px-8 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: `hsl(${GREEN})`, background: "hsl(155 72% 38% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Unknown World · Firm Core + Experimental Shell</div>
+          <div className="px-8 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Known world · Pre AI native</div>
+          <div className="px-8 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: `hsl(${GREEN})`, background: "hsl(155 72% 38% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Unknown world · AI native</div>
           {rows.map((r, i) => (
             <React.Fragment key={r.k}>
               <div className="px-7 py-7 font-bold" style={{ fontSize: 24, color: TEXT, background: CARD_ALT, borderTop: `1px solid ${CHROME_BORDER}` }}>{r.k}</div>
@@ -104,24 +101,21 @@ function S1Reframe() {
 // ─── Slide 02 · The Bet · Four investable layers ─────────────────────────────
 function S2InfraBet() {
   const layers = [
-    { name: "Models",            color: PURPLE, why: "Capex war. Hard to stand out. Winner takes the table." },
-    { name: "Apps & Tools",      color: GOLD,   why: "Commoditizes the moment the model under it ships the feature." },
-    { name: "Services",          color: ACCENT, why: "Scales linearly with humans you can hire. Margins decay." },
-    { name: "The Operating Layer", color: GREEN, why: "Centralized scale connected to the individual edge user. As long as the customer has the right people, they can scale themselves." },
+    { name: "Models",               color: PURPLE, why: "Sits outside the customer. Capex war. Winner takes the table." },
+    { name: "Apps and copilots",    color: GOLD,   why: "Sits outside the customer. Eaten by the next model release." },
+    { name: "Services firms",       color: ACCENT, why: "Sits outside the customer. Scales linearly with humans for hire." },
+    { name: "The enterprise core",  color: GREEN,  why: "Sits inside the customer. The company's own people are the scale unit. This is the only bet that compounds where it has to compound." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Bet" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 68, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
-          Four places to put capital. Only one compounds inside the customer.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
+          Three of these you already know. Only one is built inside the customer.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 28, color: MUTED, maxWidth: 1600 }}>
-          The operating layer is the only bet where the customer's own people become the multiplier. Everything else stays on our side of the boundary.
-        </p>
       </div>
 
-      <div className="absolute" style={{ left: 112, right: 112, top: 460 }}>
+      <div className="absolute" style={{ left: 112, right: 112, top: 360 }}>
         <div className="flex flex-col gap-3">
           {layers.map((l, i) => {
             const us = i === layers.length - 1;
@@ -145,7 +139,7 @@ function S2InfraBet() {
           })}
         </div>
       </div>
-      <Footer text="Models, apps and services all hit a ceiling we own. The operating layer makes the customer the scale unit." />
+      <Footer text="The first three stay on our side of the boundary. The enterprise core lives on theirs." />
     </SlideShell>
   );
 }
@@ -153,28 +147,28 @@ function S2InfraBet() {
 // ─── Slide 03 · What good infrastructure looks like ──────────────────────────
 function S3InfraSpec() {
   const parts = [
-    { icon: Network,     name: "Knowledge graph",          why: "The org's tacit and explicit knowledge in one queryable shape." },
-    { icon: ShieldCheck, name: "Governance & guardrails",  why: "Policy, identity and approval encoded as expertise, not as gates." },
-    { icon: UserCog,     name: "Human-in-the-loop UX",     why: "Designed so the operator co-authors, not just approves." },
-    { icon: FileSearch,  name: "Execution traces",         why: "Every decision is replayable, audited, attributable." },
-    { icon: RefreshCw,   name: "Self-repair loop",         why: "The system updates itself from how the work actually ran." },
-    { icon: Unplug,      name: "Portability",              why: "Knowledge belongs to the customer. No lock-in to a model or vendor." },
+    { icon: Network,     name: "One source of truth",        why: "A single place where what the company knows and decides actually lives." },
+    { icon: ShieldCheck, name: "Rules of the house",         why: "What is allowed, by whom, when. Encoded so AI plays by them." },
+    { icon: UserCog,     name: "The human stays in the loop",why: "The person works with AI without handing over their judgment." },
+    { icon: FileSearch,  name: "A record of every decision", why: "The company can see how it decided, and learn from itself." },
+    { icon: RefreshCw,   name: "Swap the model, keep the work", why: "Tomorrow's model plugs in. Yesterday's work does not get thrown away." },
+    { icon: Unplug,      name: "Knowledge belongs to the company", why: "Not to the vendor. Not to the model. The company can walk." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
-        <Tag label="The Infrastructure Spec" color={ACCENT} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 68, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
-          Before you look at the map, look at what you are mapping.
+        <Tag label="The Enterprise Core" color={ACCENT} />
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
+          What an AI native company has to have. Six things. Plain English.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 28, color: MUTED, maxWidth: 1600 }}>
-          Six components. A player is operating-layer infrastructure if it has them, and at the edge if it doesn't.
+        <p className="font-semibold" style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }}>
+          If you accept that the bet is the core, this is the core. Anything missing one of these is a feature, not the foundation.
         </p>
       </div>
 
-      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 500 }}>
+      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 510 }}>
         {parts.map((p, i) => (
-          <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 200 }}>
+          <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 210 }}>
             <div className="flex items-center gap-4">
               <div className="rounded-xl flex items-center justify-center"
                 style={{ width: 56, height: 56, background: `hsl(${ACCENT} / 0.08)`, color: `hsl(${ACCENT})`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
@@ -182,12 +176,12 @@ function S3InfraSpec() {
               </div>
               <div className="font-mono font-bold" style={{ fontSize: 14, color: SUBTLE, letterSpacing: "0.15em" }}>0{i + 1}</div>
             </div>
-            <div className="font-bold" style={{ fontSize: 24, color: TEXT, marginTop: 16 }}>{p.name}</div>
+            <div className="font-bold" style={{ fontSize: 23, color: TEXT, marginTop: 14, lineHeight: 1.2 }}>{p.name}</div>
             <p style={{ fontSize: 18, color: MUTED, marginTop: 8, lineHeight: 1.4 }}>{p.why}</p>
           </div>
         ))}
       </div>
-      <Footer text="Anything missing a component below is not the operating layer. It is a feature inside one." />
+      <Footer text="These six are what we build. Together they are the enterprise core." />
     </SlideShell>
   );
 }
@@ -277,56 +271,64 @@ function S4Map() {
   );
 }
 
-// ─── Slide 05 · Human-first is the moat ─────────────────────────────────────
+// ─── Slide 05 · Old mode → New mode ─────────────────────────────────────────
 function S5Moat() {
+  const oldMode = [
+    { k: "Where the advantage came from", v: "Execution at scale. Doing the same thing well, in volume." },
+    { k: "What you needed for it",        v: "Lots of people. Process. Throughput." },
+    { k: "What got rewarded",             v: "Cost per unit. Cycle time. Coverage." },
+  ];
+  const newMode = [
+    { k: "Where the advantage comes from", v: "Judgment and accountability. Deciding what to do, and standing behind it." },
+    { k: "What you need for it",           v: "Fewer, better people. Infrastructure that makes their judgment compound." },
+    { k: "What gets rewarded",             v: "Quality of the call. Speed of the loop. Auditability of the decision." },
+  ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Moat" color={GREEN} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 64, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
-          Everything else gets commoditized. The human-first design does not.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
+          When execution gets commoditized, the human becomes the advantage.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }}>
-          The moment of work is where the moat lives. On one side, the organization's knowledge graph. On the other, a UX with opinions about how to move the operator forward. The operator sits at the centre and the system gets smarter from how they work.
-        </p>
       </div>
 
-      {/* Two-pole moment-of-work diagram */}
-      <div className="absolute" style={{ left: 160, right: 160, top: 540, height: 420 }}>
-        {/* Left pole: Knowledge graph */}
-        <div className="absolute rounded-2xl border px-7 py-7"
-          style={{ left: 0, top: 60, width: 380, background: `hsl(${PURPLE} / 0.05)`, borderColor: `hsl(${PURPLE} / 0.3)` }}>
-          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${PURPLE})` }}>Left pole</div>
-          <div className="font-bold" style={{ fontSize: 26, color: TEXT, marginTop: 8 }}>Organizational knowledge graph</div>
-          <p style={{ fontSize: 18, color: MUTED, marginTop: 10, lineHeight: 1.4 }}>Everything the company has learned. Versioned. Queryable. Owned by the customer.</p>
-        </div>
-
-        {/* Centre: Human operator */}
-        <div className="absolute" style={{ left: "50%", top: 0, transform: "translateX(-50%)", width: 340, textAlign: "center" }}>
-          <div className="mx-auto rounded-full flex items-center justify-center"
-            style={{ width: 160, height: 160, background: `hsl(${GREEN} / 0.08)`, border: `3px solid hsl(${GREEN} / 0.4)`, boxShadow: `0 0 0 12px hsl(${GREEN} / 0.06)` }}>
-            <div className="text-center">
-              <div className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 11, color: SUBTLE }}>Moment of work</div>
-              <div className="font-bold" style={{ fontSize: 22, color: TEXT, marginTop: 6, lineHeight: 1.1 }}>Human<br/>operator</div>
-            </div>
+      <div className="absolute grid grid-cols-2 gap-6" style={{ left: 112, right: 112, top: 360 }}>
+        {/* Old mode */}
+        <div className="rounded-2xl border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, overflow: "hidden" }}>
+          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderBottom: `1px solid ${CHROME_BORDER}` }}>Old mode · Execution as the advantage</div>
+          <div className="px-7 py-6">
+            {oldMode.map((r, i) => (
+              <div key={r.k} className="py-4" style={{ borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
+                <div className="font-bold" style={{ fontSize: 17, color: SUBTLE, marginBottom: 6 }}>{r.k}</div>
+                <div style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>{r.v}</div>
+              </div>
+            ))}
           </div>
-          <div className="font-bold" style={{ fontSize: 22, color: `hsl(${GREEN})`, marginTop: 20 }}>The ultimate advantage</div>
-          <p style={{ fontSize: 17, color: MUTED, marginTop: 6, lineHeight: 1.4 }}>The operator is the input, the output, and the reason the system compounds.</p>
         </div>
-
-        {/* Right pole: Guardrail UX */}
-        <div className="absolute rounded-2xl border px-7 py-7"
-          style={{ right: 0, top: 60, width: 380, background: `hsl(${ACCENT} / 0.05)`, borderColor: `hsl(${ACCENT} / 0.3)` }}>
-          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${ACCENT})` }}>Right pole</div>
-          <div className="font-bold" style={{ fontSize: 26, color: TEXT, marginTop: 8 }}>Guardrail UX with expertise</div>
-          <p style={{ fontSize: 18, color: MUTED, marginTop: 10, lineHeight: 1.4 }}>A people-first interface that moves the operator forward. Our lived expertise made into product.</p>
+        {/* New mode */}
+        <div className="rounded-2xl border" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)`, overflow: "hidden", boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
+          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, borderBottom: `1px solid hsl(${GREEN} / 0.25)` }}>New mode · Judgment as the advantage</div>
+          <div className="px-7 py-6">
+            {newMode.map((r, i) => (
+              <div key={r.k} className="py-4" style={{ borderTop: i === 0 ? "none" : `1px solid hsl(${GREEN} / 0.18)` }}>
+                <div className="font-bold" style={{ fontSize: 17, color: `hsl(${GREEN})`, marginBottom: 6 }}>{r.k}</div>
+                <div style={{ fontSize: 20, color: TEXT, lineHeight: 1.35 }}>{r.v}</div>
+              </div>
+            ))}
+          </div>
         </div>
-
-        {/* Connecting lines */}
-        <div className="absolute" style={{ left: 380, right: 380, top: 140, height: 2, background: `hsl(${MUTED} / 0.25)` }} />
       </div>
 
-      <Footer text="Knowledge on one side. Guardrails on the other. The human in the middle is the multiplier." />
+      {/* Regulatory anchor */}
+      <div className="absolute rounded-2xl px-7 py-5 flex items-center gap-6"
+        style={{ left: 112, right: 112, bottom: 100, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 12, color: SUBTLE }}>Regulation agrees</div>
+        <div style={{ fontSize: 19, color: TEXT, lineHeight: 1.35 }}>
+          <span className="font-bold">EU AI Act, GDPR and sector regulators</span> all put responsibility on a named human. Approving a clinical protocol, signing off a credit decision, releasing a financial statement. The accountable person does not get automated away. The infrastructure has to make them faster, not replace them.
+        </div>
+      </div>
+
+      <Footer text="Execution gets cheaper. Judgment gets scarcer. We build for the side that still matters." />
     </SlideShell>
   );
 }
@@ -334,24 +336,21 @@ function S5Moat() {
 // ─── Slide 06 · Valuation Logic ─────────────────────────────────────────────
 function S6Valuation() {
   const steps = [
-    { k: "01", t: "New category. No comp set.",          d: "Pre-AI-native multiples do not price what is being built here." },
-    { k: "02", t: "Therefore the bet is the operators.", d: "What you underwrite is depth across the four domains the operating layer requires." },
-    { k: "03", t: "Senior operators cost senior money.", d: "Competitive salaries are the precondition for keeping the team that defines the category." },
-    { k: "04", t: "So the round is sized for that.",     d: "Capital is allocated to hold the firm core and run the experimental shell around it." },
+    { k: "01", t: "New category. No comp set.",                    d: "There are no precedents to multiply against. Pre AI native maths does not price what is being built here." },
+    { k: "02", t: "So the bet is on who can build the core.",      d: "Few people understand this new space and have a reasonable chance of actually building it. That is what gets underwritten." },
+    { k: "03", t: "Rarity sets the price, not a comp.",            d: "The valuation reflects how thin that talent layer is, not a salary line or a revenue multiple." },
+    { k: "04", t: "The round is sized to hold the team.",          d: "Enough capital to hold the firm core and run the experimental shell around it through the next 18 months." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
-        <Tag label="The Valuation Logic" color={GOLD} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
-          The number is the conclusion, not the headline.
+        <Tag label="The Valuation" color={GOLD} />
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 68, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
+          If you accept the frame, the number is the conclusion.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }}>
-          Four steps from the frame to the ask. If you accept the frame, the number follows.
-        </p>
       </div>
 
-      <div className="absolute grid grid-cols-2 gap-5" style={{ left: 112, right: 112, top: 460 }}>
+      <div className="absolute grid grid-cols-2 gap-5" style={{ left: 112, right: 112, top: 360 }}>
         {steps.map((s) => (
           <div key={s.k} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 180 }}>
             <div className="flex items-baseline gap-3">
@@ -400,12 +399,12 @@ function WithRail({ index, children }: { index: number; children: React.ReactNod
 }
 
 const RAW_SLIDES = [
-  { id: "reframe",      title: "01 · The Reframe · Known frame vs Unknown frame", component: <S1Reframe /> },
-  { id: "infra-bet",    title: "02 · The Bet · Four investable layers",           component: <S2InfraBet /> },
-  { id: "infra-spec",   title: "03 · Infrastructure Spec · Six components",       component: <S3InfraSpec /> },
-  { id: "map",          title: "04 · The Map · Human role decides the moat",      component: <S4Map /> },
-  { id: "moat",         title: "05 · The Moat · Human-first by design",           component: <S5Moat /> },
-  { id: "valuation",    title: "06 · The Valuation Logic · $2M at $15.38M",       component: <S6Valuation /> },
+  { id: "reframe",      title: "01 · Known world vs unknown world",         component: <S1Reframe /> },
+  { id: "infra-bet",    title: "02 · Only one bet lives inside the customer", component: <S2InfraBet /> },
+  { id: "infra-spec",   title: "03 · What the enterprise core has to have",  component: <S3InfraSpec /> },
+  { id: "map",          title: "04 · Where the others sit. Where we sit.",   component: <S4Map /> },
+  { id: "moat",         title: "05 · Execution gets cheap. Judgment does not.", component: <S5Moat /> },
+  { id: "valuation",    title: "06 · The number is the conclusion",          component: <S6Valuation /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
