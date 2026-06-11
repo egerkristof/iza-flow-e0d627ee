@@ -7,6 +7,25 @@
 
 ---
 
+## 0a. Bilingual delivery (EN / DE)
+
+- **Languages shipped at launch:** English + German. Both are first-class — no "translated" feel on either side.
+- **Detection:** `navigator.language` starts with `de` → German default. Else English. Selector top-right, persistent via `localStorage`.
+- **Routes:** `/factory-floor` (EN), `/fabrikhalle` (DE). Selector swaps route + persists choice.
+- **PDF:** generated in the same language as the verdict session.
+- **Translation rule:** verdict copy and "Monday in 6 months" scenes are written natively in German by a marketing translator. Do not machine-translate.
+- **Core German vocabulary:**
+  - Standard → **Standard**
+  - Line → **Fließband**
+  - QA → **Qualitätskontrolle**
+  - Meter → **Kennzahl**
+  - Craft workshop → **Manufaktur**
+  - Factory floor → **Fabrikhalle / Fertigung**
+  - Production line (secondary phrasing) → **Produktionslinie**
+- **Metaphor note (DACH):** "Factory" can read cold in German. Pair *Fabrikhalle* with *Produktionslinie* in body copy to keep the industrial register without the dehumanizing edge.
+
+---
+
 ## 0. Page-level framing
 
 ### Above-the-fold title (one of two — pick later)
@@ -21,6 +40,22 @@
 
 ---
 
+## 0b. Scene 0 — Scale anchor (asked first)
+
+**Question:**
+> Roughly how many AI tasks are live in your org today?
+>
+> ◯ 0–2  (just starting)
+> ◯ 3–9  (real, but contained)
+> ◯ 10+  (running at scale)
+
+**Moment-after line:**
+> *This is the only number the verdict needs from you. Everything else is about the structure underneath it.*
+
+**Why it's first:** it sets the dramatic posture of the verdict (Pre-factory / Workshop / Workshop-at-scale) before the 4 structural questions. The 4 structural answers then decide *which gap* gets named.
+
+---
+
 ## 1. The 4 input scenes
 
 Each scene has three pieces:
@@ -30,12 +65,14 @@ Each scene has three pieces:
 
 The 4 questions map 1:1 to the 4 factory parts: **Standard / Line / QA / Meter.**
 
+**Language note on the unit of work:** we ask about an **"AI task running in your org today"** — concrete, unit-level, works whether the org has 1 or 100. For Pre-factory respondents (0–2), the prompt softens to *"…or the first AI task you're about to run."* We do **not** use "top AI workflow" or "most-used workflow" — both assume a winner exists, which the Pre-factory buyer cannot answer.
+
 ---
 
 ### Scene 1 — **The Standard** (do you have a written definition of "good"?)
 
 **Question:**
-> For your most-used AI workflow, is there a written, agreed definition of what a "good output" looks like — that the AI is held to?
+> Pick one AI task running in your org today (or the first one you're about to run). Is there a written, agreed definition of what a "good output" looks like — that the AI is held to?
 >
 > ◯ Yes, written and used
 > ◯ Sort of, in people's heads
@@ -51,7 +88,7 @@ The 4 questions map 1:1 to the 4 factory parts: **Standard / Line / QA / Meter.*
 ### Scene 2 — **The Line** (is the AI work repeatable, or bespoke every time?)
 
 **Question:**
-> When two different people use AI for the same task in your org, do they get the same shape of output?
+> When two different people run that same AI task, do they get the same shape of output?
 >
 > ◯ Yes, it's templated
 > ◯ Roughly, depends on the person
@@ -67,7 +104,7 @@ The 4 questions map 1:1 to the 4 factory parts: **Standard / Line / QA / Meter.*
 ### Scene 3 — **The QA** (who catches bad output before it ships?)
 
 **Question:**
-> When AI produces a wrong or off-brand output, what catches it before it reaches a customer/decision?
+> When that AI task produces a wrong or off-brand output, what catches it before it reaches a customer or decision?
 >
 > ◯ An automated check
 > ◯ A human reviewer, every time
@@ -80,17 +117,18 @@ The 4 questions map 1:1 to the 4 factory parts: **Standard / Line / QA / Meter.*
 
 ---
 
-### Scene 4 — **The Meter** (do you know cost-per-output and quality-per-output?)
+### Scene 4 — **The Meter** (do you know what it costs and how often it has to be redone?)
 
-**Question:**
-> For your top AI workflow, can you state — today — the cost per output and the rework rate?
+**Question (two sub-parts, same screen, two taps):**
 >
-> ◯ Yes, both
-> ◯ One of them
-> ◯ Neither
+> **4a — Cost.** For that AI task, do you know what one output costs you (model + human time)?
+> ◯ Yes  ◯ Roughly  ◯ No
+>
+> **4b — Rework.** Do you know how often an output has to be fixed or redone?
+> ◯ Yes  ◯ Roughly  ◯ No
 
 **Moment-after line:**
-> *A factory without meters is just an expensive room with lights on. You can't scale what you can't measure, and you can't defend an AI budget to a CFO with vibes.*
+> *Cost without rework is a half-truth. Rework without cost is a complaint. Together they're the only honest answer to "is this AI task working?"*
 
 **Visual cue:** The "Meter" quadrant lights up. All 4 quadrants now visible — the factory diagram is complete (in whichever colors their answers produced).
 
@@ -98,19 +136,19 @@ The 4 questions map 1:1 to the 4 factory parts: **Standard / Line / QA / Meter.*
 
 ## 2. The verdict engine — three states
 
-After Scene 4, the page renders **one of three verdicts**, picked by their pattern of answers. Same factory metaphor across all three. Different dramatic posture.
+After Scene 4, the page renders **one of three verdicts**, picked by the **Scene 0 scale anchor** (which posture) combined with the **4 structural answers** (which gap to name).
 
-**State selection rules (rough):**
-- **Pre-factory:** mostly "No" answers, and they self-described as early (we infer from a 1-line bonus question: *"Roughly how many AI workflows are live in production today?"* → 0–2).
-- **Workshop:** mix of Yes/Sort-of/No. 3–8 workflows.
-- **Workshop-at-scale:** mostly "Sort-of" / "No" but **10+ workflows live**. The dangerous one.
+**State selection rules:**
+- **Pre-factory:** Scene 0 = 0–2 tasks. Posture: "before the trap."
+- **Workshop:** Scene 0 = 3–9 tasks. Posture: "the bruise is real."
+- **Workshop-at-scale:** Scene 0 = 10+ tasks. Posture: "you're already paying for the missing structure."
 
 ---
 
 ### State A — **Pre-factory** ("You're about to hire craftsmen. Don't.")
 
 **Headline on screen:**
-> **You haven't built the workshop yet. Build the line first.**
+> **You're one hire away from the most expensive mistake of your AI program.**
 
 **Diagnosis paragraph (on screen):**
 > Right now AI in your org is a few smart people doing impressive things by hand. That's the workshop stage, and it's the right stage — for about six months. The trap is the next decision: most leaders respond to early wins by greenlighting more pilots and hiring more "AI people." That's hiring more craftsmen for a workshop that has no spec sheet, no line, no QA, no meter. It doesn't scale; it multiplies the chaos. The window you have right now — before headcount and pilots compound — is the cheapest window you will ever have to install the four factory parts.
@@ -121,9 +159,9 @@ After Scene 4, the page renders **one of three verdicts**, picked by their patte
 > *It's a Monday in May. You have 12 AI initiatives live across 5 teams. No two produce output the same way. Three have quietly stopped. Your CFO asks what the €400K cloud bill bought. You don't have an answer that survives the meeting.*
 
 **Next move (single line, in the verdict card):**
-> Write **one Standard** for your single most-used AI workflow before your next pilot launches. One page. That's the foundation of the factory.
+> **In the next 14 days:** write **one Standard** for the first AI task you'll run. One page. Before any new pilot is greenlit.
 
-**PDF (2 pages, emailed):** *"The Pre-Factory Brief — How to install the first Standard before your next pilot."* Includes one template: a 1-page Standard for an AI workflow (Inputs / Decision criteria / Output shape / Rejection conditions / Owner).
+**PDF (2 pages, emailed):** *"The Pre-Factory Brief — Writing the first Standard before your first pilot."* Includes one template: a **1-page AI Task Brief** (Task name / Trigger / Inputs / Expected output shape / What "good" looks like in one sentence / What "wrong" looks like in one sentence / Owner). This is the Pre-factory-appropriate template — a QA gate spec is too advanced for an org that hasn't written its first definition of good.
 
 ---
 
@@ -141,7 +179,7 @@ After Scene 4, the page renders **one of three verdicts**, picked by their patte
 > *It's a Monday in May. Your best AI workflow now runs 800 times a week. You're reviewing 30% of outputs personally because no one else can hold the bar. You stop a launch on Wednesday because two outputs went out wrong on Tuesday and you can't tell whether it's the model, the prompt, or the user. The CEO asks if AI is ready for the next department. You hedge.*
 
 **Next move:**
-> Pick your **highest-volume AI workflow**. Install an automated QA check on it within 30 days. One workflow, one check. That's how the line begins.
+> **In the next 30 days:** pick your highest-volume AI task. Install one automated QA check on it. One task, one check. That's how the line begins.
 
 **PDF:** *"The Workshop Brief — Installing the first QA gate on your highest-volume workflow."* Includes one template: a QA gate spec (Trigger / Rule / Pass condition / Fail handling / Owner).
 
@@ -161,7 +199,7 @@ After Scene 4, the page renders **one of three verdicts**, picked by their patte
 > *It's a Monday in May. A board member asks for the ROI of your AI program. You have 23 workflows live, a €1.2M annual spend, and no defensible number for any of them. The CTO has started routing around you. Two of your best AI engineers have left because "no one knows what good looks like here."*
 
 **Next move:**
-> **Stop launching new AI workflows for 30 days.** Install the Meter on your top 3 by spend. You cannot fix what you cannot see, and right now you cannot see.
+> **In the next 30 days:** stop launching new AI tasks. Install the Meter on your top 3 by spend. You cannot fix what you cannot see, and right now you cannot see.
 
 **PDF:** *"The Workshop-at-Scale Brief — Installing the Meter before the next pilot."* Includes one template: a Meter spec (Cost-per-output / Rework rate / Quality sample / Reviewer / Cadence).
 
@@ -186,6 +224,19 @@ After Scene 4, the page renders **one of three verdicts**, picked by their patte
 **Email gate copy:**
 > *Want the 2-page brief and the template? Drop your work email. No sequence, no nurture — one email, one PDF.*
 
+### 48-hour follow-up email (single send, no sequence)
+
+Subject: *Did you write the Standard?*
+
+Body (3 lines):
+> Two days ago you ran the Factory Floor check. One question:
+>
+> Did you write the Standard for that AI task yet?
+>
+> Yes / Not yet / Want help — reply with one word. That's it.
+
+**Why:** cheap, single-question, high-signal. A "Yes" is a buyer signal. "Want help" is a sales call. "Not yet" tells us the friction is real and we know who to keep warm.
+
 ---
 
 ## 4. New vocabulary the page installs
@@ -196,7 +247,7 @@ By the end, the buyer should leave with **4 words they didn't have before**, all
 - **QA** — the in-line check
 - **Meter** — the cost/quality instrument
 
-This is the vocabulary the sales call inherits. The first call no longer starts with "tell me about your AI strategy." It starts with *"You scored weakest on Meter — walk me through your top workflow."*
+This is the vocabulary the sales call inherits. The first call no longer starts with "tell me about your AI strategy." It starts with *"You scored weakest on Meter — walk me through that one AI task."*
 
 ---
 
