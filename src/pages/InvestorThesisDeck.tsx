@@ -110,9 +110,12 @@ function S2InfraBet() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Bet" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
-          Three of these you already know. Only one is built inside the customer.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 14, maxWidth: 1680 }}>
+          Three of these live outside the customer. Only one lives inside it.
         </h1>
+        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
+          That inside part is what has to work for AI to actually run at scale in an enterprise. It is the only one that compounds where the work happens.
+        </p>
       </div>
 
       <div className="absolute" style={{ left: 112, right: 112, top: 360 }}>
