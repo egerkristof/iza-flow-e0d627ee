@@ -779,6 +779,51 @@ export type Database = {
         }
         Relationships: []
       }
+      factory_floor_submissions: {
+        Row: {
+          call_requested: boolean
+          company: string | null
+          created_at: string
+          email: string | null
+          grading: string
+          id: string
+          name: string | null
+          promise: string
+          role: string | null
+          user_agent: string | null
+          verdict: Json | null
+          workflow: string
+        }
+        Insert: {
+          call_requested?: boolean
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          grading: string
+          id?: string
+          name?: string | null
+          promise: string
+          role?: string | null
+          user_agent?: string | null
+          verdict?: Json | null
+          workflow: string
+        }
+        Update: {
+          call_requested?: boolean
+          company?: string | null
+          created_at?: string
+          email?: string | null
+          grading?: string
+          id?: string
+          name?: string | null
+          promise?: string
+          role?: string | null
+          user_agent?: string | null
+          verdict?: Json | null
+          workflow?: string
+        }
+        Relationships: []
+      }
       insights_research: {
         Row: {
           aggregate_snapshot: Json | null
