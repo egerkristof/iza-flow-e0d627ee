@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
-import { ChevronLeft, ChevronRight, Maximize2, X, Grid3x3, ArrowRight, Users, Boxes, Workflow, Repeat, Target } from "lucide-react";
+import { ChevronLeft, ChevronRight, Maximize2, X, Grid3x3, Network, ShieldCheck, UserCog, FileSearch, RefreshCw, Unplug } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
 import { cn } from "@/lib/utils";
@@ -11,18 +11,18 @@ import {
 } from "@/pages/TechDDDeck";
 
 // ═════════════════════════════════════════════════════════════════════════════
-// INVESTOR THESIS DECK — 5 slides. Tomorrow's room.
-// Argument: pre-AI-native vs post-AI-native investing → infra bet → four-quadrant
-// map (Wonderful / Paradox / Interloom / LIZA) → self-serve is architecture →
-// team bet. Council-approved sequence.
+// INVESTOR THESIS DECK — 6 slides. Council v2.
+// Known frame vs Unknown frame → Four investable layers → What good infra
+// looks like → Competitive map → Human-first is the moat → Valuation logic.
 // ═════════════════════════════════════════════════════════════════════════════
 
 const ACTS = [
   { short: "Reframe" },
-  { short: "Infra Bet" },
+  { short: "The Bet" },
+  { short: "Infra Spec" },
   { short: "Map" },
-  { short: "Architecture" },
-  { short: "Team" },
+  { short: "Moat" },
+  { short: "Valuation" },
 ];
 
 function ActRail({ index }: { index: number }) {
@@ -31,7 +31,7 @@ function ActRail({ index }: { index: number }) {
       <span className="font-mono uppercase tracking-[0.3em] font-bold whitespace-nowrap" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>
         LIZA OS Investor Thesis
       </span>
-      <div className="flex-1 grid grid-cols-5 gap-2">
+      <div className="flex-1 grid grid-cols-6 gap-2">
         {ACTS.map((a, i) => {
           const active = i === index;
           const past = i < index;
@@ -63,37 +63,35 @@ function SlideShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ─── Slide 01 · Pre-AI-native vs Post-AI-native investing ───────────────────
+// ─── Slide 01 · Known frame vs Unknown frame ────────────────────────────────
 function S1Reframe() {
   const rows = [
-    { k: "Team",      pre: "Headcount × experience",        post: "Operator depth in 4 domains" },
-    { k: "Customers", pre: "Logos on a slide",              post: "Co-architects of the loop" },
-    { k: "Revenue",   pre: "ARR per seat",                  post: "Metered execution per decision" },
-    { k: "Moat",      pre: "Features competitors ship next", post: "Tacit knowledge ↔ org graph loop" },
-    { k: "Comp set",  pre: "Vertical SaaS multiples",        post: "Infrastructure category bets" },
+    { k: "What you underwrite", pre: "Proven categories. Known winners.",         post: "A firm core. Experimentation around it." },
+    { k: "How you price",       pre: "Multiples on an existing comp set.",         post: "A bet on category formation." },
+    { k: "What signals it",     pre: "Revenue per seat. Logo count.",              post: "Operator depth. Strategic co-architects." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 76, lineHeight: 1.02, color: TEXT, marginBottom: 18 }}>
-          You are not buying a SaaS company.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.03, color: TEXT, marginBottom: 18 }}>
+          In a known world you invest in known categories. In an unknown world you invest in a firm core.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 30, color: MUTED, maxWidth: 1500 }}>
-          Before you price us, change the lens. The way you underwrote AI <em>apps</em> does not work for the layer that runs an AI-native organization.
+        <p className="font-semibold" style={{ fontSize: 28, color: MUTED, maxWidth: 1600 }}>
+          AI-native is not a new category inside the old frame. It is a new frame. Your own investing model has to change with it.
         </p>
       </div>
 
-      <div className="absolute" style={{ left: 112, right: 112, top: 460 }}>
-        <div className="grid grid-cols-[200px_1fr_1fr] gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: CHROME_BORDER, background: BG }}>
-          <div className="px-6 py-5 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 13, color: SUBTLE, background: CARD_ALT }}>Dimension</div>
-          <div className="px-7 py-5 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 13, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Pre-AI-Native Investing</div>
-          <div className="px-7 py-5 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, background: "hsl(155 72% 38% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Post-AI-Native Investing</div>
+      <div className="absolute" style={{ left: 112, right: 112, top: 480 }}>
+        <div className="grid grid-cols-[240px_1fr_1fr] gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: CHROME_BORDER, background: BG }}>
+          <div className="px-7 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: SUBTLE, background: CARD_ALT }}>Dimension</div>
+          <div className="px-8 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Known World · Known Categories</div>
+          <div className="px-8 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: `hsl(${GREEN})`, background: "hsl(155 72% 38% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Unknown World · Firm Core + Experimental Shell</div>
           {rows.map((r, i) => (
             <React.Fragment key={r.k}>
-              <div className="px-6 py-5 font-bold" style={{ fontSize: 22, color: TEXT, background: CARD_ALT, borderTop: `1px solid ${CHROME_BORDER}` }}>{r.k}</div>
-              <div className="px-7 py-5" style={{ fontSize: 22, color: MUTED, borderLeft: `1px solid ${CHROME_BORDER}`, borderTop: `1px solid ${CHROME_BORDER}`, background: i % 2 ? "hsl(0 72% 50% / 0.03)" : "transparent" }}>{r.pre}</div>
-              <div className="px-7 py-5 font-semibold" style={{ fontSize: 22, color: TEXT, borderLeft: `1px solid ${CHROME_BORDER}`, borderTop: `1px solid ${CHROME_BORDER}`, background: i % 2 ? "hsl(155 72% 38% / 0.04)" : "transparent" }}>{r.post}</div>
+              <div className="px-7 py-7 font-bold" style={{ fontSize: 24, color: TEXT, background: CARD_ALT, borderTop: `1px solid ${CHROME_BORDER}` }}>{r.k}</div>
+              <div className="px-8 py-7" style={{ fontSize: 24, color: MUTED, borderLeft: `1px solid ${CHROME_BORDER}`, borderTop: `1px solid ${CHROME_BORDER}`, background: i % 2 ? "hsl(0 72% 50% / 0.03)" : "transparent" }}>{r.pre}</div>
+              <div className="px-8 py-7 font-semibold" style={{ fontSize: 24, color: TEXT, borderLeft: `1px solid ${CHROME_BORDER}`, borderTop: `1px solid ${CHROME_BORDER}`, background: i % 2 ? "hsl(155 72% 38% / 0.04)" : "transparent" }}>{r.post}</div>
             </React.Fragment>
           ))}
         </div>
@@ -103,23 +101,23 @@ function S1Reframe() {
   );
 }
 
-// ─── Slide 02 · The AI Infrastructure Bet ────────────────────────────────────
+// ─── Slide 02 · The Bet · Four investable layers ─────────────────────────────
 function S2InfraBet() {
   const layers = [
-    { name: "Models", note: "OpenAI · Anthropic · Google", color: PURPLE, desc: "Raw cognition. Commoditizing fast." },
-    { name: "Apps & Tools", note: "Cursor · Harvey · Paradigm", color: GOLD, desc: "Point solutions. Wrap a model, sell a workflow." },
-    { name: "Agent Deployment", note: "Wonderful · Sierra · Decagon", color: ACCENT, desc: "Services-led production. Speed-to-launch as a service." },
-    { name: "The Operating Layer", note: "LIZA OS", color: GREEN, desc: "The loop where tacit human knowledge enters the org graph and compounds. The only layer the organization keeps." },
+    { name: "Models",            color: PURPLE, why: "Capex war. Hard to stand out. Winner takes the table." },
+    { name: "Apps & Tools",      color: GOLD,   why: "Commoditizes the moment the model under it ships the feature." },
+    { name: "Services",          color: ACCENT, why: "Scales linearly with humans you can hire. Margins decay." },
+    { name: "The Operating Layer", color: GREEN, why: "Centralized scale connected to the individual edge user. As long as the customer has the right people, they can scale themselves." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Bet" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.04, color: TEXT, marginBottom: 14 }}>
-          Not a model. Not a tool. Not a deployment service.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 68, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
+          Four places to put capital. Only one compounds inside the customer.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 30, color: MUTED, maxWidth: 1500 }}>
-          The operating layer of the AI-native organization. The one layer that has to be owned, not rented.
+        <p className="font-semibold" style={{ fontSize: 28, color: MUTED, maxWidth: 1600 }}>
+          The operating layer is the only bet where the customer's own people become the multiplier. Everything else stays on our side of the boundary.
         </p>
       </div>
 
@@ -128,20 +126,17 @@ function S2InfraBet() {
           {layers.map((l, i) => {
             const us = i === layers.length - 1;
             return (
-              <div key={l.name} className="grid grid-cols-[300px_1fr_auto] items-center gap-8 px-8 py-6 rounded-2xl border"
+              <div key={l.name} className="grid grid-cols-[340px_1fr_auto] items-center gap-8 px-8 py-7 rounded-2xl border"
                 style={{
                   borderColor: us ? `hsl(${l.color} / 0.45)` : CHROME_BORDER,
                   background: us ? `hsl(${l.color} / 0.06)` : BG,
                   boxShadow: us ? `0 8px 32px hsl(${l.color} / 0.12)` : "none",
                 }}>
-                <div>
-                  <div className="font-bold" style={{ fontSize: 28, color: us ? `hsl(${l.color})` : TEXT }}>{l.name}</div>
-                  <div className="font-mono uppercase tracking-[0.15em]" style={{ fontSize: 12, color: SUBTLE, marginTop: 4 }}>{l.note}</div>
-                </div>
-                <div style={{ fontSize: 22, color: us ? TEXT : MUTED, fontWeight: us ? 600 : 400 }}>{l.desc}</div>
+                <div className="font-bold" style={{ fontSize: 30, color: us ? `hsl(${l.color})` : TEXT }}>{l.name}</div>
+                <div style={{ fontSize: 23, color: us ? TEXT : MUTED, fontWeight: us ? 600 : 400, lineHeight: 1.35 }}>{l.why}</div>
                 {us && (
-                  <div className="px-4 py-2 rounded-full font-bold uppercase tracking-[0.18em]"
-                    style={{ fontSize: 12, color: `hsl(${l.color})`, background: `hsl(${l.color} / 0.12)`, border: `1px solid hsl(${l.color} / 0.3)` }}>
+                  <div className="px-5 py-2 rounded-full font-bold uppercase tracking-[0.18em] whitespace-nowrap"
+                    style={{ fontSize: 13, color: `hsl(${l.color})`, background: `hsl(${l.color} / 0.12)`, border: `1px solid hsl(${l.color} / 0.3)` }}>
                     Our bet
                   </div>
                 )}
@@ -150,18 +145,60 @@ function S2InfraBet() {
           })}
         </div>
       </div>
-      <Footer text="Apps die when the model under them ships the feature. Infrastructure compounds." />
+      <Footer text="Models, apps and services all hit a ceiling we own. The operating layer makes the customer the scale unit." />
     </SlideShell>
   );
 }
 
-// ─── Slide 03 · Four-Quadrant Map ────────────────────────────────────────────
-function S3Map() {
+// ─── Slide 03 · What good infrastructure looks like ──────────────────────────
+function S3InfraSpec() {
+  const parts = [
+    { icon: Network,     name: "Knowledge graph",          why: "The org's tacit and explicit knowledge in one queryable shape." },
+    { icon: ShieldCheck, name: "Governance & guardrails",  why: "Policy, identity and approval encoded as expertise, not as gates." },
+    { icon: UserCog,     name: "Human-in-the-loop UX",     why: "Designed so the operator co-authors, not just approves." },
+    { icon: FileSearch,  name: "Execution traces",         why: "Every decision is replayable, audited, attributable." },
+    { icon: RefreshCw,   name: "Self-repair loop",         why: "The system updates itself from how the work actually ran." },
+    { icon: Unplug,      name: "Portability",              why: "Knowledge belongs to the customer. No lock-in to a model or vendor." },
+  ];
+  return (
+    <SlideShell>
+      <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
+        <Tag label="The Infrastructure Spec" color={ACCENT} />
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 68, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
+          Before you look at the map, look at what you are mapping.
+        </h1>
+        <p className="font-semibold" style={{ fontSize: 28, color: MUTED, maxWidth: 1600 }}>
+          Six components. A player is operating-layer infrastructure if it has them, and at the edge if it doesn't.
+        </p>
+      </div>
+
+      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 500 }}>
+        {parts.map((p, i) => (
+          <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 200 }}>
+            <div className="flex items-center gap-4">
+              <div className="rounded-xl flex items-center justify-center"
+                style={{ width: 56, height: 56, background: `hsl(${ACCENT} / 0.08)`, color: `hsl(${ACCENT})`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
+                <p.icon size={28} strokeWidth={1.7} />
+              </div>
+              <div className="font-mono font-bold" style={{ fontSize: 14, color: SUBTLE, letterSpacing: "0.15em" }}>0{i + 1}</div>
+            </div>
+            <div className="font-bold" style={{ fontSize: 24, color: TEXT, marginTop: 16 }}>{p.name}</div>
+            <p style={{ fontSize: 18, color: MUTED, marginTop: 8, lineHeight: 1.4 }}>{p.why}</p>
+          </div>
+        ))}
+      </div>
+      <Footer text="Anything missing a component below is not the operating layer. It is a feature inside one." />
+    </SlideShell>
+  );
+}
+
+// ─── Slide 04 · Four-Quadrant Map ────────────────────────────────────────────
+function S4Map() {
   // axes: X = deployment model (services-led → self-serve), Y = human role (approver → co-author)
   const pts = [
-    { name: "Wonderful",  x: 0.15, y: 0.25, color: GOLD,   note: "$286M raised · services-led · agents replace humans" },
-    { name: "Paradox",    x: 0.35, y: 0.78, color: PURPLE, note: "Shared world model · research-stage · not in production" },
-    { name: "Interloom",  x: 0.55, y: 0.40, color: ACCENT, note: "Agentic workflow infra · humans approve a queue" },
+    { name: "Wonderful",  x: 0.12, y: 0.20, color: GOLD,   note: "Forward-deployed engineers + McKinsey alliance. Agents replace humans." },
+    { name: "Paradox",    x: 0.30, y: 0.78, color: PURPLE, note: "EU research-stage. Human-first clarity papers. Not in production." },
+    { name: "Interloom",  x: 0.60, y: 0.38, color: ACCENT, note: "SME-led no-code back-office. Humans design and approve flows." },
     { name: "LIZA OS",    x: 0.85, y: 0.85, color: GREEN,  note: "Self-serve · human tacit knowledge is the input" },
   ];
   const PLOT = { left: 320, top: 460, w: 1280, h: 540 };
@@ -169,11 +206,11 @@ function S3Map() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Map" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 64, lineHeight: 1.05, color: TEXT, marginBottom: 12 }}>
-          Four companies. One quadrant unoccupied.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 62, lineHeight: 1.05, color: TEXT, marginBottom: 12 }}>
+          The human role decides the moat. The quadrant top-right is open.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1500 }}>
-          Human role × deployment model. Top-right is the only position where the loop closes.
+        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
+          Other infrastructure players solve scale to some degree. None of them design for the human as a co-author the system gets smarter from.
         </p>
       </div>
 
@@ -240,107 +277,111 @@ function S3Map() {
   );
 }
 
-// ─── Slide 04 · Self-serve is the architecture ──────────────────────────────
-function S4Architecture() {
+// ─── Slide 05 · Human-first is the moat ─────────────────────────────────────
+function S5Moat() {
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
-        <Tag label="The Architecture" color={GREEN} />
+        <Tag label="The Moat" color={GREEN} />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 64, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
-          Self-serve is not a GTM choice. It is the only architecture where the loop compounds.
+          Everything else gets commoditized. The human-first design does not.
         </h1>
         <p className="font-semibold" style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }}>
-          Every services-led deployment adds a human gate between the operator's tacit knowledge and the organizational graph. The gate is where the compounding dies.
+          The moment of work is where the moat lives. On one side, the organization's knowledge graph. On the other, a UX with opinions about how to move the operator forward. The operator sits at the centre and the system gets smarter from how they work.
         </p>
       </div>
 
-      {/* Loop diagram */}
-      <div className="absolute" style={{ left: 200, right: 200, top: 580, height: 340 }}>
-        {[
-          { label: "Operator", sub: "Tacit knowledge", icon: Users,    color: ACCENT, x: 0 },
-          { label: "LIZA OS",  sub: "Friction-free capture", icon: Repeat, color: GREEN, x: 1 },
-          { label: "Org Graph", sub: "Shared context", icon: Boxes,   color: PURPLE, x: 2 },
-          { label: "Execution", sub: "Compounded output", icon: Target, color: GOLD,   x: 3 },
-        ].map((n, i, arr) => {
-          const slot = 1520 / (arr.length - 1);
-          return (
-            <React.Fragment key={n.label}>
-              <div className="absolute" style={{ left: n.x * slot - 100, top: 0, width: 200, textAlign: "center" }}>
-                <div className="mx-auto rounded-2xl flex items-center justify-center"
-                  style={{
-                    width: 110, height: 110,
-                    background: `hsl(${n.color} / 0.08)`,
-                    border: `2px solid hsl(${n.color} / 0.3)`,
-                    color: `hsl(${n.color})`,
-                  }}>
-                  <n.icon size={48} strokeWidth={1.5} />
-                </div>
-                <div className="font-bold" style={{ fontSize: 24, color: TEXT, marginTop: 14 }}>{n.label}</div>
-                <div style={{ fontSize: 16, color: MUTED, marginTop: 4 }}>{n.sub}</div>
-              </div>
-              {i < arr.length - 1 && (
-                <div className="absolute flex items-center justify-center"
-                  style={{ left: n.x * slot + 60, top: 40, width: slot - 120, height: 30 }}>
-                  <ArrowRight size={32} color={`hsl(${MUTED})`} strokeWidth={1.8} />
-                </div>
-              )}
-            </React.Fragment>
-          );
-        })}
-        {/* return arrow underneath */}
-        <div className="absolute" style={{ left: 0, top: 200, width: 1520, height: 80 }}>
-          <div className="absolute" style={{ left: 60, right: 60, top: 30, height: 2, background: `hsl(${GREEN} / 0.35)` }} />
-          <div className="absolute" style={{ left: 0, top: 0, width: 60, height: 60, borderLeft: `2px solid hsl(${GREEN} / 0.35)`, borderTop: `2px solid hsl(${GREEN} / 0.35)`, borderTopLeftRadius: 24 }} />
-          <div className="absolute" style={{ right: 0, top: 0, width: 60, height: 60, borderRight: `2px solid hsl(${GREEN} / 0.35)`, borderTop: `2px solid hsl(${GREEN} / 0.35)`, borderTopRightRadius: 24 }} />
-          <div className="absolute font-bold uppercase tracking-[0.2em]"
-            style={{ left: "50%", top: 14, transform: "translateX(-50%)", fontSize: 13, color: `hsl(${GREEN})`, background: BG, padding: "0 12px" }}>
-            New input · zero friction · same day
-          </div>
+      {/* Two-pole moment-of-work diagram */}
+      <div className="absolute" style={{ left: 160, right: 160, top: 540, height: 420 }}>
+        {/* Left pole: Knowledge graph */}
+        <div className="absolute rounded-2xl border px-7 py-7"
+          style={{ left: 0, top: 60, width: 380, background: `hsl(${PURPLE} / 0.05)`, borderColor: `hsl(${PURPLE} / 0.3)` }}>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${PURPLE})` }}>Left pole</div>
+          <div className="font-bold" style={{ fontSize: 26, color: TEXT, marginTop: 8 }}>Organizational knowledge graph</div>
+          <p style={{ fontSize: 18, color: MUTED, marginTop: 10, lineHeight: 1.4 }}>Everything the company has learned. Versioned. Queryable. Owned by the customer.</p>
         </div>
+
+        {/* Centre: Human operator */}
+        <div className="absolute" style={{ left: "50%", top: 0, transform: "translateX(-50%)", width: 340, textAlign: "center" }}>
+          <div className="mx-auto rounded-full flex items-center justify-center"
+            style={{ width: 160, height: 160, background: `hsl(${GREEN} / 0.08)`, border: `3px solid hsl(${GREEN} / 0.4)`, boxShadow: `0 0 0 12px hsl(${GREEN} / 0.06)` }}>
+            <div className="text-center">
+              <div className="font-mono uppercase tracking-[0.2em] font-bold" style={{ fontSize: 11, color: SUBTLE }}>Moment of work</div>
+              <div className="font-bold" style={{ fontSize: 22, color: TEXT, marginTop: 6, lineHeight: 1.1 }}>Human<br/>operator</div>
+            </div>
+          </div>
+          <div className="font-bold" style={{ fontSize: 22, color: `hsl(${GREEN})`, marginTop: 20 }}>The ultimate advantage</div>
+          <p style={{ fontSize: 17, color: MUTED, marginTop: 6, lineHeight: 1.4 }}>The operator is the input, the output, and the reason the system compounds.</p>
+        </div>
+
+        {/* Right pole: Guardrail UX */}
+        <div className="absolute rounded-2xl border px-7 py-7"
+          style={{ right: 0, top: 60, width: 380, background: `hsl(${ACCENT} / 0.05)`, borderColor: `hsl(${ACCENT} / 0.3)` }}>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${ACCENT})` }}>Right pole</div>
+          <div className="font-bold" style={{ fontSize: 26, color: TEXT, marginTop: 8 }}>Guardrail UX with expertise</div>
+          <p style={{ fontSize: 18, color: MUTED, marginTop: 10, lineHeight: 1.4 }}>A people-first interface that moves the operator forward. Our lived expertise made into product.</p>
+        </div>
+
+        {/* Connecting lines */}
+        <div className="absolute" style={{ left: 380, right: 380, top: 140, height: 2, background: `hsl(${MUTED} / 0.25)` }} />
       </div>
 
-      <Footer text="Wonderful's margin model needs the services layer. Ours breaks if it has one." dark={false} />
+      <Footer text="Knowledge on one side. Guardrails on the other. The human in the middle is the multiplier." />
     </SlideShell>
   );
 }
 
-// ─── Slide 05 · Team Bet ─────────────────────────────────────────────────────
-function S5Team() {
-  const domains = [
-    { name: "Organizational Development", proof: "15+ years scaling AI/data orgs across regulated industries" },
-    { name: "Business Model Innovation",  proof: "Designed and shipped metered, decision-priced commercial models" },
-    { name: "Technology Architecture",    proof: "Production AI systems in pharma, banking, defence, AEC" },
-    { name: "Human Systems",              proof: "Tacit knowledge capture frameworks deployed with operator teams" },
+// ─── Slide 06 · Valuation Logic ─────────────────────────────────────────────
+function S6Valuation() {
+  const steps = [
+    { k: "01", t: "New category. No comp set.",          d: "Pre-AI-native multiples do not price what is being built here." },
+    { k: "02", t: "Therefore the bet is the operators.", d: "What you underwrite is depth across the four domains the operating layer requires." },
+    { k: "03", t: "Senior operators cost senior money.", d: "Competitive salaries are the precondition for keeping the team that defines the category." },
+    { k: "04", t: "So the round is sized for that.",     d: "Capital is allocated to hold the firm core and run the experimental shell around it." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
-        <Tag label="The Team Bet" color={GOLD} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 64, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
-          The category is not defined yet. The operators who can define it are.
+        <Tag label="The Valuation Logic" color={GOLD} />
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
+          The number is the conclusion, not the headline.
         </h1>
         <p className="font-semibold" style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }}>
-          You are underwriting committed operators with shared scars in the four domains this layer requires. Not headcount. Not titles.
+          Four steps from the frame to the ask. If you accept the frame, the number follows.
         </p>
       </div>
 
-      <div className="absolute grid grid-cols-2 gap-5" style={{ left: 112, right: 112, top: 510 }}>
-        {domains.map((d, i) => (
-          <div key={d.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG }}>
+      <div className="absolute grid grid-cols-2 gap-5" style={{ left: 112, right: 112, top: 460 }}>
+        {steps.map((s) => (
+          <div key={s.k} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 180 }}>
             <div className="flex items-baseline gap-3">
-              <span className="font-mono font-bold" style={{ fontSize: 14, color: `hsl(${GOLD})`, letterSpacing: "0.15em" }}>0{i + 1}</span>
-              <div className="font-bold" style={{ fontSize: 26, color: TEXT }}>{d.name}</div>
+              <span className="font-mono font-bold" style={{ fontSize: 14, color: `hsl(${GOLD})`, letterSpacing: "0.15em" }}>{s.k}</span>
+              <div className="font-bold" style={{ fontSize: 24, color: TEXT }}>{s.t}</div>
             </div>
-            <p style={{ fontSize: 20, color: MUTED, marginTop: 12, lineHeight: 1.4 }}>{d.proof}</p>
+            <p style={{ fontSize: 19, color: MUTED, marginTop: 10, lineHeight: 1.4 }}>{s.d}</p>
           </div>
         ))}
       </div>
 
-      <div className="absolute rounded-2xl px-8 py-6"
+      {/* The ask, anchored on financials */}
+      <div className="absolute rounded-2xl px-8 py-6 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-6"
         style={{ left: 112, right: 112, bottom: 90, background: `hsl(${GOLD} / 0.06)`, border: `1px solid hsl(${GOLD} / 0.3)` }}>
-        <div className="font-bold" style={{ fontSize: 24, color: TEXT, lineHeight: 1.35 }}>
-          The valuation question is not "how big is the TAM."
-          <span style={{ color: `hsl(${GOLD})` }}> It is "who can be trusted to define it."</span>
+        <div>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>Seed round</div>
+          <div className="font-bold" style={{ fontSize: 34, color: TEXT, marginTop: 4 }}>$2.0M</div>
+          <div style={{ fontSize: 16, color: MUTED }}>at $15.38M post · 13% to investor</div>
+        </div>
+        <div className="font-mono" style={{ fontSize: 28, color: SUBTLE }}>→</div>
+        <div>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>Milestone · Q1'28</div>
+          <div className="font-bold" style={{ fontSize: 34, color: TEXT, marginTop: 4 }}>~$3M ARR</div>
+          <div style={{ fontSize: 16, color: MUTED }}>operator-funded growth, no services dependency</div>
+        </div>
+        <div className="font-mono" style={{ fontSize: 28, color: SUBTLE }}>→</div>
+        <div>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${GOLD})` }}>Series A target</div>
+          <div className="font-bold" style={{ fontSize: 34, color: `hsl(${GOLD})`, marginTop: 4 }}>$10M @ $50M</div>
+          <div style={{ fontSize: 16, color: MUTED }}>20% dilution · 15× forward ARR</div>
         </div>
       </div>
     </SlideShell>
@@ -359,11 +400,12 @@ function WithRail({ index, children }: { index: number; children: React.ReactNod
 }
 
 const RAW_SLIDES = [
-  { id: "reframe",      title: "01 · The Reframe · Pre-AI vs Post-AI investing",  component: <S1Reframe /> },
-  { id: "infra-bet",    title: "02 · The Bet · Not a model, not a tool",          component: <S2InfraBet /> },
-  { id: "map",          title: "03 · The Map · Four companies, one quadrant",     component: <S3Map /> },
-  { id: "architecture", title: "04 · The Architecture · Self-serve is the loop",  component: <S4Architecture /> },
-  { id: "team",         title: "05 · The Team Bet · Operators in four domains",   component: <S5Team /> },
+  { id: "reframe",      title: "01 · The Reframe · Known frame vs Unknown frame", component: <S1Reframe /> },
+  { id: "infra-bet",    title: "02 · The Bet · Four investable layers",           component: <S2InfraBet /> },
+  { id: "infra-spec",   title: "03 · Infrastructure Spec · Six components",       component: <S3InfraSpec /> },
+  { id: "map",          title: "04 · The Map · Human role decides the moat",      component: <S4Map /> },
+  { id: "moat",         title: "05 · The Moat · Human-first by design",           component: <S5Moat /> },
+  { id: "valuation",    title: "06 · The Valuation Logic · $2M at $15.38M",       component: <S6Valuation /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
