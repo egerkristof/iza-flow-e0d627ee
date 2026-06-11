@@ -1,258 +1,218 @@
 /**
- * /factory-floor. Council Review #2 applied.
- *  1. Demand-side hero ("CEO promised, can you ship?")
- *  2. "AI task" replaced with "AI workflow" everywhere
- *  3. Scale sub-headline cut
- *  4. Question prompts rewritten (Q1 rule-set framing, Q2 skill-dependency, Q4 tokens)
- *  5. Diagram is a payoff (verdict only). No progressive companion during Qs.
- *  6. Verdict restructured into 4 blocks: label, meaning, 3 bullets, next move.
+ * /factory-floor. Council Review #3 applied. Conversation, not quiz.
+ *  - Hero: sober, declarative, no Anglo sales energy.
+ *  - 3 free-text prompts (promise, workflow, grading). No multiple choice.
+ *  - Verdict: AI-generated letter, second person, signed. No metaphor in hero, earned in verdict.
+ *  - CTA: gated 20-min call request (name/company/role), founder vets, sends Cal link.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import {
-  EMPTY_ANSWERS,
-  FactoryAnswers,
-  FactoryDiagram,
-  StationKey,
-  StationState,
-} from "@/components/factory/FactoryDiagram";
+import { supabase } from "@/integrations/supabase/client";
 
-type ScaleBand = "0-2" | "3-9" | "10+";
-type VerdictState = "pre-factory" | "workshop" | "workshop-at-scale";
+type Step = "intro" | "promise" | "workflow" | "grading" | "thinking" | "verdict" | "requested";
 
-type QuestionDef = {
-  key: StationKey;
-  n: string;
-  title: string;
-  prompt: string;
-  options: { value: StationState; label: string }[];
-  reframe: string;
+type Verdict = {
+  headline: string;
+  gap_named: string;
+  breaks_next_quarter: string[];
+  the_call: string;
+  signoff_quote: string;
 };
 
-const QUESTIONS: QuestionDef[] = [
-  {
-    key: "standard", n: "01", title: "The Standard",
-    prompt:
-      "Across the AI workflows, use cases, or experiments running in your org, is there a written, agreed rule-set the AI is held to. A spec, a rubric, a definition of a good output. Something graded against, not just vibes.",
-    options: [
-      { value: "yes", label: "Yes, written and used" },
-      { value: "partial", label: "Sort of, in people's heads" },
-      { value: "no", label: "No" },
-    ],
-    reframe:
-      "Every factory starts with a spec sheet. Without one, every AI output is a craftsman opinion and every reviewer is grading on vibes.",
+const PROMPTS = {
+  promise: {
+    eyebrow: "01 / THE PROMISE",
+    question: "In one sentence, what has your CEO or board promised about AI for next quarter?",
+    hint: "What they said out loud. The number, the date, the deliverable. Their words, not yours.",
+    placeholder:
+      "e.g. 30 percent faster contract turnaround by end of Q2, using AI across legal ops.",
   },
-  {
-    key: "line", n: "02", title: "The Line",
-    prompt:
-      "When a more skilled team member and a less skilled one both use AI for the same kind of work, do they produce the same shape of output. Or wildly different ones.",
-    options: [
-      { value: "yes", label: "Same shape, every time" },
-      { value: "partial", label: "Roughly similar, depends on the person" },
-      { value: "no", label: "Completely different outputs" },
-    ],
-    reframe:
-      "A factory line produces the same part a thousand times. A workshop produces a thousand different parts. Workshops do not scale by hiring more craftsmen. They collapse.",
+  workflow: {
+    eyebrow: "02 / THE WORKFLOW",
+    question: "Name the one AI workflow you would point to if they asked tomorrow.",
+    hint: "The one actually running. Not the slide deck. Not the pilot you wish was live.",
+    placeholder: "e.g. NDA first-pass review. Drafts go to legal counsel for final sign-off.",
   },
-  {
-    key: "qa", n: "03", title: "The QA",
-    prompt:
-      "When AI produces a wrong or off-brand output, what catches it before it reaches a customer or a real decision.",
-    options: [
-      { value: "yes", label: "An automated check, in-line" },
-      { value: "partial", label: "A human reviewer, every time" },
-      { value: "no", label: "Whoever happens to notice" },
-    ],
-    reframe:
-      "Factories ship at scale because QA runs in-line, not as heroics. If your only QA is someone noticing, your error rate is whatever your most tired employee allows.",
+  grading: {
+    eyebrow: "03 / THE GRADING",
+    question: "Who graded its last output. And against what.",
+    hint: "Name the person and the standard. If neither, write that. The vague answer is the diagnosis.",
+    placeholder:
+      "e.g. Two junior associates eyeball it. There is no written rubric. We call it good if no one complains.",
   },
-  {
-    key: "meter", n: "04", title: "The Meter",
-    prompt:
-      "For your highest-volume AI workflow, do you know what one output actually costs (tokens plus reviewer time) and how often it has to be redone or fixed.",
-    options: [
-      { value: "yes", label: "Yes, both numbers" },
-      { value: "partial", label: "One of them" },
-      { value: "no", label: "Neither" },
-    ],
-    reframe:
-      "Cost without rework is a half-truth. Rework without cost is a complaint. Together they are the only honest answer to: is this workflow working.",
-  },
-];
-
-// 4-block verdict copy. Each bullet is what breaks NEXT QUARTER.
-const VERDICT_COPY: Record<VerdictState, {
-  label: string;
-  meaning: string;
-  breaks: string[];
-  nextMove: string;
-  pdfTitle: string;
-}> = {
-  "pre-factory": {
-    label: "Pre-factory",
-    meaning:
-      "AI is a few smart people doing impressive things by hand. Right stage for six months. Wrong stage to scale from.",
-    breaks: [
-      "More pilots get greenlit. None converge on a shared output standard.",
-      "Cloud spend climbs. No one in the room can answer what it bought.",
-      "Two of your best people leave because no one defines what good looks like.",
-    ],
-    nextMove:
-      "Next 14 days: write one Standard for the first AI workflow you will run. One page. Before any new pilot is approved.",
-    pdfTitle: "The Pre-Factory Brief",
-  },
-  workshop: {
-    label: "Workshop",
-    meaning:
-      "AI is producing real work used by real people. The cracks are structural, not tooling. Goodwill expires the quarter your CFO asks for unit economics.",
-    breaks: [
-      "Output drift between users becomes a launch-blocker, not a backlog item.",
-      "You become the QA function. Personally. On evenings.",
-      "Costs creep without a story. The CFO discovers it before you do.",
-    ],
-    nextMove:
-      "Next 30 days: pick your highest-volume workflow. Install one automated check. One workflow. One check. That is how the line begins.",
-    pdfTitle: "The Workshop Brief",
-  },
-  "workshop-at-scale": {
-    label: "Workshop at scale",
-    meaning:
-      "Ten or more workflows live. Hundreds of users. Monthly spend on the CFO radar. Underlying structure has not kept up. Every new initiative compounds the rework.",
-    breaks: [
-      "A board member asks for ROI. No defensible number for any of the 20+ workflows.",
-      "The CTO starts routing around you because nobody can vouch for output quality.",
-      "Best AI engineers leave. No one knows what good looks like here.",
-    ],
-    nextMove:
-      "Next 30 days: stop launching new workflows. Install the Meter on your top 3 by spend. You cannot fix what you cannot see.",
-    pdfTitle: "The Workshop-at-Scale Brief",
-  },
-};
-
-function pickVerdictState(scale: ScaleBand): VerdictState {
-  if (scale === "0-2") return "pre-factory";
-  if (scale === "3-9") return "workshop";
-  return "workshop-at-scale";
-}
-
-function pickWeakest(answers: FactoryAnswers, state: VerdictState): StationKey | null {
-  if (state === "workshop-at-scale") return "meter";
-  const order: StationKey[] = ["standard", "line", "qa", "meter"];
-  const score = (s: StationState) => (s === "no" ? 0 : s === "partial" ? 1 : 2);
-  return [...order].sort((a, b) => score(answers[a]) - score(answers[b]))[0] ?? null;
-}
-
-type Step = "intro" | "scale" | "q1" | "q2" | "q3" | "q4" | "verdict";
+} as const;
 
 export default function FactoryFloor() {
   const [step, setStep] = useState<Step>("intro");
-  const [scale, setScale] = useState<ScaleBand | null>(null);
-  const [answers, setAnswers] = useState<FactoryAnswers>(EMPTY_ANSWERS);
+  const [promise, setPromise] = useState("");
+  const [workflow, setWorkflow] = useState("");
+  const [grading, setGrading] = useState("");
+  const [verdict, setVerdict] = useState<Verdict | null>(null);
+  const [submissionId, setSubmissionId] = useState<string | null>(null);
+
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const [company, setCompany] = useState("");
+  const [role, setRole] = useState("");
+  const [requesting, setRequesting] = useState(false);
 
   useEffect(() => {
     const prev = document.title;
-    document.title = "Factory Floor. Can your operation ship what the CEO promised?";
+    document.title = "Factory Floor. The 90 seconds before next quarter.";
     return () => { document.title = prev; };
   }, []);
 
-  const verdictState = useMemo(() => (scale ? pickVerdictState(scale) : null), [scale]);
-  const weakest = useMemo(
-    () => (verdictState ? pickWeakest(answers, verdictState) : null),
-    [answers, verdictState],
-  );
-  const copy = verdictState ? VERDICT_COPY[verdictState] : null;
-  const weakestLabel = weakest
-    ? QUESTIONS.find((q) => q.key === weakest)?.title.replace("The ", "")
-    : "";
+  async function runVerdict() {
+    setStep("thinking");
+    try {
+      const { data, error } = await supabase.functions.invoke("factory-verdict", {
+        body: { promise, workflow, grading },
+      });
+      if (error) throw error;
+      const v = (data as { verdict?: Verdict })?.verdict;
+      if (!v?.headline) throw new Error("empty verdict");
 
-  function answer(key: StationKey, value: StationState, nextStep: Step) {
-    setAnswers((prev) => ({ ...prev, [key]: value }));
-    setStep(nextStep);
+      // Persist the submission, capture id for the call-request follow-up
+      const { data: inserted, error: insErr } = await supabase
+        .from("factory_floor_submissions")
+        .insert({
+          promise,
+          workflow,
+          grading,
+          verdict: v as unknown as Record<string, unknown>,
+          user_agent: navigator.userAgent.slice(0, 240),
+        })
+        .select("id")
+        .single();
+      if (!insErr && inserted?.id) setSubmissionId(inserted.id);
+
+      setVerdict(v);
+      setStep("verdict");
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "The verdict engine stalled.",
+        description: "Try again in a moment. Your answers are still here.",
+      });
+      setStep("grading");
+    }
   }
 
-  function handleEmail(e: React.FormEvent) {
+  async function requestCall(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.includes("@")) {
-      toast({ title: "Add a work email so we can send the brief." });
+    if (!name.trim() || !email.includes("@") || !company.trim()) {
+      toast({ title: "Name, work email, and company are required." });
       return;
     }
-    setSubmitted(true);
-    toast({ title: "On its way.", description: "Two pages. One template. No nurture sequence." });
+    setRequesting(true);
+    try {
+      if (submissionId) {
+        await supabase
+          .from("factory_floor_submissions")
+          .update({ name, email, company, role, call_requested: true })
+          .eq("id", submissionId);
+      }
+      const { error } = await supabase.functions.invoke("factory-call-request", {
+        body: { name, email, company, role, promise, workflow, grading, verdict, submission_id: submissionId },
+      });
+      if (error) throw error;
+      setStep("requested");
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Could not send the request.",
+        description: "Email kristof.eger@lizaos.ai directly and we will sort it.",
+      });
+    } finally {
+      setRequesting(false);
+    }
   }
 
   function reset() {
     setStep("intro");
-    setScale(null);
-    setAnswers(EMPTY_ANSWERS);
-    setEmail("");
-    setSubmitted(false);
+    setPromise(""); setWorkflow(""); setGrading("");
+    setVerdict(null); setSubmissionId(null);
+    setName(""); setEmail(""); setCompany(""); setRole("");
   }
-
-  const progress = (() => {
-    const order: Step[] = ["intro", "scale", "q1", "q2", "q3", "q4", "verdict"];
-    return Math.round((order.indexOf(step) / (order.length - 1)) * 100);
-  })();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
-          <a href="/" className="text-xs tracking-[0.2em] font-bold text-foreground">LIZA OS</a>
-          <div className="text-[10px] tracking-[0.2em] text-muted-foreground">FACTORY FLOOR / DIAGNOSTIC</div>
-        </div>
-        <div className="h-[2px] w-full bg-muted">
-          <motion.div className="h-full bg-foreground" animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
+      <div className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur">
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
+          <a href="/" className="text-xs tracking-[0.2em] font-bold">LIZA OS</a>
+          <div className="text-[10px] tracking-[0.2em] text-muted-foreground">
+            FACTORY FLOOR / OPERATING DIAGNOSTIC
+          </div>
         </div>
       </div>
 
-      <main className="mx-auto max-w-6xl px-6 py-12 md:py-20">
+      <main className="mx-auto max-w-3xl px-6 py-14 md:py-24">
         <AnimatePresence mode="wait">
-          {step === "intro" && <IntroStep key="intro" onStart={() => setStep("scale")} />}
-          {step === "scale" && (
-            <ScaleStep key="scale" onPick={(v) => { setScale(v); setStep("q1"); }} />
+          {step === "intro" && <Intro key="intro" onStart={() => setStep("promise")} />}
+
+          {step === "promise" && (
+            <Prompt
+              key="promise"
+              {...PROMPTS.promise}
+              value={promise}
+              onChange={setPromise}
+              onNext={() => setStep("workflow")}
+              onBack={() => setStep("intro")}
+              minLen={12}
+            />
           )}
-          {step === "q1" && (
-            <QuestionStep key="q1" q={QUESTIONS[0]} progressLabel="1 of 4"
-              onAnswer={(v) => answer("standard", v, "q2")} />
+
+          {step === "workflow" && (
+            <Prompt
+              key="workflow"
+              {...PROMPTS.workflow}
+              value={workflow}
+              onChange={setWorkflow}
+              onNext={() => setStep("grading")}
+              onBack={() => setStep("promise")}
+              minLen={8}
+            />
           )}
-          {step === "q2" && (
-            <QuestionStep key="q2" q={QUESTIONS[1]} progressLabel="2 of 4"
-              onAnswer={(v) => answer("line", v, "q3")} />
+
+          {step === "grading" && (
+            <Prompt
+              key="grading"
+              {...PROMPTS.grading}
+              value={grading}
+              onChange={setGrading}
+              onNext={runVerdict}
+              onBack={() => setStep("workflow")}
+              nextLabel="Generate the verdict"
+              minLen={6}
+            />
           )}
-          {step === "q3" && (
-            <QuestionStep key="q3" q={QUESTIONS[2]} progressLabel="3 of 4"
-              onAnswer={(v) => answer("qa", v, "q4")} />
-          )}
-          {step === "q4" && (
-            <QuestionStep key="q4" q={QUESTIONS[3]} progressLabel="4 of 4"
-              onAnswer={(v) => answer("meter", v, "verdict")} />
-          )}
-          {step === "verdict" && copy && weakest && (
-            <VerdictStep
+
+          {step === "thinking" && <Thinking key="thinking" />}
+
+          {step === "verdict" && verdict && (
+            <VerdictLetter
               key="verdict"
-              copy={copy}
-              answers={answers}
-              weakest={weakest}
-              weakestLabel={weakestLabel ?? ""}
-              email={email}
-              onEmail={setEmail}
-              submitted={submitted}
-              onSubmit={handleEmail}
+              verdict={verdict}
+              name={name} email={email} company={company} role={role}
+              onName={setName} onEmail={setEmail} onCompany={setCompany} onRole={setRole}
+              onSubmit={requestCall}
+              submitting={requesting}
               onReset={reset}
             />
           )}
+
+          {step === "requested" && <Requested key="requested" name={name} onReset={reset} />}
         </AnimatePresence>
       </main>
 
       <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 text-xs text-muted-foreground">
-          <span>LIZA OS. Standards engineering for AI-native organizations.</span>
+        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6 text-xs text-muted-foreground">
+          <span>LIZA OS. The operating layer for AI-native organizations.</span>
           <a href="/" className="hover:text-foreground">lizaos.ai</a>
         </div>
       </footer>
@@ -264,184 +224,239 @@ const fade = {
   initial: { opacity: 0, y: 10 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -10 },
-  transition: { duration: 0.3, ease: "easeOut" as const },
+  transition: { duration: 0.35, ease: "easeOut" as const },
 };
 
-function IntroStep({ onStart }: { onStart: () => void }) {
+function Intro({ onStart }: { onStart: () => void }) {
   return (
-    <motion.section {...fade} className="mx-auto max-w-3xl text-center">
-      <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">FOR HEADS OF AI / DACH</p>
-      <h1 className="mt-6 text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight">
-        Your CEO just promised AI results next quarter.
-        <br />
-        Can your operation actually ship them?
-      </h1>
-      <p className="mt-6 text-lg text-muted-foreground">
-        4 questions. 90 seconds. A verdict you can take into Monday&apos;s exec review.
-      </p>
-      <div className="mt-10">
-        <Button size="lg" onClick={onStart} className="text-base px-8 h-12">
-          Run the check <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
-      <p className="mt-6 text-xs text-muted-foreground">
-        You leave with: a four-station diagram of your AI operation, the gap that breaks next, and a single 30-day move.
-      </p>
-    </motion.section>
-  );
-}
-
-function ScaleStep({ onPick }: { onPick: (v: ScaleBand) => void }) {
-  const options: { value: ScaleBand; label: string; sub: string }[] = [
-    { value: "0-2", label: "0 to 2", sub: "Just starting." },
-    { value: "3-9", label: "3 to 9", sub: "Real, but contained." },
-    { value: "10+", label: "10 or more", sub: "Running at scale." },
-  ];
-  return (
-    <motion.section {...fade} className="mx-auto max-w-3xl">
-      <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">SCALE</p>
-      <h2 className="mt-4 text-2xl md:text-4xl font-bold tracking-tight">
-        Roughly how many AI workflows are live in your org today?
-      </h2>
-      <p className="mt-3 text-muted-foreground">
-        Pick the closest number. You can be rough.
-      </p>
-
-      <div className="mt-8 grid gap-3">
-        {options.map((o) => (
-          <button
-            key={o.value}
-            onClick={() => onPick(o.value)}
-            className="group flex items-center justify-between rounded-lg border border-border bg-background px-6 py-5 text-left transition-all hover:border-foreground hover:bg-accent"
-          >
-            <div>
-              <div className="text-lg font-bold">{o.label}</div>
-              <div className="text-sm text-muted-foreground">{o.sub}</div>
-            </div>
-            <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-foreground" />
-          </button>
-        ))}
-      </div>
-    </motion.section>
-  );
-}
-
-function QuestionStep({
-  q, progressLabel, onAnswer,
-}: {
-  q: QuestionDef; progressLabel: string; onAnswer: (v: StationState) => void;
-}) {
-  return (
-    <motion.section {...fade} className="mx-auto max-w-3xl">
+    <motion.section {...fade} className="text-left">
       <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">
-        STATION {q.n} / {q.title.toUpperCase()} / {progressLabel}
+        FOR HEADS OF AI / DACH
       </p>
-      <h2 className="mt-4 text-2xl md:text-3xl font-bold tracking-tight">{q.prompt}</h2>
+      <h1 className="mt-6 text-4xl md:text-[3.4rem] font-bold leading-[1.05] tracking-tight">
+        Next quarter, your board expects AI results.
+        <br />
+        <span className="text-foreground/70">
+          90 seconds tells you whether your operation can deliver them.
+        </span>
+      </h1>
 
-      <div className="mt-8 grid gap-3">
-        {q.options.map((o) => (
-          <button
-            key={o.value}
-            onClick={() => onAnswer(o.value)}
-            className="rounded-lg border border-border bg-background px-5 py-5 text-left transition-all hover:border-foreground hover:bg-accent"
-          >
-            <div className="text-sm font-bold">{o.label}</div>
-          </button>
-        ))}
+      <div className="mt-10 space-y-4 max-w-2xl text-[15px] leading-relaxed text-foreground/80">
+        <p>
+          Three questions. You type the answers in your own words. We write you a one-page letter
+          naming the specific gap between what was promised and what your operation can actually
+          govern.
+        </p>
+        <p>
+          No score. No PDF nurture sequence. Read it on screen, decide if a 20 minute call with
+          us is worth your Monday.
+        </p>
       </div>
 
-      <p className="mt-8 text-sm text-muted-foreground italic max-w-2xl">{q.reframe}</p>
+      <div className="mt-12 flex items-center gap-6">
+        <Button size="lg" onClick={onStart} className="text-base px-7 h-12">
+          Begin <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+        <p className="text-xs text-muted-foreground">
+          Your answers are private. Letter is generated in ~5 seconds.
+        </p>
+      </div>
     </motion.section>
   );
 }
 
-function VerdictStep({
-  copy, answers, weakest, weakestLabel, email, onEmail, submitted, onSubmit, onReset,
+function Prompt({
+  eyebrow, question, hint, placeholder, value, onChange, onNext, onBack, nextLabel, minLen,
 }: {
-  copy: typeof VERDICT_COPY[VerdictState];
-  answers: FactoryAnswers;
-  weakest: StationKey;
-  weakestLabel: string;
-  email: string;
-  onEmail: (v: string) => void;
-  submitted: boolean;
+  eyebrow: string;
+  question: string;
+  hint: string;
+  placeholder: string;
+  value: string;
+  onChange: (v: string) => void;
+  onNext: () => void;
+  onBack: () => void;
+  nextLabel?: string;
+  minLen: number;
+}) {
+  const ref = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => { ref.current?.focus(); }, []);
+  const ready = value.trim().length >= minLen;
+
+  return (
+    <motion.section {...fade}>
+      <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">{eyebrow}</p>
+      <h2 className="mt-4 text-2xl md:text-[2rem] font-bold tracking-tight leading-[1.15]">
+        {question}
+      </h2>
+      <p className="mt-3 text-sm text-muted-foreground max-w-2xl">{hint}</p>
+
+      <Textarea
+        ref={ref}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        rows={4}
+        className="mt-8 text-base leading-relaxed bg-card border-border focus-visible:ring-foreground"
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && ready) onNext();
+        }}
+      />
+
+      <div className="mt-6 flex items-center justify-between">
+        <button
+          onClick={onBack}
+          className="text-xs tracking-[0.2em] text-muted-foreground hover:text-foreground"
+        >
+          BACK
+        </button>
+        <div className="flex items-center gap-3">
+          <span className="text-[11px] text-muted-foreground hidden sm:inline">
+            {ready ? "press Cmd+Enter" : `at least ${minLen} characters`}
+          </span>
+          <Button onClick={onNext} disabled={!ready} size="lg" className="h-11">
+            {nextLabel ?? "Next"} <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+function Thinking() {
+  return (
+    <motion.section {...fade} className="text-left py-16">
+      <Loader2 className="h-6 w-6 animate-spin text-foreground/60" />
+      <h2 className="mt-6 text-2xl font-bold tracking-tight">Reading your three answers.</h2>
+      <p className="mt-3 text-muted-foreground max-w-xl">
+        Naming the structural gap between the promise and the workflow. Drafting the letter.
+      </p>
+    </motion.section>
+  );
+}
+
+function VerdictLetter({
+  verdict, name, email, company, role,
+  onName, onEmail, onCompany, onRole, onSubmit, submitting, onReset,
+}: {
+  verdict: Verdict;
+  name: string; email: string; company: string; role: string;
+  onName: (v: string) => void; onEmail: (v: string) => void;
+  onCompany: (v: string) => void; onRole: (v: string) => void;
   onSubmit: (e: React.FormEvent) => void;
+  submitting: boolean;
   onReset: () => void;
 }) {
   return (
-    <motion.section {...fade} className="mx-auto max-w-5xl">
-      {/* Block 1: THE LABEL */}
-      <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">YOUR VERDICT</p>
-      <h2 className="mt-3 text-3xl md:text-5xl font-bold tracking-tight leading-[1.05]">
-        {copy.label}.{" "}
-        <span className="text-destructive">Missing: {weakestLabel}.</span>{" "}
-        <span className="text-foreground/70">Install in 30 days.</span>
-      </h2>
-
-      {/* Block 2: WHAT THIS MEANS */}
-      <p className="mt-6 max-w-3xl text-lg text-foreground leading-snug">{copy.meaning}</p>
-
-      {/* The diagram. Single payoff render. */}
-      <div className="mt-10">
-        <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold mb-3">
-          YOUR OPERATION, TODAY
+    <motion.section {...fade}>
+      {/* The letter */}
+      <article className="rounded-sm border border-border bg-card p-8 md:p-12 shadow-[0_1px_0_hsl(var(--foreground)/0.04)]">
+        <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">
+          PRIVATE MEMO / TO THE HEAD OF AI
         </p>
-        <FactoryDiagram answers={answers} weakest={weakest} size="lg" futureState />
-      </div>
 
-      {/* Block 3: WHAT BREAKS NEXT QUARTER */}
-      <div className="mt-12">
-        <p className="text-[10px] tracking-[0.3em] text-destructive font-bold mb-4">
-          WHAT BREAKS NEXT QUARTER
+        <h2 className="mt-5 text-2xl md:text-[2.1rem] font-bold tracking-tight leading-[1.15]">
+          {verdict.headline}
+        </h2>
+
+        <p className="mt-6 text-[15px] md:text-base leading-relaxed text-foreground/90">
+          {verdict.gap_named}
         </p>
-        <ul className="space-y-3 max-w-3xl">
-          {copy.breaks.map((b, i) => (
-            <li key={i} className="flex gap-4 text-base leading-snug">
-              <span className="text-destructive font-bold tabular-nums">0{i + 1}</span>
-              <span>{b}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
 
-      {/* Block 4: NEXT MOVE */}
-      <div className="mt-12 rounded-lg border-2 border-foreground bg-background p-6 md:p-8">
-        <p className="text-[10px] tracking-[0.3em] text-foreground font-bold">NEXT MOVE</p>
-        <p className="mt-3 text-xl md:text-2xl font-bold leading-snug">{copy.nextMove}</p>
-      </div>
+        <div className="mt-8 border-t border-border pt-6">
+          <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold mb-4">
+            WHAT BREAKS BEFORE THE QUARTER ENDS
+          </p>
+          <ol className="space-y-3">
+            {verdict.breaks_next_quarter.map((b, i) => (
+              <li key={i} className="flex gap-4 text-[15px] leading-relaxed">
+                <span className="font-bold tabular-nums text-foreground/50 shrink-0 w-6">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
 
-      {/* Email gate */}
-      <div className="mt-10 grid gap-8 md:grid-cols-2 md:items-center rounded-lg border border-border bg-card p-8">
-        <div>
-          <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">THE BRIEF</p>
-          <h3 className="mt-2 text-2xl font-bold">{copy.pdfTitle}</h3>
-          <p className="mt-3 text-sm text-muted-foreground">
-            2 pages. The diagnosis, the named gap, and one template you can use without us. One PDF. No sequence.
+        <div className="mt-8 border-t border-border pt-6">
+          <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold mb-3">
+            WHAT A 20 MINUTE CALL RESOLVES
+          </p>
+          <p className="text-[15px] leading-relaxed text-foreground/90">{verdict.the_call}</p>
+        </div>
+
+        <div className="mt-10 border-t border-border pt-6">
+          <p className="italic text-foreground/70 text-[15px]">
+            &ldquo;{verdict.signoff_quote}&rdquo;
+          </p>
+          <p className="mt-4 text-xs tracking-[0.15em] text-muted-foreground">
+            KRISTOF EGER &middot; LIZA OS
           </p>
         </div>
-        <div>
-          {!submitted ? (
-            <form onSubmit={onSubmit} className="flex gap-2">
-              <Input
-                type="email" required placeholder="work@company.com"
-                value={email} onChange={(e) => onEmail(e.target.value)} className="h-12"
-              />
-              <Button type="submit" size="lg" className="h-12">Send PDF</Button>
-            </form>
-          ) : (
-            <div className="flex items-center gap-3 rounded-md border border-foreground bg-accent px-4 py-3">
-              <Check className="h-5 w-5" />
-              <span className="text-sm font-medium">On its way. Check your inbox in a minute.</span>
-            </div>
-          )}
-        </div>
+      </article>
+
+      {/* Gated call request */}
+      <div className="mt-12 rounded-sm border-2 border-foreground bg-background p-8 md:p-10">
+        <p className="text-[10px] tracking-[0.3em] text-foreground font-bold">REQUEST THE CALL</p>
+        <h3 className="mt-3 text-xl md:text-2xl font-bold tracking-tight">
+          We do not run a calendar widget. We vet first, then send a slot within 24 hours.
+        </h3>
+        <p className="mt-3 text-sm text-muted-foreground max-w-2xl">
+          Three details. If your situation matches what we work on, you get a private link the
+          same day.
+        </p>
+
+        <form onSubmit={onSubmit} className="mt-6 grid gap-3 md:grid-cols-2">
+          <Input value={name} onChange={(e) => onName(e.target.value)} placeholder="Full name" className="h-11" required />
+          <Input type="email" value={email} onChange={(e) => onEmail(e.target.value)} placeholder="Work email" className="h-11" required />
+          <Input value={company} onChange={(e) => onCompany(e.target.value)} placeholder="Company" className="h-11" required />
+          <Input value={role} onChange={(e) => onRole(e.target.value)} placeholder="Role (e.g. Head of AI)" className="h-11" />
+          <div className="md:col-span-2 flex items-center justify-between gap-4 pt-2">
+            <p className="text-[11px] text-muted-foreground">
+              No newsletter. No sequence. One reply from a human.
+            </p>
+            <Button type="submit" size="lg" disabled={submitting} className="h-11">
+              {submitting ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending</>
+              ) : (
+                <>Request the call <ArrowRight className="ml-2 h-4 w-4" /></>
+              )}
+            </Button>
+          </div>
+        </form>
       </div>
 
       <div className="mt-10 text-center">
         <button onClick={onReset} className="text-xs tracking-[0.2em] text-muted-foreground hover:text-foreground">
-          RUN AGAIN
+          START OVER
         </button>
       </div>
+    </motion.section>
+  );
+}
+
+function Requested({ name, onReset }: { name: string; onReset: () => void }) {
+  return (
+    <motion.section {...fade} className="py-12">
+      <div className="inline-flex items-center gap-3 rounded-full border border-foreground bg-accent px-4 py-2">
+        <Check className="h-4 w-4" />
+        <span className="text-xs tracking-[0.15em] font-bold">REQUEST RECEIVED</span>
+      </div>
+      <h2 className="mt-6 text-3xl md:text-4xl font-bold tracking-tight leading-tight">
+        Thank you{name ? `, ${name.split(" ")[0]}` : ""}. We will reply within 24 hours.
+      </h2>
+      <p className="mt-4 text-muted-foreground max-w-xl">
+        If the fit is right, you receive a private booking link from kristof.eger@lizaos.ai. If
+        not, you receive a short note pointing you to the one thing worth doing this month.
+        Either way, a human reads your answers before we respond.
+      </p>
+      <button
+        onClick={onReset}
+        className="mt-8 text-xs tracking-[0.2em] text-muted-foreground hover:text-foreground"
+      >
+        RUN ANOTHER &rarr;
+      </button>
     </motion.section>
   );
 }
