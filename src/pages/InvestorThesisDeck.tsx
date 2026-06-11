@@ -206,27 +206,27 @@ function S4Map() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Map" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 62, lineHeight: 1.05, color: TEXT, marginBottom: 12 }}>
-          The human role decides the moat. The quadrant top-right is open.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 12 }}>
+          Where the others sit. Where we sit.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
-          Other infrastructure players solve scale to some degree. None of them design for the human as a co-author the system gets smarter from.
+        <p className="font-semibold" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
+          Two questions decide the position. How is it delivered (services or self-serve), and what the human is asked to do (approve AI's work, or co-author it).
         </p>
       </div>
 
-      {/* Y axis label */}
-      <div className="absolute font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: SUBTLE, left: 130, top: PLOT.top - 30 }}>
-        Human role: Co-author ↑
+      {/* Y axis labels — outside plot, vertically stacked, larger */}
+      <div className="absolute font-bold uppercase tracking-[0.18em]" style={{ fontSize: 15, color: TEXT, left: 130, top: PLOT.top - 4, width: 170, lineHeight: 1.2 }}>
+        Human as<br/>co-author ↑
       </div>
-      <div className="absolute font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: SUBTLE, left: 130, top: PLOT.top + PLOT.h - 8 }}>
-        Human role: Approver ↓
+      <div className="absolute font-bold uppercase tracking-[0.18em]" style={{ fontSize: 15, color: SUBTLE, left: 130, top: PLOT.top + PLOT.h - 40, width: 170, lineHeight: 1.2 }}>
+        ↓ Human as<br/>approver
       </div>
-      {/* X axis labels */}
-      <div className="absolute font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: SUBTLE, left: PLOT.left, top: PLOT.top + PLOT.h + 18 }}>
-        ← Services-led
+      {/* X axis labels — clearly below plot, larger */}
+      <div className="absolute font-bold uppercase tracking-[0.18em]" style={{ fontSize: 15, color: SUBTLE, left: PLOT.left, top: PLOT.top + PLOT.h + 22 }}>
+        ← Services-led delivery
       </div>
-      <div className="absolute font-bold uppercase tracking-[0.2em] text-right" style={{ fontSize: 13, color: SUBTLE, left: PLOT.left + PLOT.w - 200, top: PLOT.top + PLOT.h + 18, width: 200 }}>
-        Self-serve →
+      <div className="absolute font-bold uppercase tracking-[0.18em] text-right" style={{ fontSize: 15, color: TEXT, left: PLOT.left + PLOT.w - 320, top: PLOT.top + PLOT.h + 22, width: 320 }}>
+        Self-serve delivery →
       </div>
 
       {/* Plot area */}
