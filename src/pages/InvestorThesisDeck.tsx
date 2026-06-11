@@ -66,20 +66,20 @@ function SlideShell({ children }: { children: React.ReactNode }) {
 // ─── Slide 01 · Known frame vs Unknown frame ────────────────────────────────
 function S1Reframe() {
   const rows = [
-    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The enterprise core. The part of the company that has to exist no matter which model wins." },
-    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "There is no comp set yet. You are pricing a team that can build the core." },
-    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The team holds a firm core while the shell around it keeps moving." },
+    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The part of the company that has to keep working no matter which model wins." },
+    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "No comp set yet. You are pricing the team that can actually build this part." },
+    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The team holds the firm core steady while everything else around it keeps changing." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 76, lineHeight: 1.03, color: TEXT, marginBottom: 0 }}>
-          In a known world you invest in known categories. In an unknown world you invest in the enterprise core.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 58, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          What is worth investing in now is the part that has to work inside the enterprise.
         </h1>
       </div>
 
-      <div className="absolute" style={{ left: 112, right: 112, top: 410 }}>
+      <div className="absolute" style={{ left: 112, right: 112, top: 360 }}>
         <div className="grid grid-cols-[240px_1fr_1fr] gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: CHROME_BORDER, background: BG }}>
           <div className="px-7 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: SUBTLE, background: CARD_ALT }}>Dimension</div>
           <div className="px-8 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Known world · Pre AI native</div>
