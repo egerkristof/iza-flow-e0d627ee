@@ -14,3 +14,9 @@ verify_jwt = false
 
 [functions.notify-calculator-lead]
 verify_jwt = false
+
+[functions.factory-verdict]
+verify_jwt = false
+
+[functions.factory-call-request]
+verify_jwt = false
