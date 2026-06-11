@@ -84,7 +84,7 @@ export default function FactoryFloor() {
           promise,
           workflow,
           grading,
-          verdict: v as unknown as Record<string, unknown>,
+          verdict: v as unknown as never,
           user_agent: navigator.userAgent.slice(0, 240),
         }])
         .select("id")
