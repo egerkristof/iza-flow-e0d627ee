@@ -399,12 +399,12 @@ function WithRail({ index, children }: { index: number; children: React.ReactNod
 }
 
 const RAW_SLIDES = [
-  { id: "reframe",      title: "01 · The Reframe · Known frame vs Unknown frame", component: <S1Reframe /> },
-  { id: "infra-bet",    title: "02 · The Bet · Four investable layers",           component: <S2InfraBet /> },
-  { id: "infra-spec",   title: "03 · Infrastructure Spec · Six components",       component: <S3InfraSpec /> },
-  { id: "map",          title: "04 · The Map · Human role decides the moat",      component: <S4Map /> },
-  { id: "moat",         title: "05 · The Moat · Human-first by design",           component: <S5Moat /> },
-  { id: "valuation",    title: "06 · The Valuation Logic · $2M at $15.38M",       component: <S6Valuation /> },
+  { id: "reframe",      title: "01 · Known world vs unknown world",         component: <S1Reframe /> },
+  { id: "infra-bet",    title: "02 · Only one bet lives inside the customer", component: <S2InfraBet /> },
+  { id: "infra-spec",   title: "03 · What the enterprise core has to have",  component: <S3InfraSpec /> },
+  { id: "map",          title: "04 · Where the others sit. Where we sit.",   component: <S4Map /> },
+  { id: "moat",         title: "05 · Execution gets cheap. Judgment does not.", component: <S5Moat /> },
+  { id: "valuation",    title: "06 · The number is the conclusion",          component: <S6Valuation /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
