@@ -8,6 +8,7 @@ const ImpactDeck = lazy(() => import("@/pages/ImpactDeck"));
 const HoldingDeck = lazy(() => import("@/pages/HoldingDeck"));
 const FactoryDeck = lazy(() => import("@/pages/FactoryDeck"));
 const ThesisDeck = lazy(() => import("@/pages/ThesisDeck"));
+const InvestorThesisDeck = lazy(() => import("@/pages/InvestorThesisDeck"));
 const SeedPitchDeck = lazy(() => import("@/pages/SeedPitchDeck"));
 const SeedPitchDeckSkeptic = lazy(() => import("@/pages/SeedPitchDeckSkeptic"));
 const SeedPitchDeckLens = lazy(() => import("@/pages/SeedPitchDeckLens"));
