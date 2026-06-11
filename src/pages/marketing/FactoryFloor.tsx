@@ -1,22 +1,11 @@
 /**
- * /factory-floor — diagnostic landing page.
- *
- * Visual + copy contract:
- *   docs/factory-floor-copy.md
- *   docs/storyboards/factory-floor-v2.svg
- *
- * Council notes baked in:
- *  1. Cross-section (not 2x2). Horizontal production line.
- *  2. Progressive build — stations fill as user answers.
- *  3. Three-noun verdict line. Workshop. Missing: QA. Install in 30 days.
- *  4. Verdict-shift = Today + 6 months side-by-side, sequenced (~500ms beat).
- *  5. Leak drops on missing stations (irregular teardrops, not circles).
- *  6. Grid-paper background on every result surface.
- *  7. No black "VERDICT" bar — verdict lives inside the diagram surface.
- *  8. Email gate at the end only — no signup to start.
- *  9. Scene 0 (scale anchor) first. Drives State A/B/C.
- * 10. "AI task" language throughout (not "workflow" / "use case").
- * 11. Bonus number ("23 stations") emphasized as emotional spike in 6-month pane.
+ * /factory-floor. Council Review #2 applied.
+ *  1. Demand-side hero ("CEO promised, can you ship?")
+ *  2. "AI task" replaced with "AI workflow" everywhere
+ *  3. Scale sub-headline cut
+ *  4. Question prompts rewritten (Q1 rule-set framing, Q2 skill-dependency, Q4 tokens)
+ *  5. Diagram is a payoff (verdict only). No progressive companion during Qs.
+ *  6. Verdict restructured into 4 blocks: label, meaning, 3 bullets, next move.
  */
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,10 +20,6 @@ import {
   StationKey,
   StationState,
 } from "@/components/factory/FactoryDiagram";
-
-// ---------------------------------------------------------------------------
-// Types & data
-// ---------------------------------------------------------------------------
 
 type ScaleBand = "0-2" | "3-9" | "10+";
 type VerdictState = "pre-factory" | "workshop" | "workshop-at-scale";
@@ -52,32 +37,33 @@ const QUESTIONS: QuestionDef[] = [
   {
     key: "standard", n: "01", title: "The Standard",
     prompt:
-      "Pick one AI task running in your org today (or the first one you're about to run). Is there a written, agreed definition of what a good output looks like, that the AI is held to?",
+      "Across the AI workflows, use cases, or experiments running in your org, is there a written, agreed rule-set the AI is held to. A spec, a rubric, a definition of a good output. Something graded against, not just vibes.",
     options: [
       { value: "yes", label: "Yes, written and used" },
       { value: "partial", label: "Sort of, in people's heads" },
       { value: "no", label: "No" },
     ],
     reframe:
-      "Every factory starts with a spec sheet. Without one, every AI output is a craftsman's opinion, and every reviewer is grading on vibes.",
+      "Every factory starts with a spec sheet. Without one, every AI output is a craftsman opinion and every reviewer is grading on vibes.",
   },
   {
     key: "line", n: "02", title: "The Line",
-    prompt: "When two different people run that same AI task, do they get the same shape of output?",
+    prompt:
+      "When a more skilled team member and a less skilled one both use AI for the same kind of work, do they produce the same shape of output. Or wildly different ones.",
     options: [
-      { value: "yes", label: "Yes, it's templated" },
-      { value: "partial", label: "Roughly, depends on the person" },
-      { value: "no", label: "No, every output looks different" },
+      { value: "yes", label: "Same shape, every time" },
+      { value: "partial", label: "Roughly similar, depends on the person" },
+      { value: "no", label: "Completely different outputs" },
     ],
     reframe:
-      "A factory line produces the same part a thousand times. A workshop produces a thousand different parts. Workshops don't scale by hiring more craftsmen. They collapse.",
+      "A factory line produces the same part a thousand times. A workshop produces a thousand different parts. Workshops do not scale by hiring more craftsmen. They collapse.",
   },
   {
     key: "qa", n: "03", title: "The QA",
     prompt:
-      "When that AI task produces a wrong or off-brand output, what catches it before it reaches a customer or decision?",
+      "When AI produces a wrong or off-brand output, what catches it before it reaches a customer or a real decision.",
     options: [
-      { value: "yes", label: "An automated check" },
+      { value: "yes", label: "An automated check, in-line" },
       { value: "partial", label: "A human reviewer, every time" },
       { value: "no", label: "Whoever happens to notice" },
     ],
@@ -87,65 +73,62 @@ const QUESTIONS: QuestionDef[] = [
   {
     key: "meter", n: "04", title: "The Meter",
     prompt:
-      "For that AI task, do you know both what one output costs (model plus human time) and how often an output has to be redone?",
+      "For your highest-volume AI workflow, do you know what one output actually costs (tokens plus reviewer time) and how often it has to be redone or fixed.",
     options: [
-      { value: "yes", label: "Yes, both" },
+      { value: "yes", label: "Yes, both numbers" },
       { value: "partial", label: "One of them" },
       { value: "no", label: "Neither" },
     ],
     reframe:
-      "Cost without rework is a half-truth. Rework without cost is a complaint. Together they're the only honest answer to: is this AI task working?",
+      "Cost without rework is a half-truth. Rework without cost is a complaint. Together they are the only honest answer to: is this workflow working.",
   },
 ];
 
-// ---------------------------------------------------------------------------
-// Verdict engine
-// ---------------------------------------------------------------------------
-
+// 4-block verdict copy. Each bullet is what breaks NEXT QUARTER.
 const VERDICT_COPY: Record<VerdictState, {
-  headline: string;
-  posture: string;
-  diagnosis: string;
-  futureScene: string;
-  futureCount: string;
-  futureDelta: string;
+  label: string;
+  meaning: string;
+  breaks: string[];
   nextMove: string;
   pdfTitle: string;
 }> = {
   "pre-factory": {
-    headline: "You're one hire away from the most expensive mistake of your AI program.",
-    posture: "Pre-factory",
-    diagnosis:
-      "AI in your org is a few smart people doing impressive things by hand. That's the workshop stage, and it's the right stage for about six months. The trap is the next decision: most leaders respond to early wins by greenlighting more pilots and hiring more AI people. That's hiring more craftsmen for a workshop that has no spec sheet, no line, no QA, no meter. It doesn't scale. It multiplies the chaos.",
-    futureScene:
-      "A Monday in May. 12 AI initiatives live across 5 teams. No two produce output the same way. Three have quietly stopped. Your CFO asks what the cloud bill bought. You don't have an answer that survives the meeting.",
-    futureCount: "12",
-    futureDelta: "from 1",
-    nextMove: "In the next 14 days, write one Standard for the first AI task you'll run. One page. Before any new pilot is greenlit.",
+    label: "Pre-factory",
+    meaning:
+      "AI is a few smart people doing impressive things by hand. Right stage for six months. Wrong stage to scale from.",
+    breaks: [
+      "More pilots get greenlit. None converge on a shared output standard.",
+      "Cloud spend climbs. No one in the room can answer what it bought.",
+      "Two of your best people leave because no one defines what good looks like.",
+    ],
+    nextMove:
+      "Next 14 days: write one Standard for the first AI workflow you will run. One page. Before any new pilot is approved.",
     pdfTitle: "The Pre-Factory Brief",
   },
   workshop: {
-    headline: "You have a workshop. It's already bruising. You have months, not years, to install the line.",
-    posture: "Workshop",
-    diagnosis:
-      "You're past the demo phase. AI is producing real work, used by real people, on real customer-facing surfaces. The cracks are appearing in the places cracks always appear in a workshop being asked to behave like a factory: outputs drift between users, review is a bottleneck, costs creep without a story, and you personally are the QA function. None of this is a tooling problem. It's structural. Goodwill expires the quarter after the CFO asks for unit economics.",
-    futureScene:
-      "A Monday in May. Your best AI task now runs 800 times a week. You're reviewing 30 percent of outputs personally because no one else can hold the bar. You stop a launch on Wednesday because two outputs went out wrong on Tuesday and you can't tell whether it's the model, the prompt, or the user. The CEO asks if AI is ready for the next department. You hedge.",
-    futureCount: "800/wk",
-    futureDelta: "from 60/wk",
-    nextMove: "In the next 30 days, pick your highest-volume AI task. Install one automated check. One task, one check. That's how the line begins.",
+    label: "Workshop",
+    meaning:
+      "AI is producing real work used by real people. The cracks are structural, not tooling. Goodwill expires the quarter your CFO asks for unit economics.",
+    breaks: [
+      "Output drift between users becomes a launch-blocker, not a backlog item.",
+      "You become the QA function. Personally. On evenings.",
+      "Costs creep without a story. The CFO discovers it before you do.",
+    ],
+    nextMove:
+      "Next 30 days: pick your highest-volume workflow. Install one automated check. One workflow. One check. That is how the line begins.",
     pdfTitle: "The Workshop Brief",
   },
   "workshop-at-scale": {
-    headline: "You are running a factory with no Standard, no QA, no Meter. The cost is compounding monthly.",
-    posture: "Workshop at scale",
-    diagnosis:
-      "You have ten or more AI tasks live, hundreds of people using them, and a monthly spend that shows up on the CFO's radar. The structure underneath has not kept up. Every new initiative inherits the missing structure and compounds the rework. The right move is not another pilot. The right move is to stop launching, install the Meter first so you can see the bleeding, and only then rebuild the line.",
-    futureScene:
-      "A Monday in May. A board member asks for the ROI of your AI program. 23 tasks live, no defensible number for any of them. The CTO has started routing around you. Two of your best AI engineers have left because no one knows what good looks like here.",
-    futureCount: "23",
-    futureDelta: "from 12",
-    nextMove: "In the next 30 days, stop launching new AI tasks. Install the Meter on your top 3 by spend. You cannot fix what you cannot see.",
+    label: "Workshop at scale",
+    meaning:
+      "Ten or more workflows live. Hundreds of users. Monthly spend on the CFO radar. Underlying structure has not kept up. Every new initiative compounds the rework.",
+    breaks: [
+      "A board member asks for ROI. No defensible number for any of the 20+ workflows.",
+      "The CTO starts routing around you because nobody can vouch for output quality.",
+      "Best AI engineers leave. No one knows what good looks like here.",
+    ],
+    nextMove:
+      "Next 30 days: stop launching new workflows. Install the Meter on your top 3 by spend. You cannot fix what you cannot see.",
     pdfTitle: "The Workshop-at-Scale Brief",
   },
 };
@@ -157,18 +140,11 @@ function pickVerdictState(scale: ScaleBand): VerdictState {
 }
 
 function pickWeakest(answers: FactoryAnswers, state: VerdictState): StationKey | null {
-  // Workshop-at-scale forces Meter first (per copy doc).
   if (state === "workshop-at-scale") return "meter";
-  // Otherwise rank by missing > partial > yes, in factory order.
   const order: StationKey[] = ["standard", "line", "qa", "meter"];
   const score = (s: StationState) => (s === "no" ? 0 : s === "partial" ? 1 : 2);
-  const sorted = [...order].sort((a, b) => score(answers[a]) - score(answers[b]));
-  return sorted[0] ?? null;
+  return [...order].sort((a, b) => score(answers[a]) - score(answers[b]))[0] ?? null;
 }
-
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
 
 type Step = "intro" | "scale" | "q1" | "q2" | "q3" | "q4" | "verdict";
 
@@ -176,13 +152,12 @@ export default function FactoryFloor() {
   const [step, setStep] = useState<Step>("intro");
   const [scale, setScale] = useState<ScaleBand | null>(null);
   const [answers, setAnswers] = useState<FactoryAnswers>(EMPTY_ANSWERS);
-  const [showFuture, setShowFuture] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const prev = document.title;
-    document.title = "Factory Floor — workshop or factory? A 90-second AI diagnostic.";
+    document.title = "Factory Floor. Can your operation ship what the CEO promised?";
     return () => { document.title = prev; };
   }, []);
 
@@ -196,15 +171,9 @@ export default function FactoryFloor() {
     ? QUESTIONS.find((q) => q.key === weakest)?.title.replace("The ", "")
     : "";
 
-  // ----- handlers -----
   function answer(key: StationKey, value: StationState, nextStep: Step) {
     setAnswers((prev) => ({ ...prev, [key]: value }));
     setStep(nextStep);
-    if (nextStep === "verdict") {
-      // Reveal "Today" first, then "6 months" after the council's ~500ms beat.
-      setShowFuture(false);
-      window.setTimeout(() => setShowFuture(true), 700);
-    }
   }
 
   function handleEmail(e: React.FormEvent) {
@@ -221,7 +190,6 @@ export default function FactoryFloor() {
     setStep("intro");
     setScale(null);
     setAnswers(EMPTY_ANSWERS);
-    setShowFuture(false);
     setEmail("");
     setSubmitted(false);
   }
@@ -233,52 +201,38 @@ export default function FactoryFloor() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Top progress strip */}
       <div className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
           <a href="/" className="text-xs tracking-[0.2em] font-bold text-foreground">LIZA OS</a>
           <div className="text-[10px] tracking-[0.2em] text-muted-foreground">FACTORY FLOOR / DIAGNOSTIC</div>
         </div>
         <div className="h-[2px] w-full bg-muted">
-          <motion.div
-            className="h-full bg-foreground"
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.3 }}
-          />
+          <motion.div className="h-full bg-foreground" animate={{ width: `${progress}%` }} transition={{ duration: 0.3 }} />
         </div>
       </div>
 
       <main className="mx-auto max-w-6xl px-6 py-12 md:py-20">
         <AnimatePresence mode="wait">
           {step === "intro" && <IntroStep key="intro" onStart={() => setStep("scale")} />}
-
           {step === "scale" && (
-            <ScaleStep
-              key="scale"
-              onPick={(v) => {
-                setScale(v);
-                setStep("q1");
-              }}
-            />
+            <ScaleStep key="scale" onPick={(v) => { setScale(v); setStep("q1"); }} />
           )}
-
           {step === "q1" && (
-            <QuestionStep key="q1" q={QUESTIONS[0]} progressLabel="1 of 4" answers={answers} weakest={weakest}
+            <QuestionStep key="q1" q={QUESTIONS[0]} progressLabel="1 of 4"
               onAnswer={(v) => answer("standard", v, "q2")} />
           )}
           {step === "q2" && (
-            <QuestionStep key="q2" q={QUESTIONS[1]} progressLabel="2 of 4" answers={answers} weakest={weakest}
+            <QuestionStep key="q2" q={QUESTIONS[1]} progressLabel="2 of 4"
               onAnswer={(v) => answer("line", v, "q3")} />
           )}
           {step === "q3" && (
-            <QuestionStep key="q3" q={QUESTIONS[2]} progressLabel="3 of 4" answers={answers} weakest={weakest}
+            <QuestionStep key="q3" q={QUESTIONS[2]} progressLabel="3 of 4"
               onAnswer={(v) => answer("qa", v, "q4")} />
           )}
           {step === "q4" && (
-            <QuestionStep key="q4" q={QUESTIONS[3]} progressLabel="4 of 4" answers={answers} weakest={weakest}
+            <QuestionStep key="q4" q={QUESTIONS[3]} progressLabel="4 of 4"
               onAnswer={(v) => answer("meter", v, "verdict")} />
           )}
-
           {step === "verdict" && copy && weakest && (
             <VerdictStep
               key="verdict"
@@ -286,7 +240,6 @@ export default function FactoryFloor() {
               answers={answers}
               weakest={weakest}
               weakestLabel={weakestLabel ?? ""}
-              showFuture={showFuture}
               email={email}
               onEmail={setEmail}
               submitted={submitted}
@@ -299,17 +252,13 @@ export default function FactoryFloor() {
 
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 text-xs text-muted-foreground">
-          <span>LIZA OS — Standards engineering for AI-native organizations.</span>
+          <span>LIZA OS. Standards engineering for AI-native organizations.</span>
           <a href="/" className="hover:text-foreground">lizaos.ai</a>
         </div>
       </footer>
     </div>
   );
 }
-
-// ---------------------------------------------------------------------------
-// Steps
-// ---------------------------------------------------------------------------
 
 const fade = {
   initial: { opacity: 0, y: 10 },
@@ -323,12 +272,12 @@ function IntroStep({ onStart }: { onStart: () => void }) {
     <motion.section {...fade} className="mx-auto max-w-3xl text-center">
       <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">FOR HEADS OF AI / DACH</p>
       <h1 className="mt-6 text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight">
-        You're running AI like a craft workshop.
+        Your CEO just promised AI results next quarter.
         <br />
-        Scaling needs a factory floor.
+        Can your operation actually ship them?
       </h1>
       <p className="mt-6 text-lg text-muted-foreground">
-        4 questions. 90 seconds. A verdict you can show your CEO on Monday. No email, no signup to start.
+        4 questions. 90 seconds. A verdict you can take into Monday&apos;s exec review.
       </p>
       <div className="mt-10">
         <Button size="lg" onClick={onStart} className="text-base px-8 h-12">
@@ -336,7 +285,7 @@ function IntroStep({ onStart }: { onStart: () => void }) {
         </Button>
       </div>
       <p className="mt-6 text-xs text-muted-foreground">
-        What you'll leave with: a four-station diagram of your AI operation, named gaps, and a single next move.
+        You leave with: a four-station diagram of your AI operation, the gap that breaks next, and a single 30-day move.
       </p>
     </motion.section>
   );
@@ -350,12 +299,12 @@ function ScaleStep({ onPick }: { onPick: (v: ScaleBand) => void }) {
   ];
   return (
     <motion.section {...fade} className="mx-auto max-w-3xl">
-      <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">SCALE / ASKED FIRST</p>
+      <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">SCALE</p>
       <h2 className="mt-4 text-2xl md:text-4xl font-bold tracking-tight">
-        Roughly how many AI tasks are live in your org today?
+        Roughly how many AI workflows are live in your org today?
       </h2>
       <p className="mt-3 text-muted-foreground">
-        This sets the posture of the verdict. The next four answers decide which gap gets named.
+        Pick the closest number. You can be rough.
       </p>
 
       <div className="mt-8 grid gap-3">
@@ -378,26 +327,18 @@ function ScaleStep({ onPick }: { onPick: (v: ScaleBand) => void }) {
 }
 
 function QuestionStep({
-  q,
-  progressLabel,
-  answers,
-  weakest,
-  onAnswer,
+  q, progressLabel, onAnswer,
 }: {
-  q: QuestionDef;
-  progressLabel: string;
-  answers: FactoryAnswers;
-  weakest: StationKey | null;
-  onAnswer: (v: StationState) => void;
+  q: QuestionDef; progressLabel: string; onAnswer: (v: StationState) => void;
 }) {
   return (
-    <motion.section {...fade} className="mx-auto max-w-4xl">
+    <motion.section {...fade} className="mx-auto max-w-3xl">
       <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">
-        STATION {q.n} / {q.title.toUpperCase()} — {progressLabel}
+        STATION {q.n} / {q.title.toUpperCase()} / {progressLabel}
       </p>
       <h2 className="mt-4 text-2xl md:text-3xl font-bold tracking-tight">{q.prompt}</h2>
 
-      <div className="mt-8 grid gap-3 md:grid-cols-3">
+      <div className="mt-8 grid gap-3">
         {q.options.map((o) => (
           <button
             key={o.value}
@@ -410,31 +351,17 @@ function QuestionStep({
       </div>
 
       <p className="mt-8 text-sm text-muted-foreground italic max-w-2xl">{q.reframe}</p>
-
-      <div className="mt-10">
-        <FactoryDiagram answers={answers} weakest={weakest} size="lg" />
-      </div>
     </motion.section>
   );
 }
 
 function VerdictStep({
-  copy,
-  answers,
-  weakest,
-  weakestLabel,
-  showFuture,
-  email,
-  onEmail,
-  submitted,
-  onSubmit,
-  onReset,
+  copy, answers, weakest, weakestLabel, email, onEmail, submitted, onSubmit, onReset,
 }: {
   copy: typeof VERDICT_COPY[VerdictState];
   answers: FactoryAnswers;
   weakest: StationKey;
   weakestLabel: string;
-  showFuture: boolean;
   email: string;
   onEmail: (v: string) => void;
   submitted: boolean;
@@ -442,57 +369,43 @@ function VerdictStep({
   onReset: () => void;
 }) {
   return (
-    <motion.section {...fade} className="mx-auto max-w-6xl">
-      {/* Three-noun verdict line (council note 4) */}
+    <motion.section {...fade} className="mx-auto max-w-5xl">
+      {/* Block 1: THE LABEL */}
       <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">YOUR VERDICT</p>
-      <h2 className="mt-3 text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-        {copy.posture}.{" "}
+      <h2 className="mt-3 text-3xl md:text-5xl font-bold tracking-tight leading-[1.05]">
+        {copy.label}.{" "}
         <span className="text-destructive">Missing: {weakestLabel}.</span>{" "}
         <span className="text-foreground/70">Install in 30 days.</span>
       </h2>
 
-      <p className="mt-6 max-w-3xl text-lg text-foreground">{copy.headline}</p>
-      <p className="mt-4 max-w-3xl text-base text-muted-foreground leading-relaxed">{copy.diagnosis}</p>
+      {/* Block 2: WHAT THIS MEANS */}
+      <p className="mt-6 max-w-3xl text-lg text-foreground leading-snug">{copy.meaning}</p>
 
-      {/* Verdict-shift: Today vs Monday in 6 months */}
-      <div className="mt-12 grid gap-6 md:grid-cols-[1fr_auto_1fr] md:items-center">
-        {/* Today */}
-        <div>
-          <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold mb-3">TODAY</p>
-          <FactoryDiagram answers={answers} weakest={weakest} size="md" />
-        </div>
-
-        {/* Arrow / 6 months */}
-        <div className="flex flex-col items-center text-center px-2">
-          <div className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">6 MONTHS</div>
-          <div className="text-[10px] tracking-[0.3em] text-muted-foreground">NO CHANGE</div>
-          <ArrowRight className="my-2 h-10 w-10 text-foreground" />
-        </div>
-
-        {/* 6 months */}
-        <AnimatePresence>
-          {showFuture && (
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              <div className="flex items-baseline justify-between mb-3">
-                <p className="text-[10px] tracking-[0.3em] text-destructive font-bold">MONDAY IN 6 MONTHS</p>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-destructive leading-none">{copy.futureCount}</div>
-                  <div className="text-[10px] tracking-wide text-muted-foreground">{copy.futureDelta}</div>
-                </div>
-              </div>
-              <FactoryDiagram answers={answers} weakest={weakest} size="md" futureState />
-              <p className="mt-3 text-sm text-foreground/80 italic leading-relaxed">{copy.futureScene}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      {/* The diagram. Single payoff render. */}
+      <div className="mt-10">
+        <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold mb-3">
+          YOUR OPERATION, TODAY
+        </p>
+        <FactoryDiagram answers={answers} weakest={weakest} size="lg" futureState />
       </div>
 
-      {/* Next move */}
-      <div className="mt-14 rounded-lg border-2 border-foreground bg-background p-8">
+      {/* Block 3: WHAT BREAKS NEXT QUARTER */}
+      <div className="mt-12">
+        <p className="text-[10px] tracking-[0.3em] text-destructive font-bold mb-4">
+          WHAT BREAKS NEXT QUARTER
+        </p>
+        <ul className="space-y-3 max-w-3xl">
+          {copy.breaks.map((b, i) => (
+            <li key={i} className="flex gap-4 text-base leading-snug">
+              <span className="text-destructive font-bold tabular-nums">0{i + 1}</span>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Block 4: NEXT MOVE */}
+      <div className="mt-12 rounded-lg border-2 border-foreground bg-background p-6 md:p-8">
         <p className="text-[10px] tracking-[0.3em] text-foreground font-bold">NEXT MOVE</p>
         <p className="mt-3 text-xl md:text-2xl font-bold leading-snug">{copy.nextMove}</p>
       </div>
@@ -503,36 +416,27 @@ function VerdictStep({
           <p className="text-[10px] tracking-[0.3em] text-muted-foreground font-bold">THE BRIEF</p>
           <h3 className="mt-2 text-2xl font-bold">{copy.pdfTitle}</h3>
           <p className="mt-3 text-sm text-muted-foreground">
-            2 pages. Diagnosis, the named gap, and one template you can use without us. Drop your work email. One PDF. No sequence, no nurture.
+            2 pages. The diagnosis, the named gap, and one template you can use without us. One PDF. No sequence.
           </p>
         </div>
         <div>
           {!submitted ? (
             <form onSubmit={onSubmit} className="flex gap-2">
               <Input
-                type="email"
-                required
-                placeholder="work@company.com"
-                value={email}
-                onChange={(e) => onEmail(e.target.value)}
-                className="h-12"
+                type="email" required placeholder="work@company.com"
+                value={email} onChange={(e) => onEmail(e.target.value)} className="h-12"
               />
-              <Button type="submit" size="lg" className="h-12">
-                Send PDF
-              </Button>
+              <Button type="submit" size="lg" className="h-12">Send PDF</Button>
             </form>
           ) : (
             <div className="flex items-center gap-3 rounded-md border border-foreground bg-accent px-4 py-3">
               <Check className="h-5 w-5" />
-              <span className="text-sm font-medium">
-                On its way. Check your inbox in a minute.
-              </span>
+              <span className="text-sm font-medium">On its way. Check your inbox in a minute.</span>
             </div>
           )}
         </div>
       </div>
 
-      {/* Reset */}
       <div className="mt-10 text-center">
         <button onClick={onReset} className="text-xs tracking-[0.2em] text-muted-foreground hover:text-foreground">
           RUN AGAIN
