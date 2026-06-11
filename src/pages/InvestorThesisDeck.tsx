@@ -351,9 +351,12 @@ function S6Valuation() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Valuation" color={GOLD} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 68, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
-          If you accept the frame, the number is the conclusion.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 12, maxWidth: 1680 }}>
+          The bet is on who can build the core. Here is what that takes.
         </h1>
+        <p className="font-semibold" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
+          Three things have to come together in the same team. Each one on its own is not unusual. The combination is.
+        </p>
       </div>
 
       <div className="absolute grid grid-cols-2 gap-5" style={{ left: 112, right: 112, top: 360 }}>
@@ -405,12 +408,12 @@ function WithRail({ index, children }: { index: number; children: React.ReactNod
 }
 
 const RAW_SLIDES = [
-  { id: "reframe",      title: "01 · Known world vs unknown world",         component: <S1Reframe /> },
-  { id: "infra-bet",    title: "02 · Only one bet lives inside the customer", component: <S2InfraBet /> },
-  { id: "infra-spec",   title: "03 · What the enterprise core has to have",  component: <S3InfraSpec /> },
-  { id: "map",          title: "04 · Where the others sit. Where we sit.",   component: <S4Map /> },
-  { id: "moat",         title: "05 · Execution gets cheap. Judgment does not.", component: <S5Moat /> },
-  { id: "valuation",    title: "06 · The number is the conclusion",          component: <S6Valuation /> },
+  { id: "reframe",      title: "01 · The part that has to work inside the enterprise", component: <S1Reframe /> },
+  { id: "infra-bet",    title: "02 · Three outside the customer, one inside",          component: <S2InfraBet /> },
+  { id: "infra-spec",   title: "03 · What an AI native company has to have",           component: <S3InfraSpec /> },
+  { id: "map",          title: "04 · Where the others sit. Where we sit.",             component: <S4Map /> },
+  { id: "moat",         title: "05 · Pre AI native vs AI native advantage",            component: <S5Moat /> },
+  { id: "valuation",    title: "06 · What it takes to build the core",                 component: <S6Valuation /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
