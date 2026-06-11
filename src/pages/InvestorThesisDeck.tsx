@@ -150,28 +150,28 @@ function S2InfraBet() {
 // ─── Slide 03 · What good infrastructure looks like ──────────────────────────
 function S3InfraSpec() {
   const parts = [
-    { icon: Network,     name: "One source of truth",        why: "A single place where what the company knows and decides actually lives." },
-    { icon: ShieldCheck, name: "Rules of the house",         why: "What is allowed, by whom, when. Encoded so AI plays by them." },
-    { icon: UserCog,     name: "The human stays in the loop",why: "The person works with AI without handing over their judgment." },
-    { icon: FileSearch,  name: "A record of every decision", why: "The company can see how it decided, and learn from itself." },
-    { icon: RefreshCw,   name: "Swap the model, keep the work", why: "Tomorrow's model plugs in. Yesterday's work does not get thrown away." },
-    { icon: Unplug,      name: "Knowledge belongs to the company", why: "Not to the vendor. Not to the model. The company can walk." },
+    { icon: Network,     name: "One source of truth",        liza: "Knowledge graph",            why: "A single place where what the company knows and decides actually lives. So AI is not guessing every time." },
+    { icon: ShieldCheck, name: "Rules of the house",         liza: "Governance layer",           why: "What is allowed, by whom, when. Encoded once so every AI action plays by them." },
+    { icon: UserCog,     name: "The human stays in the loop",liza: "Oversight UX",               why: "The person works with AI on the same screen, without handing over their judgment." },
+    { icon: FileSearch,  name: "A record of every decision", liza: "Decision log",               why: "The company can see how AI got to an answer, audit it, and learn from itself." },
+    { icon: RefreshCw,   name: "Swap the model, keep the work", liza: "Model portability",       why: "Tomorrow's model plugs in. Yesterday's work, rules and knowledge do not get thrown away." },
+    { icon: Unplug,      name: "Knowledge belongs to the company", liza: "Sovereignty",          why: "Not to the vendor. Not to the model provider. The company can walk and keep its asset." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Enterprise Core" color={ACCENT} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
-          What an AI native company has to have. Six things. Plain English.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 14 }}>
+          What an AI native company has to have. Six things.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }}>
-          If you accept that the bet is the core, this is the core. Anything missing one of these is a feature, not the foundation.
+        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
+          Plain English on the left. The name we use for it in LIZA OS on the right. If any of these six is missing, you have a feature, not the foundation.
         </p>
       </div>
 
-      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 510 }}>
+      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 470 }}>
         {parts.map((p, i) => (
-          <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 210 }}>
+          <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 230 }}>
             <div className="flex items-center gap-4">
               <div className="rounded-xl flex items-center justify-center"
                 style={{ width: 56, height: 56, background: `hsl(${ACCENT} / 0.08)`, color: `hsl(${ACCENT})`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
@@ -179,8 +179,11 @@ function S3InfraSpec() {
               </div>
               <div className="font-mono font-bold" style={{ fontSize: 14, color: SUBTLE, letterSpacing: "0.15em" }}>0{i + 1}</div>
             </div>
-            <div className="font-bold" style={{ fontSize: 23, color: TEXT, marginTop: 14, lineHeight: 1.2 }}>{p.name}</div>
-            <p style={{ fontSize: 18, color: MUTED, marginTop: 8, lineHeight: 1.4 }}>{p.why}</p>
+            <div className="font-bold" style={{ fontSize: 22, color: TEXT, marginTop: 14, lineHeight: 1.2 }}>{p.name}</div>
+            <div className="font-mono uppercase tracking-[0.16em] font-bold" style={{ fontSize: 11, color: `hsl(${ACCENT})`, marginTop: 4 }}>
+              LIZA OS · {p.liza}
+            </div>
+            <p style={{ fontSize: 17, color: MUTED, marginTop: 8, lineHeight: 1.4 }}>{p.why}</p>
           </div>
         ))}
       </div>
