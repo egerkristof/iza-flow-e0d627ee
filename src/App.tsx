@@ -64,6 +64,7 @@ const SanctionedPage = lazy(() => import("./pages/Sanctioned"));
 const PlaybookBuilderPage = lazy(() => import("./pages/PlaybookBuilder"));
 const MockRibbonPage = lazy(() => import("./pages/marketing/MockRibbon"));
 const MockLayerPage = lazy(() => import("./pages/marketing/MockLayer"));
+const FactoryFloorPage = lazy(() => import("./pages/marketing/FactoryFloor"));
 
 function RouteLoader() {
   return <div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading…</div>;
@@ -123,6 +124,8 @@ const App = () => (
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/mock/ribbon" element={<MockRibbonPage />} />
             <Route path="/mock/layer" element={<MockLayerPage />} />
+            <Route path="/factory-floor" element={<FactoryFloorPage />} />
+            <Route path="/fabrikhalle" element={<Navigate to="/factory-floor" replace />} />
 
             {/* Standalone admin panel */}
             <Route path="/admin/manage" element={<AdminRoute><AdminPage /></AdminRoute>} />
