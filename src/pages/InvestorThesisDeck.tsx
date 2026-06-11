@@ -66,20 +66,20 @@ function SlideShell({ children }: { children: React.ReactNode }) {
 // ─── Slide 01 · Known frame vs Unknown frame ────────────────────────────────
 function S1Reframe() {
   const rows = [
-    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The enterprise core. The part of the company that has to exist no matter which model wins." },
-    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "There is no comp set yet. You are pricing a team that can build the core." },
-    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The team holds a firm core while the shell around it keeps moving." },
+    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The part of the company that has to keep working no matter which model wins." },
+    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "No comp set yet. You are pricing the team that can actually build this part." },
+    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The team holds the firm core steady while everything else around it keeps changing." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 76, lineHeight: 1.03, color: TEXT, marginBottom: 0 }}>
-          In a known world you invest in known categories. In an unknown world you invest in the enterprise core.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 58, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          What is worth investing in now is the part that has to work inside the enterprise.
         </h1>
       </div>
 
-      <div className="absolute" style={{ left: 112, right: 112, top: 410 }}>
+      <div className="absolute" style={{ left: 112, right: 112, top: 360 }}>
         <div className="grid grid-cols-[240px_1fr_1fr] gap-0 rounded-2xl overflow-hidden border" style={{ borderColor: CHROME_BORDER, background: BG }}>
           <div className="px-7 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: SUBTLE, background: CARD_ALT }}>Dimension</div>
           <div className="px-8 py-6 font-bold uppercase tracking-[0.18em]" style={{ fontSize: 14, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderLeft: `1px solid ${CHROME_BORDER}` }}>Known world · Pre AI native</div>
@@ -110,9 +110,12 @@ function S2InfraBet() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Bet" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
-          Three of these you already know. Only one is built inside the customer.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 14, maxWidth: 1680 }}>
+          Three of these live outside the customer. Only one lives inside it.
         </h1>
+        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
+          That inside part is what has to work for AI to actually run at scale in an enterprise. It is the only one that compounds where the work happens.
+        </p>
       </div>
 
       <div className="absolute" style={{ left: 112, right: 112, top: 360 }}>
@@ -147,28 +150,28 @@ function S2InfraBet() {
 // ─── Slide 03 · What good infrastructure looks like ──────────────────────────
 function S3InfraSpec() {
   const parts = [
-    { icon: Network,     name: "One source of truth",        why: "A single place where what the company knows and decides actually lives." },
-    { icon: ShieldCheck, name: "Rules of the house",         why: "What is allowed, by whom, when. Encoded so AI plays by them." },
-    { icon: UserCog,     name: "The human stays in the loop",why: "The person works with AI without handing over their judgment." },
-    { icon: FileSearch,  name: "A record of every decision", why: "The company can see how it decided, and learn from itself." },
-    { icon: RefreshCw,   name: "Swap the model, keep the work", why: "Tomorrow's model plugs in. Yesterday's work does not get thrown away." },
-    { icon: Unplug,      name: "Knowledge belongs to the company", why: "Not to the vendor. Not to the model. The company can walk." },
+    { icon: Network,     name: "One source of truth",        liza: "Knowledge graph",            why: "A single place where what the company knows and decides actually lives. So AI is not guessing every time." },
+    { icon: ShieldCheck, name: "Rules of the house",         liza: "Governance layer",           why: "What is allowed, by whom, when. Encoded once so every AI action plays by them." },
+    { icon: UserCog,     name: "The human stays in the loop",liza: "Oversight UX",               why: "The person works with AI on the same screen, without handing over their judgment." },
+    { icon: FileSearch,  name: "A record of every decision", liza: "Decision log",               why: "The company can see how AI got to an answer, audit it, and learn from itself." },
+    { icon: RefreshCw,   name: "Swap the model, keep the work", liza: "Model portability",       why: "Tomorrow's model plugs in. Yesterday's work, rules and knowledge do not get thrown away." },
+    { icon: Unplug,      name: "Knowledge belongs to the company", liza: "Sovereignty",          why: "Not to the vendor. Not to the model provider. The company can walk and keep its asset." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Enterprise Core" color={ACCENT} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 14 }}>
-          What an AI native company has to have. Six things. Plain English.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 14 }}>
+          What an AI native company has to have. Six things.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 26, color: MUTED, maxWidth: 1600 }}>
-          If you accept that the bet is the core, this is the core. Anything missing one of these is a feature, not the foundation.
+        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
+          Plain English on the left. The name we use for it in LIZA OS on the right. If any of these six is missing, you have a feature, not the foundation.
         </p>
       </div>
 
-      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 510 }}>
+      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 470 }}>
         {parts.map((p, i) => (
-          <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 210 }}>
+          <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 230 }}>
             <div className="flex items-center gap-4">
               <div className="rounded-xl flex items-center justify-center"
                 style={{ width: 56, height: 56, background: `hsl(${ACCENT} / 0.08)`, color: `hsl(${ACCENT})`, border: `1px solid hsl(${ACCENT} / 0.25)` }}>
@@ -176,8 +179,11 @@ function S3InfraSpec() {
               </div>
               <div className="font-mono font-bold" style={{ fontSize: 14, color: SUBTLE, letterSpacing: "0.15em" }}>0{i + 1}</div>
             </div>
-            <div className="font-bold" style={{ fontSize: 23, color: TEXT, marginTop: 14, lineHeight: 1.2 }}>{p.name}</div>
-            <p style={{ fontSize: 18, color: MUTED, marginTop: 8, lineHeight: 1.4 }}>{p.why}</p>
+            <div className="font-bold" style={{ fontSize: 22, color: TEXT, marginTop: 14, lineHeight: 1.2 }}>{p.name}</div>
+            <div className="font-mono uppercase tracking-[0.16em] font-bold" style={{ fontSize: 11, color: `hsl(${ACCENT})`, marginTop: 4 }}>
+              LIZA OS · {p.liza}
+            </div>
+            <p style={{ fontSize: 17, color: MUTED, marginTop: 8, lineHeight: 1.4 }}>{p.why}</p>
           </div>
         ))}
       </div>
@@ -200,27 +206,27 @@ function S4Map() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Map" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 62, lineHeight: 1.05, color: TEXT, marginBottom: 12 }}>
-          The human role decides the moat. The quadrant top-right is open.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 12 }}>
+          Where the others sit. Where we sit.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
-          Other infrastructure players solve scale to some degree. None of them design for the human as a co-author the system gets smarter from.
+        <p className="font-semibold" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
+          Two questions decide the position. How is it delivered (services or self-serve), and what the human is asked to do (approve AI's work, or co-author it).
         </p>
       </div>
 
-      {/* Y axis label */}
-      <div className="absolute font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: SUBTLE, left: 130, top: PLOT.top - 30 }}>
-        Human role: Co-author ↑
+      {/* Y axis labels — outside plot, vertically stacked, larger */}
+      <div className="absolute font-bold uppercase tracking-[0.18em]" style={{ fontSize: 15, color: TEXT, left: 130, top: PLOT.top - 4, width: 170, lineHeight: 1.2 }}>
+        Human as<br/>co-author ↑
       </div>
-      <div className="absolute font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: SUBTLE, left: 130, top: PLOT.top + PLOT.h - 8 }}>
-        Human role: Approver ↓
+      <div className="absolute font-bold uppercase tracking-[0.18em]" style={{ fontSize: 15, color: SUBTLE, left: 130, top: PLOT.top + PLOT.h - 40, width: 170, lineHeight: 1.2 }}>
+        ↓ Human as<br/>approver
       </div>
-      {/* X axis labels */}
-      <div className="absolute font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: SUBTLE, left: PLOT.left, top: PLOT.top + PLOT.h + 18 }}>
-        ← Services-led
+      {/* X axis labels — clearly below plot, larger */}
+      <div className="absolute font-bold uppercase tracking-[0.18em]" style={{ fontSize: 15, color: SUBTLE, left: PLOT.left, top: PLOT.top + PLOT.h + 22 }}>
+        ← Services-led delivery
       </div>
-      <div className="absolute font-bold uppercase tracking-[0.2em] text-right" style={{ fontSize: 13, color: SUBTLE, left: PLOT.left + PLOT.w - 200, top: PLOT.top + PLOT.h + 18, width: 200 }}>
-        Self-serve →
+      <div className="absolute font-bold uppercase tracking-[0.18em] text-right" style={{ fontSize: 15, color: TEXT, left: PLOT.left + PLOT.w - 320, top: PLOT.top + PLOT.h + 22, width: 320 }}>
+        Self-serve delivery →
       </div>
 
       {/* Plot area */}
@@ -287,15 +293,15 @@ function S5Moat() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Moat" color={GREEN} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 72, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
-          When execution gets commoditized, the human becomes the advantage.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          What used to be the advantage in the pre AI native age is not the advantage in the AI native age.
         </h1>
       </div>
 
       <div className="absolute grid grid-cols-2 gap-6" style={{ left: 112, right: 112, top: 360 }}>
         {/* Old mode */}
         <div className="rounded-2xl border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, overflow: "hidden" }}>
-          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderBottom: `1px solid ${CHROME_BORDER}` }}>Old mode · Execution as the advantage</div>
+          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderBottom: `1px solid ${CHROME_BORDER}` }}>Pre AI native age · Execution was the advantage</div>
           <div className="px-7 py-6">
             {oldMode.map((r, i) => (
               <div key={r.k} className="py-4" style={{ borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
@@ -307,7 +313,7 @@ function S5Moat() {
         </div>
         {/* New mode */}
         <div className="rounded-2xl border" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)`, overflow: "hidden", boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
-          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, borderBottom: `1px solid hsl(${GREEN} / 0.25)` }}>New mode · Judgment as the advantage</div>
+          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 14, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, borderBottom: `1px solid hsl(${GREEN} / 0.25)` }}>AI native age · Judgment is the advantage</div>
           <div className="px-7 py-6">
             {newMode.map((r, i) => (
               <div key={r.k} className="py-4" style={{ borderTop: i === 0 ? "none" : `1px solid hsl(${GREEN} / 0.18)` }}>
@@ -320,10 +326,10 @@ function S5Moat() {
       </div>
 
       {/* Regulatory anchor */}
-      <div className="absolute rounded-2xl px-7 py-5 flex items-center gap-6"
-        style={{ left: 112, right: 112, bottom: 100, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
-        <div className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 12, color: SUBTLE }}>Regulation agrees</div>
-        <div style={{ fontSize: 19, color: TEXT, lineHeight: 1.35 }}>
+      <div className="absolute rounded-2xl px-8 py-6 flex items-start gap-7"
+        style={{ left: 112, right: 112, bottom: 80, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+        <div className="font-mono uppercase tracking-[0.2em] font-bold whitespace-nowrap" style={{ fontSize: 14, color: `hsl(${GREEN})`, paddingTop: 4 }}>Regulation agrees</div>
+        <div style={{ fontSize: 22, color: TEXT, lineHeight: 1.4 }}>
           <span className="font-bold">EU AI Act, GDPR and sector regulators</span> all put responsibility on a named human. Approving a clinical protocol, signing off a credit decision, releasing a financial statement. The accountable person does not get automated away. The infrastructure has to make them faster, not replace them.
         </div>
       </div>
@@ -336,18 +342,21 @@ function S5Moat() {
 // ─── Slide 06 · Valuation Logic ─────────────────────────────────────────────
 function S6Valuation() {
   const steps = [
-    { k: "01", t: "New category. No comp set.",                    d: "There are no precedents to multiply against. Pre AI native maths does not price what is being built here." },
-    { k: "02", t: "So the bet is on who can build the core.",      d: "Few people understand this new space and have a reasonable chance of actually building it. That is what gets underwritten." },
-    { k: "03", t: "Rarity sets the price, not a comp.",            d: "The valuation reflects how thin that talent layer is, not a salary line or a revenue multiple." },
-    { k: "04", t: "The round is sized to hold the team.",          d: "Enough capital to hold the firm core and run the experimental shell around it through the next 18 months." },
+    { k: "01", t: "Deep tech and AI build experience.",            d: "15+ years building data and AI systems in production. The kind of work the enterprise core is actually made of, not slideware." },
+    { k: "02", t: "The bridge between enterprise IT and business.", d: "Same 15 years spent inside digital transformation programs at Aliz.ai. We know where business reality and modern enterprise tech break against each other, because we have lived on both sides of that line." },
+    { k: "03", t: "How AI native teams actually work.",             d: "We run on a teal team model and have been trialing it inside Aliz for years. Founder is also a practicing executive coach. Building the core needs people who already know how this kind of team operates." },
+    { k: "04", t: "The round is sized to hold the team.",           d: "Enough capital to hold this firm core and run the experimental shell around it through the next 18 months. Not a salary line. The capital reflects how unusual this combination is to assemble." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Valuation" color={GOLD} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 68, lineHeight: 1.05, color: TEXT, marginBottom: 0 }}>
-          If you accept the frame, the number is the conclusion.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 12, maxWidth: 1680 }}>
+          The bet is on who can build the core. Here is what that takes.
         </h1>
+        <p className="font-semibold" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
+          Three things have to come together in the same team. Each one on its own is not unusual. The combination is.
+        </p>
       </div>
 
       <div className="absolute grid grid-cols-2 gap-5" style={{ left: 112, right: 112, top: 360 }}>
@@ -399,12 +408,12 @@ function WithRail({ index, children }: { index: number; children: React.ReactNod
 }
 
 const RAW_SLIDES = [
-  { id: "reframe",      title: "01 · Known world vs unknown world",         component: <S1Reframe /> },
-  { id: "infra-bet",    title: "02 · Only one bet lives inside the customer", component: <S2InfraBet /> },
-  { id: "infra-spec",   title: "03 · What the enterprise core has to have",  component: <S3InfraSpec /> },
-  { id: "map",          title: "04 · Where the others sit. Where we sit.",   component: <S4Map /> },
-  { id: "moat",         title: "05 · Execution gets cheap. Judgment does not.", component: <S5Moat /> },
-  { id: "valuation",    title: "06 · The number is the conclusion",          component: <S6Valuation /> },
+  { id: "reframe",      title: "01 · The part that has to work inside the enterprise", component: <S1Reframe /> },
+  { id: "infra-bet",    title: "02 · Three outside the customer, one inside",          component: <S2InfraBet /> },
+  { id: "infra-spec",   title: "03 · What an AI native company has to have",           component: <S3InfraSpec /> },
+  { id: "map",          title: "04 · Where the others sit. Where we sit.",             component: <S4Map /> },
+  { id: "moat",         title: "05 · Pre AI native vs AI native advantage",            component: <S5Moat /> },
+  { id: "valuation",    title: "06 · What it takes to build the core",                 component: <S6Valuation /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
