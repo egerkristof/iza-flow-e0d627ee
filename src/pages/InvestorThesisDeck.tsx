@@ -72,10 +72,10 @@ function S0OurBet() {
     "Senior staff roles at hyperscalers and model labs",
   ];
   const facts = [
-    { k: "Time in",           v: "18 months",         note: "Full-time, no side projects." },
+    { k: "Time in",           v: "18 months",          note: "Full-time, no side projects. Built before we raised." },
     { k: "Founders",          v: "3 senior operators", note: "Data, AI, digital transformation. 15+ years each." },
-    { k: "Founder capital",   v: "~$300K",            note: "Cash and foregone salary, put into the build." },
-    { k: "Origin",            v: "Aliz.ai",           note: "Spun out of a 10-year enterprise AI delivery practice." },
+    { k: "What we de-risked", v: "The core, not the pitch", note: "Architecture, governance model, and operating system already built and run on ourselves." },
+    { k: "Origin",            v: "Aliz.ai",            note: "Spun out of a 10-year enterprise AI delivery practice." },
   ];
   return (
     <SlideShell>
