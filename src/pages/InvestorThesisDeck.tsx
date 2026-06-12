@@ -72,10 +72,10 @@ function S0OurBet() {
     "Senior staff roles at hyperscalers and model labs",
   ];
   const facts = [
-    { k: "Time in",           v: "18 months",         note: "Full-time, no side projects." },
+    { k: "Time in",           v: "18 months",          note: "Full-time, no side projects. Built before we raised." },
     { k: "Founders",          v: "3 senior operators", note: "Data, AI, digital transformation. 15+ years each." },
-    { k: "Founder capital",   v: "~$300K",            note: "Cash and foregone salary, put into the build." },
-    { k: "Origin",            v: "Aliz.ai",           note: "Spun out of a 10-year enterprise AI delivery practice." },
+    { k: "What we de-risked", v: "The core, not the pitch", note: "Architecture, governance model, and operating system already built and run on ourselves." },
+    { k: "Origin",            v: "Aliz.ai",            note: "Spun out of a 10-year enterprise AI delivery practice." },
   ];
   return (
     <SlideShell>
@@ -237,7 +237,7 @@ function S3InfraSpec() {
           </div>
         ))}
       </div>
-      <Footer text="Six things we have been building for 18 months. Each one is where founder capital has gone." />
+      <Footer text="Six things we have been building for 18 months. Each one is a piece of the bet we de-risked before asking anyone else to." />
     </SlideShell>
   );
 }
@@ -392,7 +392,7 @@ function S6Valuation() {
     { k: "01", t: "Deep tech and AI build experience.",            d: "15+ years building data and AI systems in production. The kind of work the enterprise core is actually made of, not slideware." },
     { k: "02", t: "The bridge between enterprise IT and business.", d: "Same 15 years spent inside digital transformation programs at Aliz.ai. We know where business reality and modern enterprise tech break against each other, because we have lived on both sides of that line." },
     { k: "03", t: "A team that already operates the AI native way.",             d: "The core needs to be built by people who already work like it. We run on a teal team model, have trialed it inside Aliz for years, and the founder is a practicing executive coach. The operating model is the evidence." },
-    { k: "04", t: "The round continues the bet we already made.",   d: "18 months and ~$300K of founder capital are already in. This round holds the firm core and runs the experimental shell around it for the next 18. Not a salary line. The size reflects how unusual this combination is to assemble." },
+    { k: "04", t: "The round continues the bet we already made.",   d: "18 months of full-time build are already in. The core architecture, governance model, and team operating system were de-risked on our own time, before the raise. This round holds the firm core and runs the experimental shell around it for the next 18. The size reflects how unusual this combination is to assemble in an AI-funding climate where most rounds buy a pitch, not a working core." },
   ];
   return (
     <SlideShell>
