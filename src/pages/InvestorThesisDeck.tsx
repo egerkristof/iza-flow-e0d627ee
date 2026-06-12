@@ -76,7 +76,7 @@ function S0OurBet() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 150 }}>
         <Tag label="Why we made the bet" color={GOLD} />
-        <h1 className="font-semibold leading-[1.05] tracking-tight" style={{ fontSize: 96, color: TEXT, marginTop: 24, marginBottom: 0, maxWidth: 1500 }}>
+        <h1 className="font-semibold leading-[1.1] tracking-tight" style={{ fontSize: 80, color: TEXT, marginTop: 28, marginBottom: 0, maxWidth: 1400 }}>
           Models change. Governance doesn&rsquo;t.
         </h1>
       </div>
