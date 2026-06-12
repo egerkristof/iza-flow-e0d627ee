@@ -104,18 +104,15 @@ function S2InfraBet() {
     { name: "Models",               color: PURPLE, why: "Sits outside the customer. Capex war. Winner takes the table." },
     { name: "Apps and copilots",    color: GOLD,   why: "Sits outside the customer. Eaten by the next model release." },
     { name: "Services firms",       color: ACCENT, why: "Sits outside the customer. Scales linearly with humans for hire." },
-    { name: "The enterprise core",  color: GREEN,  why: "Sits inside the customer. The company's own people are the scale unit. This is the only bet that compounds where it has to compound." },
+    { name: "The enterprise core",  color: GREEN,  why: "Sits inside the customer. Where compliance lives, in both senses: the rules and guardrails AI has to obey, and the human intent and best practice the system learns from." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Bet" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 14, maxWidth: 1680 }}>
-          Three of these live outside the customer. Only one lives inside it.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          If the enterprise core has one job, it is compliance. The rules AI has to obey, and the human intent it has to learn from.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
-          That inside part is what has to work for AI to actually run at scale in an enterprise. It is the only one that compounds where the work happens.
-        </p>
       </div>
 
       <div className="absolute" style={{ left: 112, right: 112, top: 360 }}>
@@ -142,7 +139,7 @@ function S2InfraBet() {
           })}
         </div>
       </div>
-      <Footer text="The first three stay on our side of the boundary. The enterprise core lives on theirs." />
+      <Footer text="The first three stay on the vendor side of the line. The enterprise core lives on the customer side." />
     </SlideShell>
   );
 }
