@@ -527,9 +527,9 @@ export default function InvestorThesisDeck() {
     mobileTimerRef.current = setTimeout(() => setMobileControlsVisible(false), 3000);
   }, []);
   useEffect(() => {
-    if (isMobile && !isPortrait) showMobileControls();
+    if (isMobile) showMobileControls();
     return () => clearTimeout(mobileTimerRef.current);
-  }, [isMobile, isPortrait, showMobileControls]);
+  }, [isMobile, showMobileControls]);
 
   if (isMobile) {
     return (
