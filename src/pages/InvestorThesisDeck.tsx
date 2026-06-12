@@ -131,7 +131,7 @@ function S1Reframe() {
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 58, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          The bet sits below the line. Above it, the winners keep changing.
+          What an AI native company has to have. And why that is what we invested in.
         </h1>
       </div>
 
