@@ -17,6 +17,7 @@ import {
 // ═════════════════════════════════════════════════════════════════════════════
 
 const ACTS = [
+  { short: "Our Bet" },
   { short: "Reframe" },
   { short: "The Bet" },
   { short: "Infra Spec" },
@@ -31,7 +32,7 @@ function ActRail({ index }: { index: number }) {
       <span className="font-mono uppercase tracking-[0.3em] font-bold whitespace-nowrap" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>
         LIZA OS Investor Thesis
       </span>
-      <div className="flex-1 grid grid-cols-6 gap-2">
+      <div className="flex-1 grid grid-cols-7 gap-2">
         {ACTS.map((a, i) => {
           const active = i === index;
           const past = i < index;
