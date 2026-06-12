@@ -82,7 +82,7 @@ function S0OurBet() {
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="Why we are here" color={GOLD} />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          We gave ourselves the term sheet 18 months ago. This deck is the case for why you should write the next one.
+          We gave ourselves the term sheet 18 months ago. This deck is the case for the next one.
         </h1>
       </div>
 
@@ -124,14 +124,14 @@ function S1Reframe() {
   const rows = [
     { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The infrastructure inside the company that every AI innovation has to plug into to actually work." },
     { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "No comp set yet. You are pricing the capability to build the part that has to exist no matter what happens above it." },
-    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The durable core of the AI native company. What is built here keeps compounding while the layer above it keeps changing." },
+    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The team that can build the part that has to keep working no matter which layer changes above it." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 58, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          The bet is on building the part of the AI native company that has to exist no matter which innovation wins above it.
+          The bet sits below the line. Above it, the winners keep changing.
         </h1>
       </div>
 
@@ -167,7 +167,7 @@ function S2InfraBet() {
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Bet" />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          If the enterprise core has one job, it is compliance. The rules AI has to obey, and the human intent it has to learn from.
+          The enterprise core has one job. Hold the rules AI must obey, and the human intent it learns from.
         </h1>
       </div>
 
@@ -249,7 +249,7 @@ function S4Map() {
     { name: "Wonderful",  x: 0.12, y: 0.20, color: GOLD,   note: "Forward-deployed engineers + McKinsey alliance. Agents replace humans." },
     { name: "Paradox",    x: 0.30, y: 0.78, color: PURPLE, note: "EU research-stage. Human-first clarity papers. Not in production." },
     { name: "Interloom",  x: 0.60, y: 0.38, color: ACCENT, note: "SME-led no-code back-office. Humans design and approve flows." },
-    { name: "LIZA OS",    x: 0.85, y: 0.85, color: GREEN,  note: "Self-serve · human tacit knowledge is the input" },
+    { name: "LIZA OS",    x: 0.85, y: 0.85, color: GREEN,  note: "Self-serve product. Human intent and tacit knowledge enter as input, not as cleanup." },
   ];
   const PLOT = { left: 320, top: 360, w: 1280, h: 560 };
   return (
@@ -391,7 +391,7 @@ function S6Valuation() {
   const steps = [
     { k: "01", t: "Deep tech and AI build experience.",            d: "15+ years building data and AI systems in production. The kind of work the enterprise core is actually made of, not slideware." },
     { k: "02", t: "The bridge between enterprise IT and business.", d: "Same 15 years spent inside digital transformation programs at Aliz.ai. We know where business reality and modern enterprise tech break against each other, because we have lived on both sides of that line." },
-    { k: "03", t: "How AI native teams actually work.",             d: "We run on a teal team model and have been trialing it inside Aliz for years. Founder is also a practicing executive coach. Building the core needs people who already know how this kind of team operates." },
+    { k: "03", t: "A team that already operates the AI native way.",             d: "The core needs to be built by people who already work like it. We run on a teal team model, have trialed it inside Aliz for years, and the founder is a practicing executive coach. The operating model is the evidence." },
     { k: "04", t: "The round continues the bet we already made.",   d: "18 months and ~$500K of founder capital are already in. This round holds the firm core and runs the experimental shell around it for the next 18. Not a salary line. The size reflects how unusual this combination is to assemble." },
   ];
   return (
@@ -424,13 +424,14 @@ function S6Valuation() {
         <div>
           <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>Seed round</div>
           <div className="font-bold" style={{ fontSize: 34, color: TEXT, marginTop: 4 }}>$2.0M</div>
-          <div style={{ fontSize: 16, color: MUTED }}>at $15.38M post · 13% to investor</div>
+          <div style={{ fontSize: 16, color: MUTED }}>at $11.33M post · 15% to investor</div>
+          <div style={{ fontSize: 13, color: SUBTLE, marginTop: 2 }}>Priced on the team and the 18 months already in.</div>
         </div>
         <div className="font-mono" style={{ fontSize: 28, color: SUBTLE }}>→</div>
         <div>
           <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>Milestone · Q1'28</div>
           <div className="font-bold" style={{ fontSize: 34, color: TEXT, marginTop: 4 }}>~$3M ARR</div>
-          <div style={{ fontSize: 16, color: MUTED }}>operator-funded growth, no services dependency</div>
+          <div style={{ fontSize: 16, color: MUTED }}>≥3× YoY into the round · no services dependency</div>
         </div>
         <div className="font-mono" style={{ fontSize: 28, color: SUBTLE }}>→</div>
         <div>
