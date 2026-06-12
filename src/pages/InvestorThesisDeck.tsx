@@ -481,6 +481,13 @@ export default function InvestorThesisDeck() {
   const exportRef = useRef<HTMLDivElement>(null);
 
   const isMobile = useIsMobileViewport();
+  const isPortrait = useIsPortrait();
+  // Suppress the "rotate device" overlay only inside the Lovable in-editor preview
+  // (hostname like `id-preview--<uuid>.lovable.app`), since that iframe can't actually
+  // rotate. Keep the prompt for the published site (iza-flow.lovable.app, lizaos.ai).
+  const isLovableEditorPreview = typeof window !== "undefined"
+    && window.location.hostname.startsWith("id-preview--");
+  const showRotatePrompt = isMobile && isPortrait && !isLovableEditorPreview;
 
   const next = useCallback(() => setCurrent(c => Math.min(c + 1, SLIDES.length - 1)), []);
   const prev = useCallback(() => setCurrent(c => Math.max(c - 1, 0)), []);
@@ -536,7 +543,7 @@ export default function InvestorThesisDeck() {
       <div className="fixed inset-0 z-[9999]" style={{ background: BG }}
         onClick={() => { showMobileControls(); }}>
         <ScaledSlide>{slide.component}</ScaledSlide>
-        <>
+        {!showRotatePrompt && <>
           <button onClick={(e) => { e.stopPropagation(); prev(); showMobileControls(); }} disabled={current === 0}
             className="absolute left-0 top-0 h-full w-[15%] z-[10001] flex items-center justify-start pl-4 disabled:opacity-0 transition-opacity"
             style={{ background: "linear-gradient(90deg, hsl(0 0% 0% / 0.06), transparent)" }} aria-label="Previous slide">
@@ -547,11 +554,26 @@ export default function InvestorThesisDeck() {
             style={{ background: "linear-gradient(270deg, hsl(0 0% 0% / 0.06), transparent)" }} aria-label="Next slide">
             <ChevronRight size={32} style={{ color: `hsl(215 15% 42% / 0.5)` }} />
           </button>
-        </>
+        </>}
+        {showRotatePrompt && (
+          <div className="absolute inset-0 z-[10002] flex items-center justify-center p-8"
+            style={{ background: "hsl(0 0% 100% / 0.96)", backdropFilter: "blur(8px)" }}>
+            <div className="flex flex-col items-center gap-4 text-center max-w-xs">
+              <div className="text-4xl">📱↻</div>
+              <div className="text-base font-medium" style={{ color: TEXT }}>
+                Rotate your device to landscape
+              </div>
+              <div className="text-sm" style={{ color: MUTED }}>
+                This deck is designed for a wide screen.
+              </div>
+            </div>
+          </div>
+        )}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3 px-4 py-2 rounded-full transition-opacity duration-300"
           style={{
             background: "hsl(0 0% 100% / 0.9)", border: `1px solid ${CHROME_BORDER}`, backdropFilter: "blur(8px)",
-            opacity: mobileControlsVisible ? 1 : 0, pointerEvents: mobileControlsVisible ? "auto" : "none",
+            opacity: showRotatePrompt ? 0 : (mobileControlsVisible ? 1 : 0),
+            pointerEvents: showRotatePrompt ? "none" : (mobileControlsVisible ? "auto" : "none"),
           }}
           onClick={(e) => e.stopPropagation()}>
           <button onClick={prev} disabled={current === 0} className="p-1.5 rounded-lg disabled:opacity-20">
