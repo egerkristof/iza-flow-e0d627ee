@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useIsMobileViewport } from "@/hooks/use-mobile-presentation";
+import { useIsMobileViewport, useIsPortrait } from "@/hooks/use-mobile-presentation";
 import { ChevronLeft, ChevronRight, Maximize2, X, Grid3x3, Network, ShieldCheck, UserCog, FileSearch, RefreshCw, Unplug } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExportMenu } from "@/components/ExportMenu";
