@@ -392,7 +392,7 @@ function S6Valuation() {
     { k: "01", t: "Deep tech and AI build experience.",            d: "15+ years building data and AI systems in production. The kind of work the enterprise core is actually made of, not slideware." },
     { k: "02", t: "The bridge between enterprise IT and business.", d: "Same 15 years spent inside digital transformation programs at Aliz.ai. We know where business reality and modern enterprise tech break against each other, because we have lived on both sides of that line." },
     { k: "03", t: "How AI native teams actually work.",             d: "We run on a teal team model and have been trialing it inside Aliz for years. Founder is also a practicing executive coach. Building the core needs people who already know how this kind of team operates." },
-    { k: "04", t: "The round is sized to hold the team.",           d: "Enough capital to hold this firm core and run the experimental shell around it through the next 18 months. Not a salary line. The capital reflects how unusual this combination is to assemble." },
+    { k: "04", t: "The round continues the bet we already made.",   d: "18 months and ~$500K of founder capital are already in. This round holds the firm core and runs the experimental shell around it for the next 18. Not a salary line. The size reflects how unusual this combination is to assemble." },
   ];
   return (
     <SlideShell>
