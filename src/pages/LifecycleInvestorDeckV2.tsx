@@ -2097,7 +2097,7 @@ function Slide07() {
     },
     {
       num: "02", title: "Govern", icon: <Shield size={28} />,
-      desc: "The AACE framework binds each rule to a capability, scope and owner, then resolves conflicts between layers (org, domain, team) so only one source of truth is enforceable at runtime.",
+      desc: "The AACE framework binds each rule to a capability, scope and owner, then resolves conflicts between layers (org, domain, team) so only a common source of truth is enforceable at runtime.",
       flow: ["Bind rules to scope & owner", "Resolve cross-layer conflicts", "Version, sign & publish"],
       output: "Governed knowledge graph",
       color: TEAL,

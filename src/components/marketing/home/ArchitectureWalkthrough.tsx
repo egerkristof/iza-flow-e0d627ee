@@ -725,7 +725,7 @@ const SCENES: Scene[] = [
   },
   {
     kicker: "08 · The plan", headline: "Liza learns, then governs.", duration: 8500, render: ScenePlan,
-    caption: "Connect, co-author, wire to every AI tool. Two weeks to one source of truth.",
+    caption: "Connect, co-author, wire to every AI tool. Two weeks to a common source of truth.",
   },
   {
     kicker: "09 · Success", headline: "One answer. Audited. Compounding.", duration: 9000, render: SceneSuccess,
