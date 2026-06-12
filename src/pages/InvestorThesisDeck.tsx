@@ -248,8 +248,14 @@ function S4Map() {
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Map" />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0 }}>
-          Where the others sit. Where we sit.
+          Where the infrastructure players sit. Where we sit.
         </h1>
+        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1" style={{ fontSize: 16, color: MUTED }}>
+          <span>Not on this map:</span>
+          <span style={{ color: SUBTLE }}>Models & Producers</span>
+          <span style={{ color: SUBTLE }}>Applications & Copilots</span>
+          <span style={{ color: SUBTLE }}>Services Firms</span>
+        </div>
       </div>
 
       {/* Y axis labels — outside plot, vertically stacked, larger */}
