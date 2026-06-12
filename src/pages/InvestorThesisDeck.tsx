@@ -424,7 +424,7 @@ function S6Valuation() {
         <div>
           <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>Seed round</div>
           <div className="font-bold" style={{ fontSize: 34, color: TEXT, marginTop: 4 }}>$2.0M</div>
-          <div style={{ fontSize: 16, color: MUTED }}>at $11.33M post · 15% to investor</div>
+          <div style={{ fontSize: 16, color: MUTED }}>at $15.38M post · 13% to investor</div>
           <div style={{ fontSize: 13, color: SUBTLE, marginTop: 2 }}>Priced on the team and the 18 months already in.</div>
         </div>
         <div className="font-mono" style={{ fontSize: 28, color: SUBTLE }}>→</div>
