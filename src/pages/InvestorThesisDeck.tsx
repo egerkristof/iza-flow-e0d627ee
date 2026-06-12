@@ -28,7 +28,7 @@ const ACTS = [
 
 function ActRail({ index }: { index: number }) {
   return (
-    <div className="absolute z-30 flex items-center gap-4" style={{ top: 24, left: 96, right: 96, height: 44 }}>
+    <div className="absolute z-30 flex items-center gap-4" style={{ top: 24, left: 180, right: 96, height: 44 }}>
       <span className="font-mono uppercase tracking-[0.3em] font-bold whitespace-nowrap" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>
         LIZA OS Investor Thesis
       </span>
