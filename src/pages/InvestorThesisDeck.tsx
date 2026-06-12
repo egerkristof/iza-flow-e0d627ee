@@ -66,16 +66,16 @@ function SlideShell({ children }: { children: React.ReactNode }) {
 // ─── Slide 01 · Known frame vs Unknown frame ────────────────────────────────
 function S1Reframe() {
   const rows = [
-    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The part of the company that has to keep working no matter which model wins." },
-    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "No comp set yet. You are pricing the team that can actually build this part." },
-    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The team holds the firm core steady while everything else around it keeps changing." },
+    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The infrastructure inside the company that every AI innovation has to plug into to actually work." },
+    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "No comp set yet. You are pricing the capability to build the part that has to exist no matter what happens above it." },
+    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The durable core of the AI native company. What is built here keeps compounding while the layer above it keeps changing." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 58, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          What is worth investing in now is the part that has to work inside the enterprise.
+          The bet is on building the part of the AI native company that has to exist no matter which innovation wins above it.
         </h1>
       </div>
 
@@ -93,7 +93,7 @@ function S1Reframe() {
           ))}
         </div>
       </div>
-      <Footer text="The lens decides the valuation. Choose the lens first." />
+      <Footer text="Above the line: models and apps keep changing. Below the line: the company core has to keep working." />
     </SlideShell>
   );
 }
@@ -104,18 +104,15 @@ function S2InfraBet() {
     { name: "Models",               color: PURPLE, why: "Sits outside the customer. Capex war. Winner takes the table." },
     { name: "Apps and copilots",    color: GOLD,   why: "Sits outside the customer. Eaten by the next model release." },
     { name: "Services firms",       color: ACCENT, why: "Sits outside the customer. Scales linearly with humans for hire." },
-    { name: "The enterprise core",  color: GREEN,  why: "Sits inside the customer. The company's own people are the scale unit. This is the only bet that compounds where it has to compound." },
+    { name: "The enterprise core",  color: GREEN,  why: "Sits inside the customer. Where compliance lives, in both senses: the rules and guardrails AI has to obey, and the human intent and best practice the system learns from." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Bet" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 14, maxWidth: 1680 }}>
-          Three of these live outside the customer. Only one lives inside it.
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          If the enterprise core has one job, it is compliance. The rules AI has to obey, and the human intent it has to learn from.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
-          That inside part is what has to work for AI to actually run at scale in an enterprise. It is the only one that compounds where the work happens.
-        </p>
       </div>
 
       <div className="absolute" style={{ left: 112, right: 112, top: 360 }}>
@@ -142,7 +139,7 @@ function S2InfraBet() {
           })}
         </div>
       </div>
-      <Footer text="The first three stay on our side of the boundary. The enterprise core lives on theirs." />
+      <Footer text="The first three stay on the vendor side of the line. The enterprise core lives on the customer side." />
     </SlideShell>
   );
 }
@@ -161,15 +158,12 @@ function S3InfraSpec() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Enterprise Core" color={ACCENT} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 14 }}>
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0 }}>
           What an AI native company has to have. Six things.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
-          Plain English on the left. The name we use for it in LIZA OS on the right. If any of these six is missing, you have a feature, not the foundation.
-        </p>
       </div>
 
-      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 470 }}>
+      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 340 }}>
         {parts.map((p, i) => (
           <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 230 }}>
             <div className="flex items-center gap-4">
@@ -201,17 +195,14 @@ function S4Map() {
     { name: "Interloom",  x: 0.60, y: 0.38, color: ACCENT, note: "SME-led no-code back-office. Humans design and approve flows." },
     { name: "LIZA OS",    x: 0.85, y: 0.85, color: GREEN,  note: "Self-serve · human tacit knowledge is the input" },
   ];
-  const PLOT = { left: 320, top: 460, w: 1280, h: 540 };
+  const PLOT = { left: 320, top: 360, w: 1280, h: 560 };
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Map" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 12 }}>
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0 }}>
           Where the others sit. Where we sit.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
-          Two questions decide the position. How is it delivered (services or self-serve), and what the human is asked to do (approve AI's work, or co-author it).
-        </p>
       </div>
 
       {/* Y axis labels — outside plot, vertically stacked, larger */}
@@ -272,7 +263,7 @@ function S4Map() {
           );
         })}
       </div>
-      <Footer text="Sources: appparadox.com · interloom.com · wonderful.ai · LIZA OS production." />
+      <Footer text="All four build infrastructure. The split is how each one treats human intent and intuition. Sources: appparadox.com · interloom.com · wonderful.ai · LIZA OS production." />
     </SlideShell>
   );
 }
