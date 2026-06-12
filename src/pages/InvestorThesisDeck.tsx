@@ -66,16 +66,16 @@ function SlideShell({ children }: { children: React.ReactNode }) {
 // ─── Slide 01 · Known frame vs Unknown frame ────────────────────────────────
 function S1Reframe() {
   const rows = [
-    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The part of the company that has to keep working no matter which model wins." },
-    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "No comp set yet. You are pricing the team that can actually build this part." },
-    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The team holds the firm core steady while everything else around it keeps changing." },
+    { k: "What you put money into", pre: "Models. Vertical apps. Copilots. Services firms wrapped around them.",      post: "The infrastructure inside the company that every AI innovation has to plug into to actually work." },
+    { k: "Why it can be priced",    pre: "There is a comp set. Multiples are known.",                                  post: "No comp set yet. You are pricing the capability to build the part that has to exist no matter what happens above it." },
+    { k: "What you are betting on", pre: "The product wins its category.",                                             post: "The durable core of the AI native company. What is built here keeps compounding while the layer above it keeps changing." },
   ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 58, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          What is worth investing in now is the part that has to work inside the enterprise.
+          The bet is on building the part of the AI native company that has to exist no matter which innovation wins above it.
         </h1>
       </div>
 
@@ -93,7 +93,7 @@ function S1Reframe() {
           ))}
         </div>
       </div>
-      <Footer text="The lens decides the valuation. Choose the lens first." />
+      <Footer text="Above the line: models and apps keep changing. Below the line: the company core has to keep working." />
     </SlideShell>
   );
 }
