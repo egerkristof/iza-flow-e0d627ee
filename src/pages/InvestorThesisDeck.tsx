@@ -74,7 +74,7 @@ function S0OurBet() {
   const facts = [
     { k: "Time in",           v: "18 months",         note: "Full-time, no side projects." },
     { k: "Founders",          v: "3 senior operators", note: "Data, AI, digital transformation. 15+ years each." },
-    { k: "Founder capital",   v: "~$500K",            note: "Cash and foregone salary, put into the build." },
+    { k: "Founder capital",   v: "~$300K",            note: "Cash and foregone salary, put into the build." },
     { k: "Origin",            v: "Aliz.ai",           note: "Spun out of a 10-year enterprise AI delivery practice." },
   ];
   return (
@@ -244,12 +244,12 @@ function S3InfraSpec() {
 
 // ─── Slide 04 · Four-Quadrant Map ────────────────────────────────────────────
 function S4Map() {
-  // axes: X = deployment model (services-led → self-serve), Y = human role (approver → co-author)
+  // axes: X = paradigm (traditional enterprise deployment → AI-native operating model), Y = human role (approver → co-author)
   const pts = [
-    { name: "Wonderful",  x: 0.12, y: 0.20, color: GOLD,   note: "Forward-deployed engineers + McKinsey alliance. Agents replace humans." },
-    { name: "Paradox",    x: 0.30, y: 0.78, color: PURPLE, note: "EU research-stage. Human-first clarity papers. Not in production." },
-    { name: "Interloom",  x: 0.60, y: 0.38, color: ACCENT, note: "SME-led no-code back-office. Humans design and approve flows." },
-    { name: "LIZA OS",    x: 0.85, y: 0.85, color: GREEN,  note: "Self-serve product. Human intent and tacit knowledge enter as input, not as cleanup." },
+    { name: "Wonderful",  x: 0.12, y: 0.20, color: GOLD,   note: "Forward-deployed engineers + McKinsey alliance. Custom enterprise rollout. Agents replace humans." },
+    { name: "Paradox",    x: 0.30, y: 0.78, color: PURPLE, note: "EU research-stage. Human-first clarity papers. Not yet an operating model in production." },
+    { name: "Interloom",  x: 0.60, y: 0.38, color: ACCENT, note: "SME-led no-code back-office. Workflow tooling on top of the old deployment shape." },
+    { name: "LIZA OS",    x: 0.85, y: 0.85, color: GREEN,  note: "AI-native operating model. Human intent and tacit knowledge enter as the input, not as cleanup." },
   ];
   const PLOT = { left: 320, top: 360, w: 1280, h: 560 };
   return (
@@ -270,10 +270,10 @@ function S4Map() {
       </div>
       {/* X axis labels — clearly below plot, larger */}
       <div className="absolute font-bold uppercase tracking-[0.18em]" style={{ fontSize: 15, color: SUBTLE, left: PLOT.left, top: PLOT.top + PLOT.h + 22 }}>
-        ← Services-led delivery
+        ← Traditional enterprise deployment
       </div>
-      <div className="absolute font-bold uppercase tracking-[0.18em] text-right" style={{ fontSize: 15, color: TEXT, left: PLOT.left + PLOT.w - 320, top: PLOT.top + PLOT.h + 22, width: 320 }}>
-        Self-serve delivery →
+      <div className="absolute font-bold uppercase tracking-[0.18em] text-right" style={{ fontSize: 15, color: TEXT, left: PLOT.left + PLOT.w - 360, top: PLOT.top + PLOT.h + 22, width: 360 }}>
+        AI-native operating model →
       </div>
 
       {/* Plot area */}
@@ -392,7 +392,7 @@ function S6Valuation() {
     { k: "01", t: "Deep tech and AI build experience.",            d: "15+ years building data and AI systems in production. The kind of work the enterprise core is actually made of, not slideware." },
     { k: "02", t: "The bridge between enterprise IT and business.", d: "Same 15 years spent inside digital transformation programs at Aliz.ai. We know where business reality and modern enterprise tech break against each other, because we have lived on both sides of that line." },
     { k: "03", t: "A team that already operates the AI native way.",             d: "The core needs to be built by people who already work like it. We run on a teal team model, have trialed it inside Aliz for years, and the founder is a practicing executive coach. The operating model is the evidence." },
-    { k: "04", t: "The round continues the bet we already made.",   d: "18 months and ~$500K of founder capital are already in. This round holds the firm core and runs the experimental shell around it for the next 18. Not a salary line. The size reflects how unusual this combination is to assemble." },
+    { k: "04", t: "The round continues the bet we already made.",   d: "18 months and ~$300K of founder capital are already in. This round holds the firm core and runs the experimental shell around it for the next 18. Not a salary line. The size reflects how unusual this combination is to assemble." },
   ];
   return (
     <SlideShell>
