@@ -74,15 +74,14 @@ function S0OurBet() {
   ];
   return (
     <SlideShell>
-      <div className="absolute" style={{ left: 112, right: 112, top: 130 }}>
+      <div className="absolute" style={{ left: 112, right: 112, top: 150 }}>
         <Tag label="Why we made the bet" color={GOLD} />
-        <h1 className="font-light italic leading-[1.05] tracking-tight" style={{ fontSize: 80, color: TEXT, marginBottom: 0, maxWidth: 1500 }}>
-          <span style={{ fontSize: 120, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginRight: 8 }}>&ldquo;</span>
-          Models are provisional. Governance is the through-line. We bet on what endures.<span style={{ fontSize: 120, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginLeft: 8 }}>&rdquo;</span>
+        <h1 className="font-semibold leading-[1.05] tracking-tight" style={{ fontSize: 96, color: TEXT, marginTop: 24, marginBottom: 0, maxWidth: 1500 }}>
+          Models change. Governance doesn&rsquo;t.
         </h1>
       </div>
 
-      <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 420 }}>
+      <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 480 }}>
         {facts.map((f) => (
           <div key={f.k} className="rounded-2xl border px-6 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 200 }}>
             <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>{f.k}</div>
