@@ -237,7 +237,7 @@ function S3InfraSpec() {
           </div>
         ))}
       </div>
-      <Footer text="Six things we have been building for 18 months. Each one is where founder capital has gone." />
+      <Footer text="Six things we have been building for 18 months. Each one is a piece of the bet we de-risked before asking anyone else to." />
     </SlideShell>
   );
 }
