@@ -17,6 +17,7 @@ import {
 // ═════════════════════════════════════════════════════════════════════════════
 
 const ACTS = [
+  { short: "Our Bet" },
   { short: "Reframe" },
   { short: "The Bet" },
   { short: "Infra Spec" },
@@ -31,7 +32,7 @@ function ActRail({ index }: { index: number }) {
       <span className="font-mono uppercase tracking-[0.3em] font-bold whitespace-nowrap" style={{ fontSize: 11, color: `hsl(${ACCENT})` }}>
         LIZA OS Investor Thesis
       </span>
-      <div className="flex-1 grid grid-cols-6 gap-2">
+      <div className="flex-1 grid grid-cols-7 gap-2">
         {ACTS.map((a, i) => {
           const active = i === index;
           const past = i < index;
@@ -60,6 +61,61 @@ function SlideShell({ children }: { children: React.ReactNode }) {
       {children}
       <SlideBar />
     </div>
+  );
+}
+
+// ─── Slide 00 · Our own term sheet ──────────────────────────────────────────
+function S0OurBet() {
+  const foregone = [
+    "Partner track at a consultancy",
+    "Head of AI / CTO seats at scaleups",
+    "Senior staff roles at hyperscalers and model labs",
+  ];
+  const facts = [
+    { k: "Time in",           v: "18 months",         note: "Full-time, no side projects." },
+    { k: "Founders",          v: "3 senior operators", note: "Data, AI, digital transformation. 15+ years each." },
+    { k: "Founder capital",   v: "~$500K",            note: "Cash and foregone salary, put into the build." },
+    { k: "Origin",            v: "Aliz.ai",           note: "Spun out of a 10-year enterprise AI delivery practice." },
+  ];
+  return (
+    <SlideShell>
+      <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
+        <Tag label="Why we are here" color={GOLD} />
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          We gave ourselves the term sheet 18 months ago. This deck is the case for why you should write the next one.
+        </h1>
+      </div>
+
+      <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 340 }}>
+        {facts.map((f) => (
+          <div key={f.k} className="rounded-2xl border px-6 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 200 }}>
+            <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>{f.k}</div>
+            <div className="font-bold" style={{ fontSize: 36, color: TEXT, marginTop: 10, lineHeight: 1.1 }}>{f.v}</div>
+            <div style={{ fontSize: 17, color: MUTED, marginTop: 10, lineHeight: 1.35 }}>{f.note}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="absolute grid grid-cols-2 gap-6" style={{ left: 112, right: 112, top: 600 }}>
+        <div className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${RED})` }}>What we walked away from</div>
+          <div style={{ fontSize: 20, color: TEXT, marginTop: 12, lineHeight: 1.45 }}>
+            {foregone.join(". ")}.
+          </div>
+          <div style={{ fontSize: 17, color: MUTED, marginTop: 12, lineHeight: 1.4 }}>
+            Three senior operators at the most lucrative point of their careers, choosing to build instead.
+          </div>
+        </div>
+        <div className="rounded-2xl border px-7 py-6" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)`, boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Why we made the bet</div>
+          <div style={{ fontSize: 20, color: TEXT, marginTop: 12, lineHeight: 1.45 }}>
+            Models and apps keep changing. Governance is the recurring blocker every enterprise hits with any new digital technology. The lasting part is the enterprise core where governance lives. That is what is worth 18 months of our lives.
+          </div>
+        </div>
+      </div>
+
+      <Footer text="The rest of this deck is the thesis we have been investing against. We are inviting the next round in." />
+    </SlideShell>
   );
 }
 
@@ -93,7 +149,7 @@ function S1Reframe() {
           ))}
         </div>
       </div>
-      <Footer text="Above the line: models and apps keep changing. Below the line: the company core has to keep working." />
+      <Footer text="Chapter one of what we invested in. The part below the line is where the money has to go." />
     </SlideShell>
   );
 }
@@ -139,7 +195,7 @@ function S2InfraBet() {
           })}
         </div>
       </div>
-      <Footer text="The first three stay on the vendor side of the line. The enterprise core lives on the customer side." />
+      <Footer text="Why we picked this layer. Governance is the recurring blocker. We chose to build where it lives." />
     </SlideShell>
   );
 }
@@ -181,7 +237,7 @@ function S3InfraSpec() {
           </div>
         ))}
       </div>
-      <Footer text="These six are what we build. Together they are the enterprise core." />
+      <Footer text="Six things we have been building for 18 months. Each one is where founder capital has gone." />
     </SlideShell>
   );
 }
@@ -263,7 +319,7 @@ function S4Map() {
           );
         })}
       </div>
-      <Footer text="All four build infrastructure. The split is how each one treats human intent and intuition. Sources: appparadox.com · interloom.com · wonderful.ai · LIZA OS production." />
+      <Footer text="All four build infrastructure. We placed our bet on the corner that treats human intent as the input, not the output. Sources: appparadox.com · interloom.com · wonderful.ai · LIZA OS production." />
     </SlideShell>
   );
 }
@@ -336,7 +392,7 @@ function S6Valuation() {
     { k: "01", t: "Deep tech and AI build experience.",            d: "15+ years building data and AI systems in production. The kind of work the enterprise core is actually made of, not slideware." },
     { k: "02", t: "The bridge between enterprise IT and business.", d: "Same 15 years spent inside digital transformation programs at Aliz.ai. We know where business reality and modern enterprise tech break against each other, because we have lived on both sides of that line." },
     { k: "03", t: "How AI native teams actually work.",             d: "We run on a teal team model and have been trialing it inside Aliz for years. Founder is also a practicing executive coach. Building the core needs people who already know how this kind of team operates." },
-    { k: "04", t: "The round is sized to hold the team.",           d: "Enough capital to hold this firm core and run the experimental shell around it through the next 18 months. Not a salary line. The capital reflects how unusual this combination is to assemble." },
+    { k: "04", t: "The round continues the bet we already made.",   d: "18 months and ~$500K of founder capital are already in. This round holds the firm core and runs the experimental shell around it for the next 18. Not a salary line. The size reflects how unusual this combination is to assemble." },
   ];
   return (
     <SlideShell>
@@ -399,12 +455,13 @@ function WithRail({ index, children }: { index: number; children: React.ReactNod
 }
 
 const RAW_SLIDES = [
-  { id: "reframe",      title: "01 · The part that has to work inside the enterprise", component: <S1Reframe /> },
-  { id: "infra-bet",    title: "02 · Three outside the customer, one inside",          component: <S2InfraBet /> },
-  { id: "infra-spec",   title: "03 · What an AI native company has to have",           component: <S3InfraSpec /> },
-  { id: "map",          title: "04 · Where the others sit. Where we sit.",             component: <S4Map /> },
-  { id: "moat",         title: "05 · Pre AI native vs AI native advantage",            component: <S5Moat /> },
-  { id: "valuation",    title: "06 · What it takes to build the core",                 component: <S6Valuation /> },
+  { id: "our-bet",      title: "01 · We gave ourselves the term sheet 18 months ago",  component: <S0OurBet /> },
+  { id: "reframe",      title: "02 · The part that has to work inside the enterprise", component: <S1Reframe /> },
+  { id: "infra-bet",    title: "03 · Three outside the customer, one inside",          component: <S2InfraBet /> },
+  { id: "infra-spec",   title: "04 · What an AI native company has to have",           component: <S3InfraSpec /> },
+  { id: "map",          title: "05 · Where the others sit. Where we sit.",             component: <S4Map /> },
+  { id: "moat",         title: "06 · Pre AI native vs AI native advantage",            component: <S5Moat /> },
+  { id: "valuation",    title: "07 · What it takes to build the core",                 component: <S6Valuation /> },
 ];
 const SLIDES = RAW_SLIDES.map((s, i) => ({
   ...s,
