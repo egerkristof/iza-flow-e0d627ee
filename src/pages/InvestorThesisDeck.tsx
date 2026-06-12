@@ -454,7 +454,7 @@ const RAW_SLIDES = [
   { id: "reframe",      title: "02 · The part that has to work inside the enterprise", component: <S1Reframe /> },
   { id: "infra-bet",    title: "03 · Three outside the customer, one inside",          component: <S2InfraBet /> },
   { id: "infra-spec",   title: "04 · What an AI native company has to have",           component: <S3InfraSpec /> },
-  { id: "map",          title: "05 · Where the others sit. Where we sit.",             component: <S4Map /> },
+  { id: "map",          title: "05 · Where the infrastructure players sit. Where we sit.", component: <S4Map /> },
   { id: "moat",         title: "06 · Pre AI native vs AI native advantage",            component: <S5Moat /> },
   { id: "valuation",    title: "07 · What it takes to build the core",                 component: <S6Valuation /> },
 ];
