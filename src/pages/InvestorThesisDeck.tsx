@@ -64,6 +64,61 @@ function SlideShell({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ─── Slide 00 · Our own term sheet ──────────────────────────────────────────
+function S0OurBet() {
+  const foregone = [
+    "Partner track at a consultancy",
+    "Head of AI / CTO seats at scaleups",
+    "Senior staff roles at hyperscalers and model labs",
+  ];
+  const facts = [
+    { k: "Time in",           v: "18 months",         note: "Full-time, no side projects." },
+    { k: "Founders",          v: "3 senior operators", note: "Data, AI, digital transformation. 15+ years each." },
+    { k: "Founder capital",   v: "~$500K",            note: "Cash and foregone salary, put into the build." },
+    { k: "Origin",            v: "Aliz.ai",           note: "Spun out of a 10-year enterprise AI delivery practice." },
+  ];
+  return (
+    <SlideShell>
+      <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
+        <Tag label="Why we are here" color={GOLD} />
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          We gave ourselves the term sheet 18 months ago. This deck is the case for why you should write the next one.
+        </h1>
+      </div>
+
+      <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 340 }}>
+        {facts.map((f) => (
+          <div key={f.k} className="rounded-2xl border px-6 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 200 }}>
+            <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>{f.k}</div>
+            <div className="font-bold" style={{ fontSize: 36, color: TEXT, marginTop: 10, lineHeight: 1.1 }}>{f.v}</div>
+            <div style={{ fontSize: 17, color: MUTED, marginTop: 10, lineHeight: 1.35 }}>{f.note}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="absolute grid grid-cols-2 gap-6" style={{ left: 112, right: 112, top: 600 }}>
+        <div className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${RED})` }}>What we walked away from</div>
+          <div style={{ fontSize: 20, color: TEXT, marginTop: 12, lineHeight: 1.45 }}>
+            {foregone.join(". ")}.
+          </div>
+          <div style={{ fontSize: 17, color: MUTED, marginTop: 12, lineHeight: 1.4 }}>
+            Three senior operators at the most lucrative point of their careers, choosing to build instead.
+          </div>
+        </div>
+        <div className="rounded-2xl border px-7 py-6" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)`, boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
+          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Why we made the bet</div>
+          <div style={{ fontSize: 20, color: TEXT, marginTop: 12, lineHeight: 1.45 }}>
+            Models and apps keep changing. Governance is the recurring blocker every enterprise hits with any new digital technology. The lasting part is the enterprise core where governance lives. That is what is worth 18 months of our lives.
+          </div>
+        </div>
+      </div>
+
+      <Footer text="The rest of this deck is the thesis we have been investing against. We are inviting the next round in." />
+    </SlideShell>
+  );
+}
+
 // ─── Slide 01 · Known frame vs Unknown frame ────────────────────────────────
 function S1Reframe() {
   const rows = [
