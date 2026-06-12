@@ -195,17 +195,14 @@ function S4Map() {
     { name: "Interloom",  x: 0.60, y: 0.38, color: ACCENT, note: "SME-led no-code back-office. Humans design and approve flows." },
     { name: "LIZA OS",    x: 0.85, y: 0.85, color: GREEN,  note: "Self-serve · human tacit knowledge is the input" },
   ];
-  const PLOT = { left: 320, top: 460, w: 1280, h: 540 };
+  const PLOT = { left: 320, top: 360, w: 1280, h: 560 };
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Map" />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 12 }}>
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0 }}>
           Where the others sit. Where we sit.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
-          Two questions decide the position. How is it delivered (services or self-serve), and what the human is asked to do (approve AI's work, or co-author it).
-        </p>
       </div>
 
       {/* Y axis labels — outside plot, vertically stacked, larger */}
@@ -266,7 +263,7 @@ function S4Map() {
           );
         })}
       </div>
-      <Footer text="Sources: appparadox.com · interloom.com · wonderful.ai · LIZA OS production." />
+      <Footer text="All four build infrastructure. The split is how each one treats human intent and intuition. Sources: appparadox.com · interloom.com · wonderful.ai · LIZA OS production." />
     </SlideShell>
   );
 }
