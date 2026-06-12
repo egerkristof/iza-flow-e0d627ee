@@ -391,7 +391,7 @@ function S6Risk() {
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Risk" color={RED} />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 56, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          Two risks sit on this check. Only one of them is bounded.
+          Two risks sit on this check. The hard part of one of them is already behind us.
         </h1>
       </div>
 
@@ -402,13 +402,13 @@ function S6Risk() {
             Risk of writing the check
           </div>
           <div className="font-bold" style={{ fontSize: 36, color: TEXT, lineHeight: 1.18, marginBottom: 22 }}>
-            Capital is locked for 5 to 7 years instead of the 3 to 4 a SaaS bet would mark in.
+            The path to return is modular, not a single straight line.
           </div>
           <div style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>
-            No public comp set yet, so interim marks are patient. The bet is on a category, not on a quarter.
+            This is a horizontal core, not a vertical wedge. We hold strong base scenarios, but the exact shape of how it compounds is harder to call than a single-market bet.
           </div>
           <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, lineHeight: 1.35 }}>
-            What caps the downside: 18 months of full-time build are already in. The architecture runs, the team is assembled, the IP exists. You are not funding a search for product.
+            What is already behind us: the hardest part. The core architecture, the team, the IP and the operating model are built. You are funding the capitalization, not the invention.
           </div>
         </div>
 
@@ -418,18 +418,18 @@ function S6Risk() {
             Risk of not writing it
           </div>
           <div className="font-bold" style={{ fontSize: 36, color: TEXT, lineHeight: 1.18, marginBottom: 22 }}>
-            The AI-native enterprise layer gets funded once, and you watched it from outside.
+            The AI-native enterprise layer gets built once. You either sit on the cap table or you watch it from outside.
           </div>
           <div style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>
-            Salesforce was funded once. ServiceNow was funded once. The category-defining system of record only takes one check at this stage, and it is built alongside the first customers or not at all.
+            Category-defining systems of record are built once, alongside the first customers, or not at all. This one is being built now.
           </div>
           <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${GREEN})`, lineHeight: 1.35 }}>
-            What does not cap the downside: nothing. There is no Series B entry into a category someone else already owns.
+            What does not get easier later: entry. There is no clean second door into a category once someone else owns its core.
           </div>
         </div>
       </div>
 
-      <Footer text="One risk is a longer hold. The other is missing the category. Price both, not just the one with a comp set." />
+      <Footer text="One risk is a less predictable path. The other is missing the category. Price both, not just the one that is easier to model." />
     </SlideShell>
   );
 }
