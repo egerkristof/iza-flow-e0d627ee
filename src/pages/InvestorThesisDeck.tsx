@@ -386,81 +386,53 @@ function S5Moat() {
 
 // ─── Slide 06 · Risk · Two risks the check carries ──────────────────────────
 function S6Risk() {
-  const writing = [
-    { k: "Time horizon",      v: "Longer than a SaaS bet. The enterprise core compounds over 5 to 7 years, not 18 months." },
-    { k: "No comp set",       v: "No public multiples for the layer. Pricing is on team and architecture, not ARR multiples." },
-    { k: "Hard to mark",      v: "Traditional growth metrics underread the asset. Value lives in the core, not in the topline." },
-  ];
-  const bounds = [
-    { k: "Modular architecture", v: "Models, apps and rails above the core can be swapped. The asset does not depend on which one wins." },
-    { k: "Human-anchored UX",    v: "Regulation puts a named human on the decision. The core makes them faster. That demand does not get automated away." },
-    { k: "Team and IP compound", v: "18 months of build, governance model and operating system are already in. The downside is bounded by what already exists." },
-  ];
-  const notWriting = [
-    { k: "Missing the layer",     v: "Models, apps and services get funded every quarter. The enterprise core gets funded once, by whoever sees it first." },
-    { k: "No second entry",       v: "When the category settles, the core is the part you cannot buy late. It has to be built alongside the customer." },
-    { k: "Unbounded on the upside you do not own", v: "The downside on writing is bounded. The downside on not writing is the whole layer, compounding without you." },
-  ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Risk" color={RED} />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 56, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          Two risks the check carries. Pick the one you would rather hold.
+          Two risks. One check. Which one do you want to carry?
         </h1>
+        <p style={{ fontSize: 22, color: MUTED, marginTop: 18, maxWidth: 1400, lineHeight: 1.4 }}>
+          Every investment has two sides. The cost of being wrong, and the cost of not being there. Most rooms only price the first.
+        </p>
       </div>
 
-      <div className="absolute grid grid-cols-2 gap-6" style={{ left: 112, right: 112, top: 320 }}>
+      <div className="absolute grid grid-cols-2 gap-8" style={{ left: 112, right: 112, top: 400 }}>
         {/* Risk of writing */}
-        <div className="rounded-2xl border" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, overflow: "hidden" }}>
-          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${RED})`, background: "hsl(0 72% 50% / 0.05)", borderBottom: `1px solid ${CHROME_BORDER}` }}>Risk of writing the check</div>
-          <div className="px-7 py-5">
-            {writing.map((r, i) => (
-              <div key={r.k} className="py-3" style={{ borderTop: i === 0 ? "none" : `1px solid ${CHROME_BORDER}` }}>
-                <div className="font-bold" style={{ fontSize: 15, color: SUBTLE, marginBottom: 4 }}>{r.k}</div>
-                <div style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{r.v}</div>
-              </div>
-            ))}
+        <div className="rounded-2xl border flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, padding: "44px 44px 40px", minHeight: 440 }}>
+          <div className="font-mono uppercase tracking-[0.22em] font-bold" style={{ fontSize: 13, color: `hsl(${RED})`, marginBottom: 18 }}>
+            If we write the check
           </div>
-          <div className="px-7 py-4" style={{ background: "hsl(0 72% 50% / 0.04)", borderTop: `1px solid ${CHROME_BORDER}` }}>
-            <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 11, color: `hsl(${RED})`, marginBottom: 6 }}>What bounds it</div>
-            {bounds.map((r) => (
-              <div key={r.k} className="py-1.5">
-                <span className="font-bold" style={{ fontSize: 15, color: TEXT }}>{r.k}. </span>
-                <span style={{ fontSize: 15, color: MUTED, lineHeight: 1.35 }}>{r.v}</span>
-              </div>
-            ))}
+          <div className="font-bold" style={{ fontSize: 38, color: TEXT, lineHeight: 1.15, marginBottom: 24 }}>
+            Worst case, the money takes longer to come back.
+          </div>
+          <div style={{ fontSize: 21, color: MUTED, lineHeight: 1.45 }}>
+            This is a 5 to 7 year bet, not an 18 month one. There is no public comp set yet, so the mark is patient.
+          </div>
+          <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, lineHeight: 1.3 }}>
+            Bounded. The team, the IP and the architecture already exist.
           </div>
         </div>
 
         {/* Risk of not writing */}
-        <div className="rounded-2xl border" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)`, overflow: "hidden", boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
-          <div className="px-7 py-5 font-bold uppercase tracking-[0.2em]" style={{ fontSize: 13, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.08)`, borderBottom: `1px solid hsl(${GREEN} / 0.25)` }}>Risk of not writing it</div>
-          <div className="px-7 py-5">
-            {notWriting.map((r, i) => (
-              <div key={r.k} className="py-3" style={{ borderTop: i === 0 ? "none" : `1px solid hsl(${GREEN} / 0.18)` }}>
-                <div className="font-bold" style={{ fontSize: 15, color: `hsl(${GREEN})`, marginBottom: 4 }}>{r.k}</div>
-                <div style={{ fontSize: 18, color: TEXT, lineHeight: 1.35 }}>{r.v}</div>
-              </div>
-            ))}
+        <div className="rounded-2xl border flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)`, padding: "44px 44px 40px", minHeight: 440, boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
+          <div className="font-mono uppercase tracking-[0.22em] font-bold" style={{ fontSize: 13, color: `hsl(${GREEN})`, marginBottom: 18 }}>
+            If we don't
           </div>
-          <div className="px-7 py-4" style={{ background: `hsl(${GREEN} / 0.06)`, borderTop: `1px solid hsl(${GREEN} / 0.18)` }}>
-            <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 11, color: `hsl(${GREEN})`, marginBottom: 6 }}>What does not bound it</div>
-            <div style={{ fontSize: 15, color: TEXT, lineHeight: 1.4 }}>
-              Once the core settles, it is not a layer you can re-enter. It is built alongside the customer or it is not yours.
-            </div>
+          <div className="font-bold" style={{ fontSize: 38, color: TEXT, lineHeight: 1.15, marginBottom: 24 }}>
+            Worst case, the layer gets built without us.
+          </div>
+          <div style={{ fontSize: 21, color: MUTED, lineHeight: 1.45 }}>
+            The enterprise core is funded once, by whoever sees it first. It is built alongside the customer, or it is not yours.
+          </div>
+          <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${GREEN})`, lineHeight: 1.3 }}>
+            Unbounded. There is no second entry into this category.
           </div>
         </div>
       </div>
 
-      <div className="absolute rounded-2xl px-8 py-6"
-        style={{ left: 112, right: 112, bottom: 80, background: BG, border: `1px solid ${CHROME_BORDER}` }}>
-        <div style={{ fontSize: 24, color: TEXT, lineHeight: 1.4, fontWeight: 600 }}>
-          The question is not whether the check is risky. It is which of the two risks you would rather carry.
-        </div>
-      </div>
-
-      <Footer text="How we think about risk. We want the room to price both sides, not just the one with a comp set." />
+      <Footer text="Price both sides of the trade, not just the side with a comp set." />
     </SlideShell>
   );
 }
