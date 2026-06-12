@@ -158,15 +158,12 @@ function S3InfraSpec() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Enterprise Core" color={ACCENT} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 14 }}>
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0 }}>
           What an AI native company has to have. Six things.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 24, color: MUTED, maxWidth: 1600 }}>
-          Plain English on the left. The name we use for it in LIZA OS on the right. If any of these six is missing, you have a feature, not the foundation.
-        </p>
       </div>
 
-      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 470 }}>
+      <div className="absolute grid grid-cols-3 gap-5" style={{ left: 112, right: 112, top: 340 }}>
         {parts.map((p, i) => (
           <div key={p.name} className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 230 }}>
             <div className="flex items-center gap-4">
