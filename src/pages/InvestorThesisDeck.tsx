@@ -79,14 +79,17 @@ function S0OurBet() {
   ];
   return (
     <SlideShell>
-      <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
-        <Tag label="Why we are here" color={GOLD} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          We gave ourselves the term sheet 18 months ago. This deck is the case for the next one.
+      <div className="absolute" style={{ left: 112, right: 112, top: 130 }}>
+        <Tag label="Why we made the bet" color={GOLD} />
+        <h1 className="font-bold tracking-tight" style={{ fontSize: 52, lineHeight: 1.08, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          Models and apps keep changing. Governance is the recurring blocker every enterprise hits with any new digital technology. The lasting part is the enterprise core where governance lives. That is what is worth 18 months of our lives.
         </h1>
+        <div style={{ fontSize: 20, color: MUTED, marginTop: 16, lineHeight: 1.45 }}>
+          We gave ourselves the term sheet 18 months ago. This deck is the case for the next one.
+        </div>
       </div>
 
-      <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 340 }}>
+      <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 420 }}>
         {facts.map((f) => (
           <div key={f.k} className="rounded-2xl border px-6 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 200 }}>
             <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>{f.k}</div>
@@ -96,7 +99,7 @@ function S0OurBet() {
         ))}
       </div>
 
-      <div className="absolute grid grid-cols-2 gap-6" style={{ left: 112, right: 112, top: 600 }}>
+      <div className="absolute" style={{ left: 112, right: 112, top: 660 }}>
         <div className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
           <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${RED})` }}>What we walked away from</div>
           <div style={{ fontSize: 20, color: TEXT, marginTop: 12, lineHeight: 1.45 }}>
@@ -104,12 +107,6 @@ function S0OurBet() {
           </div>
           <div style={{ fontSize: 17, color: MUTED, marginTop: 12, lineHeight: 1.4 }}>
             Three senior operators at the most lucrative point of their careers, choosing to build instead.
-          </div>
-        </div>
-        <div className="rounded-2xl border px-7 py-6" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.05)`, boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
-          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${GREEN})` }}>Why we made the bet</div>
-          <div style={{ fontSize: 20, color: TEXT, marginTop: 12, lineHeight: 1.45 }}>
-            Models and apps keep changing. Governance is the recurring blocker every enterprise hits with any new digital technology. The lasting part is the enterprise core where governance lives. That is what is worth 18 months of our lives.
           </div>
         </div>
       </div>
