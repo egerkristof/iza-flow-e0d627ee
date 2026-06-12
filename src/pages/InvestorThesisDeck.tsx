@@ -391,48 +391,45 @@ function S6Risk() {
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Risk" color={RED} />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 56, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          Two risks. One check. Which one do you want to carry?
+          Two risks sit on this check. Only one of them is bounded.
         </h1>
-        <p style={{ fontSize: 22, color: MUTED, marginTop: 18, maxWidth: 1400, lineHeight: 1.4 }}>
-          Every investment has two sides. The cost of being wrong, and the cost of not being there. Most rooms only price the first.
-        </p>
       </div>
 
       <div className="absolute grid grid-cols-2 gap-8" style={{ left: 112, right: 112, top: 400 }}>
         {/* Risk of writing */}
         <div className="rounded-2xl border flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, padding: "44px 44px 40px", minHeight: 440 }}>
           <div className="font-mono uppercase tracking-[0.22em] font-bold" style={{ fontSize: 13, color: `hsl(${RED})`, marginBottom: 18 }}>
-            If we write the check
+            Risk of writing the check
           </div>
-          <div className="font-bold" style={{ fontSize: 38, color: TEXT, lineHeight: 1.15, marginBottom: 24 }}>
-            Worst case, the money takes longer to come back.
+          <div className="font-bold" style={{ fontSize: 36, color: TEXT, lineHeight: 1.18, marginBottom: 22 }}>
+            Capital is locked for 5 to 7 years instead of the 3 to 4 a SaaS bet would mark in.
           </div>
-          <div style={{ fontSize: 21, color: MUTED, lineHeight: 1.45 }}>
-            This is a 5 to 7 year bet, not an 18 month one. There is no public comp set yet, so the mark is patient.
+          <div style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>
+            No public comp set yet, so interim marks are patient. The bet is on a category, not on a quarter.
           </div>
-          <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, lineHeight: 1.3 }}>
-            Bounded. The team, the IP and the architecture already exist.
+          <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, lineHeight: 1.35 }}>
+            What caps the downside: 18 months of full-time build are already in. The architecture runs, the team is assembled, the IP exists. You are not funding a search for product.
           </div>
         </div>
 
         {/* Risk of not writing */}
         <div className="rounded-2xl border flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)`, padding: "44px 44px 40px", minHeight: 440, boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
           <div className="font-mono uppercase tracking-[0.22em] font-bold" style={{ fontSize: 13, color: `hsl(${GREEN})`, marginBottom: 18 }}>
-            If we don't
+            Risk of not writing it
           </div>
-          <div className="font-bold" style={{ fontSize: 38, color: TEXT, lineHeight: 1.15, marginBottom: 24 }}>
-            Worst case, the layer gets built without us.
+          <div className="font-bold" style={{ fontSize: 36, color: TEXT, lineHeight: 1.18, marginBottom: 22 }}>
+            The AI-native enterprise layer gets funded once, and you watched it from outside.
           </div>
-          <div style={{ fontSize: 21, color: MUTED, lineHeight: 1.45 }}>
-            The enterprise core is funded once, by whoever sees it first. It is built alongside the customer, or it is not yours.
+          <div style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>
+            Salesforce was funded once. ServiceNow was funded once. The category-defining system of record only takes one check at this stage, and it is built alongside the first customers or not at all.
           </div>
-          <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${GREEN})`, lineHeight: 1.3 }}>
-            Unbounded. There is no second entry into this category.
+          <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${GREEN})`, lineHeight: 1.35 }}>
+            What does not cap the downside: nothing. There is no Series B entry into a category someone else already owns.
           </div>
         </div>
       </div>
 
-      <Footer text="Price both sides of the trade, not just the side with a comp set." />
+      <Footer text="One risk is a longer hold. The other is missing the category. Price both, not just the one with a comp set." />
     </SlideShell>
   );
 }
