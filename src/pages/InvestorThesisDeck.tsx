@@ -194,7 +194,7 @@ function S2InfraBet() {
 // ─── Slide 03 · What good infrastructure looks like ──────────────────────────
 function S3InfraSpec() {
   const parts = [
-    { icon: Network,     name: "One source of truth",        liza: "Knowledge graph",            why: "A single place where what the company knows and decides actually lives. So AI is not guessing every time." },
+    { icon: Network,     name: "Common source of truth",     liza: "Knowledge graph",            why: "A single place where what the company knows and decides actually lives. So AI is not guessing every time." },
     { icon: ShieldCheck, name: "Rules of the house",         liza: "Governance layer",           why: "What is allowed, by whom, when. Encoded once so every AI action plays by them." },
     { icon: UserCog,     name: "The human stays in the loop",liza: "Oversight UX",               why: "The person works with AI on the same screen, without handing over their judgment." },
     { icon: FileSearch,  name: "A record of every decision", liza: "Decision log",               why: "The company can see how AI got to an answer, audit it, and learn from itself." },
