@@ -17,9 +17,9 @@ import {
 // ═════════════════════════════════════════════════════════════════════════════
 
 const ACTS = [
-  { short: "Our Bet" },
+  { short: "Origin" },
   { short: "Reframe" },
-  { short: "The Bet" },
+  { short: "Bet" },
   { short: "Infra Spec" },
   { short: "Map" },
   { short: "Moat" },
@@ -122,7 +122,7 @@ function S1Reframe() {
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Reframe" />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 58, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          What an AI native company has to have. And why that is what we invested in.
+          What you used to fund. What you have to fund now.
         </h1>
       </div>
 
@@ -398,9 +398,6 @@ function S6Valuation() {
         <h1 className="font-bold tracking-tight" style={{ fontSize: 60, lineHeight: 1.06, color: TEXT, marginBottom: 12, maxWidth: 1680 }}>
           The bet is on who can build the core. Here is what that takes.
         </h1>
-        <p className="font-semibold" style={{ fontSize: 22, color: MUTED, maxWidth: 1600 }}>
-          Three things have to come together in the same team. Each one on its own is not unusual. The combination is.
-        </p>
       </div>
 
       <div className="absolute grid grid-cols-2 gap-5" style={{ left: 112, right: 112, top: 360 }}>
