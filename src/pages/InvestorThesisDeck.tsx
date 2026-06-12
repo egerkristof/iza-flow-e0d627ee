@@ -149,7 +149,7 @@ function S1Reframe() {
           ))}
         </div>
       </div>
-      <Footer text="Above the line: models and apps keep changing. Below the line: the company core has to keep working." />
+      <Footer text="Chapter one of what we invested in. The part below the line is where the money has to go." />
     </SlideShell>
   );
 }
@@ -195,7 +195,7 @@ function S2InfraBet() {
           })}
         </div>
       </div>
-      <Footer text="The first three stay on the vendor side of the line. The enterprise core lives on the customer side." />
+      <Footer text="Why we picked this layer. Governance is the recurring blocker. We chose to build where it lives." />
     </SlideShell>
   );
 }
@@ -237,7 +237,7 @@ function S3InfraSpec() {
           </div>
         ))}
       </div>
-      <Footer text="These six are what we build. Together they are the enterprise core." />
+      <Footer text="Six things we have been building for 18 months. Each one is where founder capital has gone." />
     </SlideShell>
   );
 }
@@ -319,7 +319,7 @@ function S4Map() {
           );
         })}
       </div>
-      <Footer text="All four build infrastructure. The split is how each one treats human intent and intuition. Sources: appparadox.com · interloom.com · wonderful.ai · LIZA OS production." />
+      <Footer text="All four build infrastructure. We placed our bet on the corner that treats human intent as the input, not the output. Sources: appparadox.com · interloom.com · wonderful.ai · LIZA OS production." />
     </SlideShell>
   );
 }
