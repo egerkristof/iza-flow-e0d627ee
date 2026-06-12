@@ -92,17 +92,6 @@ function S0OurBet() {
         ))}
       </div>
 
-      <div className="absolute" style={{ left: 112, right: 112, top: 660 }}>
-        <div className="rounded-2xl border px-7 py-6" style={{ borderColor: CHROME_BORDER, background: CARD_ALT }}>
-          <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${RED})` }}>What we walked away from</div>
-          <div style={{ fontSize: 20, color: TEXT, marginTop: 12, lineHeight: 1.45 }}>
-            {foregone.join(". ")}.
-          </div>
-          <div style={{ fontSize: 17, color: MUTED, marginTop: 12, lineHeight: 1.4 }}>
-            Three senior operators at the most lucrative point of their careers, choosing to build instead.
-          </div>
-        </div>
-      </div>
 
       <Footer text="The rest of this deck is the thesis we have been investing against. We are inviting the next round in." />
     </SlideShell>
