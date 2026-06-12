@@ -81,10 +81,12 @@ function S0OurBet() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 130 }}>
         <Tag label="Why we made the bet" color={GOLD} />
-        <h1 className="font-bold tracking-tight" style={{ fontSize: 52, lineHeight: 1.08, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+        <h1 className="font-light italic leading-[1.15] tracking-tight" style={{ fontSize: 44, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
+          <span style={{ fontSize: 72, lineHeight: 0, verticalAlign: "-0.15em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal" }}>&ldquo;</span>
           Models and apps keep changing. Governance is the recurring blocker every enterprise hits with any new digital technology. The lasting part is the enterprise core where governance lives. That is what is worth 18 months of our lives.
+          <span style={{ fontSize: 72, lineHeight: 0, verticalAlign: "-0.15em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal" }}>&rdquo;</span>
         </h1>
-        <div style={{ fontSize: 20, color: MUTED, marginTop: 16, lineHeight: 1.45 }}>
+        <div style={{ fontSize: 20, color: MUTED, marginTop: 20, lineHeight: 1.45 }}>
           We gave ourselves the term sheet 18 months ago. This deck is the case for the next one.
         </div>
       </div>
