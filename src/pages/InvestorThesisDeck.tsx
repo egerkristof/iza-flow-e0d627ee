@@ -386,50 +386,72 @@ function S5Moat() {
 
 // ─── Slide 06 · Risk · Two risks the check carries ──────────────────────────
 function S6Risk() {
+  const rows = [
+    {
+      dim: "Shape of the bet",
+      pre: "Vertical wedge into a known market.",
+      post: "Horizontal core under many markets.",
+    },
+    {
+      dim: "Risk you are pricing",
+      pre: "Will they execute against a clear comp set?",
+      post: "Will they own the layer everyone else builds on?",
+    },
+    {
+      dim: "Path to return",
+      pre: "Linear. Modeled against the comp set.",
+      post: "Modular. Strong base scenarios, no single line to draw.",
+    },
+    {
+      dim: "What the check buys",
+      pre: "Traction still to find.",
+      post: "A core already built. Funding the capitalization, not the invention.",
+    },
+  ];
   return (
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="The Risk" color={RED} />
         <h1 className="font-bold tracking-tight" style={{ fontSize: 56, lineHeight: 1.06, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          Two risks sit on this check. The hard part of one of them is already behind us.
+          How to price this. The old playbook and the new one.
         </h1>
       </div>
 
-      <div className="absolute grid grid-cols-2 gap-8" style={{ left: 112, right: 112, top: 400 }}>
-        {/* Risk of writing */}
-        <div className="rounded-2xl border flex flex-col" style={{ borderColor: CHROME_BORDER, background: CARD_ALT, padding: "44px 44px 40px", minHeight: 440 }}>
-          <div className="font-mono uppercase tracking-[0.22em] font-bold" style={{ fontSize: 13, color: `hsl(${RED})`, marginBottom: 18 }}>
-            Risk of writing the check
+      <div className="absolute" style={{ left: 112, right: 112, top: 360 }}>
+        {/* Column headers */}
+        <div className="grid gap-6" style={{ gridTemplateColumns: "260px 1fr 1fr", marginBottom: 14 }}>
+          <div />
+          <div className="font-mono uppercase tracking-[0.22em] font-bold px-6 py-3 rounded-lg"
+            style={{ fontSize: 13, color: MUTED, background: CARD_ALT, border: `1px solid ${CHROME_BORDER}` }}>
+            Pre-AI playbook
           </div>
-          <div className="font-bold" style={{ fontSize: 36, color: TEXT, lineHeight: 1.18, marginBottom: 22 }}>
-            The path to return is modular, not a single straight line.
-          </div>
-          <div style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>
-            This is a horizontal core, not a vertical wedge. We hold strong base scenarios, but the exact shape of how it compounds is harder to call than a single-market bet.
-          </div>
-          <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${RED})`, lineHeight: 1.35 }}>
-            What is already behind us: the hardest part. The core architecture, the team, the IP and the operating model are built. You are funding the capitalization, not the invention.
+          <div className="font-mono uppercase tracking-[0.22em] font-bold px-6 py-3 rounded-lg"
+            style={{ fontSize: 13, color: `hsl(${GREEN})`, background: `hsl(${GREEN} / 0.06)`, border: `1px solid hsl(${GREEN} / 0.35)` }}>
+            AI-native playbook
           </div>
         </div>
 
-        {/* Risk of not writing */}
-        <div className="rounded-2xl border flex flex-col" style={{ borderColor: `hsl(${GREEN} / 0.4)`, background: `hsl(${GREEN} / 0.04)`, padding: "44px 44px 40px", minHeight: 440, boxShadow: `0 8px 32px hsl(${GREEN} / 0.10)` }}>
-          <div className="font-mono uppercase tracking-[0.22em] font-bold" style={{ fontSize: 13, color: `hsl(${GREEN})`, marginBottom: 18 }}>
-            Risk of not writing it
-          </div>
-          <div className="font-bold" style={{ fontSize: 36, color: TEXT, lineHeight: 1.18, marginBottom: 22 }}>
-            The AI-native enterprise layer gets built once. You either sit on the cap table or you watch it from outside.
-          </div>
-          <div style={{ fontSize: 20, color: MUTED, lineHeight: 1.45 }}>
-            Category-defining systems of record are built once, alongside the first customers, or not at all. This one is being built now.
-          </div>
-          <div className="mt-auto pt-8 font-bold" style={{ fontSize: 20, color: `hsl(${GREEN})`, lineHeight: 1.35 }}>
-            What does not get easier later: entry. There is no clean second door into a category once someone else owns its core.
-          </div>
+        {/* Rows */}
+        <div className="flex flex-col gap-3">
+          {rows.map((r) => (
+            <div key={r.dim} className="grid gap-6 items-stretch" style={{ gridTemplateColumns: "260px 1fr 1fr" }}>
+              <div className="font-bold flex items-center" style={{ fontSize: 18, color: TEXT, letterSpacing: "-0.01em" }}>
+                {r.dim}
+              </div>
+              <div className="rounded-xl px-6 py-5 flex items-center"
+                style={{ background: CARD_ALT, border: `1px solid ${CHROME_BORDER}`, fontSize: 22, color: MUTED, lineHeight: 1.3 }}>
+                {r.pre}
+              </div>
+              <div className="rounded-xl px-6 py-5 flex items-center"
+                style={{ background: `hsl(${GREEN} / 0.05)`, border: `1px solid hsl(${GREEN} / 0.35)`, fontSize: 22, color: TEXT, lineHeight: 1.3, fontWeight: 600 }}>
+                {r.post}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      <Footer text="One risk is a less predictable path. The other is missing the category. Price both, not just the one that is easier to model." />
+      <Footer text="Pricing an AI-native core with a pre-AI playbook underprices the asset and misreads the risk." />
     </SlideShell>
   );
 }
