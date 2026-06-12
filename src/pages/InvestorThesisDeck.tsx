@@ -76,9 +76,9 @@ function S0OurBet() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 130 }}>
         <Tag label="Why we made the bet" color={GOLD} />
-        <h1 className="font-light italic leading-[1.05] tracking-tight" style={{ fontSize: 88, color: TEXT, marginBottom: 0, maxWidth: 1500 }}>
+        <h1 className="font-light italic leading-[1.05] tracking-tight" style={{ fontSize: 80, color: TEXT, marginBottom: 0, maxWidth: 1500 }}>
           <span style={{ fontSize: 120, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginRight: 8 }}>&ldquo;</span>
-          Models change. Governance stays.<span style={{ fontSize: 120, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginLeft: 8 }}>&rdquo;</span>
+          Models are provisional. Governance is the through-line. We bet on what endures.<span style={{ fontSize: 120, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginLeft: 8 }}>&rdquo;</span>
         </h1>
       </div>
 
