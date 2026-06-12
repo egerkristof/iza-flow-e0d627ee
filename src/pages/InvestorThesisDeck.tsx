@@ -74,14 +74,18 @@ function S0OurBet() {
   ];
   return (
     <SlideShell>
-      <div className="absolute" style={{ left: 112, right: 112, top: 150 }}>
+      <div className="absolute" style={{ left: 112, right: 112, top: 140 }}>
         <Tag label="Why we made the bet" color={GOLD} />
-        <h1 className="font-semibold leading-[1.1] tracking-tight" style={{ fontSize: 80, color: TEXT, marginTop: 28, marginBottom: 0, maxWidth: 1400 }}>
-          Models change. Governance doesn&rsquo;t.
+        <h1 className="font-light italic leading-[1.15] tracking-tight" style={{ fontSize: 56, color: TEXT, marginTop: 24, marginBottom: 24, maxWidth: 1680 }}>
+          <span style={{ fontSize: 80, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginRight: 6 }}>&ldquo;</span>
+          Models and apps keep changing. Governance is the recurring blocker every enterprise hits with any new digital technology. The lasting part is the enterprise core where governance lives. That is what is worth 18 months of our lives.<span style={{ fontSize: 80, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginLeft: 6 }}>&rdquo;</span>
         </h1>
+        <div style={{ fontSize: 20, color: MUTED, maxWidth: 1400 }}>
+          We gave ourselves the term sheet 18 months ago. This deck is the case for the next one.
+        </div>
       </div>
 
-      <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 480 }}>
+      <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 620 }}>
         {facts.map((f) => (
           <div key={f.k} className="rounded-2xl border px-6 py-6" style={{ borderColor: CHROME_BORDER, background: BG, minHeight: 200 }}>
             <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: SUBTLE }}>{f.k}</div>
@@ -91,6 +95,15 @@ function S0OurBet() {
         ))}
       </div>
 
+      <div className="absolute rounded-2xl border px-8 py-6" style={{ left: 112, right: 112, top: 860, borderColor: CHROME_BORDER, background: CARD_ALT }}>
+        <div className="font-mono uppercase tracking-[0.18em] font-bold" style={{ fontSize: 12, color: `hsl(${RED})` }}>What we walked away from</div>
+        <div style={{ fontSize: 20, color: TEXT, marginTop: 10, lineHeight: 1.35 }}>
+          Partner track at a consultancy. Head of AI / CTO seats at scaleups. Senior staff roles at hyperscalers and model labs.
+        </div>
+        <div style={{ fontSize: 17, color: MUTED, marginTop: 6, lineHeight: 1.35 }}>
+          Three senior operators at the most lucrative point of their careers, choosing to build instead.
+        </div>
+      </div>
 
       <Footer text="The rest of this deck is the thesis we have been investing against. We are inviting the next round in." />
     </SlideShell>
