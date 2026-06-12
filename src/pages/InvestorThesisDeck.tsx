@@ -81,14 +81,10 @@ function S0OurBet() {
     <SlideShell>
       <div className="absolute" style={{ left: 112, right: 112, top: 130 }}>
         <Tag label="Why we made the bet" color={GOLD} />
-        <h1 className="font-light italic leading-[1.15] tracking-tight" style={{ fontSize: 44, color: TEXT, marginBottom: 0, maxWidth: 1680 }}>
-          <span style={{ fontSize: 72, lineHeight: 0, verticalAlign: "-0.15em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal" }}>&ldquo;</span>
-          Models and apps keep changing. Governance is the recurring blocker every enterprise hits with any new digital technology. The lasting part is the enterprise core where governance lives. That is what is worth 18 months of our lives.
-          <span style={{ fontSize: 72, lineHeight: 0, verticalAlign: "-0.15em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal" }}>&rdquo;</span>
+        <h1 className="font-light italic leading-[1.05] tracking-tight" style={{ fontSize: 88, color: TEXT, marginBottom: 0, maxWidth: 1500 }}>
+          <span style={{ fontSize: 120, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginRight: 8 }}>&ldquo;</span>
+          Models change. Governance stays.<span style={{ fontSize: 120, lineHeight: 0, verticalAlign: "-0.2em", color: `hsl(${ACCENT})`, fontFamily: "Georgia, serif", fontStyle: "normal", marginLeft: 8 }}>&rdquo;</span>
         </h1>
-        <div style={{ fontSize: 20, color: MUTED, marginTop: 20, lineHeight: 1.45 }}>
-          We gave ourselves the term sheet 18 months ago. This deck is the case for the next one.
-        </div>
       </div>
 
       <div className="absolute grid grid-cols-4 gap-5" style={{ left: 112, right: 112, top: 420 }}>
