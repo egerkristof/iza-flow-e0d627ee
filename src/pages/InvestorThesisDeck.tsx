@@ -66,11 +66,6 @@ function SlideShell({ children }: { children: React.ReactNode }) {
 
 // ─── Slide 00 · Our own term sheet ──────────────────────────────────────────
 function S0OurBet() {
-  const foregone = [
-    "Partner track at a consultancy",
-    "Head of AI / CTO seats at scaleups",
-    "Senior staff roles at hyperscalers and model labs",
-  ];
   const facts = [
     { k: "Time in",           v: "18 months",          note: "Full-time, no side projects. Built before we raised." },
     { k: "Founders",          v: "3 senior operators", note: "Data, AI, digital transformation. 15+ years each." },
